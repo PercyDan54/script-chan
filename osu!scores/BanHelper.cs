@@ -97,13 +97,13 @@ namespace Osu.Scores
             {
                 hasFirstTeamBanned = true;
                 FirstBeatmapBanned = bm;
-                text = GenerateActionMessage(FirstTeamToBan, FirstBeatmapBanned, true);
+                //text = GenerateActionMessage(FirstTeamToBan, FirstBeatmapBanned, true);
             }
             else if(!hasSecondTeamBanned)
             {
                 hasSecondTeamBanned = true;
                 SecondBeatmapBanned = bm;
-                text = GenerateActionMessage(SecondTeamToBan, SecondBeatmapBanned, true);
+                //text = GenerateActionMessage(SecondTeamToBan, SecondBeatmapBanned, true);
             }
 
             return text;
@@ -115,13 +115,13 @@ namespace Osu.Scores
 
             if (hasSecondTeamBanned)
             {
-                text = GenerateActionMessage(SecondTeamToBan, SecondBeatmapBanned, false);
+                //text = GenerateActionMessage(SecondTeamToBan, SecondBeatmapBanned, false);
                 hasSecondTeamBanned = false;
                 SecondBeatmapBanned = null;
             }
             else if (hasFirstTeamBanned)
             {
-                text = GenerateActionMessage(FirstTeamToBan, FirstBeatmapBanned, false);
+                //text = GenerateActionMessage(FirstTeamToBan, FirstBeatmapBanned, false);
                 hasFirstTeamBanned = false;
                 FirstBeatmapBanned = null;
             }
@@ -147,17 +147,19 @@ namespace Osu.Scores
             }
         }
 
+        /*
         private string GenerateActionMessage(Team team, Beatmap beatmap, bool isItBan)
         {
-            return string.Format("[{4} vs {5}] {0} ({1} pick) has been {2} by team {3}", beatmap.OsuBeatmap.Title, beatmap.PickType, (isItBan ? "banned" : "unbanned"), team.Name, FirstTeamToBan.Name, SecondTeamToBan.Name);
+            return string.Format("[{3} vs {4}] {0} ({1} pick) has been {2}", beatmap.OsuBeatmap.Title, beatmap.PickType, (isItBan ? "banned" : "unbanned"), team.name, FirstTeamToBan.Name, SecondTeamToBan.Name);
         }
+        */
 
         public string GenerateBanRecapMessage()
         {
             //Check if both bans have been made
             if(!CanBan())
             {
-                return string.Format("Ban recap for {0} vs {1} : " + Environment.NewLine + "**{0}** -> {2} - {3} [{4}]" + Environment.NewLine + "{1} -> {5} - {6} [{7}]",
+                return string.Format("Ban recap for {0} vs **{1}** : " + Environment.NewLine + "{0} : `{4}` {2} - {3}" + Environment.NewLine + "**{1}** : `{7}` {5} - {6}",
                     FirstTeamToBan.Name, SecondTeamToBan.Name,
                     FirstBeatmapBanned.OsuBeatmap.Artist, FirstBeatmapBanned.OsuBeatmap.Title, FirstBeatmapBanned.PickType,
                     SecondBeatmapBanned.OsuBeatmap.Artist, SecondBeatmapBanned.OsuBeatmap.Title, SecondBeatmapBanned.PickType);
@@ -177,7 +179,7 @@ namespace Osu.Scores
             for(int counter = 0; counter < picks.Count; counter++)
             {
                 bm = picks[counter];
-                result += string.Format("-{0}- **{1}** : {2} - {3} [{4}]" + Environment.NewLine, counter + 1, (counter % 2 == 0 ? SecondTeamToBan.Name : FirstTeamToBan.Name), bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.PickType);
+                result += string.Format("-{0}- **{1}** : `{4}` {2} - {3}" + Environment.NewLine, counter + 1, (counter % 2 == 0 ? SecondTeamToBan.Name : FirstTeamToBan.Name), bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.PickType);
             }
 
             return result;

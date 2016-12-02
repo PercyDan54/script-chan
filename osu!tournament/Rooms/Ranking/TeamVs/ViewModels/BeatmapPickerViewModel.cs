@@ -232,7 +232,8 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             {
                 var dbot = osu_discord.DiscordBot.GetInstance();
                 isBanned = true;
-                dbot.SendMessage(bh.ApplyBan(beatmap));
+                //dbot.SendMessage(bh.ApplyBan(beatmap));
+                bh.ApplyBan(beatmap);
                 NotifyOfPropertyChange("Background");
                 NotifyOfPropertyChange("IsCheckboxEnabled");
             }
@@ -249,7 +250,8 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             {
                 var dbot = osu_discord.DiscordBot.GetInstance();
                 isBanned = false;
-                dbot.SendMessage(bh.RemoveBan());
+                //dbot.SendMessage(bh.RemoveBan());
+                bh.RemoveBan();
                 NotifyOfPropertyChange("Background");
                 NotifyOfPropertyChange("IsCheckboxEnabled");
             }

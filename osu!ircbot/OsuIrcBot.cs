@@ -116,7 +116,7 @@ namespace Osu.Ircbot
             password = cache.Get("password", "");
             isConnected = false;
             shouldCatchSettings = false;
-            regexPlayerLine = new Regex("^Slot \\d \\s*(Ready|Not Ready)\\s*([^\\s]*)\\s*\\[Team (Blue|Red)(?:\\]| /? ((?:\\w+[, ]*)*)\\])$");
+            regexPlayerLine = new Regex("^Slot \\d \\s*(Ready|Not Ready)\\s*[^\\s]*\\s*([^\\s]*)\\s*\\[Team (Blue|Red)(?:[ ]?\\]|[ ]+/?[ ]+((?:\\w+[, ]*)*)\\])$");
             regexRoomLine = new Regex("^Room name: ([^,]*), History:");
             regexMapLine = new Regex("Beatmap: [^ ]* (.*)");
 
@@ -440,13 +440,45 @@ namespace Osu.Ircbot
         {
             catchSettingsTimer.Enabled = false;
             shouldCatchSettings = false;
-            var stringToSend = "**FreeMod Pick** " + fmv.RoomString + Environment.NewLine + "Map selected: " + fmv.MapString + Environment.NewLine;
+            var stringToSend = "**FreeMod Pick** " + fmv.RoomString + Environment.NewLine + fmv.MapString + Environment.NewLine;
+            List<string> values = new List<string>();
+
+            int separator = 1;
             foreach (UserSettings us in fmv.Players)
             {
-                stringToSend += string.Format("[{0}] {1} -> {2}" + Environment.NewLine, us.TeamColor, us.Username, us.ModsSelected);
+                values.Clear();
+                if (us.ModsSelected.Contains(","))
+                {
+                    values.AddRange(us.ModsSelected.Split(new string[] { ", " }, StringSplitOptions.None));
+                }
+                else
+                {
+                    if(us.ModsSelected != "None")
+                    {
+                        values.Add(us.ModsSelected);
+                    }
+                }
+                stringToSend += string.Format("[{0}] {1} ", us.TeamColor, us.Username);
+
+                foreach(string mod in values)
+                {
+                    stringToSend += "`" + mod + "` ";
+                }
+
+                stringToSend += Environment.NewLine;
+
+                if(separator == 4)
+                {
+                    stringToSend += "-----------------------" + Environment.NewLine;
+                }
+                separator++;
             }
+
             if (shouldHlCommentators)
-                stringToSend += "@commentators";
+            {
+                stringToSend += "<@&228232322288189440>";
+                shouldHlCommentators = false;
+            }
 
             DiscordBot.GetInstance().SendMessage(stringToSend);
 
