@@ -329,7 +329,7 @@ namespace Osu.Scores
                     break;
                 case RoomStatus.Finished:
                     sentences.Add(GetScoreFormatted());
-                    sentences.Add((DidBlueTeamWin() ? teams[OsuTeam.Blue].Name : teams[OsuTeam.Red].Name) + " wins the match.");
+                    sentences.Add("**" + (DidBlueTeamWin() ? teams[OsuTeam.Blue].Name : teams[OsuTeam.Red].Name) + " wins the match.**");
                     break;
             }
             return sentences;
@@ -376,17 +376,24 @@ namespace Osu.Scores
                     }
                 }
 
-                sentences.Add(String.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their pick [{2} [{1}]]", CurrentTeam.Name, bm.PickType, bm.OsuBeatmap.Title));
+                if(abortHappened)
+                {
+                    didCurrentTeamWon = !didCurrentTeamWon;
+                }
+
+                sentences.Add(String.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their pick `{1}` {2}", (abortHappened ? NextTeam.Name : CurrentTeam.Name), bm.PickType, bm.OsuBeatmap.Title));
 
                 sentences.AddRange(GetStatus());
-                OsuScore mvp = room.OsuRoom.Games.Last().Scores.OrderByDescending(x => x.Score).First();
+                IOrderedEnumerable<OsuScore> scores = room.OsuRoom.Games.Last().Scores.OrderByDescending(x => x.Score);
+                OsuScore mvp = scores.First();
 
                 Player mvpPlayer;
+
                 room.Players.TryGetValue(mvp.UserId, out mvpPlayer);
 
                 if(mvpPlayer != null)
                 {
-                    sentences.Add(String.Format("MVP of the map : {0} from {1} with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country, mvp.Score));
+                    sentences.Add(String.Format("MVP : {0} from {1} with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country, mvp.Score));
                 }
 
                 return sentences;
