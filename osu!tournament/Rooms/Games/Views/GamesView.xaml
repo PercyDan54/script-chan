@@ -1,0 +1,41 @@
+﻿<UserControl
+    x:Class="Osu.Mvvm.Rooms.Games.Views.GamesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:w="clr-namespace:Osu.Mvvm"
+    mc:Ignorable="d"
+    d:DesignHeight="500"
+    d:DesignWidth="500">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Content="Select a mappool in the list or choose manual mode" VerticalContentAlignment="Center" FontSize="20" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
+        <ComboBox x:Name="Mappools" IsEnabled="{Binding MappoolsEnabled}" DisplayMemberPath="Name" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="1" />
+        <CheckBox x:Name="Manual" Content="Manual" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="2.5,0,0,0" Grid.Column="1" Grid.Row="1" />
+        <Label Content="And uncheck the games you wish to ignore" FontSize="20" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Row="2" Grid.ColumnSpan="2" />
+
+        <ScrollViewer Padding="0" Margin="0,5,0,0" Grid.Row="3" Grid.ColumnSpan="2">
+            <ItemsControl x:Name="Beatmaps" IsEnabled="{Binding Manual}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

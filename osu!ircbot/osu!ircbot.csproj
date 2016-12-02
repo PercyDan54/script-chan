@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{469C8CB4-53D7-456D-A836-DA2831AD5F4C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Osu.Ircbot</RootNamespace>
+    <AssemblyName>osu!ircbot</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FreemodViewer.cs" />
+    <Compile Include="UserSettings.cs" />
+    <Compile Include="Handlers\AdminHandler.cs" />
+    <Compile Include="Handlers\IrcHandler.cs" />
+    <Compile Include="Handlers\MultiplayerEventArgs.cs" />
+    <Compile Include="Handlers\NormalHandler.cs" />
+    <Compile Include="MultiEvent.cs" />
+    <Compile Include="OsuIrcBot.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IrcClient-csharp\IrcClient-csharp.csproj">
+      <Project>{b01150db-641e-4f3a-8d14-c094deded1e8}</Project>
+      <Name>IrcClient-csharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\osu!api\osu!api.csproj">
+      <Project>{76ec97a3-cf1c-42ff-8416-f9864bc84ddd}</Project>
+      <Name>osu!api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\osu!discord\osu!discord.csproj">
+      <Project>{426c52c2-0a9c-4c28-a2b4-f390c5436492}</Project>
+      <Name>osu!discord</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\osu!scores\osu!scores.csproj">
+      <Project>{219d47f5-e963-47e6-b235-9fd88d6b6d74}</Project>
+      <Name>osu!scores</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\osu!utils\osu!utils.csproj">
+      <Project>{56c0bb7b-89b3-4ef2-8d01-473e090e42eb}</Project>
+      <Name>osu!utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

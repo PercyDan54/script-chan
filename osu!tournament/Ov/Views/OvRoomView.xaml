@@ -1,0 +1,39 @@
+﻿<UserControl
+    x:Class="Osu.Mvvm.Ov.Views.OvRoomView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:w="clr-namespace:Osu.Mvvm"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="500"
+    Margin="0,0,0,2.5">
+
+    <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="30" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="RoomName" cal:Message.Attach="[Event MouseDoubleClick] = [Action OpenMpLink()]" Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" FontWeight="Bold"/>
+            <Label x:Name="Timer" Content="38min" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center" Padding="0" Margin="2,2,2,-1" Foreground="#FF6A6A6A" />
+            <Label Content="Scores :" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center" FontSize="14" Padding="0" Margin="2,2,2,0"/>
+            <Label x:Name="TeamBlue" Grid.Column="2" Grid.Row="1" VerticalContentAlignment="Center" Padding="0" Margin="2,2,2,2" Foreground="#FF0180FF" FontSize="18"/>
+            <Label x:Name="TeamRed" Grid.Column="2" Grid.Row="2" VerticalContentAlignment="Center" Padding="0" Margin="2,2,2,2" Foreground="#FFFF2727" FontSize="18"/>
+            <Label x:Name="ScoreBlue" Grid.Column="3" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2,2,2,2" FontWeight="Bold" />
+            <Label x:Name="ScoreRed" Grid.Column="3" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2,2,2,2" FontWeight="Bold" />
+            <Label x:Name="Status" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2,2,2,2"/>
+            <Label x:Name="Pick" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2,2,2,2"/>
+        </Grid>
+    </Border>
+</UserControl>

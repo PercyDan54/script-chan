@@ -1,0 +1,30 @@
+﻿<UserControl
+    x:Class="Osu.Mvvm.Mappools.Views.BeatmapView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:w="clr-namespace:Osu.Mvvm"
+    mc:Ignorable="d"
+    d:DesignHeight="29"
+    d:DesignWidth="500"
+    Height="29"
+    Margin="0,2.5,5,2.5"
+    Background="{Binding Background}"
+    BorderBrush="{Binding Border}"
+    BorderThickness="1">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="60" />
+        </Grid.ColumnDefinitions>
+
+        <Label x:Name="DisplayName" Content="Artist - Title [Version]" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="0,0,2.5,0" Grid.Column="0" />
+        <ComboBox x:Name="PickType" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" />
+        <Button x:Name="Delete" Content="Delete" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" />
+    </Grid>
+</UserControl>
