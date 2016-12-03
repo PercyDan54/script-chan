@@ -167,7 +167,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         {
             get
             {
-                return string.Format("{0} - {1} ({2})", beatmap.OsuBeatmap.Artist, beatmap.OsuBeatmap.Title, beatmap.OsuBeatmap.Creator);
+                return string.Format("{0} - {1} ({2}) [{3}]", beatmap.OsuBeatmap.Artist, beatmap.OsuBeatmap.Title, beatmap.OsuBeatmap.Creator, beatmap.OsuBeatmap.Version);
             }
         }
         #endregion
@@ -219,8 +219,8 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             if(!isAlreadyPicked && !isBanned)
             {
                 var bot = OsuIrcBot.GetInstance();
-                bot.SendMessage("#mp_" + room.Id, string.Format("!mp map {0} {1}", beatmap.OsuBeatmap.BeatmapID, worldcupId));
                 bot.SendMessage("#mp_" + room.Id, string.Format("!mp mods {0}", modvalue));
+                bot.SendMessage("#mp_" + room.Id, string.Format("!mp map {0} {1}", beatmap.OsuBeatmap.BeatmapID, worldcupId));
                 BeatmapCheckBox = true;
             }
         }

@@ -381,7 +381,7 @@ namespace Osu.Scores
                     didCurrentTeamWon = !didCurrentTeamWon;
                 }
 
-                sentences.Add(String.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their pick `{1}` {2}", (abortHappened ? NextTeam.Name : CurrentTeam.Name), bm.PickType, bm.OsuBeatmap.Title));
+                sentences.Add(String.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their pick `{1}` {2} - {3} [{4}]", (abortHappened ? NextTeam.Name : CurrentTeam.Name), bm.PickType, bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.OsuBeatmap.Version));
 
                 sentences.AddRange(GetStatus());
                 IOrderedEnumerable<OsuScore> scores = room.OsuRoom.Games.Last().Scores.OrderByDescending(x => x.Score);
