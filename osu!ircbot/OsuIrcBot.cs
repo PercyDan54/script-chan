@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using TechLifeForum;
+using System.Linq;
 
 namespace Osu.Ircbot
 {
@@ -116,7 +117,7 @@ namespace Osu.Ircbot
             password = cache.Get("password", "");
             isConnected = false;
             shouldCatchSettings = false;
-            regexPlayerLine = new Regex("^Slot \\d \\s*(Ready|Not Ready)\\s*[^\\s]*\\s*([^\\s]*)\\s*\\[Team (Blue|Red)(?:[ ]?\\]|[ ]+/?[ ]+((?:\\w+[, ]*)*)\\])$");
+            regexPlayerLine = new Regex("^Slot (\\d+)\\s+(\\w+)\\s+https:\\/\\/osu\\.ppy\\.sh\\/u\\/(\\d+)\\s+([a-zA-Z0-9_ ]+)\\s+\\[Team (\\w+)\\s*(?:\\/ ([\\w, ]+))?\\]$");
             regexRoomLine = new Regex("^Room name: ([^,]*), History:");
             regexMapLine = new Regex("Beatmap: [^ ]* (.*)");
 
@@ -386,8 +387,8 @@ namespace Osu.Ircbot
                     Match playerline = regexPlayerLine.Match(e.Message);
                     if(playerline.Success)
                     {
-                        UserSettings us = new UserSettings() { Status = playerline.Groups[1].Value, Username = playerline.Groups[2].Value, TeamColor = playerline.Groups[3].Value};
-                        us.ModsSelected = playerline.Groups[4].Value == "" ? "None" : playerline.Groups[4].Value;
+                        UserSettings us = new UserSettings() { Slot = int.Parse(playerline.Groups[1].Value), Status = playerline.Groups[2].Value, UserId = playerline.Groups[3].Value, Username = playerline.Groups[4].Value, TeamColor = playerline.Groups[5].Value};
+                        us.ModsSelected = playerline.Groups.Count != 7 ? "None" : playerline.Groups[6].Value;
                         fmv.AddPlayer(us);
                     }
 
@@ -444,7 +445,7 @@ namespace Osu.Ircbot
             List<string> values = new List<string>();
 
             int separator = 1;
-            foreach (UserSettings us in fmv.Players)
+            foreach (UserSettings us in fmv.Players.OrderBy(x => x.Slot))
             {
                 values.Clear();
                 if (us.ModsSelected.Contains(","))

@@ -2,6 +2,7 @@
 using Osu.Ircbot;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
+using System;
 using System.Windows.Media;
 
 namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
@@ -168,6 +169,15 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             get
             {
                 return string.Format("{0} - {1} ({2}) [{3}]", beatmap.OsuBeatmap.Artist, beatmap.OsuBeatmap.Title, beatmap.OsuBeatmap.Creator, beatmap.OsuBeatmap.Version);
+            }
+        }
+
+        public string ToolTipInfos
+        {
+            get
+            {
+                TimeSpan t = TimeSpan.FromSeconds(beatmap.OsuBeatmap.TotalLength);
+                return string.Format("{0} - {1}✩ - {2} BPM - {3} CS - {4} AR", t.ToString(@"mm\:ss"), Math.Round(beatmap.OsuBeatmap.DifficultyRating, 2), beatmap.OsuBeatmap.BPM, beatmap.OsuBeatmap.CircleSize, beatmap.OsuBeatmap.ApproachRate);
             }
         }
         #endregion

@@ -32,6 +32,10 @@
                     <MenuItem Header="Unbannerino" cal:Message.Attach="RevertBannerino"/>
                 </ContextMenu>
             </Button.ContextMenu>
+            <ToolTipService.ToolTip >
+                <ToolTip Content="{Binding ToolTipInfos}"   
+        HorizontalOffset="210" VerticalOffset="-45" Background="AliceBlue"/>
+            </ToolTipService.ToolTip>
         </Button>
     </Grid>
 </UserControl>
