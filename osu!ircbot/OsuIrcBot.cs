@@ -387,7 +387,7 @@ namespace Osu.Ircbot
                     Match playerline = regexPlayerLine.Match(e.Message);
                     if(playerline.Success)
                     {
-                        UserSettings us = new UserSettings() { Slot = int.Parse(playerline.Groups[1].Value), Status = playerline.Groups[2].Value, UserId = playerline.Groups[3].Value, Username = playerline.Groups[4].Value, TeamColor = playerline.Groups[5].Value};
+                        UserSettings us = new UserSettings() { Slot = int.Parse(playerline.Groups[1].Value), Status = playerline.Groups[2].Value, UserId = playerline.Groups[3].Value, Username = playerline.Groups[4].Value.Trim(), TeamColor = playerline.Groups[5].Value};
                         us.ModsSelected = playerline.Groups.Count != 7 ? "None" : playerline.Groups[6].Value;
                         fmv.AddPlayer(us);
                     }
