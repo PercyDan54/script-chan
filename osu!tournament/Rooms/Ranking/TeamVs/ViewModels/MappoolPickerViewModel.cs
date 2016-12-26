@@ -3,6 +3,7 @@ using Osu.Scores;
 using osu_discord;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 {
@@ -22,9 +23,13 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             searchBoxValue = "";
             r = room;
             beatmaps = new BindableCollection<BeatmapPickerViewModel>();
-            foreach(KeyValuePair<long, Beatmap> kvp in room.Mappool?.Pool)
+            if (room.Mappool != null)
             {
-                beatmaps.Add(new BeatmapPickerViewModel(room, kvp.Value));
+                beatmaps.Clear();
+                foreach (KeyValuePair<long, Beatmap> kvp in room.Mappool?.Pool)
+                {
+                    beatmaps.Add(new BeatmapPickerViewModel(room, kvp.Value));
+                }
             }
         }
         #endregion
@@ -72,7 +77,19 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         #endregion
 
         #region Public Methods
-
+        public void Update()
+        {
+            if (r.Mappool != null)
+            {
+                beatmaps.Clear();
+                Task<Room> re = Room.Get(r.Id);
+                re.Wait();
+                foreach (KeyValuePair<long, Beatmap> kvp in re.Result.Mappool?.Pool)
+                {
+                    beatmaps.Add(new BeatmapPickerViewModel(r, kvp.Value));
+                }
+            }
+        }
         #endregion
     }
 }

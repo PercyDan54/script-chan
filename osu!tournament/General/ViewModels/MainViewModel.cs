@@ -8,6 +8,8 @@ using Osu.Scores;
 using Osu.Utils;
 using System.Windows.Media;
 using Osu.Mvvm.Preparation.ViewModels;
+using Osu.Tournament.Miscellaneous;
+using Osu.Tournament.Properties;
 
 namespace Osu.Mvvm.General.ViewModels
 {
@@ -46,6 +48,8 @@ namespace Osu.Mvvm.General.ViewModels
         /// The options view model
         /// </summary>
         private OptionsViewModel options;
+
+        private WindowInfo windowInfo;
         #endregion
 
         #region Constructor
@@ -65,6 +69,20 @@ namespace Osu.Mvvm.General.ViewModels
             mappools = new MappoolsViewModel();
 
             options = new OptionsViewModel();
+
+            windowInfo = new WindowInfo();
+
+            if (Settings.Default.WindowLocation != null)
+            {
+                windowInfo.Left = Settings.Default.WindowLocation.X;
+                windowInfo.Top = Settings.Default.WindowLocation.Y;
+            }
+
+            if(Settings.Default.WindowSize != null)
+            {
+                windowInfo.Width = Settings.Default.WindowSize.Width;
+                windowInfo.Height = Settings.Default.WindowSize.Height;
+            }
 
             ShowRooms();
         }
@@ -116,6 +134,22 @@ namespace Osu.Mvvm.General.ViewModels
                 {
                     active_item_name = value;
                     NotifyOfPropertyChange(() => ActiveItemName);
+                }
+            }
+        }
+
+        public WindowInfo WindowInfo
+        {
+            get
+            {
+                return windowInfo;
+            }
+            set
+            {
+                if(value != windowInfo)
+                {
+                    windowInfo = value;
+                    NotifyOfPropertyChange(() => WindowInfo);
                 }
             }
         }
@@ -190,12 +224,16 @@ namespace Osu.Mvvm.General.ViewModels
         {
             // Save the mappools
             Mappool.Save();
+            Room.Save();
+            RefereeMatchHelper.Save();
 
             // Exit the irc bot
-            OsuIrcBot.GetInstance().Disconnect();
+            OsuIrcBot.GetInstancePrivate().Disconnect();
+            OsuIrcBot.GetInstancePublic().Disconnect();
             // Save all the caches
             Cache.SaveAll();
         }
+
         #endregion
     }
 }

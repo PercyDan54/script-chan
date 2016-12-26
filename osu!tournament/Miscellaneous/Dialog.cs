@@ -23,6 +23,16 @@ namespace Osu.Mvvm.Miscellaneous
         private static ProgressDialogController controller;
         #endregion
 
+
+        #region Properties
+        public static MetroWindow Window
+        {
+            get
+            {
+                return window;
+            }
+        }
+        #endregion
         #region Public Methods
         /// <summary>
         /// Initializes the window we need to display dialogs

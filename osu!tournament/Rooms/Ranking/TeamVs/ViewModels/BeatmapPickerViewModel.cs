@@ -228,7 +228,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
             if(!isAlreadyPicked && !isBanned)
             {
-                var bot = OsuIrcBot.GetInstance();
+                var bot = OsuIrcBot.GetInstancePrivate();
                 bot.SendMessage("#mp_" + room.Id, string.Format("!mp mods {0}", modvalue));
                 bot.SendMessage("#mp_" + room.Id, string.Format("!mp map {0} {1}", beatmap.OsuBeatmap.BeatmapID, worldcupId));
                 BeatmapCheckBox = true;

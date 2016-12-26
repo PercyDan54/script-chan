@@ -23,7 +23,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// <summary>
         /// The regex used to get the room's id if we get a link
         /// </summary>
-        protected static readonly Regex LinkRegex = new Regex("^(http|https):\\/\\/osu.ppy.sh\\/mp\\/(\\d+)$");
+        protected static readonly Regex LinkRegex = new Regex("(http|https):\\/\\/(?:osu|new)\\.ppy\\.sh\\/(?:mp|matches)\\/(\\d+)");
 
         /// <summary>
         /// The irc bot
@@ -60,7 +60,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
             DisplayName = "Current Room: ";
             selected = null;
 
-            bot = OsuIrcBot.GetInstance();
+            bot = OsuIrcBot.GetInstancePrivate();
             bot.MessageRoomCatched += ircbot_MessageRoomCatched;
 
             discordBot = DiscordBot.GetInstance();
@@ -340,7 +340,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                         // If the beatmap exists in the mappool, we're changing the map
                         if (room.Mappool.Pool.TryGetValue(multi_room.Map_Id, out beatmap))
                         {
-                            OsuIrcBot.GetInstance().OnChangeMapRoom(room, multi_room.Map_Id, beatmap);
+                            OsuIrcBot.GetInstancePrivate().OnChangeMapRoom(room, multi_room.Map_Id, beatmap);
                         }
                     }  
                 }

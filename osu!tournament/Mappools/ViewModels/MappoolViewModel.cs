@@ -126,6 +126,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
 
                                     // Change its osu!beatmap
                                     beatmap.OsuBeatmap = osu_beatmap;
+                                    beatmap.Id = osu_beatmap.BeatmapID;
 
                                     // Add this beatmap to the mappool list
                                     mappool.Pool[osu_beatmap.BeatmapID] = beatmap;

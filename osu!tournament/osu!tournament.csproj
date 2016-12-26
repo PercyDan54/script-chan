@@ -85,6 +85,7 @@
     <Compile Include="General\ViewModels\MainViewModel.cs" />
     <Compile Include="Miscellaneous\Log.cs" />
     <Compile Include="Miscellaneous\PasswordHelper.cs" />
+    <Compile Include="Miscellaneous\WindowSettings.cs" />
     <Compile Include="Ov\ViewModels\OvRoomViewModel.cs" />
     <Compile Include="Ov\ViewModels\OvViewModel.cs" />
     <Compile Include="Preparation\ViewModels\PreparationRoomViewModel.cs" />
@@ -244,7 +245,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\osu!api\osu!api.csproj">

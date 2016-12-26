@@ -20,7 +20,7 @@ namespace Osu.Scores
         /// <summary>
         /// The osu! beatmap
         /// </summary>
-        [IgnoreDataMember]
+        [DataMember]
         protected OsuBeatmap osu_beatmap;
 
         /// <summary>
@@ -69,6 +69,21 @@ namespace Osu.Scores
             set
             {
                 pick_type = value;
+            }
+        }
+
+        /// <summary>
+        /// PickType property
+        /// </summary>
+        public long Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
             }
         }
         #endregion

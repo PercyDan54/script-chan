@@ -96,7 +96,7 @@ namespace Osu.Scores
         /// <summary>
         /// Default constructor
         /// </summary>
-        private Room(OsuRoom osu_room)
+        public Room(OsuRoom osu_room)
         {
             this.osu_room = osu_room;
             blacklist = new List<long>();
@@ -578,15 +578,46 @@ namespace Osu.Scores
         /// <summary>
         /// Initializes the rooms
         /// </summary>
-        public static void Initialize()
+        public static async Task Initialize()
         {
             rooms = new Dictionary<long, Room>();
 
-            // Not yet cached
+            Cache cache = Cache.GetCache("osu!cache.db");
+            Dictionary<long, OsuRoom> matches = cache.GetObject<Dictionary<long, OsuRoom>>("rooms", new Dictionary<long, OsuRoom>());
+            Dictionary<long, Api.OsuTeam> teamvsfirst = cache.GetObject<Dictionary<long, Api.OsuTeam>>("teamvs_isbluefirstpicking", new Dictionary<long, Api.OsuTeam>());
 
-            // Cache cache = Cache.GetCache("osu!cache.db");
+            OsuTeam firstteam;
 
-            // rooms = cache.Get<Dictionary<long, Room>>("rooms", new Dictionary<long, Room>());
+            foreach (var match in matches)
+            {
+                rooms[match.Key] = new Room(match.Value);
+                await rooms[match.Key].Update(false);
+
+                if(rooms[match.Key].Ranking.type == Ranking.Type.TeamVs && teamvsfirst.TryGetValue(match.Key, out firstteam))
+                {
+                    ((TeamVs)rooms[match.Key].Ranking).First = firstteam;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Saves the mappools list in the cache
+        /// </summary>
+        public static void Save()
+        {
+            Cache cache = Cache.GetCache("osu!cache.db");
+            Dictionary<long, OsuRoom> matches = new Dictionary<long, OsuRoom>();
+            Dictionary<long, Api.OsuTeam> teamfirstdic = new Dictionary<long, Api.OsuTeam>();
+            foreach (var r in rooms)
+            {
+                matches.Add(r.Key, r.Value.OsuRoom);
+                if(r.Value.Ranking.type == Ranking.Type.TeamVs)
+                {
+                    teamfirstdic.Add(r.Key, ((TeamVs)r.Value.Ranking).First);
+                }
+            }
+            cache["rooms"] = matches;
+            cache["teamvs_isbluefirstpicking"] = teamfirstdic;
         }
 
         /// <summary>

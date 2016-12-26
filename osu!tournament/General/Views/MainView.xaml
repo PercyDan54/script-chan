@@ -11,11 +11,12 @@
     Title="{Binding DisplayName}"
     TitleCaps="False"
     TitlebarHeight="26"
-    Height="600"
-    Width="600"
+    Height="{Binding WindowInfo.Height, Mode=TwoWay}"
+    Width="{Binding WindowInfo.Width, Mode=TwoWay}"
     MinHeight="600"
     MinWidth="600"
-    WindowStartupLocation="CenterScreen"
+    Top="{Binding WindowInfo.Top, Mode=TwoWay}"
+    Left="{Binding WindowInfo.Left, Mode=TwoWay}"
     BorderBrush="{DynamicResource AccentColorBrush}"
     BorderThickness="1">
 

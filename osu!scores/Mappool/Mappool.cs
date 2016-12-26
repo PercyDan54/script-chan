@@ -31,6 +31,10 @@ namespace Osu.Scores
         protected Dictionary<long, Beatmap> pool;
         #endregion
 
+        #region Events
+        public static event EventHandler<EventArgs> ChangeEvent;
+        #endregion
+
         #region Constructors
         /// <summary>
         /// Default constructor
@@ -137,7 +141,10 @@ namespace Osu.Scores
         public static Mappool Get(string name)
         {
             if (!mappools.ContainsKey(name))
+            {
                 mappools[name] = new Mappool();
+                FireChangeEvent();
+            }
 
             return mappools[name];
         }
@@ -149,7 +156,20 @@ namespace Osu.Scores
         public static void Remove(string name)
         {
             if (mappools.ContainsKey(name))
+            {
                 mappools.Remove(name);
+                FireChangeEvent();
+            }
+
+
+        }
+
+        private static void FireChangeEvent()
+        {
+            if (ChangeEvent != null)
+            {
+                ChangeEvent(typeof(Mappool), new EventArgs());
+            }
         }
 
         /// <summary>

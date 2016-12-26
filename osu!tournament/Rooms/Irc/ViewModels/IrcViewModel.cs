@@ -63,7 +63,7 @@ namespace Osu.Mvvm.Rooms.Irc.ViewModels
         public async void SendButton()
         {
             // No bot
-            if (!OsuIrcBot.GetInstance().IsConnected)
+            if (!OsuIrcBot.GetInstancePrivate().IsConnected)
             {
                 // Error
                 Dialog.ShowDialog("Whoops!", "You're not connected to bancho!");
@@ -78,7 +78,7 @@ namespace Osu.Mvvm.Rooms.Irc.ViewModels
                 foreach (string sentence in roomVM.Room.Ranking.GetStatus())
                 {
                     // Send message to targets
-                    OsuIrcBot.GetInstance().SendMessage(roomVM.Room.IrcTargets, sentence);
+                    OsuIrcBot.GetInstancePrivate().SendMessage(roomVM.Room.IrcTargets, sentence);
                 }
 
                 // Hide progress

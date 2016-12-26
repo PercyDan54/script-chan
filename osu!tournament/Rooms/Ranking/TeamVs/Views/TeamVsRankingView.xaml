@@ -21,32 +21,46 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="80" />
             <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="60" />
+            
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="StatusLabel" Content="{Binding CurrentStatus}" VerticalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <Label x:Name="StatusLabel" Content="{Binding CurrentStatus}" VerticalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7"/>
+
+        <Button x:Name="SwitchAll" Content="Switch All" FontSize="12" VerticalContentAlignment="Center" Padding="0" Grid.Row="0" Grid.Column="7"/>
+        <Button x:Name="MoveAll" Content="Move All" FontSize="12" VerticalContentAlignment="Center" Padding="0" Grid.Row="0" Grid.Column="8" />
 
         <Label Content="Team" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="1" />
-        <Label Content="Score" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Column="3" Grid.Row="1" />
+        <Label Content="Score" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="1" />
 
         <Label x:Name="BlueTeamLabel" Content="{Binding BlueTeamName}" VerticalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="2" />
         <Label x:Name="RedTeamLabel" Content="{Binding RedTeamName}" VerticalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="3" />
 
-        <Button x:Name="BlueRemovePoint" Content="-" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="1" />
-        <Button x:Name="RedRemovePoint" Content="-" VerticalContentAlignment="Center" Padding="0" Grid.Row="3" Grid.Column="1" />
+        <Button x:Name="SwitchBlue" Content="Switch" FontSize="12" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="7" />
+        <Button x:Name="SwitchRed" Content="Switch" FontSize="12" VerticalContentAlignment="Center" Padding="0" Grid.Row="3" Grid.Column="7" />
+        <Button x:Name="MoveBlue" Content="Move" FontSize="12" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="8" />
+        <Button x:Name="MoveRed" Content="Move" FontSize="12" VerticalContentAlignment="Center" Padding="0" Grid.Row="3" Grid.Column="8" />
         
-        <Button x:Name="BlueAddPoint" Content="+" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="2" />
-        <Button x:Name="RedAddPoint" Content="+" VerticalContentAlignment="Center" Padding="0" Grid.Row="3" Grid.Column="2" />
+        <Button x:Name="BlueRemovePoint" Content="-" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="2" />
+        <Button x:Name="RedRemovePoint" Content="-" VerticalContentAlignment="Center" Padding="0" Grid.Row="3" Grid.Column="2" />
+        
+        <Button x:Name="BlueAddPoint" Content="+" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="3" />
+        <Button x:Name="RedAddPoint" Content="+" VerticalContentAlignment="Center" Padding="0" Grid.Row="3" Grid.Column="3" />
 
-        <Label x:Name="BlueTeamPoints" Content="{Binding BlueTeamScore}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="3" Grid.Row="2" />
-        <Label x:Name="RedTeamPoints" Content="{Binding RedTeamScore}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="3" Grid.Row="3" />
+        <Label x:Name="BlueTeamPoints" Content="{Binding BlueTeamScore}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="2" />
+        <Label x:Name="RedTeamPoints" Content="{Binding RedTeamScore}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="3" />
 
-        <Button x:Name="RevertPointChanges" Content="R" VerticalContentAlignment="Center" Padding="0" Grid.Row="4" Grid.Column="1" />
-        <Button x:Name="AbortHappened" Content="A" VerticalContentAlignment="Center" Padding="0" Grid.Row="4" Grid.Column="2" />
+        <Button x:Name="RevertPointChanges" Content="Revert score" FontSize="10" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="5" />
+        <Button x:Name="AbortHappened" Content="Abort map" FontSize="10" VerticalContentAlignment="Center" Padding="0" Grid.Row="3" Grid.Column="5" />
 
-        <ContentControl x:Name="MappoolPicker" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"/>
+        <ContentControl x:Name="MappoolPicker" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="9"/>
     </Grid>
 </UserControl>

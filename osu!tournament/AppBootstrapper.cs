@@ -5,12 +5,15 @@ using Osu.Ircbot;
 using Osu.Mvvm.General.ViewModels;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
+using Osu.Tournament.Properties;
 using Osu.Utils;
 using osu_discord;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Osu.Mvvm
 {
@@ -37,14 +40,17 @@ namespace Osu.Mvvm
         /// <param name="e">the arguments</param>
         protected override async void OnStartup(object sender, StartupEventArgs e)
         {
+            Cache c = Cache.GetCache("osu!userdata.db");
+
             // Use our configuration file to configure the logger
             XmlConfigurator.Configure(new MemoryStream(Encoding.UTF8.GetBytes(Osu.Tournament.Properties.Resources.LoggerConfig)));
-
             // Initialize the osu!ircbot
-            OsuIrcBot.Initialize();
-
+            bool isIrcInit = OsuIrcBot.Initialize(c.Get<string>("ircpublic", null), c.Get<string>("ircprivate", null), c.Get<string>("admins", null));
             // Initialize the discord bot
-            DiscordBot.Initialize();
+
+            bool isDiscordInit = false;
+
+            isDiscordInit = DiscordBot.Initialize(c.Get<string>("discordkey", null));
 
             // Initialize the BanHelper
             RefereeMatchHelper.Initialize();
@@ -59,7 +65,7 @@ namespace Osu.Mvvm
             await Mappool.Initialize();
 
             // Initialize the rooms
-            Room.Initialize();
+            await Room.Initialize();
 
             // Initialize the timed counters
             Counter.Initialize();
@@ -69,6 +75,48 @@ namespace Osu.Mvvm
 
             // Initialize the dialogs
             Dialog.Initialize();
+
+            if(!isDiscordInit)
+            {
+                await Dialog.ShowConfirmation("Error", "Discord initialization failed. Invalid data in the cache.");
+                Application.Current.MainWindow.Close();
+            }
+
+            if (!isIrcInit)
+            {
+                await Dialog.ShowConfirmation("Error", "IRC initialization failed. Invalid data in the cache.");
+                Application.Current.MainWindow.Close();
+            }
+
+        }
+
+        protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            // Save the mappools
+            Mappool.Save();
+            Room.Save();
+            RefereeMatchHelper.Save();
+
+            // Exit the irc bot
+            if(OsuIrcBot.GetInstancePrivate() != null)
+            {
+                OsuIrcBot.GetInstancePrivate().Disconnect();
+                OsuIrcBot.GetInstancePublic().Disconnect();
+            }
+
+            // Save all the caches
+            Cache.SaveAll();
+
+            base.OnUnhandledException(sender, e);
+        }
+
+        protected override void OnExit(object sender, EventArgs e)
+        {
+            Settings.Default.WindowSize = new System.Drawing.Size((int)Dialog.Window.Width, (int)Dialog.Window.Height);
+            Settings.Default.WindowLocation = new System.Drawing.Point((int)Dialog.Window.Left, (int)Dialog.Window.Top);
+            Settings.Default.Save();
+
+            base.OnExit(sender, e);
         }
         #endregion
     }

@@ -18,22 +18,15 @@ namespace osu_discord
 
         private static ILog log = LogManager.GetLogger("osu!discord");
 
-        private DiscordBot()
+        private DiscordBot(string discordKey)
         {
             _client = new DiscordClient();
             Thread t = new Thread(async () =>
             {
-                await _client.Connect("MjQ3MDE1Mjk2MzgzMDU3OTIz.CwjEVw.BesdwOA3pKPeM2rBDTS9ErDBYnM", TokenType.Bot);
+                await _client.Connect(discordKey, TokenType.Bot);
             });
 
             t.Start();
-        }
-
-        private void Start()
-        {
-            _client.ExecuteAndWait(async () => {
-                await _client.Connect("MjQ3MDE1Mjk2MzgzMDU3OTIz.CwjEVw.BesdwOA3pKPeM2rBDTS9ErDBYnM", TokenType.Bot);
-            });
         }
 
         public void OnUpdateRoom(Room room)
@@ -68,11 +61,28 @@ namespace osu_discord
         /// <summary>
         /// Initialize the osu!ircbot
         /// </summary>
-        public static void Initialize()
+        public static bool Initialize(string discordKey)
         {
-            // Initialize the instance
-            instance = new DiscordBot();
-            log.Info("Discord bot has been initialized!");
+            if(!string.IsNullOrEmpty(discordKey))
+            {
+                try
+                {
+                    // Initialize the instance
+                    instance = new DiscordBot(discordKey);
+                    log.Info("Discord bot has been initialized!");
+                    return true;
+                }
+                catch(Exception e)
+                {
+                    return false;
+                }
+                
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         /// <summary>

@@ -1,29 +1,39 @@
 ﻿using Osu.Api;
+using Osu.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Osu.Scores
 {
+    [DataContract]
     public class RefereeMatchHelper
     {
-        private static Dictionary<long, RefereeMatchHelper> dicInstance;
+        protected static Dictionary<long, RefereeMatchHelper> dicInstance;
         private const int MAX_BAN = 2;
 
-        private Team FirstTeamToBan { get; set; }
-        private Team SecondTeamToBan { get; set; }
+        [DataMember]
+        protected Team FirstTeamToBan { get; set; }
+        [DataMember]
+        protected Team SecondTeamToBan { get; set; }
 
-        private Beatmap FirstBeatmapBanned { get; set; }
-        private Beatmap SecondBeatmapBanned { get; set; }
+        [DataMember]
+        protected Beatmap FirstBeatmapBanned { get; set; }
+        [DataMember]
+        protected Beatmap SecondBeatmapBanned { get; set; }
 
-        public bool hasFirstTeamBanned;
-        public bool hasSecondTeamBanned;
+        [DataMember]
+        protected bool hasFirstTeamBanned;
+        [DataMember]
+        protected bool hasSecondTeamBanned;
 
-        private List<Beatmap> picks;
+        [DataMember]
+        protected List<Beatmap> picks;
 
-        private RefereeMatchHelper()
+        protected RefereeMatchHelper()
         {
             hasFirstTeamBanned = false;
             hasSecondTeamBanned = false;
@@ -189,7 +199,14 @@ namespace Osu.Scores
         #region Static methods
         public static void Initialize()
         {
-            dicInstance = new Dictionary<long, RefereeMatchHelper>();
+            Cache cache = Cache.GetCache("osu!cache.db");
+            dicInstance = cache.GetObject<Dictionary<long, RefereeMatchHelper>>("refereematchhelpers", new Dictionary<long, RefereeMatchHelper>());
+        }
+
+        public static void Save()
+        {
+            Cache cache = Cache.GetCache("osu!cache.db");
+            cache["refereematchhelpers"] = dicInstance;
         }
 
         public static RefereeMatchHelper GetInstance(long roomId)

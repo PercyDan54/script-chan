@@ -28,8 +28,8 @@
         <Button x:Name="PickTheMap" Background="{Binding Background}" Focusable="True" Content="{Binding ButtonMapText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1">
             <Button.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Bannerino" cal:Message.Attach="MapBannerino"/>
-                    <MenuItem Header="Unbannerino" cal:Message.Attach="RevertBannerino"/>
+                    <MenuItem Header="Ban" cal:Message.Attach="MapBannerino"/>
+                    <MenuItem Header="Unban" cal:Message.Attach="RevertBannerino"/>
                 </ContextMenu>
             </Button.ContextMenu>
             <ToolTipService.ToolTip >

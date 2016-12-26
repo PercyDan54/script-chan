@@ -28,6 +28,8 @@ namespace Osu.Mvvm.General.ViewModels
         /// </summary>
         private OsuIrcBot bot;
 
+        private OsuIrcBot botpublic;
+
         private OsuMode gm;
 
         private Osu.Scores.Mappool mappool;
@@ -41,7 +43,8 @@ namespace Osu.Mvvm.General.ViewModels
         {
             cache = Cache.GetCache("osu!options.db");
             DisplayName = "Options";
-            bot = OsuIrcBot.GetInstance();
+            bot = OsuIrcBot.GetInstancePrivate();
+            botpublic = OsuIrcBot.GetInstancePublic();
             string t = Cache.GetCache("osu!options.db").Get("wctype", "Standard");
             string pool = Cache.GetCache("osu!options.db").Get("defaultmappool", "");
             switch (t)
@@ -61,9 +64,20 @@ namespace Osu.Mvvm.General.ViewModels
             }
 
             if(!string.IsNullOrEmpty(pool))
-                SelectedMappool = Mappool.Mappools.First(x => x.Name == pool);
+                SelectedMappool = Mappool.Mappools.FirstOrDefault(x => x.Name == pool);
+
+            Mappool.ChangeEvent += e_ChangeEvent(); 
 
             LoadBot();
+        }
+
+        private EventHandler<EventArgs> e_ChangeEvent()
+        {
+            NotifyOfPropertyChange(() => Mappools);
+            SelectedMappool = null;
+            NotifyOfPropertyChange(() => SelectedMappool);
+
+            return null;
         }
         #endregion
 
@@ -82,6 +96,7 @@ namespace Osu.Mvvm.General.ViewModels
                 if (value != bot.Username)
                 {
                     bot.Username = value;
+                    botpublic.Username = value;
                     NotifyOfPropertyChange(() => Username);
                     NotifyOfPropertyChange(() => CanConnect);
                 }
@@ -113,6 +128,7 @@ namespace Osu.Mvvm.General.ViewModels
                 if (value != bot.Password)
                 {
                     bot.Password = value;
+                    botpublic.Password = value;
                     NotifyOfPropertyChange(() => Password);
                     NotifyOfPropertyChange(() => CanConnect);
                 }
@@ -233,7 +249,7 @@ namespace Osu.Mvvm.General.ViewModels
             }
             set
             {
-                if (mappool != value)
+                if (mappool != value && value != null)
                 {
                     mappool = value;
                     cache["defaultmappool"] = value.Name;
@@ -250,6 +266,7 @@ namespace Osu.Mvvm.General.ViewModels
         private async void LoadBot()
         {
             await bot.Connect();
+            await botpublic.Connect();
 
             NotifyOfPropertyChange(() => UsernameEnabled);
             NotifyOfPropertyChange(() => PasswordEnabled);

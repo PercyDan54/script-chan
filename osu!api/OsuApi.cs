@@ -4,6 +4,7 @@ using Osu.Utils;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Osu.Api
 {
@@ -101,6 +102,8 @@ namespace Osu.Api
             // Null if not yet initialized
             if (!initialized)
                 return null;
+
+            //OsuApprovalStatus
 
             // Temp value
             object value;

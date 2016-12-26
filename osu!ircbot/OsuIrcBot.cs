@@ -22,22 +22,19 @@ namespace Osu.Ircbot
     {
         #region Constants
         /// <summary>
-        /// The ip address of bancho's irc
-        /// </summary>
-        private const string IP_PUBLIC_BANCHO = "irc.ppy.sh";
-        /// <summary>
-        /// The private ip
-        /// </summary>
-        private const string IP_PRIVATE_BANCHO = "54.201.131.176";
-        /// <summary>
         /// The default port of bancho's irc
         /// </summary>
         private const int PORT_IRC_BANCHO = 6667;
 
         /// <summary>
-        /// The unique instance of the class
+        /// The instance of the private irc server
         /// </summary>
-        private static OsuIrcBot instance;
+        private static OsuIrcBot instanceMatch;
+
+        /// <summary>
+        /// The instance of the public irc server
+        /// </summary>
+        private static OsuIrcBot instancePublic;
 
         /// <summary>
         /// The logger
@@ -66,7 +63,15 @@ namespace Osu.Ircbot
 
         private Regex regexMapLine;
 
+        private Regex regexSwitchedLine;
+
         private FreemodViewer fmv;
+
+        private string irc_address;
+
+        private string adminlist;
+
+        private SwitchHandler currentswitchhandler;
         #endregion
 
         #region Attributes
@@ -108,7 +113,7 @@ namespace Osu.Ircbot
         /// <summary>
         /// Default constructor
         /// </summary>
-        private OsuIrcBot()
+        private OsuIrcBot(string ircIP, string admins)
         {
             cache = Cache.GetCache("osu!ircbot.db");
             handler = new AdminHandler();
@@ -120,7 +125,9 @@ namespace Osu.Ircbot
             regexPlayerLine = new Regex("^Slot (\\d+)\\s+(\\w+)\\s+https:\\/\\/osu\\.ppy\\.sh\\/u\\/(\\d+)\\s+([a-zA-Z0-9_ ]+)\\s+\\[Team (\\w+)\\s*(?:\\/ ([\\w, ]+))?\\]$");
             regexRoomLine = new Regex("^Room name: ([^,]*), History:");
             regexMapLine = new Regex("Beatmap: [^ ]* (.*)");
-
+            regexSwitchedLine = new Regex("^Switched ([a-zA-Z0-9_\\- ]+) to (?:the tournament server|public Bancho)$");
+            irc_address = ircIP;
+            adminlist = admins;
             fmv = new FreemodViewer();
 
 
@@ -196,12 +203,15 @@ namespace Osu.Ircbot
                 log.Info(e.Channel + " " + e.From + " " + e.Message);
             };
             client.ChannelMessage += HandleOnChannelMessage;
+            client.PrivateMessage += HandleOnPrivateMessage;
+
             client.ExceptionThrown += (s, e) =>
             {
                 log.Info(e.Exception.Message);
                 client.Disconnect();
                 isConnected = false;
             };
+
             client.OnConnect += (s, e) =>
             {
                 log.Info("IRC Bot has been successfully connected!");
@@ -241,15 +251,13 @@ namespace Osu.Ircbot
                         value = false;
                     else
                     {
-                        client = new IrcClient(IP_PRIVATE_BANCHO);
+                        client = new IrcClient(irc_address);
                         RegisterHandlers();
                         client.Nick = username;
                         client.ServerPass = password;
                         client.Connect();
                         value = true;
                         isConnected = true;
-                        //client = new IrcClient(IP_PRIVATE_BANCHO, new IrcUser(username, username, password));
-                        //client.ConnectAsync();
                     }
                 });
             }
@@ -303,6 +311,17 @@ namespace Osu.Ircbot
                 log.Info("IRC has been disconnected properly!");
                 isConnected = false;
             }
+        }
+
+        public async Task<SwitchHandler> SwitchPlayers(SwitchHandler sh)
+        {
+            currentswitchhandler = sh;
+            foreach(var user in currentswitchhandler.Players)
+            {
+                SendMessage("BanchoBot", "!mp switch " + user.Username);
+            }
+            await Task.Delay(3000);
+            return currentswitchhandler;
         }
 
         /// <summary>
@@ -437,6 +456,18 @@ namespace Osu.Ircbot
             }
         }
 
+        private void HandleOnPrivateMessage(object sender, PrivateMessageEventArgs e)
+        {
+            if(e.From == "BanchoBot")
+            {
+                var result = regexSwitchedLine.Match(e.Message);
+                if (result.Success)
+                {
+                    currentswitchhandler.FoundPlayer(result.Groups[1].Value);
+                }
+            }
+        }
+
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             catchSettingsTimer.Enabled = false;
@@ -488,8 +519,7 @@ namespace Osu.Ircbot
 
         private bool IsSentByAdmin(string name)
         {
-            var admins = "LOCTAV SHARPII P3N DEIF";
-            return admins.Contains(name.ToUpper());
+            return adminlist.Contains(name.ToUpper());
         }
         #endregion
 
@@ -497,19 +527,39 @@ namespace Osu.Ircbot
         /// <summary>
         /// Initialize the osu!ircbot
         /// </summary>
-        public static void Initialize()
+        public static bool Initialize(string ircPublic, string ircPrivate, string admins)
         {
-            // Initialize the instance
-            instance = new OsuIrcBot();
+            if(!string.IsNullOrEmpty(ircPublic) && !string.IsNullOrEmpty(ircPrivate) && !string.IsNullOrEmpty(admins))
+            {
+                // Initialize the instance
+                instanceMatch = new OsuIrcBot(ircPrivate, admins);
+                instancePublic = new OsuIrcBot(ircPublic, admins);
+                return true;
+            }
+            else
+            {
+                instanceMatch = new OsuIrcBot("", "");
+                instancePublic = new OsuIrcBot("", "");
+                return false;
+            }
         }
 
         /// <summary>
-        /// Returns the unique instance of the osu!irc bot
+        /// Returns the instance of the private osu!irc bot
         /// </summary>
         /// <returns>the unique instance</returns>
-        public static OsuIrcBot GetInstance()
+        public static OsuIrcBot GetInstancePrivate()
         {
-            return instance;
+            return instanceMatch;
+        }
+
+        /// <summary>
+        /// Returns the instance of the public osu!irc bot
+        /// </summary>
+        /// <returns>the unique instance</returns>
+        public static OsuIrcBot GetInstancePublic()
+        {
+            return instancePublic;
         }
         #endregion
     }
