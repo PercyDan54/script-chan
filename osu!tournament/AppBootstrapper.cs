@@ -7,11 +7,14 @@ using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
 using Osu.Tournament.Properties;
 using Osu.Utils;
+using Osu.Utils.Bans;
+using Osu.Utils.Info;
 using osu_discord;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -41,16 +44,19 @@ namespace Osu.Mvvm
         protected override async void OnStartup(object sender, StartupEventArgs e)
         {
             Cache c = Cache.GetCache("osu!userdata.db");
+            InfosHelper.UserDataInfos = c.GetObject<UserDataInfo>("infos", new UserDataInfo());
 
             // Use our configuration file to configure the logger
             XmlConfigurator.Configure(new MemoryStream(Encoding.UTF8.GetBytes(Osu.Tournament.Properties.Resources.LoggerConfig)));
+            
             // Initialize the osu!ircbot
-            bool isIrcInit = OsuIrcBot.Initialize(c.Get<string>("ircpublic", null), c.Get<string>("ircprivate", null), c.Get<string>("admins", null));
+            bool isIrcInit = OsuIrcBot.Initialize();
             // Initialize the discord bot
-
             bool isDiscordInit = false;
+            isDiscordInit = DiscordBot.Initialize();
 
-            isDiscordInit = DiscordBot.Initialize(c.Get<string>("discordkey", null));
+            Cache c2 = Cache.GetCache("osu!matches.db");
+            InfosHelper.TourneyInfos = c2.GetObject<TourneyInfo>("infos", new TourneyInfo());
 
             // Initialize the BanHelper
             RefereeMatchHelper.Initialize();
@@ -60,6 +66,10 @@ namespace Osu.Mvvm
 
             // Check the osu!api key
             await OsuApi.CheckKey();
+
+            ObsBanHelper.Initialize();
+
+            ObsBanHelper.CheckPath();
 
             // Initialize the mappools
             await Mappool.Initialize();
@@ -88,10 +98,18 @@ namespace Osu.Mvvm
                 Application.Current.MainWindow.Close();
             }
 
+            await Task.Delay(3000);
+
+            foreach (var room in Room.Rooms)
+            {
+                OsuIrcBot.GetInstancePrivate().OnAddRoom(room.Value);
+            }
         }
 
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
+            Log.Fatal("SEND HELP  : " + e.Exception.InnerException + e.Exception.StackTrace);
+
             // Save the mappools
             Mappool.Save();
             Room.Save();
@@ -107,6 +125,7 @@ namespace Osu.Mvvm
             // Save all the caches
             Cache.SaveAll();
 
+            Log.Fatal("SAVED ALL");
             base.OnUnhandledException(sender, e);
         }
 

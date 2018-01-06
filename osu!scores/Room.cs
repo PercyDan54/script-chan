@@ -90,6 +90,8 @@ namespace Osu.Scores
         protected string mode;
 
         protected int countBans;
+
+        protected bool isStreamed;
         #endregion
 
         #region Constructors
@@ -106,6 +108,7 @@ namespace Osu.Scores
             manual = true;
             commands = false;
             status = RoomStatus.NotStarted;
+            isStreamed = false;
             mode = Cache.GetCache("osu!options.db").Get("mode", "3");
             string t = Cache.GetCache("osu!options.db").Get("wctype", "Standard");
             string mp = Cache.GetCache("osu!options.db").Get("defaultmappool", "");
@@ -362,6 +365,19 @@ namespace Osu.Scores
                 }
             }
         }
+
+        public bool IsStreamed
+        {
+            get
+            {
+                return isStreamed;
+            }
+            set
+            {
+                if (value != isStreamed)
+                    isStreamed = value;
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -391,8 +407,8 @@ namespace Osu.Scores
                     if (match.Success)
                     {
                         // Get the team names
-                        team_vs.Blue.Name = match.Groups[2].Value;
-                        team_vs.Red.Name = match.Groups[3].Value;
+                        team_vs.Blue.Name = match.Groups[3].Value;
+                        team_vs.Red.Name = match.Groups[2].Value;
                     }
                     break;
                 case Ranking.Type.Auto:
@@ -407,8 +423,8 @@ namespace Osu.Scores
                         team_vs = new TeamVs(this);
 
                         // Get the team names
-                        team_vs.Blue.Name = match.Groups[2].Value;
-                        team_vs.Red.Name = match.Groups[3].Value;
+                        team_vs.Blue.Name = match.Groups[3].Value;
+                        team_vs.Red.Name = match.Groups[2].Value;
                     }
                     break;
                 default:
@@ -592,7 +608,6 @@ namespace Osu.Scores
             {
                 rooms[match.Key] = new Room(match.Value);
                 await rooms[match.Key].Update(false);
-
                 if(rooms[match.Key].Ranking.type == Ranking.Type.TeamVs && teamvsfirst.TryGetValue(match.Key, out firstteam))
                 {
                     ((TeamVs)rooms[match.Key].Ranking).First = firstteam;

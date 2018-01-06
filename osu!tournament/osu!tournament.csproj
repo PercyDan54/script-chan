@@ -86,6 +86,7 @@
     <Compile Include="Miscellaneous\Log.cs" />
     <Compile Include="Miscellaneous\PasswordHelper.cs" />
     <Compile Include="Miscellaneous\WindowSettings.cs" />
+    <Compile Include="Ov\ViewModels\MatchCreatedArgs.cs" />
     <Compile Include="Ov\ViewModels\OvRoomViewModel.cs" />
     <Compile Include="Ov\ViewModels\OvViewModel.cs" />
     <Compile Include="Preparation\ViewModels\PreparationRoomViewModel.cs" />

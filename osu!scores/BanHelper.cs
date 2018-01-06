@@ -1,5 +1,6 @@
 ﻿using Osu.Api;
 using Osu.Utils;
+using Osu.Utils.Bans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,24 +100,34 @@ namespace Osu.Scores
             }
         }
 
-        public string ApplyBan(Beatmap bm)
+        public bool ApplyBan(Beatmap bm, Room room)
         {
-            string text = null;
+            bool res = true;
 
             if (!hasFirstTeamBanned)
             {
                 hasFirstTeamBanned = true;
                 FirstBeatmapBanned = bm;
+                if(room.IsStreamed && ObsBanHelper.IsValid)
+                {
+                    if (!ObsBanHelper.GetInstance().SetBannedMap(FirstTeamToBan.Name, bm.OsuBeatmap.BeatmapID.ToString(), 1))
+                        res = false;
+                }
                 //text = GenerateActionMessage(FirstTeamToBan, FirstBeatmapBanned, true);
             }
             else if(!hasSecondTeamBanned)
             {
                 hasSecondTeamBanned = true;
                 SecondBeatmapBanned = bm;
+                if (room.IsStreamed && ObsBanHelper.IsValid)
+                {
+                    if (!ObsBanHelper.GetInstance().SetBannedMap(SecondTeamToBan.Name, bm.OsuBeatmap.BeatmapID.ToString(), 1))
+                        res = false;
+                }
                 //text = GenerateActionMessage(SecondTeamToBan, SecondBeatmapBanned, true);
             }
 
-            return text;
+            return res;
         }
 
         public string RemoveBan()

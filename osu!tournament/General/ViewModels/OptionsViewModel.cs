@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Windows.Threading;
 using Osu.Scores;
 using System.Linq;
+using Osu.Utils.Bans;
 
 namespace Osu.Mvvm.General.ViewModels
 {
@@ -166,6 +167,22 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        public string OBSBanPath
+        {
+            get
+            {
+                return ObsBanHelper.Path;
+            }
+            set
+            {
+                if(value != ObsBanHelper.Path)
+                {
+                    ObsBanHelper.Path = value;
+                    NotifyOfPropertyChange(() => OBSBanPath);
+                }
+            }
+        }
+
         /// <summary>
         /// Connect button text property
         /// </summary>
@@ -300,6 +317,16 @@ namespace Osu.Mvvm.General.ViewModels
                 Dialog.ShowDialog("Good!", "The osu!api key is valid!");
             else
                 Dialog.ShowDialog("Whoops!", "The provided osu!api key is not valid!");
+        }
+
+        public void SavePath()
+        {
+            ObsBanHelper.CheckPath();
+
+            if(ObsBanHelper.IsValid)
+                Dialog.ShowDialog("Good!", "The obs folder is valid!");
+            else
+                Dialog.ShowDialog("Whoops!", "The provided obs folder is not valid!");
         }
 
         /// <summary>

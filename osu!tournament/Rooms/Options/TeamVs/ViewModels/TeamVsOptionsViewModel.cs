@@ -1,7 +1,11 @@
 ﻿using Caliburn.Micro;
+using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
 using Osu.Utils;
+using Osu.Utils.Bans;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
 {
@@ -70,6 +74,26 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
             }
         }
 
+        public bool EnableStreamMode
+        {
+            get
+            {
+                return room.IsStreamed;
+            }
+            set
+            {
+                if(value)
+                {
+                    SetStreamMode();
+                }
+                else
+                {
+                    room.IsStreamed = value;
+                    NotifyOfPropertyChange(() => EnableStreamMode);
+                }
+            }
+        }
+
         /// <summary>
         /// The list of allowed BO number property
         /// </summary>
@@ -101,6 +125,14 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
 
             }
         }
+
+        public bool IsObsPathValid
+        {
+            get
+            {
+                return ObsBanHelper.IsValid;
+            }
+        }
         #endregion
 
         #region Public Methods
@@ -110,6 +142,32 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
         public void Update()
         {
 
+        }
+
+        public async void SetStreamMode()
+        {
+            if(ObsBanHelper.IsValid)
+            {
+                var confirm = await Dialog.ShowConfirmation("OBS Mode", "Are you sure to set this match as streamed? It will set OBS bans to this match and remove the one currently set.");
+                if (confirm)
+                {
+                    var roomToUnstream = Room.Rooms.FirstOrDefault(x => x.Value.IsStreamed).Value;
+                    if (roomToUnstream != null)
+                    {
+                        roomToUnstream.IsStreamed = false;
+                    }
+                    Room.Rooms.First(x => x.Value.Id == room.Id).Value.IsStreamed = true;
+                    room.IsStreamed = true;
+                    ObsBanHelper.SetInstance(((Scores.TeamVs)room.Ranking).Blue.Name, ((Scores.TeamVs)room.Ranking).Red.Name);
+                    ObsBanHelper.GetInstance().SetTeamsOnObs();
+                    NotifyOfPropertyChange(() => EnableStreamMode);
+                }
+            }
+            else
+            {
+                NotifyOfPropertyChange(() => IsObsPathValid);
+            }
+            
         }
         #endregion
     }

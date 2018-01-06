@@ -1,6 +1,8 @@
 ﻿using Discord;
+using Discord.WebSocket;
 using log4net;
 using Osu.Scores;
+using Osu.Utils.Info;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,24 +14,32 @@ namespace osu_discord
 {
     public class DiscordBot
     {
-        private DiscordClient _client;
+        private DiscordSocketClient _client;
 
         private static DiscordBot instance;
 
         private static ILog log = LogManager.GetLogger("osu!discord");
 
-        private DiscordBot(string discordKey)
+        private string serverName;
+        private string channelName;
+
+        private DiscordBot(string discordKey, string sName, string cName)
         {
-            _client = new DiscordClient();
+            serverName = sName;
+            channelName = cName;
+
+            var _config = new DiscordSocketConfig { MessageCacheSize = 100 };
+            _client = new DiscordSocketClient(_config);
             Thread t = new Thread(async () =>
             {
-                await _client.Connect(discordKey, TokenType.Bot);
+                await _client.LoginAsync(TokenType.Bot, discordKey);
+                await _client.StartAsync();
             });
 
             t.Start();
         }
 
-        public void OnUpdateRoom(Room room)
+        public async Task OnUpdateRoom(Room room)
         {
             if (room.Ranking.Played != 0)
             {
@@ -38,18 +48,18 @@ namespace osu_discord
                 if(sentences != null)
                 {
                     string test = String.Join(Environment.NewLine, sentences);
-                    SendMessage(test);
+                    await SendMessage(test);
                 }
             }
         }
 
-        public void SendMessage(string message)
+        public async Task SendMessage(string message)
         {
             if(!string.IsNullOrEmpty(message))
             {
-                var server = _client.Servers.FirstOrDefault(x => x.Name == "osu! staff");
-                var channel = server?.TextChannels.FirstOrDefault(x => x.Name == "tourney");
-                channel?.SendMessage(message);
+                var server = _client.Guilds.FirstOrDefault(x => x.Name == serverName);
+                var channel = server?.TextChannels.FirstOrDefault(x => x.Name == channelName);
+                await channel?.SendMessageAsync(message);
             }
             else
             {
@@ -61,14 +71,14 @@ namespace osu_discord
         /// <summary>
         /// Initialize the osu!ircbot
         /// </summary>
-        public static bool Initialize(string discordKey)
+        public static bool Initialize()
         {
-            if(!string.IsNullOrEmpty(discordKey))
+            if(!string.IsNullOrEmpty(InfosHelper.UserDataInfos.DiscordKey))
             {
                 try
                 {
                     // Initialize the instance
-                    instance = new DiscordBot(discordKey);
+                    instance = new DiscordBot(InfosHelper.UserDataInfos.DiscordKey, InfosHelper.UserDataInfos.DiscordServerName, InfosHelper.UserDataInfos.DiscordChannelName);
                     log.Info("Discord bot has been initialized!");
                     return true;
                 }
@@ -76,7 +86,6 @@ namespace osu_discord
                 {
                     return false;
                 }
-                
             }
             else
             {

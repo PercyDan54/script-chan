@@ -56,18 +56,19 @@ namespace TechLifeForum
         /// IrcClient used to connect to an IRC Server (default port: 6667)
         /// </summary>
         /// <param name="Server">IRC Server</param>
-        public IrcClient(string Server) : this(Server, 6667) { }
+        public IrcClient(string Server, bool shouldOutput) : this(Server, 6667, shouldOutput) { }
 
         /// <summary>
         /// IrcClient used to connect to an IRC Server
         /// </summary>
         /// <param name="Server">IRC Server</param>
         /// <param name="Port">IRC Port (6667 if you are unsure)</param>
-        public IrcClient(string Server, int Port)
+        public IrcClient(string Server, int Port, bool shouldOutput)
         {
             op = AsyncOperationManager.CreateOperation(null);
             _server = Server;
             _port = Port;
+            _consoleOutput = shouldOutput;
         }
         #endregion
 
@@ -244,7 +245,7 @@ namespace TechLifeForum
             {
                 if (irc.Connected)
                 {
-                    Send("QUIT Client Disconnected: http://tech.reboot.pro");
+                    Send("QUIT Client Disconnected");
                 }
                 irc = null;
             }

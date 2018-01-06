@@ -12,10 +12,20 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <ScrollViewer Padding="0" Margin="0,0,0,5" Grid.Row="0">
+        <ComboBox Name="Items" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="2,2,6,0" IsEditable="False" IsReadOnly="True" Text="Select batches to display...">
+        <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsSelected}" Width="20" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding ObjectData}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ScrollViewer Padding="0" Margin="0,0,0,5" Grid.Row="1">
             <ItemsControl x:Name="ViewRooms">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

@@ -8,32 +8,40 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
     mc:Ignorable="d"
-    d:DesignHeight="100"
-    d:DesignWidth="500"
-    Margin="0,0,0,2.5">
+    d:DesignHeight="60"
+    d:DesignWidth="550"
+    Margin="2.5,2.5,2.5,2.5">
 
     <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2">
-        <Grid>
+        <Grid Background="#DEEFFF">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="50*" />
-                <ColumnDefinition Width="120" />
-                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="150*" />
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="80*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="120*" />
             </Grid.ColumnDefinitions>
-            <Label x:Name="RoomName" cal:Message.Attach="[Event MouseDoubleClick] = [Action OpenMpLink()]" Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" FontWeight="Bold"/>
-            <Label x:Name="Timer" Content="38min" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center" Padding="0" Margin="2,2,2,-1" Foreground="#FF6A6A6A" />
-            <Label Content="Scores :" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center" FontSize="14" Padding="0" Margin="2,2,2,0"/>
-            <Label x:Name="TeamBlue" Grid.Column="2" Grid.Row="1" VerticalContentAlignment="Center" Padding="0" Margin="2,2,2,2" Foreground="#FF0180FF" FontSize="18"/>
-            <Label x:Name="TeamRed" Grid.Column="2" Grid.Row="2" VerticalContentAlignment="Center" Padding="0" Margin="2,2,2,2" Foreground="#FFFF2727" FontSize="18"/>
-            <Label x:Name="ScoreBlue" Grid.Column="3" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2,2,2,2" FontWeight="Bold" />
-            <Label x:Name="ScoreRed" Grid.Column="3" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2,2,2,2" FontWeight="Bold" />
-            <Label x:Name="Status" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2,2,2,2"/>
-            <Label x:Name="Pick" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2,2,2,2"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="18" Margin="5,0,0,0" Grid.ColumnSpan="3">
+                <Run Text="{Binding TeamRed, Mode=OneWay}" Foreground="#FFFF2727" />
+                <Run Text=" VS " />
+                <Run Text="{Binding TeamBlue, Mode=OneWay}" Foreground="#FF0180FF"/>
+            </TextBlock>
+            <Label x:Name="Timer" Content="38min" Grid.Column="6" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Foreground="#FF6A6A6A" Margin="0,0,0,0" FontSize="14"/>
+            <Label x:Name="BatchUI" Grid.Column="6" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Foreground="#FF6A6A6A" Margin="0,0,0,0" FontSize="14"/>
+            <Label x:Name="ScoreLabel" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Padding="0"/>
+            <Label x:Name="ScoreRed" Grid.Column="4" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontWeight="Bold" Foreground="#FFFF2727" FontSize="18"/>
+            <Label x:Name="ScoreBlue" Grid.Column="5" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontWeight="Bold" Foreground="#FF0180FF" FontSize="18"/>
+
+            <Label x:Name="Status" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label x:Name="Pick" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
+            <Button x:Name="ActivateButton" Content="{Binding ButtonName}" FontSize="12" Grid.Row="1" Grid.Column="0" />
         </Grid>
     </Border>
 </UserControl>

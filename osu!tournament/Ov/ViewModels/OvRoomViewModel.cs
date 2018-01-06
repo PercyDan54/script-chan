@@ -1,6 +1,9 @@
 ﻿using Caliburn.Micro;
+using Osu.Ircbot;
+using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
 using Osu.Scores.Status;
+using Osu.Tournament.Ov.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +13,8 @@ using System.Timers;
 
 namespace Osu.Mvvm.Ov.ViewModels
 {
+    public delegate void MatchCreatedEvent(object sender, MatchCreatedArgs e);
+
     public class OvRoomViewModel : PropertyChangedBase
     {
         #region Attributes
@@ -27,6 +32,16 @@ namespace Osu.Mvvm.Ov.ViewModels
         /// The duration of the game
         /// </summary>
         protected int duration;
+
+        protected string blueteam;
+
+        protected string redteam;
+
+        protected string batch;
+
+        protected long roomId;
+
+        public event MatchCreatedEvent MatchCreated;
         #endregion
 
         #region Constructor
@@ -37,15 +52,36 @@ namespace Osu.Mvvm.Ov.ViewModels
         public OvRoomViewModel(Room room)
         {
             this.room = room;
+            this.roomId = room.Id;
+            IsCreated = true;
+
+            Initialize();
+        }
+
+        public OvRoomViewModel(string teamblue, string teamred, string b)
+        {
+            blueteam = teamblue;
+            redteam = teamred;
+            batch = b;
+            IsCreated = false;
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
             this.timer = new Timer(60000);
 
             this.timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
 
             this.duration = 0;
 
-            if (room.Status != RoomStatus.NotStarted && room.Status != RoomStatus.Finished)
+            if(IsCreated)
             {
-                StartTimer();
+                if (room.Status != RoomStatus.NotStarted && room.Status != RoomStatus.Finished)
+                {
+                    StartTimer();
+                }
             }
         }
         #endregion
@@ -60,16 +96,20 @@ namespace Osu.Mvvm.Ov.ViewModels
             {
                 return room;
             }
+            set
+            {
+                if(value != room)
+                {
+                    room = value;
+                }
+            }
         }
 
-        /// <summary>
-        /// Room name property
-        /// </summary>
-        public String RoomName
+        public long RoomId
         {
             get
             {
-                return room.Name;
+                return roomId;
             }
         }
 
@@ -80,7 +120,14 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                return ((TeamVs)room.Ranking).Blue.Name;
+                if(blueteam != null)
+                {
+                    return blueteam;
+                }
+                else
+                {
+                    return ((TeamVs)room.Ranking).Blue.Name;
+                }
             }
         }
 
@@ -91,7 +138,10 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                return "" + ( ((TeamVs)room.Ranking).Blue.Points + ((TeamVs)room.Ranking).Blue.PointAddition );
+                if (room != null)
+                    return "" + (((TeamVs)room.Ranking).Blue.Points + ((TeamVs)room.Ranking).Blue.PointAddition);
+                else
+                    return string.Empty;
             }
         }
 
@@ -102,7 +152,10 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                return ((TeamVs)room.Ranking).Red.Name;
+                if (redteam != null)
+                    return redteam;
+                else
+                    return ((TeamVs)room.Ranking).Red.Name;
             }
         }
 
@@ -113,7 +166,10 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                return "" + ( ((TeamVs)room.Ranking).Red.Points + ((TeamVs)room.Ranking).Red.PointAddition );
+                if (room != null)
+                    return "" + (((TeamVs)room.Ranking).Red.Points + ((TeamVs)room.Ranking).Red.PointAddition);
+                else
+                    return string.Empty;
             }
         }
 
@@ -124,24 +180,31 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                if (room.Status == RoomStatus.Playing)
+                if(room != null)
                 {
-                    if (Room.Playing)
+                    if (room.Status == RoomStatus.Playing)
                     {
-                        return "Status : Playing";
+                        if (Room.Playing)
+                        {
+                            return "Status : Playing";
+                        }
+                        else
+                        {
+                            return "Status : Picking";
+                        }
+                    }
+                    else if (room.Playing)
+                    {
+                        return "Status : " + room.Status.ToString() + " - Playing";
                     }
                     else
                     {
-                        return "Status : Picking";
-                    }    
-                }
-                else if (room.Playing)
-                {
-                    return "Status : " + room.Status.ToString() + " - Playing";
+                        return "Status : " + room.Status.ToString() + (room.Status == RoomStatus.Finished ? "" : " - Picking");
+                    }
                 }
                 else
                 {
-                    return "Status : " + room.Status.ToString() + (room.Status == RoomStatus.Finished ? "" : " - Picking");
+                    return string.Empty;
                 }
             }
         }
@@ -153,24 +216,80 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                if (room.Status != RoomStatus.Finished)
+                if(room != null)
                 {
-                    return "Next team to pick : " + ((TeamVs)room.Ranking).NextTeam.Name;
+                    if (room.Status != RoomStatus.Finished)
+                    {
+                        return "Next team to pick : " + ((TeamVs)room.Ranking).NextTeam.Name;
+                    }
+                    else
+                    {
+                        return "Winner : " + ((((TeamVs)room.Ranking).Red.Points + ((TeamVs)room.Ranking).Red.PointAddition) > (((TeamVs)room.Ranking).Blue.Points + ((TeamVs)room.Ranking).Blue.PointAddition) ? ((TeamVs)room.Ranking).Red.Name : ((TeamVs)room.Ranking).Blue.Name);
+                    }
                 }
                 else
                 {
-                    return "Winner : " + ( ( ((TeamVs)room.Ranking).Red.Points + ((TeamVs)room.Ranking).Red.PointAddition ) > ( ((TeamVs)room.Ranking).Blue.Points + ((TeamVs)room.Ranking).Blue.PointAddition ) ? ((TeamVs)room.Ranking).Red.Name : ((TeamVs)room.Ranking).Blue.Name);
+                    return string.Empty;
                 }
             }
         }
 
+        public String ButtonName
+        {
+            get
+            {
+                if (IsCreated)
+                    return "Link";
+                else
+                    return "Create";
+            }
+        }
         public String Timer
         {
             get
             {
-                return duration + "min";
+                if (IsCreated)
+                    return duration + "min";
+                else
+                    return string.Empty;
             }
         }
+
+        public String ScoreLabel
+        {
+            get
+            {
+                if (IsCreated)
+                    return "Scores :";
+                else
+                    return string.Empty;
+            }
+        }
+
+        public String BatchUI
+        {
+            get
+            {
+                if (!IsCreated)
+                    return "Batch " + batch;
+                else
+                    return string.Empty;
+            }
+        }
+
+        public String Batch
+        {
+            get
+            {
+                return batch;
+            }
+            set
+            {
+                batch = value;
+            }
+        }
+
+        public bool IsCreated { get; set; }
         #endregion
 
         #region Public Methods
@@ -195,7 +314,42 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
             else if (!timer.Enabled)
             {
-                StartTimer();
+                if(room.Status != RoomStatus.NotStarted)
+                    StartTimer();
+            }
+        }
+
+        private async void CreateMatch()
+        {
+            await Dialog.ShowProgress("Please wait", "Creating the room...");
+            OsuIrcBot.GetInstancePrivate().CreateMatch(blueteam, redteam);
+        }
+
+        public void SetCreation(long id)
+        {
+            roomId = id;
+            MatchCreated(this, new MatchCreatedArgs(id));
+            IsCreated = true;
+            OsuIrcBot.GetInstancePrivate().ConfigureMatch(id.ToString());
+
+        }
+
+        public void ActivateButton()
+        {
+            if(!IsCreated)
+            {
+                CreateMatch();
+            }
+            else
+            {
+                if(room != null)
+                {
+                    System.Diagnostics.Process.Start("https://osu.ppy.sh/community/matches/" + room.Id);
+                }
+                else
+                {
+                    Dialog.ShowDialog("Whoops!", "The room doesn't exist in the view model");
+                }
             }
         }
 
@@ -207,6 +361,10 @@ namespace Osu.Mvvm.Ov.ViewModels
             NotifyOfPropertyChange(() => ScoreBlue);
             NotifyOfPropertyChange(() => ScoreRed);
             NotifyOfPropertyChange(() => Pick);
+            NotifyOfPropertyChange(() => ButtonName);
+            NotifyOfPropertyChange(() => Timer);
+            NotifyOfPropertyChange(() => ScoreLabel);
+            NotifyOfPropertyChange(() => BatchUI);
             UpdateStatus();
         }
         #endregion

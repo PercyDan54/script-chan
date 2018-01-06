@@ -16,6 +16,7 @@
             <RowDefinition Height="35" />
             <RowDefinition Height="35" />
             <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -25,7 +26,8 @@
         <Label Content="First team" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Row="0" />
         <CheckBox x:Name="FirstTeamIsRed" Content="Red team starts picking" Padding="5,0,0,0" Margin="2.5" Grid.Row="1" />
         <CheckBox x:Name="EnableCommands" Content="Enable commands" Padding="5,0,0,0" Margin="2.5" Grid.Row="2" />
-        <Label Content="BO for the room" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="3" />
-        <ComboBox x:Name="Modes" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="3" Grid.Column="1" Width="96"/>
+        <CheckBox x:Name="EnableStreamMode" IsEnabled="{Binding IsObsPathValid, Mode=OneWay}" Content="Match on stream (obs ban)" Padding="5,0,0,0" Margin="2.5" Grid.Row="3" />
+        <Label Content="BO for the room" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="4" />
+        <ComboBox x:Name="Modes" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="4" Grid.Column="1" Width="96"/>
     </Grid>
 </UserControl>

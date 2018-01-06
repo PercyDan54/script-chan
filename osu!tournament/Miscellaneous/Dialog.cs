@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -39,6 +40,7 @@ namespace Osu.Mvvm.Miscellaneous
         /// </summary>
         public static void Initialize()
         {
+
             window = Application.Current.Windows.OfType<MetroWindow>().First();
         }
 

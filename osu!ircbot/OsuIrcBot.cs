@@ -12,12 +12,15 @@ using System.Threading.Tasks;
 using System.Timers;
 using TechLifeForum;
 using System.Linq;
+using Osu.Utils.Info;
 
 namespace Osu.Ircbot
 {
     /// <summary>
     /// The bot which will connect to irc
     /// </summary>
+    public delegate void MatchCreatedHandler(object sender, MatchCatchedArgs e);
+
     public class OsuIrcBot
     {
         #region Constants
@@ -53,6 +56,8 @@ namespace Osu.Ircbot
         /// </summary>
         public event EventHandler MessageRoomCatched;
 
+        public event MatchCreatedHandler RoomCreatedCatched;
+
         private bool shouldCatchSettings;
 
         private System.Timers.Timer catchSettingsTimer;
@@ -64,6 +69,8 @@ namespace Osu.Ircbot
         private Regex regexMapLine;
 
         private Regex regexSwitchedLine;
+
+        private Regex regexCreateCommand;
 
         private FreemodViewer fmv;
 
@@ -106,6 +113,7 @@ namespace Osu.Ircbot
         protected string password;
 
         protected bool isConnected;
+
         private bool shouldHlCommentators;
         #endregion
 
@@ -122,15 +130,18 @@ namespace Osu.Ircbot
             password = cache.Get("password", "");
             isConnected = false;
             shouldCatchSettings = false;
+            fmv = new FreemodViewer();
+
+            // Regex
             regexPlayerLine = new Regex("^Slot (\\d+)\\s+(\\w+)\\s+https:\\/\\/osu\\.ppy\\.sh\\/u\\/(\\d+)\\s+([a-zA-Z0-9_ ]+)\\s+\\[Team (\\w+)\\s*(?:\\/ ([\\w, ]+))?\\]$");
             regexRoomLine = new Regex("^Room name: ([^,]*), History:");
             regexMapLine = new Regex("Beatmap: [^ ]* (.*)");
-            regexSwitchedLine = new Regex("^Switched ([a-zA-Z0-9_\\- ]+) to (?:the tournament server|public Bancho)$");
+            regexSwitchedLine = new Regex("^Switched ([a-zA-Z0-9_\\- ]+) to the tournament server$");
+            regexCreateCommand = new Regex("^Created the tournament match https:\\/\\/osu\\.ppy\\.sh\\/mp\\/(\\d+)[^\\:]*: \\(([^\\)]*)\\) vs \\(([^\\)]*)\\)$");
             irc_address = ircIP;
             adminlist = admins;
-            fmv = new FreemodViewer();
 
-
+            // Timer to catch mp settings infos
             catchSettingsTimer = new System.Timers.Timer();
             catchSettingsTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             catchSettingsTimer.Interval = 3000;
@@ -251,7 +262,10 @@ namespace Osu.Ircbot
                         value = false;
                     else
                     {
-                        client = new IrcClient(irc_address);
+                        if(irc_address == "irc.ppy.sh")
+                            client = new IrcClient(irc_address, false);
+                        else
+                            client = new IrcClient(irc_address, true);
                         RegisterHandlers();
                         client.Nick = username;
                         client.ServerPass = password;
@@ -281,7 +295,8 @@ namespace Osu.Ircbot
         /// </summary>
         public void SendMessage(string user, string message)
         {
-            client.SendMessage(user, message);
+            if(client != null)
+                client.SendMessage(user, message);
         }
 
         /// <summary>
@@ -289,7 +304,8 @@ namespace Osu.Ircbot
         /// </summary>
         public void JoinChannel(string channel_name)
         {
-            client.JoinChannel(channel_name);
+            if (client != null)
+                client.JoinChannel(channel_name);
         }
 
         /// <summary>
@@ -297,7 +313,8 @@ namespace Osu.Ircbot
         /// </summary>
         public void LeaveChannel(string channel_name)
         {
-            client.PartChannel(channel_name);
+            if (client != null)
+                client.PartChannel(channel_name);
         }
 
         /// <summary>
@@ -320,8 +337,35 @@ namespace Osu.Ircbot
             {
                 SendMessage("BanchoBot", "!mp switch " + user.Username);
             }
-            await Task.Delay(3000);
+            await Task.Delay(10000);
             return currentswitchhandler;
+        }
+
+        public void CreateMatch(string blueteam, string redteam)
+        {
+            SendMessage("BanchoBot", string.Format("!mp make {2}: ({0}) vs ({1})", redteam, blueteam, InfosHelper.TourneyInfos.Acronym));
+        }
+
+        public void ConfigureMatch(string roomCreatedId)
+        {
+            if (roomCreatedId != null)
+            {
+                SendMessage("#mp_" + roomCreatedId, "!mp addref " + adminlist);
+                SendMessage("#mp_" + roomCreatedId, string.Format("!mp set {0} {1} {2}", InfosHelper.TourneyInfos.TeamMode, InfosHelper.TourneyInfos.ScoreMode, InfosHelper.TourneyInfos.RoomSize));
+                SendMessage("#mp_" + roomCreatedId, string.Format("!mp map {0} {1}", InfosHelper.TourneyInfos.DefaultMapId, InfosHelper.TourneyInfos.ModeType));
+                SendMessage("#mp_" + roomCreatedId, "!mp unlock");
+                SendMessage("#mp_" + roomCreatedId, "!mp settings");
+            }
+        }
+
+        public void SendWelcomeMessage(Room room)
+        {
+            if(room.Ranking.GetType() == typeof(TeamVs))
+            {
+                TeamVs tvs = ((TeamVs)room.Ranking);
+                SendMessage("#mp_" + room.Id, string.Format("{0} is RED, slots {2} to {3} --- {1} is BLUE, slots {4} to {5}", tvs.Red.Name, tvs.Blue.Name, "1", InfosHelper.TourneyInfos.PlayersPerTeam, InfosHelper.TourneyInfos.PlayersPerTeam + 1, InfosHelper.TourneyInfos.PlayersPerTeam + InfosHelper.TourneyInfos.PlayersPerTeam));
+            }
+            SendMessage("#mp_" + room.Id, "Please invite your teammates and sort yourself accordingly");
         }
 
         /// <summary>
@@ -427,7 +471,7 @@ namespace Osu.Ircbot
             // A player is speaking
             else
             {
-                if((e.From == client.Nick || IsSentByAdmin(e.From)) && e.Message.Contains("settings discord"))
+                if((e.From == client.Nick || IsMessageSentByAdmin(e.From)) && e.Message.Contains("settings discord"))
                 {
                     shouldCatchSettings = true;
                     catchSettingsTimer.Enabled = true;
@@ -456,18 +500,37 @@ namespace Osu.Ircbot
             }
         }
 
-        private void HandleOnPrivateMessage(object sender, PrivateMessageEventArgs e)
+        /// <summary>
+        /// Event which catch all private messages from banchobot (switch command and create room)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void HandleOnPrivateMessage(object sender, PrivateMessageEventArgs e)
         {
             if(e.From == "BanchoBot")
             {
-                var result = regexSwitchedLine.Match(e.Message);
-                if (result.Success)
+                // Switch command
+                var switchCommand = regexSwitchedLine.Match(e.Message);
+                if (switchCommand.Success && currentswitchhandler != null)
                 {
-                    currentswitchhandler.FoundPlayer(result.Groups[1].Value);
+                    currentswitchhandler.FoundPlayer(switchCommand.Groups[1].Value);
+                }
+
+                // Create room command
+                var createCommand = regexCreateCommand.Match(e.Message);
+                if(createCommand.Success)
+                {
+                    await Task.Delay(2000);
+                    RoomCreatedCatched(this, new MatchCatchedArgs() { Id = createCommand.Groups[1].Value, BlueTeam = createCommand.Groups[3].Value, RedTeam = createCommand.Groups[2].Value });
                 }
             }
         }
 
+        /// <summary>
+        /// Event which catch the mp settings command and print it to discord
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             catchSettingsTimer.Enabled = false;
@@ -508,7 +571,7 @@ namespace Osu.Ircbot
 
             if (shouldHlCommentators)
             {
-                stringToSend += "<@&228232322288189440>";
+                stringToSend += InfosHelper.UserDataInfos.DiscordCommentatorGroup;
                 shouldHlCommentators = false;
             }
 
@@ -517,7 +580,7 @@ namespace Osu.Ircbot
             fmv.Players.Clear();
         }
 
-        private bool IsSentByAdmin(string name)
+        private bool IsMessageSentByAdmin(string name)
         {
             return adminlist.Contains(name.ToUpper());
         }
@@ -527,13 +590,13 @@ namespace Osu.Ircbot
         /// <summary>
         /// Initialize the osu!ircbot
         /// </summary>
-        public static bool Initialize(string ircPublic, string ircPrivate, string admins)
+        public static bool Initialize()
         {
-            if(!string.IsNullOrEmpty(ircPublic) && !string.IsNullOrEmpty(ircPrivate) && !string.IsNullOrEmpty(admins))
+            if(!string.IsNullOrEmpty(InfosHelper.UserDataInfos.IPPublicBancho) && !string.IsNullOrEmpty(InfosHelper.UserDataInfos.IPPrivateBancho) && !string.IsNullOrEmpty(InfosHelper.UserDataInfos.Admins))
             {
                 // Initialize the instance
-                instanceMatch = new OsuIrcBot(ircPrivate, admins);
-                instancePublic = new OsuIrcBot(ircPublic, admins);
+                instanceMatch = new OsuIrcBot(InfosHelper.UserDataInfos.IPPrivateBancho, InfosHelper.UserDataInfos.Admins);
+                instancePublic = new OsuIrcBot(InfosHelper.UserDataInfos.IPPublicBancho, InfosHelper.UserDataInfos.Admins);
                 return true;
             }
             else

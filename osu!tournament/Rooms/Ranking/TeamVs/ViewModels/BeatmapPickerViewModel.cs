@@ -243,7 +243,10 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 var dbot = osu_discord.DiscordBot.GetInstance();
                 isBanned = true;
                 //dbot.SendMessage(bh.ApplyBan(beatmap));
-                bh.ApplyBan(beatmap);
+
+                if (!bh.ApplyBan(beatmap, room))
+                    Dialog.ShowDialog("Whoops!", "The map has not been applied for OBS!");
+
                 NotifyOfPropertyChange("Background");
                 NotifyOfPropertyChange("IsCheckboxEnabled");
             }

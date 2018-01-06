@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Mvvm.Ov.ViewModels;
 using osu_discord;
+using Osu.Tournament.Ov.ViewModels;
 
 namespace Osu.Mvvm.Rooms.ViewModels
 {
@@ -66,6 +67,12 @@ namespace Osu.Mvvm.Rooms.ViewModels
             discordBot = DiscordBot.GetInstance();
 
             overview = ov;
+            overview.MatchCreated += OnMatchCreated;
+        }
+
+        private void OnMatchCreated(object sender, MatchCreatedArgs e)
+        {
+            AddRoom(e.Id);
         }
         #endregion
 
@@ -229,6 +236,33 @@ namespace Osu.Mvvm.Rooms.ViewModels
             }
         }
 
+        private async void AddRoom(long id)
+        {
+            // Create a new room
+            Room room = await Room.Get(id);
+
+            // Update the room
+            await room.Update(false);
+
+            // Notify
+            Log.Info("Adding room \"" + room.Name + "\"");
+
+            // Change the currently selected mappool
+            SelectedRoom = room;
+
+            // Trying to connect to the channel
+            bot.OnAddRoom(room);
+
+            // Mappool list has changed
+            NotifyOfPropertyChange(() => Rooms);
+
+            // Add the room in overview
+            selected_view_model.OverView = overview.getOverview(room);
+
+            // UpdateTeamBanOrder with osuteam.blue which is the first team to pick
+            RefereeMatchHelper.GetInstance(room.Id).UpdateTeamBanOrder(room, OsuTeam.Blue);
+        }
+
         /// <summary>
         /// Checks if we can delete a room
         /// </summary>
@@ -299,32 +333,39 @@ namespace Osu.Mvvm.Rooms.ViewModels
             // If the beatmap just finished
             if (multi_room.Event_Type == MultiEvent.EndMap)
             {
-                // If it's the selected room, we're updating the room and UI + sending messages
-                if (selected.Id == multi_room.MatchId)
+                try
                 {
-                    Caliburn.Micro.Execute.OnUIThread((async () =>
+                    // If it's the selected room, we're updating the room and UI + sending messages
+                    if (selected.Id == multi_room.MatchId)
                     {
-                        await selected_view_model.Update(true);
-                        bot.OnUpdateRoom(SelectedRoom);
-                        discordBot.OnUpdateRoom(SelectedRoom);
-                    }));
-                }
-                // It's not the selected room, we're updating the room + sending messages
-                else
-                {
-                    Room room = null;
-                    if (Room.Rooms.TryGetValue(multi_room.MatchId, out room))
-                    {                     
-                        await room.Update(true);  
-
-                        room.Playing = false;
-
-                        overview.Update(room);
-
-                        bot.OnUpdateRoom(room);
-
-                        discordBot.OnUpdateRoom(room);
+                        Caliburn.Micro.Execute.OnUIThread((async () =>
+                        {
+                            await selected_view_model.Update(true);
+                            bot.OnUpdateRoom(SelectedRoom);
+                            discordBot.OnUpdateRoom(SelectedRoom);
+                        }));
                     }
+                    // It's not the selected room, we're updating the room + sending messages
+                    else
+                    {
+                        Room room = null;
+                        if (Room.Rooms.TryGetValue(multi_room.MatchId, out room))
+                        {
+                            await room.Update(true);
+
+                            room.Playing = false;
+
+                            overview.Update(room);
+
+                            bot.OnUpdateRoom(room);
+
+                            discordBot.OnUpdateRoom(room);
+                        }
+                    }
+                }
+                catch(Exception ee)
+                {
+                    Log.Fatal("ERROR UPDATE : " + ee.Message + " " + ee.StackTrace);
                 }
             }
             // If we're getting the command for changing map

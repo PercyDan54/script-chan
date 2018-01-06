@@ -43,6 +43,18 @@ namespace Osu.Utils
             }
         }
 
+        public void UpdateWithNewSwitch(SwitchHandler switchhandler)
+        {
+            foreach (var player in switchhandler.Players)
+            {
+                var psave = this.Players.Find(x => x.Username == player.Username);
+                if (player.IsSwitched && psave != null && !psave.IsSwitched)
+                {
+                    this.Players.Find(x => x.Username == player.Username).IsSwitched = true;
+                }
+            }
+        }
+
         #region Properties
         public List<IRCPlayerInfo> Players { get { return players; } }
         #endregion

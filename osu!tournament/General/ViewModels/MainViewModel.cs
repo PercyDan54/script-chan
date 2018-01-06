@@ -10,6 +10,9 @@ using System.Windows.Media;
 using Osu.Mvvm.Preparation.ViewModels;
 using Osu.Tournament.Miscellaneous;
 using Osu.Tournament.Properties;
+using Osu.Utils.Info;
+using System.Threading.Tasks;
+using Osu.Mvvm.Miscellaneous;
 
 namespace Osu.Mvvm.General.ViewModels
 {
@@ -64,11 +67,41 @@ namespace Osu.Mvvm.General.ViewModels
 
             overviewRooms = new OvViewModel();
 
+            options = new OptionsViewModel();
+
+            bool alreadyExist;
+
+            foreach (var room in Room.Rooms)
+            {
+                overviewRooms.addOverview(room.Value);
+            }
+
+            if(InfosHelper.TourneyInfos.Matches != null)
+            {
+                foreach (var game in InfosHelper.TourneyInfos.Matches)
+                {
+                    alreadyExist = false;
+                    foreach (var kv in Room.Rooms)
+                    {
+                        if (kv.Value.Ranking.GetType() == typeof(TeamVs))
+                        {
+                            if (((TeamVs)kv.Value.Ranking).Blue.Name == game.TeamBlueName && ((TeamVs)kv.Value.Ranking).Red.Name == game.TeamRedName)
+                            {
+                                alreadyExist = true;
+                            }
+                        }
+                    }
+
+                    if (!alreadyExist)
+                        overviewRooms.addOverview(game.TeamBlueName, game.TeamRedName, game.Batch);
+                    else
+                        overviewRooms.UpdateBatch(game.TeamBlueName, game.TeamRedName, game.Batch);
+                }
+            }
+
             rooms = new RoomsViewModel(overviewRooms);
 
             mappools = new MappoolsViewModel();
-
-            options = new OptionsViewModel();
 
             windowInfo = new WindowInfo();
 
@@ -84,7 +117,14 @@ namespace Osu.Mvvm.General.ViewModels
                 windowInfo.Height = Settings.Default.WindowSize.Height;
             }
 
-            ShowRooms();
+            if(!IsBlockedOnOption)
+            {
+                ShowRooms();
+            }
+            else
+            {
+                ShowOptions();
+            }
         }
         #endregion
 
@@ -153,6 +193,14 @@ namespace Osu.Mvvm.General.ViewModels
                 }
             }
         }
+
+        private bool IsBlockedOnOption
+        {
+            get
+            {
+                return string.IsNullOrEmpty(options.ApiKey) || !options.CanConnect;
+            }
+        }
         #endregion
 
         #region Public Methods
@@ -160,46 +208,67 @@ namespace Osu.Mvvm.General.ViewModels
         /// <summary>
         /// Shows the overview screen
         /// </summary>
-        public void ShowOverview()
+        public async void ShowOverview()
         {
-            if (Transition == TransitionType.RightReplace)
-                Transition = TransitionType.LeftReplace;
+            if (!IsBlockedOnOption)
+            {
+                if (Transition == TransitionType.RightReplace)
+                    Transition = TransitionType.LeftReplace;
+                else
+                    Transition = TransitionType.RightReplace;
+
+                ActiveItemName = "Overview";
+
+                ActivateItem(overviewRooms);
+            }
             else
-                Transition = TransitionType.RightReplace;
-
-            ActiveItemName = "Overview";
-
-            ActivateItem(overviewRooms);
+            {
+                await Dialog.ShowConfirmation("Error", "You need to fill api key and IRC informations first!");
+            }
         }
 
         /// <summary>
         /// Shows the rooms screen
         /// </summary>
-        public void ShowRooms()
+        public async void ShowRooms()
         {
-            if (Transition == TransitionType.RightReplace)
-                Transition = TransitionType.LeftReplace;
+            if (!IsBlockedOnOption)
+            {
+                if (Transition == TransitionType.RightReplace)
+                    Transition = TransitionType.LeftReplace;
+                else
+                    Transition = TransitionType.RightReplace;
+
+                ActiveItemName = "Rooms";
+
+                ActivateItem(rooms);
+            }
             else
-                Transition = TransitionType.RightReplace;
-
-            ActiveItemName = "Rooms";
-
-            ActivateItem(rooms);
+            {
+                await Dialog.ShowConfirmation("Error", "You need to fill api key and IRC informations first!");
+            }
         }
 
         /// <summary>
         /// Shows the mappools screen
         /// </summary>
-        public void ShowMappools()
+        public async void ShowMappools()
         {
-            if (Transition == TransitionType.RightReplace)
-                Transition = TransitionType.LeftReplace;
+            if (!IsBlockedOnOption)
+            {
+                if (Transition == TransitionType.RightReplace)
+                    Transition = TransitionType.LeftReplace;
+                else
+                    Transition = TransitionType.RightReplace;
+
+                ActiveItemName = "Mappools";
+
+                ActivateItem(mappools);
+            }
             else
-                Transition = TransitionType.RightReplace;
-
-            ActiveItemName = "Mappools";
-
-            ActivateItem(mappools);
+            {
+                await Dialog.ShowConfirmation("Error", "You need to fill api key and IRC informations first!");
+            }
         }
 
         /// <summary>

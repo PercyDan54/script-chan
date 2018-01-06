@@ -404,10 +404,10 @@ namespace Osu.Scores
         public string GetScoreFormatted()
         {
             String res = String.Format("{0} : {1} | {2} : {3}",
-                        teams[OsuTeam.Blue].Name,
-                        teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition,
+                        teams[OsuTeam.Red].Name,
                         teams[OsuTeam.Red].Points + teams[OsuTeam.Red].PointAddition,
-                        teams[OsuTeam.Red].Name);
+                        teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition,
+                        teams[OsuTeam.Blue].Name);
             return res;
         }
 

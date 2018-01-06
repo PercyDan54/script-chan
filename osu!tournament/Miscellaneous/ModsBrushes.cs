@@ -83,5 +83,9 @@ namespace Osu.Mvvm.Miscellaneous
         public static Brush TieBreakerLight = new SolidColorBrush(Color.FromRgb(217, 234, 211));
 
         public static Brush BannedMap = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+
+        public static Brush BlueTeam = new SolidColorBrush(Color.FromRgb(20, 141, 175));
+
+        public static Brush RedTeam = new SolidColorBrush(Color.FromRgb(252, 69, 73));
     }
 }
