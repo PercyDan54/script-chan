@@ -298,7 +298,7 @@ namespace Osu.Mvvm.Ov.ViewModels
         /// </summary>
         public void OpenMpLink()
         {
-            System.Diagnostics.Process.Start("https://osu.ppy.sh/mp/" + room.Id);
+            System.Diagnostics.Process.Start("https://osu.ppy.sh/community/matches/" + room.Id);
         }
 
         /// <summary>

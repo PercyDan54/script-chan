@@ -208,7 +208,7 @@ namespace Osu.Mvvm.General.ViewModels
         /// <summary>
         /// Shows the overview screen
         /// </summary>
-        public async void ShowOverview()
+        public void ShowOverview()
         {
             if (!IsBlockedOnOption)
             {
@@ -223,14 +223,14 @@ namespace Osu.Mvvm.General.ViewModels
             }
             else
             {
-                await Dialog.ShowConfirmation("Error", "You need to fill api key and IRC informations first!");
+                Dialog.ShowDialog("Error", "You need to fill api key and IRC informations first!");
             }
         }
 
         /// <summary>
         /// Shows the rooms screen
         /// </summary>
-        public async void ShowRooms()
+        public void ShowRooms()
         {
             if (!IsBlockedOnOption)
             {
@@ -245,14 +245,14 @@ namespace Osu.Mvvm.General.ViewModels
             }
             else
             {
-                await Dialog.ShowConfirmation("Error", "You need to fill api key and IRC informations first!");
+                Dialog.ShowDialog("Error", "You need to fill api key and IRC informations first!");
             }
         }
 
         /// <summary>
         /// Shows the mappools screen
         /// </summary>
-        public async void ShowMappools()
+        public void ShowMappools()
         {
             if (!IsBlockedOnOption)
             {
@@ -267,7 +267,7 @@ namespace Osu.Mvvm.General.ViewModels
             }
             else
             {
-                await Dialog.ShowConfirmation("Error", "You need to fill api key and IRC informations first!");
+                Dialog.ShowDialog("Error", "You need to fill api key and IRC informations first!");
             }
         }
 

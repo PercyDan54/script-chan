@@ -65,8 +65,8 @@ namespace Osu.Mvvm.Ov.ViewModels
                 }
                 else
                 {
-                    var testttt = items.ToList().FindAll(y => y.IsSelected == true);
-                    return new BindableCollection<OvRoomViewModel>(rooms.Where(item => testttt.Exists(y => y.ObjectData == item.Batch)).OrderBy(x => x.Batch));
+                    var vrooms = items.ToList().FindAll(y => y.IsSelected == true);
+                    return new BindableCollection<OvRoomViewModel>(rooms.Where(item => vrooms.Exists(y => y.ObjectData == item.Batch)).OrderBy(x => x.Batch));
                 }
             }
         }
@@ -182,7 +182,7 @@ namespace Osu.Mvvm.Ov.ViewModels
                 {
                     rooms.FirstOrDefault(x => x.TeamBlue == e.BlueTeam && x.TeamRed == e.RedTeam).SetCreation(id);
                     System.Windows.Application.Current.Dispatcher.Invoke(new System.Action(async () => { await Dialog.HideProgress(); Dialog.ShowDialog("OK!", "Match has been created!"); }));
-                    osu_discord.DiscordBot.GetInstance().SendMessage("<@86410647549513728> & <@91136622749319168> : https://osu.ppy.sh/community/matches/" + id);
+                    osu_discord.DiscordBot.GetInstance().SendMessage("Match created : https://osu.ppy.sh/community/matches/" + id);
                     //}
                     //else
                     //{

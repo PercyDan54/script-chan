@@ -24,7 +24,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// <summary>
         /// The regex used to get the room's id if we get a link
         /// </summary>
-        protected static readonly Regex LinkRegex = new Regex("(http|https):\\/\\/(?:osu|new)\\.ppy\\.sh\\/(?:mp|matches)\\/(\\d+)");
+        protected static readonly Regex LinkRegex = new Regex("(http|https):\\/\\/(?:osu|new)\\.ppy\\.sh\\/(?:mp|community\\/matches)\\/(\\d+)");
 
         /// <summary>
         /// The irc bot
