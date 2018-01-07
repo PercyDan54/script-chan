@@ -128,6 +128,17 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                     isMovingWithMessage = value;
             }
         }
+
+        public string IsControlVisible
+        {
+            get
+            {
+                if (room.Manual == false)
+                    return "Visible";
+                else
+                    return "Hidden";
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -152,6 +163,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
             NotifyOfPropertyChange(() => RedTeamScore);
             NotifyOfPropertyChange(() => BlueTeamScore);
+            NotifyOfPropertyChange(() => IsControlVisible);
             UpdateStatusLabel();
         }
 

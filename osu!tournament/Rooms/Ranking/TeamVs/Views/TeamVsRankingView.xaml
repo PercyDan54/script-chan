@@ -63,6 +63,6 @@
         <Button x:Name="RevertPointChanges" Content="Revert score" FontSize="10" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="5" />
         <Button x:Name="AbortHappened" Content="Abort map" FontSize="10" VerticalContentAlignment="Center" Padding="0" Grid.Row="3" Grid.Column="5" />
 
-        <ContentControl x:Name="MappoolPicker" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="9"/>
+        <ContentControl Visibility="{Binding IsControlVisible}" x:Name="MappoolPicker" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="9"/>
     </Grid>
 </UserControl>
