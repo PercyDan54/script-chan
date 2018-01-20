@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using Osu.Api;
+using Osu.Ircbot;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
 using Osu.Utils;
@@ -38,23 +40,6 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
         #endregion
 
         #region Properties
-        /// <summary>
-        /// First team red property
-        /// </summary>
-        public bool FirstTeamIsRed
-        {
-            get
-            {
-                return ranking.First == Api.OsuTeam.Red;
-            }
-            set
-            {
-                ranking.First = value ? Api.OsuTeam.Red : Api.OsuTeam.Blue;
-                RefereeMatchHelper.GetInstance(room.Id).UpdateTeamBanOrder(room, ranking.First);
-                NotifyOfPropertyChange(() => FirstTeamIsRed);
-            }
-        }
-
         /// <summary>
         /// Enable commands property
         /// </summary>
@@ -126,6 +111,129 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The list of allowed BO number property
+        /// </summary>
+        public List<OsuTeamType> TeamModeBox
+        {
+            get
+            {
+                return new List<OsuTeamType> { OsuTeamType.HeadToHead, OsuTeamType.TeamVs };
+            }
+        }
+
+        /// <summary>
+        /// The selected BO property
+        /// </summary>
+        public OsuTeamType SelectedTeamModeBox
+        {
+            get
+            {
+                return room.RoomConfiguration.TeamMode;
+            }
+
+            set
+            {
+                if (room.RoomConfiguration.TeamMode != value)
+                {
+                    room.RoomConfiguration.TeamMode = value;
+                    NotifyOfPropertyChange(() => SelectedTeamModeBox);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// The list of allowed BO number property
+        /// </summary>
+        public List<OsuScoringType> ScoreModeBox
+        {
+            get
+            {
+                return new List<OsuScoringType> { OsuScoringType.Score, OsuScoringType.ScoreV2 };
+            }
+        }
+
+        /// <summary>
+        /// The selected BO property
+        /// </summary>
+        public OsuScoringType SelectedScoreModeBox
+        {
+            get
+            {
+                return room.RoomConfiguration.ScoreMode;
+            }
+
+            set
+            {
+                if (room.RoomConfiguration.ScoreMode != value)
+                {
+                    room.RoomConfiguration.ScoreMode = value;
+                    NotifyOfPropertyChange(() => SelectedScoreModeBox);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// The list of allowed BO number property
+        /// </summary>
+        public List<string> RoomSizeBox
+        {
+            get
+            {
+                return new List<string> { "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" };
+            }
+        }
+
+        /// <summary>
+        /// The selected BO property
+        /// </summary>
+        public string SelectedRoomSizeBox
+        {
+            get
+            {
+                return room.RoomConfiguration.RoomSize;
+            }
+
+            set
+            {
+                if (room.RoomConfiguration.RoomSize != value)
+                {
+                    room.RoomConfiguration.RoomSize = value;
+                    NotifyOfPropertyChange(() => SelectedScoreModeBox);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// The list of allowed BO number property
+        /// </summary>
+        public List<bool> FirstTeamIsRed
+        {
+            get
+            {
+                return new List<bool> { true, false };
+            }
+        }
+
+        public bool SelectedFirstTeamIsRed
+        {
+            get
+            {
+                return ranking.First == Api.OsuTeam.Red;
+            }
+            set
+            {
+                ranking.First = value ? Api.OsuTeam.Red : Api.OsuTeam.Blue;
+                RefereeMatchHelper.GetInstance(room.Id).UpdateTeamBanOrder(room, ranking.First);
+                NotifyOfPropertyChange(() => SelectedFirstTeamIsRed);
+            }
+        }
+
+        
+
         public bool IsObsPathValid
         {
             get
@@ -168,6 +276,11 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
                 NotifyOfPropertyChange(() => IsObsPathValid);
             }
             
+        }
+
+        public void UpdateRoomConfiguration()
+        {
+            OsuIrcBot.GetInstancePrivate().UpdateRoomConfiguration(room.Id.ToString(), room.RoomConfiguration);
         }
         #endregion
     }

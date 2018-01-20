@@ -362,6 +362,11 @@ namespace Osu.Ircbot
             }
         }
 
+        public void UpdateRoomConfiguration(string roomCreatedId, RoomConfiguration config)
+        {
+            SendMessage("#mp_" + roomCreatedId, string.Format("!mp set {0} {1} {2}", config.TeamMode, config.ScoreMode, config.RoomSize));
+        }
+
         public void SendWelcomeMessage(Room room)
         {
             if(room.Ranking.GetType() == typeof(TeamVs))

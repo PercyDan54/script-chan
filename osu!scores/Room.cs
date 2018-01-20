@@ -2,6 +2,7 @@
 using Osu.Api;
 using Osu.Scores.Status;
 using Osu.Utils;
+using Osu.Utils.Info;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -94,6 +95,8 @@ namespace Osu.Scores
         protected bool isStreamed;
 
         protected List<string> roomMessages;
+
+        protected RoomConfiguration roomConfiguration;
         #endregion
 
         #region Constructors
@@ -112,6 +115,7 @@ namespace Osu.Scores
             status = RoomStatus.NotStarted;
             isStreamed = false;
             roomMessages = new List<string>();
+            roomConfiguration = new RoomConfiguration() { TeamMode = (OsuTeamType)int.Parse(InfosHelper.TourneyInfos.TeamMode), ScoreMode = (OsuScoringType)int.Parse(InfosHelper.TourneyInfos.ScoreMode), RoomSize = InfosHelper.TourneyInfos.RoomSize };
             mode = Cache.GetCache("osu!options.db").Get("mode", "3");
             string t = Cache.GetCache("osu!options.db").Get("wctype", "Standard");
             string mp = Cache.GetCache("osu!options.db").Get("defaultmappool", "");
@@ -387,6 +391,14 @@ namespace Osu.Scores
             get
             {
                 return roomMessages;
+            }
+        }
+
+        public RoomConfiguration RoomConfiguration
+        {
+            get
+            {
+                return roomConfiguration;
             }
         }
         #endregion
