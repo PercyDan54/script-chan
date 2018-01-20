@@ -22,6 +22,11 @@
         </Grid.RowDefinitions>
 
         <TabControl Padding="0" Margin="0,0,0,5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabPanel}">
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                </Style>
+            </TabControl.Resources>
             <TabItem Header="Ranking">
                 <ContentControl x:Name="Ranking" />
             </TabItem>

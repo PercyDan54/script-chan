@@ -51,9 +51,15 @@ namespace Osu.Mvvm
             
             // Initialize the osu!ircbot
             bool isIrcInit = OsuIrcBot.Initialize();
-            // Initialize the discord bot
-            bool isDiscordInit = false;
-            isDiscordInit = DiscordBot.Initialize();
+
+            if (!isIrcInit)
+            {
+                await Dialog.ShowConfirmation("Error", "IRC initialization failed. Invalid data in the cache.");
+                Application.Current.MainWindow.Close();
+            }
+
+            // Initialize discord webhooks
+            DiscordClient.Initialize();
 
             Cache c2 = Cache.GetCache("osu!matches.db");
             InfosHelper.TourneyInfos = c2.GetObject<TourneyInfo>("infos", new TourneyInfo());
@@ -85,18 +91,6 @@ namespace Osu.Mvvm
 
             // Initialize the dialogs
             Dialog.Initialize();
-
-            if(!isDiscordInit)
-            {
-                await Dialog.ShowConfirmation("Error", "Discord initialization failed. Invalid data in the cache.");
-                Application.Current.MainWindow.Close();
-            }
-
-            if (!isIrcInit)
-            {
-                await Dialog.ShowConfirmation("Error", "IRC initialization failed. Invalid data in the cache.");
-                Application.Current.MainWindow.Close();
-            }
 
             await Task.Delay(3000);
 

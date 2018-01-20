@@ -19,14 +19,17 @@ namespace Osu.Utils.Info
         [DataMember(Name = "admins")]
         public string Admins { get; set; }
 
-        [DataMember(Name = "discordkey")]
-        public string DiscordKey { get; set; }
+        [DataMember(Name = "webhookdefault")]
+        public string WebhookDefault { get; set; }
 
-        [DataMember(Name = "discordguildname")]
-        public string DiscordServerName { get; set; }
+        [DataMember(Name = "webhookcommentators")]
+        public string WebhookCommentators { get; set; }
 
-        [DataMember(Name = "discordchannelname")]
-        public string DiscordChannelName { get; set; }
+        [DataMember(Name = "webhookreferees")]
+        public string WebhookReferees { get; set; }
+
+        [DataMember(Name = "webhookadmins")]
+        public string WebhookAdmins { get; set; }
 
         [DataMember(Name = "commentatorsgroup")]
         public string DiscordCommentatorGroup { get; set; }

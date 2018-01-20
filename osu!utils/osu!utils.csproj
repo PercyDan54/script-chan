@@ -52,6 +52,13 @@
     <Compile Include="Cache.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="Bans\CountryUtilities.cs" />
+    <Compile Include="DiscordModels\Author.cs" />
+    <Compile Include="DiscordModels\DiscordChannelEnum.cs" />
+    <Compile Include="DiscordModels\Embed.cs" />
+    <Compile Include="DiscordModels\Field.cs" />
+    <Compile Include="DiscordModels\Footer.cs" />
+    <Compile Include="DiscordModels\Image.cs" />
+    <Compile Include="DiscordModels\Payload.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IconUtilities.cs" />
     <Compile Include="Info\InfosHelper.cs" />

@@ -14,27 +14,21 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="{Binding SizePlayerList}" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="70" />
+        </Grid.ColumnDefinitions>
 
-        <Label x:Name="Status" Content="Please Wait..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" FontSize="20" />
-
-        <ScrollViewer Padding="0" Margin="0" Grid.Column="0" Grid.Row="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="35" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="70" />
-                </Grid.ColumnDefinitions>
-
-                <Label Content="Player" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="0"  Grid.Column="0" Grid.Row="0" FontSize="20" />
-                <Label Content="Score" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="0,0,5,0" Margin="0" Grid.Column="1" Grid.Row="0" FontSize="20" />
-
-                <ItemsControl x:Name="Lines" Padding="0" Margin="0,5,0,0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" />
-            </Grid>
+        <Label x:Name="Status" Content="Please Wait..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" FontSize="20" Grid.ColumnSpan="2"/>
+        <Label Content="Player" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="0"  Grid.Column="0" Grid.Row="1" FontSize="20" />
+        <Label Content="Score" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="0,0,5,0" Margin="0" Grid.Column="1" Grid.Row="1" FontSize="20" />
+        <ScrollViewer Padding="0" Margin="0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+            <ItemsControl x:Name="Lines" Padding="0" Margin="0,5,0,0"  />
         </ScrollViewer>
+        <ContentControl Visibility="{Binding IsControlVisible}" x:Name="MappoolPicker" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
     </Grid>
 </UserControl>

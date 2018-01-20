@@ -29,7 +29,7 @@ namespace TechLifeForum
         private string _altNick = "";
 
         //default consoleOutput mode
-        private bool _consoleOutput = true;
+        private bool _consoleOutput = false;
 
         // private TcpClient used to talk to the server
         private TcpClient irc;

@@ -240,7 +240,6 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             RefereeMatchHelper bh = RefereeMatchHelper.GetInstance(room.Id);
             if (bh.CanBan() && !isBanned)
             {
-                var dbot = osu_discord.DiscordBot.GetInstance();
                 isBanned = true;
                 //dbot.SendMessage(bh.ApplyBan(beatmap));
 
@@ -261,7 +260,6 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             RefereeMatchHelper bh = RefereeMatchHelper.GetInstance(room.Id);
             if (bh.CanUnban(beatmap))
             {
-                var dbot = osu_discord.DiscordBot.GetInstance();
                 isBanned = false;
                 //dbot.SendMessage(bh.RemoveBan());
                 bh.RemoveBan();

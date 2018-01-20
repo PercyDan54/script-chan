@@ -5,6 +5,7 @@ using Osu.Scores;
 using Osu.Tournament.Ov.ViewModels;
 using Osu.Utils;
 using Osu.Utils.Info;
+using osu_discord;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -182,7 +183,8 @@ namespace Osu.Mvvm.Ov.ViewModels
                 {
                     rooms.FirstOrDefault(x => x.TeamBlue == e.BlueTeam && x.TeamRed == e.RedTeam).SetCreation(id);
                     System.Windows.Application.Current.Dispatcher.Invoke(new System.Action(async () => { await Dialog.HideProgress(); Dialog.ShowDialog("OK!", "Match has been created!"); }));
-                    osu_discord.DiscordBot.GetInstance().SendMessage("Match created : https://osu.ppy.sh/community/matches/" + id);
+                    DiscordHelper.SendNewMatch(id.ToString(), e.RedTeam, e.BlueTeam);
+                    //osu_discord.DiscordBot.GetInstance().SendMessage("Match created : https://osu.ppy.sh/community/matches/" + id + " . If you want to join, click irc://cho.ppy.sh:6667/mp_" + id);
                     //}
                     //else
                     //{

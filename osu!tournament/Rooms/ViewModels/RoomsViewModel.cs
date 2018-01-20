@@ -34,7 +34,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// <summary>
         /// The discord bot
         /// </summary>
-        private DiscordBot discordBot;
+        private DiscordClient discordClient;
 
         /// <summary>
         /// The selected room
@@ -64,7 +64,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
             bot = OsuIrcBot.GetInstancePrivate();
             bot.MessageRoomCatched += ircbot_MessageRoomCatched;
 
-            discordBot = DiscordBot.GetInstance();
+            discordClient = DiscordClient.GetInstance();
 
             overview = ov;
             overview.MatchCreated += OnMatchCreated;
@@ -280,6 +280,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// </summary>
         public async void DeleteRoom()
         {
+            discordClient.OnUpdateRoom(SelectedRoom);
             if (await Dialog.ShowConfirmation("Delete room", "Are you sure you want to delete the room ?"))
             {
                 Log.Info("Deleting room \"" + SelectedRoom.Name + "\"");
@@ -342,7 +343,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                         {
                             await selected_view_model.Update(true);
                             bot.OnUpdateRoom(SelectedRoom);
-                            discordBot.OnUpdateRoom(SelectedRoom);
+                            discordClient.OnUpdateRoom(SelectedRoom);
                         }));
                     }
                     // It's not the selected room, we're updating the room + sending messages
@@ -359,7 +360,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
 
                             bot.OnUpdateRoom(room);
 
-                            discordBot.OnUpdateRoom(room);
+                            discordClient.OnUpdateRoom(room);
                         }
                     }
                 }

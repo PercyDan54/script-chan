@@ -41,16 +41,18 @@ namespace osu_discord
 
         public async Task OnUpdateRoom(Room room)
         {
+            /*
             if (room.Ranking.Played != 0)
             {
                 log.Info(string.Format("OnUpdateRoom triggered for room {0}!", room.Id));
-                List<string> sentences = room.Ranking.GetDiscordStatus();
+                //List<string> sentences = room.Ranking.GetDiscordStatus();
                 if(sentences != null)
                 {
                     string test = String.Join(Environment.NewLine, sentences);
                     await SendMessage(test);
                 }
             }
+            */
         }
 
         public async Task SendMessage(string message)
@@ -71,8 +73,9 @@ namespace osu_discord
         /// <summary>
         /// Initialize the osu!ircbot
         /// </summary>
-        public static bool Initialize()
+        public static void Initialize()
         {
+            /*
             if(!string.IsNullOrEmpty(InfosHelper.UserDataInfos.DiscordKey))
             {
                 try
@@ -91,7 +94,7 @@ namespace osu_discord
             {
                 return false;
             }
-            
+            */
         }
 
         /// <summary>

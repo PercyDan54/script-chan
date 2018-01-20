@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels;
 using Osu.Scores;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,11 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
         /// The list of player lines
         /// </summary>
         private IObservableCollection<PlayerLineViewModel> lines;
+
+        /// <summary>
+        /// Mappool view model
+        /// </summary>
+        private MappoolPickerViewModel mpvm;
         #endregion
 
         #region Constructors
@@ -44,6 +50,8 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             ranking = (Osu.Scores.HeadToHead)room.Ranking;
             status = "Please wait...";
             lines = new BindableCollection<PlayerLineViewModel>();
+
+            MappoolPicker = new MappoolPickerViewModel(room);
 
             Update();
         }
@@ -77,6 +85,48 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             get
             {
                 return lines;
+            }
+        }
+
+        public MappoolPickerViewModel MappoolPicker
+        {
+            get
+            {
+                return mpvm;
+            }
+            set
+            {
+                if (value != mpvm)
+                {
+                    mpvm = value;
+                    NotifyOfPropertyChange(() => MappoolPicker);
+                }
+            }
+        }
+
+        public string IsControlVisible
+        {
+            get
+            {
+                if (room.Manual == false)
+                    return "Visible";
+                else
+                    return "Hidden";
+            }
+        }
+
+        public string SizePlayerList
+        {
+            get
+            {
+                if(IsControlVisible == "Hidden")
+                {
+                    return "*";
+                }
+                else
+                {
+                    return "200";
+                }
             }
         }
         #endregion
@@ -128,6 +178,8 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
         {
             UpdateStatusMessage();
             UpdatePlayersLines();
+            NotifyOfPropertyChange(() => IsControlVisible);
+            NotifyOfPropertyChange(() => SizePlayerList);
         }
         #endregion
     }

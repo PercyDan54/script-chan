@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using Osu.Scores;
 using osu_discord;
+using osu_utils.DiscordModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -65,14 +66,39 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
         public void SendBanRecap()
         {
-            string message = RefereeMatchHelper.GetInstance(r.Id).GenerateBanRecapMessage();
-            DiscordBot.GetInstance().SendMessage(message);
+            Embed message = RefereeMatchHelper.GetInstance(r.Id).GenerateBanRecapMessage();
+            if(message != null)
+            {
+                string name;
+                if (r.Ranking.GetType() == typeof(Osu.Scores.TeamVs))
+                {
+                    name = string.Format("{0} VS {1}", ((Osu.Scores.TeamVs)r.Ranking).Red.Name, ((Osu.Scores.TeamVs)r.Ranking).Blue.Name);
+                }
+                else
+                {
+                    name = r.Name;
+                }
+                DiscordHelper.SendRecap(message, DiscordChannelEnum.Default, name, r.Id.ToString());
+            }
         }
 
         public void SendPickRecap()
         {
-            string message = RefereeMatchHelper.GetInstance(r.Id).GeneratePickRecapMessage();
-            DiscordBot.GetInstance().SendMessage(message);
+            Embed message = RefereeMatchHelper.GetInstance(r.Id).GeneratePickRecapMessage();
+            if (message != null)
+            {
+                string name;
+                if (r.Ranking.GetType() == typeof(Osu.Scores.TeamVs))
+                {
+                    name = string.Format("{0} VS {1}", ((Osu.Scores.TeamVs)r.Ranking).Red.Name, ((Osu.Scores.TeamVs)r.Ranking).Blue.Name);
+                }
+                else
+                {
+                    name = r.Name;
+                }
+                DiscordHelper.SendRecap(message, DiscordChannelEnum.Default, name, r.Id.ToString());
+            }
+            //DiscordBot.GetInstance().SendMessage(message);
         }
         #endregion
 

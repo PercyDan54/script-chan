@@ -1,5 +1,6 @@
 ﻿using Osu.Api;
 using Osu.Scores.Status;
+using osu_utils.DiscordModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -203,7 +204,7 @@ namespace Osu.Scores
             {
                 int limit = int.Parse(room.Mode) / 2;
 
-                return (Blue.Points + Blue.PointAddition) == limit + 1 || (Red.Points + Red.PointAddition) == limit + 1;
+                return (Blue.Points + Blue.PointAddition) >= limit + 1 || (Red.Points + Red.PointAddition) >= limit + 1;
             }
         }
 
@@ -278,6 +279,19 @@ namespace Osu.Scores
                                 throw new SystemException("TeamVS - Update: Match type is not TeamVS :(");
                         }
                     }
+                    // If this is a 1v1 match selection without teamVS mode
+                    else
+                    {
+                        switch(score.Slot)
+                        {
+                            case 1:
+                                red_score += score.Score;
+                                break;
+                            case 2:
+                                blue_score += score.Score;
+                                break;
+                        }
+                    }
                 }
             }
         }
@@ -335,7 +349,7 @@ namespace Osu.Scores
             return sentences;
         }
 
-        public override List<String> GetDiscordStatus()
+        public override Embed GetDiscordStatus()
         {
             List<string> sentences = new List<string>();
 
@@ -344,59 +358,51 @@ namespace Osu.Scores
 
             if(bm != null)
             {
-                IEnumerable<IGrouping<OsuTeam, OsuScore>> test = room.OsuRoom.Games.Last().Scores.OrderByDescending(x => x.Score).GroupBy(x => x.Team);
-                var bpb = test.Single(g => g.Key == OsuTeam.Blue);
-                var bluescore = bpb.Where(x => x.Pass == 1).Sum(x => x.Score);
-
-                var bpb2 = test.Single(g => g.Key == OsuTeam.Red);
-                var redscore = bpb2.Where(x => x.Pass == 1).Sum(x => x.Score);
                 bool didCurrentTeamWon;
 
-                if(Blue == CurrentTeam)
+                if((Blue == CurrentTeam && blue_score > red_score) || (Red == CurrentTeam && blue_score < red_score))
                 {
-                    if (bluescore > redscore)
-                    {
-                        didCurrentTeamWon = true;
-                    }
-                    else
-                    {
-                        didCurrentTeamWon = false;
-                    }
+                    didCurrentTeamWon = true;
                 }
                 else
                 {
-                    if (bluescore < redscore)
-                    {
-                        didCurrentTeamWon = true;
-
-                    }
-                    else
-                    {
-                        didCurrentTeamWon = false;
-                    }
+                    didCurrentTeamWon = false;
                 }
 
+                // ??
                 if(abortHappened)
                 {
                     didCurrentTeamWon = !didCurrentTeamWon;
                 }
-
-                sentences.Add(String.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their pick `{1}` {2} - {3} [{4}]", (abortHappened ? NextTeam.Name : CurrentTeam.Name), bm.PickType, bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.OsuBeatmap.Version));
 
                 sentences.AddRange(GetStatus());
                 IOrderedEnumerable<OsuScore> scores = room.OsuRoom.Games.Last().Scores.OrderByDescending(x => x.Score);
                 OsuScore mvp = scores.First();
 
                 Player mvpPlayer;
-
                 room.Players.TryGetValue(mvp.UserId, out mvpPlayer);
 
-                if(mvpPlayer != null)
+                Embed embed = new Embed();
+                embed.Author = new Author { Name = string.Format("{0} VS {1}", teams[OsuTeam.Red].Name, teams[OsuTeam.Blue].Name), Url = "https://osu.ppy.sh/community/matches/" + this.room.Id, IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png" };
+                embed.Color = didCurrentTeamWon ? "6729778" : "14177041";
+                embed.Title = string.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their __{1}__ pick ", (abortHappened ? NextTeam.Name : CurrentTeam.Name), bm.PickType);
+                embed.Thumbnail = new Image { Url = didCurrentTeamWon ? "https://cdn.discordapp.com/attachments/130304896581763072/400388818127290369/section-pass.png" : "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png" };
+                embed.Description = string.Format("**{0} - {1} [{2}]**", bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.OsuBeatmap.Version);
+                embed.Fields = new List<Field>();
+                embed.Fields.Add(new Field() { Name = teams[OsuTeam.Red].Name, Value = (teams[OsuTeam.Red].Points + teams[OsuTeam.Red].PointAddition).ToString(), Inline = true });
+                embed.Fields.Add(new Field() { Name = teams[OsuTeam.Blue].Name, Value = (teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition).ToString(), Inline = true });
+                if (mvpPlayer != null)
                 {
-                    sentences.Add(String.Format("MVP : {0} from {1} with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country, mvp.Score));
+                    embed.Fields.Add(new Field() { Name = "MVP", Value = string.Format(":flag_{1}: **{0}** with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country.ToLower(), mvp.Score) });
                 }
 
-                return sentences;
+                embed.Fields.Add(new Field() { Name = "Status", Value = GetStatus().Last() + " " + (room.Status == RoomStatus.Finished ? ":clap:" : ":loudspeaker:") });
+                if(room.Status == RoomStatus.Finished)
+                {
+                    embed.Image = new Image { Url = "https://78.media.tumblr.com/b94193615145d12bfb64aa77b677269e/tumblr_njzqukOpBP1ti1gm1o1_500.gif" };
+                }
+                
+                return embed;
             }
             return null;
         }

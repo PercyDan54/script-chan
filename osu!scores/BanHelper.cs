@@ -1,6 +1,7 @@
 ﻿using Osu.Api;
 using Osu.Utils;
 using Osu.Utils.Bans;
+using osu_utils.DiscordModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -175,36 +176,62 @@ namespace Osu.Scores
         }
         */
 
-        public string GenerateBanRecapMessage()
+        public Embed GenerateBanRecapMessage()
         {
             //Check if both bans have been made
             if(!CanBan())
             {
-                return string.Format("Ban recap for {0} vs **{1}** : " + Environment.NewLine + "{0} : `{4}` {2} - {3} [{8}]" + Environment.NewLine + "**{1}** : `{7}` {5} - {6} [{9}]",
-                    FirstTeamToBan.Name, SecondTeamToBan.Name,
-                    FirstBeatmapBanned.OsuBeatmap.Artist, FirstBeatmapBanned.OsuBeatmap.Title, FirstBeatmapBanned.PickType,
-                    SecondBeatmapBanned.OsuBeatmap.Artist, SecondBeatmapBanned.OsuBeatmap.Title, SecondBeatmapBanned.PickType,
-                    FirstBeatmapBanned.OsuBeatmap.Version, SecondBeatmapBanned.OsuBeatmap.Version);
+                Embed e = new Embed();
+                e.Title = "Ban Recap";
+                e.Fields = new List<Field>();
+                e.Fields.Add(new Field() { Name = FirstTeamToBan.Name, Value = string.Format("__{0}__ **{1} - {2} [{3}]**", FirstBeatmapBanned.PickType, FirstBeatmapBanned.OsuBeatmap.Artist, FirstBeatmapBanned.OsuBeatmap.Title, FirstBeatmapBanned.OsuBeatmap.Version) });
+                e.Fields.Add(new Field() { Name = SecondTeamToBan.Name, Value = string.Format("__{0}__ **{1} - {2} [{3}]**", SecondBeatmapBanned.PickType, SecondBeatmapBanned.OsuBeatmap.Artist, SecondBeatmapBanned.OsuBeatmap.Title, SecondBeatmapBanned.OsuBeatmap.Version) });
+
+                return e;
             }
             return null;
         }
 
-        public string GeneratePickRecapMessage()
+        public Embed GeneratePickRecapMessage()
         {
-            string result = "";
+            Embed e = new Embed();
+            e.Title = "Pick Recap";
+            e.Fields = new List<Field>();
+            Field firstteam = new Field() { Name = FirstTeamToBan.Name };
+            Field secondteam = new Field() { Name = SecondTeamToBan.Name };
 
-            if(picks.Count > 0)
+            if (picks.Count > 0)
             {
-                result += string.Format("Pick recap for {0} vs {1}" + Environment.NewLine, FirstTeamToBan.Name, SecondTeamToBan.Name);
             }
             Beatmap bm = null;
             for(int counter = 0; counter < picks.Count; counter++)
             {
                 bm = picks[counter];
-                result += string.Format("-{0}- **{1}** : `{4}` {2} - {3} [{5}]" + Environment.NewLine, counter + 1, (counter % 2 == 0 ? SecondTeamToBan.Name : FirstTeamToBan.Name), bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.PickType, bm.OsuBeatmap.Version);
+                string sentence = string.Format("-{0}- __{1}__ **{2} - {3} [{4}]**" + Environment.NewLine, counter + 1, bm.PickType, bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.OsuBeatmap.Version);
+                if (counter % 2 == 0)
+                {
+                    secondteam.Value += sentence;
+                }
+                else
+                {
+                    firstteam.Value += sentence;
+                }
+            }
+            
+            if(string.IsNullOrEmpty(firstteam.Value))
+            {
+                firstteam.Value = "None";
             }
 
-            return result;
+            if (string.IsNullOrEmpty(secondteam.Value))
+            {
+                secondteam.Value = "None";
+            }
+
+            e.Fields.Add(firstteam);
+            e.Fields.Add(secondteam);
+
+            return e;
         }
 
         #region Static methods

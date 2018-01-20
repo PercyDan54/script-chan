@@ -1,4 +1,5 @@
 ﻿using Osu.Api;
+using osu_utils.DiscordModels;
 using System.Collections.Generic;
 
 namespace Osu.Scores
@@ -88,7 +89,7 @@ namespace Osu.Scores
         /// <returns>a list of string</returns>
         public abstract List<string> GetStatus();
 
-        public abstract List<string> GetDiscordStatus();
+        public abstract Embed GetDiscordStatus();
 
         #endregion
     }

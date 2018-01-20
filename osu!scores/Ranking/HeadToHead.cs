@@ -1,5 +1,6 @@
 ﻿using Osu.Api;
 using Osu.Scores.Status;
+using osu_utils.DiscordModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -382,7 +383,7 @@ namespace Osu.Scores
             return sentences;
         }
 
-        public override List<string> GetDiscordStatus()
+        public override Embed GetDiscordStatus()
         {
             return null;
         }

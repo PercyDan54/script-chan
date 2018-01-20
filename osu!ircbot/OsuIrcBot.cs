@@ -114,6 +114,8 @@ namespace Osu.Ircbot
 
         protected bool isConnected;
 
+        protected bool readInput;
+
         private bool shouldHlCommentators;
         #endregion
 
@@ -121,7 +123,7 @@ namespace Osu.Ircbot
         /// <summary>
         /// Default constructor
         /// </summary>
-        private OsuIrcBot(string ircIP, string admins)
+        private OsuIrcBot(string ircIP, string admins, bool shouldRead)
         {
             cache = Cache.GetCache("osu!ircbot.db");
             handler = new AdminHandler();
@@ -131,6 +133,8 @@ namespace Osu.Ircbot
             isConnected = false;
             shouldCatchSettings = false;
             fmv = new FreemodViewer();
+
+            readInput = shouldRead;
 
             // Regex
             regexPlayerLine = new Regex("^Slot (\\d+)\\s+(\\w+)\\s+https:\\/\\/osu\\.ppy\\.sh\\/u\\/(\\d+)\\s+([a-zA-Z0-9_ ]+)\\s+\\[Team (\\w+)\\s*(?:\\/ ([\\w, ]+))?\\]$");
@@ -262,10 +266,8 @@ namespace Osu.Ircbot
                         value = false;
                     else
                     {
-                        if(irc_address == "irc.ppy.sh")
-                            client = new IrcClient(irc_address, false);
-                        else
-                            client = new IrcClient(irc_address, true);
+                        client = new IrcClient(irc_address, readInput);
+
                         RegisterHandlers();
                         client.Nick = username;
                         client.ServerPass = password;
@@ -350,9 +352,9 @@ namespace Osu.Ircbot
         {
             if (roomCreatedId != null)
             {
-                SendMessage("#mp_" + roomCreatedId, "!mp addref " + adminlist);
                 SendMessage("#mp_" + roomCreatedId, string.Format("!mp set {0} {1} {2}", InfosHelper.TourneyInfos.TeamMode, InfosHelper.TourneyInfos.ScoreMode, InfosHelper.TourneyInfos.RoomSize));
                 SendMessage("#mp_" + roomCreatedId, string.Format("!mp map {0} {1}", InfosHelper.TourneyInfos.DefaultMapId, InfosHelper.TourneyInfos.ModeType));
+                SendMessage("#mp_" + roomCreatedId, "!mp addref " + adminlist);
                 SendMessage("#mp_" + roomCreatedId, "!mp unlock");
                 SendMessage("#mp_" + roomCreatedId, "!mp settings");
             }
@@ -575,7 +577,8 @@ namespace Osu.Ircbot
                 shouldHlCommentators = false;
             }
 
-            DiscordBot.GetInstance().SendMessage(stringToSend);
+            // TODO
+            //DiscordBot.GetInstance().SendMessage(stringToSend);
 
             fmv.Players.Clear();
         }
@@ -592,17 +595,26 @@ namespace Osu.Ircbot
         /// </summary>
         public static bool Initialize()
         {
-            if(!string.IsNullOrEmpty(InfosHelper.UserDataInfos.IPPublicBancho) && !string.IsNullOrEmpty(InfosHelper.UserDataInfos.IPPrivateBancho) && !string.IsNullOrEmpty(InfosHelper.UserDataInfos.Admins))
+            if(!string.IsNullOrEmpty(InfosHelper.UserDataInfos.IPPrivateBancho) && !string.IsNullOrEmpty(InfosHelper.UserDataInfos.Admins))
             {
                 // Initialize the instance
-                instanceMatch = new OsuIrcBot(InfosHelper.UserDataInfos.IPPrivateBancho, InfosHelper.UserDataInfos.Admins);
-                instancePublic = new OsuIrcBot(InfosHelper.UserDataInfos.IPPublicBancho, InfosHelper.UserDataInfos.Admins);
+                instanceMatch = new OsuIrcBot(InfosHelper.UserDataInfos.IPPrivateBancho, InfosHelper.UserDataInfos.Admins, true);
+            }
+            else
+            {
+                instanceMatch = null;
+            }
+
+
+            if(!string.IsNullOrEmpty(InfosHelper.UserDataInfos.IPPublicBancho) && !string.IsNullOrEmpty(InfosHelper.UserDataInfos.Admins))
+            {
+                instancePublic = new OsuIrcBot(InfosHelper.UserDataInfos.IPPublicBancho, InfosHelper.UserDataInfos.Admins, instanceMatch == null ? true : false);
                 return true;
             }
             else
             {
-                instanceMatch = new OsuIrcBot("", "");
-                instancePublic = new OsuIrcBot("", "");
+                instanceMatch = new OsuIrcBot("", "", false);
+                instancePublic = new OsuIrcBot("", "", false);
                 return false;
             }
         }
@@ -613,7 +625,10 @@ namespace Osu.Ircbot
         /// <returns>the unique instance</returns>
         public static OsuIrcBot GetInstancePrivate()
         {
-            return instanceMatch;
+            if (instanceMatch != null)
+                return instanceMatch;
+            else
+                return instancePublic;
         }
 
         /// <summary>
