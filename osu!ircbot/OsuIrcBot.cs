@@ -56,6 +56,8 @@ namespace Osu.Ircbot
         /// </summary>
         public event EventHandler MessageRoomCatched;
 
+        public event EventHandler PlayerMessageRoomCatched;
+
         public event MatchCreatedHandler RoomCreatedCatched;
 
         private bool shouldCatchSettings;
@@ -416,12 +418,22 @@ namespace Osu.Ircbot
 
         #region Handlers
         /// <summary>
-        /// Handler which is handling messages from BanchoBot
+        /// Handler for messages from BanchoBot
         /// </summary>
         private void OnMessageRoomCatched(EventArgs e)
         {
             if (MessageRoomCatched != null)
                 MessageRoomCatched(this, e);
+        }
+
+        /// <summary>
+        /// Handler for messages from players in a room
+        /// </summary>
+        /// <param name="e"></param>
+        private void OnPlayerMessageCatched(EventArgs e)
+        {
+            if (PlayerMessageRoomCatched != null)
+                PlayerMessageRoomCatched(this, e);
         }
 
         /// <summary>
@@ -484,6 +496,7 @@ namespace Osu.Ircbot
                 }
 
                 //BALLEK
+                /*
                 if (e.Message.ToLower().StartsWith("#map "))
                 {
                     long id;
@@ -498,7 +511,10 @@ namespace Osu.Ircbot
                         // Sending the event
                         OnMessageRoomCatched(changeEvent);
                     }
-                }
+                }*/
+
+                PlayerSpokeEventArgs playerEvent = new PlayerSpokeEventArgs() { MatchId = int.Parse(e.Channel.Substring(4)), PlayerName = e.From, Message = e.Message };
+                OnPlayerMessageCatched(playerEvent);
             }
         }
 

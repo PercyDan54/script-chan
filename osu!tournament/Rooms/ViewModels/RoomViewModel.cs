@@ -2,6 +2,7 @@
 using Osu.Api;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Mvvm.Ov.ViewModels;
+using Osu.Mvvm.Rooms.Chat.ViewModels;
 using Osu.Mvvm.Rooms.Export.ViewModels;
 using Osu.Mvvm.Rooms.Games.ViewModels;
 using Osu.Mvvm.Rooms.Irc.ViewModels;
@@ -36,6 +37,11 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// The options vm
         /// </summary>
         private IOptionsViewModel options;
+
+        /// <summary>
+        /// The chat vm
+        /// </summary>
+        private ChatViewModel chat;
 
         /// <summary>
         /// The games vm
@@ -76,8 +82,10 @@ namespace Osu.Mvvm.Rooms.ViewModels
             this.export = new ExportViewModel(room);
             this.irc = new IrcViewModel(this);
             this.players = new PlayersViewModel(room, irc);
+            this.chat = new ChatViewModel(room);
 
             UpdateRanking();
+            chat.Update();
         }
 
         #endregion
@@ -135,6 +143,25 @@ namespace Osu.Mvvm.Rooms.ViewModels
                 {
                     options = value;
                     NotifyOfPropertyChange(() => Options);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Games property
+        /// </summary>
+        public ChatViewModel Chat
+        {
+            get
+            {
+                return chat;
+            }
+            set
+            {
+                if (value != chat)
+                {
+                    chat = value;
+                    NotifyOfPropertyChange(() => Chat);
                 }
             }
         }
@@ -294,6 +321,11 @@ namespace Osu.Mvvm.Rooms.ViewModels
                 // Hide progress
                 await Dialog.HideProgress();
             }
+        }
+
+        public void UpdateChat()
+        {
+            chat.Update();
         }
 
         /// <summary>

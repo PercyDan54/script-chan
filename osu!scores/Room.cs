@@ -92,6 +92,8 @@ namespace Osu.Scores
         protected int countBans;
 
         protected bool isStreamed;
+
+        protected List<string> roomMessages;
         #endregion
 
         #region Constructors
@@ -109,6 +111,7 @@ namespace Osu.Scores
             commands = false;
             status = RoomStatus.NotStarted;
             isStreamed = false;
+            roomMessages = new List<string>();
             mode = Cache.GetCache("osu!options.db").Get("mode", "3");
             string t = Cache.GetCache("osu!options.db").Get("wctype", "Standard");
             string mp = Cache.GetCache("osu!options.db").Get("defaultmappool", "");
@@ -376,6 +379,14 @@ namespace Osu.Scores
             {
                 if (value != isStreamed)
                     isStreamed = value;
+            }
+        }
+
+        public List<string> RoomMessages
+        {
+            get
+            {
+                return roomMessages;
             }
         }
         #endregion

@@ -81,6 +81,8 @@ namespace Osu.Scores
         /// <returns>a task</returns>
         public async Task Update()
         {
+            List<long> bmToRemove = new List<long>();
+
             // For each pair in our pool
             foreach (KeyValuePair<long, Beatmap> pair in pool)
             {
@@ -90,11 +92,16 @@ namespace Osu.Scores
                 // If the beatmap doesn't exist
                 if (osu_beatmap == null)
                     // Remove this beatmap from the pool (Since there's some kind of error)
-                    pool.Remove(pair.Key);
+                    bmToRemove.Add(pair.Key);
                 // Else
                 else
                     // Change the osu!beatmap linked in the beatmap object
                     pair.Value.OsuBeatmap = osu_beatmap;
+            }
+
+            foreach(var bm in bmToRemove)
+            {
+                pool.Remove(bm);
             }
         }
 

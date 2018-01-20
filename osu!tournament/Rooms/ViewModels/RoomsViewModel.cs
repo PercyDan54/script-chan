@@ -63,6 +63,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
 
             bot = OsuIrcBot.GetInstancePrivate();
             bot.MessageRoomCatched += ircbot_MessageRoomCatched;
+            bot.PlayerMessageRoomCatched += ircbot_PlayerMessageRoomCatched;
 
             discordClient = DiscordClient.GetInstance();
 
@@ -386,6 +387,29 @@ namespace Osu.Mvvm.Rooms.ViewModels
                         }
                     }  
                 }
+            }
+        }
+
+        private async void ircbot_PlayerMessageRoomCatched(object sender, EventArgs e)
+        {
+            // Getting event type and informations
+            PlayerSpokeEventArgs multi_room = (PlayerSpokeEventArgs)e;
+
+            Room room = null;
+            if (Room.Rooms.TryGetValue(multi_room.MatchId, out room))
+            {
+                if(room.RoomMessages.Count >= 100)
+                {
+                    room.RoomMessages.RemoveAt(0);
+                }
+                room.RoomMessages.Add(string.Format("{0}: {1}", multi_room.PlayerName, multi_room.Message));
+            }
+            if(selected.Id == multi_room.MatchId)
+            {
+                Caliburn.Micro.Execute.OnUIThread((() =>
+                {
+                    selected_view_model.UpdateChat();
+                }));
             }
         }
         #endregion

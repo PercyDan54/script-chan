@@ -30,6 +30,9 @@
             <TabItem Header="Ranking">
                 <ContentControl x:Name="Ranking" />
             </TabItem>
+            <TabItem Header="Chat">
+                <ContentControl x:Name="Chat" />
+            </TabItem>
             <TabItem Header="Options">
                 <ContentControl x:Name="Options" />
             </TabItem>

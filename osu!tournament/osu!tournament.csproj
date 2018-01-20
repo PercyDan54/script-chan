@@ -91,6 +91,7 @@
     <Compile Include="Ov\ViewModels\OvViewModel.cs" />
     <Compile Include="Preparation\ViewModels\PreparationRoomViewModel.cs" />
     <Compile Include="Preparation\ViewModels\PreparationViewModel.cs" />
+    <Compile Include="Rooms\Chat\ViewModels\ChatViewModel.cs" />
     <Compile Include="Rooms\Export\ViewModels\ExportViewModel.cs" />
     <Compile Include="Rooms\Games\ViewModels\GamesViewModel.cs" />
     <Compile Include="Rooms\Games\ViewModels\GameViewModel.cs" />
@@ -147,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Preparation\Views\PreparationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rooms\Chat\Views\ChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
