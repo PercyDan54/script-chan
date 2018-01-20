@@ -19,6 +19,11 @@ namespace Osu.Api
         /// <summary>
         /// Scoring by combo
         /// </summary>
-        Combo = 2
+        Combo = 2,
+        
+        /// <summary>
+        /// Scoring by scoreV2
+        /// </summary>
+        ScoreV2 = 3
     }
 }
