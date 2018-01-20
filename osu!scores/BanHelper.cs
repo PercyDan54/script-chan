@@ -15,7 +15,6 @@ namespace Osu.Scores
     public class RefereeMatchHelper
     {
         protected static Dictionary<long, RefereeMatchHelper> dicInstance;
-        private const int MAX_BAN = 2;
 
         [DataMember]
         protected Team FirstTeamToBan { get; set; }
@@ -23,22 +22,14 @@ namespace Osu.Scores
         protected Team SecondTeamToBan { get; set; }
 
         [DataMember]
-        protected Beatmap FirstBeatmapBanned { get; set; }
-        [DataMember]
-        protected Beatmap SecondBeatmapBanned { get; set; }
-
-        [DataMember]
-        protected bool hasFirstTeamBanned;
-        [DataMember]
-        protected bool hasSecondTeamBanned;
+        protected List<Beatmap> BeatmapBanned { get; set; }
 
         [DataMember]
         protected List<Beatmap> picks;
 
         protected RefereeMatchHelper()
         {
-            hasFirstTeamBanned = false;
-            hasSecondTeamBanned = false;
+            BeatmapBanned = new List<Beatmap>();
             picks = new List<Beatmap>();
         }
         /// <summary>
@@ -59,19 +50,21 @@ namespace Osu.Scores
 
         public bool IsThisMapBanned(Beatmap bm)
         {
-            return (FirstBeatmapBanned?.OsuBeatmap.BeatmapID == bm.OsuBeatmap.BeatmapID || SecondBeatmapBanned?.OsuBeatmap.BeatmapID == bm.OsuBeatmap.BeatmapID);
+            return BeatmapBanned.Contains(bm); //(FirstBeatmapBanned?.OsuBeatmap.BeatmapID == bm.OsuBeatmap.BeatmapID || SecondBeatmapBanned?.OsuBeatmap.BeatmapID == bm.OsuBeatmap.BeatmapID);
         }
 
-        public bool CanBan()
+        private bool CanShowBan()
         {
-            if (hasSecondTeamBanned && hasFirstTeamBanned)
-                return false;
-            else
-                return true;
+            return BeatmapBanned.Count % 2 == 0;
         }
 
         public bool CanUnban(Beatmap bm)
         {
+            if (BeatmapBanned.Count != 0)
+                return BeatmapBanned.Last().Id == bm.Id;
+            else
+                return false;
+            /*
             if (!hasFirstTeamBanned && !hasSecondTeamBanned)
             {
                 return false;
@@ -99,12 +92,14 @@ namespace Osu.Scores
                     return false;
                 }
             }
+            */
         }
 
         public bool ApplyBan(Beatmap bm, Room room)
         {
             bool res = true;
-
+            BeatmapBanned.Add(bm);
+            /*
             if (!hasFirstTeamBanned)
             {
                 hasFirstTeamBanned = true;
@@ -127,6 +122,7 @@ namespace Osu.Scores
                 }
                 //text = GenerateActionMessage(SecondTeamToBan, SecondBeatmapBanned, true);
             }
+            */
 
             return res;
         }
@@ -135,6 +131,7 @@ namespace Osu.Scores
         {
             string text = null;
 
+            /*
             if (hasSecondTeamBanned)
             {
                 //text = GenerateActionMessage(SecondTeamToBan, SecondBeatmapBanned, false);
@@ -147,6 +144,8 @@ namespace Osu.Scores
                 hasFirstTeamBanned = false;
                 FirstBeatmapBanned = null;
             }
+            */
+            BeatmapBanned.RemoveAt(BeatmapBanned.Count - 1);
 
             return text;
         }
@@ -179,13 +178,27 @@ namespace Osu.Scores
         public Embed GenerateBanRecapMessage()
         {
             //Check if both bans have been made
-            if(!CanBan())
+            if(CanShowBan())
             {
                 Embed e = new Embed();
                 e.Title = "Ban Recap";
                 e.Fields = new List<Field>();
-                e.Fields.Add(new Field() { Name = FirstTeamToBan.Name, Value = string.Format("__{0}__ **{1} - {2} [{3}]**", FirstBeatmapBanned.PickType, FirstBeatmapBanned.OsuBeatmap.Artist, FirstBeatmapBanned.OsuBeatmap.Title, FirstBeatmapBanned.OsuBeatmap.Version) });
-                e.Fields.Add(new Field() { Name = SecondTeamToBan.Name, Value = string.Format("__{0}__ **{1} - {2} [{3}]**", SecondBeatmapBanned.PickType, SecondBeatmapBanned.OsuBeatmap.Artist, SecondBeatmapBanned.OsuBeatmap.Title, SecondBeatmapBanned.OsuBeatmap.Version) });
+
+                string first_team = "";
+                string second_team = "";
+
+                for (int i = 0; i < BeatmapBanned.Count; i++)
+                {
+                    var res = string.Format("__{0}__ **{1} - {2} [{3}]**" + System.Environment.NewLine, BeatmapBanned[i].PickType, BeatmapBanned[i].OsuBeatmap.Artist, BeatmapBanned[i].OsuBeatmap.Title, BeatmapBanned[i].OsuBeatmap.Version);
+                    if (i % 2 == 0)
+                        first_team += res;
+                    else
+                        second_team += res;
+                }
+
+
+                e.Fields.Add(new Field() { Name = FirstTeamToBan.Name, Value = first_team });
+                e.Fields.Add(new Field() { Name = SecondTeamToBan.Name, Value = second_team });
 
                 return e;
             }

@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
 using osu_discord;
 using osu_utils.DiscordModels;
@@ -79,6 +80,10 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                     name = r.Name;
                 }
                 DiscordHelper.SendRecap(message, DiscordChannelEnum.Default, name, r.Id.ToString());
+            }
+            else
+            {
+                Dialog.ShowDialog("Whoops!", "You need to ban the same number of maps for each team to display it!");
             }
         }
 

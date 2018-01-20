@@ -238,7 +238,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         public void MapBannerino()
         {
             RefereeMatchHelper bh = RefereeMatchHelper.GetInstance(room.Id);
-            if (bh.CanBan() && !isBanned)
+            if (!isBanned)
             {
                 isBanned = true;
                 //dbot.SendMessage(bh.ApplyBan(beatmap));
@@ -268,7 +268,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
             else
             {
-                Dialog.ShowDialog("Whoops!", "You can't unban this beatmap! It is either because there is no map banned or you have to unban the second beatmap first!");
+                Dialog.ShowDialog("Whoops!", "You have to unban the last banned map or ban a map first!");
             }
         }
         #endregion
