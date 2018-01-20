@@ -35,7 +35,7 @@ namespace Osu.Scores
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="r"></param>
+        /// <param name="r">The room</param>
         /// <param name="firstTeam">THE FIRST TEAM TO PICK (not banning, which is the contrary)</param>
         public void UpdateTeamBanOrder(Room r, OsuTeam firstTeam)
         {
@@ -50,7 +50,7 @@ namespace Osu.Scores
 
         public bool IsThisMapBanned(Beatmap bm)
         {
-            return BeatmapBanned.Contains(bm); //(FirstBeatmapBanned?.OsuBeatmap.BeatmapID == bm.OsuBeatmap.BeatmapID || SecondBeatmapBanned?.OsuBeatmap.BeatmapID == bm.OsuBeatmap.BeatmapID);
+            return BeatmapBanned.Contains(bm); 
         }
 
         private bool CanShowBan()
@@ -64,90 +64,19 @@ namespace Osu.Scores
                 return BeatmapBanned.Last().Id == bm.Id;
             else
                 return false;
-            /*
-            if (!hasFirstTeamBanned && !hasSecondTeamBanned)
-            {
-                return false;
-            }
-            
-            if(hasSecondTeamBanned)
-            {
-                if(SecondBeatmapBanned.OsuBeatmap.BeatmapID == bm.OsuBeatmap.BeatmapID)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                if(FirstBeatmapBanned.OsuBeatmap.BeatmapID == bm.OsuBeatmap.BeatmapID)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            */
         }
 
         public bool ApplyBan(Beatmap bm, Room room)
         {
             bool res = true;
             BeatmapBanned.Add(bm);
-            /*
-            if (!hasFirstTeamBanned)
-            {
-                hasFirstTeamBanned = true;
-                FirstBeatmapBanned = bm;
-                if(room.IsStreamed && ObsBanHelper.IsValid)
-                {
-                    if (!ObsBanHelper.GetInstance().SetBannedMap(FirstTeamToBan.Name, bm.OsuBeatmap.BeatmapID.ToString(), 1))
-                        res = false;
-                }
-                //text = GenerateActionMessage(FirstTeamToBan, FirstBeatmapBanned, true);
-            }
-            else if(!hasSecondTeamBanned)
-            {
-                hasSecondTeamBanned = true;
-                SecondBeatmapBanned = bm;
-                if (room.IsStreamed && ObsBanHelper.IsValid)
-                {
-                    if (!ObsBanHelper.GetInstance().SetBannedMap(SecondTeamToBan.Name, bm.OsuBeatmap.BeatmapID.ToString(), 1))
-                        res = false;
-                }
-                //text = GenerateActionMessage(SecondTeamToBan, SecondBeatmapBanned, true);
-            }
-            */
 
             return res;
         }
 
-        public string RemoveBan()
+        public void RemoveBan()
         {
-            string text = null;
-
-            /*
-            if (hasSecondTeamBanned)
-            {
-                //text = GenerateActionMessage(SecondTeamToBan, SecondBeatmapBanned, false);
-                hasSecondTeamBanned = false;
-                SecondBeatmapBanned = null;
-            }
-            else if (hasFirstTeamBanned)
-            {
-                //text = GenerateActionMessage(FirstTeamToBan, FirstBeatmapBanned, false);
-                hasFirstTeamBanned = false;
-                FirstBeatmapBanned = null;
-            }
-            */
             BeatmapBanned.RemoveAt(BeatmapBanned.Count - 1);
-
-            return text;
         }
 
         public void AddPick(Beatmap beatmap)
