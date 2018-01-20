@@ -448,7 +448,9 @@ namespace Osu.Ircbot
         /// <param name="e">the arguments</param>
         private void HandleOnChannelMessage(object sender, ChannelMessageEventArgs e)
         {
-            //var test = e.Text;
+            // Probably better to get bancho messages as well to the room chat..
+            PlayerSpokeEventArgs playerEvent = new PlayerSpokeEventArgs() { MatchId = int.Parse(e.Channel.Substring(4)), PlayerName = e.From, Message = e.Message };
+            OnPlayerMessageCatched(playerEvent);
 
             // If BanchoBot is speaking
             if (e.From.CompareTo("BanchoBot") == 0)
@@ -517,9 +519,6 @@ namespace Osu.Ircbot
                         OnMessageRoomCatched(changeEvent);
                     }
                 }*/
-
-                PlayerSpokeEventArgs playerEvent = new PlayerSpokeEventArgs() { MatchId = int.Parse(e.Channel.Substring(4)), PlayerName = e.From, Message = e.Message };
-                OnPlayerMessageCatched(playerEvent);
             }
         }
 
