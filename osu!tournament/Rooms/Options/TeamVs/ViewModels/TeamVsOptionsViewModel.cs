@@ -207,6 +207,30 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
             }
         }
 
+        public List<OsuMode> GameMode
+        {
+            get
+            {
+                return new List<OsuMode>() { OsuMode.Standard, OsuMode.Taiko, OsuMode.CTB, OsuMode.Mania };
+            }
+        }
+
+        public OsuMode SelectedGameMode
+        {
+            get
+            {
+                return room.Wctype;
+            }
+            set
+            {
+                if (room.Wctype != value)
+                {
+                    room.Wctype = value;
+                    NotifyOfPropertyChange(() => SelectedGameMode);
+                }
+            }
+        }
+
         /// <summary>
         /// The list of allowed BO number property
         /// </summary>

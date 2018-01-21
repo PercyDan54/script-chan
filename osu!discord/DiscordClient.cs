@@ -70,7 +70,7 @@ namespace osu_discord
         }
 
         //Post a message using a Payload object
-        public void PostMessage(Payload payload, DiscordChannelEnum channel)
+        public async Task<HttpResponseMessage> PostMessage(Payload payload, DiscordChannelEnum channel)
         {
             if(IsEnabled)
             {
@@ -85,10 +85,11 @@ namespace osu_discord
                 {
                     NameValueCollection data = new NameValueCollection();
                     data["payload"] = payloadJson;
-
-                    var response = client.PostAsync(uri, new StringContent(payloadJson, Encoding.UTF8, "application/json")).Result;
+                    return await Task.Run(() => client.PostAsync(uri, new StringContent(payloadJson, Encoding.UTF8, "application/json")));
                 }
             }
+
+            return null;
         }
 
         /// <summary>

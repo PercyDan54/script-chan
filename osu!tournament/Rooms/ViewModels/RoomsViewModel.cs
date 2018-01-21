@@ -404,11 +404,12 @@ namespace Osu.Mvvm.Rooms.ViewModels
                 }
                 room.RoomMessages.Add(string.Format("{0}: {1}", multi_room.PlayerName, multi_room.Message));
             }
-            if(selected.Id == multi_room.MatchId)
+            if(selected != null && selected.Id == multi_room.MatchId)
             {
                 Caliburn.Micro.Execute.OnUIThread((() =>
                 {
-                    selected_view_model.UpdateChat();
+                    if(selected_view_model != null)
+                        selected_view_model.UpdateChat();
                 }));
             }
         }
