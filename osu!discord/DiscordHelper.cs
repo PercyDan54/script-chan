@@ -32,7 +32,7 @@ namespace osu_discord
             e.Author = new Author() { IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400731693192839179/plus.png", Name = string.Format("{0} VS {1}", redname, bluename), Url = "https://osu.ppy.sh/community/matches/" + id };
             e.Color = "2061822";
             e.Title = "The match has been created!";
-            e.Description = "You can join the match on IRC by typing `/join #mp_" + id + "`";
+            e.Description = "You can join the match on IRC by typing ```/join #mp_" + id + "```";
             Payload p = GenerateBasePayload();
             p.Embeds.Add(GenerateFooter(e));
             DiscordClient.GetInstance().PostMessage(p, DiscordChannelEnum.Default);

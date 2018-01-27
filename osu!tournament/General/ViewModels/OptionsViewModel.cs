@@ -10,6 +10,8 @@ using System.Windows.Threading;
 using Osu.Scores;
 using System.Linq;
 using Osu.Utils.Bans;
+using MahApps.Metro;
+using System.Windows;
 
 namespace Osu.Mvvm.General.ViewModels
 {
@@ -34,6 +36,8 @@ namespace Osu.Mvvm.General.ViewModels
         private OsuMode gm;
 
         private Osu.Scores.Mappool mappool;
+
+        private string colorMode;
         #endregion
 
         #region Constructor
@@ -47,6 +51,9 @@ namespace Osu.Mvvm.General.ViewModels
             bot = OsuIrcBot.GetInstancePrivate();
             botpublic = OsuIrcBot.GetInstancePublic();
             string t = Cache.GetCache("osu!options.db").Get("wctype", "Standard");
+            string cMode = Cache.GetCache("osu!options.db").Get("colormode", "BaseLight");
+            //SelectedColorMode = cMode;
+
             string pool = Cache.GetCache("osu!options.db").Get("defaultmappool", "");
             switch (t)
             {
@@ -167,19 +174,35 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
-        public string OBSBanPath
+        public List<string> ColorMode
         {
             get
             {
-                return ObsBanHelper.Path;
+                return new List<string> { "BaseLight", "BaseDark" };
             }
+        }
+
+        public string test
+        {
+            get;set;
+        }
+
+        /// <summary>
+        /// The selected BO property
+        /// </summary>
+        public string SelectedColorMode
+        {
+            get
+            {
+                return colorMode;
+            }
+
             set
             {
-                if(value != ObsBanHelper.Path)
-                {
-                    ObsBanHelper.Path = value;
-                    NotifyOfPropertyChange(() => OBSBanPath);
-                }
+                var theme = ThemeManager.DetectAppStyle(Application.Current);
+                var bob = ThemeManager.GetAccent(value);
+                ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, ThemeManager.GetAppTheme(value));
+                NotifyOfPropertyChange(() => SelectedColorMode);
             }
         }
 

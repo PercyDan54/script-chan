@@ -624,13 +624,24 @@ namespace Osu.Scores
             Cache cache = Cache.GetCache("osu!cache.db");
             Dictionary<long, OsuRoom> matches = cache.GetObject<Dictionary<long, OsuRoom>>("rooms", new Dictionary<long, OsuRoom>());
             Dictionary<long, Api.OsuTeam> teamvsfirst = cache.GetObject<Dictionary<long, Api.OsuTeam>>("teamvs_isbluefirstpicking", new Dictionary<long, Api.OsuTeam>());
+            Dictionary<long, string> mappoolSet = cache.GetObject<Dictionary<long, string>>("mappool_set", new Dictionary<long, string>());
 
             OsuTeam firstteam;
+            string poolname;
 
             foreach (var match in matches)
             {
                 rooms[match.Key] = new Room(match.Value);
                 await rooms[match.Key].Update(false);
+                mappoolSet.TryGetValue(match.Key, out poolname);
+                if (!string.IsNullOrEmpty(poolname))
+                {
+                    rooms[match.Key].Mappool = Mappool.Mappools.FirstOrDefault(x => x.Name == poolname);
+                    if(rooms[match.Key].Mappool != null)
+                    {
+                        rooms[match.Key].Manual = false;
+                    }
+                }
                 if(rooms[match.Key].Ranking.type == Ranking.Type.TeamVs && teamvsfirst.TryGetValue(match.Key, out firstteam))
                 {
                     ((TeamVs)rooms[match.Key].Ranking).First = firstteam;
@@ -646,16 +657,20 @@ namespace Osu.Scores
             Cache cache = Cache.GetCache("osu!cache.db");
             Dictionary<long, OsuRoom> matches = new Dictionary<long, OsuRoom>();
             Dictionary<long, Api.OsuTeam> teamfirstdic = new Dictionary<long, Api.OsuTeam>();
+            Dictionary<long, string> mappoolSet = new Dictionary<long, string>();
             foreach (var r in rooms)
             {
                 matches.Add(r.Key, r.Value.OsuRoom);
                 if(r.Value.Ranking.type == Ranking.Type.TeamVs)
                 {
                     teamfirstdic.Add(r.Key, ((TeamVs)r.Value.Ranking).First);
+                    if(r.Value.Mappool != null)
+                    mappoolSet.Add(r.Key, r.Value.Mappool.Name);
                 }
             }
             cache["rooms"] = matches;
             cache["teamvs_isbluefirstpicking"] = teamfirstdic;
+            cache["mappool_set"] = mappoolSet;
         }
 
         /// <summary>

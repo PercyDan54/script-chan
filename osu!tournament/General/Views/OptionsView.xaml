@@ -37,10 +37,9 @@
         <Label Content="General" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" />
         <Label Content="osu!api key (required)" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" />
         <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding ApiKey, Mode=TwoWay}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" />
-        <Label Content="OBS Ban path (optional)" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" />
-        <TextBox x:Name="OBSBanPath" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+        <Label Content="Color mode" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" />
+        <ComboBox x:Name="ColorMode" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
         <Button x:Name="Save" Content="Save" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="2" />
-        <Button x:Name="SavePath" Content="Save" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="3" Grid.Row="4" />
         <Label Content="IRC (optional)" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" />
         <Label Content="Username" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="6" />
         <Label Content="Password" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="6" />

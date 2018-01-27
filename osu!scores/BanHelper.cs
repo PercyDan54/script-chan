@@ -22,7 +22,7 @@ namespace Osu.Scores
         protected Team SecondTeamToBan { get; set; }
 
         [DataMember]
-        protected List<Beatmap> BeatmapBanned { get; set; }
+        protected List<Beatmap> BeatmapBanned;
 
         [DataMember]
         protected List<Beatmap> picks;
@@ -50,7 +50,7 @@ namespace Osu.Scores
 
         public bool IsThisMapBanned(Beatmap bm)
         {
-            return BeatmapBanned.Contains(bm); 
+            return BeatmapBanned.Exists(x => x.Id == bm.Id); 
         }
 
         private bool CanShowBan()
