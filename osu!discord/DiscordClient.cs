@@ -47,7 +47,7 @@ namespace osu_discord
             }
             else
             {
-                _isEnabled = true;
+                _isEnabled = false;
             }
         }
 
@@ -64,7 +64,7 @@ namespace osu_discord
                 Embed embed = room.Ranking.GetDiscordStatus();
                 if(embed != null)
                 { 
-                    DiscordHelper.SendGame(embed, DiscordChannelEnum.Default);
+                    DiscordHelper.SendGame(embed, new List<DiscordChannelEnum> { DiscordChannelEnum.Default, DiscordChannelEnum.Admins });
                 }
             }
         }
@@ -79,13 +79,16 @@ namespace osu_discord
                     NullValueHandling = NullValueHandling.Ignore
                 });
 
-                string uri = _uriDic[channel] != null ? _uriDic[channel] : _uriDic[DiscordChannelEnum.Default];
+                string uri = _uriDic[channel];
 
-                using (HttpClient client = new HttpClient())
+                if(!string.IsNullOrEmpty(uri))
                 {
-                    NameValueCollection data = new NameValueCollection();
-                    data["payload"] = payloadJson;
-                    return await Task.Run(() => client.PostAsync(uri, new StringContent(payloadJson, Encoding.UTF8, "application/json")));
+                    using (HttpClient client = new HttpClient())
+                    {
+                        NameValueCollection data = new NameValueCollection();
+                        data["payload"] = payloadJson;
+                        return await Task.Run(() => client.PostAsync(uri, new StringContent(payloadJson, Encoding.UTF8, "application/json")));
+                    }
                 }
             }
 

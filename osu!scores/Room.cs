@@ -115,7 +115,11 @@ namespace Osu.Scores
             status = RoomStatus.NotStarted;
             isStreamed = false;
             roomMessages = new List<string>();
-            roomConfiguration = new RoomConfiguration() { TeamMode = (OsuTeamType)int.Parse(InfosHelper.TourneyInfos.TeamMode), ScoreMode = (OsuScoringType)int.Parse(InfosHelper.TourneyInfos.ScoreMode), RoomSize = InfosHelper.TourneyInfos.RoomSize };
+
+            var scoremode = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.ScoreMode) ? (OsuScoringType)int.Parse(InfosHelper.TourneyInfos.ScoreMode) : OsuScoringType.Score;
+            var roomsize = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.RoomSize) ? InfosHelper.TourneyInfos.RoomSize : "16";
+
+            roomConfiguration = new RoomConfiguration() { ScoreMode = scoremode, RoomSize = roomsize };
             mode = Cache.GetCache("osu!options.db").Get("mode", "3");
             string t = Cache.GetCache("osu!options.db").Get("wctype", "Standard");
             string mp = Cache.GetCache("osu!options.db").Get("defaultmappool", "");
@@ -437,13 +441,18 @@ namespace Osu.Scores
                 case Ranking.Type.Auto:
                     // If the regex didn't match
                     if (!match.Success)
+                    {
                         // Head to head
                         head_to_head = new HeadToHead(this);
+                        RoomConfiguration.TeamMode = OsuTeamType.HeadToHead;
+                    }
+                    
                     // Else
                     else
                     {
                         // Create a new teamvs
                         team_vs = new TeamVs(this);
+                        RoomConfiguration.TeamMode = OsuTeamType.TeamVs;
 
                         // Get the team names
                         team_vs.Blue.Name = match.Groups[3].Value;

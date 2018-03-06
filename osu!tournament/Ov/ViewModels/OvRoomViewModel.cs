@@ -113,6 +113,14 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        public String InBetweenText
+        {
+            get
+            {
+                return (room == null || room.Ranking.GetType() == typeof(Osu.Scores.TeamVs)) ? " VS " : room.Name;
+            }
+        }
+
         /// <summary>
         /// Blue team name property
         /// </summary>

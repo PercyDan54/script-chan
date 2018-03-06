@@ -29,7 +29,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" FontSize="18" Margin="5,0,0,0" Grid.ColumnSpan="3">
                 <Run Text="{Binding TeamRed, Mode=OneWay}" Foreground="#FFFF2727" />
-                <Run Text=" VS " />
+                <Run Text="{Binding InBetweenText, Mode=OneWay}" />
                 <Run Text="{Binding TeamBlue, Mode=OneWay}" Foreground="#FF0180FF"/>
             </TextBlock>
             <Label x:Name="Timer" Content="38min" Grid.Column="6" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Foreground="#FF6A6A6A" Margin="0,0,0,0" FontSize="14"/>

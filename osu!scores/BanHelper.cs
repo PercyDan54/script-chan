@@ -39,8 +39,11 @@ namespace Osu.Scores
         /// <param name="firstTeam">THE FIRST TEAM TO PICK (not banning, which is the contrary)</param>
         public void UpdateTeamBanOrder(Room r, OsuTeam firstTeam)
         {
-            FirstTeamToBan = firstTeam == OsuTeam.Blue ? ((Osu.Scores.TeamVs)r.Ranking).Red : ((Osu.Scores.TeamVs)r.Ranking).Blue;
-            SecondTeamToBan = firstTeam == OsuTeam.Blue ? ((Osu.Scores.TeamVs)r.Ranking).Blue : ((Osu.Scores.TeamVs)r.Ranking).Red;
+            if(r.Ranking.GetType() == typeof(Osu.Scores.TeamVs))
+            {
+                FirstTeamToBan = firstTeam == OsuTeam.Blue ? ((Osu.Scores.TeamVs)r.Ranking).Red : ((Osu.Scores.TeamVs)r.Ranking).Blue;
+                SecondTeamToBan = firstTeam == OsuTeam.Blue ? ((Osu.Scores.TeamVs)r.Ranking).Blue : ((Osu.Scores.TeamVs)r.Ranking).Red;
+            }
         }
 
         public bool IsThisMapPicked(Beatmap bm)
@@ -124,7 +127,6 @@ namespace Osu.Scores
                     else
                         second_team += res;
                 }
-
 
                 e.Fields.Add(new Field() { Name = FirstTeamToBan.Name, Value = first_team });
                 e.Fields.Add(new Field() { Name = SecondTeamToBan.Name, Value = second_team });

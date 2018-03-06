@@ -111,6 +111,7 @@
       <DependentUpon>PlayerLineView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Rooms\Ranking\IRankingViewModel.cs" />
+    <Compile Include="Rooms\Ranking\TeamVs\ViewModels\MultiplayerCommandsViewModel.cs" />
     <Compile Include="Rooms\Ranking\TeamVs\ViewModels\TeamVsRankingViewModel.cs" />
     <Compile Include="Rooms\ViewModels\IRCViewModel.cs" />
     <Compile Include="Rooms\ViewModels\RoomsViewModel.cs" />
@@ -174,6 +175,10 @@
     <Page Include="Rooms\Irc\Views\IrcView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rooms\Ranking\TeamVs\Views\MultiplayerCommandsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Rooms\Ranking\TeamVs\Views\MappoolPickerView.xaml">
       <SubType>Designer</SubType>

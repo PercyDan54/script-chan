@@ -52,11 +52,13 @@ namespace Osu.Mvvm
             // Initialize the osu!ircbot
             bool isIrcInit = OsuIrcBot.Initialize();
 
+            /*
             if (!isIrcInit)
             {
                 await Dialog.ShowConfirmation("Error", "IRC initialization failed. Invalid data in the cache.");
                 Application.Current.MainWindow.Close();
             }
+            */
 
             // Initialize discord webhooks
             DiscordClient.Initialize();

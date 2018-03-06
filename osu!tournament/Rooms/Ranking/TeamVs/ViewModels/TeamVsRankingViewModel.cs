@@ -29,6 +29,8 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
         private MappoolPickerViewModel mpvm;
 
+        private MultiplayerCommandsViewModel commandsVM;
+
         private bool abortHappened;
 
         private bool isMovingWithMessage;
@@ -46,6 +48,8 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             isMovingWithMessage = true;
 
             MappoolPicker = new MappoolPickerViewModel(room);
+
+            MultiCommands = new MultiplayerCommandsViewModel(room, ranking.Red.Name, ranking.Blue.Name);
 
             Update();
         }
@@ -112,6 +116,22 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 {
                     mpvm = value;
                     NotifyOfPropertyChange(() => MappoolPicker);
+                }
+            }
+        }
+
+        public MultiplayerCommandsViewModel MultiCommands
+        {
+            get
+            {
+                return commandsVM;
+            }
+            set
+            {
+                if (value != commandsVM)
+                {
+                    commandsVM = value;
+                    NotifyOfPropertyChange(() => MultiCommands);
                 }
             }
         }
@@ -204,152 +224,6 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             abortHappened = !abortHappened;
             ranking.DidAbortHappened = abortHappened;
             Dialog.ShowDialog("Whoops!", "Abort taken in consideration!");
-        }
-
-        public async void SwitchAll()
-        {
-            await Dialog.ShowProgress("Please wait", "Sending all switch commands...");
-            string res1 = await Switch(BlueTeamName);
-            string res2 = await Switch(RedTeamName);
-            await Dialog.HideProgress();
-            Dialog.ShowDialog("Switch done!", res1 + System.Environment.NewLine + res2);
-        }
-
-        public async void MoveAll()
-        {
-            await Dialog.ShowProgress("Please wait", "Sending all moving commands...");
-            string res1 = Move(BlueTeamName, true);
-            string res2 = Move(RedTeamName, false);
-            if (isMovingWithMessage)
-            {
-                await Task.Delay(3000);
-                OsuIrcBot.GetInstancePrivate().SendWelcomeMessage(room);
-            }
-            await Dialog.HideProgress();
-            Dialog.ShowDialog("Switch done!", res1 + System.Environment.NewLine + res2);
-        }
-
-        private async Task<string> Switch(string name)
-        {
-            SwitchHandler sh = new SwitchHandler();
-
-            if (sh.FillPlayerList(name))
-            {
-                var switchhandler = await OsuIrcBot.GetInstancePublic().SwitchPlayers(sh);
-                string message = "[" + name + "]" + System.Environment.NewLine + "players switched successfully : " + System.Environment.NewLine;
-                List<string> playerToAdd = new List<string>();
-                foreach(var p in switchhandler.Players.FindAll(x => x.IsSwitched))
-                {
-                    playerToAdd.Add(p.Username);
-                }
-                message += string.Join(", ", playerToAdd) + System.Environment.NewLine;
-                message += System.Environment.NewLine + "players not found : " + System.Environment.NewLine;
-                playerToAdd.Clear();
-                foreach (var p in switchhandler.Players.FindAll(x => !x.IsSwitched))
-                {
-                    playerToAdd.Add(p.Username);
-                }
-                message += string.Join(", ", playerToAdd) + System.Environment.NewLine;
-
-                if (switchhandlers.ContainsKey(name))
-                {
-                    switchhandlers.GetValueOrDefault(name).UpdateWithNewSwitch(switchhandler);
-                }
-                else
-                {
-                    switchhandlers.Add(name, switchhandler);
-                }
-
-                return message;
-            }
-            else
-            {
-                return "Team not found" + name + " doesn't have any player stored in osu!players.db";
-            }
-        }
-
-        private string Move(string name, bool isBlueTeam)
-        {
-            string message;
-            var switchhandler = switchhandlers.GetValueOrDefault(name);
-            if(switchhandler != null)
-            {
-                var firstp = switchhandler.Players.Find(x => x.Team == name && x.IsSwitched == true);
-                if(firstp != null)
-                {
-                    int slotnumber = InfosHelper.TourneyInfos.PlayersPerTeam + 1;
-                    OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, string.Format("!mp move {0} {1}", firstp.Username, isBlueTeam ? "1" : slotnumber + ""));
-                    message = name + " handled successfully";
-                }
-                else
-                {
-                    message = name + " handled with errors : no players connected";
-                }
-                
-            }
-            else
-            {
-                message = "You haven't switched players for team " + name;
-            }
-            return message;
-        }
-
-        public async void SwitchBlue()
-        {
-            await Dialog.ShowProgress("Please wait", "Sending all switch commands...");
-            string res = await Switch(BlueTeamName);
-            await Dialog.HideProgress();
-            Dialog.ShowDialog("Switch done!", res);
-        }
-
-        public async void SwitchRed()
-        {
-            await Dialog.ShowProgress("Please wait", "Sending all switch commands...");
-            string res = await Switch(RedTeamName);
-            await Dialog.HideProgress();
-            Dialog.ShowDialog("Switch done!", res);
-        }
-
-        public async void MoveBlue()
-        {
-            await Dialog.ShowProgress("Please wait", "Sending all move commands...");
-            string res1 = Move(BlueTeamName, true);
-            if (isMovingWithMessage)
-            {
-                await Task.Delay(3000);
-                OsuIrcBot.GetInstancePrivate().SendWelcomeMessage(room);
-            }
-            await Dialog.HideProgress();
-            Dialog.ShowDialog("Switch done!", res1);
-        }
-
-        public async void MoveRed()
-        {
-            await Dialog.ShowProgress("Please wait", "Sending all move commands...");
-            string res2 = Move(RedTeamName, false);
-            if(isMovingWithMessage)
-            {
-                await Task.Delay(3000);
-                OsuIrcBot.GetInstancePrivate().SendWelcomeMessage(room);
-            }
-            await Dialog.HideProgress();
-            Dialog.ShowDialog("Switch done!", res2);
-        }
-
-        public void SendStart()
-        {
-            OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, "!mp start 5");
-        }
-
-        public void SendSettings()
-        {
-            OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, "!mp settings");
-        }
-
-        public async void SendQuickSwitch()
-        {
-            await Switch(BlueTeamName);
-            await Switch(RedTeamName);
         }
         #endregion
     }

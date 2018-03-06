@@ -400,9 +400,12 @@ namespace Osu.Scores
                 }
 
                 embed.Fields.Add(new Field() { Name = "Status", Value = GetStatus().Last() + " " + (room.Status == RoomStatus.Finished ? ":clap:" : ":loudspeaker:") });
-                if(room.Status == RoomStatus.Finished)
+
+                if (room.Status == RoomStatus.Finished)
                 {
                     embed.Image = new Image { Url = "https://78.media.tumblr.com/b94193615145d12bfb64aa77b677269e/tumblr_njzqukOpBP1ti1gm1o1_500.gif" };
+                    embed.Thumbnail = new Image { Url = "https://cdn.discordapp.com/attachments/130304896581763072/411660079771811870/crown.png" };
+                    embed.Color = "10494192";
                 }
                 
                 return embed;

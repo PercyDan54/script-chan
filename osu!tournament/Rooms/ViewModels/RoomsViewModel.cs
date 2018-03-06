@@ -281,7 +281,6 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// </summary>
         public async void DeleteRoom()
         {
-            discordClient.OnUpdateRoom(SelectedRoom);
             if (await Dialog.ShowConfirmation("Delete room", "Are you sure you want to delete the room ?"))
             {
                 Log.Info("Deleting room \"" + SelectedRoom.Name + "\"");
@@ -406,7 +405,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
             }
             if(selected != null && selected.Id == multi_room.MatchId)
             {
-                Caliburn.Micro.Execute.OnUIThread((() =>
+                Caliburn.Micro.Execute.OnUIThreadAsync((() =>
                 {
                     if(selected_view_model != null)
                         selected_view_model.UpdateChat();

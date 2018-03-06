@@ -115,6 +115,17 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             }
         }
 
+        public string RowSpanScore
+        {
+            get
+            {
+                if (IsControlVisible == "Hidden")
+                    return "2";
+                else
+                    return "1";
+            }
+        }
+
         public string SizePlayerList
         {
             get
@@ -180,6 +191,7 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             UpdatePlayersLines();
             NotifyOfPropertyChange(() => IsControlVisible);
             NotifyOfPropertyChange(() => SizePlayerList);
+            NotifyOfPropertyChange(() => RowSpanScore);
         }
         #endregion
     }

@@ -24,10 +24,14 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         {
             searchBoxValue = "";
             r = room;
-            beatmaps = new BindableCollection<BeatmapPickerViewModel>();
+
+            if(beatmaps != null)
+                beatmaps.Clear();
+            else
+                beatmaps = new BindableCollection<BeatmapPickerViewModel>();
+
             if (room.Mappool != null)
             {
-                beatmaps.Clear();
                 foreach (KeyValuePair<long, Beatmap> kvp in room.Mappool?.Pool)
                 {
                     beatmaps.Add(new BeatmapPickerViewModel(room, kvp.Value));
@@ -42,9 +46,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             get
             {
                 if (searchBoxValue == "")
-                    return beatmaps;
+                    return new BindableCollection<BeatmapPickerViewModel>(beatmaps.OrderBy(x => x.Beatmap.PickType));
 
-                return new BindableCollection<BeatmapPickerViewModel>(beatmaps.Where(x => x.Beatmap.OsuBeatmap.Title.ToUpper().Contains(searchBoxValue.ToUpper()) || x.Beatmap.OsuBeatmap.Artist.ToUpper().Contains(searchBoxValue.ToUpper())));
+                return new BindableCollection<BeatmapPickerViewModel>(beatmaps.Where(x => x.Beatmap.OsuBeatmap.Title.ToUpper().Contains(searchBoxValue.ToUpper()) || x.Beatmap.OsuBeatmap.Artist.ToUpper().Contains(searchBoxValue.ToUpper())).OrderBy(entry => entry.Beatmap.PickType));
             }
         }
 
@@ -79,7 +83,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 {
                     name = r.Name;
                 }
-                DiscordHelper.SendRecap(message, DiscordChannelEnum.Default, name, r.Id.ToString());
+                DiscordHelper.SendRecap(message, new List<DiscordChannelEnum> { DiscordChannelEnum.Default, DiscordChannelEnum.Admins }, name, r.Id.ToString());
             }
             else
             {
@@ -101,7 +105,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 {
                     name = r.Name;
                 }
-                DiscordHelper.SendRecap(message, DiscordChannelEnum.Default, name, r.Id.ToString());
+                DiscordHelper.SendRecap(message, new List<DiscordChannelEnum> { DiscordChannelEnum.Admins }, name, r.Id.ToString());
             }
             //DiscordBot.GetInstance().SendMessage(message);
         }

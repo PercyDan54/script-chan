@@ -79,8 +79,6 @@ namespace Osu.Ircbot
         private string irc_address;
 
         private string adminlist;
-
-        private SwitchHandler currentswitchhandler;
         #endregion
 
         #region Attributes
@@ -232,6 +230,7 @@ namespace Osu.Ircbot
             client.OnConnect += (s, e) =>
             {
                 log.Info("IRC Bot has been successfully connected!");
+                isConnected = true;
             };
 
             log.Info("The bot has been initialised!");
@@ -334,15 +333,36 @@ namespace Osu.Ircbot
             }
         }
 
-        public async Task<SwitchHandler> SwitchPlayers(SwitchHandler sh)
+        public void SwitchPlayers(SwitchHandler sh)
         {
-            currentswitchhandler = sh;
-            foreach(var user in currentswitchhandler.Players)
+            foreach(var user in sh.Players)
             {
                 SendMessage("BanchoBot", "!mp switch " + user.Username);
             }
-            await Task.Delay(10000);
-            return currentswitchhandler;
+        }
+
+        public void SwitchPlayers(List<string> players)
+        {
+            foreach (var user in players)
+            {
+                SendMessage("BanchoBot", "!mp switch " + user);
+            }
+        }
+
+        public void InvitePlayers(long id, SwitchHandler sh)
+        {
+            foreach (var user in sh.Players)
+            {
+                SendMessage("#mp_" + id, "!mp invite " + user.Username);
+            }
+        }
+
+        public void InvitePlayers(long id, List<string> players)
+        {
+            foreach (var user in players)
+            {
+                SendMessage("#mp_" + id, "!mp invite " + user);
+            }
         }
 
         public void CreateMatch(string blueteam, string redteam)
@@ -532,11 +552,13 @@ namespace Osu.Ircbot
             if(e.From == "BanchoBot")
             {
                 // Switch command
+                /*
                 var switchCommand = regexSwitchedLine.Match(e.Message);
                 if (switchCommand.Success && currentswitchhandler != null)
                 {
                     currentswitchhandler.FoundPlayer(switchCommand.Groups[1].Value);
                 }
+                */
 
                 // Create room command
                 var createCommand = regexCreateCommand.Match(e.Message);

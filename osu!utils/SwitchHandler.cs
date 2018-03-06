@@ -20,8 +20,8 @@ namespace Osu.Utils
         public bool FillPlayerList(string teamname)
         {
             Cache cache = Cache.GetCache("osu!teams.db");
-            var t = cache.GetArray(teamname, new string[1]);
-            if(t.Length != 1)
+            var t = cache.GetArray(teamname, new string[0]);
+            if(t.Length != 0)
             {
                 foreach (var u in t)
                 {

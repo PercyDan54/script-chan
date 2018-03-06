@@ -9,21 +9,27 @@ namespace osu_discord
 {
     public static class DiscordHelper
     {
-        public static void SendGame(Embed embed, DiscordChannelEnum channel)
+        public static void SendGame(Embed embed, List<DiscordChannelEnum> channels)
         {
             Payload p = GenerateBasePayload();
             p.Embeds.Add(GenerateFooter(embed));
-            DiscordClient.GetInstance().PostMessage(p, channel);
+            foreach(DiscordChannelEnum channel in channels)
+            {
+                DiscordClient.GetInstance().PostMessage(p, channel);
+            }
         }
 
-        public static void SendRecap(Embed embed, DiscordChannelEnum channel, string name, string id)
+        public static void SendRecap(Embed embed, List<DiscordChannelEnum> channels, string name, string id)
         {
             Payload p = GenerateBasePayload();
             embed.Author = new Author() { IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400744720772628481/more-info-button.png", Name = name, Url = "https://osu.ppy.sh/community/matches/" + id };
             embed.URL = "https://osu.ppy.sh/community/matches/" + id;
             embed.Color = "16574595";
             p.Embeds.Add(GenerateFooter(embed));
-            DiscordClient.GetInstance().PostMessage(p, channel);
+            foreach (DiscordChannelEnum channel in channels)
+            {
+                DiscordClient.GetInstance().PostMessage(p, channel);
+            }
         }
 
         public static void SendNewMatch(string id, string redname, string bluename)
@@ -35,7 +41,7 @@ namespace osu_discord
             e.Description = "You can join the match on IRC by typing ```/join #mp_" + id + "```";
             Payload p = GenerateBasePayload();
             p.Embeds.Add(GenerateFooter(e));
-            DiscordClient.GetInstance().PostMessage(p, DiscordChannelEnum.Default);
+            DiscordClient.GetInstance().PostMessage(p, DiscordChannelEnum.Admins);
         }
 
         private static Payload GenerateBasePayload()
