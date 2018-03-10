@@ -536,7 +536,7 @@ namespace Osu.Scores
         /// <summary>
         /// Updates the room
         /// </summary>
-        public async Task Update(bool isIrcTrigger)
+        public async Task<bool> Update(bool isIrcTrigger)
         {
             log.Info("Updating room " + osu_room.Match.MatchId);
 
@@ -545,6 +545,10 @@ namespace Osu.Scores
                 await Task.Delay(4000);
 
             osu_room = await OsuApi.GetRoom(osu_room.Match.MatchId);
+
+            // In case the game has been saved in the cache but does not exist anymore on osu! side, we remove it
+            if (osu_room == null)
+                return false;
 
             // Update the player list
             await UpdatePlayers();
@@ -608,6 +612,8 @@ namespace Osu.Scores
                 else if (ranking.IsFinished)
                     status = RoomStatus.Finished;
             }
+
+            return true;
         }
 
         /// <summary>
@@ -641,19 +647,28 @@ namespace Osu.Scores
             foreach (var match in matches)
             {
                 rooms[match.Key] = new Room(match.Value);
-                await rooms[match.Key].Update(false);
-                mappoolSet.TryGetValue(match.Key, out poolname);
-                if (!string.IsNullOrEmpty(poolname))
+                var updated = await rooms[match.Key].Update(false);
+
+                // If the game does not exist in the API anymore
+                if(!updated)
                 {
-                    rooms[match.Key].Mappool = Mappool.Mappools.FirstOrDefault(x => x.Name == poolname);
-                    if(rooms[match.Key].Mappool != null)
-                    {
-                        rooms[match.Key].Manual = false;
-                    }
+                    rooms.Remove(match.Key);
                 }
-                if(rooms[match.Key].Ranking.type == Ranking.Type.TeamVs && teamvsfirst.TryGetValue(match.Key, out firstteam))
+                else
                 {
-                    ((TeamVs)rooms[match.Key].Ranking).First = firstteam;
+                    mappoolSet.TryGetValue(match.Key, out poolname);
+                    if (!string.IsNullOrEmpty(poolname))
+                    {
+                        rooms[match.Key].Mappool = Mappool.Mappools.FirstOrDefault(x => x.Name == poolname);
+                        if (rooms[match.Key].Mappool != null)
+                        {
+                            rooms[match.Key].Manual = false;
+                        }
+                    }
+                    if (rooms[match.Key].Ranking.type == Ranking.Type.TeamVs && teamvsfirst.TryGetValue(match.Key, out firstteam))
+                    {
+                        ((TeamVs)rooms[match.Key].Ranking).First = firstteam;
+                    }
                 }
             }
         }
