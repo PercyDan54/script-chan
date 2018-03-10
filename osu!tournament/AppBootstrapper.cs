@@ -53,6 +53,7 @@ namespace Osu.Mvvm
             bool isIrcInit = OsuIrcBot.Initialize();
 
             /*
+             * test
             if (!isIrcInit)
             {
                 await Dialog.ShowConfirmation("Error", "IRC initialization failed. Invalid data in the cache.");
