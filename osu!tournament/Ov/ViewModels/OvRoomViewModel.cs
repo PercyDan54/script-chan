@@ -28,6 +28,8 @@ namespace Osu.Mvvm.Ov.ViewModels
         /// </summary>
         protected Timer timer;
 
+        protected OvViewModel parent;
+
         /// <summary>
         /// The duration of the game
         /// </summary>
@@ -49,8 +51,9 @@ namespace Osu.Mvvm.Ov.ViewModels
         /// The constructor
         /// </summary>
         /// <param name="room">the room</param>
-        public OvRoomViewModel(Room room)
+        public OvRoomViewModel(OvViewModel ovvm, Room room)
         {
+            parent = ovvm;
             this.room = room;
             this.roomId = room.Id;
             IsCreated = true;
@@ -58,8 +61,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             Initialize();
         }
 
-        public OvRoomViewModel(string teamblue, string teamred, string b)
+        public OvRoomViewModel(OvViewModel ovvm, string teamblue, string teamred, string b)
         {
+            parent = ovvm;
             blueteam = teamblue;
             redteam = teamred;
             batch = b;
@@ -297,7 +301,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
-        public bool IsCreated { get; set; }
+        protected bool IsCreated { get; set; }
+
+        public bool IsMatchRunning { get { return !IsCreated; } }
         #endregion
 
         #region Public Methods
@@ -359,6 +365,11 @@ namespace Osu.Mvvm.Ov.ViewModels
                     Dialog.ShowDialog("Whoops!", "The room doesn't exist in the view model");
                 }
             }
+        }
+
+        public void DeleteOverview()
+        {
+            parent.RemoveOverview(this);
         }
 
         /// <summary>

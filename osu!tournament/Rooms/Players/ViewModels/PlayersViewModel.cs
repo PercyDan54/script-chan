@@ -111,7 +111,6 @@ namespace Osu.Mvvm.Rooms.Players.ViewModels
                 await Dialog.ShowProgress("Please wait", "Trying to retrieve and register the player");
 
                 OsuUser user = await OsuApi.GetUser(input, wctype, false);
-                System.Console.WriteLine(input + " " + wctype + " " + user);
                 if (user == null)
                 {
                     await Dialog.HideProgress();

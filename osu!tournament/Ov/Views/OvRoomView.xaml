@@ -44,4 +44,10 @@
             <Button x:Name="ActivateButton" Content="{Binding ButtonName}" FontSize="12" Grid.Row="1" Grid.Column="0" />
         </Grid>
     </Border>
+
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Delete" x:Name="DeleteOverview" cal:Message.Attach="DeleteOverview()"  IsEnabled="{Binding IsMatchRunning}"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
 </UserControl>

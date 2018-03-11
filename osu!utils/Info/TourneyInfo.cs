@@ -32,6 +32,33 @@ namespace Osu.Utils
         public int PlayersPerTeam { get; set; }
 
         [DataMember(Name = "matches")]
-        public Game[] Matches { get; set; }
+        public List<Game> Matches { get; set; }
+
+        /// <summary>
+        /// Saves the matches in the cache
+        /// </summary>
+        public void Save()
+        {
+            Cache cache = Cache.GetCache("osu!matches.db");
+            cache["infos"] = this;
+        }
+
+        public void CheckValue()
+        {
+            if (string.IsNullOrEmpty(TeamMode))
+                TeamMode = "0";
+
+            if (string.IsNullOrEmpty(ScoreMode))
+                ScoreMode = "0";
+
+            if (string.IsNullOrEmpty(RoomSize))
+                RoomSize = "8";
+
+            if (string.IsNullOrEmpty(ModeType))
+                ModeType = "0";
+
+            if (PlayersPerTeam == 0)
+                PlayersPerTeam = 4;
+        }
     }
 }

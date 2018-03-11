@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:cal="http://www.caliburnproject.org"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -25,6 +26,7 @@
             <Button x:Name="ShowOverview" Content="Overview" cal:Message.Attach="ShowOverview" />
             <Button x:Name="ShowRooms" Content="Rooms" cal:Message.Attach="ShowRooms" />
             <Button x:Name="ShowMappools" Content="Mappools" cal:Message.Attach="ShowMappools" />
+            <Button x:Name="ShowTeams" Content="Teams" cal:Message.Attach="ShowTeams" />
             <Button x:Name="ShowOptions" Content="Options" cal:Message.Attach="ShowOptions" />
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>

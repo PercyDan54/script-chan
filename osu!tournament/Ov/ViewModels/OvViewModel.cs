@@ -1,7 +1,9 @@
 ﻿using Caliburn.Micro;
+using Osu.Api;
 using Osu.Ircbot;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
+using Osu.Utils.TeamsOv;
 using Osu.Tournament.Ov.ViewModels;
 using Osu.Utils;
 using Osu.Utils.Info;
@@ -25,6 +27,9 @@ namespace Osu.Mvvm.Ov.ViewModels
         /// </summary>
         protected IObservableCollection<OvRoomViewModel> rooms;
         protected IObservableCollection<SelectableObject<string>> items;
+        protected TeamOv selectedRedTeam;
+        protected TeamOv selectedBlueTeam;
+        protected char batchLetter;
 
         public event MatchCreatedEvent MatchCreated;
         #endregion
@@ -34,6 +39,8 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             rooms = new BindableCollection<OvRoomViewModel>();
             items = new BindableCollection<SelectableObject<string>>();
+
+            batchLetter = 'A';
 
             if (InfosHelper.TourneyInfos.Matches != null)
             {
@@ -80,12 +87,109 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        public IEnumerable<TeamOv> RedTeam
+        {
+            get
+            {
+                return TeamManager.Teams.OrderBy(x => x.Name);
+            }
+        }
+
+        public TeamOv SelectedRedTeam
+        {
+            get
+            {
+                return selectedRedTeam;
+            }
+            set
+            {
+                if(selectedRedTeam != value)
+                {
+                    selectedRedTeam = value;
+                }
+            }
+        }
+
+        public IEnumerable<TeamOv> BlueTeam
+        {
+            get
+            {
+                return TeamManager.Teams.OrderBy(x => x.Name);
+            }
+        }
+
+        public TeamOv SelectedBlueTeam
+        {
+            get
+            {
+                return selectedBlueTeam;
+            }
+            set
+            {
+                if (selectedBlueTeam != value)
+                {
+                    selectedBlueTeam = value;
+                }
+            }
+        }
+
+        public char BatchLetter
+        {
+            get
+            {
+                return batchLetter;
+            }
+            set
+            {
+                if(batchLetter != value && char.IsLetter(value))
+                {
+                    batchLetter = value;
+                    NotifyOfPropertyChange(() => BatchLetter);
+                }
+                else
+                {
+                    Dialog.ShowDialog("Whoops!", "Please, enter a letter!");
+                }
+            }
+        }
+
+        #region Configuration
+        public string Acronym { get { return InfosHelper.TourneyInfos.Acronym; } set { InfosHelper.TourneyInfos.Acronym = value; } }
+        public string DefaultId { get { return InfosHelper.TourneyInfos.DefaultMapId; } set { InfosHelper.TourneyInfos.DefaultMapId = value; } }
+        public List<int> PlayersPerTeam { get { return new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 }; } }
+        public int SelectedPlayersPerTeam { get { return InfosHelper.TourneyInfos.PlayersPerTeam; } set { InfosHelper.TourneyInfos.PlayersPerTeam = value; } }
+        public List<OsuTeamType> TeamMode { get { return new List<OsuTeamType>() { OsuTeamType.HeadToHead, OsuTeamType.TeamVs }; } }
+        public OsuTeamType SelectedTeamMode { get { return (OsuTeamType)Enum.Parse(typeof(OsuTeamType), InfosHelper.TourneyInfos.TeamMode, true); } set { InfosHelper.TourneyInfos.TeamMode = value.ToString(); } }
+        public List<OsuScoringType> ScoreMode { get { return new List<OsuScoringType>() { OsuScoringType.Score, OsuScoringType.ScoreV2 }; } }
+        public OsuScoringType SelectedScoreMode { get { return (OsuScoringType)Enum.Parse(typeof(OsuScoringType), InfosHelper.TourneyInfos.ScoreMode, true); } set { InfosHelper.TourneyInfos.ScoreMode = value.ToString(); } }
+        public List<string> Size { get { return new List<string>(){"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"}; } }
+        public string SelectedSize { get { return InfosHelper.TourneyInfos.RoomSize; } set { InfosHelper.TourneyInfos.RoomSize = value; } }
+        public List<OsuMode> GameMode { get { return new List<OsuMode>() { OsuMode.Standard, OsuMode.Taiko, OsuMode.CTB, OsuMode.Mania }; } }
+        public OsuMode SelectedGameMode { get { return (OsuMode)Enum.Parse(typeof(OsuMode),InfosHelper.TourneyInfos.ModeType, true); } set { InfosHelper.TourneyInfos.ModeType = value.ToString(); } }
+        #endregion
         #endregion
 
         #region Public Methods
+        public void CreateOverview()
+        {
+            if(selectedRedTeam.Name == selectedBlueTeam.Name)
+            {
+                Dialog.ShowDialog("Whoops!", "You can't use the same team twice!");
+            }
+            else
+            {
+                if (InfosHelper.TourneyInfos.Matches == null)
+                    InfosHelper.TourneyInfos.Matches = new List<Game>();
+
+                InfosHelper.TourneyInfos.Matches.Add(new Game() { TeamRedName = selectedRedTeam.Name, TeamBlueName = selectedBlueTeam.Name, Batch = batchLetter.ToString() });
+                addOverview(selectedBlueTeam.Name, selectedRedTeam.Name, batchLetter.ToString());
+            }
+
+        }
+
         public OvRoomViewModel addOverview(Room room)
         {
-            OvRoomViewModel ovvm = new OvRoomViewModel(room);
+            OvRoomViewModel ovvm = new OvRoomViewModel(this, room);
             ovvm.MatchCreated += OnMatchCreated;
             rooms.Add(ovvm);
             NotifyOfPropertyChange(() => ViewRooms);
@@ -95,7 +199,7 @@ namespace Osu.Mvvm.Ov.ViewModels
 
         public OvRoomViewModel addOverview(string blueteam, string redteam, string batch)
         {
-            OvRoomViewModel ovvm = new OvRoomViewModel(blueteam, redteam, batch);
+            OvRoomViewModel ovvm = new OvRoomViewModel(this, blueteam, redteam, batch);
             ovvm.MatchCreated += OnMatchCreated;
             rooms.Add(ovvm);
             NotifyOfPropertyChange(() => ViewRooms);
@@ -127,6 +231,13 @@ namespace Osu.Mvvm.Ov.ViewModels
             }      
         }
 
+        public void RemoveOverview(OvRoomViewModel ov)
+        {
+            InfosHelper.TourneyInfos.Matches.RemoveAll(x => x.TeamBlueName == ov.TeamBlue && x.TeamRedName == ov.TeamRed && x.Batch == ov.Batch);
+            rooms.Remove(ov);
+            NotifyOfPropertyChange(() => ViewRooms);
+        }
+
         public OvRoomViewModel findOvRoom(Room room)
         {
             foreach (OvRoomViewModel r in rooms)
@@ -138,7 +249,6 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
             return null;
         }
-        
 
         public void UpdateStatus(Room room)
         {

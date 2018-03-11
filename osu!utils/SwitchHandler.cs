@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Osu.Utils.TeamsOv;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,13 +20,12 @@ namespace Osu.Utils
 
         public bool FillPlayerList(string teamname)
         {
-            Cache cache = Cache.GetCache("osu!teams.db");
-            var t = cache.GetArray(teamname, new string[0]);
-            if(t.Length != 0)
+            var team = TeamManager.Teams.FirstOrDefault(x => x.Name == teamname);
+            if(team != null)
             {
-                foreach (var u in t)
+                foreach (var u in team.Players)
                 {
-                    players.Add(new IRCPlayerInfo(teamname, u));
+                    players.Add(new IRCPlayerInfo(team.Name, u.Name));
                 }
                 return true;
             }

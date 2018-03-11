@@ -74,6 +74,9 @@
     <Compile Include="SelectableObject.cs" />
     <Compile Include="SwitchHandler.cs" />
     <Compile Include="Info\TourneyInfo.cs" />
+    <Compile Include="TeamsOv\PlayerOv.cs" />
+    <Compile Include="TeamsOv\TeamManager.cs" />
+    <Compile Include="TeamsOv\TeamOv.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\countries.txt" />
