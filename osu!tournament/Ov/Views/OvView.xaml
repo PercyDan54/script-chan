@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:cal="http://www.caliburnproject.org"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,7 +17,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ComboBox Name="Items" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="2,2,6,0" IsEditable="False" IsReadOnly="True" Text="Select batches to display...">
-        <ComboBox.ItemTemplate>
+            <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding IsSelected}" Width="20" VerticalAlignment="Center" />
@@ -25,14 +26,97 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ScrollViewer Padding="0" Margin="0,0,0,5" Grid.Row="1">
-            <ItemsControl x:Name="ViewRooms">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </ScrollViewer>
+        <DockPanel Grid.Row="1">
+            <Expander DockPanel.Dock="Top" Margin="2,2,6,6"
+                      Header="Room configuration"
+                      IsExpanded="False">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="380*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Acronym" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="0" />
+                    <Label Content="Default map id" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="1" />
+                    <Label Content="Players per team" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="2" />
+                    <Label Content="Team mode" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="3" />
+                    <Label Content="Score mode" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="4" />
+                    <Label Content="Size" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="5" />
+                    <Label Content="Game mode" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="6" />
+
+                    <TextBox x:Name="Acronym" Grid.Column="1" Margin="2"/>
+                    <TextBox x:Name="DefaultId" Grid.Row="1" Grid.Column="1" Margin="2"/>
+                    <ComboBox x:Name="PlayersPerTeam" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedPlayersPerTeam}" />
+                    <ComboBox x:Name="TeamMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedTeamMode}" />
+                    <ComboBox x:Name="ScoreMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedScoreMode}" />
+                    <ComboBox x:Name="Size" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedSize}" />
+                    <ComboBox x:Name="GameMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
+                </Grid>
+            </Expander>
+            <Expander DockPanel.Dock="Top" Margin="2,2,6,6"
+                      Header="Create a match"
+                      IsExpanded="False">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="420*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Batch letter" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="0" />
+                    <Label Content="Red Team" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="1" Foreground="#FFFF2727" />
+                    <Label Content="Blue Team" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="2" Foreground="#FF0180FF" />
+
+                    <TextBox Width="30" Grid.Column="1" Margin="5,2,0,2" HorizontalAlignment="Left" CharacterCasing="Upper" MaxLength="1" x:Name="BatchLetter"/>
+
+                    <ComboBox Width="300"
+                          DisplayMemberPath="Name"
+                          Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Grid.Row="1"
+                           Margin="5,2,0,2"
+                          Controls:TextBoxHelper.ClearTextButton="True"
+                          Controls:TextBoxHelper.Watermark="Please select a team..."
+                          x:Name="RedTeam" SelectedItem="{Binding SelectedRedTeam}">
+                    </ComboBox>
+
+                    <ComboBox Width="300"
+                          DisplayMemberPath="Name"
+                          Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Grid.Row="2"
+                          Margin="5,2,0,2"
+                          Controls:TextBoxHelper.ClearTextButton="True"
+                          Controls:TextBoxHelper.Watermark="Please select a team..."
+                          x:Name="BlueTeam" SelectedItem="{Binding SelectedBlueTeam}">
+                    </ComboBox>
+
+                    <Button x:Name="CreateOverview" Content="Create the match in the overview" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" />
+                </Grid>
+            </Expander>
+            <ScrollViewer DockPanel.Dock="Bottom" Padding="0" Grid.Row="1" Margin="0,0,0,5">
+                <ItemsControl x:Name="ViewRooms">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
     </Grid>
+    
 </UserControl>

@@ -3,6 +3,7 @@ using Osu.Api;
 using Osu.Scores.Status;
 using Osu.Utils;
 using Osu.Utils.Info;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -116,7 +117,7 @@ namespace Osu.Scores
             isStreamed = false;
             roomMessages = new List<string>();
 
-            var scoremode = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.ScoreMode) ? (OsuScoringType)int.Parse(InfosHelper.TourneyInfos.ScoreMode) : OsuScoringType.Score;
+            var scoremode = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.ScoreMode) ? (OsuScoringType)Enum.Parse(typeof(OsuScoringType), InfosHelper.TourneyInfos.ScoreMode, true) : OsuScoringType.Score;
             var roomsize = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.RoomSize) ? InfosHelper.TourneyInfos.RoomSize : "16";
 
             roomConfiguration = new RoomConfiguration() { ScoreMode = scoremode, RoomSize = roomsize };

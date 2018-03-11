@@ -5,6 +5,7 @@ using Osu.Ircbot;
 using Osu.Mvvm.General.ViewModels;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
+using Osu.Utils.TeamsOv;
 using Osu.Tournament.Properties;
 using Osu.Utils;
 using Osu.Utils.Bans;
@@ -65,6 +66,7 @@ namespace Osu.Mvvm
 
             Cache c2 = Cache.GetCache("osu!matches.db");
             InfosHelper.TourneyInfos = c2.GetObject<TourneyInfo>("infos", new TourneyInfo());
+            InfosHelper.TourneyInfos.CheckValue();
 
             // Initialize the BanHelper
             RefereeMatchHelper.Initialize();
@@ -81,6 +83,9 @@ namespace Osu.Mvvm
 
             // Initialize the mappools
             await Mappool.Initialize();
+
+            // Initialize the teams
+            TeamManager.Initialize();
 
             // Initialize the rooms
             await Room.Initialize();
@@ -108,6 +113,8 @@ namespace Osu.Mvvm
 
             // Save the mappools
             Mappool.Save();
+            InfosHelper.TourneyInfos.Save();
+            TeamManager.Save();
             Room.Save();
             RefereeMatchHelper.Save();
 

@@ -13,6 +13,8 @@ using Osu.Tournament.Properties;
 using Osu.Utils.Info;
 using System.Threading.Tasks;
 using Osu.Mvvm.Miscellaneous;
+using Osu.Mvvm.Teams.ViewModels;
+using Osu.Utils.TeamsOv;
 
 namespace Osu.Mvvm.General.ViewModels
 {
@@ -48,9 +50,16 @@ namespace Osu.Mvvm.General.ViewModels
         private MappoolsViewModel mappools;
 
         /// <summary>
+        /// The teams view model
+        /// </summary>
+        private TeamsViewModel teams;
+
+        /// <summary>
         /// The options view model
         /// </summary>
         private OptionsViewModel options;
+
+        private FlyoutsControl flyoutsControl;
 
         private WindowInfo windowInfo;
         #endregion
@@ -103,6 +112,8 @@ namespace Osu.Mvvm.General.ViewModels
 
             mappools = new MappoolsViewModel();
 
+            teams = new TeamsViewModel();
+
             windowInfo = new WindowInfo();
 
             if (Settings.Default.WindowLocation != null)
@@ -139,6 +150,8 @@ namespace Osu.Mvvm.General.ViewModels
                 return IconUtilities.ToImageSource(Osu.Tournament.Properties.Resources.Icon);
             }
         }
+
+        public FlyoutsControl ControlFlyouts { get; set; }
 
         /// <summary>
         /// Transition property
@@ -272,6 +285,28 @@ namespace Osu.Mvvm.General.ViewModels
         }
 
         /// <summary>
+        /// Shows the mappools screen
+        /// </summary>
+        public void ShowTeams()
+        {
+            if (!IsBlockedOnOption)
+            {
+                if (Transition == TransitionType.RightReplace)
+                    Transition = TransitionType.LeftReplace;
+                else
+                    Transition = TransitionType.RightReplace;
+
+                ActiveItemName = "Teams";
+
+                ActivateItem(teams);
+            }
+            else
+            {
+                Dialog.ShowDialog("Error", "You need to fill api key and IRC informations first!");
+            }
+        }
+
+        /// <summary>
         /// Shows the options screen
         /// </summary>
         public void ShowOptions()
@@ -293,6 +328,8 @@ namespace Osu.Mvvm.General.ViewModels
         {
             // Save the mappools
             Mappool.Save();
+            InfosHelper.TourneyInfos.Save();
+            TeamManager.Save();
             Room.Save();
             RefereeMatchHelper.Save();
 
@@ -302,7 +339,6 @@ namespace Osu.Mvvm.General.ViewModels
             // Save all the caches
             Cache.SaveAll();
         }
-
         #endregion
     }
 }

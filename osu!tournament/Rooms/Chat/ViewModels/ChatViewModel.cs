@@ -62,7 +62,10 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         public void Update()
         {
             _messages = string.Empty;
-            room.RoomMessages.ForEach(x => _messages += x + "\n");
+            foreach(var message in room.RoomMessages.ToList())
+            {
+                _messages += message + "\n";
+            }
             NotifyOfPropertyChange(() => MultiplayerChat);
         }
     }
