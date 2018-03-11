@@ -144,6 +144,26 @@ namespace Osu.Mvvm.General.ViewModels
         }
 
         /// <summary>
+        /// RateLimit property
+        /// </summary>
+        public long RateLimit
+        {
+            get
+            {
+                return bot.RateLimit;
+            }
+            set
+            {
+                if (value != bot.RateLimit)
+                {
+                    bot.RateLimit = value;
+                    botpublic.RateLimit = value;
+                    NotifyOfPropertyChange(() => RateLimit);
+                }
+            }
+        }
+
+        /// <summary>
         /// Password enabled property
         /// </summary>
         public bool PasswordEnabled

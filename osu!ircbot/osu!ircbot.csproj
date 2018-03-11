@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="FreemodViewer.cs" />
     <Compile Include="Handlers\PlayerSpokeEventArgs.cs" />
+    <Compile Include="IrcMessage.cs" />
     <Compile Include="UserSettings.cs" />
     <Compile Include="Handlers\AdminHandler.cs" />
     <Compile Include="Handlers\IrcHandler.cs" />

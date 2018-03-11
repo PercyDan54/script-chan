@@ -11,48 +11,54 @@
     d:DesignHeight="500"
     d:DesignWidth="500">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="80" />
-        </Grid.ColumnDefinitions>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
 
-        <Label Content="General" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" />
-        <Label Content="osu!api key (required)" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" />
-        <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding ApiKey, Mode=TwoWay}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" />
-        <Label Content="Color mode" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" />
-        <ComboBox x:Name="ColorMode" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
-        <Button x:Name="Save" Content="Save" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="2" />
-        <Label Content="IRC (optional)" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" />
-        <Label Content="Username" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="6" />
-        <Label Content="Password" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="6" />
-        <TextBox x:Name="Username" IsEnabled="{Binding UsernameEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="7"/>
-        <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding PasswordEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="7" />
-        <Button x:Name="Connect" Content="{Binding ConnectButtonText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="7" />
-        <Label Content="Room options" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" />
-        <Label Content="Default BO when creating a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="9" />
-        <ComboBox x:Name="Modes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="1" />
-        <Label Content="Default GameMode for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="9" />
-        <ComboBox x:Name="GameModes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
-        <Label Content="Default Mappool for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="12" />
-        <ComboBox x:Name="Mappools" DisplayMemberPath="Name" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedMappool}" />
-        <Label Content="Default Mappool for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="12" />
-    </Grid>
+            <Label Content="General" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" />
+            <Label Content="osu!api key (required)" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" />
+            <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding ApiKey, Mode=TwoWay}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" />
+            <Label Content="Color mode" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" />
+            <ComboBox x:Name="ColorMode" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+            <Button x:Name="Save" Content="Save" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="2" />
+            <Label Content="IRC (optional)" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" />
+            <Label Content="Username" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="6" />
+            <Label Content="Password" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="6" />
+            <TextBox x:Name="Username" IsEnabled="{Binding UsernameEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="7"/>
+            <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding PasswordEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="7" />
+            <Button x:Name="Connect" Content="{Binding ConnectButtonText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="7" />
+            <Label Content="Time between messages (in ms)" VerticalContentAlignment="Center" Padding="0" Grid.Column="0" Grid.Row="8" />
+            <TextBox x:Name="RateLimit" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="9" />
+            <Label Content="Room options" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="3" />
+            <Label Content="Default BO when creating a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="11" />
+            <ComboBox x:Name="Modes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="1" />
+            <Label Content="Default GameMode for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="11" />
+            <ComboBox x:Name="GameModes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="12" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
+            <Label Content="Default Mappool for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="14" />
+            <ComboBox x:Name="Mappools" DisplayMemberPath="Name" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="15" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedMappool}" />
+            <Label Content="Default Mappool for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="14" />
+        </Grid>
+    </ScrollViewer>
 </UserControl>

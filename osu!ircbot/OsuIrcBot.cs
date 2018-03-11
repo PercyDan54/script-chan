@@ -64,6 +64,10 @@ namespace Osu.Ircbot
 
         private System.Timers.Timer catchSettingsTimer;
 
+        private System.Timers.Timer sendMessageTimer;
+
+        private Queue<IrcMessage> messageQueue;
+
         private Regex regexPlayerLine;
 
         private Regex regexRoomLine;
@@ -112,6 +116,11 @@ namespace Osu.Ircbot
         /// </summary>
         protected string password;
 
+        /// <summary>
+        /// The amount of milliseconds to wait between sending messages
+        /// </summary>
+        protected long rateLimit;
+
         protected bool isConnected;
 
         protected bool readInput;
@@ -130,9 +139,11 @@ namespace Osu.Ircbot
             handler.RegisterBot(this);
             username = cache.Get("username", "");
             password = cache.Get("password", "");
+            rateLimit = cache.Get<long>("ratelimit", 1000);
             isConnected = false;
             shouldCatchSettings = false;
             fmv = new FreemodViewer();
+            messageQueue = new Queue<IrcMessage>();
 
             readInput = shouldRead;
 
@@ -149,6 +160,13 @@ namespace Osu.Ircbot
             catchSettingsTimer = new System.Timers.Timer();
             catchSettingsTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             catchSettingsTimer.Interval = 3000;
+
+            // Timer to send messages
+            sendMessageTimer = new System.Timers.Timer();
+            sendMessageTimer.Elapsed += new ElapsedEventHandler(SendNextMessage);
+            sendMessageTimer.Interval = rateLimit;
+            sendMessageTimer.AutoReset = true;
+            sendMessageTimer.Start();
 
             ignoreErrorEvent = false;
         }
@@ -184,6 +202,20 @@ namespace Osu.Ircbot
             {
                 password = value;
                 cache["password"] = value;
+            }
+        }
+
+        public long RateLimit
+        {
+            get
+            {
+                return rateLimit;
+            }
+            set
+            {
+                rateLimit = value;
+                sendMessageTimer.Interval = rateLimit;
+                cache["ratelimit"] = value;
             }
         }
 
@@ -289,7 +321,7 @@ namespace Osu.Ircbot
         {
             foreach (string user in list_users)
             {
-                client.SendMessage(user, message);
+                messageQueue.Enqueue(new IrcMessage { User = user, Message = message });
             }
         }
 
@@ -299,7 +331,7 @@ namespace Osu.Ircbot
         public void SendMessage(string user, string message)
         {
             if(client != null)
-                client.SendMessage(user, message);
+                messageQueue.Enqueue(new IrcMessage { User = user, Message = message });
         }
 
         /// <summary>
@@ -623,6 +655,18 @@ namespace Osu.Ircbot
             //DiscordBot.GetInstance().SendMessage(stringToSend);
 
             fmv.Players.Clear();
+        }
+
+        /// <summary>
+        /// Send message if one is queued
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SendNextMessage(object sender, ElapsedEventArgs e)
+        {
+            if (messageQueue.Count == 0) return;
+            var ircMessage = messageQueue.Dequeue();
+            client.SendMessage(ircMessage.User, ircMessage.Message);
         }
 
         private bool IsMessageSentByAdmin(string name)
