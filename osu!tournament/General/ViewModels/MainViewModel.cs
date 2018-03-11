@@ -112,7 +112,7 @@ namespace Osu.Mvvm.General.ViewModels
 
             mappools = new MappoolsViewModel();
 
-            teams = new TeamsViewModel();
+            teams = new TeamsViewModel(overviewRooms);
 
             windowInfo = new WindowInfo();
 

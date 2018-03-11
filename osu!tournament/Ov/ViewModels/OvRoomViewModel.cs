@@ -4,6 +4,7 @@ using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
 using Osu.Scores.Status;
 using Osu.Tournament.Ov.ViewModels;
+using Osu.Utils.Info;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -335,8 +336,15 @@ namespace Osu.Mvvm.Ov.ViewModels
 
         private async void CreateMatch()
         {
-            await Dialog.ShowProgress("Please wait", "Creating the room...");
-            OsuIrcBot.GetInstancePrivate().CreateMatch(blueteam, redteam);
+            if(string.IsNullOrEmpty(InfosHelper.TourneyInfos.Acronym))
+            {
+                Dialog.ShowDialog("Whoops!", "Do not forget to set the acronym of your game before creating it!");
+            }
+            else
+            {
+                await Dialog.ShowProgress("Please wait", "Creating the room...");
+                OsuIrcBot.GetInstancePrivate().CreateMatch(blueteam, redteam);
+            }
         }
 
         public void SetCreation(long id)

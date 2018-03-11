@@ -123,6 +123,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 {
                     beatmaps.Add(new BeatmapPickerViewModel(r, kvp.Value));
                 }
+                NotifyOfPropertyChange(() => Beatmaps);
             }
         }
         #endregion

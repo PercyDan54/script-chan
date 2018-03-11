@@ -65,7 +65,8 @@ namespace Osu.Mvvm.Mappools.ViewModels
                     selected = value;
 
                     // Activate the selected item
-                    ActivateItem(selected);
+                    if(selected != null)
+                        ActivateItem(selected);
 
                     // Selected mappool has changed
                     NotifyOfPropertyChange(() => SelectedMappool);
@@ -131,6 +132,8 @@ namespace Osu.Mvvm.Mappools.ViewModels
             // Remove this mappool from our lists of mappools
             mappools.Remove(mappool);
             Mappool.Remove(mappool.DisplayName);
+
+            DeactivateItem(mappool, true);
 
             Log.Info("Deleting mappool \"" + mappool.DisplayName + "\"");
 

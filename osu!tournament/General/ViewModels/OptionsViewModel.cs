@@ -12,6 +12,7 @@ using System.Linq;
 using Osu.Utils.Bans;
 using MahApps.Metro;
 using System.Windows;
+using Osu.Utils.Info;
 
 namespace Osu.Mvvm.General.ViewModels
 {
@@ -154,7 +155,7 @@ namespace Osu.Mvvm.General.ViewModels
             }
             set
             {
-                if (value != bot.RateLimit)
+                if (value != bot.RateLimit && value > 0)
                 {
                     bot.RateLimit = value;
                     botpublic.RateLimit = value;
@@ -309,11 +310,35 @@ namespace Osu.Mvvm.General.ViewModels
             }
             set
             {
-                if (mappool != value && value != null)
+                if (mappool != value)
                 {
                     mappool = value;
-                    cache["defaultmappool"] = value.Name;
+                    cache["defaultmappool"] = value == null ? null : value.Name;
                 }
+            }
+        }
+
+        public string DefaultWebhook
+        {
+            get
+            {
+                return InfosHelper.UserDataInfos.WebhookDefault;
+            }
+            set
+            {
+                InfosHelper.UserDataInfos.WebhookDefault = value;
+            }
+        }
+
+        public string AdminWebhook
+        {
+            get
+            {
+                return InfosHelper.UserDataInfos.WebhookAdmins;
+            }
+            set
+            {
+                InfosHelper.UserDataInfos.WebhookAdmins = value;
             }
         }
 

@@ -37,6 +37,9 @@ namespace Osu.Mvvm.Ov.ViewModels
         #region Constructor
         public OvViewModel()
         {
+            // Event to create an overview when we create a room with mp make on irc
+            OsuIrcBot.GetInstancePrivate().RoomCreatedCatched += CreateMatchNext;
+
             rooms = new BindableCollection<OvRoomViewModel>();
             items = new BindableCollection<SelectableObject<string>>();
 
@@ -53,9 +56,7 @@ namespace Osu.Mvvm.Ov.ViewModels
                         items.Add(so);
                     }
                 }
-                OsuIrcBot.GetInstancePrivate().RoomCreatedCatched += CreateMatchNext;
             }
-            
         }
         #endregion
 
@@ -106,6 +107,7 @@ namespace Osu.Mvvm.Ov.ViewModels
                 if(selectedRedTeam != value)
                 {
                     selectedRedTeam = value;
+                    NotifyOfPropertyChange(() => CanCreateMatch);
                 }
             }
         }
@@ -129,6 +131,7 @@ namespace Osu.Mvvm.Ov.ViewModels
                 if (selectedBlueTeam != value)
                 {
                     selectedBlueTeam = value;
+                    NotifyOfPropertyChange(() => CanCreateMatch);
                 }
             }
         }
@@ -155,6 +158,7 @@ namespace Osu.Mvvm.Ov.ViewModels
 
         #region Configuration
         public string Acronym { get { return InfosHelper.TourneyInfos.Acronym; } set { InfosHelper.TourneyInfos.Acronym = value; } }
+        public string AdminList { get { return InfosHelper.UserDataInfos.Admins; } set { InfosHelper.UserDataInfos.Admins = value; } }
         public string DefaultId { get { return InfosHelper.TourneyInfos.DefaultMapId; } set { InfosHelper.TourneyInfos.DefaultMapId = value; } }
         public List<int> PlayersPerTeam { get { return new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 }; } }
         public int SelectedPlayersPerTeam { get { return InfosHelper.TourneyInfos.PlayersPerTeam; } set { InfosHelper.TourneyInfos.PlayersPerTeam = value; } }
@@ -170,6 +174,11 @@ namespace Osu.Mvvm.Ov.ViewModels
         #endregion
 
         #region Public Methods
+        public bool CanCreateMatch
+        {
+            get { return selectedBlueTeam != null && selectedRedTeam != null; }
+        }
+
         public void CreateOverview()
         {
             if(selectedRedTeam.Name == selectedBlueTeam.Name)
@@ -266,6 +275,12 @@ namespace Osu.Mvvm.Ov.ViewModels
             {
                 ov.Update();
             }
+        }
+
+        public void UpdateTeams()
+        {
+            NotifyOfPropertyChange(() => BlueTeam);
+            NotifyOfPropertyChange(() => RedTeam);
         }
 
         public OvRoomViewModel getOverview(Room room)

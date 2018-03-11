@@ -17,7 +17,6 @@ namespace osu_discord
     public class DiscordClient
     {
         private static ILog log = LogManager.GetLogger("osu!discord");
-        private Dictionary<DiscordChannelEnum, string> _uriDic;
         private readonly Encoding _encoding = new UTF8Encoding();
         private bool _isEnabled;
         private static DiscordClient instance;
@@ -26,30 +25,27 @@ namespace osu_discord
 
         public DiscordClient()
         {
-            _uriDic = new Dictionary<DiscordChannelEnum, string>();
-            if (!string.IsNullOrEmpty(InfosHelper.UserDataInfos.WebhookDefault))
-            {
-                _uriDic.Add(DiscordChannelEnum.Default, InfosHelper.UserDataInfos.WebhookDefault);
-                _isEnabled = true;
+            //We don't really care anymore
+             _isEnabled = true;
+        }
 
-                if (!string.IsNullOrEmpty(InfosHelper.UserDataInfos.WebhookReferees))
-                {
-                    _uriDic.Add(DiscordChannelEnum.Referees, InfosHelper.UserDataInfos.WebhookReferees);
-                }
-                if (!string.IsNullOrEmpty(InfosHelper.UserDataInfos.WebhookCommentators))
-                {
-                    _uriDic.Add(DiscordChannelEnum.Commentators, InfosHelper.UserDataInfos.WebhookCommentators);
-                }
-                if (!string.IsNullOrEmpty(InfosHelper.UserDataInfos.WebhookAdmins))
-                {
-                    _uriDic.Add(DiscordChannelEnum.Admins, InfosHelper.UserDataInfos.WebhookAdmins);
-                }
-            }
-            else
+        private string GetLink(DiscordChannelEnum channel)
+        {
+            switch(channel)
             {
-                _isEnabled = false;
+                case DiscordChannelEnum.Default:
+                    return InfosHelper.UserDataInfos.WebhookDefault;
+                case DiscordChannelEnum.Commentators:
+                    return InfosHelper.UserDataInfos.WebhookCommentators;
+                case DiscordChannelEnum.Referees:
+                    return InfosHelper.UserDataInfos.WebhookReferees;
+                case DiscordChannelEnum.Admins:
+                    return InfosHelper.UserDataInfos.WebhookAdmins;
+                default:
+                    return "";
             }
         }
+        
 
         public static void Initialize()
         {
@@ -79,9 +75,13 @@ namespace osu_discord
                     NullValueHandling = NullValueHandling.Ignore
                 });
 
-                string uri = _uriDic[channel];
+                string uri = GetLink(channel);
 
-                if(!string.IsNullOrEmpty(uri))
+                Uri uriResult;
+                bool result = Uri.TryCreate(uri, UriKind.Absolute, out uriResult)
+                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+                if (!string.IsNullOrEmpty(uri) && result)
                 {
                     using (HttpClient client = new HttpClient())
                     {

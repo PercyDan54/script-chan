@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using Osu.Mvvm.Miscellaneous;
+using Osu.Mvvm.Ov.ViewModels;
 using Osu.Utils.TeamsOv;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,20 @@ namespace Osu.Mvvm.Teams.ViewModels
         private IObservableCollection<TeamViewModel> teams;
 
         /// <summary>
+        /// The OvViewModel to update teams when I create a new one
+        /// </summary>
+        private OvViewModel ov;
+
+        /// <summary>
         /// The selected team
         /// </summary>
         private TeamViewModel selected;
         #endregion
 
 
-        public TeamsViewModel()
+        public TeamsViewModel(OvViewModel overview)
         {
+            ov = overview;
             DisplayName = "Teams";
             teams = new BindableCollection<TeamViewModel>();
             selected = null;
@@ -62,7 +69,8 @@ namespace Osu.Mvvm.Teams.ViewModels
                     selected = value;
 
                     // Activate the selected item
-                    ActivateItem(selected);
+                    if(selected != null)
+                        ActivateItem(selected);
 
                     // Selected mappool has changed
                     NotifyOfPropertyChange(() => SelectedTeam);
@@ -111,6 +119,9 @@ namespace Osu.Mvvm.Teams.ViewModels
                 // Change the currently selected team
                 SelectedTeam = model;
 
+                // Update the overview view
+                ov.UpdateTeams();
+
                 // team list has changed
                 NotifyOfPropertyChange(() => Teams);
             }
@@ -128,13 +139,19 @@ namespace Osu.Mvvm.Teams.ViewModels
             teams.Remove(team);
             TeamManager.Remove(team.DisplayName);
 
+            DeactivateItem(team, true);
+
             Log.Info("Deleting team \"" + team.DisplayName + "\"");
 
             // Select the first team from our list (Or null if there is no team)
             SelectedTeam = teams.Count == 0 ? null : teams[0];
 
+            // Update the overview view for team creation
+            ov.UpdateTeams();
+
             // team list has changed
             NotifyOfPropertyChange(() => Teams);
+            NotifyOfPropertyChange(() => SelectedTeam);
         }
         #endregion
     }
