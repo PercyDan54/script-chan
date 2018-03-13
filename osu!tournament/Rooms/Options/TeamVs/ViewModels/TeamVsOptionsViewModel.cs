@@ -265,6 +265,22 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
                 return ObsBanHelper.IsValid;
             }
         }
+
+        public bool NotificationsEnabled
+        {
+            get
+            {
+                return room.NotificationsEnabled;
+            }
+            set
+            {
+                if (room.NotificationsEnabled != value)
+                {
+                    room.NotificationsEnabled = value;
+                    NotifyOfPropertyChange(() => NotificationsEnabled);
+                }
+            }
+        }
         #endregion
 
         #region Public Methods

@@ -91,6 +91,11 @@ namespace Osu.Scores
         /// </summary>
         protected string mode;
 
+        /// <summary>
+        /// If irc and discord notifications are enabled
+        /// </summary>
+        protected bool notificationsEnabled;
+
         protected int countBans;
 
         protected bool isStreamed;
@@ -116,6 +121,7 @@ namespace Osu.Scores
             status = RoomStatus.NotStarted;
             isStreamed = false;
             roomMessages = new List<string>();
+            notificationsEnabled = true;
 
             var scoremode = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.ScoreMode) ? (OsuScoringType)Enum.Parse(typeof(OsuScoringType), InfosHelper.TourneyInfos.ScoreMode, true) : OsuScoringType.Score;
             var roomsize = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.RoomSize) ? InfosHelper.TourneyInfos.RoomSize : "16";
@@ -360,6 +366,21 @@ namespace Osu.Scores
                 {
                     mode = value;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Notifications property
+        /// </summary>
+        public bool NotificationsEnabled
+        {
+            get
+            {
+                return notificationsEnabled;
+            }
+            set
+            {
+                notificationsEnabled = value;
             }
         }
 

@@ -342,8 +342,11 @@ namespace Osu.Mvvm.Rooms.ViewModels
                         Caliburn.Micro.Execute.OnUIThread((async () =>
                         {
                             await selected_view_model.Update(true);
-                            bot.OnUpdateRoom(SelectedRoom);
-                            discordClient.OnUpdateRoom(SelectedRoom);
+                            if (SelectedRoom.NotificationsEnabled)
+                            {
+                                bot.OnUpdateRoom(SelectedRoom);
+                                discordClient.OnUpdateRoom(SelectedRoom);
+                            }
                         }));
                     }
                     // It's not the selected room, we're updating the room + sending messages
@@ -358,9 +361,12 @@ namespace Osu.Mvvm.Rooms.ViewModels
 
                             overview.Update(room);
 
-                            bot.OnUpdateRoom(room);
+                            if (room.NotificationsEnabled)
+                            {
+                                bot.OnUpdateRoom(room);
 
-                            discordClient.OnUpdateRoom(room);
+                                discordClient.OnUpdateRoom(room);
+                            }
                         }
                     }
                 }
