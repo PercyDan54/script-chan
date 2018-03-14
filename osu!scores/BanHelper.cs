@@ -119,6 +119,8 @@ namespace Osu.Scores
                 string first_team = "";
                 string second_team = "";
 
+                e.Fields.Add(new Field() { Name = "Roll Winner", Value = SecondTeamToBan.Name });
+
                 for (int i = 0; i < BeatmapBanned.Count; i++)
                 {
                     var res = string.Format("__{0}__ **{1} - {2} [{3}]**" + System.Environment.NewLine, BeatmapBanned[i].PickType, BeatmapBanned[i].OsuBeatmap.Artist, BeatmapBanned[i].OsuBeatmap.Title, BeatmapBanned[i].OsuBeatmap.Version);
@@ -128,8 +130,8 @@ namespace Osu.Scores
                         second_team += res;
                 }
 
-                e.Fields.Add(new Field() { Name = FirstTeamToBan.Name, Value = first_team });
-                e.Fields.Add(new Field() { Name = SecondTeamToBan.Name, Value = second_team });
+                e.Fields.Add(new Field() { Name = FirstTeamToBan.Name + " Bans", Value = first_team });
+                e.Fields.Add(new Field() { Name = SecondTeamToBan.Name + " Bans", Value = second_team });
 
                 return e;
             }

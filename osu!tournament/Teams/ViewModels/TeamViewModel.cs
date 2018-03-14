@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Osu.Utils;
 
 namespace Osu.Mvvm.Teams.ViewModels
 {
@@ -85,6 +86,24 @@ namespace Osu.Mvvm.Teams.ViewModels
                 // If something was entered
                 if (!string.IsNullOrEmpty(input))
                 {
+                    var t = Cache.GetCache("osu!options.db").Get("wctype", "Standard");
+                    var mode = OsuMode.Standard;
+                    switch (t)
+                    {
+                        case "Standard":
+                            mode = OsuMode.Standard;
+                            break;
+                        case "Taiko":
+                            mode = OsuMode.Taiko;
+                            break;
+                        case "CTB":
+                            mode = OsuMode.CTB;
+                            break;
+                        case "Mania":
+                            mode = OsuMode.Mania;
+                            break;
+                    }
+
                     List<string> playerslist = new List<string>();
                     if (input.Contains(";"))
                     {
@@ -116,9 +135,9 @@ namespace Osu.Mvvm.Teams.ViewModels
 
                             // Get the player
                             if (isNumber)
-                                osu_player = await OsuApi.GetUser(id, OsuMode.Standard, false);
+                                osu_player = await OsuApi.GetUser(id, mode, false);
                             else
-                                osu_player = await OsuApi.GetUser(player, OsuMode.Standard, false);
+                                osu_player = await OsuApi.GetUser(player, mode, false);
 
                             // Beatmap doesn't exist
                             if (osu_player == null)
