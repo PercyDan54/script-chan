@@ -33,5 +33,11 @@ namespace Osu.Utils.Info
 
         [DataMember(Name = "commentatorsgroup")]
         public string DiscordCommentatorGroup { get; set; }
+
+        public void Save()
+        {
+            Cache cache = Cache.GetCache("osu!userdata.db");
+            cache["infos"] = this;
+        }
     }
 }

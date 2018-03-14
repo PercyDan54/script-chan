@@ -329,6 +329,7 @@ namespace Osu.Mvvm.General.ViewModels
             // Save the mappools
             Mappool.Save();
             InfosHelper.TourneyInfos.Save();
+            InfosHelper.UserDataInfos.Save();
             TeamManager.Save();
             Room.Save();
             RefereeMatchHelper.Save();

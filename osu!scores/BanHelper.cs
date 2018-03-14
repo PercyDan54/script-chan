@@ -113,13 +113,11 @@ namespace Osu.Scores
             if(CanShowBan())
             {
                 Embed e = new Embed();
-                e.Title = "Ban Recap";
+                e.Title = "Ban Recap (Roll Winner : " + SecondTeamToBan.Name + ")";
                 e.Fields = new List<Field>();
 
                 string first_team = "";
                 string second_team = "";
-
-                e.Fields.Add(new Field() { Name = "Roll Winner", Value = SecondTeamToBan.Name });
 
                 for (int i = 0; i < BeatmapBanned.Count; i++)
                 {
@@ -130,8 +128,8 @@ namespace Osu.Scores
                         second_team += res;
                 }
 
-                e.Fields.Add(new Field() { Name = FirstTeamToBan.Name + " Bans", Value = first_team });
-                e.Fields.Add(new Field() { Name = SecondTeamToBan.Name + " Bans", Value = second_team });
+                e.Fields.Add(new Field() { Name = FirstTeamToBan.Name, Value = first_team });
+                e.Fields.Add(new Field() { Name = SecondTeamToBan.Name, Value = second_team });
 
                 return e;
             }

@@ -30,10 +30,21 @@
             <ColumnDefinition Width="100*" />
             <ColumnDefinition Width="100*" />
         </Grid.ColumnDefinitions>
-
+        <Grid.Resources>
+            <Style x:Key="CustomMetroToggleSwitch"
+                       BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
+                       TargetType="{x:Type controls:ToggleSwitch}">
+                <Setter Property="OffLabel" Value="Blue" />
+                <Setter Property="OnLabel" Value="Red" />
+                <Setter Property="FontSize" Value="10" />
+                <Setter Property="SwitchForeground" Value="Red" />
+                <Setter Property="OffSwitchBrush" Value="Blue"/>
+            </Style>
+        </Grid.Resources>
         <Label Content="Click refresh button after updating these options" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Row="0" Grid.ColumnSpan="5" />
-        <Label Content="Red team starts picking" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <ComboBox x:Name="FirstTeamIsRed" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="1" Grid.Column="2" Width="96"/>
+        <Label Content="Roll winner and first pick team" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <controls:ToggleSwitch IsChecked="{Binding SelectedFirstTeamIsRed}" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="1" Grid.Column="2" Style="{DynamicResource CustomMetroToggleSwitch}"/>
+        <!--<ComboBox x:Name="FirstTeamIsRed" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="1" Grid.Column="2" Width="96"/>-->
         <!--<CheckBox x:Name="EnableCommands" Content="Enable commands" Padding="5,0,0,0" Margin="2.5" Grid.Row="2" />-->
         <!--<CheckBox x:Name="EnableStreamMode" IsEnabled="{Binding IsObsPathValid, Mode=OneWay}" Content="Match on stream (obs ban)" Padding="5,0,0,0" Margin="2.5" Grid.Row="3" />-->
         <Label Content="BO for the room (press refresh)" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="2" Grid.ColumnSpan="2" />

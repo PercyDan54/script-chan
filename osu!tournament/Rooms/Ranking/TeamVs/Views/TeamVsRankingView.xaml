@@ -31,7 +31,7 @@
             
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="StatusLabel" Content="{Binding CurrentStatus}" VerticalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7"/>
+        <Label x:Name="StatusLabel" Content="{Binding CurrentStatus}" FontSize="16" VerticalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7"/>
 
         <Label Content="Team" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="1" />
         <Label Content="Score" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="1" />

@@ -170,7 +170,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             Team current = abortHappened ? ranking.NextTeam : ranking.CurrentTeam;
             Team next = abortHappened ? ranking.CurrentTeam : ranking.NextTeam;
 
-            currentStatus = "Current Team: " + current.Name + " | Next Team: " + next.Name;
+            currentStatus = "Team picking: " + current.Name + " | Next Team: " + next.Name;
             NotifyOfPropertyChange(() => CurrentStatus);
             
         }

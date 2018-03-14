@@ -114,6 +114,7 @@ namespace Osu.Mvvm
             // Save the mappools
             Mappool.Save();
             InfosHelper.TourneyInfos.Save();
+            InfosHelper.UserDataInfos.Save();
             TeamManager.Save();
             Room.Save();
             RefereeMatchHelper.Save();
