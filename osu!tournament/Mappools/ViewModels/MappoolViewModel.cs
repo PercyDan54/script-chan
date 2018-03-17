@@ -151,6 +151,16 @@ namespace Osu.Mvvm.Mappools.ViewModels
         {
             if (await Dialog.ShowConfirmation("Delete beatmap", "Are you sure you want to delete the beatmap \"" + model.DisplayName + "\"?"))
             {
+                // Reset all bans of an existing room if the bans contain the deleted beatmap
+                foreach (var room in Room.Rooms.Values.ToList())
+                {
+                    var refereeMatchHelper = RefereeMatchHelper.GetInstance(room.Id);
+                    if (refereeMatchHelper.IsThisMapBanned(model.Beatmap))
+                    {
+                        refereeMatchHelper.RemoveAllBans();
+                    }
+                }
+
                 beatmaps.Remove(model);
                 mappool.Pool.Remove(model.Beatmap.OsuBeatmap.BeatmapID);
 

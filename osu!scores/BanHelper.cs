@@ -82,6 +82,11 @@ namespace Osu.Scores
             BeatmapBanned.RemoveAt(BeatmapBanned.Count - 1);
         }
 
+        public void RemoveAllBans()
+        {
+            BeatmapBanned.Clear();
+        }
+
         public void AddPick(Beatmap beatmap)
         {
             picks.Add(beatmap);
