@@ -71,7 +71,7 @@ namespace Osu.Mvvm.Teams.ViewModels
         /// <summary>
         /// Add player(s)
         /// </summary>
-        public async void AddPlayers()
+        public async void AddPlayers(string input = null)
         {
             // If the osu!api is not valid
             if (!OsuApi.Valid)
@@ -80,8 +80,9 @@ namespace Osu.Mvvm.Teams.ViewModels
             // Else
             else
             {
-                // Get an input
-                string input = await Dialog.ShowInput("Add player(s)", "Enter the players id or name. You can use ';' as a separator");
+                // Get an input if none is given
+                if (input == null)
+                    input = await Dialog.ShowInput("Add player(s)", "Enter the players id or name. You can use ';' as a separator");
 
                 // If something was entered
                 if (!string.IsNullOrEmpty(input))
