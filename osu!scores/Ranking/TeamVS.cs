@@ -1,4 +1,5 @@
-﻿using Osu.Api;
+﻿using log4net;
+using Osu.Api;
 using Osu.Scores.Status;
 using osu_utils.DiscordModels;
 using System;
@@ -45,6 +46,11 @@ namespace Osu.Scores
         /// </summary>
         protected long blue_score;
         private bool abortHappened;
+
+        /// <summary>
+        /// The logger
+        /// </summary>
+        protected static ILog log = LogManager.GetLogger("osu!scores");
         #endregion
 
         #region Constructors
@@ -284,10 +290,10 @@ namespace Osu.Scores
                     {
                         switch(score.Slot)
                         {
-                            case 1:
+                            case 0:
                                 red_score += score.Score;
                                 break;
-                            case 2:
+                            case 1:
                                 blue_score += score.Score;
                                 break;
                         }
@@ -380,35 +386,44 @@ namespace Osu.Scores
 
                 // Retrieve the player with the best score on the map
                 IOrderedEnumerable<OsuScore> scores = room.OsuRoom.Games.Last().Scores.OrderByDescending(x => x.Score);
-                OsuScore mvp = scores.First();
-                Player mvpPlayer;
-                room.Players.TryGetValue(mvp.UserId, out mvpPlayer);
+                OsuScore mvp = scores.FirstOrDefault();
 
-                // Generate the embed
-                Embed embed = new Embed();
-                embed.Author = new Author { Name = string.Format("{0} VS {1}", teams[OsuTeam.Red].Name, teams[OsuTeam.Blue].Name), Url = "https://osu.ppy.sh/community/matches/" + this.room.Id, IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png" };
-                embed.Color = didCurrentTeamWon ? "6729778" : "14177041";
-                embed.Title = string.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their __{1}__ pick by {2} points", (abortHappened ? NextTeam.Name : CurrentTeam.Name), bm.PickType, diffPoint);
-                embed.Thumbnail = new Image { Url = didCurrentTeamWon ? "https://cdn.discordapp.com/attachments/130304896581763072/400388818127290369/section-pass.png" : "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png" };
-                embed.Description = string.Format("**{0} - {1} [{2}]**", bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.OsuBeatmap.Version);
-                embed.Fields = new List<Field>();
-                embed.Fields.Add(new Field() { Name = teams[OsuTeam.Red].Name, Value = (teams[OsuTeam.Red].Points + teams[OsuTeam.Red].PointAddition).ToString(), Inline = true });
-                embed.Fields.Add(new Field() { Name = teams[OsuTeam.Blue].Name, Value = (teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition).ToString(), Inline = true });
-                if (mvpPlayer != null)
+                if (mvp != null)
                 {
-                    embed.Fields.Add(new Field() { Name = "MVP", Value = string.Format(":flag_{1}: **{0}** with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country.ToLower(), mvp.Score) });
+                    Player mvpPlayer;
+                    room.Players.TryGetValue(mvp.UserId, out mvpPlayer);
+
+                    // Generate the embed
+                    Embed embed = new Embed();
+                    embed.Author = new Author { Name = string.Format("{0} VS {1}", teams[OsuTeam.Red].Name, teams[OsuTeam.Blue].Name), Url = "https://osu.ppy.sh/community/matches/" + this.room.Id, IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png" };
+                    embed.Color = didCurrentTeamWon ? "6729778" : "14177041";
+                    embed.Title = string.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their __{1}__ pick by {2} points", (abortHappened ? NextTeam.Name : CurrentTeam.Name), bm.PickType, diffPoint);
+                    embed.Thumbnail = new Image { Url = didCurrentTeamWon ? "https://cdn.discordapp.com/attachments/130304896581763072/400388818127290369/section-pass.png" : "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png" };
+                    embed.Description = string.Format("**{0} - {1} [{2}]**", bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.OsuBeatmap.Version);
+                    embed.Fields = new List<Field>();
+                    embed.Fields.Add(new Field() { Name = teams[OsuTeam.Red].Name, Value = (teams[OsuTeam.Red].Points + teams[OsuTeam.Red].PointAddition).ToString(), Inline = true });
+                    embed.Fields.Add(new Field() { Name = teams[OsuTeam.Blue].Name, Value = (teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition).ToString(), Inline = true });
+                    if (mvpPlayer != null)
+                    {
+                        embed.Fields.Add(new Field() { Name = "MVP", Value = string.Format(":flag_{1}: **{0}** with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country.ToLower(), mvp.Score) });
+                    }
+
+                    embed.Fields.Add(new Field() { Name = "Status", Value = GetStatus().Last() + " " + (room.Status == RoomStatus.Finished ? ":clap:" : ":loudspeaker:") });
+
+                    if (room.Status == RoomStatus.Finished)
+                    {
+                        embed.Image = new Image { Url = "https://78.media.tumblr.com/b94193615145d12bfb64aa77b677269e/tumblr_njzqukOpBP1ti1gm1o1_500.gif" };
+                        embed.Thumbnail = new Image { Url = "https://cdn.discordapp.com/attachments/130304896581763072/411660079771811870/crown.png" };
+                        embed.Color = "10494192";
+                    }
+
+                    return embed;
                 }
-
-                embed.Fields.Add(new Field() { Name = "Status", Value = GetStatus().Last() + " " + (room.Status == RoomStatus.Finished ? ":clap:" : ":loudspeaker:") });
-
-                if (room.Status == RoomStatus.Finished)
+                else
                 {
-                    embed.Image = new Image { Url = "https://78.media.tumblr.com/b94193615145d12bfb64aa77b677269e/tumblr_njzqukOpBP1ti1gm1o1_500.gif" };
-                    embed.Thumbnail = new Image { Url = "https://cdn.discordapp.com/attachments/130304896581763072/411660079771811870/crown.png" };
-                    embed.Color = "10494192";
+                    log.Error("No MVP found in the last game : " + scores.Count() + " results");
                 }
                 
-                return embed;
             }
 
             return null;

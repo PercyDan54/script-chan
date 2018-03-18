@@ -43,6 +43,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
         public void SendSettings()
         {
+            room.Ranking.GetDiscordStatus();
             OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, "!mp settings");
         }
 
