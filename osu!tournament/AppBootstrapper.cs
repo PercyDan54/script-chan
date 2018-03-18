@@ -109,7 +109,7 @@ namespace Osu.Mvvm
 
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            Log.Fatal("SEND HELP  : " + e.Exception.InnerException + e.Exception.StackTrace);
+            Log.Fatal("SEND HELP  : " + e.Exception.Message + e.Exception.Source + e.Exception.InnerException + e.Exception.StackTrace);
 
             // Save the mappools
             Mappool.Save();

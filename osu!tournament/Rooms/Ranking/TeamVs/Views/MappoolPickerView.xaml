@@ -24,7 +24,7 @@
         <Label Content="Map picker" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="0" />
         <Button Content="Ban recap" Grid.Column="1" x:Name="SendBanRecap" Margin="2.5" VerticalContentAlignment="Center"/>
         <Button Content="Pick recap" Grid.Column="2" x:Name="SendPickRecap" Margin="2.5" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="SearchBox" Grid.Column="3" Grid.Row="0" Margin="0, 2.5, 0, 2.5" TextWrapping="Wrap">
+        <TextBox x:Name="SearchBox" Grid.Column="3" Grid.Row="0" Margin="0, 2.5, 0, 2.5" FontSize="15" TextWrapping="Wrap" controls:TextBoxHelper.Watermark="Filter beatmaps by Title or Artist">
             <!-- cal:Message.Attach="[Event KeyDown] = [Action ExecuteFilterView($executionContext)]" -->
         </TextBox>
         <ScrollViewer Margin="0,5,0,0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4">

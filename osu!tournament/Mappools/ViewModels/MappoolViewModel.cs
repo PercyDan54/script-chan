@@ -151,6 +151,13 @@ namespace Osu.Mvvm.Mappools.ViewModels
         {
             if (await Dialog.ShowConfirmation("Delete beatmap", "Are you sure you want to delete the beatmap \"" + model.DisplayName + "\"?"))
             {
+                // Check all rooms if the mappool is already in use
+                if (Room.Rooms.Values.ToList().Any(x => x.Mappool == mappool))
+                {
+                    Dialog.ShowDialog("Delete beatmap", "Beatmap could not be deleted because the mappool is used in a room.");
+                    return;
+                }
+                
                 beatmaps.Remove(model);
                 mappool.Pool.Remove(model.Beatmap.OsuBeatmap.BeatmapID);
 
