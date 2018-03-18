@@ -27,6 +27,11 @@ namespace Osu.Mvvm.Teams.ViewModels
         /// The selected team
         /// </summary>
         private TeamViewModel selected;
+
+        /// <summary>
+        /// Adds player with same name as team at teamcreation
+        /// </summary>
+        private bool addPlayerWithTeamname;
         #endregion
 
 
@@ -80,6 +85,19 @@ namespace Osu.Mvvm.Teams.ViewModels
                 }
             }
         }
+
+        public bool AddPlayerWithTeamname
+        {
+            get { return addPlayerWithTeamname; }
+            set
+            {
+                if (value != addPlayerWithTeamname)
+                {
+                    addPlayerWithTeamname = value;
+                    NotifyOfPropertyChange(() => AddPlayerWithTeamname);
+                }
+            }
+        }
         #endregion
 
         #region Public Methods
@@ -124,6 +142,11 @@ namespace Osu.Mvvm.Teams.ViewModels
 
                 // team list has changed
                 NotifyOfPropertyChange(() => Teams);
+
+                if (addPlayerWithTeamname)
+                {
+                    model.AddPlayers(name);
+                }
             }
         }
 
