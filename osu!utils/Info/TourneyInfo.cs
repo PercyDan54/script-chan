@@ -34,6 +34,9 @@ namespace Osu.Utils
         [DataMember(Name = "matches")]
         public List<Game> Matches { get; set; }
 
+        [DataMember(Name = "timer")]
+        public int Timer { get; set; }
+
         /// <summary>
         /// Saves the matches in the cache
         /// </summary>
@@ -59,6 +62,9 @@ namespace Osu.Utils
 
             if (PlayersPerTeam == 0)
                 PlayersPerTeam = 4;
+
+            if (Timer == 0)
+                Timer = 180;
         }
     }
 }

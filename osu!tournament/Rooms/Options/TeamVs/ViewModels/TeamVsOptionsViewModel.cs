@@ -281,6 +281,19 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
                 }
             }
         }
+
+        public int Timer
+        {
+            get { return room.Timer; }
+            set
+            {
+                if (room.Timer != value)
+                {
+                    room.Timer = value;
+                    NotifyOfPropertyChange(() => Timer);
+                }
+            }
+        }
         #endregion
 
         #region Public Methods

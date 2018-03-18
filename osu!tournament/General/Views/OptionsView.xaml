@@ -62,7 +62,8 @@
             <ComboBox x:Name="GameModes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
             <Label Content="Default Mappool for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="16" />
             <ComboBox x:Name="Mappools" DisplayMemberPath="Name" controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="You can leave it blank if you want" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="17" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedMappool}" />
-            <Label Content="Default Mappool for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="16" />
+            <Label Content="Default Timer after match for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="16" />
+            <TextBox x:Name="Timer" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="17" />
         </Grid>
     </ScrollViewer>
 </UserControl>

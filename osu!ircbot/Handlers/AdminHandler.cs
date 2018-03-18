@@ -54,7 +54,7 @@ namespace Osu.Ircbot.Handlers
             await Task.Delay(5000);
             if(room.Status != Scores.Status.RoomStatus.Finished)
             {
-                bot.SendMessage("#mp_" + room.Id, "!mp timer 180");
+                bot.SendMessage("#mp_" + room.Id, "!mp timer " + room.Timer);
             }
             
         }
