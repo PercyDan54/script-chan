@@ -13,13 +13,16 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
 {
     public class ChatViewModel : PropertyChangedBase
     {
+        #region Attributes
         /// <summary>
         /// The room
         /// </summary>
         private Room room;
 
         private string _messages;
+        #endregion
 
+        #region Properties
         public string MultiplayerChat
         {
             get
@@ -29,7 +32,9 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         }
 
         public string Message { get; set; }
+        #endregion
 
+        #region Constructor
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -39,7 +44,9 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
             this.room = room;
             _messages = "";
         }
+        #endregion
 
+        #region Public Methods
         public void SendMessage()
         {
             room.RoomMessages.Add("=> " + Message);
@@ -68,5 +75,6 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
             }
             NotifyOfPropertyChange(() => MultiplayerChat);
         }
+        #endregion
     }
 }
