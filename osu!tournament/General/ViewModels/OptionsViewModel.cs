@@ -345,7 +345,11 @@ namespace Osu.Mvvm.General.ViewModels
         public int Timer
         {
             get { return InfosHelper.TourneyInfos.Timer; }
-            set { InfosHelper.TourneyInfos.Timer = value; }
+            set
+            {
+                InfosHelper.TourneyInfos.Timer = Math.Abs(value);
+                NotifyOfPropertyChange(() => Timer);
+            }
         }
         #endregion
 
