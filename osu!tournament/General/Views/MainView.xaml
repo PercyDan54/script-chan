@@ -15,7 +15,7 @@
     Height="{Binding WindowInfo.Height, Mode=TwoWay}"
     Width="{Binding WindowInfo.Width, Mode=TwoWay}"
     MinHeight="600"
-    MinWidth="600"
+    MinWidth="640"
     Top="{Binding WindowInfo.Top, Mode=TwoWay}"
     Left="{Binding WindowInfo.Left, Mode=TwoWay}"
     BorderBrush="{DynamicResource AccentColorBrush}"

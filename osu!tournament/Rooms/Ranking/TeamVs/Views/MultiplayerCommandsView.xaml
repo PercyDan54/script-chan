@@ -37,9 +37,9 @@
 
         <!--<Button x:Name="SwitchAll" Content="Switch All" FontSize="12" VerticalContentAlignment="Center" Padding="0" Grid.Row="0" Grid.Column="7"/>-->
         <Button x:Name="SendInvitations" Content="Invite players" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="3" />
-        <Button x:Name="SendStart" Content="MP Start" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="2" />
+        <Button x:Name="SendStart" Content="Start game (5s)" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="2" />
         <Button x:Name="SendSettings" Content="Settings" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="3" />
-        <Button x:Name="SendWelcomeMessage" Content="Welcome Message" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="4" />
-        <Button x:Name="SetPassword" Content="Password" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="4" />
+        <Button x:Name="SendWelcomeMessage" Content="Welcome String" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="4" />
+        <Button x:Name="SetPassword" Content="Set Password" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="4" />
     </Grid>
 </UserControl>
