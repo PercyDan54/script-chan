@@ -271,11 +271,13 @@ namespace Osu.Mvvm.Rooms.ViewModels
             {
                 Ranking = new HeadToHeadRankingViewModel(room);
                 Options = new HeadToHeadOptionsViewModel(room);
+                Chat = new ChatViewModel(room);
             }
             else if (room.Ranking is TeamVs)
             {
                 Ranking = new TeamVsRankingViewModel(Room, (TeamVs)room.Ranking);
                 Options = new TeamVsOptionsViewModel(room);
+                Chat = new ChatViewModel(room, (TeamVs)room.Ranking);
             }
             else
                 throw new SystemException("RoomViewModel - UpdateRanking: Ranking type is not correct");

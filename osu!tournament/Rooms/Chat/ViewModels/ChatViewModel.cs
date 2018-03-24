@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels;
 
 namespace Osu.Mvvm.Rooms.Chat.ViewModels
 {
@@ -20,6 +21,8 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         private Room room;
 
         private string _messages;
+
+        private MultiplayerCommandsViewModel commandsVM;
         #endregion
 
         #region Properties
@@ -32,6 +35,22 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         }
 
         public string Message { get; set; }
+
+        public MultiplayerCommandsViewModel MultiCommands
+        {
+            get
+            {
+                return commandsVM;
+            }
+            set
+            {
+                if (value != commandsVM)
+                {
+                    commandsVM = value;
+                    NotifyOfPropertyChange(() => MultiCommands);
+                }
+            }
+        }
         #endregion
 
         #region Constructor
@@ -39,10 +58,20 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         /// Default constructor
         /// </summary>
         /// <param name="room">the room</param>
+        public ChatViewModel(Room room, Osu.Scores.TeamVs ranking)
+        {
+            this.room = room;
+            _messages = "";
+
+            MultiCommands = new MultiplayerCommandsViewModel(room, ranking.Red.Name, ranking.Blue.Name);
+        }
+
         public ChatViewModel(Room room)
         {
             this.room = room;
             _messages = "";
+
+            MultiCommands = new MultiplayerCommandsViewModel(room);
         }
         #endregion
 

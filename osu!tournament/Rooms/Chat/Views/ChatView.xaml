@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="35" />
+            <RowDefinition Height="75" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -25,5 +26,6 @@
         </ScrollViewer>
         <TextBox x:Name="Message" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="1" cal:Message.Attach="[Event KeyDown] = [Action PressEnterToSend($executionContext)]" />
         <Button x:Name="SendMessage" Content="Send" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1" Grid.Row="1" />
+        <ContentControl x:Name="MultiCommands" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,2.5,0,0" />
     </Grid>
 </UserControl>
