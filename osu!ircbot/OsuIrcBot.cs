@@ -152,7 +152,7 @@ namespace Osu.Ircbot
             regexRoomLine = new Regex("^Room name: ([^,]*), History:");
             regexMapLine = new Regex("Beatmap: [^ ]* (.*)");
             regexSwitchedLine = new Regex("^Switched ([a-zA-Z0-9_\\- ]+) to the tournament server$");
-            regexCreateCommand = new Regex("^Created the tournament match https:\\/\\/osu\\.ppy\\.sh\\/mp\\/(\\d+)[^\\:]*: \\(([^\\)]*)\\) vs \\(([^\\)]*)\\)$");
+            regexCreateCommand = new Regex(@"^Created the tournament match https:\/\/osu\.ppy\.sh\/mp\/(\d+)[^\:]*: \(([^\)]*)\)\s\w+\s\(([^\)]*)\)$");
             irc_address = ircIP;
 
             // Timer to catch mp settings infos
