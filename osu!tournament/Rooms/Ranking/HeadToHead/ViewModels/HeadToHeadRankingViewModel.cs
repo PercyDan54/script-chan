@@ -152,10 +152,10 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
 
             long next = ranking.Next;
 
-            if (current == 0 || next == 0)
+            if (next == 0)
                 Status = "No order defined";
             else
-                Status = "Current player: " + room.Players[current].OsuUser.Username + ". Next player: " + room.Players[next].OsuUser.Username + ".";
+                Status = "Current player: " + (current == 0 ? "No map played yet" : room.Players[current].OsuUser.Username) + ". Next player: " + room.Players[next].OsuUser.Username + ".";
         }
 
         /// <summary>
@@ -189,9 +189,11 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
         {
             UpdateStatusMessage();
             UpdatePlayersLines();
+            mpvm.Update();
             NotifyOfPropertyChange(() => IsControlVisible);
             NotifyOfPropertyChange(() => SizePlayerList);
             NotifyOfPropertyChange(() => RowSpanScore);
+            NotifyOfPropertyChange(() => MappoolPicker);
         }
         #endregion
     }

@@ -191,8 +191,8 @@ namespace Osu.Scores
                     if (id != 0 && room.Players[id].Playing)
                         players.Add(id);
 
-                // No players
-                if (players.Count == 0)
+                // No players or no map played from the pool yet
+                if (players.Count == 0 || played == 0)
                     // 0
                     return NoPlayer;
 

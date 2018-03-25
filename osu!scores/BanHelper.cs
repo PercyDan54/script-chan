@@ -56,9 +56,12 @@ namespace Osu.Scores
             return BeatmapBanned.Exists(x => x.Id == bm.Id); 
         }
 
-        private bool CanShowBan()
+        private bool CanShowBan(bool teamVsMode)
         {
-            return BeatmapBanned.Count % 2 == 0;
+            if (teamVsMode)
+                return BeatmapBanned.Count % 2 == 0 && BeatmapBanned.Count != 0;
+            else
+                return BeatmapBanned.Count != 0;
         }
 
         public bool CanUnban(Beatmap bm)
@@ -107,13 +110,18 @@ namespace Osu.Scores
         }
         */
 
-        public Embed GenerateBanRecapMessage()
+        public Embed GenerateBanRecapMessage(Type rankingType)
         {
-            //Check if both bans have been made
-            if(CanShowBan())
+            var printTeamVsMode = false;
+
+            if (rankingType == typeof(TeamVs))
+                printTeamVsMode = true;
+
+            //Check if both bans have been made or if there's a map banned for head to head
+            if (CanShowBan(printTeamVsMode))
             {
                 Embed e = new Embed();
-                e.Title = "Ban Recap (Roll Winner : " + SecondTeamToBan.Name + ")";
+                e.Title = "Ban Recap " + (!printTeamVsMode ? "" : "(Roll Winner : " + SecondTeamToBan.Name + ")");
                 e.Fields = new List<Field>();
 
                 string first_team = "";
@@ -122,27 +130,54 @@ namespace Osu.Scores
                 for (int i = 0; i < BeatmapBanned.Count; i++)
                 {
                     var res = string.Format("__{0}__ **{1} - {2} [{3}]**" + System.Environment.NewLine, BeatmapBanned[i].PickType, BeatmapBanned[i].OsuBeatmap.Artist, BeatmapBanned[i].OsuBeatmap.Title, BeatmapBanned[i].OsuBeatmap.Version);
-                    if (i % 2 == 0)
-                        first_team += res;
+                    if(printTeamVsMode)
+                    {
+                        if (i % 2 == 0)
+                            first_team += res;
+                        else
+                            second_team += res;
+                    }
                     else
-                        second_team += res;
+                    {
+                        first_team += (string.Format("-{0}- ", i+1) + res);
+                    }
+                    
                 }
 
-                e.Fields.Add(new Field() { Name = FirstTeamToBan.Name, Value = first_team });
-                e.Fields.Add(new Field() { Name = SecondTeamToBan.Name, Value = second_team });
+                if (printTeamVsMode)
+                {
+                    e.Fields.Add(new Field() { Name = FirstTeamToBan.Name, Value = first_team });
+                    e.Fields.Add(new Field() { Name = SecondTeamToBan.Name, Value = second_team });
+                }
+                else
+                {
+                    e.Fields.Add(new Field() { Name = "The list", Value = first_team });
+                }
 
                 return e;
             }
             return null;
         }
 
-        public Embed GeneratePickRecapMessage()
+        public Embed GeneratePickRecapMessage(Type rankingType)
         {
             Embed e = new Embed();
             e.Title = "Pick Recap";
             e.Fields = new List<Field>();
-            Field firstteam = new Field() { Name = FirstTeamToBan.Name };
-            Field secondteam = new Field() { Name = SecondTeamToBan.Name };
+            var printTeamVsMode = (rankingType == typeof(TeamVs));
+            Field firstteam = null;
+            Field secondteam = null;
+
+
+            if (printTeamVsMode)
+            {
+                firstteam = new Field() { Name = FirstTeamToBan.Name };
+                secondteam = new Field() { Name = SecondTeamToBan.Name };
+            }
+            else
+            {
+                firstteam = new Field() { Name = "The list" };
+            }
 
             if (picks.Count > 0)
             {
@@ -152,7 +187,7 @@ namespace Osu.Scores
             {
                 bm = picks[counter];
                 string sentence = string.Format("-{0}- __{1}__ **{2} - {3} [{4}]**" + Environment.NewLine, counter + 1, bm.PickType, bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.OsuBeatmap.Version);
-                if (counter % 2 == 0)
+                if (counter % 2 == 0 && printTeamVsMode)
                 {
                     secondteam.Value += sentence;
                 }
@@ -167,13 +202,15 @@ namespace Osu.Scores
                 firstteam.Value = "None";
             }
 
-            if (string.IsNullOrEmpty(secondteam.Value))
+            if (printTeamVsMode && string.IsNullOrEmpty(secondteam.Value))
             {
                 secondteam.Value = "None";
             }
 
             e.Fields.Add(firstteam);
-            e.Fields.Add(secondteam);
+
+            if (printTeamVsMode)
+                e.Fields.Add(secondteam);
 
             return e;
         }

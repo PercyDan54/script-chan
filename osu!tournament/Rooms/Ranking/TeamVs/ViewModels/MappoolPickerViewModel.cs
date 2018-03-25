@@ -71,7 +71,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
         public void SendBanRecap()
         {
-            Embed message = RefereeMatchHelper.GetInstance(r.Id).GenerateBanRecapMessage();
+            Embed message = RefereeMatchHelper.GetInstance(r.Id).GenerateBanRecapMessage(r.Ranking.GetType());
             if(message != null)
             {
                 string name;
@@ -93,7 +93,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
         public void SendPickRecap()
         {
-            Embed message = RefereeMatchHelper.GetInstance(r.Id).GeneratePickRecapMessage();
+            Embed message = RefereeMatchHelper.GetInstance(r.Id).GeneratePickRecapMessage(r.Ranking.GetType());
             if (message != null)
             {
                 string name;
