@@ -49,7 +49,7 @@
             <Button x:Name="Save" Content="Save" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="2" />
             <Label Content="IRC (optional)" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="3" />
             <Label Content="Username" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="8" />
-            <Label Content="Password" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="8" />
+            <Label Content="Password" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="8" />
             <TextBox x:Name="Username" IsEnabled="{Binding UsernameEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="9"/>
             <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding PasswordEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="9" />
             <Button x:Name="Connect" Content="{Binding ConnectButtonText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="9" />
@@ -58,11 +58,11 @@
             <Label Content="Room options" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="3" />
             <Label Content="Default BO when creating a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="13" />
             <ComboBox x:Name="Modes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="1" />
-            <Label Content="Default GameMode for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="13" />
-            <ComboBox x:Name="GameModes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
+            <Label Content="Default GameMode for a new room" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="13" />
+            <ComboBox x:Name="GameModes" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
             <Label Content="Default Mappool for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="16" />
             <ComboBox x:Name="Mappools" DisplayMemberPath="Name" controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="You can leave it blank if you want" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="17" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedMappool}" />
-            <Label Content="Default Timer after match for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="1" Grid.Row="16" />
+            <Label ToolTip="The mp timer command is triggered after each map played" Content="Mp timer duration (0 = deactivated)" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="16" />
             <TextBox x:Name="Timer" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="17" />
         </Grid>
     </ScrollViewer>
