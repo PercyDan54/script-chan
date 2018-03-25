@@ -98,6 +98,11 @@ namespace Osu.Scores
         /// </summary>
         protected bool notificationsEnabled;
 
+        /// <summary>
+        /// Countdown timer amount
+        /// </summary>
+        protected int timer;
+
         protected int countBans;
 
         protected bool isStreamed;
@@ -127,6 +132,7 @@ namespace Osu.Scores
 
             var scoremode = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.ScoreMode) ? (OsuScoringType)Enum.Parse(typeof(OsuScoringType), InfosHelper.TourneyInfos.ScoreMode, true) : OsuScoringType.Score;
             var roomsize = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.RoomSize) ? InfosHelper.TourneyInfos.RoomSize : "16";
+            timer = InfosHelper.TourneyInfos.Timer;
 
             roomConfiguration = new RoomConfiguration() { ScoreMode = scoremode, RoomSize = roomsize };
             mode = Cache.GetCache("osu!options.db").Get("mode", "3");
@@ -427,6 +433,17 @@ namespace Osu.Scores
             get
             {
                 return roomConfiguration;
+            }
+        }
+
+        public int Timer
+        {
+            get { return timer; }
+            set {
+                if (timer != value)
+                {
+                    timer = value;
+                }
             }
         }
         #endregion

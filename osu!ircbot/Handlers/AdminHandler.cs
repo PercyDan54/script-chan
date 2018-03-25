@@ -52,11 +52,10 @@ namespace Osu.Ircbot.Handlers
         public async void StartCounter(Scores.Room room)
         {
             await Task.Delay(5000);
-            if(room.Status != Scores.Status.RoomStatus.Finished)
+            if(room.Status != Scores.Status.RoomStatus.Finished && room.Timer > 0)
             {
-                bot.SendMessage("#mp_" + room.Id, "!mp timer 180");
+                bot.SendMessage("#mp_" + room.Id, "!mp timer " + room.Timer);
             }
-            
         }
 
         public void OnDeleteRoom(Scores.Room room)
