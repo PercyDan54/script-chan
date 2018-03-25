@@ -53,16 +53,18 @@
         <ComboBox x:Name="GameMode" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="3" Grid.Column="2" Width="96"/>
         <Label Content="Enable notifications" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="4" Grid.ColumnSpan="2" />
         <CheckBox x:Name="NotificationsEnabled" Grid.Row="4" Grid.Column="2" Margin="2,2,0,2" />
+        <Label Content="Mp timer duration (0 = deactivated)" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="5" Grid.ColumnSpan="2" />
+        <TextBox x:Name="Timer" VerticalContentAlignment="Center" FontSize="12" Margin="2,2,2,2" Grid.Row="5" Grid.Column="2" />
 
-        <Label Content="Update room configuration" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Row="6" Grid.ColumnSpan="5" />
-        <Label Content="Team mode" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="1"/>
-        <Label Content="Score mode" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="1"/>
-        <Label Content="Size" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="1"/>
+        <Label Content="Update room configuration" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Row="7" Grid.ColumnSpan="5" />
+        <Label Content="Team mode" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="1"/>
+        <Label Content="Score mode" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1"/>
+        <Label Content="Size" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="1"/>
 
-        <ComboBox x:Name="TeamModeBox" HorizontalAlignment="Center" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="8" Grid.Column="0" Width="96"/>
-        <ComboBox x:Name="ScoreModeBox" HorizontalAlignment="Center" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="8" Grid.Column="1" Width="96"/>
-        <ComboBox x:Name="RoomSizeBox" HorizontalAlignment="Center" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="8" Grid.Column="2" Width="96"/>
+        <ComboBox x:Name="TeamModeBox" HorizontalAlignment="Center" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="9" Grid.Column="0" Width="96"/>
+        <ComboBox x:Name="ScoreModeBox" HorizontalAlignment="Center" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="9" Grid.Column="1" Width="96"/>
+        <ComboBox x:Name="RoomSizeBox" HorizontalAlignment="Center" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="9" Grid.Column="2" Width="96"/>
 
-        <Button x:Name="UpdateRoomConfiguration" Content="Update" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="4" Grid.Row="8" />
+        <Button x:Name="UpdateRoomConfiguration" Content="Update" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="4" Grid.Row="9" />
     </Grid>
 </UserControl>

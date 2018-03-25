@@ -56,6 +56,7 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             parent = ovvm;
             this.room = room;
+            this.room.RankingTypeChanged += OnRankingTypeChanged;
             this.roomId = room.Id;
             IsCreated = true;
 
@@ -137,9 +138,13 @@ namespace Osu.Mvvm.Ov.ViewModels
                 {
                     return blueteam;
                 }
-                else
+                else if(room.Ranking.GetType() == typeof(TeamVs))
                 {
                     return ((TeamVs)room.Ranking).Blue.Name;
+                }
+                else
+                {
+                    return string.Empty;
                 }
             }
         }
@@ -151,7 +156,7 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                if (room != null)
+                if (room != null && room.Ranking.GetType() == typeof(TeamVs))
                     return "" + (((TeamVs)room.Ranking).Blue.Points + ((TeamVs)room.Ranking).Blue.PointAddition);
                 else
                     return string.Empty;
@@ -166,9 +171,18 @@ namespace Osu.Mvvm.Ov.ViewModels
             get
             {
                 if (redteam != null)
+                {
                     return redteam;
-                else
+
+                }
+                else if(room.Ranking.GetType() == typeof(TeamVs))
+                {
                     return ((TeamVs)room.Ranking).Red.Name;
+                }
+                else
+                {
+                    return string.Empty;
+                }
             }
         }
 
@@ -179,7 +193,7 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                if (room != null)
+                if (room != null && room.Ranking.GetType() == typeof(TeamVs))
                     return "" + (((TeamVs)room.Ranking).Red.Points + ((TeamVs)room.Ranking).Red.PointAddition);
                 else
                     return string.Empty;
@@ -229,7 +243,7 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                if(room != null)
+                if(room != null && room.Ranking.GetType() == typeof(TeamVs))
                 {
                     if (room.Status != RoomStatus.Finished)
                     {
@@ -272,7 +286,7 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                if (IsCreated)
+                if (IsCreated && room.Ranking.GetType() == typeof(TeamVs))
                     return "Scores :";
                 else
                     return string.Empty;
@@ -394,6 +408,31 @@ namespace Osu.Mvvm.Ov.ViewModels
             NotifyOfPropertyChange(() => BatchUI);
             UpdateStatus();
         }
+
+        public void UpdateRanking()
+        {
+            NotifyOfPropertyChange(() => TeamBlue);
+            NotifyOfPropertyChange(() => TeamRed);
+            NotifyOfPropertyChange(() => InBetweenText);
+            NotifyOfPropertyChange(() => ScoreBlue);
+            NotifyOfPropertyChange(() => ScoreRed);
+            NotifyOfPropertyChange(() => Pick);
+            NotifyOfPropertyChange(() => ScoreLabel);
+        }
+
+        /// <summary>
+        /// Function called when an overview created with the tool has now the room in game created
+        /// </summary>
+        /// <param name="r"></param>
+        public void NotifyRoomCreated(Room r)
+        {
+            // Removing variables used for overview before room creation
+            redteam = null;
+            blueteam = null;
+
+            this.Room = r;
+            this.Room.RankingTypeChanged += OnRankingTypeChanged;
+        }
         #endregion
 
         #region Private Methods
@@ -417,6 +456,11 @@ namespace Osu.Mvvm.Ov.ViewModels
         private void StopTimer()
         {
             this.timer.Stop();
+        }
+
+        private void OnRankingTypeChanged(object sender, EventArgs e)
+        {
+            UpdateRanking();
         }
         #endregion
     }

@@ -25,7 +25,7 @@ namespace Osu.Scores
         /// <summary>
         /// The regex used to get the team name
         /// </summary>
-        protected static readonly Regex TeamRegex = new Regex("^([\\w+ ]*): \\(([\\w+ ]*)\\)\\s\\w+\\s\\(([\\w+ ]*)\\)$");
+        protected static readonly Regex TeamRegex = new Regex(@"^([\w+ ]*): \(([^\)]*)\)\s\w+\s\(([^\)]*)\)$");
 
         /// <summary>
         /// The logger
@@ -33,6 +33,8 @@ namespace Osu.Scores
         protected static ILog log = LogManager.GetLogger("osu!scores");
 
         protected OsuMode wctype;
+
+        public event EventHandler RankingTypeChanged;
         #endregion
 
         #region Attribute
@@ -96,6 +98,11 @@ namespace Osu.Scores
         /// </summary>
         protected bool notificationsEnabled;
 
+        /// <summary>
+        /// Countdown timer amount
+        /// </summary>
+        protected int timer;
+
         protected int countBans;
 
         protected bool isStreamed;
@@ -125,6 +132,7 @@ namespace Osu.Scores
 
             var scoremode = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.ScoreMode) ? (OsuScoringType)Enum.Parse(typeof(OsuScoringType), InfosHelper.TourneyInfos.ScoreMode, true) : OsuScoringType.Score;
             var roomsize = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.RoomSize) ? InfosHelper.TourneyInfos.RoomSize : "16";
+            timer = InfosHelper.TourneyInfos.Timer;
 
             roomConfiguration = new RoomConfiguration() { ScoreMode = scoremode, RoomSize = roomsize };
             mode = Cache.GetCache("osu!options.db").Get("mode", "3");
@@ -427,6 +435,17 @@ namespace Osu.Scores
                 return roomConfiguration;
             }
         }
+
+        public int Timer
+        {
+            get { return timer; }
+            set {
+                if (timer != value)
+                {
+                    timer = value;
+                }
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -647,6 +666,8 @@ namespace Osu.Scores
                 InitializeRankingType(Ranking.Type.TeamVs);
             else
                 InitializeRankingType(Ranking.Type.HeadToHead);
+
+            RankingTypeChanged(this, new EventArgs());
         }
         #endregion
 

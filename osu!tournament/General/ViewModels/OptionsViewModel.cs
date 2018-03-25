@@ -51,8 +51,8 @@ namespace Osu.Mvvm.General.ViewModels
             DisplayName = "Options";
             bot = OsuIrcBot.GetInstancePrivate();
             botpublic = OsuIrcBot.GetInstancePublic();
-            string t = Cache.GetCache("osu!options.db").Get("wctype", "Standard");
-            string cMode = Cache.GetCache("osu!options.db").Get("colormode", "BaseLight");
+            string t = cache.Get("wctype", "Standard");
+            string cMode = cache.Get("colormode", "BaseLight");
             //SelectedColorMode = cMode;
 
             string pool = Cache.GetCache("osu!options.db").Get("defaultmappool", "");
@@ -342,6 +342,15 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        public int Timer
+        {
+            get { return InfosHelper.TourneyInfos.Timer; }
+            set
+            {
+                InfosHelper.TourneyInfos.Timer = Math.Abs(value);
+                NotifyOfPropertyChange(() => Timer);
+            }
+        }
         #endregion
 
         #region Private Methods

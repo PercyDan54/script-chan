@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using Caliburn.Micro;
 using Osu.Api;
 using Osu.Ircbot;
 using Osu.Mvvm.Miscellaneous;
@@ -278,6 +279,19 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
                 {
                     room.NotificationsEnabled = value;
                     NotifyOfPropertyChange(() => NotificationsEnabled);
+                }
+            }
+        }
+
+        public int Timer
+        {
+            get { return room.Timer; }
+            set
+            {
+                if (room.Timer != value)
+                {
+                    room.Timer = Math.Abs(value);
+                    NotifyOfPropertyChange(() => Timer);
                 }
             }
         }

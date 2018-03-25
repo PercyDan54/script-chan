@@ -289,7 +289,11 @@ namespace Osu.Mvvm.Ov.ViewModels
             {
                 if(room.Id == orvm.RoomId)
                 {
-                    orvm.Room = room;
+                    if (orvm.Room == null)
+                        orvm.NotifyRoomCreated(room);
+                    else
+                        orvm.Room = room;
+
                     orvm.Update();
                     return orvm;
                 }

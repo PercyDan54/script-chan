@@ -29,6 +29,8 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
         private MappoolPickerViewModel mpvm;
 
+        private MultiplayerCommandsViewModel commandsVM;
+
         private bool abortHappened;
 
         private bool isMovingWithMessage;
@@ -46,6 +48,8 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             isMovingWithMessage = true;
 
             MappoolPicker = new MappoolPickerViewModel(room);
+
+            MultiCommands = new MultiplayerCommandsViewModel(room, ranking.Red.Name, ranking.Blue.Name);
 
             Update();
         }
@@ -112,6 +116,19 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 {
                     mpvm = value;
                     NotifyOfPropertyChange(() => MappoolPicker);
+                }
+            }
+        }
+
+        public MultiplayerCommandsViewModel MultiCommands
+        {
+            get { return commandsVM; }
+            set
+            {
+                if (commandsVM != value)
+                {
+                    commandsVM = value;
+                    NotifyOfPropertyChange(() => MultiCommands);
                 }
             }
         }
