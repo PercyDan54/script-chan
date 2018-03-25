@@ -12,7 +12,7 @@
     d:DesignWidth="500">
     <DockPanel>
         <Expander DockPanel.Dock="Bottom" Header="MP Commands" IsExpanded="False">
-            <ContentControl x:Name="MultiCommands" Height="100" HorizontalAlignment="Center" />
+            <ContentControl x:Name="MultiCommands" Height="100" HorizontalAlignment="Left" />
         </Expander>
         <Grid DockPanel.Dock="Top" Margin="0,0,0,2.5">
             <Grid.RowDefinitions>
