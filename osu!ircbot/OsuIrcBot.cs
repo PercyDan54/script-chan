@@ -669,6 +669,15 @@ namespace Osu.Ircbot
         {
             if (messageQueue.Count == 0) return;
             var ircMessage = messageQueue.Dequeue();
+            if (ircMessage.User.StartsWith("#mp_"))
+            {
+                var playerEvent = new PlayerSpokeEventArgs {
+                    MatchId = int.Parse(ircMessage.User.Substring(4)),
+                    Message = ircMessage.Message,
+                    PlayerName = username
+                };
+                OnPlayerMessageCatched(playerEvent);
+            }
             client.SendMessage(ircMessage.User, ircMessage.Message);
         }
 

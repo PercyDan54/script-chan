@@ -78,7 +78,6 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         #region Public Methods
         public void SendMessage()
         {
-            room.RoomMessages.Add("=> " + Message);
             OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, Message);
             Update();
             Message = string.Empty;
