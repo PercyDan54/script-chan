@@ -407,7 +407,15 @@ namespace Osu.Mvvm.Rooms.ViewModels
                 {
                     room.RoomMessages.RemoveAt(0);
                 }
-                room.RoomMessages.Add(string.Format("{0}: {1}", multi_room.PlayerName, multi_room.Message));
+
+                if (multi_room.PlayerName == bot.Username)
+                {
+                    room.RoomMessages.Add(string.Format("=> {0}", multi_room.Message));
+                }
+                else
+                {
+                    room.RoomMessages.Add(string.Format("{0}: {1}", multi_room.PlayerName, multi_room.Message));
+                }
             }
             if(selected != null && selected.Id == multi_room.MatchId)
             {

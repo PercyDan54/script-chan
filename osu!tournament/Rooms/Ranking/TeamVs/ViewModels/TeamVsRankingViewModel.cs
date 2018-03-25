@@ -122,13 +122,10 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
         public MultiplayerCommandsViewModel MultiCommands
         {
-            get
-            {
-                return commandsVM;
-            }
+            get { return commandsVM; }
             set
             {
-                if (value != commandsVM)
+                if (commandsVM != value)
                 {
                     commandsVM = value;
                     NotifyOfPropertyChange(() => MultiCommands);
