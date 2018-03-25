@@ -25,7 +25,7 @@ namespace Osu.Scores
         /// <summary>
         /// The regex used to get the team name
         /// </summary>
-        protected static readonly Regex TeamRegex = new Regex("^([\\w+ ]*): \\(([\\w+ ]*)\\)\\s\\w+\\s\\(([\\w+ ]*)\\)$");
+        protected static readonly Regex TeamRegex = new Regex(@"^([\w+ ]*): \(([^\)]*)\)\s\w+\s\(([^\)]*)\)$");
 
         /// <summary>
         /// The logger
@@ -33,6 +33,8 @@ namespace Osu.Scores
         protected static ILog log = LogManager.GetLogger("osu!scores");
 
         protected OsuMode wctype;
+
+        public event EventHandler RankingTypeChanged;
         #endregion
 
         #region Attribute
@@ -647,6 +649,8 @@ namespace Osu.Scores
                 InitializeRankingType(Ranking.Type.TeamVs);
             else
                 InitializeRankingType(Ranking.Type.HeadToHead);
+
+            RankingTypeChanged(this, new EventArgs());
         }
         #endregion
 
