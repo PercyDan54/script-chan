@@ -108,7 +108,7 @@ namespace Osu.Mvvm.General.ViewModels
                 }
             }
 
-            rooms = new RoomsViewModel(overviewRooms);
+            rooms = new RoomsViewModel(overviewRooms, this);
 
             mappools = new MappoolsViewModel();
 
@@ -185,6 +185,10 @@ namespace Osu.Mvvm.General.ViewModels
             {
                 if (value != active_item_name)
                 {
+                    if (active_item_name != null && active_item_name == "Rooms" && rooms.ActiveItem != null && rooms.ActiveItem.SelectedTab.Header.ToString() == "Chat")
+                    {
+                        rooms.ActiveItem.RemoveNewMessageLine();
+                    }
                     active_item_name = value;
                     NotifyOfPropertyChange(() => ActiveItemName);
                 }

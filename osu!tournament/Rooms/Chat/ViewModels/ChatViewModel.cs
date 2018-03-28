@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels;
 
 namespace Osu.Mvvm.Rooms.Chat.ViewModels
@@ -20,13 +22,13 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         /// </summary>
         private Room room;
 
-        private string _messages;
+        private FlowDocument _messages;
 
         private MultiplayerCommandsViewModel commandsVM;
         #endregion
 
         #region Properties
-        public string MultiplayerChat
+        public FlowDocument MultiplayerChat
         {
             get
             {
@@ -61,7 +63,11 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         public ChatViewModel(Room room, Osu.Scores.TeamVs ranking)
         {
             this.room = room;
-            _messages = "";
+            _messages = new FlowDocument {
+                FontFamily = new FontFamily("Lucida Console"),
+                FontSize = 14,
+                TextAlignment = TextAlignment.Left
+            };
 
             MultiCommands = new MultiplayerCommandsViewModel(room, ranking.Red.Name, ranking.Blue.Name);
         }
@@ -69,7 +75,12 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         public ChatViewModel(Room room)
         {
             this.room = room;
-            _messages = "";
+            _messages = new FlowDocument
+            {
+                FontFamily = new FontFamily("Lucida Console"),
+                FontSize = 14,
+                TextAlignment = TextAlignment.Left
+            };
 
             MultiCommands = new MultiplayerCommandsViewModel(room);
         }
@@ -96,10 +107,19 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
 
         public void Update()
         {
-            _messages = string.Empty;
+            _messages.Blocks.Clear();
             foreach(var message in room.RoomMessages.ToList())
             {
-                _messages += message + "\n";
+                Paragraph paragraph;
+                if (message.Message == "------------------ NEW MESSAGES ------------------")
+                {
+                    paragraph = new Paragraph(new Run("------------------ NEW MESSAGES ------------------")) { Margin = new Thickness(135, 0, 0, 0), TextIndent = -135, Foreground = Brushes.Red, TextAlignment = TextAlignment.Center };
+                }
+                else
+                {
+                    paragraph = new Paragraph(new Run($"{message.User.PadRight(15)} {message.Message}")) {Margin = new Thickness(135, 0, 0, 0), TextIndent = -135};
+                }
+                _messages.Blocks.Add(paragraph);
             }
             NotifyOfPropertyChange(() => MultiplayerChat);
         }

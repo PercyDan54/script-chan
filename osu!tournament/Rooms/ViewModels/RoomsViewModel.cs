@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Mvvm.Ov.ViewModels;
 using osu_discord;
+using Osu.Mvvm.General.ViewModels;
 using Osu.Tournament.Ov.ViewModels;
+using Osu.Utils;
 
 namespace Osu.Mvvm.Rooms.ViewModels
 {
@@ -50,13 +52,15 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// The overview view model
         /// </summary>
         private OvViewModel overview;
+
+        private MainViewModel mainview;
         #endregion
 
         #region Constructor
         /// <summary>
         /// Default constructor
         /// </summary>
-        public RoomsViewModel(OvViewModel ov)
+        public RoomsViewModel(OvViewModel ov, MainViewModel mv)
         {
             DisplayName = "Current Room: ";
             selected = null;
@@ -69,6 +73,8 @@ namespace Osu.Mvvm.Rooms.ViewModels
 
             overview = ov;
             overview.MatchCreated += OnMatchCreated;
+
+            mainview = mv;
         }
 
         private void OnMatchCreated(object sender, MatchCreatedArgs e)
@@ -403,19 +409,12 @@ namespace Osu.Mvvm.Rooms.ViewModels
             Room room = null;
             if (Room.Rooms.TryGetValue(multi_room.MatchId, out room))
             {
-                if(room.RoomMessages.Count >= 100)
+                Execute.OnUIThread(() =>
                 {
-                    room.RoomMessages.RemoveAt(0);
-                }
-
-                if (multi_room.PlayerName == bot.Username)
-                {
-                    room.RoomMessages.Add(string.Format("=> {0}", multi_room.Message));
-                }
-                else
-                {
-                    room.RoomMessages.Add(string.Format("{0}: {1}", multi_room.PlayerName, multi_room.Message));
-                }
+                    if (mainview.ActiveItemName != "Rooms" || selected == null || selected.Id != multi_room.MatchId || selected_view_model.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() != "Chat")
+                        room.AddNewMessageLine();
+                });
+                room.AddMessage(new IrcMessage { Message = multi_room.Message, User = multi_room.PlayerName });
             }
             if(selected != null && selected.Id == multi_room.MatchId)
             {

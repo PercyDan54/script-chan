@@ -63,6 +63,7 @@
     <Compile Include="IconUtilities.cs" />
     <Compile Include="Info\InfosHelper.cs" />
     <Compile Include="Info\UserDataInfo.cs" />
+    <Compile Include="IrcMessage.cs" />
     <Compile Include="IRCPlayerInfo.cs" />
     <Compile Include="MatchCatchedArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
