@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -63,11 +64,14 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         public ChatViewModel(Room room, Osu.Scores.TeamVs ranking)
         {
             this.room = room;
-            _messages = new FlowDocument {
-                FontFamily = new FontFamily("Lucida Console"),
-                FontSize = 14,
-                TextAlignment = TextAlignment.Left
-            };
+            Execute.OnUIThread(() =>
+            {
+                _messages = new FlowDocument {
+                    FontFamily = new FontFamily("Lucida Console"),
+                    FontSize = 14,
+                    TextAlignment = TextAlignment.Left
+                };
+            });
 
             MultiCommands = new MultiplayerCommandsViewModel(room, ranking.Red.Name, ranking.Blue.Name);
         }
@@ -75,12 +79,14 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         public ChatViewModel(Room room)
         {
             this.room = room;
-            _messages = new FlowDocument
+            Execute.OnUIThread(() =>
             {
-                FontFamily = new FontFamily("Lucida Console"),
-                FontSize = 14,
-                TextAlignment = TextAlignment.Left
-            };
+                _messages = new FlowDocument {
+                    FontFamily = new FontFamily("Lucida Console"),
+                    FontSize = 14,
+                    TextAlignment = TextAlignment.Left
+                };
+            });
 
             MultiCommands = new MultiplayerCommandsViewModel(room);
         }
@@ -90,7 +96,6 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         public void SendMessage()
         {
             OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, Message);
-            Update();
             Message = string.Empty;
             NotifyOfPropertyChange(() => Message);
         }
@@ -105,23 +110,33 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
             }
         }
 
-        public void Update()
+        public void Update(bool scrollToNewLine)
         {
-            _messages.Blocks.Clear();
-            foreach(var message in room.RoomMessages.ToList())
+            Execute.OnUIThread(() =>
             {
-                Paragraph paragraph;
-                if (message.Message == "------------------ NEW MESSAGES ------------------")
+                Paragraph newMessageParagraph = null;
+                _messages.Blocks.Clear();
+                foreach (var message in room.RoomMessages.ToList())
                 {
-                    paragraph = new Paragraph(new Run("------------------ NEW MESSAGES ------------------")) { Margin = new Thickness(135, 0, 0, 0), TextIndent = -135, Foreground = Brushes.Red, TextAlignment = TextAlignment.Center };
+                    Paragraph paragraph;
+                    if (message.Message == "------------------ NEW MESSAGES ------------------")
+                    {
+                        paragraph = new Paragraph(new Run("------------------ NEW MESSAGES ------------------")) {Margin = new Thickness(135, 0, 0, 0), TextIndent = -135, Foreground = Brushes.Red, TextAlignment = TextAlignment.Center};
+                        newMessageParagraph = paragraph;
+                    }
+                    else
+                    {
+                        paragraph = new Paragraph(new Run($"{message.User.PadRight(15)} {message.Message}")) {Margin = new Thickness(135, 0, 0, 0), TextIndent = -135};
+                    }
+
+                    _messages.Blocks.Add(paragraph);
                 }
-                else
-                {
-                    paragraph = new Paragraph(new Run($"{message.User.PadRight(15)} {message.Message}")) {Margin = new Thickness(135, 0, 0, 0), TextIndent = -135};
-                }
-                _messages.Blocks.Add(paragraph);
-            }
-            NotifyOfPropertyChange(() => MultiplayerChat);
+
+                NotifyOfPropertyChange(() => MultiplayerChat);
+
+                if (scrollToNewLine && newMessageParagraph != null)
+                    newMessageParagraph.Loaded += (sender, args) => newMessageParagraph.BringIntoView();
+            });
         }
         #endregion
     }

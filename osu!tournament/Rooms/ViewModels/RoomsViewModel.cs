@@ -411,18 +411,16 @@ namespace Osu.Mvvm.Rooms.ViewModels
             {
                 Execute.OnUIThread(() =>
                 {
-                    if (mainview.ActiveItemName != "Rooms" || selected == null || selected.Id != multi_room.MatchId || selected_view_model.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() != "Chat")
+                    if (mainview.ActiveItemName != "Rooms" || selected == null || selected.Id != multi_room.MatchId || selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() != "Chat")
                         room.AddNewMessageLine();
+
+                    room.AddMessage(new IrcMessage { Message = multi_room.Message, User = multi_room.PlayerName });
+
+                    if (mainview.ActiveItemName == "Rooms" && selected != null && selected.Id == multi_room.MatchId && selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() == "Chat")
+                        selected_view_model.UpdateChat(false);
+                    else
+                        selected_view_model.UpdateChat(true);
                 });
-                room.AddMessage(new IrcMessage { Message = multi_room.Message, User = multi_room.PlayerName });
-            }
-            if(selected != null && selected.Id == multi_room.MatchId)
-            {
-                Caliburn.Micro.Execute.OnUIThreadAsync((() =>
-                {
-                    if(selected_view_model != null)
-                        selected_view_model.UpdateChat();
-                }));
             }
         }
         #endregion

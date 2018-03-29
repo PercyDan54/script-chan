@@ -87,7 +87,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
             this.players = new PlayersViewModel(room, irc);
 
             UpdateRanking();
-            chat.Update();
+            Execute.OnUIThread(() => UpdateChat(false));
         }
 
         #endregion
@@ -340,9 +340,9 @@ namespace Osu.Mvvm.Rooms.ViewModels
             }
         }
 
-        public void UpdateChat()
+        public void UpdateChat(bool scrollToNewLine)
         {
-            chat.Update();
+            chat.Update(scrollToNewLine);
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
         public void RemoveNewMessageLine()
         {
             room.RemoveNewMessageLine();
-            UpdateChat();
+            Execute.OnUIThread(() => UpdateChat(false));
         }
         #endregion
     }
