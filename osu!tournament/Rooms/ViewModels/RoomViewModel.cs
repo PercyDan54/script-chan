@@ -225,7 +225,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
             }
         }
 
-        
+
 
         /// <summary>
         /// Irc property
@@ -329,7 +329,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                 games.Update();
                 players.Update();
                 irc.Update();
-                
+
                 if (orvm != null)
                 {
                     orvm.Update();
