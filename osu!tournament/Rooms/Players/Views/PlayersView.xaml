@@ -36,7 +36,7 @@
 
         <Button x:Name="Add" Content="Add" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1" Grid.Row="0" />
 
-        <ComboBox x:Name="CbMode" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding CbModeItems}" SelectedItem="{Binding CbModeItem}">
+        <ComboBox x:Name="CbMode" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" ItemsSource="{Binding CbModeItems}" SelectedItem="{Binding CbModeItem}">
         </ComboBox>
     </Grid>
 </UserControl>
