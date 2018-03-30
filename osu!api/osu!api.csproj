@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,6 +60,7 @@
     <Compile Include="Enums\OsuScoreType.cs" />
     <Compile Include="Enums\OsuTeam.cs" />
     <Compile Include="Enums\OsuTeamType.cs" />
+    <Compile Include="Enums\ReturnCodeAPI.cs" />
     <Compile Include="User\OsuEvent.cs" />
     <Compile Include="OsuApi.cs" />
     <Compile Include="Multiplayer\OsuGame.cs" />

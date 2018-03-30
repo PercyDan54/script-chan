@@ -429,9 +429,14 @@ namespace Osu.Scores
                 embed.Thumbnail = new Image { Url = "https://b.ppy.sh/thumb/" + obm.BeatmapSetID + "l.jpg" };
                 embed.Description = string.Format("**{0} - {1} [{2}]**", obm.Artist, obm.Title, obm.Version);
                 embed.Fields = new List<Field>();
-                embed.Fields.Add(new Field() { Name = "User", Value = "Player3" + Environment.NewLine + "Player4" + Environment.NewLine + "Player5" + Environment.NewLine + "Player6" + Environment.NewLine + "Super noob username", Inline = true });
-                embed.Fields.Add(new Field() { Name = "Points", Value = "20 pts" + Environment.NewLine + "19 pts" + Environment.NewLine + "15 pts" + Environment.NewLine + "8 pts" + Environment.NewLine + "2 pts", Inline = true });
-                //REMPLACER PAR LES JOUEURS
+
+                string players = string.Empty;
+                string points = string.Empty;
+
+                Points.OrderByDescending(x => x.Value).ToList().ForEach(y => { players += room.Players[y.Key].Username + Environment.NewLine; points += y.Value + " pts" + Environment.NewLine; });
+
+                embed.Fields.Add(new Field() { Name = "User", Value = players, Inline = true });
+                embed.Fields.Add(new Field() { Name = "Points", Value = points, Inline = true });
 
                 return embed;
             }

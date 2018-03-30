@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using Osu.Api.Enums;
 
 namespace Osu.Mvvm
 {
@@ -47,6 +48,10 @@ namespace Osu.Mvvm
             Cache c = Cache.GetCache("osu!userdata.db");
             InfosHelper.UserDataInfos = c.GetObject<UserDataInfo>("infos", new UserDataInfo());
 
+            // Initialize the osu!api
+            OsuApi.Initialize();
+            Task<ReturnCodeAPI> apires = OsuApi.CheckKey();
+
             // Use our configuration file to configure the logger
             XmlConfigurator.Configure(new MemoryStream(Encoding.UTF8.GetBytes(Osu.Tournament.Properties.Resources.LoggerConfig)));
             
@@ -71,12 +76,6 @@ namespace Osu.Mvvm
             // Initialize the BanHelper
             RefereeMatchHelper.Initialize();
 
-            // Initialize the osu!api
-            OsuApi.Initialize();
-
-            // Check the osu!api key
-            await OsuApi.CheckKey();
-
             ObsBanHelper.Initialize();
 
             ObsBanHelper.CheckPath();
@@ -87,23 +86,32 @@ namespace Osu.Mvvm
             // Initialize the teams
             TeamManager.Initialize();
 
-            // Initialize the rooms
-            await Room.Initialize();
-
             // Initialize the timed counters
             Counter.Initialize();
 
-            // Display the main view
-            DisplayRootViewFor<MainViewModel>();
+            ReturnCodeAPI apiresvalue = await apires;
 
-            // Initialize the dialogs
-            Dialog.Initialize();
-
-            await Task.Delay(3000);
-
-            foreach (var room in Room.Rooms)
+            if(apires.Result == ReturnCodeAPI.TIMEOUT)
             {
-                OsuIrcBot.GetInstancePrivate().OnAddRoom(room.Value);
+                DisplayRootViewFor<ErrorViewModel>();
+            }
+            else
+            {
+                // Initialize the rooms
+                await Room.Initialize();
+
+                // Display the main view
+                DisplayRootViewFor<MainViewModel>();
+
+                // Initialize the dialogs
+                Dialog.Initialize();
+
+                await Task.Delay(3000);
+
+                foreach (var room in Room.Rooms)
+                {
+                    OsuIrcBot.GetInstancePrivate().OnAddRoom(room.Value);
+                }
             }
         }
 
@@ -135,9 +143,12 @@ namespace Osu.Mvvm
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            Settings.Default.WindowSize = new System.Drawing.Size((int)Dialog.Window.Width, (int)Dialog.Window.Height);
-            Settings.Default.WindowLocation = new System.Drawing.Point((int)Dialog.Window.Left, (int)Dialog.Window.Top);
-            Settings.Default.Save();
+            if(Dialog.Window != null)
+            {
+                Settings.Default.WindowSize = new System.Drawing.Size((int)Dialog.Window.Width, (int)Dialog.Window.Height);
+                Settings.Default.WindowLocation = new System.Drawing.Point((int)Dialog.Window.Left, (int)Dialog.Window.Top);
+                Settings.Default.Save();
+            }
 
             base.OnExit(sender, e);
         }
