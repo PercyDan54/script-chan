@@ -80,7 +80,7 @@ namespace Osu.Api
         /// <returns></returns>
         private string MakeUrl()
         {
-            string url = base_url + "?k=" + (string.IsNullOrEmpty(api_key) ? "somerandomkey" : "fffff");// api_key);
+            string url = base_url + "?k=" + (string.IsNullOrEmpty(api_key) ? "somerandomkey" : api_key);
 
             foreach (Parameter parameter in parameters)
                 url += "&" + parameter.key + "=" + parameter.value;
