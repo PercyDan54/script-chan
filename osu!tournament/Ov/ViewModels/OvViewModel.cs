@@ -26,7 +26,8 @@ namespace Osu.Mvvm.Ov.ViewModels
         /// The list of OverviewRoom view models
         /// </summary>
         protected IObservableCollection<OvRoomViewModel> rooms;
-        protected IObservableCollection<SelectableObject<string>> items;
+        protected IObservableCollection<string> items;
+        protected string selecteditem;
         protected TeamOv selectedRedTeam;
         protected TeamOv selectedBlueTeam;
         protected char batchLetter;
@@ -41,7 +42,7 @@ namespace Osu.Mvvm.Ov.ViewModels
             OsuIrcBot.GetInstancePrivate().RoomCreatedCatched += CreateMatchNext;
 
             rooms = new BindableCollection<OvRoomViewModel>();
-            items = new BindableCollection<SelectableObject<string>>();
+            items = new BindableCollection<string>();
 
             batchLetter = 'A';
 
@@ -49,11 +50,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             {
                 foreach (Game g in InfosHelper.TourneyInfos.Matches)
                 {
-                    if (items.Count(x => x.ObjectData == g.Batch) == 0)
+                    if (items.Count(x => x == g.Batch) == 0)
                     {
-                        var so = new SelectableObject<string>(g.Batch, false);
-                        so.BatchSelected += OnItemChange;
-                        items.Add(so);
+                        items.Add(g.Batch);
                     }
                 }
             }
@@ -68,23 +67,38 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             get
             {
-                if(items.Count(x => x.IsSelected == true) == 0)
+                if(SelectedItem == null)
                 {
                     return rooms;
                 }
                 else
                 {
-                    var vrooms = items.ToList().FindAll(y => y.IsSelected == true);
-                    return new BindableCollection<OvRoomViewModel>(rooms.Where(item => vrooms.Exists(y => y.ObjectData == item.Batch)).OrderBy(x => x.Batch));
+                    return new BindableCollection<OvRoomViewModel>(rooms.Where(item => item.Batch == SelectedItem).OrderBy(x => x.Batch));
                 }
             }
         }
 
-        public IObservableCollection<SelectableObject<string>> Items
+        public IObservableCollection<string> Items
         {
             get
             {
-                return items;
+                return new BindableCollection<string>(items.OrderBy(q => q).ToList());
+            }
+        }
+
+        public string SelectedItem
+        {
+            get
+            {
+                return selecteditem;
+            }
+            set
+            {
+                if(value != selecteditem)
+                {
+                    selecteditem = value;
+                    NotifyOfPropertyChange(() => ViewRooms);
+                }
             }
         }
 
@@ -208,10 +222,14 @@ namespace Osu.Mvvm.Ov.ViewModels
 
         public OvRoomViewModel addOverview(string blueteam, string redteam, string batch)
         {
+            if (!items.ToList().Exists(x => x == batch))
+                items.Add(batch);
+
             OvRoomViewModel ovvm = new OvRoomViewModel(this, blueteam, redteam, batch);
             ovvm.MatchCreated += OnMatchCreated;
             rooms.Add(ovvm);
             NotifyOfPropertyChange(() => ViewRooms);
+            NotifyOfPropertyChange(() => Items);
 
             return ovvm;
         }
@@ -330,11 +348,6 @@ namespace Osu.Mvvm.Ov.ViewModels
                 System.Windows.Application.Current.Dispatcher.Invoke(new System.Action(async () => { await Dialog.HideProgress(); Dialog.ShowDialog("Whoops!", "The mp room can't be created!"); }));
             }
         }
-
-        private void OnItemChange(object sender, EventArgs e)
-        {
-            NotifyOfPropertyChange(() => ViewRooms);
-        }
-            #endregion
-        }
+        #endregion
+    }
 }
