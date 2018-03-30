@@ -708,6 +708,7 @@ namespace Osu.Scores
             Dictionary<long, OsuRoom> matches = cache.GetObject<Dictionary<long, OsuRoom>>("rooms", new Dictionary<long, OsuRoom>());
             Dictionary<long, Api.OsuTeam> teamvsfirst = cache.GetObject<Dictionary<long, Api.OsuTeam>>("teamvs_isbluefirstpicking", new Dictionary<long, Api.OsuTeam>());
             Dictionary<long, string> mappoolSet = cache.GetObject<Dictionary<long, string>>("mappool_set", new Dictionary<long, string>());
+            Dictionary<long, bool> isTeamVsMode = cache.GetObject<Dictionary<long, bool>>("isTeamVsMode", new Dictionary<long, bool>());
 
             OsuTeam firstteam;
             string poolname;
@@ -715,6 +716,7 @@ namespace Osu.Scores
             foreach (var match in matches)
             {
                 rooms[match.Key] = new Room(match.Value);
+                rooms[match.Key].InitializeRankingType(isTeamVsMode[match.Key] ? Ranking.Type.TeamVs : Ranking.Type.HeadToHead);
                 var updated = await rooms[match.Key].Update(false);
 
                 // If the game does not exist in the API anymore
@@ -750,19 +752,22 @@ namespace Osu.Scores
             Dictionary<long, OsuRoom> matches = new Dictionary<long, OsuRoom>();
             Dictionary<long, Api.OsuTeam> teamfirstdic = new Dictionary<long, Api.OsuTeam>();
             Dictionary<long, string> mappoolSet = new Dictionary<long, string>();
+            Dictionary<long, bool> isTeamVsMode = new Dictionary<long, bool>();
             foreach (var r in rooms)
             {
                 matches.Add(r.Key, r.Value.OsuRoom);
-                if(r.Value.Ranking.type == Ranking.Type.TeamVs)
-                {
+                isTeamVsMode.Add(r.Key, r.Value.Ranking.type == Ranking.Type.TeamVs ? true : false);
+
+                if (r.Value.Ranking.type == Ranking.Type.TeamVs)
                     teamfirstdic.Add(r.Key, ((TeamVs)r.Value.Ranking).First);
-                    if(r.Value.Mappool != null)
+                    
+                if (r.Value.Mappool != null)
                     mappoolSet.Add(r.Key, r.Value.Mappool.Name);
-                }
             }
             cache["rooms"] = matches;
             cache["teamvs_isbluefirstpicking"] = teamfirstdic;
             cache["mappool_set"] = mappoolSet;
+            cache["isTeamVsMode"] = isTeamVsMode;
         }
 
         /// <summary>
