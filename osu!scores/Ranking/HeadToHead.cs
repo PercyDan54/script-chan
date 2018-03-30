@@ -4,6 +4,7 @@ using osu_utils.DiscordModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Osu.Scores
 {
@@ -64,6 +65,11 @@ namespace Osu.Scores
         /// The list of players that failed
         /// </summary>
         protected List<OsuScore> players_fail;
+
+        /// <summary>
+        /// The first player of the last map
+        /// </summary>
+        protected OsuScore firstPlayer;
         #endregion
 
         #region Constructors
@@ -191,8 +197,8 @@ namespace Osu.Scores
                     if (id != 0 && room.Players[id].Playing)
                         players.Add(id);
 
-                // No players
-                if (players.Count == 0)
+                // No players or no map played from the pool yet
+                if (players.Count == 0 || played == 0)
                     // 0
                     return NoPlayer;
 
@@ -346,6 +352,11 @@ namespace Osu.Scores
             // Then the players that failed
             UpdateScores(players_fail);
 
+            if (players_pass.Count > 0)
+                firstPlayer = players_pass[0];
+            else
+                firstPlayer = players_fail[0];
+
             // And finally clear the scores lists
             players_pass.Clear();
             players_fail.Clear();
@@ -385,6 +396,54 @@ namespace Osu.Scores
 
         public override Embed GetDiscordStatus()
         {
+            // Grabbing the osu beatmap
+            OsuBeatmap obm = null;
+            Beatmap bm = null;
+
+            if (room.Mappool != null && !room.Manual)
+            {
+                var game = room.OsuRoom.Games.LastOrDefault();
+                if(game != null)
+                {
+                    room.Mappool?.Pool.TryGetValue(game.BeatmapId, out bm);
+                    
+                    // If we found the beatmap in the mappool
+                    if(bm != null)
+                        obm = bm.OsuBeatmap;
+                }
+            }
+            else
+            {
+                var game = room.OsuRoom.Games.LastOrDefault();
+                if (game != null)
+                {
+                    Task<OsuBeatmap> beatmap = OsuApi.GetBeatmap(game.BeatmapId, false);
+                    obm = beatmap.Result;
+                }
+            }
+
+            // If there is one, we build discord Embed
+            if(obm != null)
+            {
+                Embed embed = new Embed();
+                embed.Author = new Author { Name = this.Room.Name, Url = "https://osu.ppy.sh/community/matches/" + this.room.Id, IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png" };
+                embed.Color = "6729778";
+                embed.Title = string.Format("{0} won the{1}pick with {2} points", room.Players[firstPlayer.UserId].Username, (bm == null ? " " : " __" + bm.PickType.ToString() + "__ "), string.Format("{0:n0}", firstPlayer.Score));
+                embed.Thumbnail = new Image { Url = "https://b.ppy.sh/thumb/" + obm.BeatmapSetID + "l.jpg" };
+                embed.Description = string.Format("**{0} - {1} [{2}]**", obm.Artist, obm.Title, obm.Version);
+                embed.Fields = new List<Field>();
+
+                string players = string.Empty;
+                string points = string.Empty;
+
+                Points.OrderByDescending(x => x.Value).ToList().ForEach(y => { players += room.Players[y.Key].Username + Environment.NewLine; points += y.Value + " pts" + Environment.NewLine; });
+
+                embed.Fields.Add(new Field() { Name = "User", Value = players, Inline = true });
+                embed.Fields.Add(new Field() { Name = "Points", Value = points, Inline = true });
+
+                return embed;
+            }
+
             return null;
         }
         #endregion

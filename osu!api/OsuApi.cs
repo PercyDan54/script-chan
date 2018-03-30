@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using Osu.Api.Enums;
 
 namespace Osu.Api
 {
@@ -479,7 +480,7 @@ namespace Osu.Api
             string json = await builder.GetAsync();
 
             // If the json is not valid
-            if (!IsValid(json))
+            if (json == "TIMEOUT" || !IsValid(json))
                 // Null
                 return null;
 
@@ -535,7 +536,7 @@ namespace Osu.Api
         /// Checks if the provided api key is valid or not
         /// </summary>
         /// <returns>true/false</returns>
-        public static async Task<bool> CheckKey()
+        public static async Task<ReturnCodeAPI> CheckKey()
         {
             log.Info("Checking validity of the api key");
 
@@ -556,16 +557,21 @@ namespace Osu.Api
                 // Get the response
                 string json = await builder.GetAsync();
 
-                // If the json is not valid
-                if (!IsValid(json))
+                // If the API timed out
+                if(json == "TIMEOUT")
+                {
+                    return ReturnCodeAPI.TIMEOUT;
+                }
+                // If the JSON is not valid
+                else if (!IsValid(json))
                     // Null
-                    return false;
+                    return ReturnCodeAPI.KO;
 
                 // Set valid to true
                 valid = true;
 
                 // Valid
-                return true;
+                return ReturnCodeAPI.OK;
             }
             // If an exception occurs (Typically Error 401)
             catch (Exception)
@@ -574,7 +580,7 @@ namespace Osu.Api
                 valid = false;
 
                 // Not valid
-                return false;
+                return ReturnCodeAPI.KO;
             }
         }
         #endregion

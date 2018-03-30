@@ -44,14 +44,13 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             RedTeamName = rTeamName;
         }
 
-        public MultiplayerCommandsViewModel(Room r, string gName) : this(r)
-        {
-            GroupName = gName;
-        }
-
         public MultiplayerCommandsViewModel(Room r)
         {
             room = r;
+
+            // If it's a FFA room, set the groupname to the room name;
+            if (room.Ranking.GetType() == typeof(Osu.Scores.HeadToHead))
+                GroupName = room.Name;
         }
         #endregion
 

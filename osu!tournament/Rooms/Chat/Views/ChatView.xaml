@@ -11,7 +11,7 @@
     d:DesignHeight="500"
     d:DesignWidth="500">
     <DockPanel>
-        <Expander DockPanel.Dock="Bottom" Header="Commands" IsExpanded="False">
+        <Expander DockPanel.Dock="Bottom" Header="Commands" IsExpanded="True">
             <DockPanel>
                 <ContentControl DockPanel.Dock="Left" x:Name="MultiCommands" Height="100" HorizontalAlignment="Left" />
                 <Button DockPanel.Dock="Right" Margin="1" x:Name="EnableAutoscrolling" Content="Enable Autoscrolling" IsEnabled="{Binding AutoScrollDisabled}" />

@@ -1,0 +1,37 @@
+﻿<controls:MetroWindow
+    x:Class="Osu.Mvvm.General.Views.ErrorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:w="clr-namespace:Osu.Mvvm"
+    Icon="{Binding Icon}"
+    Title="{Binding DisplayName}"
+    TitleCaps="False"
+    TitlebarHeight="26"
+    Height="200"
+    Width="300"
+    MinHeight="200"
+    MinWidth="300"
+    MaxHeight="200"
+    MaxWidth="300"
+    Top="{Binding WindowInfo.Top, Mode=TwoWay}"
+    Left="{Binding WindowInfo.Left, Mode=TwoWay}"
+    BorderBrush="{DynamicResource AccentColorBrush}"
+    BorderThickness="1">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label x:Name="ActiveItemName" Content="API is not answering :(" FontSize="20" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" />
+        <Button x:Name="CheckOsuStatus" Content="Check osu!status twitter" Grid.Row="1" Margin="2"/>
+        <Button x:Name="QuitApplication" Content="Close and try again later" Grid.Row="2" Margin="2"/>
+    </Grid>
+</controls:MetroWindow>

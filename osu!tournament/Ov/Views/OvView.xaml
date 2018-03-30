@@ -13,21 +13,11 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ComboBox Name="Items" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="2,2,6,0" IsEditable="False" IsReadOnly="True" Text="Select batches to display...">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding IsSelected}" Width="20" VerticalAlignment="Center" />
-                        <TextBlock Text="{Binding ObjectData}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <DockPanel Grid.Row="1">
-            <Expander DockPanel.Dock="Top" Margin="2,2,6,6"
+        <DockPanel Grid.Row="0">
+
+            <Expander DockPanel.Dock="Top" Margin="2,3,6,3"
                       Header="Room configuration"
                       IsExpanded="False">
                 <Grid>
@@ -110,6 +100,7 @@
                     <Button x:Name="CreateOverview" IsEnabled="{Binding CanCreateMatch}" Content="Create the match in the overview" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" />
                 </Grid>
             </Expander>
+            <ComboBox x:Name="Items" DockPanel.Dock="Top" controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="You can select a batch letter to filter your matches" VerticalAlignment="Center" Margin="2,2,6,6" IsEditable="False" IsReadOnly="True" />
             <ScrollViewer DockPanel.Dock="Bottom" Padding="0" Grid.Row="1" Margin="0,0,0,5">
                 <ItemsControl x:Name="ViewRooms">
                     <ItemsControl.ItemsPanel>

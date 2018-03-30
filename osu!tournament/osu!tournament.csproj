@@ -80,6 +80,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="General\ViewModels\ErrorViewModel.cs" />
     <Compile Include="Mappools\ViewModels\BeatmapViewModel.cs" />
     <Compile Include="Mappools\ViewModels\MappoolsViewModel.cs" />
     <Compile Include="Mappools\ViewModels\MappoolViewModel.cs" />
@@ -123,6 +124,10 @@
     <Compile Include="Teams\ViewModels\PlayerViewModel.cs" />
     <Compile Include="Teams\ViewModels\TeamsViewModel.cs" />
     <Compile Include="Teams\ViewModels\TeamViewModel.cs" />
+    <Page Include="General\Views\ErrorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="General\Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

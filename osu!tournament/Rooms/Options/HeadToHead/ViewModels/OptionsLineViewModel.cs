@@ -66,6 +66,17 @@ namespace Osu.Mvvm.Rooms.Options.HeadToHead.ViewModels
         }
 
         /// <summary>
+        /// Number shown on UI screen
+        /// </summary>
+        public int NumberDisplayed
+        {
+            get
+            {
+                return number + 1;
+            }
+        }
+
+        /// <summary>
         /// Players property
         /// </summary>
         public IEnumerable<Player> Players

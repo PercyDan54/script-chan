@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Osu.Api
@@ -105,15 +108,22 @@ namespace Osu.Api
         {
             // Create the request
             WebRequest request = WebRequest.Create(MakeUrl());
+            request.Timeout = 10000;
+            try
+            {
+                // Get the response
+                WebResponse response = request.GetResponse();
 
-            // Get the response
-            WebResponse response = request.GetResponse();
+                // Create a stream on the response
+                StreamReader reader = new StreamReader(response.GetResponseStream());
 
-            // Create a stream on the response
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-
-            // Read and return the stream content
-            return reader.ReadToEnd();
+                // Read and return the stream content
+                return reader.ReadToEnd();
+            }
+            catch(TimeoutException e)
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -122,13 +132,30 @@ namespace Osu.Api
         /// <returns>the response</returns>
         public async Task<string> GetAsync()
         {
-            WebRequest request = WebRequest.Create(MakeUrl());
+            var cts = new CancellationTokenSource();
 
-            WebResponse response = await request.GetResponseAsync();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.Timeout = new TimeSpan(0, 0, 10);
+                    using (var r = await client.GetAsync(new Uri(MakeUrl()), cts.Token))
+                    {
+                        string result = await r.Content.ReadAsStringAsync();
+                        return result;
+                    }
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                // Certainly a timeout from the API
+                if (ex.CancellationToken != cts.Token)
+                {
+                    return "TIMEOUT";
+                }
+            }
 
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-
-            return await reader.ReadToEndAsync();
+            return null;
         }
         #endregion
     }
