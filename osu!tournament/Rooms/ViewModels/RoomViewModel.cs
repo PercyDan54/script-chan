@@ -16,6 +16,7 @@ using Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels;
 using Osu.Scores;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Osu.Mvvm.Rooms.ViewModels
 {
@@ -67,6 +68,8 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// The overview room view model
         /// </summary>
         private OvRoomViewModel orvm;
+
+        private TabItem selectedTab;
         #endregion
 
         #region Constructors
@@ -82,10 +85,9 @@ namespace Osu.Mvvm.Rooms.ViewModels
             this.export = new ExportViewModel(room);
             this.irc = new IrcViewModel(this);
             this.players = new PlayersViewModel(room, irc);
-            this.chat = new ChatViewModel(room);
 
             UpdateRanking();
-            chat.Update();
+            Execute.OnUIThread(() => UpdateChat(false));
         }
 
         #endregion
@@ -259,6 +261,19 @@ namespace Osu.Mvvm.Rooms.ViewModels
                 }
             }
         }
+
+        public TabItem SelectedTab
+        {
+            get => selectedTab;
+            set
+            {
+                if (selectedTab != null && selectedTab.Header.ToString() == "Chat" && value.Header.ToString() != "Chat")
+                {
+                    RemoveNewMessageLine();
+                }
+                selectedTab = value;
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -325,9 +340,9 @@ namespace Osu.Mvvm.Rooms.ViewModels
             }
         }
 
-        public void UpdateChat()
+        public void UpdateChat(bool scrollToNewLine)
         {
-            chat.Update();
+            chat.Update(scrollToNewLine);
         }
 
         /// <summary>
@@ -343,6 +358,12 @@ namespace Osu.Mvvm.Rooms.ViewModels
 
                 await Update(false);
             }
+        }
+
+        public void RemoveNewMessageLine()
+        {
+            room.RemoveNewMessageLine();
+            Execute.OnUIThread(() => UpdateChat(false));
         }
         #endregion
     }

@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Mvvm.Ov.ViewModels;
 using osu_discord;
+using Osu.Mvvm.General.ViewModels;
 using Osu.Tournament.Ov.ViewModels;
+using Osu.Utils;
 
 namespace Osu.Mvvm.Rooms.ViewModels
 {
@@ -50,13 +52,15 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// The overview view model
         /// </summary>
         private OvViewModel overview;
+
+        private MainViewModel mainview;
         #endregion
 
         #region Constructor
         /// <summary>
         /// Default constructor
         /// </summary>
-        public RoomsViewModel(OvViewModel ov)
+        public RoomsViewModel(OvViewModel ov, MainViewModel mv)
         {
             DisplayName = "Current Room: ";
             selected = null;
@@ -69,6 +73,8 @@ namespace Osu.Mvvm.Rooms.ViewModels
 
             overview = ov;
             overview.MatchCreated += OnMatchCreated;
+
+            mainview = mv;
         }
 
         private void OnMatchCreated(object sender, MatchCreatedArgs e)
@@ -102,6 +108,15 @@ namespace Osu.Mvvm.Rooms.ViewModels
             {
                 if (value != selected)
                 {
+                    // Remove new message line in chat of room that is deselected if chat is the currently selected tab
+                    Execute.OnUIThread(() =>
+                    {
+                        if (selected != null && selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() == "Chat")
+                        {
+                            selected.RemoveNewMessageLine();
+                        }
+                    });
+
                     // Select this room
                     selected = value;
 
@@ -127,6 +142,12 @@ namespace Osu.Mvvm.Rooms.ViewModels
 
                     // We have a new mappool that can be deleted
                     NotifyOfPropertyChange(() => CanDeleteRoom);
+
+                    // Scroll chat to the new message line if one is there
+                    Execute.OnUIThread(() =>
+                    {
+                        selected_view_model?.UpdateChat(true);
+                    });
                 }
             }
         }
@@ -403,27 +424,18 @@ namespace Osu.Mvvm.Rooms.ViewModels
             Room room = null;
             if (Room.Rooms.TryGetValue(multi_room.MatchId, out room))
             {
-                if(room.RoomMessages.Count >= 100)
+                Execute.OnUIThread(() =>
                 {
-                    room.RoomMessages.RemoveAt(0);
-                }
+                    if (mainview.ActiveItemName != "Rooms" || selected == null || selected.Id != multi_room.MatchId || selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() != "Chat")
+                        room.AddNewMessageLine();
 
-                if (multi_room.PlayerName == bot.Username)
-                {
-                    room.RoomMessages.Add(string.Format("=> {0}", multi_room.Message));
-                }
-                else
-                {
-                    room.RoomMessages.Add(string.Format("{0}: {1}", multi_room.PlayerName, multi_room.Message));
-                }
-            }
-            if(selected != null && selected.Id == multi_room.MatchId)
-            {
-                Caliburn.Micro.Execute.OnUIThreadAsync((() =>
-                {
-                    if(selected_view_model != null)
-                        selected_view_model.UpdateChat();
-                }));
+                    room.AddMessage(new IrcMessage { Message = multi_room.Message, User = multi_room.PlayerName });
+
+                    if (mainview.ActiveItemName == "Rooms" && selected != null && selected.Id == multi_room.MatchId && selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() == "Chat")
+                        selected_view_model.UpdateChat(false);
+                    else
+                        selected_view_model?.UpdateChat(true);
+                });
             }
         }
         #endregion

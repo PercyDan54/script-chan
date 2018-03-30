@@ -21,7 +21,7 @@
             <RowDefinition Height="35" />
         </Grid.RowDefinitions>
 
-        <TabControl Padding="0" Margin="0,0,0,5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+        <TabControl Padding="0" Margin="0,0,0,5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabPanel}">
                     <Setter Property="HorizontalAlignment" Value="Center" />

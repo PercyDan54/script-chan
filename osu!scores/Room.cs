@@ -107,9 +107,11 @@ namespace Osu.Scores
 
         protected bool isStreamed;
 
-        protected List<string> roomMessages;
+        protected List<IrcMessage> roomMessages;
 
         protected RoomConfiguration roomConfiguration;
+
+        protected bool canAddNewMessagesLine;
         #endregion
 
         #region Constructors
@@ -127,8 +129,9 @@ namespace Osu.Scores
             commands = false;
             status = RoomStatus.NotStarted;
             isStreamed = false;
-            roomMessages = new List<string>();
+            roomMessages = new List<IrcMessage>();
             notificationsEnabled = true;
+            canAddNewMessagesLine = true;
 
             var scoremode = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.ScoreMode) ? (OsuScoringType)Enum.Parse(typeof(OsuScoringType), InfosHelper.TourneyInfos.ScoreMode, true) : OsuScoringType.Score;
             var roomsize = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.RoomSize) ? InfosHelper.TourneyInfos.RoomSize : "16";
@@ -160,7 +163,7 @@ namespace Osu.Scores
             {
                 manual = false;
             }
-
+            
         }
         #endregion
 
@@ -420,7 +423,7 @@ namespace Osu.Scores
             }
         }
 
-        public List<string> RoomMessages
+        public List<IrcMessage> RoomMessages
         {
             get
             {
@@ -668,6 +671,28 @@ namespace Osu.Scores
                 InitializeRankingType(Ranking.Type.HeadToHead);
 
             RankingTypeChanged(this, new EventArgs());
+        }
+
+        public void AddMessage(IrcMessage message)
+        {
+            if (RoomMessages.Count >= 100)
+            {
+                RoomMessages.RemoveAt(0);
+            }
+            RoomMessages.Add(message);
+        }
+
+        public void AddNewMessageLine()
+        {
+            if (!canAddNewMessagesLine) return;
+            canAddNewMessagesLine = false;
+            AddMessage(new IrcMessage { Message = "------------------ NEW MESSAGES ------------------" });
+        }
+
+        public void RemoveNewMessageLine()
+        {
+            RoomMessages.RemoveAll(x => x.Message == "------------------ NEW MESSAGES ------------------");
+            canAddNewMessagesLine = true;
         }
         #endregion
 
