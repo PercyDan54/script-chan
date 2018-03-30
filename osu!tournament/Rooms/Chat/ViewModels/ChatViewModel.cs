@@ -22,18 +22,29 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         /// The room
         /// </summary>
         private Room room;
-
+        
         private FlowDocument _messages;
+
+        private bool _autoScrollDisabled;
 
         private MultiplayerCommandsViewModel commandsVM;
         #endregion
 
         #region Properties
-        public FlowDocument MultiplayerChat
+        public FlowDocument MultiplayerChat => _messages;
+
+        public bool AutoScrollDisabled
         {
-            get
+            get => _autoScrollDisabled;
+            set
             {
-                return _messages;
+                if (_autoScrollDisabled == value) return;
+                _autoScrollDisabled = value;
+                NotifyOfPropertyChange(() => AutoScrollDisabled);
+                if (!value)
+                {
+                    Update(false);
+                }
             }
         }
 
@@ -61,7 +72,7 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         /// Default constructor
         /// </summary>
         /// <param name="room">the room</param>
-        public ChatViewModel(Room room, Osu.Scores.TeamVs ranking)
+        public ChatViewModel(Room room, Osu.Scores.TeamVs ranking = null)
         {
             this.room = room;
             Execute.OnUIThread(() =>
@@ -71,24 +82,15 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
                     FontSize = 14,
                     TextAlignment = TextAlignment.Left
                 };
+                _messages.MouseWheel += (sender, args) => DisableAutoscrolling();
             });
 
-            MultiCommands = new MultiplayerCommandsViewModel(room, ranking.Red.Name, ranking.Blue.Name);
-        }
+            _autoScrollDisabled = false;
 
-        public ChatViewModel(Room room)
-        {
-            this.room = room;
-            Execute.OnUIThread(() =>
-            {
-                _messages = new FlowDocument {
-                    FontFamily = new FontFamily("Lucida Console"),
-                    FontSize = 14,
-                    TextAlignment = TextAlignment.Left
-                };
-            });
-
-            MultiCommands = new MultiplayerCommandsViewModel(room);
+            if (ranking != null)
+                MultiCommands = new MultiplayerCommandsViewModel(room, ranking.Red.Name, ranking.Blue.Name);
+            else
+                MultiCommands = new MultiplayerCommandsViewModel(room);
         }
         #endregion
 
@@ -115,10 +117,10 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
             Execute.OnUIThread(() =>
             {
                 Paragraph newMessageParagraph = null;
+                Paragraph paragraph = null;
                 _messages.Blocks.Clear();
                 foreach (var message in room.RoomMessages.ToList())
                 {
-                    Paragraph paragraph;
                     if (message.Message == "------------------ NEW MESSAGES ------------------")
                     {
                         paragraph = new Paragraph(new Run("------------------ NEW MESSAGES ------------------")) {Margin = new Thickness(135, 0, 0, 0), TextIndent = -135, Foreground = Brushes.Red, TextAlignment = TextAlignment.Center};
@@ -134,9 +136,48 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
 
                 NotifyOfPropertyChange(() => MultiplayerChat);
 
-                if (scrollToNewLine && newMessageParagraph != null)
+                if (scrollToNewLine)
+                {
+                    _autoScrollDisabled = true;
+                    NotifyOfPropertyChange(() => AutoScrollDisabled);
+                }
+                if (!_autoScrollDisabled && paragraph != null)
+                    paragraph.Loaded += (sender, args) => paragraph.BringIntoView();
+                else if (scrollToNewLine && newMessageParagraph != null)
                     newMessageParagraph.Loaded += (sender, args) => newMessageParagraph.BringIntoView();
             });
+        }
+
+        public void EnableAutoscrolling()
+        {
+            AutoScrollDisabled = false;
+        }
+
+        public void DisableAutoscrolling()
+        {
+            AutoScrollDisabled = true;
+        }
+        #endregion
+
+        #region Private Methods
+        private ScrollViewer FindScroll(Visual visual)
+        {
+            if (visual is ScrollViewer)
+                return visual as ScrollViewer;
+
+            ScrollViewer searchChild = null;
+            DependencyObject child;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(visual); i++)
+            {
+                child = VisualTreeHelper.GetChild(visual, i);
+                if (child is Visual)
+                    searchChild = FindScroll(child as Visual);
+                if (searchChild != null)
+                    return searchChild;
+            }
+
+            return null;
         }
         #endregion
     }

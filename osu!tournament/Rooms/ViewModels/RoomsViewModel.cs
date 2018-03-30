@@ -108,6 +108,15 @@ namespace Osu.Mvvm.Rooms.ViewModels
             {
                 if (value != selected)
                 {
+                    // Remove new message line in chat of room that is deselected if chat is the currently selected tab
+                    Execute.OnUIThread(() =>
+                    {
+                        if (selected != null && selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() == "Chat")
+                        {
+                            selected.RemoveNewMessageLine();
+                        }
+                    });
+
                     // Select this room
                     selected = value;
 
@@ -133,6 +142,12 @@ namespace Osu.Mvvm.Rooms.ViewModels
 
                     // We have a new mappool that can be deleted
                     NotifyOfPropertyChange(() => CanDeleteRoom);
+
+                    // Scroll chat to the new message line if one is there
+                    Execute.OnUIThread(() =>
+                    {
+                        selected_view_model?.UpdateChat(true);
+                    });
                 }
             }
         }
@@ -419,7 +434,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                     if (mainview.ActiveItemName == "Rooms" && selected != null && selected.Id == multi_room.MatchId && selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() == "Chat")
                         selected_view_model.UpdateChat(false);
                     else
-                        selected_view_model.UpdateChat(true);
+                        selected_view_model?.UpdateChat(true);
                 });
             }
         }

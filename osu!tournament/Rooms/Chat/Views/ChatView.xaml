@@ -14,6 +14,7 @@
         <Expander DockPanel.Dock="Bottom" Header="MP Commands" IsExpanded="False">
             <ContentControl x:Name="MultiCommands" Height="100" HorizontalAlignment="Left" />
         </Expander>
+        <Button x:Name="EnableAutoscrolling" DockPanel.Dock="Bottom" Content="Enable Autoscrolling" IsEnabled="{Binding AutoScrollDisabled}" />
         <Grid DockPanel.Dock="Top" Margin="0,0,0,2.5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
