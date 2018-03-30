@@ -400,13 +400,16 @@ namespace Osu.Scores
             OsuBeatmap obm = null;
             Beatmap bm = null;
 
-            if (room.Mappool != null)
+            if (room.Mappool != null && !room.Manual)
             {
                 var game = room.OsuRoom.Games.LastOrDefault();
                 if(game != null)
                 {
                     room.Mappool?.Pool.TryGetValue(game.BeatmapId, out bm);
-                    obm = bm.OsuBeatmap;
+                    
+                    // If we found the beatmap in the mappool
+                    if(bm != null)
+                        obm = bm.OsuBeatmap;
                 }
             }
             else

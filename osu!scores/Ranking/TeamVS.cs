@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Osu.Scores
 {
@@ -358,10 +359,33 @@ namespace Osu.Scores
         public override Embed GetDiscordStatus()
         {
             // Get the beatmap object
+            OsuBeatmap obm = null;
             Beatmap bm = null;
-            room.Mappool?.Pool.TryGetValue(room.OsuRoom.Games.Last().BeatmapId, out bm);
 
-            if(bm != null)
+            if (room.Mappool != null && !room.Manual)
+            {
+                var game = room.OsuRoom.Games.LastOrDefault();
+                if (game != null)
+                {
+                    room.Mappool?.Pool.TryGetValue(game.BeatmapId, out bm);
+                    
+                    // If we found the beatmap in the mappool
+                    if (bm != null)
+                        obm = bm.OsuBeatmap;
+                }
+            }
+            else
+            {
+                var game = room.OsuRoom.Games.LastOrDefault();
+                if (game != null)
+                {
+                    Task<OsuBeatmap> beatmap = OsuApi.GetBeatmap(game.BeatmapId, false);
+                    obm = beatmap.Result;
+                }
+            }
+
+            // If we found the map
+            if (obm != null)
             {
                 bool didCurrentTeamWon;
 
@@ -397,15 +421,15 @@ namespace Osu.Scores
                     Embed embed = new Embed();
                     embed.Author = new Author { Name = string.Format("{0} VS {1}", teams[OsuTeam.Red].Name, teams[OsuTeam.Blue].Name), Url = "https://osu.ppy.sh/community/matches/" + this.room.Id, IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png" };
                     embed.Color = didCurrentTeamWon ? "6729778" : "14177041";
-                    embed.Title = string.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their __{1}__ pick by {2} points", (abortHappened ? NextTeam.Name : CurrentTeam.Name), bm.PickType, diffPoint);
+                    embed.Title = string.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their{1}pick by {2} points", (abortHappened ? NextTeam.Name : CurrentTeam.Name), (bm == null ? " " : " __" + bm.PickType.ToString() + "__ "), string.Format("{0:n0}", diffPoint));
                     embed.Thumbnail = new Image { Url = didCurrentTeamWon ? "https://cdn.discordapp.com/attachments/130304896581763072/400388818127290369/section-pass.png" : "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png" };
-                    embed.Description = string.Format("**{0} - {1} [{2}]**", bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.OsuBeatmap.Version);
+                    embed.Description = string.Format("**{0} - {1} [{2}]**", obm.Artist, obm.Title, obm.Version);
                     embed.Fields = new List<Field>();
                     embed.Fields.Add(new Field() { Name = teams[OsuTeam.Red].Name, Value = (teams[OsuTeam.Red].Points + teams[OsuTeam.Red].PointAddition).ToString(), Inline = true });
                     embed.Fields.Add(new Field() { Name = teams[OsuTeam.Blue].Name, Value = (teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition).ToString(), Inline = true });
                     if (mvpPlayer != null)
                     {
-                        embed.Fields.Add(new Field() { Name = "MVP", Value = string.Format(":flag_{1}: **{0}** with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country.ToLower(), mvp.Score) });
+                        embed.Fields.Add(new Field() { Name = "MVP", Value = string.Format(":flag_{1}: **{0}** with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country.ToLower(), string.Format("{0:n0}", mvp.Score)) });
                     }
 
                     embed.Fields.Add(new Field() { Name = "Status", Value = GetStatus().Last() + " " + (room.Status == RoomStatus.Finished ? ":clap:" : ":loudspeaker:") });
