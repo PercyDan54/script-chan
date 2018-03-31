@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Osu.Utils.Bans
 {
+    /// <summary>
+    /// Not used anymore, was for the world cups
+    /// </summary>
     public class ObsBanHelper
     {
         /// <summary>

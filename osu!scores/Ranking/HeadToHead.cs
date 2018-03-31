@@ -394,12 +394,17 @@ namespace Osu.Scores
             return sentences;
         }
 
+        /// <summary>
+        /// Return the ranking and informations as an embed for discord 
+        /// </summary>
+        /// <returns></returns>
         public override Embed GetDiscordStatus()
         {
             // Grabbing the osu beatmap
             OsuBeatmap obm = null;
             Beatmap bm = null;
 
+            // If there is a mappool selected for the room, we try to find it in the pool
             if (room.Mappool != null && !room.Manual)
             {
                 var game = room.OsuRoom.Games.LastOrDefault();
@@ -414,6 +419,7 @@ namespace Osu.Scores
             }
             else
             {
+                // Otherwise, we try to grab informations from the last map played
                 var game = room.OsuRoom.Games.LastOrDefault();
                 if (game != null)
                 {
@@ -422,7 +428,7 @@ namespace Osu.Scores
                 }
             }
 
-            // If there is one, we build discord Embed
+            // If we found a map, we build discord Embed
             if(obm != null)
             {
                 Embed embed = new Embed();

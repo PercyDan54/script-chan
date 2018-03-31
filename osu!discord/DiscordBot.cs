@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace osu_discord
 {
     /// <summary>
-    /// Discord bot has been dropped for now, using Webhooks.
+    /// Discord bot has been dropped for now, we are using Webhooks.
     /// </summary>
     public class DiscordBot
     {

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Osu.Utils
 {
+    /// <summary>
+    /// Switch handler which was used to check if the user has been successfully switched to the private server.
+    /// </summary>
     public class SwitchHandler
     {
         #region Attributes
