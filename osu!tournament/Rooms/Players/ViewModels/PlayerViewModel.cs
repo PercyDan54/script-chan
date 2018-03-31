@@ -20,6 +20,9 @@ namespace Osu.Mvvm.Rooms.Players.ViewModels
             this.player = player;
         }
 
+        /// <summary>
+        /// The PlayerCheckBox property to know if he is playing or not, even if he is in the room
+        /// </summary>
         public bool PlayerCheckBox
         {
             get
@@ -36,6 +39,9 @@ namespace Osu.Mvvm.Rooms.Players.ViewModels
             }
         }
 
+        /// <summary>
+        /// DisplayUserName property
+        /// </summary>
         public string DisplayUserName
         {
             get

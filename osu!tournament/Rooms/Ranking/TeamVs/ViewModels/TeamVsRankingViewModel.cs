@@ -27,12 +27,24 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         /// </summary>
         protected string currentStatus;
 
+        /// <summary>
+        /// The mappool picker view model
+        /// </summary>
         private MappoolPickerViewModel mpvm;
 
+        /// <summary>
+        /// The multiplayer commands view model
+        /// </summary>
         private MultiplayerCommandsViewModel commandsVM;
 
+        /// <summary>
+        /// Boolean to check if one abort happened or not
+        /// </summary>
         private bool abortHappened;
 
+        /// <summary>
+        /// Boolean to send the message after moving users in the osu! room (should not be used anymore)
+        /// </summary>
         private bool isMovingWithMessage;
 
         private Dictionary<string, SwitchHandler> switchhandlers;
@@ -56,6 +68,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         #endregion
 
         #region Properties
+        /// <summary>
+        /// The RedTeamName property
+        /// </summary>
         public string RedTeamName
         {
             get
@@ -64,6 +79,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The BlueTeamName property
+        /// </summary>
         public string BlueTeamName
         {
             get
@@ -72,6 +90,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The RedTeamScore property
+        /// </summary>
         public string RedTeamScore
         {
             get
@@ -80,6 +101,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The BlueTeamScore property
+        /// </summary>
         public string BlueTeamScore
         {
             get
@@ -88,6 +112,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The CurrentStatus property
+        /// </summary>
         public string CurrentStatus
         {
             get
@@ -99,11 +126,14 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 if (value != currentStatus)
                 {
                     currentStatus = value;
-                    NotifyOfPropertyChange("CurrentStatus");
+                    NotifyOfPropertyChange(() => CurrentStatus);
                 }
             }
         }
 
+        /// <summary>
+        /// The MappoolPicker property
+        /// </summary>
         public MappoolPickerViewModel MappoolPicker
         {
             get
@@ -120,6 +150,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The MultiCommands property
+        /// </summary>
         public MultiplayerCommandsViewModel MultiCommands
         {
             get { return commandsVM; }
@@ -133,6 +166,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The IsMOvingWithMessage property
+        /// </summary>
         public bool IsMovingWithMessage
         {
             get
@@ -146,6 +182,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The IsControlVisible property
+        /// </summary>
         public string IsControlVisible
         {
             get
@@ -184,30 +223,45 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             UpdateStatusLabel();
         }
 
+        /// <summary>
+        /// Function called to add points to blue team manually
+        /// </summary>
         public void BlueAddPoint()
         {
             ranking.Blue.PointAddition++;
             Update();
         }
 
+        /// <summary>
+        /// Function called to add points to red team manually
+        /// </summary>
         public void RedAddPoint()
         {
             ranking.Red.PointAddition++;
             Update();
         }
 
+        /// <summary>
+        /// Function called to remove points to blue team manually
+        /// </summary>
         public void BlueRemovePoint()
         {
             ranking.Blue.PointAddition--;
             Update();
         }
 
+        /// <summary>
+        /// Function called to remove points to red team manually
+        /// </summary>
         public void RedRemovePoint()
         {
             ranking.Red.PointAddition--;
             Update();
         }
 
+        /// <summary>
+        /// Function called to revert changes to score made manually
+        /// </summary>
         public void RevertPointChanges()
         {
             ranking.Red.PointAddition = 0;
@@ -215,6 +269,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             Update();
         }
 
+        /// <summary>
+        /// Function called when you want to abort the map
+        /// </summary>
         public void AbortHappened()
         {
             OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, "!mp abort");

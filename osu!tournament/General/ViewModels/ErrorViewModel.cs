@@ -20,7 +20,7 @@ using System.Windows;
 namespace Osu.Mvvm.General.ViewModels
 {
     /// <summary>
-    /// Represents the main view model
+    /// Represents the main view model if API is not answering
     /// </summary>
     public class ErrorViewModel : Conductor<IScreen>.Collection.OneActive, IScreen
     {
@@ -41,9 +41,12 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// Closing the application
+        /// </summary>
         public void QuitApplication()
         {
-            Application.Current.MainWindow.Close();
+            if (Application.Current.MainWindow != null) Application.Current.MainWindow.Close();
         }
     }
 }

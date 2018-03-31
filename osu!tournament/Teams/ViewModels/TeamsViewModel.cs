@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Osu.Mvvm.Teams.ViewModels
 {
+    /// <summary>
+    /// The teams view model
+    /// </summary>
     public class TeamsViewModel : Conductor<TeamViewModel>.Collection.OneActive
     {
         #region Attributes
@@ -34,7 +37,7 @@ namespace Osu.Mvvm.Teams.ViewModels
         private bool addPlayerWithTeamname;
         #endregion
 
-
+        #region Constructors
         public TeamsViewModel(OvViewModel overview)
         {
             ov = overview;
@@ -45,6 +48,7 @@ namespace Osu.Mvvm.Teams.ViewModels
             foreach (TeamOv team in TeamManager.Teams)
                 teams.Add(new TeamViewModel(team));
         }
+        #endregion
 
         #region Properties
         /// <summary>
@@ -86,6 +90,9 @@ namespace Osu.Mvvm.Teams.ViewModels
             }
         }
 
+        /// <summary>
+        /// AddPlayerWithTeamname property if we want to add the team name as player of the team
+        /// </summary>
         public bool AddPlayerWithTeamname
         {
             get { return addPlayerWithTeamname; }

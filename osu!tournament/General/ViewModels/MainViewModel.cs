@@ -59,8 +59,14 @@ namespace Osu.Mvvm.General.ViewModels
         /// </summary>
         private OptionsViewModel options;
 
+        /// <summary>
+        /// The flyouts control
+        /// </summary>
         private FlyoutsControl flyoutsControl;
 
+        /// <summary>
+        /// Windows informations (size and position)
+        /// </summary>
         private WindowInfo windowInfo;
         #endregion
 
@@ -195,6 +201,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// WindowInfo property
+        /// </summary>
         public WindowInfo WindowInfo
         {
             get
@@ -211,6 +220,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsBlockedOnOption property if the api and irc is not connected
+        /// </summary>
         private bool IsBlockedOnOption
         {
             get
