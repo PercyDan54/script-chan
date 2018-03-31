@@ -11,29 +11,53 @@ using System.Threading.Tasks;
 
 namespace Osu.Scores
 {
+    /// <summary>
+    /// The RefereeMatchHelper for picks and bans in the pool picker
+    /// </summary>
     [DataContract]
     public class RefereeMatchHelper
     {
+        #region Attributes
+        /// <summary>
+        /// The dictionary containing all matchhelper for all rooms
+        /// </summary>
         protected static Dictionary<long, RefereeMatchHelper> dicInstance;
 
+        /// <summary>
+        /// The first team who is banning if TeamVs mode
+        /// </summary>
         [DataMember]
         protected Team FirstTeamToBan { get; set; }
+        /// <summary>
+        /// The second team who is banning if TeamVs mode
+        /// </summary>
         [DataMember]
         protected Team SecondTeamToBan { get; set; }
 
+        /// <summary>
+        /// The list of beatmaps banned
+        /// </summary>
         [DataMember]
         protected List<Beatmap> BeatmapBanned;
 
+        /// <summary>
+        /// The list of beatmaps picked
+        /// </summary>
         [DataMember]
         protected List<Beatmap> picks;
+        #endregion
 
+        #region Constructors
         protected RefereeMatchHelper()
         {
             BeatmapBanned = new List<Beatmap>();
             picks = new List<Beatmap>();
         }
+        #endregion
+
+        #region Public Methods
         /// <summary>
-        /// 
+        /// Function which is updating the ban order
         /// </summary>
         /// <param name="r">The room</param>
         /// <param name="firstTeam">THE FIRST TEAM TO PICK (not banning, which is the contrary)</param>
@@ -46,16 +70,31 @@ namespace Osu.Scores
             }
         }
 
+        /// <summary>
+        /// Check if a map has already been picked or not
+        /// </summary>
+        /// <param name="bm">the beatmap to pick</param>
+        /// <returns></returns>
         public bool IsThisMapPicked(Beatmap bm)
         {
             return picks.Exists(x => x.OsuBeatmap.BeatmapID == bm.OsuBeatmap.BeatmapID);
         }
 
+        /// <summary>
+        /// Check if a map has already been banned or not
+        /// </summary>
+        /// <param name="bm">the beatmap to ban</param>
+        /// <returns></returns>
         public bool IsThisMapBanned(Beatmap bm)
         {
             return BeatmapBanned.Exists(x => x.Id == bm.Id); 
         }
 
+        /// <summary>
+        /// Check if we can print bans on discord
+        /// </summary>
+        /// <param name="teamVsMode">true if teamvs, false if headtohead</param>
+        /// <returns></returns>
         private bool CanShowBan(bool teamVsMode)
         {
             if (teamVsMode)
@@ -64,6 +103,11 @@ namespace Osu.Scores
                 return BeatmapBanned.Count != 0;
         }
 
+        /// <summary>
+        /// Check if a map can be unbanned or not
+        /// </summary>
+        /// <param name="bm">the beatmap to unban</param>
+        /// <returns></returns>
         public bool CanUnban(Beatmap bm)
         {
             if (BeatmapBanned.Count != 0)
@@ -72,6 +116,12 @@ namespace Osu.Scores
                 return false;
         }
 
+        /// <summary>
+        /// Function which is applying the ban to the beatmap
+        /// </summary>
+        /// <param name="bm">the beatmap to ban</param>
+        /// <param name="room">The room</param>
+        /// <returns></returns>
         public bool ApplyBan(Beatmap bm, Room room)
         {
             bool res = true;
@@ -80,16 +130,28 @@ namespace Osu.Scores
             return res;
         }
 
+        /// <summary>
+        /// Function which is removing the last ban
+        /// </summary>
         public void RemoveBan()
         {
             BeatmapBanned.RemoveAt(BeatmapBanned.Count - 1);
         }
 
+        /// <summary>
+        /// Function which is adding a map to the pick list
+        /// </summary>
+        /// <param name="beatmap">the beatmap to pick</param>
         public void AddPick(Beatmap beatmap)
         {
             picks.Add(beatmap);
         }
 
+        /// <summary>
+        /// Function which removes the last pick if it is the beatmap selected
+        /// </summary>
+        /// <param name="beatmap">the beatmap to remove from the pick list</param>
+        /// <returns></returns>
         public bool RemoveLastPick(Beatmap beatmap)
         {
             if(picks.Last().OsuBeatmap.BeatmapID == beatmap.OsuBeatmap.BeatmapID)
@@ -110,6 +172,11 @@ namespace Osu.Scores
         }
         */
 
+        /// <summary>
+        /// Function called to generate the ban recap on discord depending of the rankingtype
+        /// </summary>
+        /// <param name="rankingType">TeamVs or Headtohead</param>
+        /// <returns></returns>
         public Embed GenerateBanRecapMessage(Type rankingType)
         {
             var printTeamVsMode = false;
@@ -159,6 +226,11 @@ namespace Osu.Scores
             return null;
         }
 
+        /// <summary>
+        /// Function called to generate the pick recap on discord depending of the rankingtype
+        /// </summary>
+        /// <param name="rankingType"></param>
+        /// <returns></returns>
         public Embed GeneratePickRecapMessage(Type rankingType)
         {
             Embed e = new Embed();
@@ -214,20 +286,32 @@ namespace Osu.Scores
 
             return e;
         }
+        #endregion
 
         #region Static methods
+        /// <summary>
+        /// Initialize the ban helpers saved in the cache
+        /// </summary>
         public static void Initialize()
         {
             Cache cache = Cache.GetCache("osu!cache.db");
             dicInstance = cache.GetObject<Dictionary<long, RefereeMatchHelper>>("refereematchhelpers", new Dictionary<long, RefereeMatchHelper>());
         }
 
+        /// <summary>
+        /// Save the matchhelpers in the cache
+        /// </summary>
         public static void Save()
         {
             Cache cache = Cache.GetCache("osu!cache.db");
             cache["refereematchhelpers"] = dicInstance;
         }
 
+        /// <summary>
+        /// Get the instance of the room
+        /// </summary>
+        /// <param name="roomId">the room id</param>
+        /// <returns></returns>
         public static RefereeMatchHelper GetInstance(long roomId)
         {
             RefereeMatchHelper instance;
@@ -241,6 +325,11 @@ namespace Osu.Scores
             return instance;
         }
 
+        /// <summary>
+        /// Check if a ban helper exists for the room already
+        /// </summary>
+        /// <param name="roomId">the room id</param>
+        /// <returns></returns>
         public static bool IsInstanceExisting(long roomId)
         {
             RefereeMatchHelper instance;

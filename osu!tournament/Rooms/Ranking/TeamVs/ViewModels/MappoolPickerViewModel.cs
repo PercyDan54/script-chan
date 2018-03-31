@@ -12,10 +12,19 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
     public class MappoolPickerViewModel : Screen
     {
         #region Attributes
+        /// <summary>
+        /// The list of beatmap picker view models
+        /// </summary>
         private IObservableCollection<BeatmapPickerViewModel> beatmaps;
 
+        /// <summary>
+        /// The room for this mappool picker
+        /// </summary>
         private Room r;
 
+        /// <summary>
+        /// The textbox content to search a beatmap
+        /// </summary>
         private string searchBoxValue;
         #endregion
 
@@ -41,6 +50,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         #endregion
 
         #region Properties
+        /// <summary>
+        /// The Beatmaps property
+        /// </summary>
         public IObservableCollection<BeatmapPickerViewModel> Beatmaps
         {
             get
@@ -52,6 +64,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The Searchbox property
+        /// </summary>
         public string SearchBox
         {
             get
@@ -69,11 +84,16 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// Function called to send ban recap on discord through webhooks
+        /// </summary>
         public void SendBanRecap()
         {
+            // Generate the embed for the ban recap
             Embed message = RefereeMatchHelper.GetInstance(r.Id).GenerateBanRecapMessage(r.Ranking.GetType());
             if(message != null)
             {
+                // Depending of the ranking type, we change the name of the payload
                 string name;
                 if (r.Ranking.GetType() == typeof(Osu.Scores.TeamVs))
                 {
@@ -91,11 +111,16 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// Function called to send pick recap on discord through webhooks
+        /// </summary>
         public void SendPickRecap()
         {
+            // Generate the embed for the pick recap
             Embed message = RefereeMatchHelper.GetInstance(r.Id).GeneratePickRecapMessage(r.Ranking.GetType());
             if (message != null)
             {
+                // Depending of the ranking type, we change the name of the payload
                 string name;
                 if (r.Ranking.GetType() == typeof(Osu.Scores.TeamVs))
                 {
@@ -107,11 +132,13 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 }
                 DiscordHelper.SendRecap(message, new List<DiscordChannelEnum> { DiscordChannelEnum.Admins }, name, r.Id.ToString());
             }
-            //DiscordBot.GetInstance().SendMessage(message);
         }
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Update UI function
+        /// </summary>
         public void Update()
         {
             if (r.Mappool != null)

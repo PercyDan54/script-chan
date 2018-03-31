@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Osu.Utils.Info
 {
+    /// <summary>
+    /// Class containing informations from the cache about the tournament and user data
+    /// </summary>
     public static class InfosHelper
     {
         public static TourneyInfo TourneyInfos { get; set; }

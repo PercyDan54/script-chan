@@ -11,6 +11,9 @@ using Osu.Utils;
 
 namespace Osu.Mvvm.Teams.ViewModels
 {
+    /// <summary>
+    /// The team view model
+    /// </summary>
     public class TeamViewModel : Screen
     {
         #region Attributes
@@ -25,7 +28,7 @@ namespace Osu.Mvvm.Teams.ViewModels
         protected List<PlayerViewModel> players;
         #endregion
 
-
+        #region Constructors
         public TeamViewModel(TeamOv team)
         {
             this.Team = team;
@@ -35,10 +38,11 @@ namespace Osu.Mvvm.Teams.ViewModels
             foreach (PlayerOv playerOv in Team.Players)
                 players.Add(new PlayerViewModel(this, playerOv));
         }
+        #endregion
 
         #region Properties
         /// <summary>
-        /// Beatmaps property
+        /// Players property
         /// </summary>
         public IObservableCollection<PlayerViewModel> Players
         {
@@ -49,8 +53,6 @@ namespace Osu.Mvvm.Teams.ViewModels
         }
         #endregion
 
-
-
         #region Public Methods
         /// <summary>
         /// Updates the view model
@@ -60,6 +62,9 @@ namespace Osu.Mvvm.Teams.ViewModels
             NotifyOfPropertyChange(() => Players);
         }
 
+        /// <summary>
+        /// The team name displayed on the UI property
+        /// </summary>
         public override string DisplayName
         {
             get

@@ -15,6 +15,9 @@ using Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels;
 
 namespace Osu.Mvvm.Rooms.Chat.ViewModels
 {
+    /// <summary>
+    /// The chat view model
+    /// </summary>
     public class ChatViewModel : PropertyChangedBase
     {
         #region Attributes
@@ -23,16 +26,31 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         /// </summary>
         private Room room;
         
+        /// <summary>
+        /// The flow document containing messages of the room in the UI
+        /// </summary>
         private FlowDocument _messages;
 
+        /// <summary>
+        /// Boolean if auto scroll is disabled or not
+        /// </summary>
         private bool _autoScrollDisabled;
 
+        /// <summary>
+        /// The Multiplayer commands view model
+        /// </summary>
         private MultiplayerCommandsViewModel commandsVM;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// The MultiplayerChat property
+        /// </summary>
         public FlowDocument MultiplayerChat => _messages;
 
+        /// <summary>
+        /// The AutoScrollDisabled property
+        /// </summary>
         public bool AutoScrollDisabled
         {
             get => _autoScrollDisabled;
@@ -75,6 +93,8 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         public ChatViewModel(Room room, Osu.Scores.TeamVs ranking = null)
         {
             this.room = room;
+
+            // Setting up the flow document
             Execute.OnUIThread(() =>
             {
                 _messages = new FlowDocument {
@@ -87,6 +107,7 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
 
             _autoScrollDisabled = false;
 
+            // Setting up the buttons who are sending mp commands
             if (ranking != null)
                 MultiCommands = new MultiplayerCommandsViewModel(room, ranking.Red.Name, ranking.Blue.Name);
             else
@@ -95,6 +116,9 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Function which is sending messages the user types in the textbox on irc
+        /// </summary>
         public void SendMessage()
         {
             OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, Message);
@@ -102,6 +126,10 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
             NotifyOfPropertyChange(() => Message);
         }
 
+        /// <summary>
+        /// Event to catch enter keypress to send the message
+        /// </summary>
+        /// <param name="context"></param>
         public void PressEnterToSend(ActionExecutionContext context)
         {
             var keyArgs = context.EventArgs as KeyEventArgs;
@@ -112,6 +140,10 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
             }
         }
 
+        /// <summary>
+        /// Update function of the chat, flow document
+        /// </summary>
+        /// <param name="scrollToNewLine">should we scroll or not</param>
         public void Update(bool scrollToNewLine)
         {
             Execute.OnUIThread(() =>
@@ -121,6 +153,7 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
                 _messages.Blocks.Clear();
                 foreach (var message in room.RoomMessages.ToList())
                 {
+                    // If we need to print the new messages line
                     if (message.Message == "------------------ NEW MESSAGES ------------------")
                     {
                         paragraph = new Paragraph(new Run("------------------ NEW MESSAGES ------------------")) {Margin = new Thickness(135, 0, 0, 0), TextIndent = -135, Foreground = Brushes.Red, TextAlignment = TextAlignment.Center};
@@ -148,11 +181,17 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
             });
         }
 
+        /// <summary>
+        /// Function called to enable auto scrolling
+        /// </summary>
         public void EnableAutoscrolling()
         {
             AutoScrollDisabled = false;
         }
 
+        /// <summary>
+        /// Function called to disable auto scrolling
+        /// </summary>
         public void DisableAutoscrolling()
         {
             AutoScrollDisabled = true;
@@ -160,6 +199,11 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Function used to find the scroll viewer in the visual
+        /// </summary>
+        /// <param name="visual"></param>
+        /// <returns></returns>
         private ScrollViewer FindScroll(Visual visual)
         {
             if (visual is ScrollViewer)

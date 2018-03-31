@@ -32,8 +32,14 @@ namespace Osu.Scores
         /// </summary>
         protected static ILog log = LogManager.GetLogger("osu!scores");
 
+        /// <summary>
+        /// The osu! mode of the room (std, taiko, ctb, mania..)
+        /// </summary>
         protected OsuMode wctype;
 
+        /// <summary>
+        /// The event handled when the ranking type changed between TeamVs and HeadToHead
+        /// </summary>
         public event EventHandler RankingTypeChanged;
         #endregion
 
@@ -103,14 +109,29 @@ namespace Osu.Scores
         /// </summary>
         protected int timer;
 
+        /// <summary>
+        /// The ban counter
+        /// </summary>
         protected int countBans;
 
+        /// <summary>
+        /// If it is the room streamed (not used anymore, it was for the world cups)
+        /// </summary>
         protected bool isStreamed;
 
+        /// <summary>
+        /// The list of messages sent in the room from everyone
+        /// </summary>
         protected List<IrcMessage> roomMessages;
 
+        /// <summary>
+        /// The room configuration of the osu! room (mode, type, slots)
+        /// </summary>
         protected RoomConfiguration roomConfiguration;
 
+        /// <summary>
+        /// Check if we can add the 'new message' line to the chat view
+        /// </summary>
         protected bool canAddNewMessagesLine;
         #endregion
 
@@ -395,6 +416,9 @@ namespace Osu.Scores
             }
         }
 
+        /// <summary>
+        /// The CountBans property
+        /// </summary>
         public int CountBans
         {
             get
@@ -410,6 +434,9 @@ namespace Osu.Scores
             }
         }
 
+        /// <summary>
+        /// IsStreamed property
+        /// </summary>
         public bool IsStreamed
         {
             get
@@ -423,6 +450,9 @@ namespace Osu.Scores
             }
         }
 
+        /// <summary>
+        /// RoomMessages property
+        /// </summary>
         public List<IrcMessage> RoomMessages
         {
             get
@@ -431,6 +461,9 @@ namespace Osu.Scores
             }
         }
 
+        /// <summary>
+        /// RoomConfiguration property
+        /// </summary>
         public RoomConfiguration RoomConfiguration
         {
             get
@@ -439,6 +472,9 @@ namespace Osu.Scores
             }
         }
 
+        /// <summary>
+        /// Timer property
+        /// </summary>
         public int Timer
         {
             get { return timer; }
@@ -673,6 +709,10 @@ namespace Osu.Scores
             RankingTypeChanged(this, new EventArgs());
         }
 
+        /// <summary>
+        /// Add a message coming from the room the the list of messages to display on the chat tab
+        /// </summary>
+        /// <param name="message"></param>
         public void AddMessage(IrcMessage message)
         {
             if (RoomMessages.Count >= 100)
@@ -682,6 +722,9 @@ namespace Osu.Scores
             RoomMessages.Add(message);
         }
 
+        /// <summary>
+        /// Function called if we need to add the 'new messages' line
+        /// </summary>
         public void AddNewMessageLine()
         {
             if (!canAddNewMessagesLine) return;
@@ -689,6 +732,9 @@ namespace Osu.Scores
             AddMessage(new IrcMessage { Message = "------------------ NEW MESSAGES ------------------" });
         }
 
+        /// <summary>
+        /// Function called if we need to remove the 'new messages' line
+        /// </summary>
         public void RemoveNewMessageLine()
         {
             RoomMessages.RemoveAll(x => x.Message == "------------------ NEW MESSAGES ------------------");
@@ -698,12 +744,13 @@ namespace Osu.Scores
 
         #region Static Methods
         /// <summary>
-        /// Initializes the rooms
+        /// Initializes the rooms on startup
         /// </summary>
         public static async Task Initialize()
         {
             rooms = new Dictionary<long, Room>();
 
+            // Grabbing all infos from the caches
             Cache cache = Cache.GetCache("osu!cache.db");
             Dictionary<long, OsuRoom> matches = cache.GetObject<Dictionary<long, OsuRoom>>("rooms", new Dictionary<long, OsuRoom>());
             Dictionary<long, Api.OsuTeam> teamvsfirst = cache.GetObject<Dictionary<long, Api.OsuTeam>>("teamvs_isbluefirstpicking", new Dictionary<long, Api.OsuTeam>());
@@ -719,13 +766,14 @@ namespace Osu.Scores
                 rooms[match.Key].InitializeRankingType(isTeamVsMode[match.Key] ? Ranking.Type.TeamVs : Ranking.Type.HeadToHead);
                 var updated = await rooms[match.Key].Update(false);
 
-                // If the game does not exist in the API anymore
+                // If the game does not exist in the API anymore or in the cache
                 if(!updated)
                 {
                     rooms.Remove(match.Key);
                 }
                 else
                 {
+                    // Try to add the pool to the room
                     mappoolSet.TryGetValue(match.Key, out poolname);
                     if (!string.IsNullOrEmpty(poolname))
                     {
@@ -735,6 +783,8 @@ namespace Osu.Scores
                             rooms[match.Key].Manual = false;
                         }
                     }
+
+                    // For TeamVs, add who is picking first
                     if (rooms[match.Key].Ranking.type == Ranking.Type.TeamVs && teamvsfirst.TryGetValue(match.Key, out firstteam))
                     {
                         ((TeamVs)rooms[match.Key].Ranking).First = firstteam;

@@ -10,17 +10,20 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using TechLifeForum;
+using IrcSharp;
 using System.Linq;
 using Osu.Utils.Info;
 
 namespace Osu.Ircbot
 {
     /// <summary>
-    /// The bot which will connect to irc
+    /// The delegate when a match has been created
     /// </summary>
     public delegate void MatchCreatedHandler(object sender, MatchCatchedArgs e);
 
+    /// <summary>
+    /// The class handling everything for osu! irc
+    /// </summary>
     public class OsuIrcBot
     {
         #region Constants
@@ -29,6 +32,9 @@ namespace Osu.Ircbot
         /// </summary>
         private const int PORT_IRC_BANCHO = 6667;
 
+        /// <summary>
+        /// The default public irc ip address
+        /// </summary>
         private const string PUBLIC_IRC_BANCHO = "irc.ppy.sh";
 
         /// <summary>
@@ -42,7 +48,7 @@ namespace Osu.Ircbot
         private static OsuIrcBot instancePublic;
 
         /// <summary>
-        /// The logger
+        /// The logger for irc
         /// </summary>
         private static ILog log = LogManager.GetLogger("osu!irc");
         #endregion
@@ -58,30 +64,69 @@ namespace Osu.Ircbot
         /// </summary>
         public event EventHandler MessageRoomCatched;
 
+        /// <summary>
+        /// The event handler when a player wrote something in the room
+        /// </summary>
         public event EventHandler PlayerMessageRoomCatched;
 
+        /// <summary>
+        /// The event handler when Banchobot is sending the room creation string
+        /// </summary>
         public event MatchCreatedHandler RoomCreatedCatched;
 
+        /// <summary>
+        /// Boolean if the bot should wait on IRC for Banchobot prints from mp settings
+        /// </summary>
         private bool shouldCatchSettings;
 
+        /// <summary>
+        /// The timer to wait until we are sure we catched all lines from mp settings
+        /// </summary>
         private System.Timers.Timer catchSettingsTimer;
 
+        /// <summary>
+        /// The timer to wait every x ms before sending a new message from the queue if there is one
+        /// </summary>
         private System.Timers.Timer sendMessageTimer;
 
+        /// <summary>
+        /// The queue keeping IRC messages until they are sent
+        /// </summary>
         private Queue<IrcMessage> messageQueue;
 
+        /// <summary>
+        /// The regex to catch players line on mp settings
+        /// </summary>
         private Regex regexPlayerLine;
 
+        /// <summary>
+        /// The regex to grab room infos on mp settings
+        /// </summary>
         private Regex regexRoomLine;
 
+        /// <summary>
+        /// The regex to grab the map in mp settings
+        /// </summary>
         private Regex regexMapLine;
 
+        /// <summary>
+        /// The regex to grab who has been switched to the private server
+        /// </summary>
         private Regex regexSwitchedLine;
 
+        /// <summary>
+        /// The regex to grab room creation
+        /// </summary>
         private Regex regexCreateCommand;
 
+        /// <summary>
+        /// The freemod viewer
+        /// </summary>
         private FreemodViewer fmv;
 
+        /// <summary>
+        /// The IRC IP Address
+        /// </summary>
         private string irc_address;
         #endregion
 
@@ -121,10 +166,19 @@ namespace Osu.Ircbot
         /// </summary>
         protected long rateLimit;
 
+        /// <summary>
+        /// Boolean if we are connected to the irc server or not
+        /// </summary>
         protected bool isConnected;
 
+        /// <summary>
+        /// Boolean to know if we have to read inputs incoming or not for this instance
+        /// </summary>
         protected bool readInput;
 
+        /// <summary>
+        /// Boolean to know if we have to highlight commentators when we are grabbing mods with mp settings and displaying it on discord
+        /// </summary>
         private bool shouldHlCommentators;
         #endregion
 
@@ -144,7 +198,6 @@ namespace Osu.Ircbot
             shouldCatchSettings = false;
             fmv = new FreemodViewer();
             messageQueue = new Queue<IrcMessage>();
-
             readInput = shouldRead;
 
             // Regex
@@ -204,6 +257,9 @@ namespace Osu.Ircbot
             }
         }
 
+        /// <summary>
+        /// The rate limit used by the timer to send messages on IRC (interval)
+        /// </summary>
         public long RateLimit
         {
             get
@@ -218,6 +274,9 @@ namespace Osu.Ircbot
             }
         }
 
+        /// <summary>
+        /// Properties to know if we are connected to irc or not
+        /// </summary>
         public bool IsConnected
         {
             get
@@ -364,6 +423,10 @@ namespace Osu.Ircbot
             }
         }
 
+        /// <summary>
+        /// Switch players to the private server
+        /// </summary>
+        /// <param name="sh">Switchhandler containing the list of players who need to be switched</param>
         public void SwitchPlayers(SwitchHandler sh)
         {
             foreach(var user in sh.Players)
@@ -372,6 +435,10 @@ namespace Osu.Ircbot
             }
         }
 
+        /// <summary>
+        /// Switch players to the private server
+        /// </summary>
+        /// <param name="players">List containing the players who need to be switched</param>
         public void SwitchPlayers(List<string> players)
         {
             foreach (var user in players)
@@ -380,6 +447,11 @@ namespace Osu.Ircbot
             }
         }
 
+        /// <summary>
+        /// Invite players to a room
+        /// </summary>
+        /// <param name="id">the room id</param>
+        /// <param name="sh">the switch handled containing players who need to be invited</param>
         public void InvitePlayers(long id, SwitchHandler sh)
         {
             foreach (var user in sh.Players)
@@ -388,6 +460,11 @@ namespace Osu.Ircbot
             }
         }
 
+        /// <summary>
+        /// Invite players to a room
+        /// </summary>
+        /// <param name="id">the room id</param>
+        /// <param name="players">the list of players who need to be invited</param>
         public void InvitePlayers(long id, List<string> players)
         {
             foreach (var user in players)
@@ -396,11 +473,21 @@ namespace Osu.Ircbot
             }
         }
 
+        /// <summary>
+        /// Sending the command to create a room
+        /// </summary>
+        /// <param name="blueteam">the blue team name</param>
+        /// <param name="redteam">the red team name</param>
         public void CreateMatch(string blueteam, string redteam)
         {
+            // Grabbing the acronym from the overview tab
             SendMessage("BanchoBot", string.Format("!mp make {2}: ({0}) vs ({1})", redteam, blueteam, InfosHelper.TourneyInfos.Acronym));
         }
 
+        /// <summary>
+        /// Function called when the bot joined the room, configuring the room with tourney informations
+        /// </summary>
+        /// <param name="roomCreatedId">the room id</param>
         public void ConfigureMatch(string roomCreatedId)
         {
             if (roomCreatedId != null)
@@ -408,6 +495,7 @@ namespace Osu.Ircbot
                 SendMessage("#mp_" + roomCreatedId, string.Format("!mp set {0} {1} {2}", InfosHelper.TourneyInfos.TeamMode, InfosHelper.TourneyInfos.ScoreMode, InfosHelper.TourneyInfos.RoomSize));
                 SendMessage("#mp_" + roomCreatedId, string.Format("!mp map {0} {1}", InfosHelper.TourneyInfos.DefaultMapId, InfosHelper.TourneyInfos.ModeType));
 
+                // If we have some names to addref
                 if(!string.IsNullOrEmpty(InfosHelper.UserDataInfos.Admins))
                     SendMessage("#mp_" + roomCreatedId, "!mp addref " + InfosHelper.UserDataInfos.Admins);
 
@@ -416,18 +504,29 @@ namespace Osu.Ircbot
             }
         }
 
+        /// <summary>
+        /// Function called when we are updating the room manually from the option tab
+        /// </summary>
+        /// <param name="roomCreatedId">the room id</param>
+        /// <param name="config">the room configuration from the option tab</param>
         public void UpdateRoomConfiguration(string roomCreatedId, RoomConfiguration config)
         {
             SendMessage("#mp_" + roomCreatedId, string.Format("!mp set {0} {1} {2}", config.TeamMode, config.ScoreMode, config.RoomSize));
         }
 
+        /// <summary>
+        /// Function called with the welcome button, send strings for slots
+        /// </summary>
+        /// <param name="room">the room object</param>
         public void SendWelcomeMessage(Room room)
         {
+            // If we have teams, we give reserved slots to players
             if(room.Ranking.GetType() == typeof(TeamVs))
             {
                 TeamVs tvs = ((TeamVs)room.Ranking);
                 SendMessage("#mp_" + room.Id, string.Format("{0} is RED, slots {2} to {3} --- {1} is BLUE, slots {4} to {5}", tvs.Red.Name, tvs.Blue.Name, "1", InfosHelper.TourneyInfos.PlayersPerTeam, InfosHelper.TourneyInfos.PlayersPerTeam + 1, InfosHelper.TourneyInfos.PlayersPerTeam + InfosHelper.TourneyInfos.PlayersPerTeam));
             }
+
             SendMessage("#mp_" + room.Id, "Please invite your teammates and sort yourself accordingly");
         }
 
@@ -606,7 +705,7 @@ namespace Osu.Ircbot
         }
 
         /// <summary>
-        /// Event which catch the mp settings command and print it to discord
+        /// Event which catch the mp settings command and print it to discord, NOT USED ANYMORE
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
@@ -654,7 +753,7 @@ namespace Osu.Ircbot
                 shouldHlCommentators = false;
             }
 
-            // TODO
+            // TODO, not used anymore
             //DiscordBot.GetInstance().SendMessage(stringToSend);
 
             fmv.Players.Clear();

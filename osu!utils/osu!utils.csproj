@@ -72,7 +72,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SelectableObject.cs" />
     <Compile Include="SwitchHandler.cs" />
     <Compile Include="Info\TourneyInfo.cs" />
     <Compile Include="TeamsOv\PlayerOv.cs" />

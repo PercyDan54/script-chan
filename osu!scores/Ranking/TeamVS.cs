@@ -215,6 +215,9 @@ namespace Osu.Scores
             }
         }
 
+        /// <summary>
+        /// DidAbortHappened property
+        /// </summary>
         public bool DidAbortHappened
         {
             set
@@ -356,12 +359,17 @@ namespace Osu.Scores
             return sentences;
         }
 
+        /// <summary>
+        /// Returns the embed created for discord with ranking informations of the last map played
+        /// </summary>
+        /// <returns>the embed</returns>
         public override Embed GetDiscordStatus()
         {
             // Get the beatmap object
             OsuBeatmap obm = null;
             Beatmap bm = null;
 
+            // If there is a mappool selected for the room, we try to find it in the pool
             if (room.Mappool != null && !room.Manual)
             {
                 var game = room.OsuRoom.Games.LastOrDefault();
@@ -376,6 +384,7 @@ namespace Osu.Scores
             }
             else
             {
+                // Otherwise, we try to grab informations from the last map played
                 var game = room.OsuRoom.Games.LastOrDefault();
                 if (game != null)
                 {
@@ -384,7 +393,7 @@ namespace Osu.Scores
                 }
             }
 
-            // If we found the map
+            // If we found a map, we build discord Embed
             if (obm != null)
             {
                 bool didCurrentTeamWon;
@@ -453,6 +462,10 @@ namespace Osu.Scores
             return null;
         }
 
+        /// <summary>
+        /// Score formatted for irc messages
+        /// </summary>
+        /// <returns></returns>
         public string GetScoreFormatted()
         {
             String res = String.Format("{0} : {1} | {2} : {3}",
@@ -463,6 +476,10 @@ namespace Osu.Scores
             return res;
         }
 
+        /// <summary>
+        /// Check which team won the match
+        /// </summary>
+        /// <returns></returns>
         public bool DidBlueTeamWin()
         {
             return (teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition) > (teams[OsuTeam.Red].Points + teams[OsuTeam.Red].PointAddition);

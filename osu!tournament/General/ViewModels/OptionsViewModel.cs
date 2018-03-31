@@ -32,12 +32,24 @@ namespace Osu.Mvvm.General.ViewModels
         /// </summary>
         private OsuIrcBot bot;
 
+        /// <summary>
+        /// The osu!ircbot public instance
+        /// </summary>
         private OsuIrcBot botpublic;
 
+        /// <summary>
+        /// The osu! mode
+        /// </summary>
         private OsuMode gm;
 
+        /// <summary>
+        /// The default mappool when you create a room
+        /// </summary>
         private Osu.Scores.Mappool mappool;
 
+        /// <summary>
+        /// Color mode for the application (removed for now)
+        /// </summary>
         private string colorMode;
         #endregion
 
@@ -195,17 +207,15 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// The color mode property (not used anymore)
+        /// </summary>
         public List<string> ColorMode
         {
             get
             {
                 return new List<string> { "BaseLight", "BaseDark" };
             }
-        }
-
-        public string test
-        {
-            get;set;
         }
 
         /// <summary>
@@ -249,6 +259,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// The GameModes property
+        /// </summary>
         public List<OsuMode> GameModes
         {
             get
@@ -257,6 +270,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// Mappools list property
+        /// </summary>
         public List<Osu.Scores.Mappool> Mappools
         {
             get
@@ -285,6 +301,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// SelectedGameMode property
+        /// </summary>
         public OsuMode SelectedGameMode
         {
             get
@@ -302,6 +321,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// Selected mappool property
+        /// </summary>
         public Osu.Scores.Mappool SelectedMappool
         {
             get
@@ -318,6 +340,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// Default webhook URL
+        /// </summary>
         public string DefaultWebhook
         {
             get
@@ -330,6 +355,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// Admin webhook URL
+        /// </summary>
         public string AdminWebhook
         {
             get
@@ -342,6 +370,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
         }
 
+        /// <summary>
+        /// Timer interval property
+        /// </summary>
         public int Timer
         {
             get { return InfosHelper.TourneyInfos.Timer; }
