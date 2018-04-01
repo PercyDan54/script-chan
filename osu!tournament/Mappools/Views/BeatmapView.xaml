@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     d:DesignHeight="29"
     d:DesignWidth="500"
-    Height="29"
+    Height="34"
     Margin="0,2.5,5,2.5"
     Background="{Binding Background}"
     BorderBrush="{Binding Border}"
@@ -24,7 +24,7 @@
             <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="1" Height="27" Width="27" BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Column="1" Height="27" Width="27" BorderBrush="Black" BorderThickness="1" CornerRadius="13.5">
             <Button x:Name="ShowModPicker" Content="+" Padding="0" Background="Transparent" Foreground="Black" />
         </Border>
         <DockPanel Grid.Column="0">
@@ -36,14 +36,14 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Height="27" BorderBrush="Black" BorderThickness="1">
+                        <Border Height="27" BorderBrush="Black" BorderThickness="1" CornerRadius="13.5" Margin="0,0,5,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="27" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Button Content="X" Padding="0" Background="Transparent" Foreground="Black" cal:Message.Attach="[Event Click] = [Action RemoveMod($this)]" />
-                                <TextBlock Text="{Binding}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock Text="{Binding}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0" />
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -62,8 +62,8 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Height="27" BorderBrush="Black" BorderThickness="1">
-                                <TextBlock Text="{Binding}" VerticalAlignment="Center" cal:Message.Attach="[Event MouseUp] = [Action AddMod($this)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, ElementName=DisplayName}" />
+                            <Border Height="27" BorderBrush="Black" BorderThickness="1" CornerRadius="13.5" Margin="2">
+                                <TextBlock Text="{Binding}" VerticalAlignment="Center" Margin="10,0,10,0" cal:Message.Attach="[Event MouseUp] = [Action AddMod($this)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, ElementName=DisplayName}" />
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
