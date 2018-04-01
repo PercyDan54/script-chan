@@ -68,26 +68,8 @@ namespace Osu.Mvvm.Mappools.ViewModels
                         case Scores.PickType.DT:
                             brushToAdd = ModsBrushes.DTLight;
                             break;
-                        case Scores.PickType.NC:
-                            brushToAdd = ModsBrushes.NCLight;
-                            break;
-                        case Scores.PickType.HT:
-                            brushToAdd = ModsBrushes.HTLight;
-                            break;
-                        case Scores.PickType.EZ:
-                            brushToAdd = ModsBrushes.EZLight;
-                            break;
                         case Scores.PickType.FL:
                             brushToAdd = ModsBrushes.FLLight;
-                            break;
-                        case Scores.PickType.NF:
-                            brushToAdd = ModsBrushes.NFLight;
-                            break;
-                        case Scores.PickType.SD:
-                            brushToAdd = ModsBrushes.SDLight;
-                            break;
-                        case Scores.PickType.PF:
-                            brushToAdd = ModsBrushes.PFLight;
                             break;
                         case Scores.PickType.Freemod:
                             brushToAdd = ModsBrushes.FreeModLight;
@@ -133,26 +115,8 @@ namespace Osu.Mvvm.Mappools.ViewModels
                         case Scores.PickType.DT:
                             brushToAdd = ModsBrushes.DT;
                             break;
-                        case Scores.PickType.NC:
-                            brushToAdd = ModsBrushes.NC;
-                            break;
-                        case Scores.PickType.HT:
-                            brushToAdd = ModsBrushes.HT;
-                            break;
-                        case Scores.PickType.EZ:
-                            brushToAdd = ModsBrushes.EZ;
-                            break;
                         case Scores.PickType.FL:
                             brushToAdd = ModsBrushes.FL;
-                            break;
-                        case Scores.PickType.NF:
-                            brushToAdd = ModsBrushes.NF;
-                            break;
-                        case Scores.PickType.SD:
-                            brushToAdd = ModsBrushes.SD;
-                            break;
-                        case Scores.PickType.PF:
-                            brushToAdd = ModsBrushes.PF;
                             break;
                         case Scores.PickType.Freemod:
                             brushToAdd = ModsBrushes.FreeMod;

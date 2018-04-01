@@ -11,14 +11,8 @@ namespace Osu.Scores
         HD = 1,
         HR = 2,
         DT = 3,
-        NC = 4,
-        HT = 5,
-        EZ = 6,
-        FL = 7,
-        NF = 8,
-        SD = 9,
-        PF = 10,
-        Freemod = 11,
-        TieBreaker = 12
+        FL = 4,
+        Freemod = 5,
+        TieBreaker = 6
     }
 }

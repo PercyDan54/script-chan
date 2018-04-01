@@ -102,33 +102,6 @@ namespace Osu.Scores
                 pick_type.Clear();
             else
                 pick_type.RemoveAll(x => x == Scores.PickType.None || x == Scores.PickType.Freemod || x == Scores.PickType.TieBreaker);
-            switch (mod)
-            {
-                case Scores.PickType.HT:
-                    pick_type.RemoveAll(x => x == Scores.PickType.DT || x == Scores.PickType.NC);
-                    break;
-                case Scores.PickType.DT:
-                    pick_type.RemoveAll(x => x == Scores.PickType.HT || x == Scores.PickType.NC);
-                    break;
-                case Scores.PickType.NC:
-                    pick_type.RemoveAll(x => x == Scores.PickType.HT || x == Scores.PickType.DT);
-                    break;
-                case Scores.PickType.HR:
-                    pick_type.RemoveAll(x => x == Scores.PickType.EZ);
-                    break;
-                case Scores.PickType.EZ:
-                    pick_type.RemoveAll(x => x == Scores.PickType.HR);
-                    break;
-                case Scores.PickType.SD:
-                    pick_type.RemoveAll(x => x == Scores.PickType.PF || x == Scores.PickType.NF);
-                    break;
-                case Scores.PickType.PF:
-                    pick_type.RemoveAll(x => x == Scores.PickType.SD || x == Scores.PickType.NF);
-                    break;
-                case Scores.PickType.NF:
-                    pick_type.RemoveAll(x => x == Scores.PickType.SD || x == Scores.PickType.PF);
-                    break;
-            }
 
             pick_type.Add(mod);
         }

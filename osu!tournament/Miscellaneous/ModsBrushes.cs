@@ -62,33 +62,9 @@ namespace Osu.Mvvm.Miscellaneous
         /// </summary>
         public static Brush DTLight = new SolidColorBrush(Color.FromRgb(207, 226, 243));
 
-        public static Brush NC = new SolidColorBrush();
-
-        public static Brush NCLight = new SolidColorBrush();
-
-        public static Brush HT = new SolidColorBrush();
-
-        public static Brush HTLight = new SolidColorBrush();
-
-        public static Brush EZ = new SolidColorBrush();
-
-        public static Brush EZLight = new SolidColorBrush();
-
         public static Brush FL = new SolidColorBrush();
 
         public static Brush FLLight = new SolidColorBrush();
-
-        public static Brush NF = new SolidColorBrush();
-
-        public static Brush NFLight = new SolidColorBrush();
-
-        public static Brush SD = new SolidColorBrush();
-
-        public static Brush SDLight = new SolidColorBrush();
-
-        public static Brush PF = new SolidColorBrush();
-
-        public static Brush PFLight = new SolidColorBrush();
 
         /// <summary>
         /// Freemod
