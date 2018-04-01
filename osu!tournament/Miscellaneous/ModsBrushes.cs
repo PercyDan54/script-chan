@@ -33,34 +33,62 @@ namespace Osu.Mvvm.Miscellaneous
         public static Brush NoModLight = new SolidColorBrush(Color.FromRgb(255, 255, 255));
 
         /// <summary>
-        /// Hidden
+        /// HD
         /// </summary>
-        public static Brush Hidden = new SolidColorBrush(Color.FromRgb(255, 229, 153));
+        public static Brush HD = new SolidColorBrush(Color.FromRgb(255, 229, 153));
 
         /// <summary>
-        /// Light Hidden
+        /// Light HD
         /// </summary>
-        public static Brush HiddenLight = new SolidColorBrush(Color.FromRgb(255, 242, 204));
+        public static Brush HDLight = new SolidColorBrush(Color.FromRgb(255, 242, 204));
 
         /// <summary>
-        /// HardRock
+        /// HR
         /// </summary>
-        public static Brush HardRock = new SolidColorBrush(Color.FromRgb(234, 153, 153));
+        public static Brush HR = new SolidColorBrush(Color.FromRgb(234, 153, 153));
 
         /// <summary>
-        /// Light HardRock
+        /// Light HR
         /// </summary>
-        public static Brush HardRockLight = new SolidColorBrush(Color.FromRgb(244, 204, 204));
+        public static Brush HRLight = new SolidColorBrush(Color.FromRgb(244, 204, 204));
 
         /// <summary>
-        /// DoubleTime
+        /// DT
         /// </summary>
-        public static Brush DoubleTime = new SolidColorBrush(Color.FromRgb(159, 197, 232));
+        public static Brush DT = new SolidColorBrush(Color.FromRgb(159, 197, 232));
 
         /// <summary>
-        /// Light DoubleTime
+        /// Light DT
         /// </summary>
-        public static Brush DoubleTimeLight = new SolidColorBrush(Color.FromRgb(207, 226, 243));
+        public static Brush DTLight = new SolidColorBrush(Color.FromRgb(207, 226, 243));
+
+        public static Brush NC = new SolidColorBrush();
+
+        public static Brush NCLight = new SolidColorBrush();
+
+        public static Brush HT = new SolidColorBrush();
+
+        public static Brush HTLight = new SolidColorBrush();
+
+        public static Brush EZ = new SolidColorBrush();
+
+        public static Brush EZLight = new SolidColorBrush();
+
+        public static Brush FL = new SolidColorBrush();
+
+        public static Brush FLLight = new SolidColorBrush();
+
+        public static Brush NF = new SolidColorBrush();
+
+        public static Brush NFLight = new SolidColorBrush();
+
+        public static Brush SD = new SolidColorBrush();
+
+        public static Brush SDLight = new SolidColorBrush();
+
+        public static Brush PF = new SolidColorBrush();
+
+        public static Brush PFLight = new SolidColorBrush();
 
         /// <summary>
         /// FreeMod

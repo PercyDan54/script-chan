@@ -7,34 +7,18 @@ namespace Osu.Scores
     /// </summary>
     public enum PickType
     {
-        /// <summary>
-        /// The No Mod Pick
-        /// </summary>
         NoMod = 0,
-        
-        /// <summary>
-        /// The Hidden Mod Pick
-        /// </summary>
-        Hidden = 1,
-
-        /// <summary>
-        /// The HardRock Mod Pick
-        /// </summary>
-        HardRock = 2,
-
-        /// <summary>
-        /// The DoubleTime Mod Pick
-        /// </summary>
-        DoubleTime = 3,
-
-        /// <summary>
-        /// The Free Mod Pick
-        /// </summary>
-        FreeMod = 4,
-
-        /// <summary>
-        /// The TieBreaker Pick
-        /// </summary>
-        TieBreaker = 5
+        HD = 1,
+        HR = 2,
+        DT = 3,
+        NC = 4,
+        HT = 5,
+        EZ = 6,
+        FL = 7,
+        NF = 8,
+        SD = 9,
+        PF = 10,
+        FreeMod = 11,
+        TieBreaker = 12
     }
 }

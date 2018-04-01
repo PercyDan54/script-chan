@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Osu.Ircbot.Handlers
 {
@@ -71,7 +72,7 @@ namespace Osu.Ircbot.Handlers
             List<string> target = new List<string> { "#mp_" + room.Id };
             bot.SendMessage(target, "Picked map : " + beatmap.ToString());
             bot.SendMessage(target, "!mp map " + map_id);
-            bot.SendMessage(target, "!mp mods " + getPickType(beatmap.PickType));
+            bot.SendMessage(target, "!mp mods " + beatmap.PickType.Aggregate(string.Empty, (a, b) => a + " " + getPickType(b)));
         }
 
         public void onReconnectionRoom()
@@ -90,14 +91,20 @@ namespace Osu.Ircbot.Handlers
                 case PickType.NoMod:
                     res = "None";
                     break;
-                case PickType.HardRock:
+                case PickType.HR:
                     res = "HR";
                     break;
-                case PickType.DoubleTime:
+                case PickType.DT:
                     res = "DT";
                     break;
-                case PickType.Hidden:
+                case PickType.HD:
                     res = "HD";
+                    break;
+                case PickType.EZ:
+                    res = "EZ";
+                    break;
+                case PickType.FL:
+                    res = "FL";
                     break;
                 case PickType.FreeMod:
                     res = "Freemod";

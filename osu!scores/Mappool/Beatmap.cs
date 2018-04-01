@@ -1,5 +1,7 @@
 ﻿using Osu.Api;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Osu.Scores
@@ -27,7 +29,7 @@ namespace Osu.Scores
         /// The pick type
         /// </summary>
         [DataMember]
-        protected PickType pick_type;
+        protected List<PickType> pick_type;
         #endregion
 
         #region Constructors
@@ -37,7 +39,7 @@ namespace Osu.Scores
         public Beatmap()
         {
             osu_beatmap = null;
-            pick_type = PickType.NoMod;
+            pick_type = new List<PickType>();
         }
         #endregion
 
@@ -60,7 +62,7 @@ namespace Osu.Scores
         /// <summary>
         /// PickType property
         /// </summary>
-        public PickType PickType
+        public List<PickType> PickType
         {
             get
             {
@@ -90,6 +92,59 @@ namespace Osu.Scores
 
         #region Public Methods
         /// <summary>
+        /// Adds a mod to the beatmap
+        /// </summary>
+        /// <param name="mod">The mod</param>
+        public void AddMod(PickType mod)
+        {
+            if (pick_type.Contains(mod)) return;
+            if (mod == Scores.PickType.NoMod || mod == Scores.PickType.FreeMod || mod == Scores.PickType.TieBreaker)
+                pick_type.Clear();
+            else
+                pick_type.RemoveAll(x => x == Scores.PickType.NoMod || x == Scores.PickType.FreeMod || x == Scores.PickType.TieBreaker);
+            switch (mod)
+            {
+                case Scores.PickType.HT:
+                    pick_type.RemoveAll(x => x == Scores.PickType.DT || x == Scores.PickType.NC);
+                    break;
+                case Scores.PickType.DT:
+                    pick_type.RemoveAll(x => x == Scores.PickType.HT || x == Scores.PickType.NC);
+                    break;
+                case Scores.PickType.NC:
+                    pick_type.RemoveAll(x => x == Scores.PickType.HT || x == Scores.PickType.DT);
+                    break;
+                case Scores.PickType.HR:
+                    pick_type.RemoveAll(x => x == Scores.PickType.EZ);
+                    break;
+                case Scores.PickType.EZ:
+                    pick_type.RemoveAll(x => x == Scores.PickType.HR);
+                    break;
+                case Scores.PickType.SD:
+                    pick_type.RemoveAll(x => x == Scores.PickType.PF || x == Scores.PickType.NF);
+                    break;
+                case Scores.PickType.PF:
+                    pick_type.RemoveAll(x => x == Scores.PickType.SD || x == Scores.PickType.NF);
+                    break;
+                case Scores.PickType.NF:
+                    pick_type.RemoveAll(x => x == Scores.PickType.SD || x == Scores.PickType.PF);
+                    break;
+            }
+
+            pick_type.Add(mod);
+        }
+
+        /// <summary>
+        /// Removes a mod from the beatmap
+        /// </summary>
+        /// <param name="mod">The mod</param>
+        public void RemoveMod(PickType mod)
+        {
+            pick_type.RemoveAll(x => x == mod);
+            if (pick_type.Count == 0)
+                AddMod(Scores.PickType.NoMod);
+        }
+
+        /// <summary>
         /// Returns the beatmap as a string
         /// </summary>
         /// <returns>the beatmap as a string</returns>
@@ -98,6 +153,7 @@ namespace Osu.Scores
             return OsuBeatmap.Artist + " - " + OsuBeatmap.Title + " [" + OsuBeatmap.Version + "] (by " + OsuBeatmap.Creator + ")";
         }
 
+        // TODO!!!
         /// <summary>
         /// Compares the beatmap to another beatmap
         /// </summary>
@@ -105,7 +161,7 @@ namespace Osu.Scores
         /// <returns>an integer</returns>
         public int CompareTo(Beatmap other)
         {
-            return pick_type.CompareTo(other.PickType);
+            return pick_type.Max(x => (int) x) - other.pick_type.Max(x => (int) x);
         }
         #endregion
     }
