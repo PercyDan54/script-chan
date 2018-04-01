@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Osu.Utils
 {
+    /// <summary>
+    /// Games created on the overview and not created on osu! yet, saved in the cache if we close the application
+    /// </summary>
     [DataContract]
     public class Game
     {

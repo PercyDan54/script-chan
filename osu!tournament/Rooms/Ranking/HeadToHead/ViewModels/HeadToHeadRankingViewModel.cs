@@ -88,6 +88,9 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             }
         }
 
+        /// <summary>
+        /// The MappoolPicker view model
+        /// </summary>
         public MappoolPickerViewModel MappoolPicker
         {
             get
@@ -104,6 +107,9 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsControlVisible property if mappool picker is visible or not
+        /// </summary>
         public string IsControlVisible
         {
             get
@@ -115,6 +121,9 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             }
         }
 
+        /// <summary>
+        /// RowSpanScore property when mappool picker is visible or not
+        /// </summary>
         public string RowSpanScore
         {
             get
@@ -126,6 +135,9 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             }
         }
 
+        /// <summary>
+        /// SizePlayerList property when mappool picker is visible or not
+        /// </summary>
         public string SizePlayerList
         {
             get

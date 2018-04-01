@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Osu.Tournament.Miscellaneous
 {
+    /// <summary>
+    /// Class which store windows information (size, position)
+    /// </summary>
     public class WindowInfo
     {
         public int Width { get; set; }

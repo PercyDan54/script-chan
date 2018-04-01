@@ -55,6 +55,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         #endregion
 
         #region Properties
+        /// <summary>
+        /// The Background property
+        /// </summary>
         public Brush Background
         {
             get
@@ -76,7 +79,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                         Brush brushToAdd = null;
                         switch (beatmap.PickType[i])
                         {
-                            case Scores.PickType.NoMod:
+                            case Scores.PickType.None:
                                 brushToAdd = ModsBrushes.NoModLight;
                                 break;
                             case Scores.PickType.HD:
@@ -109,7 +112,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                             case Scores.PickType.PF:
                                 brushToAdd = ModsBrushes.PFLight;
                                 break;
-                            case Scores.PickType.FreeMod:
+                            case Scores.PickType.Freemod:
                                 brushToAdd = ModsBrushes.FreeModLight;
                                 break;
                             case Scores.PickType.TieBreaker:
@@ -128,6 +131,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The Border property
+        /// </summary>
         public Brush Border
         {
             get
@@ -139,7 +145,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                     Brush brushToAdd = null;
                     switch (beatmap.PickType[i])
                     {
-                        case Scores.PickType.NoMod:
+                        case Scores.PickType.None:
                             brushToAdd = ModsBrushes.NoMod;
                             break;
                         case Scores.PickType.HD:
@@ -172,7 +178,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                         case Scores.PickType.PF:
                             brushToAdd = ModsBrushes.PF;
                             break;
-                        case Scores.PickType.FreeMod:
+                        case Scores.PickType.Freemod:
                             brushToAdd = ModsBrushes.FreeMod;
                             break;
                         case Scores.PickType.TieBreaker:
@@ -190,6 +196,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The BeatmapCheckBox property to pick the map on the client side without sending the map on osu!
+        /// </summary>
         public bool BeatmapCheckBox
         {
             get
@@ -224,6 +233,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsCheckboxEnabled property
+        /// </summary>
         public bool IsCheckboxEnabled
         {
             get
@@ -233,6 +245,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The beatmap property
+        /// </summary>
         public Beatmap Beatmap
         {
             get
@@ -241,6 +256,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// The ButtonText property
+        /// </summary>
         public string ButtonMapText
         {
             get
@@ -249,6 +267,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// THe ToolTipInfos property
+        /// </summary>
         public string ToolTipInfos
         {
             get
@@ -260,6 +281,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Function called to pick the map in game
+        /// </summary>
         public void PickTheMap()
         {
             string modvalue = "";
@@ -284,12 +308,15 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             if(!isAlreadyPicked && !isBanned)
             {
                 var bot = OsuIrcBot.GetInstancePrivate();
-                bot.SendMessage("#mp_" + room.Id, string.Format("!mp mods {0}", beatmap.PickType.Aggregate(string.Empty, (a, b) => a + " " + Enum.GetName(typeof(PickType), b) )));
+                bot.SendMessage("#mp_" + room.Id, string.Format("!mp mods {0}", beatmap.PickType.Aggregate(string.Empty, (a, b) => a + " " + (b == PickType.TieBreaker ? "Freemod" : Enum.GetName(typeof(PickType), b) ))));
                 bot.SendMessage("#mp_" + room.Id, string.Format("!mp map {0} {1}", beatmap.OsuBeatmap.BeatmapID, worldcupId));
                 BeatmapCheckBox = true;
             }
         }
 
+        /// <summary>
+        /// Function called to ban the map on the client
+        /// </summary>
         public void MapBannerino()
         {
             RefereeMatchHelper bh = RefereeMatchHelper.GetInstance(room.Id);
@@ -310,6 +337,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
         }
 
+        /// <summary>
+        /// Function called to revert the ban on the client
+        /// </summary>
         public void RevertBannerino()
         {
             RefereeMatchHelper bh = RefereeMatchHelper.GetInstance(room.Id);

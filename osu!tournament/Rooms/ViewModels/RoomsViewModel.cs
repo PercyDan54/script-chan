@@ -258,6 +258,10 @@ namespace Osu.Mvvm.Rooms.ViewModels
             }
         }
 
+        /// <summary>
+        /// Function called to add a room without the overview
+        /// </summary>
+        /// <param name="id"></param>
         private async void AddRoom(long id)
         {
             // Create a new room

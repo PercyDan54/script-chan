@@ -3,6 +3,9 @@ using System;
 
 namespace Osu.Ircbot
 {
+    /// <summary>
+    /// We are not using this handler anymore, keeping it in case we need to separate admin handler again
+    /// </summary>
     class NormalHandler : IrcHandler
     {
         #region Attributes

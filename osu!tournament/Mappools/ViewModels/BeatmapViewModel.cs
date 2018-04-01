@@ -56,7 +56,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
                     Brush brushToAdd = null;
                     switch (beatmap.PickType[i])
                     {
-                        case Scores.PickType.NoMod:
+                        case Scores.PickType.None:
                             brushToAdd = ModsBrushes.NoModLight;
                             break;
                         case Scores.PickType.HD:
@@ -89,7 +89,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
                         case Scores.PickType.PF:
                             brushToAdd = ModsBrushes.PFLight;
                             break;
-                        case Scores.PickType.FreeMod:
+                        case Scores.PickType.Freemod:
                             brushToAdd = ModsBrushes.FreeModLight;
                             break;
                         case Scores.PickType.TieBreaker:
@@ -121,7 +121,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
                     Brush brushToAdd = null;
                     switch (beatmap.PickType[i])
                     {
-                        case Scores.PickType.NoMod:
+                        case Scores.PickType.None:
                             brushToAdd = ModsBrushes.NoMod;
                             break;
                         case Scores.PickType.HD:
@@ -154,7 +154,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
                         case Scores.PickType.PF:
                             brushToAdd = ModsBrushes.PF;
                             break;
-                        case Scores.PickType.FreeMod:
+                        case Scores.PickType.Freemod:
                             brushToAdd = ModsBrushes.FreeMod;
                             break;
                         case Scores.PickType.TieBreaker:

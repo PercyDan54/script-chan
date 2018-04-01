@@ -8,6 +8,9 @@ using Osu.Ircbot;
 
 namespace Osu.Mvvm.Rooms.Options.HeadToHead.ViewModels
 {
+    /// <summary>
+    /// The Head to head options view model
+    /// </summary>
     public class HeadToHeadOptionsViewModel : PropertyChangedBase, IOptionsViewModel
     {
         #region Attributes
@@ -54,6 +57,9 @@ namespace Osu.Mvvm.Rooms.Options.HeadToHead.ViewModels
             }
         }
 
+        /// <summary>
+        /// The GameMode property for the room
+        /// </summary>
         public List<OsuMode> GameMode
         {
             get
@@ -62,6 +68,9 @@ namespace Osu.Mvvm.Rooms.Options.HeadToHead.ViewModels
             }
         }
 
+        /// <summary>
+        /// The selectedgamemode property for the room
+        /// </summary>
         public OsuMode SelectedGameMode
         {
             get
@@ -78,6 +87,9 @@ namespace Osu.Mvvm.Rooms.Options.HeadToHead.ViewModels
             }
         }
 
+        /// <summary>
+        /// The NotificationsEnabled for the room (sending events on discord and irc or not)
+        /// </summary>
         public bool NotificationsEnabled
         {
             get
@@ -93,7 +105,10 @@ namespace Osu.Mvvm.Rooms.Options.HeadToHead.ViewModels
                 }
             }
         }
-
+        
+        /// <summary>
+        /// The timer property
+        /// </summary>
         public int Timer
         {
             get { return room.Timer; }

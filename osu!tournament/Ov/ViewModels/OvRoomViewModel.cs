@@ -14,6 +14,11 @@ using System.Timers;
 
 namespace Osu.Mvvm.Ov.ViewModels
 {
+    /// <summary>
+    /// The delegate for the event when a match has been created
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     public delegate void MatchCreatedEvent(object sender, MatchCreatedArgs e);
 
     public class OvRoomViewModel : PropertyChangedBase
@@ -36,14 +41,29 @@ namespace Osu.Mvvm.Ov.ViewModels
         /// </summary>
         protected int duration;
 
+        /// <summary>
+        /// The blue team name
+        /// </summary>
         protected string blueteam;
 
+        /// <summary>
+        /// The red team name
+        /// </summary>
         protected string redteam;
 
+        /// <summary>
+        /// The batch letter selected
+        /// </summary>
         protected string batch;
 
+        /// <summary>
+        /// The room id
+        /// </summary>
         protected long roomId;
 
+        /// <summary>
+        /// The match created event
+        /// </summary>
         public event MatchCreatedEvent MatchCreated;
         #endregion
 
@@ -74,6 +94,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             Initialize();
         }
 
+        /// <summary>
+        /// Function called to initialize the overview of the room, starting a timer to know the duration of the game while the tool is open
+        /// </summary>
         private void Initialize()
         {
             this.timer = new Timer(60000);
@@ -111,6 +134,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The RoomId property
+        /// </summary>
         public long RoomId
         {
             get
@@ -119,6 +145,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The InBetweenText property if you need to print the room name or the red vs blue name
+        /// </summary>
         public String InBetweenText
         {
             get
@@ -261,6 +290,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The ButtonName property for the content of the button in case the room is created or not
+        /// </summary>
         public String ButtonName
         {
             get
@@ -271,6 +303,10 @@ namespace Osu.Mvvm.Ov.ViewModels
                     return "Create";
             }
         }
+
+        /// <summary>
+        /// The timer property
+        /// </summary>
         public String Timer
         {
             get
@@ -282,6 +318,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The scorelabel property
+        /// </summary>
         public String ScoreLabel
         {
             get
@@ -293,6 +332,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The batchUI letter property
+        /// </summary>
         public String BatchUI
         {
             get
@@ -304,6 +346,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The batch letter property
+        /// </summary>
         public String Batch
         {
             get
@@ -316,8 +361,14 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The IsCreated property
+        /// </summary>
         protected bool IsCreated { get; set; }
 
+        /// <summary>
+        /// The IsMatchRunning property
+        /// </summary>
         public bool IsMatchRunning { get { return !IsCreated; } }
         #endregion
 
@@ -348,6 +399,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// Function called to create the room on osu! if you click the button to create the room
+        /// </summary>
         private async void CreateMatch()
         {
             if(string.IsNullOrEmpty(InfosHelper.TourneyInfos.Acronym))
@@ -361,6 +415,10 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// Function called when the room id has been grabbed to join the room on irc and configure the osu! room
+        /// </summary>
+        /// <param name="id">the room id</param>
         public void SetCreation(long id)
         {
             roomId = id;
@@ -370,6 +428,9 @@ namespace Osu.Mvvm.Ov.ViewModels
 
         }
 
+        /// <summary>
+        /// The button to create or show the mp link
+        /// </summary>
         public void ActivateButton()
         {
             if(!IsCreated)
@@ -389,6 +450,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// Function called to delete the overview if the match has not been created yet
+        /// </summary>
         public void DeleteOverview()
         {
             parent.RemoveOverview(this);
@@ -409,6 +473,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             UpdateStatus();
         }
 
+        /// <summary>
+        /// Update the overview but for ranking informations
+        /// </summary>
         public void UpdateRanking()
         {
             NotifyOfPropertyChange(() => TeamBlue);
@@ -458,6 +525,11 @@ namespace Osu.Mvvm.Ov.ViewModels
             this.timer.Stop();
         }
 
+        /// <summary>
+        /// Event when the ranking type changed in the tool
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnRankingTypeChanged(object sender, EventArgs e)
         {
             UpdateRanking();

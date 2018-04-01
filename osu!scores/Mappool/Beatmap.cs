@@ -98,10 +98,10 @@ namespace Osu.Scores
         public void AddMod(PickType mod)
         {
             if (pick_type.Contains(mod)) return;
-            if (mod == Scores.PickType.NoMod || mod == Scores.PickType.FreeMod || mod == Scores.PickType.TieBreaker)
+            if (mod == Scores.PickType.None || mod == Scores.PickType.Freemod || mod == Scores.PickType.TieBreaker)
                 pick_type.Clear();
             else
-                pick_type.RemoveAll(x => x == Scores.PickType.NoMod || x == Scores.PickType.FreeMod || x == Scores.PickType.TieBreaker);
+                pick_type.RemoveAll(x => x == Scores.PickType.None || x == Scores.PickType.Freemod || x == Scores.PickType.TieBreaker);
             switch (mod)
             {
                 case Scores.PickType.HT:
@@ -141,7 +141,7 @@ namespace Osu.Scores
         {
             pick_type.RemoveAll(x => x == mod);
             if (pick_type.Count == 0)
-                AddMod(Scores.PickType.NoMod);
+                AddMod(Scores.PickType.None);
         }
 
         /// <summary>

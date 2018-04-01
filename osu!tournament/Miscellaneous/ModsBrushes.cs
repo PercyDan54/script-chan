@@ -23,12 +23,12 @@ namespace Osu.Mvvm.Miscellaneous
         public static Brush LightGray = new SolidColorBrush(Color.FromRgb(160, 160, 160));
 
         /// <summary>
-        /// NoMod
+        /// None
         /// </summary>
         public static Brush NoMod = new SolidColorBrush(Color.FromRgb(239, 239, 239));
 
         /// <summary>
-        /// Light NoMod
+        /// Light None
         /// </summary>
         public static Brush NoModLight = new SolidColorBrush(Color.FromRgb(255, 255, 255));
 
@@ -91,12 +91,12 @@ namespace Osu.Mvvm.Miscellaneous
         public static Brush PFLight = new SolidColorBrush();
 
         /// <summary>
-        /// FreeMod
+        /// Freemod
         /// </summary>
         public static Brush FreeMod = new SolidColorBrush(Color.FromRgb(180, 167, 214));
 
         /// <summary>
-        /// Light FreeMod
+        /// Light Freemod
         /// </summary>
         public static Brush FreeModLight = new SolidColorBrush(Color.FromRgb(217, 210, 233));
 

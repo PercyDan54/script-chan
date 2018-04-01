@@ -26,10 +26,30 @@ namespace Osu.Mvvm.Ov.ViewModels
         /// The list of OverviewRoom view models
         /// </summary>
         protected IObservableCollection<OvRoomViewModel> rooms;
+
+        /// <summary>
+        /// The list of batch letter used
+        /// </summary>
         protected IObservableCollection<string> items;
+
+        /// <summary>
+        /// The selected batch letter in the combobox
+        /// </summary>
         protected string selecteditem;
+
+        /// <summary>
+        /// The selected red team to create an overview
+        /// </summary>
         protected TeamOv selectedRedTeam;
+
+        /// <summary>
+        /// The selected blue team to create an overview
+        /// </summary>
         protected TeamOv selectedBlueTeam;
+
+        /// <summary>
+        /// The batch letter selected to create an overview
+        /// </summary>
         protected char batchLetter;
 
         public event MatchCreatedEvent MatchCreated;
@@ -46,6 +66,7 @@ namespace Osu.Mvvm.Ov.ViewModels
 
             batchLetter = 'A';
 
+            // If we already have matches stored in the cache, we add letters to the combobox to filter batches
             if (InfosHelper.TourneyInfos.Matches != null)
             {
                 foreach (Game g in InfosHelper.TourneyInfos.Matches)
@@ -78,6 +99,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The Items property (combobox of existing batch letters)
+        /// </summary>
         public IObservableCollection<string> Items
         {
             get
@@ -86,6 +110,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The SelectedItem property (selected batch letter to filter on overviews)
+        /// </summary>
         public string SelectedItem
         {
             get
@@ -102,6 +129,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The RedTeam property
+        /// </summary>
         public IEnumerable<TeamOv> RedTeam
         {
             get
@@ -110,6 +140,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The SelectedRedTeam property
+        /// </summary>
         public TeamOv SelectedRedTeam
         {
             get
@@ -126,6 +159,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The BlueTeam property
+        /// </summary>
         public IEnumerable<TeamOv> BlueTeam
         {
             get
@@ -134,6 +170,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The SelectedBlueTeam property
+        /// </summary>
         public TeamOv SelectedBlueTeam
         {
             get
@@ -150,6 +189,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// The BatchLetter property
+        /// </summary>
         public char BatchLetter
         {
             get
@@ -188,11 +230,17 @@ namespace Osu.Mvvm.Ov.ViewModels
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Property to activate or not the button to create the overview
+        /// </summary>
         public bool CanCreateMatch
         {
             get { return selectedBlueTeam != null && selectedRedTeam != null; }
         }
 
+        /// <summary>
+        /// Function called to create the overview
+        /// </summary>
         public void CreateOverview()
         {
             if(selectedRedTeam.Name == selectedBlueTeam.Name)
@@ -210,6 +258,11 @@ namespace Osu.Mvvm.Ov.ViewModels
 
         }
 
+        /// <summary>
+        /// Function called to add an overview with an existing room
+        /// </summary>
+        /// <param name="room">the room</param>
+        /// <returns></returns>
         public OvRoomViewModel addOverview(Room room)
         {
             OvRoomViewModel ovvm = new OvRoomViewModel(this, room);
@@ -220,6 +273,13 @@ namespace Osu.Mvvm.Ov.ViewModels
             return ovvm;
         }
 
+        /// <summary>
+        /// Function called to add an overview from the cache not created on osu!
+        /// </summary>
+        /// <param name="blueteam">the blue team name</param>
+        /// <param name="redteam">the red team name</param>
+        /// <param name="batch">the batch letter</param>
+        /// <returns></returns>
         public OvRoomViewModel addOverview(string blueteam, string redteam, string batch)
         {
             if (!items.ToList().Exists(x => x == batch))
@@ -234,6 +294,12 @@ namespace Osu.Mvvm.Ov.ViewModels
             return ovvm;
         }
 
+        /// <summary>
+        /// Function which update the batch of the two teams overview
+        /// </summary>
+        /// <param name="blueteam">the blue team name</param>
+        /// <param name="redteam">the red team name</param>
+        /// <param name="batch">the new batch letter</param>
         public void UpdateBatch(string blueteam, string redteam, string batch)
         {
             var ov = rooms.FirstOrDefault(x => x.TeamBlue == blueteam && x.TeamRed == redteam);
@@ -243,11 +309,20 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// Catch event if match has been created
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMatchCreated(object sender, MatchCreatedArgs e)
         {
             MatchCreated(this, e);
         }
 
+        /// <summary>
+        /// Function called if we want to remove the overview of a room
+        /// </summary>
+        /// <param name="room">the room</param>
         public void removeOverview(Room room)
         {
             OvRoomViewModel ov = findOvRoom(room);
@@ -258,6 +333,10 @@ namespace Osu.Mvvm.Ov.ViewModels
             }      
         }
 
+        /// <summary>
+        /// Remove the selected overview
+        /// </summary>
+        /// <param name="ov">the overview</param>
         public void RemoveOverview(OvRoomViewModel ov)
         {
             InfosHelper.TourneyInfos.Matches.RemoveAll(x => x.TeamBlueName == ov.TeamBlue && x.TeamRedName == ov.TeamRed && x.Batch == ov.Batch);
@@ -265,6 +344,11 @@ namespace Osu.Mvvm.Ov.ViewModels
             NotifyOfPropertyChange(() => ViewRooms);
         }
 
+        /// <summary>
+        /// Find the overview of the selected room
+        /// </summary>
+        /// <param name="room">the room</param>
+        /// <returns>the overview of the room</returns>
         public OvRoomViewModel findOvRoom(Room room)
         {
             foreach (OvRoomViewModel r in rooms)
@@ -277,6 +361,10 @@ namespace Osu.Mvvm.Ov.ViewModels
             return null;
         }
 
+        /// <summary>
+        /// Function called to update overview status of the room
+        /// </summary>
+        /// <param name="room">the room</param>
         public void UpdateStatus(Room room)
         {
             OvRoomViewModel ov = findOvRoom(room);
@@ -286,6 +374,10 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// Function called to update the overview of the room
+        /// </summary>
+        /// <param name="room">the room</param>
         public void Update(Room room)
         {
             OvRoomViewModel ov = findOvRoom(room);
@@ -295,12 +387,20 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        /// <summary>
+        /// Send notification to the view teams has been updated
+        /// </summary>
         public void UpdateTeams()
         {
             NotifyOfPropertyChange(() => BlueTeam);
             NotifyOfPropertyChange(() => RedTeam);
         }
 
+        /// <summary>
+        /// Get the overview of the room
+        /// </summary>
+        /// <param name="room">the room</param>
+        /// <returns></returns>
         public OvRoomViewModel getOverview(Room room)
         {
             foreach(OvRoomViewModel orvm in rooms)
@@ -321,6 +421,11 @@ namespace Osu.Mvvm.Ov.ViewModels
         #endregion
 
         #region private methods
+        /// <summary>
+        /// Function called after catching the bancho message containing the id of the room, creating the room in the tool
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateMatchNext(object sender, MatchCatchedArgs e)
         {
             if (e.Id != null)

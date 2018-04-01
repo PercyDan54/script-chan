@@ -89,6 +89,10 @@ namespace Osu.Scores
         /// <returns>a list of string</returns>
         public abstract List<string> GetStatus();
 
+        /// <summary>
+        /// Returns the embed created for discord with ranking informations of the last map played
+        /// </summary>
+        /// <returns></returns>
         public abstract Embed GetDiscordStatus();
 
         #endregion

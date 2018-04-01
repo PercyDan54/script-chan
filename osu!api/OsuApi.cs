@@ -62,10 +62,7 @@ namespace Osu.Api
         /// </summary>
         public static string Key
         {
-            get
-            {
-                return key;
-            }
+            get => key;
             set
             {
                 // Change the key
@@ -82,13 +79,8 @@ namespace Osu.Api
         /// <summary>
         /// Valid property
         /// </summary>
-        public static bool Valid
-        {
-            get
-            {
-                return valid;
-            }
-        }
+        public static bool Valid => valid;
+
         #endregion
 
         #region Beatmap
@@ -104,13 +96,8 @@ namespace Osu.Api
             if (!initialized)
                 return null;
 
-            //OsuApprovalStatus
-
-            // Temp value
-            object value;
-
             // If we don't have to refresh and the cache contains the map id
-            if (!refresh && cache.TryGetValue(id.ToString(), out value))
+            if (!refresh && cache.TryGetValue(id.ToString(), out object value))
                 return JsonConvert.DeserializeObject<OsuBeatmap>((string)value);
             else
             {
@@ -123,7 +110,7 @@ namespace Osu.Api
                 builder.Add("b", id.ToString());
 
                 // Get the response
-                string json = await builder.GetAsync();
+                var json = await builder.GetAsync();
 
                 // If the json is not valid
                 if (!IsValid(json))
@@ -173,11 +160,8 @@ namespace Osu.Api
             if (!initialized)
                 return null;
 
-            // Temp value
-            object value;
-
             // If we don't have to refresh and the value is in the cache
-            if (!refresh && cache.TryGetValue(id.ToString(), out value))
+            if (!refresh && cache.TryGetValue(id.ToString(), out object value))
                 // Return it
                 return JsonConvert.DeserializeObject<OsuBeatmap[]>((string)value);
             // Else
@@ -192,7 +176,7 @@ namespace Osu.Api
                 builder.Add("s", id.ToString());
 
                 // Get the response
-                string json = await builder.GetAsync();
+                var json = await builder.GetAsync();
 
                 // If the json is not valid
                 if (!IsValid(json))
@@ -232,11 +216,8 @@ namespace Osu.Api
             if (!initialized)
                 return null;
 
-            // Temp value
-            object value;
-
             // If we don't have to refresh and the value is in the cache
-            if (!refresh && cache.TryGetValue(id.ToString(), out value))
+            if (!refresh && cache.TryGetValue(id.ToString(), out var value))
                 // Return it
                 return JsonConvert.DeserializeObject<OsuBeatmap[]>((string)value);
             // Else
@@ -251,7 +232,7 @@ namespace Osu.Api
                 builder.Add("u", id.ToString());
 
                 // Get the response
-                string json = await builder.GetAsync();
+                var json = await builder.GetAsync();
 
                 // If the json is not valid
                 if (!IsValid(json))
@@ -295,11 +276,8 @@ namespace Osu.Api
             if (!initialized)
                 return null;
 
-            // Temp value
-            object value;
-
             // If we don't have to refresh and the cache contains the key
-            if (!refresh && cache.TryGetValue("u" + username + mode.ToString(), out value))
+            if (!refresh && cache.TryGetValue("u" + username + mode.ToString(), out var value))
                 // Return it
                 return JsonConvert.DeserializeObject<OsuUser>((string)value);
             // Else
@@ -335,7 +313,7 @@ namespace Osu.Api
                 builder.Add("type", "string");
 
                 // Get the response
-                string json = await builder.GetAsync();
+                var json = await builder.GetAsync();
 
                 // If the json is not valid
                 if (!IsValid(json))
@@ -390,10 +368,9 @@ namespace Osu.Api
                 return null;
 
             // Temp value
-            object value;
 
             // If we don't have to refresh and the cache contains the key
-            if (!refresh && cache.TryGetValue("u" + id.ToString() + mode.ToString(), out value))
+            if (!refresh && cache.TryGetValue("u" + id.ToString() + mode.ToString(), out var value))
                 // Return it
                 return JsonConvert.DeserializeObject<OsuUser>((string)value);
             // Else
@@ -415,7 +392,7 @@ namespace Osu.Api
                 builder.Add("type", "id");
 
                 // Get the response
-                string json = await builder.GetAsync();
+                var json = await builder.GetAsync();
 
                 // If the json is not valid
                 if (!IsValid(json))
@@ -477,10 +454,10 @@ namespace Osu.Api
             builder.Add("mp", id.ToString());
 
             // Get the response
-            string json = await builder.GetAsync();
+            var json = await builder.GetAsync();
 
             // If the json is not valid
-            if (json == "TIMEOUT" || !IsValid(json))
+            if (!IsValid(json))
                 // Null
                 return null;
 
@@ -526,10 +503,10 @@ namespace Osu.Api
         /// <returns>if the json is valid or not</returns>
         private static bool IsValid(string json)
         {
-            if (json.Equals(ErrorMessage))
+            if (json == "TIMEOUT")
                 return false;
-            else
-                return true;
+
+            return !json.Equals(ErrorMessage);
         }
 
         /// <summary>

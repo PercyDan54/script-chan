@@ -25,8 +25,12 @@ namespace Osu.Mvvm.Rooms.Players.ViewModels
         /// </summary>
         protected IObservableCollection<PlayerViewModel> players;
 
+        /// <summary>
+        /// The osu mode to find players
+        /// </summary>
         protected OsuMode wctype;
 
+        //The osu mode list
         private IObservableCollection<OsuMode> cbModeItems = new BindableCollection<OsuMode>
         {
             OsuMode.Standard,

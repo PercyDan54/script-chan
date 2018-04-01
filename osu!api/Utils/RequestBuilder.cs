@@ -77,11 +77,12 @@ namespace Osu.Api
         /// <summary>
         /// Builds and return the complete url
         /// </summary>
-        /// <returns></returns>
+        /// <returns>string of the complete url</returns>
         private string MakeUrl()
         {
             string url = base_url + "?k=" + (string.IsNullOrEmpty(api_key) ? "somerandomkey" : api_key);
 
+            // Adding parameters to the url
             foreach (Parameter parameter in parameters)
                 url += "&" + parameter.key + "=" + parameter.value;
 
@@ -122,6 +123,7 @@ namespace Osu.Api
             }
             catch(TimeoutException e)
             {
+                // If we catch a timeout, return null
                 return null;
             }
         }
@@ -132,23 +134,28 @@ namespace Osu.Api
         /// <returns>the response</returns>
         public async Task<string> GetAsync()
         {
+            // Create the CancellationToken to check if we reach a timeout or end the call on our side
             var cts = new CancellationTokenSource();
 
             try
             {
                 using (var client = new HttpClient())
                 {
+                    // Add a 10 seconds timeout
                     client.Timeout = new TimeSpan(0, 0, 10);
+
+                    // Create the request
                     using (var r = await client.GetAsync(new Uri(MakeUrl()), cts.Token))
                     {
-                        string result = await r.Content.ReadAsStringAsync();
+                        // Read the result
+                        var result = await r.Content.ReadAsStringAsync();
                         return result;
                     }
                 }
             }
             catch (TaskCanceledException ex)
             {
-                // Certainly a timeout from the API
+                // If the CancellationToken is different from ours, it is most likely a timeout
                 if (ex.CancellationToken != cts.Token)
                 {
                     return "TIMEOUT";
