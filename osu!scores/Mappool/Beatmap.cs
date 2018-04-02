@@ -104,6 +104,8 @@ namespace Osu.Scores
                 pick_type.RemoveAll(x => x == Scores.PickType.None || x == Scores.PickType.Freemod || x == Scores.PickType.TieBreaker);
 
             pick_type.Add(mod);
+
+            ModsChanged?.Invoke();
         }
 
         /// <summary>
@@ -115,6 +117,8 @@ namespace Osu.Scores
             pick_type.RemoveAll(x => x == mod);
             if (pick_type.Count == 0)
                 AddMod(Scores.PickType.None);
+
+            ModsChanged?.Invoke();
         }
 
         /// <summary>
@@ -134,8 +138,49 @@ namespace Osu.Scores
         /// <returns>an integer</returns>
         public int CompareTo(Beatmap other)
         {
-            return String.Compare(osu_beatmap.Title, other.OsuBeatmap.Title, StringComparison.Ordinal);//pick_type.Max(x => (int) x) - other.pick_type.Max(x => (int) x);
+            if (pick_type.Contains(Scores.PickType.None))
+            {
+                if (other.pick_type.Contains(Scores.PickType.None))
+                    return 0;
+                return -1;
+            }
+
+            if (other.pick_type.Contains(Scores.PickType.None))
+                return 1;
+
+            if (pick_type.Contains(Scores.PickType.TieBreaker))
+            {
+                if (other.pick_type.Contains(Scores.PickType.TieBreaker))
+                    return 0;
+                return 1;
+            }
+
+            if (other.pick_type.Contains(Scores.PickType.TieBreaker))
+                return -1;
+
+            if (pick_type.Contains(Scores.PickType.Freemod))
+            {
+                if (other.pick_type.Contains(Scores.PickType.Freemod))
+                    return 0;
+                return 1;
+            }
+
+            if (other.pick_type.Contains(Scores.PickType.Freemod))
+                return -1;
+
+            if (pick_type.Count == other.pick_type.Count)
+                return pick_type.Max(x => (int) x) - other.pick_type.Max(x => (int) x);
+
+            return pick_type.Count - other.pick_type.Count;
         }
+        #endregion
+
+        #region Handlers
+
+        public delegate void ModsChangedHandler();
+
+        public event ModsChangedHandler ModsChanged;
+
         #endregion
     }
 }

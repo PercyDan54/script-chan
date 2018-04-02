@@ -76,34 +76,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
                     for (var i = 0; i < beatmap.PickType.Count; i++)
                     {
-                        Brush brushToAdd = null;
-                        switch (beatmap.PickType[i])
-                        {
-                            case Scores.PickType.None:
-                                brushToAdd = ModsBrushes.NoModLight;
-                                break;
-                            case Scores.PickType.HD:
-                                brushToAdd = ModsBrushes.HDLight;
-                                break;
-                            case Scores.PickType.HR:
-                                brushToAdd = ModsBrushes.HRLight;
-                                break;
-                            case Scores.PickType.DT:
-                                brushToAdd = ModsBrushes.DTLight;
-                                break;
-                            case Scores.PickType.FL:
-                                brushToAdd = ModsBrushes.FLLight;
-                                break;
-                            case Scores.PickType.Freemod:
-                                brushToAdd = ModsBrushes.FreeModLight;
-                                break;
-                            case Scores.PickType.TieBreaker:
-                                brushToAdd = ModsBrushes.TieBreakerLight;
-                                break;
-                            default:
-                                brushToAdd = ModsBrushes.NoModLight;
-                                break;
-                        }
+                        var brushToAdd = ModsBrushes.GetModBrushLight(beatmap.PickType[i]);
 
                         brush.GradientStops.Add(new GradientStop(((SolidColorBrush)brushToAdd).Color, 1f / (beatmap.PickType.Count - 1) * i));
                     }
@@ -124,34 +97,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
                 for (var i = 0; i < beatmap.PickType.Count; i++)
                 {
-                    Brush brushToAdd = null;
-                    switch (beatmap.PickType[i])
-                    {
-                        case Scores.PickType.None:
-                            brushToAdd = ModsBrushes.NoMod;
-                            break;
-                        case Scores.PickType.HD:
-                            brushToAdd = ModsBrushes.HD;
-                            break;
-                        case Scores.PickType.HR:
-                            brushToAdd = ModsBrushes.HR;
-                            break;
-                        case Scores.PickType.DT:
-                            brushToAdd = ModsBrushes.DT;
-                            break;
-                        case Scores.PickType.FL:
-                            brushToAdd = ModsBrushes.FL;
-                            break;
-                        case Scores.PickType.Freemod:
-                            brushToAdd = ModsBrushes.FreeMod;
-                            break;
-                        case Scores.PickType.TieBreaker:
-                            brushToAdd = ModsBrushes.TieBreaker;
-                            break;
-                        default:
-                            brushToAdd = ModsBrushes.NoMod;
-                            break;
-                    }
+                    var brushToAdd = ModsBrushes.GetModBrush(beatmap.PickType[i]);
 
                     brush.GradientStops.Add(new GradientStop(((SolidColorBrush)brushToAdd).Color, 1f / (beatmap.PickType.Count - 1) * i));
                 }

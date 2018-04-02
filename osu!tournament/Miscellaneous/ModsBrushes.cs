@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using Osu.Scores;
 
 namespace Osu.Mvvm.Miscellaneous
 {
@@ -25,12 +26,12 @@ namespace Osu.Mvvm.Miscellaneous
         /// <summary>
         /// None
         /// </summary>
-        public static Brush NoMod = new SolidColorBrush(Color.FromRgb(239, 239, 239));
+        public static Brush None = new SolidColorBrush(Color.FromRgb(239, 239, 239));
 
         /// <summary>
         /// Light None
         /// </summary>
-        public static Brush NoModLight = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+        public static Brush NoneLight = new SolidColorBrush(Color.FromRgb(255, 255, 255));
 
         /// <summary>
         /// HD
@@ -91,5 +92,51 @@ namespace Osu.Mvvm.Miscellaneous
         public static Brush BlueTeam = new SolidColorBrush(Color.FromRgb(20, 141, 175));
 
         public static Brush RedTeam = new SolidColorBrush(Color.FromRgb(252, 69, 73));
+
+        public static Brush GetModBrush(PickType mod)
+        {
+            switch (mod)
+            {
+                case PickType.None:
+                    return None;
+                case PickType.HD:
+                    return HD;
+                case PickType.HR:
+                    return HR;
+                case PickType.DT:
+                    return DT;
+                case PickType.FL:
+                    return FL;
+                case PickType.Freemod:
+                    return FreeMod;
+                case PickType.TieBreaker:
+                    return TieBreaker;
+                default:
+                    return None;
+            }
+        }
+
+        public static Brush GetModBrushLight(PickType mod)
+        {
+            switch (mod)
+            {
+                case PickType.None:
+                    return NoneLight;
+                case PickType.HD:
+                    return HDLight;
+                case PickType.HR:
+                    return HRLight;
+                case PickType.DT:
+                    return DTLight;
+                case PickType.FL:
+                    return FLLight;
+                case PickType.Freemod:
+                    return FreeModLight;
+                case PickType.TieBreaker:
+                    return TieBreakerLight;
+                default:
+                    return NoneLight;
+            }
+        }
     }
 }
