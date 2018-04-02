@@ -29,6 +29,11 @@
         </Border>
         <DockPanel Grid.Column="0">
             <ItemsControl x:Name="Mods" DockPanel.Dock="Right">
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="FrameworkElement.Margin" Value="2" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" />
