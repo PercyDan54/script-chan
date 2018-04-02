@@ -134,7 +134,7 @@ namespace Osu.Scores
         /// <returns>an integer</returns>
         public int CompareTo(Beatmap other)
         {
-            return pick_type.Max(x => (int) x) - other.pick_type.Max(x => (int) x);
+            return String.Compare(osu_beatmap.Title, other.OsuBeatmap.Title, StringComparison.Ordinal);//pick_type.Max(x => (int) x) - other.pick_type.Max(x => (int) x);
         }
         #endregion
     }

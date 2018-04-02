@@ -24,8 +24,8 @@
             <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="1" Height="27" Width="27" BorderBrush="Black" BorderThickness="1" CornerRadius="13.5">
-            <Button x:Name="ShowModPicker" Content="+" Padding="0" Background="Transparent" Foreground="Black" />
+        <Border Grid.Column="1" Height="27" Width="27" BorderBrush="Gray" BorderThickness="2" CornerRadius="30" Background="DarkGray">
+            <Button x:Name="ShowModPicker" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Content="+" Padding="0,-8,0,0" Margin="0,0,0,0" Background="Transparent" Foreground="Gray" Cursor="Hand" />
         </Border>
         <DockPanel Grid.Column="0">
             <ItemsControl x:Name="Mods" DockPanel.Dock="Right">
@@ -42,7 +42,28 @@
                                     <ColumnDefinition Width="27" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Button Content="X" Padding="0" Background="Transparent" Foreground="Black" cal:Message.Attach="[Event Click] = [Action RemoveMod($this)]" />
+                                <Border Height="13" Width="13" BorderBrush="Red" Background="Red" BorderThickness="1" CornerRadius="13.5" Margin="0,0,0,0">
+                                    <Button Content="X" Cursor="Hand" Opacity="0" FontSize="9" Padding="0,0,0,0" Background="Transparent" Foreground="White" cal:Message.Attach="[Event Click] = [Action RemoveMod($this)]">
+                                        <Button.Triggers>
+                                            <EventTrigger RoutedEvent="DockPanel.MouseEnter">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                                         From="0.0" To="1.0" Duration="0:0:0.1"></DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="DockPanel.MouseLeave">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                                         From="1.0" To="0.0" Duration="0:0:0.1"></DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Button.Triggers>
+                                    </Button>
+                                </Border>
                                 <TextBlock Text="{Binding}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0" />
                             </Grid>
                         </Border>

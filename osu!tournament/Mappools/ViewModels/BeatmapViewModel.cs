@@ -39,6 +39,9 @@ namespace Osu.Mvvm.Mappools.ViewModels
         {
             this.parent = parent;
             this.beatmap = beatmap;
+
+            if(beatmap.PickType.Count == 0)
+                beatmap.PickType.Add(Scores.PickType.None);
         }
         #endregion
 
@@ -194,7 +197,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
         /// </summary>
         public List<PickType> Mods
         {
-            get => beatmap.PickType.ToList();
+            get => beatmap.PickType.FindAll(x => x != Scores.PickType.None).ToList();
         }
 
         /// <summary>
