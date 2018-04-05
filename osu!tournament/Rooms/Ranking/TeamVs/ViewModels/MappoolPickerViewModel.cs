@@ -59,9 +59,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             get
             {
                 if (searchBoxValue == "")
-                    return new BindableCollection<BeatmapPickerViewModel>(beatmaps.OrderBy(x => x.Beatmap.PickType.Max(y => (int) y)));
+                    return new BindableCollection<BeatmapPickerViewModel>(beatmaps.OrderBy(x => x.Beatmap));
 
-                return new BindableCollection<BeatmapPickerViewModel>(beatmaps.Where(x => x.Beatmap.OsuBeatmap.Title.ToUpper().Contains(searchBoxValue.ToUpper()) || x.Beatmap.OsuBeatmap.Artist.ToUpper().Contains(searchBoxValue.ToUpper())).OrderBy(entry => entry.Beatmap.PickType.Max(y => (int)y)));
+                return new BindableCollection<BeatmapPickerViewModel>(beatmaps.Where(x => x.Beatmap.OsuBeatmap.Title.ToUpper().Contains(searchBoxValue.ToUpper()) || x.Beatmap.OsuBeatmap.Artist.ToUpper().Contains(searchBoxValue.ToUpper())).OrderBy(entry => entry.Beatmap));
             }
         }
 
