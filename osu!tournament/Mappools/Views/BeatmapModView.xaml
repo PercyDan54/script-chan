@@ -6,7 +6,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d"
              d:DesignHeight="27">
-    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="13.5">
+    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="13.5" Background="White">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="27" />
