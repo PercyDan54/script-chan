@@ -105,6 +105,8 @@ namespace Osu.Scores
 
             pick_type.Add(mod);
 
+            pick_type = pick_type.OrderByDescending(x => (int) x).ToList();
+
             ModsChanged?.Invoke();
         }
 
@@ -117,6 +119,8 @@ namespace Osu.Scores
             pick_type.RemoveAll(x => x == mod);
             if (pick_type.Count == 0)
                 AddMod(Scores.PickType.None);
+
+            pick_type = pick_type.OrderByDescending(x => (int)x).ToList();
 
             ModsChanged?.Invoke();
         }
