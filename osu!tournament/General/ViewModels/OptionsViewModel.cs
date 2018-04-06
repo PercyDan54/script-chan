@@ -382,16 +382,6 @@ namespace Osu.Mvvm.General.ViewModels
                 NotifyOfPropertyChange(() => Timer);
             }
         }
-
-        public string WelcomeMessage
-        {
-            get => InfosHelper.TourneyInfos.WelcomeMessage;
-            set
-            {
-                InfosHelper.TourneyInfos.WelcomeMessage = value;
-                NotifyOfPropertyChange(() => WelcomeMessage);
-            }
-        }
         #endregion
 
         #region Private Methods

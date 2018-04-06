@@ -31,8 +31,6 @@
                 <RowDefinition Height="35" />
                 <RowDefinition Height="35" />
                 <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -65,8 +63,6 @@
             <ComboBox x:Name="Mappools" DisplayMemberPath="Name" controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="You can leave it blank if you want" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedMappool}" />
             <Label ToolTip="The mp timer command is triggered after each map played" Content="Mp timer duration (0 = deactivated)" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="15" />
             <TextBox x:Name="Timer" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="16" />
-            <Label Content="Welcome Message" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="17" />
-            <TextBox x:Name="WelcomeMessage" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="18" />
         </Grid>
     </ScrollViewer>
 </UserControl>
