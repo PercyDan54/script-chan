@@ -37,6 +37,9 @@ namespace Osu.Utils
         [DataMember(Name = "timer")]
         public int Timer { get; set; }
 
+        [DataMember(Name = "welcomemessage")]
+        public string WelcomeMessage { get; set; }
+
         /// <summary>
         /// Saves the matches in the cache
         /// </summary>
@@ -65,6 +68,9 @@ namespace Osu.Utils
 
             if (Timer == 0)
                 Timer = 180;
+
+            if (string.IsNullOrEmpty(WelcomeMessage))
+                WelcomeMessage = "Please invite your teammates and sort yourself accordingly";
         }
     }
 }
