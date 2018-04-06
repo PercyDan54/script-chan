@@ -49,6 +49,9 @@
             <Label Content="IRC (optional)" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="3" />
             <Label Content="Username" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="8" />
             <Label Content="Password" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="8" />
+            <Border Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right" Height="22" Width="22" CornerRadius="22" BorderBrush="Black" BorderThickness="1" Margin="0,0,10,0" >
+                <Button x:Name="IrcPasswordHelp" Background="Transparent" Content="?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="DemiBold" Padding="1,-1,0,0" Foreground="Black" Cursor="Hand" ToolTip="The IRC password is different from your osu account password. Click here to get your IRC password." />
+            </Border>
             <TextBox x:Name="Username" IsEnabled="{Binding UsernameEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="9"/>
             <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding PasswordEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="9" />
             <Button x:Name="Connect" Content="{Binding ConnectButtonText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="9" />
@@ -56,7 +59,7 @@
             <TextBox x:Name="RateLimit" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="11" />
             <Label Content="Room options" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="3" />
             <Label Content="Default BO when creating a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="13" />
-            <ComboBox x:Name="Modes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="1" />
+            <ComboBox x:Name="Modes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="14" />
             <Label Content="Default GameMode for a new room" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="13" />
             <ComboBox x:Name="GameModes" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
             <Label Content="Default Mappool for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="15" />
