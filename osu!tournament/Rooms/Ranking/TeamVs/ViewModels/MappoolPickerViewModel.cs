@@ -85,6 +85,11 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         }
 
         /// <summary>
+        /// Check if webhooks are correctly working or not to send recaps
+        /// </summary>
+        public bool IsDiscordEnabled => DiscordHelper.IsEnabled();
+
+        /// <summary>
         /// Function called to send ban recap on discord through webhooks
         /// </summary>
         public void SendBanRecap()
@@ -152,6 +157,11 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 }
                 NotifyOfPropertyChange(() => Beatmaps);
             }
+        }
+
+        public void UpdateDiscord()
+        {
+            NotifyOfPropertyChange(() => IsDiscordEnabled);
         }
         #endregion
     }

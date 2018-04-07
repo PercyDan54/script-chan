@@ -13,6 +13,16 @@ namespace osu_discord
     public static class DiscordHelper
     {
         #region Public static methods
+
+        /// <summary>
+        /// Verify if discord client is enabled
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsEnabled()
+        {
+            return DiscordClient.GetInstance().IsEnabled;
+        }
+
         /// <summary>
         /// Generate payload and post message when a game has been played
         /// </summary>

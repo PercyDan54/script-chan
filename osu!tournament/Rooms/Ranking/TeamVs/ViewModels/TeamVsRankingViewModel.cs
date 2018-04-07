@@ -224,6 +224,14 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         }
 
         /// <summary>
+        /// Update the discord features on ranking tab
+        /// </summary>
+        public void DiscordUpdate()
+        {
+            MappoolPicker?.UpdateDiscord();
+        }
+
+        /// <summary>
         /// Function called to add points to blue team manually
         /// </summary>
         public void BlueAddPoint()

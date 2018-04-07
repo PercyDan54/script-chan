@@ -13,7 +13,7 @@ using Osu.Utils.Info;
 
 namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 {
-    public class MultiplayerCommandsViewModel : Screen, IRankingViewModel
+    public class MultiplayerCommandsViewModel : Screen
     {
         #region Attributes
         /// <summary>

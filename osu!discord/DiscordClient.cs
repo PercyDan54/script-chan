@@ -44,8 +44,7 @@ namespace osu_discord
         #region Constructors
         public DiscordClient()
         {
-            // We don't really care anymore if we have a webhook URL or not, I keep it in case we need to disable it one day
-             _isEnabled = true;
+            UpdateEnabled();
         }
         #endregion
 
@@ -134,6 +133,12 @@ namespace osu_discord
             }
 
             return null;
+        }
+
+        public void UpdateEnabled()
+        {
+            _isEnabled = Uri.TryCreate(GetLink(DiscordChannelEnum.Admins), UriKind.Absolute, out var uriResult)
+                          && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
         #endregion
 

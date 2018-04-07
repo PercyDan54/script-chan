@@ -271,6 +271,12 @@ namespace Osu.Mvvm.Rooms.ViewModels
                 {
                     RemoveNewMessageLine();
                 }
+
+                if (value.Header.ToString() == "Ranking")
+                {
+                    Ranking.DiscordUpdate();
+                }
+
                 selectedTab = value;
             }
         }

@@ -12,6 +12,7 @@ using System.Linq;
 using Osu.Utils.Bans;
 using MahApps.Metro;
 using System.Windows;
+using osu_discord;
 using Osu.Utils.Info;
 
 namespace Osu.Mvvm.General.ViewModels
@@ -367,6 +368,7 @@ namespace Osu.Mvvm.General.ViewModels
             set
             {
                 InfosHelper.UserDataInfos.WebhookAdmins = value;
+                DiscordClient.GetInstance().UpdateEnabled();
             }
         }
 
