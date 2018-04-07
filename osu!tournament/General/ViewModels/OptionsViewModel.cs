@@ -467,6 +467,11 @@ namespace Osu.Mvvm.General.ViewModels
             NotifyOfPropertyChange(() => PasswordEnabled);
             NotifyOfPropertyChange(() => ConnectButtonText);
         }
+
+        public void IrcPasswordHelp()
+        {
+            System.Diagnostics.Process.Start("https://osu.ppy.sh/p/irc");
+        }
         #endregion
 
         #region Handlers
