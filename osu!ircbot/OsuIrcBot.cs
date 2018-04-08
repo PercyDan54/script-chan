@@ -527,7 +527,7 @@ namespace Osu.Ircbot
                 SendMessage("#mp_" + room.Id, string.Format("{0} is RED, slots {2} to {3} --- {1} is BLUE, slots {4} to {5}", tvs.Red.Name, tvs.Blue.Name, "1", InfosHelper.TourneyInfos.PlayersPerTeam, InfosHelper.TourneyInfos.PlayersPerTeam + 1, InfosHelper.TourneyInfos.PlayersPerTeam + InfosHelper.TourneyInfos.PlayersPerTeam));
             }
 
-            SendMessage("#mp_" + room.Id, "Please invite your teammates and sort yourself accordingly");
+            SendMessage("#mp_" + room.Id, InfosHelper.TourneyInfos.WelcomeMessage);
         }
 
         /// <summary>

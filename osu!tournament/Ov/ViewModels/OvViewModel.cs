@@ -212,6 +212,16 @@ namespace Osu.Mvvm.Ov.ViewModels
             }
         }
 
+        public string WelcomeMessage
+        {
+            get => InfosHelper.TourneyInfos.WelcomeMessage;
+            set
+            {
+                InfosHelper.TourneyInfos.WelcomeMessage = value;
+                NotifyOfPropertyChange(() => WelcomeMessage);
+            }
+        }
+
         #region Configuration
         public string Acronym { get { return InfosHelper.TourneyInfos.Acronym; } set { InfosHelper.TourneyInfos.Acronym = value; } }
         public string AdminList { get { return InfosHelper.UserDataInfos.Admins; } set { InfosHelper.UserDataInfos.Admins = value; } }

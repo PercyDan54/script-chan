@@ -29,7 +29,8 @@
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
-                        <RowDefinition Height="30*" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120"/>
@@ -43,15 +44,17 @@
                     <Label Content="Score mode" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="5" />
                     <Label Content="Size" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="6" />
                     <Label Content="Game mode" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="7" />
+                    <Label Content="Welcome Message" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="8" />
 
                     <TextBox x:Name="Acronym" Grid.Column="1" Margin="2"/>
                     <TextBox x:Name="AdminList" Grid.Column="1" Grid.Row="1" Margin="2" Controls:TextBoxHelper.Watermark="You can leave it empty or add usernames separated by a space"/>
                     <TextBox x:Name="DefaultId" Grid.Row="2" Grid.Column="1" Margin="2"/>
-                    <ComboBox x:Name="PlayersPerTeam" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedPlayersPerTeam}" />
-                    <ComboBox x:Name="TeamMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedTeamMode}" />
-                    <ComboBox x:Name="ScoreMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedScoreMode}" />
-                    <ComboBox x:Name="Size" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedSize}" />
-                    <ComboBox x:Name="GameMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
+                    <ComboBox x:Name="PlayersPerTeam" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="3" SelectedItem="{Binding SelectedPlayersPerTeam}" />
+                    <ComboBox x:Name="TeamMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding SelectedTeamMode}" />
+                    <ComboBox x:Name="ScoreMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="5" SelectedItem="{Binding SelectedScoreMode}" />
+                    <ComboBox x:Name="Size" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="6" SelectedItem="{Binding SelectedSize}" />
+                    <ComboBox x:Name="GameMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="7" SelectedItem="{Binding SelectedGameMode}" />
+                    <TextBox x:Name="WelcomeMessage" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="8" />
                 </Grid>
             </Expander>
             <Expander DockPanel.Dock="Top" Margin="2,2,6,6"
