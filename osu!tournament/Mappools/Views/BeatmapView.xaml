@@ -43,7 +43,7 @@
             <Label x:Name="DisplayName" Content="Artist - Title [Version]" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="0,0,2.5,0" />
         </DockPanel>
         <Button x:Name="Delete" Content="Delete" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" />
-        <Popup x:Name="ModPicker" IsOpen="{Binding ModPickerIsOpen}" StaysOpen="False" PlacementTarget="{Binding ElementName=ShowModPicker}">
+        <Popup x:Name="ModPicker" IsOpen="{Binding ModPickerIsOpen}" StaysOpen="False" PlacementTarget="{Binding ElementName=ShowModPicker}" PopupAnimation="Slide" AllowsTransparency="True">
             <Border BorderBrush="Black" BorderThickness="1" Padding="5" Background="White">
                 <ItemsControl ItemsSource="{Binding PickableMods}">
                     <ItemsControl.ItemsPanel>
