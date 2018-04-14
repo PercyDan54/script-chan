@@ -98,8 +98,12 @@ namespace Osu.Scores
         public void AddMod(PickType mod)
         {
             if (pick_type.Contains(mod)) return;
-            if (mod == Scores.PickType.None || mod == Scores.PickType.Freemod || mod == Scores.PickType.TieBreaker)
+            if (mod == Scores.PickType.None || mod == Scores.PickType.TieBreaker)
                 pick_type.Clear();
+            else if (mod == Scores.PickType.Freemod)
+                pick_type.RemoveAll(x => x != Scores.PickType.DT);
+            else if (mod == Scores.PickType.DT)
+                pick_type.RemoveAll(x => x == Scores.PickType.None || x == Scores.PickType.TieBreaker);
             else
                 pick_type.RemoveAll(x => x == Scores.PickType.None || x == Scores.PickType.Freemod || x == Scores.PickType.TieBreaker);
 
