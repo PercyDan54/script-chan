@@ -192,7 +192,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 if (room.Manual == false)
                     return "Visible";
                 else
-                    return "HD";
+                    return "Hidden";
             }
         }
         #endregion
