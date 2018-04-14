@@ -205,7 +205,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
         public void UpdateMods()
         {
             _mods = new List<BeatmapModViewModel>();
-            foreach (var mod in beatmap.PickType)
+            foreach (var mod in beatmap.PickType.Where(x => x != Scores.PickType.None))
                 _mods.Add(new BeatmapModViewModel(beatmap, mod));
 
             NotifyOfPropertyChange(() => Mods);
