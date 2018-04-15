@@ -66,6 +66,9 @@ namespace Osu.Mvvm.General.ViewModels
             DisplayName = "Options";
             bot = OsuIrcBot.GetInstancePrivate();
             botpublic = OsuIrcBot.GetInstancePublic();
+
+            bot.BadAuthentificationTokenCatched += new EventHandler(OnBadToken);
+
             string t = cache.Get("wctype", "Standard");
             string cMode = cache.Get("colormode", "BaseLight");
             //SelectedColorMode = cMode;
@@ -121,6 +124,10 @@ namespace Osu.Mvvm.General.ViewModels
                 {
                     bot.Username = value;
                     botpublic.Username = value;
+
+                    bot.Username = bot.Username.Trim().Replace(' ', '_');
+                    botpublic.Username = bot.Username;
+
                     NotifyOfPropertyChange(() => Username);
                     NotifyOfPropertyChange(() => CanConnect);
                 }
@@ -456,6 +463,14 @@ namespace Osu.Mvvm.General.ViewModels
         }
 
         /// <summary>
+        /// Check if the bot is connected
+        /// </summary>
+        public bool IsConnected
+        {
+            get { return bot.IsConnected; }
+        }
+
+        /// <summary>
         /// Connects the irc bot
         /// </summary>
         public async void Connect()
@@ -492,6 +507,11 @@ namespace Osu.Mvvm.General.ViewModels
             NotifyOfPropertyChange(() => PasswordEnabled);
             NotifyOfPropertyChange(() => UsernameEnabled);
             NotifyOfPropertyChange(() => ConnectButtonText);
+
+            Execute.OnUIThread(() =>
+            {
+                Dialog.ShowDialog("Whoops!", "The irc token provided is not valid!");
+            });
         }
         #endregion
     }

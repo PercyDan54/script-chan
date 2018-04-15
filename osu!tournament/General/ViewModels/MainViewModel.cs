@@ -234,7 +234,7 @@ namespace Osu.Mvvm.General.ViewModels
         {
             get
             {
-                return string.IsNullOrEmpty(options.ApiKey) || !options.CanConnect;
+                return string.IsNullOrEmpty(options.ApiKey) || !options.CanConnect || !options.IsConnected;
             }
         }
         #endregion
@@ -259,7 +259,7 @@ namespace Osu.Mvvm.General.ViewModels
             }
             else
             {
-                Dialog.ShowDialog("Error", "You need to fill api key and IRC informations first!");
+                ShowOptionTabDialog();
             }
         }
 
@@ -281,7 +281,7 @@ namespace Osu.Mvvm.General.ViewModels
             }
             else
             {
-                Dialog.ShowDialog("Error", "You need to fill api key and IRC informations first!");
+                ShowOptionTabDialog();
             }
         }
 
@@ -303,7 +303,7 @@ namespace Osu.Mvvm.General.ViewModels
             }
             else
             {
-                Dialog.ShowDialog("Error", "You need to fill api key and IRC informations first!");
+                ShowOptionTabDialog();
             }
         }
 
@@ -325,7 +325,7 @@ namespace Osu.Mvvm.General.ViewModels
             }
             else
             {
-                Dialog.ShowDialog("Error", "You need to fill api key and IRC informations first!");
+                ShowOptionTabDialog();
             }
         }
 
@@ -339,6 +339,13 @@ namespace Osu.Mvvm.General.ViewModels
             ActiveItemName = "Options";
 
             ActivateItem(options);
+        }
+        #endregion
+
+        #region Private Methods
+        private void ShowOptionTabDialog()
+        {
+            Dialog.ShowDialog("Error", "You need to add the api key and connect to IRC before doing anything else!");
         }
         #endregion
 
