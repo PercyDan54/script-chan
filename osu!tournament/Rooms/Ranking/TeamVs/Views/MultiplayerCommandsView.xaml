@@ -32,7 +32,8 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="SendQuickSwitch" IsEnabled="{Binding IsOsuAdmin}" Content="Switch server" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="1" />
+        <Button x:Name="SendQuickSwitch" Visibility="{Binding IsOsuAdmin}" Content="Switch server" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="1" />
+        <Button x:Name="CloseRoom" Visibility="{Binding IsMpCloseVisible}" Content="Close the room" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="1" Background="OrangeRed"/>
 
         <!--<Button x:Name="SwitchAll" Content="Switch All" FontSize="12" VerticalContentAlignment="Center" Padding="0" Grid.Row="0" Grid.Column="7"/>-->
         <Button x:Name="SendInvitations" Content="Invite players" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="2" />
