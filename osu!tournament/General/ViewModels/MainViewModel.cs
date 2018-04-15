@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Mvvm.Teams.ViewModels;
 using Osu.Utils.TeamsOv;
+using System;
+using System.ComponentModel;
 
 namespace Osu.Mvvm.General.ViewModels
 {
@@ -83,6 +85,7 @@ namespace Osu.Mvvm.General.ViewModels
             overviewRooms = new OvViewModel();
 
             options = new OptionsViewModel();
+            options.ChangedWebhookEvent += new EventHandler(ChangedWebhookEvent);
 
             bool alreadyExist;
 
@@ -359,6 +362,17 @@ namespace Osu.Mvvm.General.ViewModels
             OsuIrcBot.GetInstancePublic().Disconnect();
             // Save all the caches
             Cache.SaveAll();
+        }
+        #endregion
+
+        #region Events
+        private void ChangedWebhookEvent(object o, EventArgs e)
+        {
+            if (rooms != null)
+            {
+                foreach (RoomViewModel rmv in rooms.Items)
+                    rmv.DiscordActivationChanged();
+            }
         }
         #endregion
     }

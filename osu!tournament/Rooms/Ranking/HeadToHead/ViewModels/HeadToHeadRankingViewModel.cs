@@ -207,6 +207,14 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             NotifyOfPropertyChange(() => RowSpanScore);
             NotifyOfPropertyChange(() => MappoolPicker);
         }
+
+        /// <summary>
+        /// Update the discord features on ranking tab
+        /// </summary>
+        public void DiscordUpdate()
+        {
+            MappoolPicker?.UpdateDiscord();
+        }
         #endregion
     }
 }
