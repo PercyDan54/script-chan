@@ -58,11 +58,25 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         /// <summary>
         /// IsOsuAdmin property to know if we have to enable the 'switch server' button
         /// </summary>
-        public bool IsOsuAdmin
+        public string IsOsuAdmin
         {
             get
             {
-                return !string.IsNullOrEmpty(InfosHelper.UserDataInfos.IPPrivateBancho);
+                if (!string.IsNullOrEmpty(InfosHelper.UserDataInfos.IPPrivateBancho))
+                    return "Visible";
+                else
+                    return "Hidden";
+            }
+        }
+
+        public string IsMpCloseVisible
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(InfosHelper.UserDataInfos.IPPrivateBancho))
+                    return "Visible";
+                else
+                    return "Hidden";
             }
         }
         #endregion
@@ -131,6 +145,14 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             {
                 await Invite(GroupName);
             }
+        }
+
+        public async void CloseRoom()
+        {
+            var res = await Dialog.ShowConfirmation("Closing the room", "Are you sure you want to close the osu! room?");
+
+            if (res)
+                OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, "!mp close");
         }
 
         /// <summary>
