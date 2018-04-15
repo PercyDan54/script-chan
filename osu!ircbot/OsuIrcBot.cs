@@ -70,6 +70,11 @@ namespace Osu.Ircbot
         public event EventHandler PlayerMessageRoomCatched;
 
         /// <summary>
+        /// The event handler when the authentification token is not valid
+        /// </summary>
+        public event EventHandler BadAuthentificationTokenCatched;
+
+        /// <summary>
         /// The event handler when Banchobot is sending the room creation string
         /// </summary>
         public event MatchCreatedHandler RoomCreatedCatched;
@@ -302,7 +307,7 @@ namespace Osu.Ircbot
             client.ConnectionComplete += HandleOnConnectionComplete;
             client.RawMessageRecieved += HandleOnRawMessageRecieved;
             */
-
+            client.ServerMessage += HandleOnServerMessage;
             client.ChannelMessage += (s, e) =>
             {
                 log.Info(e.Channel + " " + e.From + " " + e.Message);
@@ -593,6 +598,16 @@ namespace Osu.Ircbot
         {
             if (PlayerMessageRoomCatched != null)
                 PlayerMessageRoomCatched(this, e);
+        }
+
+        private void HandleOnServerMessage(object sender, StringEventArgs e)
+        {
+            if (e.Result == "Bad authentication token.")
+            {
+                isConnected = false;
+                client.Disconnect();
+                BadAuthentificationTokenCatched(this, e);
+            }
         }
 
         /// <summary>
