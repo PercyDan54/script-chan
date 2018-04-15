@@ -433,7 +433,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                     if (mainview.ActiveItemName != "Rooms" || selected == null || selected.Id != multi_room.MatchId || selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() != "Chat")
                         room.AddNewMessageLine();
 
-                    room.AddMessage(new IrcMessage { Message = multi_room.Message, User = multi_room.PlayerName });
+                    room.AddMessage(new IrcMessage { Message = multi_room.Message, User = multi_room.PlayerName, Timestamp = DateTime.Now });
 
                     if (mainview.ActiveItemName == "Rooms" && selected != null && selected.Id == multi_room.MatchId && selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() == "Chat")
                         selected_view_model.UpdateChat(false);

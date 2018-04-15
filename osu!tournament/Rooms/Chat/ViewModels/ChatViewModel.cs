@@ -157,12 +157,12 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
                     // If we need to print the new messages line
                     if (message.Message == "------------------ NEW MESSAGES ------------------")
                     {
-                        paragraph = new Paragraph(new Run("------------------ NEW MESSAGES ------------------")) {Margin = new Thickness(135, 0, 0, 0), TextIndent = -135, Foreground = Brushes.Red, TextAlignment = TextAlignment.Center};
+                        paragraph = new Paragraph(new Run("------------------ NEW MESSAGES ------------------")) {Margin = new Thickness(0), Foreground = Brushes.Red, TextAlignment = TextAlignment.Center};
                         newMessageParagraph = paragraph;
                     }
                     else
                     {
-                        paragraph = new Paragraph(new Run($"{message.User.PadRight(15)} {message.Message}")) {Margin = new Thickness(135, 0, 0, 0), TextIndent = -135};
+                        paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}")) {Margin = new Thickness(202, 0, 0, 0), TextIndent = -202};
                     }
 
                     _messages.Blocks.Add(paragraph);
