@@ -3,6 +3,7 @@ using Osu.Ircbot;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Scores;
 using System;
+using System.Linq;
 using System.Windows.Media;
 
 namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
@@ -81,23 +82,16 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 }
                 else
                 {
-                    switch (beatmap.PickType)
+                    var brush = new LinearGradientBrush();
+
+                    for (var i = 0; i < beatmap.PickType.Count; i++)
                     {
-                        case Scores.PickType.NoMod:
-                            return ModsBrushes.NoModLight;
-                        case Scores.PickType.HardRock:
-                            return ModsBrushes.HardRockLight;
-                        case Scores.PickType.Hidden:
-                            return ModsBrushes.HiddenLight;
-                        case Scores.PickType.DoubleTime:
-                            return ModsBrushes.DoubleTimeLight;
-                        case Scores.PickType.FreeMod:
-                            return ModsBrushes.FreeModLight;
-                        case Scores.PickType.TieBreaker:
-                            return ModsBrushes.TieBreakerLight;
-                        default:
-                            return ModsBrushes.NoModLight;
+                        var brushToAdd = ModsBrushes.GetModBrushLight(beatmap.PickType[i]);
+
+                        brush.GradientStops.Add(new GradientStop(((SolidColorBrush)brushToAdd).Color, 1f / (beatmap.PickType.Count - 1) * i));
                     }
+
+                    return brush;
                 }
             }
         }
@@ -109,23 +103,16 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         {
             get
             {
-                switch (beatmap.PickType)
+                var brush = new LinearGradientBrush();
+
+                for (var i = 0; i < beatmap.PickType.Count; i++)
                 {
-                    case Scores.PickType.NoMod:
-                        return ModsBrushes.NoMod;
-                    case Scores.PickType.HardRock:
-                        return ModsBrushes.HardRock;
-                    case Scores.PickType.Hidden:
-                        return ModsBrushes.Hidden;
-                    case Scores.PickType.DoubleTime:
-                        return ModsBrushes.DoubleTime;
-                    case Scores.PickType.FreeMod:
-                        return ModsBrushes.FreeMod;
-                    case Scores.PickType.TieBreaker:
-                        return ModsBrushes.TieBreaker;
-                    default:
-                        return ModsBrushes.NoMod;
+                    var brushToAdd = ModsBrushes.GetModBrush(beatmap.PickType[i]);
+
+                    brush.GradientStops.Add(new GradientStop(((SolidColorBrush)brushToAdd).Color, 1f / (beatmap.PickType.Count - 1) * i));
                 }
+
+                return brush;
             }
         }
 
@@ -225,28 +212,6 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             string modvalue = "";
             int worldcupId = 0;
 
-            switch(beatmap.PickType)
-            {
-                case PickType.NoMod:
-                    modvalue = "none";
-                    break;
-                case PickType.Hidden:
-                    modvalue = "hd";
-                    break;
-                case PickType.HardRock:
-                    modvalue = "hr";
-                    break;
-                case PickType.DoubleTime:
-                    modvalue = "dt";
-                    break;
-                case PickType.FreeMod:
-                    modvalue = "freemod";
-                    break;
-                case PickType.TieBreaker:
-                    modvalue = "freemod";
-                    break;
-            }
-
             switch(room.Wctype)
             {
                 case Api.OsuMode.Standard:
@@ -266,7 +231,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             if(!isAlreadyPicked && !isBanned)
             {
                 var bot = OsuIrcBot.GetInstancePrivate();
-                bot.SendMessage("#mp_" + room.Id, string.Format("!mp mods {0}", modvalue));
+                bot.SendMessage("#mp_" + room.Id, string.Format("!mp mods {0}", beatmap.PickType.Aggregate(string.Empty, (a, b) => a + " " + (b == PickType.TieBreaker ? "Freemod" : Enum.GetName(typeof(PickType), b) ))));
                 bot.SendMessage("#mp_" + room.Id, string.Format("!mp map {0} {1}", beatmap.OsuBeatmap.BeatmapID, worldcupId));
                 BeatmapCheckBox = true;
             }

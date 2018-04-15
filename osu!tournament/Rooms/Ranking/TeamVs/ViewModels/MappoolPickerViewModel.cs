@@ -6,6 +6,7 @@ using osu_utils.DiscordModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media.TextFormatting;
 
 namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 {
@@ -58,9 +59,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             get
             {
                 if (searchBoxValue == "")
-                    return new BindableCollection<BeatmapPickerViewModel>(beatmaps.OrderBy(x => x.Beatmap.PickType));
+                    return new BindableCollection<BeatmapPickerViewModel>(beatmaps.OrderBy(x => x.Beatmap));
 
-                return new BindableCollection<BeatmapPickerViewModel>(beatmaps.Where(x => x.Beatmap.OsuBeatmap.Title.ToUpper().Contains(searchBoxValue.ToUpper()) || x.Beatmap.OsuBeatmap.Artist.ToUpper().Contains(searchBoxValue.ToUpper())).OrderBy(entry => entry.Beatmap.PickType));
+                return new BindableCollection<BeatmapPickerViewModel>(beatmaps.Where(x => x.Beatmap.OsuBeatmap.Title.ToUpper().Contains(searchBoxValue.ToUpper()) || x.Beatmap.OsuBeatmap.Artist.ToUpper().Contains(searchBoxValue.ToUpper())).OrderBy(entry => entry.Beatmap));
             }
         }
 

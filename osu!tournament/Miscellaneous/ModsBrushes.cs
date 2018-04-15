@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using Osu.Scores;
 
 namespace Osu.Mvvm.Miscellaneous
 {
@@ -23,52 +24,62 @@ namespace Osu.Mvvm.Miscellaneous
         public static Brush LightGray = new SolidColorBrush(Color.FromRgb(160, 160, 160));
 
         /// <summary>
-        /// NoMod
+        /// None
         /// </summary>
-        public static Brush NoMod = new SolidColorBrush(Color.FromRgb(239, 239, 239));
+        public static Brush None = new SolidColorBrush(Color.FromRgb(239, 239, 239));
 
         /// <summary>
-        /// Light NoMod
+        /// Light None
         /// </summary>
-        public static Brush NoModLight = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+        public static Brush NoneLight = new SolidColorBrush(Color.FromRgb(255, 255, 255));
 
         /// <summary>
-        /// Hidden
+        /// HD
         /// </summary>
-        public static Brush Hidden = new SolidColorBrush(Color.FromRgb(255, 229, 153));
+        public static Brush HD = new SolidColorBrush(Color.FromRgb(255, 229, 153));
 
         /// <summary>
-        /// Light Hidden
+        /// Light HD
         /// </summary>
-        public static Brush HiddenLight = new SolidColorBrush(Color.FromRgb(255, 242, 204));
+        public static Brush HDLight = new SolidColorBrush(Color.FromRgb(255, 242, 204));
 
         /// <summary>
-        /// HardRock
+        /// HR
         /// </summary>
-        public static Brush HardRock = new SolidColorBrush(Color.FromRgb(234, 153, 153));
+        public static Brush HR = new SolidColorBrush(Color.FromRgb(234, 153, 153));
 
         /// <summary>
-        /// Light HardRock
+        /// Light HR
         /// </summary>
-        public static Brush HardRockLight = new SolidColorBrush(Color.FromRgb(244, 204, 204));
+        public static Brush HRLight = new SolidColorBrush(Color.FromRgb(244, 204, 204));
 
         /// <summary>
-        /// DoubleTime
+        /// DT
         /// </summary>
-        public static Brush DoubleTime = new SolidColorBrush(Color.FromRgb(159, 197, 232));
+        public static Brush DT = new SolidColorBrush(Color.FromRgb(159, 197, 232));
 
         /// <summary>
-        /// Light DoubleTime
+        /// Light DT
         /// </summary>
-        public static Brush DoubleTimeLight = new SolidColorBrush(Color.FromRgb(207, 226, 243));
+        public static Brush DTLight = new SolidColorBrush(Color.FromRgb(207, 226, 243));
 
         /// <summary>
-        /// FreeMod
+        /// FL
+        /// </summary>
+        public static Brush FL = new SolidColorBrush(Color.FromRgb(117, 117, 117));
+
+        /// <summary>
+        /// Light FL
+        /// </summary>
+        public static Brush FLLight = new SolidColorBrush(Color.FromRgb(189, 189, 189));
+
+        /// <summary>
+        /// Freemod
         /// </summary>
         public static Brush FreeMod = new SolidColorBrush(Color.FromRgb(180, 167, 214));
 
         /// <summary>
-        /// Light FreeMod
+        /// Light Freemod
         /// </summary>
         public static Brush FreeModLight = new SolidColorBrush(Color.FromRgb(217, 210, 233));
 
@@ -87,5 +98,51 @@ namespace Osu.Mvvm.Miscellaneous
         public static Brush BlueTeam = new SolidColorBrush(Color.FromRgb(20, 141, 175));
 
         public static Brush RedTeam = new SolidColorBrush(Color.FromRgb(252, 69, 73));
+
+        public static Brush GetModBrush(PickType mod)
+        {
+            switch (mod)
+            {
+                case PickType.None:
+                    return None;
+                case PickType.HD:
+                    return HD;
+                case PickType.HR:
+                    return HR;
+                case PickType.DT:
+                    return DT;
+                case PickType.FL:
+                    return FL;
+                case PickType.Freemod:
+                    return FreeMod;
+                case PickType.TieBreaker:
+                    return TieBreaker;
+                default:
+                    return None;
+            }
+        }
+
+        public static Brush GetModBrushLight(PickType mod)
+        {
+            switch (mod)
+            {
+                case PickType.None:
+                    return NoneLight;
+                case PickType.HD:
+                    return HDLight;
+                case PickType.HR:
+                    return HRLight;
+                case PickType.DT:
+                    return DTLight;
+                case PickType.FL:
+                    return FLLight;
+                case PickType.Freemod:
+                    return FreeModLight;
+                case PickType.TieBreaker:
+                    return TieBreakerLight;
+                default:
+                    return NoneLight;
+            }
+        }
     }
 }

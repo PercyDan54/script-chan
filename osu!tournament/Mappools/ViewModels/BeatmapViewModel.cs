@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Osu.Mvvm.Miscellaneous;
 using System.Windows.Media;
+using Osu.Tournament.Mappools.ViewModels;
+using Osu.Tournament.Mappools.Views;
 
 namespace Osu.Mvvm.Mappools.ViewModels
 {
@@ -23,6 +25,13 @@ namespace Osu.Mvvm.Mappools.ViewModels
         /// The beatmap
         /// </summary>
         private Beatmap beatmap;
+
+        /// <summary>
+        /// If add mod popup is open
+        /// </summary>
+        private bool _modPickerIsOpen;
+
+        private List<BeatmapModViewModel> _mods;
         #endregion
 
         #region Constructor
@@ -34,6 +43,13 @@ namespace Osu.Mvvm.Mappools.ViewModels
         {
             this.parent = parent;
             this.beatmap = beatmap;
+
+            beatmap.ModsChanged += UpdateMods;
+
+            if(beatmap.PickType.Count == 0)
+                beatmap.PickType.Add(Scores.PickType.None);
+
+            UpdateMods();
         }
         #endregion
 
@@ -45,23 +61,16 @@ namespace Osu.Mvvm.Mappools.ViewModels
         {
             get
             {
-                switch (beatmap.PickType)
+                var brush = new LinearGradientBrush();
+
+                for (var i = 0; i < beatmap.PickType.Count; i++)
                 {
-                    case Scores.PickType.NoMod:
-                        return ModsBrushes.NoModLight;
-                    case Scores.PickType.HardRock:
-                        return ModsBrushes.HardRockLight;
-                    case Scores.PickType.Hidden:
-                        return ModsBrushes.HiddenLight;
-                    case Scores.PickType.DoubleTime:
-                        return ModsBrushes.DoubleTimeLight;
-                    case Scores.PickType.FreeMod:
-                        return ModsBrushes.FreeModLight;
-                    case Scores.PickType.TieBreaker:
-                        return ModsBrushes.TieBreakerLight;
-                    default:
-                        return ModsBrushes.NoModLight;
+                    var brushToAdd = ModsBrushes.GetModBrushLight(beatmap.PickType[i]);
+
+                    brush.GradientStops.Add(new GradientStop(((SolidColorBrush)brushToAdd).Color, 1f / (beatmap.PickType.Count - 1) * i));
                 }
+
+                return brush;
             }
         }
 
@@ -72,23 +81,16 @@ namespace Osu.Mvvm.Mappools.ViewModels
         {
             get
             {
-                switch (beatmap.PickType)
+                var brush = new LinearGradientBrush();
+
+                for (var i = 0; i < beatmap.PickType.Count; i++)
                 {
-                    case Scores.PickType.NoMod:
-                        return ModsBrushes.NoMod;
-                    case Scores.PickType.HardRock:
-                        return ModsBrushes.HardRock;
-                    case Scores.PickType.Hidden:
-                        return ModsBrushes.Hidden;
-                    case Scores.PickType.DoubleTime:
-                        return ModsBrushes.DoubleTime;
-                    case Scores.PickType.FreeMod:
-                        return ModsBrushes.FreeMod;
-                    case Scores.PickType.TieBreaker:
-                        return ModsBrushes.TieBreaker;
-                    default:
-                        return ModsBrushes.NoMod;
+                    var brushToAdd = ModsBrushes.GetModBrush(beatmap.PickType[i]);
+
+                    brush.GradientStops.Add(new GradientStop(((SolidColorBrush)brushToAdd).Color, 1f / (beatmap.PickType.Count - 1) * i));
                 }
+
+                return brush;
             }
         }
 
@@ -130,25 +132,33 @@ namespace Osu.Mvvm.Mappools.ViewModels
         }
 
         /// <summary>
-        /// Selected item property
+        /// If add mod popup is open
         /// </summary>
-        public PickType SelectedPickType
+        public bool ModPickerIsOpen
         {
-            get
-            {
-                return beatmap.PickType;
-            }
+            get => _modPickerIsOpen;
             set
             {
-                if (value != beatmap.PickType)
+                if (_modPickerIsOpen != value)
                 {
-                    beatmap.PickType = value;
-                    NotifyOfPropertyChange(() => SelectedPickType);
-                    NotifyOfPropertyChange(() => Background);
-                    NotifyOfPropertyChange(() => Border);
-                    parent.Update();
+                    _modPickerIsOpen = value;
+                    NotifyOfPropertyChange(() => ModPickerIsOpen);
                 }
             }
+        }
+
+        /// <summary>
+        /// The current mods for the beatmap
+        /// </summary>
+        public IObservableCollection<BeatmapModViewModel> Mods => new BindableCollection<BeatmapModViewModel>(_mods);
+
+        /// <summary>
+        /// List of unpicked mods for the add mod popup
+        /// </summary>
+        public List<PickType> PickableMods
+        {
+            get;
+            set;
         }
         #endregion
 
@@ -159,6 +169,48 @@ namespace Osu.Mvvm.Mappools.ViewModels
         public void Delete()
         {
             parent.Delete(this);
+        }
+
+        /// <summary>
+        /// Opens the add mod popup
+        /// </summary>
+        public void ShowModPicker()
+        {
+            PickableMods = Enum.GetValues(typeof(PickType)).Cast<PickType>().ToList();
+            foreach (var mod in beatmap.PickType)
+            {
+                PickableMods.RemoveAll(x => x == mod);
+            }
+
+            ModPickerIsOpen = true;
+            NotifyOfPropertyChange(() => PickableMods);
+        }
+
+        /// <summary>
+        /// Adds the chosen mod to the beatmap
+        /// </summary>
+        /// <param name="context">The mod name</param>
+        public void AddMod(string context)
+        {
+            foreach (var mod in PickableMods)
+            {
+                if (Enum.GetName(typeof(PickType), mod) != context) continue;
+                beatmap.AddMod(mod);
+                break;
+            }
+
+            ModPickerIsOpen = false;
+        }
+
+        public void UpdateMods()
+        {
+            _mods = new List<BeatmapModViewModel>();
+            foreach (var mod in beatmap.PickType.Where(x => x != Scores.PickType.None))
+                _mods.Add(new BeatmapModViewModel(beatmap, mod));
+
+            NotifyOfPropertyChange(() => Mods);
+            NotifyOfPropertyChange(() => Background);
+            NotifyOfPropertyChange(() => Border);
         }
         #endregion
     }

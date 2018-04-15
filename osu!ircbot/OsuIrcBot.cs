@@ -714,7 +714,7 @@ namespace Osu.Ircbot
         {
             catchSettingsTimer.Enabled = false;
             shouldCatchSettings = false;
-            var stringToSend = "**FreeMod Pick** " + fmv.RoomString + Environment.NewLine + fmv.MapString + Environment.NewLine;
+            var stringToSend = "**Freemod Pick** " + fmv.RoomString + Environment.NewLine + fmv.MapString + Environment.NewLine;
             List<string> values = new List<string>();
 
             int separator = 1;

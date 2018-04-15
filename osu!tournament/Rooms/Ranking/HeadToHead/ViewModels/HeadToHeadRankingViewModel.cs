@@ -117,7 +117,7 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
                 if (room.Manual == false)
                     return "Visible";
                 else
-                    return "Hidden";
+                    return "HD";
             }
         }
 
@@ -128,7 +128,7 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
         {
             get
             {
-                if (IsControlVisible == "Hidden")
+                if (IsControlVisible == "HD")
                     return "2";
                 else
                     return "1";
@@ -142,7 +142,7 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
         {
             get
             {
-                if(IsControlVisible == "Hidden")
+                if(IsControlVisible == "HD")
                 {
                     return "*";
                 }

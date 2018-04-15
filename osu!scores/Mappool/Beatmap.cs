@@ -1,5 +1,7 @@
 ﻿using Osu.Api;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Osu.Scores
@@ -27,7 +29,7 @@ namespace Osu.Scores
         /// The pick type
         /// </summary>
         [DataMember]
-        protected PickType pick_type;
+        protected List<PickType> pick_type;
         #endregion
 
         #region Constructors
@@ -37,7 +39,7 @@ namespace Osu.Scores
         public Beatmap()
         {
             osu_beatmap = null;
-            pick_type = PickType.NoMod;
+            pick_type = new List<PickType>();
         }
         #endregion
 
@@ -60,7 +62,7 @@ namespace Osu.Scores
         /// <summary>
         /// PickType property
         /// </summary>
-        public PickType PickType
+        public List<PickType> PickType
         {
             get
             {
@@ -90,6 +92,44 @@ namespace Osu.Scores
 
         #region Public Methods
         /// <summary>
+        /// Adds a mod to the beatmap
+        /// </summary>
+        /// <param name="mod">The mod</param>
+        public void AddMod(PickType mod)
+        {
+            if (pick_type.Contains(mod)) return;
+            if (mod == Scores.PickType.None || mod == Scores.PickType.TieBreaker)
+                pick_type.Clear();
+            else if (mod == Scores.PickType.Freemod)
+                pick_type.RemoveAll(x => x != Scores.PickType.DT);
+            else if (mod == Scores.PickType.DT)
+                pick_type.RemoveAll(x => x == Scores.PickType.None || x == Scores.PickType.TieBreaker);
+            else
+                pick_type.RemoveAll(x => x == Scores.PickType.None || x == Scores.PickType.Freemod || x == Scores.PickType.TieBreaker);
+
+            pick_type.Add(mod);
+
+            pick_type = pick_type.OrderBy(x => (int) x).ToList();
+
+            ModsChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Removes a mod from the beatmap
+        /// </summary>
+        /// <param name="mod">The mod</param>
+        public void RemoveMod(PickType mod)
+        {
+            pick_type.RemoveAll(x => x == mod);
+            if (pick_type.Count == 0)
+                AddMod(Scores.PickType.None);
+
+            pick_type = pick_type.OrderBy(x => (int)x).ToList();
+
+            ModsChanged?.Invoke();
+        }
+
+        /// <summary>
         /// Returns the beatmap as a string
         /// </summary>
         /// <returns>the beatmap as a string</returns>
@@ -97,7 +137,7 @@ namespace Osu.Scores
         {
             return OsuBeatmap.Artist + " - " + OsuBeatmap.Title + " [" + OsuBeatmap.Version + "] (by " + OsuBeatmap.Creator + ")";
         }
-
+        
         /// <summary>
         /// Compares the beatmap to another beatmap
         /// </summary>
@@ -105,8 +145,49 @@ namespace Osu.Scores
         /// <returns>an integer</returns>
         public int CompareTo(Beatmap other)
         {
-            return pick_type.CompareTo(other.PickType);
+            if (pick_type.Contains(Scores.PickType.None))
+            {
+                if (other.pick_type.Contains(Scores.PickType.None))
+                    return 0;
+                return -1;
+            }
+
+            if (other.pick_type.Contains(Scores.PickType.None))
+                return 1;
+
+            if (pick_type.Contains(Scores.PickType.TieBreaker))
+            {
+                if (other.pick_type.Contains(Scores.PickType.TieBreaker))
+                    return 0;
+                return 1;
+            }
+
+            if (other.pick_type.Contains(Scores.PickType.TieBreaker))
+                return -1;
+
+            if (pick_type.Contains(Scores.PickType.Freemod))
+            {
+                if (other.pick_type.Contains(Scores.PickType.Freemod))
+                    return pick_type.Count - other.pick_type.Count;
+                return 1;
+            }
+
+            if (other.pick_type.Contains(Scores.PickType.Freemod))
+                return -1;
+
+            if (pick_type.Count == other.pick_type.Count)
+                return pick_type.Max(x => (int) x) - other.pick_type.Max(x => (int) x);
+
+            return pick_type.Count - other.pick_type.Count;
         }
+        #endregion
+
+        #region Handlers
+
+        public delegate void ModsChangedHandler();
+
+        public event ModsChangedHandler ModsChanged;
+
         #endregion
     }
 }

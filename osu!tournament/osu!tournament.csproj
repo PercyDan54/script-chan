@@ -81,14 +81,19 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="General\ViewModels\ErrorViewModel.cs" />
+    <Compile Include="Mappools\ViewModels\BeatmapModViewModel.cs" />
     <Compile Include="Mappools\ViewModels\BeatmapViewModel.cs" />
     <Compile Include="Mappools\ViewModels\MappoolsViewModel.cs" />
     <Compile Include="Mappools\ViewModels\MappoolViewModel.cs" />
+    <Compile Include="Mappools\Views\BeatmapModView.xaml.cs">
+      <DependentUpon>BeatmapModView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Miscellaneous\ModsBrushes.cs" />
     <Compile Include="Miscellaneous\Dialog.cs" />
     <Compile Include="Miscellaneous\Flyout.cs" />
     <Compile Include="General\ViewModels\MainViewModel.cs" />
     <Compile Include="Miscellaneous\Log.cs" />
+    <Compile Include="Miscellaneous\ModToColorConverter.cs" />
     <Compile Include="Miscellaneous\PasswordHelper.cs" />
     <Compile Include="Miscellaneous\WindowSettings.cs" />
     <Compile Include="Ov\ViewModels\MatchCreatedArgs.cs" />
@@ -133,6 +138,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="General\Views\OptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mappools\Views\BeatmapModView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

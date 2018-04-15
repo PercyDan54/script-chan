@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Osu.Ircbot.Handlers
 {
@@ -101,7 +102,7 @@ namespace Osu.Ircbot.Handlers
             List<string> target = new List<string> { "#mp_" + room.Id };
             bot.SendMessage(target, "Picked map : " + beatmap.ToString());
             bot.SendMessage(target, "!mp map " + map_id);
-            bot.SendMessage(target, "!mp mods " + GetPickType(beatmap.PickType));
+            bot.SendMessage(target, "!mp mods " + beatmap.PickType.Aggregate(string.Empty, (a, b) => a + " " + (b == PickType.TieBreaker ? "Freemod" : Enum.GetName(typeof(PickType), b))));
         }
 
         /// <summary>
@@ -113,41 +114,6 @@ namespace Osu.Ircbot.Handlers
             {
                 bot.JoinChannel(channel);
             }
-        }
-
-        /// <summary>
-        /// Retrieving the correct string for osu! mods command for the selected mod
-        /// </summary>
-        /// <param name="mod">The selected mod</param>
-        /// <returns>The string of the mod selected</returns>
-        private string GetPickType(PickType mod)
-        {
-            string res;
-            switch (mod)
-            {
-                case PickType.NoMod:
-                    res = "None";
-                    break;
-                case PickType.HardRock:
-                    res = "HR";
-                    break;
-                case PickType.DoubleTime:
-                    res = "DT";
-                    break;
-                case PickType.Hidden:
-                    res = "HD";
-                    break;
-                case PickType.FreeMod:
-                    res = "Freemod";
-                    break;
-                case PickType.TieBreaker:
-                    res = "Freemod";
-                    break;
-                default:
-                    res = "None";
-                    break;
-            }
-            return res;
         }
         #endregion
     }
