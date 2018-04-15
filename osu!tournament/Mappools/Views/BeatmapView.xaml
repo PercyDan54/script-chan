@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:misc="clr-namespace:Osu.Tournament.Miscellaneous"
     mc:Ignorable="d"
     d:DesignHeight="29"
     d:DesignWidth="500"
@@ -16,7 +17,9 @@
     Background="{Binding Background}"
     BorderBrush="{Binding Border}"
     BorderThickness="1">
-
+    <UserControl.Resources>
+        <misc:ModToColorConverter x:Key="ModToColorConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -43,7 +46,7 @@
             <Label x:Name="DisplayName" Content="Artist - Title [Version]" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="0,0,2.5,0" />
         </DockPanel>
         <Button x:Name="Delete" Content="Delete" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" />
-        <Popup x:Name="ModPicker" IsOpen="{Binding ModPickerIsOpen}" StaysOpen="False" PlacementTarget="{Binding ElementName=ShowModPicker}" PopupAnimation="Slide" AllowsTransparency="True">
+        <Popup x:Name="ModPicker" IsOpen="{Binding ModPickerIsOpen}" StaysOpen="False" PlacementTarget="{Binding ElementName=ShowModPicker}" PopupAnimation="Slide" AllowsTransparency="True" Width="100">
             <Border BorderBrush="Black" BorderThickness="1" Padding="5" Background="White">
                 <ItemsControl ItemsSource="{Binding PickableMods}">
                     <ItemsControl.ItemsPanel>
@@ -53,7 +56,23 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Height="27" BorderBrush="Black" BorderThickness="1" CornerRadius="13.5" Margin="2">
+                            <Border Height="27" BorderBrush="Black" BorderThickness="1" CornerRadius="13.5" Margin="2" Cursor="Hand" Background="{Binding Converter={StaticResource ModToColorConverter}}">
+                                <Border.Triggers>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" From="1" To="2" Duration="0:0:0" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" From="2" To="1" Duration="0:0:0" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Border.Triggers>
                                 <TextBlock Text="{Binding}" VerticalAlignment="Center" Margin="10,0,10,0" cal:Message.Attach="[Event MouseUp] = [Action AddMod($this)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, ElementName=DisplayName}" />
                             </Border>
                         </DataTemplate>

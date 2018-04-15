@@ -93,6 +93,7 @@
     <Compile Include="Miscellaneous\Flyout.cs" />
     <Compile Include="General\ViewModels\MainViewModel.cs" />
     <Compile Include="Miscellaneous\Log.cs" />
+    <Compile Include="Miscellaneous\ModToColorConverter.cs" />
     <Compile Include="Miscellaneous\PasswordHelper.cs" />
     <Compile Include="Miscellaneous\WindowSettings.cs" />
     <Compile Include="Ov\ViewModels\MatchCreatedArgs.cs" />
