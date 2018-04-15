@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Osu.Mvvm.Rooms.Chat.Views;
 using Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels;
 
 namespace Osu.Mvvm.Rooms.Chat.ViewModels
@@ -18,7 +19,7 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
     /// <summary>
     /// The chat view model
     /// </summary>
-    public class ChatViewModel : PropertyChangedBase
+    public class ChatViewModel : Screen
     {
         #region Attributes
         /// <summary>
@@ -195,6 +196,11 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         public void DisableAutoscrolling()
         {
             AutoScrollDisabled = true;
+        }
+
+        public void FocusMessageTextBox()
+        {
+            ((ChatView) GetView()).Message.Focus();
         }
         #endregion
 
