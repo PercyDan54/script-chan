@@ -17,6 +17,8 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         private bool isAlreadyPicked;
 
         private bool isBanned;
+
+        private int position;
         #endregion
 
         #region Constructor
@@ -54,6 +56,14 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         #endregion
 
         #region Properties
+        /// <summary>
+        /// The Position property
+        /// </summary>
+        public string Position
+        {
+            get { return position == 0 ? "" : position.ToString(); }
+        }
+
         /// <summary>
         /// The Background property
         /// </summary>
@@ -135,8 +145,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                     RefereeMatchHelper bh = RefereeMatchHelper.GetInstance(room.Id);
                     if (value)
                     {
-                        bh.AddPick(beatmap);
+                        position = bh.AddPick(beatmap);
                         isAlreadyPicked = value;
+                        NotifyOfPropertyChange(() => Position);
                     }
                     else
                     {
@@ -144,14 +155,16 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                         if (bh.RemoveLastPick(beatmap))
                         {
                             isAlreadyPicked = value;
+                            position = 0;
+                            NotifyOfPropertyChange(() => Position);
                         }
                         else
                         {
                             Dialog.ShowDialog("Whoops!", "You have to remove the last pick, not removing things randomly! Don't break me, duh!");
                         }
                     }
-                    NotifyOfPropertyChange("Background");
-                    NotifyOfPropertyChange("BeatmapCheckBox");
+                    NotifyOfPropertyChange(() => Background);
+                    NotifyOfPropertyChange(() => BeatmapCheckBox);
                 }
             }
         }
@@ -268,13 +281,10 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             if (!isBanned)
             {
                 isBanned = true;
-                //dbot.SendMessage(bh.ApplyBan(beatmap));
-
-                if (!bh.ApplyBan(beatmap, room))
-                    Dialog.ShowDialog("Whoops!", "The map has not been applied for OBS!");
-
-                NotifyOfPropertyChange("Background");
-                NotifyOfPropertyChange("IsCheckboxEnabled");
+                position = bh.ApplyBan(beatmap, room);
+                NotifyOfPropertyChange(() => Background);
+                NotifyOfPropertyChange(() => IsCheckboxEnabled);
+                NotifyOfPropertyChange(() => Position);
             }
             else
             {
@@ -291,10 +301,11 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             if (bh.CanUnban(beatmap))
             {
                 isBanned = false;
-                //dbot.SendMessage(bh.RemoveBan());
+                position = 0;
                 bh.RemoveBan();
-                NotifyOfPropertyChange("Background");
-                NotifyOfPropertyChange("IsCheckboxEnabled");
+                NotifyOfPropertyChange(() => Background);
+                NotifyOfPropertyChange(() => IsCheckboxEnabled);
+                NotifyOfPropertyChange(() => Position);
             }
             else
             {
