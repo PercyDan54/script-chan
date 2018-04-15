@@ -47,7 +47,7 @@
                     <Label Content="Welcome Message" HorizontalAlignment="Right" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="0" Grid.Row="8" />
 
                     <TextBox x:Name="Acronym" Grid.Column="1" Margin="2"/>
-                    <TextBox x:Name="AdminList" Grid.Column="1" Grid.Row="1" Margin="2" Controls:TextBoxHelper.Watermark="You can leave it empty or add usernames separated by a space"/>
+                    <TextBox x:Name="AdminList" Grid.Column="1" Grid.Row="1" Margin="2" Controls:TextBoxHelper.Watermark="You can leave it empty or add usernames separated by ;"/>
                     <TextBox x:Name="DefaultId" Grid.Row="2" Grid.Column="1" Margin="2"/>
                     <ComboBox x:Name="PlayersPerTeam" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="3" SelectedItem="{Binding SelectedPlayersPerTeam}" />
                     <ComboBox x:Name="TeamMode" VerticalContentAlignment="Center" Padding="0" Margin="2" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding SelectedTeamMode}" />

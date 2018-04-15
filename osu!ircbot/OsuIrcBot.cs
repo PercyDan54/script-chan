@@ -497,7 +497,8 @@ namespace Osu.Ircbot
 
                 // If we have some names to addref
                 if(!string.IsNullOrEmpty(InfosHelper.UserDataInfos.Admins))
-                    SendMessage("#mp_" + roomCreatedId, "!mp addref " + InfosHelper.UserDataInfos.Admins);
+                    foreach (var referee in InfosHelper.UserDataInfos.Admins.Split(';'))
+                        SendMessage("#mp_" + roomCreatedId, $"!mp addref {referee}");
 
                 SendMessage("#mp_" + roomCreatedId, "!mp unlock");
                 SendMessage("#mp_" + roomCreatedId, "!mp settings");
