@@ -122,12 +122,11 @@ namespace Osu.Scores
         /// <param name="bm">the beatmap to ban</param>
         /// <param name="room">The room</param>
         /// <returns></returns>
-        public bool ApplyBan(Beatmap bm, Room room)
+        public int ApplyBan(Beatmap bm, Room room)
         {
-            bool res = true;
             BeatmapBanned.Add(bm);
 
-            return res;
+            return BeatmapBanned.Count;
         }
 
         /// <summary>
@@ -142,9 +141,10 @@ namespace Osu.Scores
         /// Function which is adding a map to the pick list
         /// </summary>
         /// <param name="beatmap">the beatmap to pick</param>
-        public void AddPick(Beatmap beatmap)
+        public int AddPick(Beatmap beatmap)
         {
             picks.Add(beatmap);
+            return picks.Count;
         }
 
         /// <summary>

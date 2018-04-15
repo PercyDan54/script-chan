@@ -24,7 +24,7 @@
             <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
 
-        <CheckBox x:Name="BeatmapCheckBox" Grid.Column="0" IsEnabled="{Binding IsCheckboxEnabled}" Padding="5,0,0,0" />
+        <CheckBox x:Name="BeatmapCheckBox" Content="{Binding Position}" Grid.Column="0" IsEnabled="{Binding IsCheckboxEnabled}" Padding="5,0,0,0" />
         <Button x:Name="PickTheMap" Background="{Binding Background}" Focusable="True" Content="{Binding ButtonMapText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1">
             <Button.ContextMenu>
                 <ContextMenu>
