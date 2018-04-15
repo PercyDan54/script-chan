@@ -168,7 +168,7 @@ namespace Osu.Scores
             if (pick_type.Contains(Scores.PickType.Freemod))
             {
                 if (other.pick_type.Contains(Scores.PickType.Freemod))
-                    return 0;
+                    return pick_type.Count - other.pick_type.Count;
                 return 1;
             }
 
