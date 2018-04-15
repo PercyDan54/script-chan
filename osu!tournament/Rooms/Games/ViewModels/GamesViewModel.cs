@@ -109,6 +109,36 @@ namespace Osu.Mvvm.Rooms.Games.ViewModels
                 room.Manual = value;
                 NotifyOfPropertyChange(() => Manual);
                 NotifyOfPropertyChange(() => MappoolsEnabled);
+                NotifyOfPropertyChange(() => WarmupEnabled);
+            }
+        }
+
+        /// <summary>
+        /// WarmupColor property
+        /// </summary>
+        public string WarmupColor
+        {
+            get
+            {
+                if (room.Warmup)
+                    return "Green";
+                else
+                    return "Red";
+            }
+        }
+
+        /// <summary>
+        /// WarmupEnabled property
+        /// </summary>
+        public string WarmupEnabled
+        {
+            get
+            {
+                if (room.Manual)
+                    return "Visible";
+                else
+                    return "Hidden";
+
             }
         }
         #endregion
@@ -128,6 +158,15 @@ namespace Osu.Mvvm.Rooms.Games.ViewModels
                 foreach (OsuGame game in room.OsuRoom.Games)
                     // Add a new game control
                     Beatmaps.Add(new GameViewModel(room, game.GameId, game.BeatmapId));
+        }
+
+        /// <summary>
+        /// Updates the room status if we are in warmup mode or not to count the map
+        /// </summary>
+        public void WarmupStatus()
+        {
+            room.Warmup = !room.Warmup;
+            NotifyOfPropertyChange(() => WarmupColor);
         }
         #endregion
     }

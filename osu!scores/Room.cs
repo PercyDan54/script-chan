@@ -150,6 +150,7 @@ namespace Osu.Scores
             commands = false;
             status = RoomStatus.NotStarted;
             isStreamed = false;
+            Warmup = false;
             roomMessages = new List<IrcMessage>();
             notificationsEnabled = true;
             canAddNewMessagesLine = true;
@@ -473,6 +474,11 @@ namespace Osu.Scores
         }
 
         /// <summary>
+        /// Warmup property
+        /// </summary>
+        public bool Warmup { get; set; }
+
+        /// <summary>
         /// Timer property
         /// </summary>
         public int Timer
@@ -640,6 +646,12 @@ namespace Osu.Scores
 
             // Match is not started yet
             status = RoomStatus.NotStarted;
+
+            // If we are in warmup state in manual mode, we blacklist the last map
+            if (Warmup && Manual)
+            {
+                Blacklist.Add(osu_room.Games.Last().GameId);
+            }
 
             // If the ranking is not null
             if (ranking != null)
