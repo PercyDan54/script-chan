@@ -52,6 +52,8 @@ namespace Osu.Mvvm.General.ViewModels
         /// Color mode for the application (removed for now)
         /// </summary>
         private string colorMode;
+
+        public event EventHandler ChangedWebhookEvent;
         #endregion
 
         #region Constructor
@@ -368,7 +370,10 @@ namespace Osu.Mvvm.General.ViewModels
             set
             {
                 InfosHelper.UserDataInfos.WebhookAdmins = value;
-                DiscordClient.GetInstance().UpdateEnabled();
+                if (DiscordClient.GetInstance().IsEnabled != DiscordClient.GetInstance().UpdateEnabled())
+                {
+                    ChangedWebhookEvent?.Invoke(this, new EventArgs());
+                }
             }
         }
 

@@ -272,11 +272,6 @@ namespace Osu.Mvvm.Rooms.ViewModels
                     RemoveNewMessageLine();
                 }
 
-                if (value.Header.ToString() == "Ranking")
-                {
-                    Ranking.DiscordUpdate();
-                }
-
                 selectedTab = value;
             }
         }
@@ -370,6 +365,11 @@ namespace Osu.Mvvm.Rooms.ViewModels
         {
             room.RemoveNewMessageLine();
             Execute.OnUIThread(() => UpdateChat(false));
+        }
+
+        public void DiscordActivationChanged()
+        {
+            Ranking.DiscordUpdate();
         }
         #endregion
     }

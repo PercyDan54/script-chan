@@ -135,10 +135,12 @@ namespace osu_discord
             return null;
         }
 
-        public void UpdateEnabled()
+        public bool UpdateEnabled()
         {
             _isEnabled = Uri.TryCreate(GetLink(DiscordChannelEnum.Admins), UriKind.Absolute, out var uriResult)
                           && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+            return _isEnabled;
         }
         #endregion
 
