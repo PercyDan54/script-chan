@@ -8,7 +8,7 @@ You can use it to manage and create your osu! multiplayer rooms.
 
 User documentation: https://git.cartooncraft.fr/shARPII/script-chan/wikis/About-us/Home
 
-Forum link: 
+Forum link: https://osu.ppy.sh/community/forums/topics/730734
 
 Discord link: http://discord.gg/QGv44Sc
 
