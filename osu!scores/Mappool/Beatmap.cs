@@ -137,8 +137,7 @@ namespace Osu.Scores
         {
             return OsuBeatmap.Artist + " - " + OsuBeatmap.Title + " [" + OsuBeatmap.Version + "] (by " + OsuBeatmap.Creator + ")";
         }
-
-        // TODO!!!
+        
         /// <summary>
         /// Compares the beatmap to another beatmap
         /// </summary>

@@ -73,6 +73,8 @@ namespace Osu.Mvvm.Mappools.ViewModels
 
                     // We have a new mappool that can be deleted
                     NotifyOfPropertyChange(() => CanDeleteMappool);
+
+                    SelectedMappool?.Update();
                 }
             }
         }
@@ -142,6 +144,11 @@ namespace Osu.Mvvm.Mappools.ViewModels
 
             // Mappool list has changed
             NotifyOfPropertyChange(() => Mappools);
+        }
+
+        public void Update()
+        {
+            SelectedMappool?.Update();
         }
         #endregion
     }

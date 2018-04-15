@@ -195,6 +195,10 @@ namespace Osu.Mvvm.General.ViewModels
                     {
                         rooms.ActiveItem.RemoveNewMessageLine();
                     }
+                    if (active_item_name != "Mappools")
+                    {
+                        mappools.Update();
+                    }
                     active_item_name = value;
                     NotifyOfPropertyChange(() => ActiveItemName);
                 }
