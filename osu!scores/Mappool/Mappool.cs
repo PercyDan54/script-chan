@@ -121,7 +121,7 @@ namespace Osu.Scores
         /// </summary>
         public static async Task Initialize()
         {
-            Cache cache = Cache.GetCache("osu!cache.db");
+            Cache cache = Cache.GetCache("osu!mappools.db");
 
             mappools = cache.GetObject<Dictionary<string, Mappool>>("mappools", new Dictionary<string, Mappool>());
 
@@ -184,7 +184,7 @@ namespace Osu.Scores
         /// </summary>
         public static void Save()
         {
-            Cache cache = Cache.GetCache("osu!cache.db");
+            Cache cache = Cache.GetCache("osu!mappools.db");
 
             cache["mappools"] = mappools;
         }
