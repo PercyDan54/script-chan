@@ -7,5 +7,7 @@ namespace Osu.Mvvm.Rooms.Ranking
         /// Updates the view model
         /// </summary>
         void Update();
+
+        void DiscordUpdate();
     }
 }
