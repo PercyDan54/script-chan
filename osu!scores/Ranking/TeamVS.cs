@@ -438,7 +438,7 @@ namespace Osu.Scores
                     embed.Fields.Add(new Field() { Name = teams[OsuTeam.Blue].Name, Value = (teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition).ToString(), Inline = true });
                     if (mvpPlayer != null)
                     {
-                        embed.Fields.Add(new Field() { Name = "MVP", Value = string.Format(":flag_{1}: **{0}** with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country.ToLower(), string.Format("{0:n0}", mvp.Score)) });
+                        embed.Fields.Add(new Field() { Name = "MVP", Value = string.Format(":flag_{1}: **{0}** with {2} points", mvpPlayer.Username.Replace("_", "\\_"), mvpPlayer.OsuUser.Country.ToLower(), string.Format("{0:n0}", mvp.Score)) });
                     }
 
                     embed.Fields.Add(new Field() { Name = "Status", Value = GetStatus().Last() + " " + (room.Status == RoomStatus.Finished ? ":clap:" : ":loudspeaker:") });
