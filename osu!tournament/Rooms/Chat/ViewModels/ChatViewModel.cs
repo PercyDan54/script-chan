@@ -41,6 +41,11 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         /// The Multiplayer commands view model
         /// </summary>
         private MultiplayerCommandsViewModel commandsVM;
+
+        /// <summary>
+        /// The ScrollViewer control used to control chat scrolling
+        /// </summary>
+        private ScrollViewer _scrollViewer;
         #endregion
 
         #region Properties
@@ -103,7 +108,6 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
                     FontSize = 14,
                     TextAlignment = TextAlignment.Left
                 };
-                _messages.MouseWheel += (sender, args) => DisableAutoscrolling();
             });
 
             _autoScrollDisabled = false;
@@ -149,6 +153,20 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         {
             Execute.OnUIThread(() =>
             {
+                if (_scrollViewer == null)
+                {
+                    var view = GetView();
+                    if (view != null)
+                    {
+                        var chatWindow = ((ChatView)view).ChatWindow;
+                        _scrollViewer = FindScroll(chatWindow);
+                        if (_scrollViewer != null)
+                        {
+                            _scrollViewer.ScrollChanged += _scrollViewer_ScrollChanged;
+                        }
+                    }
+                }
+
                 Paragraph newMessageParagraph = null;
                 Paragraph paragraph = null;
                 _messages.Blocks.Clear();
@@ -176,26 +194,22 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
                     NotifyOfPropertyChange(() => AutoScrollDisabled);
                 }
                 if (!_autoScrollDisabled && paragraph != null)
-                    paragraph.Loaded += (sender, args) => paragraph.BringIntoView();
+                    _scrollViewer?.ScrollToBottom();
                 else if (scrollToNewLine && newMessageParagraph != null)
                     newMessageParagraph.Loaded += (sender, args) => newMessageParagraph.BringIntoView();
             });
         }
 
         /// <summary>
-        /// Function called to enable auto scrolling
+        /// Enable autoscrolling if scroll position is near the end of the chat history
         /// </summary>
-        public void EnableAutoscrolling()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            AutoScrollDisabled = false;
-        }
-
-        /// <summary>
-        /// Function called to disable auto scrolling
-        /// </summary>
-        public void DisableAutoscrolling()
-        {
-            AutoScrollDisabled = true;
+            var scrollViewer = (ScrollViewer)sender;
+            _autoScrollDisabled = scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset > 20;
+            NotifyOfPropertyChange(() => AutoScrollDisabled);
         }
 
         public void FocusMessageTextBox()
@@ -210,24 +224,28 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
         /// </summary>
         /// <param name="visual"></param>
         /// <returns></returns>
-        private ScrollViewer FindScroll(Visual visual)
+        private ScrollViewer FindScroll(FlowDocumentScrollViewer flowDocumentScrollViewer)
         {
-            if (visual is ScrollViewer)
-                return visual as ScrollViewer;
-
-            ScrollViewer searchChild = null;
-            DependencyObject child;
-
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(visual); i++)
+            if (VisualTreeHelper.GetChildrenCount(flowDocumentScrollViewer) == 0)
             {
-                child = VisualTreeHelper.GetChild(visual, i);
-                if (child is Visual)
-                    searchChild = FindScroll(child as Visual);
-                if (searchChild != null)
-                    return searchChild;
+                return null;
             }
 
-            return null;
+            // Border is the first child of first child of a ScrolldocumentViewer
+            DependencyObject firstChild = VisualTreeHelper.GetChild(flowDocumentScrollViewer, 0);
+            if (firstChild == null)
+            {
+                return null;
+            }
+
+            Decorator border = VisualTreeHelper.GetChild(firstChild, 0) as Decorator;
+
+            if (border == null)
+            {
+                return null;
+            }
+
+            return border.Child as ScrollViewer;
         }
         #endregion
     }
