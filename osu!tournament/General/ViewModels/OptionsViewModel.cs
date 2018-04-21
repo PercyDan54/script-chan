@@ -14,6 +14,7 @@ using MahApps.Metro;
 using System.Windows;
 using osu_discord;
 using Osu.Utils.Info;
+using System.Windows.Markup;
 
 namespace Osu.Mvvm.General.ViewModels
 {
@@ -254,7 +255,7 @@ namespace Osu.Mvvm.General.ViewModels
         {
             get
             {
-                return bot.IsConnected ? "Disconnect" : "Connect";
+                return bot.IsConnected ? Tournament.Properties.Resources.Button_Disconnect : Tournament.Properties.Resources.Button_Disconnect;
             }
         }
 
@@ -277,6 +278,30 @@ namespace Osu.Mvvm.General.ViewModels
             get
             {
                 return new List<OsuMode> { OsuMode.Standard, OsuMode.Taiko, OsuMode.CTB, OsuMode.Mania };
+            }
+        }
+
+        public List<string> Languages
+        {
+            get
+            {
+                return new List<string> { "en-US", "de-DE" };
+            }
+        }
+
+        public string SelectedLanguage
+        {
+            get
+            {
+                return cache.Get("language", "en-US");
+            }
+            set
+            {
+                if (cache.Get("language", "en-US") != value)
+                {
+                    cache["language"] = value;
+                    NotifyOfPropertyChange(() => SelectedLanguage);
+                }
             }
         }
 

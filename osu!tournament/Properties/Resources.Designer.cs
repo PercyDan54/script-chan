@@ -19,10 +19,10 @@ namespace Osu.Tournament.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Osu.Tournament.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Osu.Tournament.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Osu.Tournament.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,54 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect.
+        /// </summary>
+        public static string Button_Connect {
+            get {
+                return ResourceManager.GetString("Button_Connect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect.
+        /// </summary>
+        public static string Button_Disconnect {
+            get {
+                return ResourceManager.GetString("Button_Disconnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Button_Save {
+            get {
+                return ResourceManager.GetString("Button_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string General_Password {
+            get {
+                return ResourceManager.GetString("General_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string General_Username {
+            get {
+                return ResourceManager.GetString("General_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon Icon {
+        public static System.Drawing.Icon Icon {
             get {
                 object obj = ResourceManager.GetObject("Icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -87,9 +132,144 @@ namespace Osu.Tournament.Properties {
         ///    &lt;!-- Scores appender --&gt;
         ///    &lt;append [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string LoggerConfig {
+        public static string LoggerConfig {
             get {
                 return ResourceManager.GetString("LoggerConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin webhook (needed to enable the feature).
+        /// </summary>
+        public static string OptionsView_AdminWebhook {
+            get {
+                return ResourceManager.GetString("OptionsView_AdminWebhook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to get your API key..
+        /// </summary>
+        public static string OptionsView_ApiHelp {
+            get {
+                return ResourceManager.GetString("OptionsView_ApiHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to osu!api key (required).
+        /// </summary>
+        public static string OptionsView_ApiKey {
+            get {
+                return ResourceManager.GetString("OptionsView_ApiKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default BO when creating a new room.
+        /// </summary>
+        public static string OptionsView_BO {
+            get {
+                return ResourceManager.GetString("OptionsView_BO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time between messages (in ms).
+        /// </summary>
+        public static string OptionsView_Cooldown {
+            get {
+                return ResourceManager.GetString("OptionsView_Cooldown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default GameMode for a new room.
+        /// </summary>
+        public static string OptionsView_GameMode {
+            get {
+                return ResourceManager.GetString("OptionsView_GameMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string OptionsView_General {
+            get {
+                return ResourceManager.GetString("OptionsView_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IRC.
+        /// </summary>
+        public static string OptionsView_IRC {
+            get {
+                return ResourceManager.GetString("OptionsView_IRC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The IRC password is different from your osu account password. Click here to get your IRC password..
+        /// </summary>
+        public static string OptionsView_IRCHelp {
+            get {
+                return ResourceManager.GetString("OptionsView_IRCHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Mappool for a new room.
+        /// </summary>
+        public static string OptionsView_Mappool {
+            get {
+                return ResourceManager.GetString("OptionsView_Mappool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can leave it blank if you want.
+        /// </summary>
+        public static string OptionsView_MappoolWatermark {
+            get {
+                return ResourceManager.GetString("OptionsView_MappoolWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mp timer duration (0 = deactivated).
+        /// </summary>
+        public static string OptionsView_MpTimer {
+            get {
+                return ResourceManager.GetString("OptionsView_MpTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The mp timer command is triggered after each map played.
+        /// </summary>
+        public static string OptionsView_MpTimerTooltip {
+            get {
+                return ResourceManager.GetString("OptionsView_MpTimerTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public channel webhook.
+        /// </summary>
+        public static string OptionsView_PublicWebhook {
+            get {
+                return ResourceManager.GetString("OptionsView_PublicWebhook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room options.
+        /// </summary>
+        public static string OptionsView_RoomOptions {
+            get {
+                return ResourceManager.GetString("OptionsView_RoomOptions", resourceCulture);
             }
         }
     }

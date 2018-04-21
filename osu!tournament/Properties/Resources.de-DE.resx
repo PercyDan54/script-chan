@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Button_Connect" xml:space="preserve">
-    <value>Connect</value>
+    <value>Verbinden</value>
   </data>
   <data name="Button_Disconnect" xml:space="preserve">
-    <value>Disconnect</value>
+    <value>Trennen</value>
   </data>
   <data name="Button_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="General_Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="General_Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Benutzername</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -140,48 +140,48 @@
     <value>..\Resources\logger.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="OptionsView_AdminWebhook" xml:space="preserve">
-    <value>Admin webhook (needed to enable the feature)</value>
+    <value>Admin Webhook (Benötigt um Webhooks zu verwenden)</value>
   </data>
   <data name="OptionsView_ApiHelp" xml:space="preserve">
-    <value>Click here to get your API key.</value>
+    <value>Klick hier um einen API Key zu erhalten.</value>
   </data>
   <data name="OptionsView_ApiKey" xml:space="preserve">
-    <value>osu!api key (required)</value>
+    <value>osu!api Key (benötigt)</value>
   </data>
   <data name="OptionsView_BO" xml:space="preserve">
-    <value>Default BO when creating a new room</value>
+    <value>Standard BO für neu erstellte Räume</value>
   </data>
   <data name="OptionsView_Cooldown" xml:space="preserve">
-    <value>Time between messages (in ms)</value>
+    <value>Zeit zwischen Chat Nachrichten (in ms)</value>
   </data>
   <data name="OptionsView_GameMode" xml:space="preserve">
-    <value>Default GameMode for a new room</value>
+    <value>Standard Spielmodus für neu erstellte Räume</value>
   </data>
   <data name="OptionsView_General" xml:space="preserve">
-    <value>General</value>
+    <value>Allgemein</value>
   </data>
   <data name="OptionsView_IRC" xml:space="preserve">
     <value>IRC</value>
   </data>
   <data name="OptionsView_IRCHelp" xml:space="preserve">
-    <value>The IRC password is different from your osu account password. Click here to get your IRC password.</value>
+    <value>Das IRC Passwort unterscheidet sich von deinem normalen osu Passwort. Klick hier um ein IRC Passwort zu erhalten.</value>
   </data>
   <data name="OptionsView_Mappool" xml:space="preserve">
-    <value>Default Mappool for a new room</value>
+    <value>Standard Mappool für neu erstellte Räume</value>
   </data>
   <data name="OptionsView_MappoolWatermark" xml:space="preserve">
-    <value>You can leave it blank if you want</value>
+    <value>Muss nicht ausgewählt werden</value>
   </data>
   <data name="OptionsView_MpTimer" xml:space="preserve">
-    <value>Mp timer duration (0 = deactivated)</value>
+    <value>Mp timer Dauer (0 um das Feature zu deaktivieren)</value>
   </data>
   <data name="OptionsView_MpTimerTooltip" xml:space="preserve">
-    <value>The mp timer command is triggered after each map played</value>
+    <value>Der mp timer Befehl wird nach jeder gespielten Map gesendet</value>
   </data>
   <data name="OptionsView_PublicWebhook" xml:space="preserve">
-    <value>Public channel webhook</value>
+    <value>Webhook für öffentliche Discord Channels</value>
   </data>
   <data name="OptionsView_RoomOptions" xml:space="preserve">
-    <value>Room options</value>
+    <value>Raum</value>
   </data>
 </root>

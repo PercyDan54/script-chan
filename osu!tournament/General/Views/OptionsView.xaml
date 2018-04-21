@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:misc="clr-namespace:Osu.Mvvm.Miscellaneous"
+    xmlns:p="clr-namespace:Osu.Tournament.Properties"
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="500">
@@ -31,6 +32,8 @@
                 <RowDefinition Height="35" />
                 <RowDefinition Height="35" />
                 <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -38,37 +41,39 @@
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
 
-            <Label Content="General" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" />
-            <Label Content="osu!api key (required)" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" />
-            <Border Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Height="22" Width="22" CornerRadius="22" BorderBrush="Black" BorderThickness="1" Margin="0,0,10,0" >
-                <Button x:Name="ApiKeyHelp" Background="Transparent" Content="?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="DemiBold" Padding="1,-1,0,0" Foreground="Black" Cursor="Hand" ToolTip="Click here to get your API key." />
+            <Label Content="{x:Static p:Resources.OptionsView_General}" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" />
+            <Label Content="Language" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="1" />
+            <ComboBox x:Name="Languages" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"  SelectedItem="{Binding SelectedLanguage}" />
+            <Label Content="{x:Static p:Resources.OptionsView_ApiKey}" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" />
+            <Border Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Height="22" Width="22" CornerRadius="22" BorderBrush="Black" BorderThickness="1" Margin="0,0,10,0" >
+                <Button x:Name="ApiKeyHelp" Background="Transparent" Content="?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="DemiBold" Padding="1,-1,0,0" Foreground="Black" Cursor="Hand" ToolTip="{x:Static p:Resources.OptionsView_ApiHelp}" />
             </Border>
-            <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding ApiKey, Mode=TwoWay}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" />
-            <Label Content="Public channel webhook" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" />
-            <TextBox x:Name="DefaultWebhook" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
-            <Label Content="Admin webhook (needed to enable the feature)" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" />
-            <TextBox x:Name="AdminWebhook" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"/>
-            <Button x:Name="Save" Content="Save" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="2" />
-            <Label Content="IRC" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="3" />
-            <Label Content="Username" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="8" />
-            <Label Content="Password" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="8" />
-            <Border Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right" Height="22" Width="22" CornerRadius="22" BorderBrush="Black" BorderThickness="1" Margin="0,0,10,0" >
-                <Button x:Name="IrcPasswordHelp" Background="Transparent" Content="?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="DemiBold" Padding="1,-1,0,0" Foreground="Black" Cursor="Hand" ToolTip="The IRC password is different from your osu account password. Click here to get your IRC password." />
+            <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding ApiKey, Mode=TwoWay}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" />
+            <Label Content="{x:Static p:Resources.OptionsView_PublicWebhook}" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" />
+            <TextBox x:Name="DefaultWebhook" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"/>
+            <Label Content="{x:Static p:Resources.OptionsView_AdminWebhook}" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="3" />
+            <TextBox x:Name="AdminWebhook" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2"/>
+            <Button x:Name="Save" Content="{x:Static p:Resources.Button_Save}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="4" />
+            <Label Content="{x:Static p:Resources.OptionsView_IRC}" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="3" />
+            <Label Content="{x:Static p:Resources.General_Username}" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="10" />
+            <Label Content="{x:Static p:Resources.General_Password}" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="10" />
+            <Border Grid.Column="1" Grid.Row="10" HorizontalAlignment="Right" Height="22" Width="22" CornerRadius="22" BorderBrush="Black" BorderThickness="1" Margin="0,0,10,0" >
+                <Button x:Name="IrcPasswordHelp" Background="Transparent" Content="?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="DemiBold" Padding="1,-1,0,0" Foreground="Black" Cursor="Hand" ToolTip="{x:Static p:Resources.OptionsView_IRCHelp}" />
             </Border>
-            <TextBox x:Name="Username" IsEnabled="{Binding UsernameEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="9"/>
-            <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding PasswordEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="9" />
-            <Button x:Name="Connect" Content="{Binding ConnectButtonText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="9" />
-            <Label Content="Time between messages (in ms)" VerticalContentAlignment="Center" Padding="0" Grid.Column="0" Grid.Row="10" />
-            <TextBox x:Name="RateLimit" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="11" />
-            <Label Content="Room options" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="3" />
-            <Label Content="Default BO when creating a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="13" />
-            <ComboBox x:Name="Modes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="14" />
-            <Label Content="Default GameMode for a new room" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="13" />
-            <ComboBox x:Name="GameModes" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
-            <Label Content="Default Mappool for a new room" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="15" />
-            <ComboBox x:Name="Mappools" DisplayMemberPath="Name" controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="You can leave it blank if you want" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedMappool}" />
-            <Label ToolTip="The mp timer command is triggered after each map played" Content="Mp timer duration (0 = deactivated)" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="15" />
-            <TextBox x:Name="Timer" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="16" />
+            <TextBox x:Name="Username" IsEnabled="{Binding UsernameEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="11"/>
+            <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding PasswordEnabled}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="11" />
+            <Button x:Name="Connect" Content="{Binding ConnectButtonText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" Grid.Row="11" />
+            <Label Content="{x:Static p:Resources.OptionsView_Cooldown}" VerticalContentAlignment="Center" Padding="0" Grid.Column="0" Grid.Row="12" />
+            <TextBox x:Name="RateLimit" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="13" />
+            <Label Content="{x:Static p:Resources.OptionsView_RoomOptions}" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="3" />
+            <Label Content="{x:Static p:Resources.OptionsView_BO}" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="15" />
+            <ComboBox x:Name="Modes" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="16" />
+            <Label Content="{x:Static p:Resources.OptionsView_GameMode}" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="15" />
+            <ComboBox x:Name="GameModes" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1" Grid.Row="16" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedGameMode}" />
+            <Label Content="{x:Static p:Resources.OptionsView_Mappool}" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="17" />
+            <ComboBox x:Name="Mappools" DisplayMemberPath="Name" controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="{x:Static p:Resources.OptionsView_MappoolWatermark}" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="18" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedMappool}" />
+            <Label ToolTip="{x:Static p:Resources.OptionsView_MpTimerTooltip}" Content="{x:Static p:Resources.OptionsView_MpTimer}" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="17" />
+            <TextBox x:Name="Timer" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="18" />
         </Grid>
     </ScrollViewer>
 </UserControl>
