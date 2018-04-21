@@ -139,6 +139,21 @@
   <data name="LoggerConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logger.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="MainView_Mappools" xml:space="preserve">
+    <value>Mappools</value>
+  </data>
+  <data name="MainView_Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="MainView_Overview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="MainView_Rooms" xml:space="preserve">
+    <value>Rooms</value>
+  </data>
+  <data name="MainView_Teams" xml:space="preserve">
+    <value>Teams</value>
+  </data>
   <data name="OptionsView_AdminWebhook" xml:space="preserve">
     <value>Admin webhook (needed to enable the feature)</value>
   </data>

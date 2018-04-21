@@ -139,6 +139,51 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mappools.
+        /// </summary>
+        public static string MainView_Mappools {
+            get {
+                return ResourceManager.GetString("MainView_Mappools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string MainView_Options {
+            get {
+                return ResourceManager.GetString("MainView_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overview.
+        /// </summary>
+        public static string MainView_Overview {
+            get {
+                return ResourceManager.GetString("MainView_Overview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rooms.
+        /// </summary>
+        public static string MainView_Rooms {
+            get {
+                return ResourceManager.GetString("MainView_Rooms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teams.
+        /// </summary>
+        public static string MainView_Teams {
+            get {
+                return ResourceManager.GetString("MainView_Teams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Admin webhook (needed to enable the feature).
         /// </summary>
         public static string OptionsView_AdminWebhook {
