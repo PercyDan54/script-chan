@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Button_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="Button_Connect" xml:space="preserve">
     <value>Connect</value>
+  </data>
+  <data name="Button_Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="Button_Disconnect" xml:space="preserve">
     <value>Disconnect</value>
@@ -134,6 +140,21 @@
   </data>
   <data name="ErrorView_Status" xml:space="preserve">
     <value>Check osu!status twitter</value>
+  </data>
+  <data name="Error_ApiKeyInvalid" xml:space="preserve">
+    <value>The osu!api key is not valid!</value>
+  </data>
+  <data name="Error_BeatmapAlreadyInMappool" xml:space="preserve">
+    <value>The beatmap is already in this mappool!</value>
+  </data>
+  <data name="Error_BeatmapIdNotFound" xml:space="preserve">
+    <value>The beatmap does not exist!</value>
+  </data>
+  <data name="Error_IdIsNotNumber" xml:space="preserve">
+    <value>The entered id is not a valid number!</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Whoops!</value>
   </data>
   <data name="General_Password" xml:space="preserve">
     <value>Password</value>
@@ -162,6 +183,24 @@
   </data>
   <data name="MainView_Teams" xml:space="preserve">
     <value>Teams</value>
+  </data>
+  <data name="MappoolView_AddBeatmap" xml:space="preserve">
+    <value>Add a beatmap</value>
+  </data>
+  <data name="MappoolView_DeleteBeatmapErrorMappoolInUse" xml:space="preserve">
+    <value>Beatmap could not be deleted because the mappool is used in a room.</value>
+  </data>
+  <data name="MappoolView_DeleteBeatmapMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the beatmap?</value>
+  </data>
+  <data name="MappoolView_DeleteBeatmapTitle" xml:space="preserve">
+    <value>Delete beatmap</value>
+  </data>
+  <data name="MappoolView_EnterBeatmapIdMessage" xml:space="preserve">
+    <value>Enter the beatmap id (Must be a valid number). You can use ';' as a separator</value>
+  </data>
+  <data name="MappoolView_EnterBeatmapIdTitle" xml:space="preserve">
+    <value>Add Beatmap</value>
   </data>
   <data name="OptionsView_AdminWebhook" xml:space="preserve">
     <value>Admin webhook (needed to enable the feature)</value>

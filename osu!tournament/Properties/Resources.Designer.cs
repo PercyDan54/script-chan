@@ -61,11 +61,29 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Button_Add {
+            get {
+                return ResourceManager.GetString("Button_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect.
         /// </summary>
         public static string Button_Connect {
             get {
                 return ResourceManager.GetString("Button_Connect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Button_Delete {
+            get {
+                return ResourceManager.GetString("Button_Delete", resourceCulture);
             }
         }
         
@@ -84,6 +102,51 @@ namespace Osu.Tournament.Properties {
         public static string Button_Save {
             get {
                 return ResourceManager.GetString("Button_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The osu!api key is not valid!.
+        /// </summary>
+        public static string Error_ApiKeyInvalid {
+            get {
+                return ResourceManager.GetString("Error_ApiKeyInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The beatmap is already in this mappool!.
+        /// </summary>
+        public static string Error_BeatmapAlreadyInMappool {
+            get {
+                return ResourceManager.GetString("Error_BeatmapAlreadyInMappool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The beatmap does not exist!.
+        /// </summary>
+        public static string Error_BeatmapIdNotFound {
+            get {
+                return ResourceManager.GetString("Error_BeatmapIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The entered id is not a valid number!.
+        /// </summary>
+        public static string Error_IdIsNotNumber {
+            get {
+                return ResourceManager.GetString("Error_IdIsNotNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whoops!.
+        /// </summary>
+        public static string Error_Title {
+            get {
+                return ResourceManager.GetString("Error_Title", resourceCulture);
             }
         }
         
@@ -207,6 +270,60 @@ namespace Osu.Tournament.Properties {
         public static string MainView_Teams {
             get {
                 return ResourceManager.GetString("MainView_Teams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a beatmap.
+        /// </summary>
+        public static string MappoolView_AddBeatmap {
+            get {
+                return ResourceManager.GetString("MappoolView_AddBeatmap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beatmap could not be deleted because the mappool is used in a room..
+        /// </summary>
+        public static string MappoolView_DeleteBeatmapErrorMappoolInUse {
+            get {
+                return ResourceManager.GetString("MappoolView_DeleteBeatmapErrorMappoolInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the beatmap?.
+        /// </summary>
+        public static string MappoolView_DeleteBeatmapMessage {
+            get {
+                return ResourceManager.GetString("MappoolView_DeleteBeatmapMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete beatmap.
+        /// </summary>
+        public static string MappoolView_DeleteBeatmapTitle {
+            get {
+                return ResourceManager.GetString("MappoolView_DeleteBeatmapTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the beatmap id (Must be a valid number). You can use &apos;;&apos; as a separator.
+        /// </summary>
+        public static string MappoolView_EnterBeatmapIdMessage {
+            get {
+                return ResourceManager.GetString("MappoolView_EnterBeatmapIdMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Beatmap.
+        /// </summary>
+        public static string MappoolView_EnterBeatmapIdTitle {
+            get {
+                return ResourceManager.GetString("MappoolView_EnterBeatmapIdTitle", resourceCulture);
             }
         }
         

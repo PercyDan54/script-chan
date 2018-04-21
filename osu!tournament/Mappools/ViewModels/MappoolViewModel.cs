@@ -71,12 +71,12 @@ namespace Osu.Mvvm.Mappools.ViewModels
             // If the osu!api is not valid
             if (!OsuApi.Valid)
                 // Error
-                Dialog.ShowDialog("Whoops!", "The osu!api key is not valid!");
+                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_ApiKeyInvalid);
             // Else
             else
             {
                 // Get an input
-                string input = await Dialog.ShowInput("Add Beatmap", "Enter the beatmap id (Must be a valid number). You can use ';' as a separator");
+                string input = await Dialog.ShowInput(Tournament.Properties.Resources.MappoolView_EnterBeatmapIdTitle, Tournament.Properties.Resources.MappoolView_EnterBeatmapIdMessage);
 
                 // If something was entered
                 if (!string.IsNullOrEmpty(input))
@@ -100,14 +100,14 @@ namespace Osu.Mvvm.Mappools.ViewModels
                         long id = -1;
                         if (!long.TryParse(map, out id))
                             // Error
-                            Dialog.ShowDialog("Whoops!", "The entered id is not a valid number!");
+                            Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_IdIsNotNumber);
                         // Else
                         else
                         {
                             // If the beatmap already exists in the mappool
                             if (mappool.Pool.ContainsKey(id))
                                 // Error
-                                Dialog.ShowDialog("Whoops!", "The beatmap already exists!");
+                                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_BeatmapAlreadyInMappool);
                             // Else
                             else
                             {
@@ -117,7 +117,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
                                 // Beatmap doesn't exist
                                 if (osu_beatmap == null)
                                     // Error
-                                    Dialog.ShowDialog("Whoops!", "The beatmap does not exist!");
+                                    Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_BeatmapIdNotFound);
                                 // Beatmap exists
                                 else
                                 {
@@ -150,12 +150,12 @@ namespace Osu.Mvvm.Mappools.ViewModels
         /// </summary>
         public async void Delete(BeatmapViewModel model)
         {
-            if (await Dialog.ShowConfirmation("Delete beatmap", "Are you sure you want to delete the beatmap \"" + model.DisplayName + "\"?"))
+            if (await Dialog.ShowConfirmation(Tournament.Properties.Resources.MappoolView_DeleteBeatmapTitle, Tournament.Properties.Resources.MappoolView_DeleteBeatmapMessage))
             {
                 // Check all rooms if the mappool is already in use
                 if (Room.Rooms.Values.ToList().Any(x => x.Mappool == mappool))
                 {
-                    Dialog.ShowDialog("Delete beatmap", "Beatmap could not be deleted because the mappool is used in a room.");
+                    Dialog.ShowDialog(Tournament.Properties.Resources.MappoolView_DeleteBeatmapTitle, Tournament.Properties.Resources.MappoolView_DeleteBeatmapErrorMappoolInUse);
                     return;
                 }
                 

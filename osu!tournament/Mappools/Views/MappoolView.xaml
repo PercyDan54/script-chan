@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
+    xmlns:p="clr-namespace:Osu.Tournament.Properties"
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="500">
@@ -27,6 +28,6 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <Button x:Name="AddBeatmap" Content="Add a beatmap" Padding="0" Margin="0" Grid.Row="0" />
+        <Button x:Name="AddBeatmap" Content="{x:Static p:Resources.MappoolView_AddBeatmap}" Padding="0" Margin="0" Grid.Row="0" />
     </Grid>
 </UserControl>

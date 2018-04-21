@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Button_Add" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
   <data name="Button_Connect" xml:space="preserve">
     <value>Verbinden</value>
+  </data>
+  <data name="Button_Delete" xml:space="preserve">
+    <value>Löschen</value>
   </data>
   <data name="Button_Disconnect" xml:space="preserve">
     <value>Trennen</value>
@@ -134,6 +140,21 @@
   </data>
   <data name="ErrorView_Status" xml:space="preserve">
     <value>osu!status Twitter öffnen</value>
+  </data>
+  <data name="Error_ApiKeyInvalid" xml:space="preserve">
+    <value>API Key ist ungültig!</value>
+  </data>
+  <data name="Error_BeatmapAlreadyInMappool" xml:space="preserve">
+    <value>Die eingegebene Beatmap ist schon im Mappool vorhanden!</value>
+  </data>
+  <data name="Error_BeatmapIdNotFound" xml:space="preserve">
+    <value>Die eingegebene Beatmap existiert nicht!</value>
+  </data>
+  <data name="Error_IdIsNotNumber" xml:space="preserve">
+    <value>Die eingegebene ID ist keine Nummer!</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Hoppla!</value>
   </data>
   <data name="General_Password" xml:space="preserve">
     <value>Passwort</value>
@@ -162,6 +183,24 @@
   </data>
   <data name="MainView_Teams" xml:space="preserve">
     <value>Teams</value>
+  </data>
+  <data name="MappoolView_AddBeatmap" xml:space="preserve">
+    <value>Neue Beatmap hinzufügen</value>
+  </data>
+  <data name="MappoolView_DeleteBeatmapErrorMappoolInUse" xml:space="preserve">
+    <value>Beatmap konnte nicht gelöscht werden weil der Mappool gerade in einem Raum benutzt wird.</value>
+  </data>
+  <data name="MappoolView_DeleteBeatmapMessage" xml:space="preserve">
+    <value>Soll die Beatmap wirklich gelöscht werden?</value>
+  </data>
+  <data name="MappoolView_DeleteBeatmapTitle" xml:space="preserve">
+    <value>Beatmap löschen</value>
+  </data>
+  <data name="MappoolView_EnterBeatmapIdMessage" xml:space="preserve">
+    <value>Gebe eine Beatmap ID ein (Muss eine Numer sein). Mehrere IDs können durch ';' getrennt eingegeben werden.</value>
+  </data>
+  <data name="MappoolView_EnterBeatmapIdTitle" xml:space="preserve">
+    <value>Beatmap hinzufügen</value>
   </data>
   <data name="OptionsView_AdminWebhook" xml:space="preserve">
     <value>Admin Webhook (Benötigt um Webhooks zu verwenden)</value>
