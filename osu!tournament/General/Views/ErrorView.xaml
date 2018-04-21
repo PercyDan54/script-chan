@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
+    xmlns:p="clr-namespace:Osu.Tournament.Properties"
     Icon="{Binding Icon}"
     Title="{Binding DisplayName}"
     TitleCaps="False"
@@ -30,8 +31,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Label x:Name="ActiveItemName" Content="API is not answering :(" FontSize="20" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" />
-        <Button x:Name="CheckOsuStatus" Content="Check osu!status twitter" Grid.Row="1" Margin="2"/>
-        <Button x:Name="QuitApplication" Content="Close and try again later" Grid.Row="2" Margin="2"/>
+        <Label x:Name="ActiveItemName" Content="{x:Static p:Resources.ErrorView_Message}" FontSize="20" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" />
+        <Button x:Name="CheckOsuStatus" Content="{x:Static p:Resources.ErrorView_Status}" Grid.Row="1" Margin="2"/>
+        <Button x:Name="QuitApplication" Content="{x:Static p:Resources.ErrorView_Close}" Grid.Row="2" Margin="2"/>
     </Grid>
 </controls:MetroWindow>

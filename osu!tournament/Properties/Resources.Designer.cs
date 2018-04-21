@@ -88,6 +88,33 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close and try again later.
+        /// </summary>
+        public static string ErrorView_Close {
+            get {
+                return ResourceManager.GetString("ErrorView_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to API is not answering :(.
+        /// </summary>
+        public static string ErrorView_Message {
+            get {
+                return ResourceManager.GetString("ErrorView_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check osu!status twitter.
+        /// </summary>
+        public static string ErrorView_Status {
+            get {
+                return ResourceManager.GetString("ErrorView_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string General_Password {

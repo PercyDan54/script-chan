@@ -126,6 +126,15 @@
   <data name="Button_Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="ErrorView_Close" xml:space="preserve">
+    <value>Close and try again later</value>
+  </data>
+  <data name="ErrorView_Message" xml:space="preserve">
+    <value>API is not answering :(</value>
+  </data>
+  <data name="ErrorView_Status" xml:space="preserve">
+    <value>Check osu!status twitter</value>
+  </data>
   <data name="General_Password" xml:space="preserve">
     <value>Password</value>
   </data>

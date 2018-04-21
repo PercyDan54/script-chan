@@ -126,6 +126,15 @@
   <data name="Button_Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
+  <data name="ErrorView_Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="ErrorView_Message" xml:space="preserve">
+    <value>API ist nicht erreichbar :(</value>
+  </data>
+  <data name="ErrorView_Status" xml:space="preserve">
+    <value>osu!status Twitter öffnen</value>
+  </data>
   <data name="General_Password" xml:space="preserve">
     <value>Passwort</value>
   </data>
