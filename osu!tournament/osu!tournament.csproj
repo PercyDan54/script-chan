@@ -55,6 +55,9 @@
     <Reference Include="MahApps.Metro, Version=1.6.0.362, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Octicons, Version=2.2.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Octicons.2.2.0\lib\net45\MahApps.Metro.IconPacks.Octicons.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -80,6 +83,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="AutoUpdate\UpdateManager.cs" />
     <Compile Include="General\ViewModels\ErrorViewModel.cs" />
     <Compile Include="Mappools\ViewModels\BeatmapModViewModel.cs" />
     <Compile Include="Mappools\ViewModels\BeatmapViewModel.cs" />

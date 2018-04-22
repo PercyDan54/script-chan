@@ -20,6 +20,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Osu.Api.Enums;
 using System.Windows.Markup;
+using Osu.Tournament.AutoUpdate;
 
 namespace Osu.Mvvm
 {
@@ -149,7 +150,7 @@ namespace Osu.Mvvm
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            if(Dialog.Window != null)
+            if(Dialog.Window != null && !UpdateManager.GetInstance().HasUpdated)
             {
                 Settings.Default.WindowSize = new System.Drawing.Size((int)Dialog.Window.Width, (int)Dialog.Window.Height);
                 Settings.Default.WindowLocation = new System.Drawing.Point((int)Dialog.Window.Left, (int)Dialog.Window.Top);

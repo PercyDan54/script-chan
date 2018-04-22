@@ -184,6 +184,9 @@
   <data name="MainView_Teams" xml:space="preserve">
     <value>Teams</value>
   </data>
+  <data name="MainView_UpdateAvailable" xml:space="preserve">
+    <value>Es ist eine neue Version verfügbar. Klick hier um das Update herunterzuladen.</value>
+  </data>
   <data name="MappoolView_AddBeatmap" xml:space="preserve">
     <value>Neue Beatmap hinzufügen</value>
   </data>

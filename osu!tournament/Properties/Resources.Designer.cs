@@ -274,6 +274,15 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update available, click to download..
+        /// </summary>
+        public static string MainView_UpdateAvailable {
+            get {
+                return ResourceManager.GetString("MainView_UpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a beatmap.
         /// </summary>
         public static string MappoolView_AddBeatmap {
