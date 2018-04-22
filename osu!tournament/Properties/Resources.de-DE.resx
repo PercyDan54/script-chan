@@ -250,4 +250,13 @@
   <data name="OptionsView_RoomOptions" xml:space="preserve">
     <value>Raum</value>
   </data>
+  <data name="Update_NewVersionError" xml:space="preserve">
+    <value>Ein Fehler ist während des Downloads aufgetreten. Bitte starte die App als Administrator.</value>
+  </data>
+  <data name="Update_NewVersionMessage" xml:space="preserve">
+    <value>Soll die neue Version heruntergeladen werden? Bestätigen schließt die App.</value>
+  </data>
+  <data name="Update_NewVersionTitle" xml:space="preserve">
+    <value>Neue Version verfügbar</value>
+  </data>
 </root>

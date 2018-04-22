@@ -470,5 +470,32 @@ namespace Osu.Tournament.Properties {
                 return ResourceManager.GetString("OptionsView_RoomOptions", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured during the download, make sure you are running the tool with administrator rights..
+        /// </summary>
+        public static string Update_NewVersionError {
+            get {
+                return ResourceManager.GetString("Update_NewVersionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to download the latest version? The application will close..
+        /// </summary>
+        public static string Update_NewVersionMessage {
+            get {
+                return ResourceManager.GetString("Update_NewVersionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New version available.
+        /// </summary>
+        public static string Update_NewVersionTitle {
+            get {
+                return ResourceManager.GetString("Update_NewVersionTitle", resourceCulture);
+            }
+        }
     }
 }

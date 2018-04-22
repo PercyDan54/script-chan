@@ -46,8 +46,8 @@ namespace Osu.Tournament.AutoUpdate
 
         public async void DownloadLatestVersion()
         {
-            if (await Dialog.ShowConfirmation("New version available",
-                "Would you like to download the latest version? The application will close."))
+            if (await Dialog.ShowConfirmation(Tournament.Properties.Resources.Update_NewVersionTitle,
+                Tournament.Properties.Resources.Update_NewVersionMessage))
             {
                 if (_service.DownloadNewVersion())
                 {
@@ -56,7 +56,7 @@ namespace Osu.Tournament.AutoUpdate
                 }
                 else
                 {
-                    Dialog.ShowDialog("Error", "An error occured during the download, make sure you are running the tool with administrator rights.");
+                    Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Update_NewVersionError);
                 }
             }
         }
