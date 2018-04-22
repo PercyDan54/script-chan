@@ -120,8 +120,14 @@
   <data name="Button_Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="Button_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="Button_Connect" xml:space="preserve">
     <value>Connect</value>
+  </data>
+  <data name="Button_Copy" xml:space="preserve">
+    <value>Copy</value>
   </data>
   <data name="Button_Delete" xml:space="preserve">
     <value>Delete</value>
@@ -129,8 +135,23 @@
   <data name="Button_Disconnect" xml:space="preserve">
     <value>Disconnect</value>
   </data>
+  <data name="Button_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Button_Manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
   <data name="Button_Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Button_Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Button_Warmup" xml:space="preserve">
+    <value>Warm-up</value>
+  </data>
+  <data name="ChatView_Commands" xml:space="preserve">
+    <value>Commands</value>
   </data>
   <data name="ErrorView_Close" xml:space="preserve">
     <value>Close and try again later</value>
@@ -144,6 +165,9 @@
   <data name="Error_ApiKeyInvalid" xml:space="preserve">
     <value>The osu!api key is not valid!</value>
   </data>
+  <data name="Error_BanchoDisconnect" xml:space="preserve">
+    <value>You're not connected to bancho!</value>
+  </data>
   <data name="Error_BeatmapAlreadyInMappool" xml:space="preserve">
     <value>The beatmap is already in this mappool!</value>
   </data>
@@ -156,6 +180,9 @@
   <data name="Error_MissingAcronym" xml:space="preserve">
     <value>Do not forget to set the acronym of your game before creating it!</value>
   </data>
+  <data name="Error_NotImplemented" xml:space="preserve">
+    <value>This feature is not implemented yet!</value>
+  </data>
   <data name="Error_PlayerAlreadyInTeam" xml:space="preserve">
     <value>The player already exists!</value>
   </data>
@@ -164,6 +191,12 @@
   </data>
   <data name="Error_RoomDoesNotExist" xml:space="preserve">
     <value>The room doesn't exist in the view model</value>
+  </data>
+  <data name="Error_RoomHasNoGames" xml:space="preserve">
+    <value>The room has no played games!</value>
+  </data>
+  <data name="Error_RoomHasNoPlayers" xml:space="preserve">
+    <value>The room has no players!</value>
   </data>
   <data name="Error_SameTeam" xml:space="preserve">
     <value>You can't use the same team twice!</value>
@@ -174,6 +207,15 @@
   <data name="Error_ValueNotLetter" xml:space="preserve">
     <value>Please, enter a letter!</value>
   </data>
+  <data name="GamesView_SelectMappoolOrManual" xml:space="preserve">
+    <value>Select a mappool in the list or choose manual mode</value>
+  </data>
+  <data name="GamesView_UncheckGames" xml:space="preserve">
+    <value>And uncheck the games you wish to ignore</value>
+  </data>
+  <data name="GameView_MapNotFound" xml:space="preserve">
+    <value>Name not found!</value>
+  </data>
   <data name="General_Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -183,6 +225,9 @@
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\favicon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IrcView_SelectPlayers" xml:space="preserve">
+    <value>Select the players you wish to send messages to</value>
   </data>
   <data name="LoggerConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logger.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -222,6 +267,9 @@
   </data>
   <data name="MappoolView_EnterBeatmapIdTitle" xml:space="preserve">
     <value>Add Beatmap</value>
+  </data>
+  <data name="NewMessage" xml:space="preserve">
+    <value>------------------ NEW MESSAGES ------------------</value>
   </data>
   <data name="OptionsView_AdminWebhook" xml:space="preserve">
     <value>Admin webhook (needed to enable the feature)</value>
@@ -340,6 +388,12 @@
   <data name="OvView_WelcomeMessage" xml:space="preserve">
     <value>Welcome Message</value>
   </data>
+  <data name="Success_MessageSent" xml:space="preserve">
+    <value>The message has been successfully sent</value>
+  </data>
+  <data name="Success_Title" xml:space="preserve">
+    <value>Good!</value>
+  </data>
   <data name="TeamsView_AddTeamMessage" xml:space="preserve">
     <value>Enter the team name</value>
   </data>
@@ -372,6 +426,12 @@
   </data>
   <data name="Wait_CreatingRoom" xml:space="preserve">
     <value>Creating the room...</value>
+  </data>
+  <data name="Wait_Export" xml:space="preserve">
+    <value>Exporting the room...</value>
+  </data>
+  <data name="Wait_SendingMessage" xml:space="preserve">
+    <value>Sending the message...</value>
   </data>
   <data name="Wait_Title" xml:space="preserve">
     <value>Please wait</value>

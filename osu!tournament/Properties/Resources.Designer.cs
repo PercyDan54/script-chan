@@ -70,11 +70,29 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Button_Clear {
+            get {
+                return ResourceManager.GetString("Button_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect.
         /// </summary>
         public static string Button_Connect {
             get {
                 return ResourceManager.GetString("Button_Connect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string Button_Copy {
+            get {
+                return ResourceManager.GetString("Button_Copy", resourceCulture);
             }
         }
         
@@ -97,6 +115,24 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Button_Export {
+            get {
+                return ResourceManager.GetString("Button_Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string Button_Manual {
+            get {
+                return ResourceManager.GetString("Button_Manual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Button_Save {
@@ -106,11 +142,47 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string Button_Send {
+            get {
+                return ResourceManager.GetString("Button_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warm-up.
+        /// </summary>
+        public static string Button_Warmup {
+            get {
+                return ResourceManager.GetString("Button_Warmup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commands.
+        /// </summary>
+        public static string ChatView_Commands {
+            get {
+                return ResourceManager.GetString("ChatView_Commands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The osu!api key is not valid!.
         /// </summary>
         public static string Error_ApiKeyInvalid {
             get {
                 return ResourceManager.GetString("Error_ApiKeyInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re not connected to bancho!.
+        /// </summary>
+        public static string Error_BanchoDisconnect {
+            get {
+                return ResourceManager.GetString("Error_BanchoDisconnect", resourceCulture);
             }
         }
         
@@ -151,6 +223,15 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This feature is not implemented yet!.
+        /// </summary>
+        public static string Error_NotImplemented {
+            get {
+                return ResourceManager.GetString("Error_NotImplemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The player already exists!.
         /// </summary>
         public static string Error_PlayerAlreadyInTeam {
@@ -174,6 +255,24 @@ namespace Osu.Tournament.Properties {
         public static string Error_RoomDoesNotExist {
             get {
                 return ResourceManager.GetString("Error_RoomDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The room has no played games!.
+        /// </summary>
+        public static string Error_RoomHasNoGames {
+            get {
+                return ResourceManager.GetString("Error_RoomHasNoGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The room has no players!.
+        /// </summary>
+        public static string Error_RoomHasNoPlayers {
+            get {
+                return ResourceManager.GetString("Error_RoomHasNoPlayers", resourceCulture);
             }
         }
         
@@ -232,6 +331,33 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select a mappool in the list or choose manual mode.
+        /// </summary>
+        public static string GamesView_SelectMappoolOrManual {
+            get {
+                return ResourceManager.GetString("GamesView_SelectMappoolOrManual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to And uncheck the games you wish to ignore.
+        /// </summary>
+        public static string GamesView_UncheckGames {
+            get {
+                return ResourceManager.GetString("GamesView_UncheckGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name not found!.
+        /// </summary>
+        public static string GameView_MapNotFound {
+            get {
+                return ResourceManager.GetString("GameView_MapNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string General_Password {
@@ -256,6 +382,15 @@ namespace Osu.Tournament.Properties {
             get {
                 object obj = ResourceManager.GetObject("Icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the players you wish to send messages to.
+        /// </summary>
+        public static string IrcView_SelectPlayers {
+            get {
+                return ResourceManager.GetString("IrcView_SelectPlayers", resourceCulture);
             }
         }
         
@@ -387,6 +522,15 @@ namespace Osu.Tournament.Properties {
         public static string MappoolView_EnterBeatmapIdTitle {
             get {
                 return ResourceManager.GetString("MappoolView_EnterBeatmapIdTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ------------------ NEW MESSAGES ------------------.
+        /// </summary>
+        public static string NewMessage {
+            get {
+                return ResourceManager.GetString("NewMessage", resourceCulture);
             }
         }
         
@@ -742,6 +886,24 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The message has been successfully sent.
+        /// </summary>
+        public static string Success_MessageSent {
+            get {
+                return ResourceManager.GetString("Success_MessageSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Good!.
+        /// </summary>
+        public static string Success_Title {
+            get {
+                return ResourceManager.GetString("Success_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter the team name.
         /// </summary>
         public static string TeamsView_AddTeamMessage {
@@ -837,6 +999,24 @@ namespace Osu.Tournament.Properties {
         public static string Wait_CreatingRoom {
             get {
                 return ResourceManager.GetString("Wait_CreatingRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting the room....
+        /// </summary>
+        public static string Wait_Export {
+            get {
+                return ResourceManager.GetString("Wait_Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sending the message....
+        /// </summary>
+        public static string Wait_SendingMessage {
+            get {
+                return ResourceManager.GetString("Wait_SendingMessage", resourceCulture);
             }
         }
         
