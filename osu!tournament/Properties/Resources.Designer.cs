@@ -142,11 +142,47 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do not forget to set the acronym of your game before creating it!.
+        /// </summary>
+        public static string Error_MissingAcronym {
+            get {
+                return ResourceManager.GetString("Error_MissingAcronym", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The room doesn&apos;t exist in the view model.
+        /// </summary>
+        public static string Error_RoomDoesNotExist {
+            get {
+                return ResourceManager.GetString("Error_RoomDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can&apos;t use the same team twice!.
+        /// </summary>
+        public static string Error_SameTeam {
+            get {
+                return ResourceManager.GetString("Error_SameTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Whoops!.
         /// </summary>
         public static string Error_Title {
             get {
                 return ResourceManager.GetString("Error_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please, enter a letter!.
+        /// </summary>
+        public static string Error_ValueNotLetter {
+            get {
+                return ResourceManager.GetString("Error_ValueNotLetter", resourceCulture);
             }
         }
         
@@ -472,6 +508,222 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Batch.
+        /// </summary>
+        public static string OvRoomView_Batch {
+            get {
+                return ResourceManager.GetString("OvRoomView_Batch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string OvRoomView_Create {
+            get {
+                return ResourceManager.GetString("OvRoomView_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link.
+        /// </summary>
+        public static string OvRoomView_Link {
+            get {
+                return ResourceManager.GetString("OvRoomView_Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next team to pick.
+        /// </summary>
+        public static string OvRoomView_NextTeamPick {
+            get {
+                return ResourceManager.GetString("OvRoomView_NextTeamPick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scores.
+        /// </summary>
+        public static string OvRoomView_Scores {
+            get {
+                return ResourceManager.GetString("OvRoomView_Scores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Winner.
+        /// </summary>
+        public static string OvRoomView_Winner {
+            get {
+                return ResourceManager.GetString("OvRoomView_Winner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acronym.
+        /// </summary>
+        public static string OvView_Acronym {
+            get {
+                return ResourceManager.GetString("OvView_Acronym", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admins (addref).
+        /// </summary>
+        public static string OvView_Admins {
+            get {
+                return ResourceManager.GetString("OvView_Admins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can leave it empty or add usernames separated by ;.
+        /// </summary>
+        public static string OvView_AdminsWatermark {
+            get {
+                return ResourceManager.GetString("OvView_AdminsWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can select a batch letter to filter your matches.
+        /// </summary>
+        public static string OvView_BatchFilterWatermark {
+            get {
+                return ResourceManager.GetString("OvView_BatchFilterWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch letter.
+        /// </summary>
+        public static string OvView_BatchLetter {
+            get {
+                return ResourceManager.GetString("OvView_BatchLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blue Team.
+        /// </summary>
+        public static string OvView_BlueTeam {
+            get {
+                return ResourceManager.GetString("OvView_BlueTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a match.
+        /// </summary>
+        public static string OvView_CreateMatch {
+            get {
+                return ResourceManager.GetString("OvView_CreateMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create the match in the overview.
+        /// </summary>
+        public static string OvView_CreateMatchInOverview {
+            get {
+                return ResourceManager.GetString("OvView_CreateMatchInOverview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default map id.
+        /// </summary>
+        public static string OvView_DefaultMapId {
+            get {
+                return ResourceManager.GetString("OvView_DefaultMapId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game mode.
+        /// </summary>
+        public static string OvView_GameMode {
+            get {
+                return ResourceManager.GetString("OvView_GameMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Players per team.
+        /// </summary>
+        public static string OvView_PlayersPerTeam {
+            get {
+                return ResourceManager.GetString("OvView_PlayersPerTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a team....
+        /// </summary>
+        public static string OvView_PleaseSelectTeam {
+            get {
+                return ResourceManager.GetString("OvView_PleaseSelectTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Team.
+        /// </summary>
+        public static string OvView_RedTeam {
+            get {
+                return ResourceManager.GetString("OvView_RedTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room configuration.
+        /// </summary>
+        public static string OvView_RoomConfiguration {
+            get {
+                return ResourceManager.GetString("OvView_RoomConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Score mode.
+        /// </summary>
+        public static string OvView_ScoreMode {
+            get {
+                return ResourceManager.GetString("OvView_ScoreMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        public static string OvView_Size {
+            get {
+                return ResourceManager.GetString("OvView_Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team mode.
+        /// </summary>
+        public static string OvView_TeamMode {
+            get {
+                return ResourceManager.GetString("OvView_TeamMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome Message.
+        /// </summary>
+        public static string OvView_WelcomeMessage {
+            get {
+                return ResourceManager.GetString("OvView_WelcomeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured during the download, make sure you are running the tool with administrator rights..
         /// </summary>
         public static string Update_NewVersionError {
@@ -495,6 +747,24 @@ namespace Osu.Tournament.Properties {
         public static string Update_NewVersionTitle {
             get {
                 return ResourceManager.GetString("Update_NewVersionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating the room....
+        /// </summary>
+        public static string Wait_CreatingRoom {
+            get {
+                return ResourceManager.GetString("Wait_CreatingRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait.
+        /// </summary>
+        public static string Wait_Title {
+            get {
+                return ResourceManager.GetString("Wait_Title", resourceCulture);
             }
         }
     }

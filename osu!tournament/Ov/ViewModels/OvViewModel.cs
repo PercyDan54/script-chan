@@ -207,7 +207,7 @@ namespace Osu.Mvvm.Ov.ViewModels
                 }
                 else
                 {
-                    Dialog.ShowDialog("Whoops!", "Please, enter a letter!");
+                    Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_ValueNotLetter);
                 }
             }
         }
@@ -255,7 +255,7 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             if(selectedRedTeam.Name == selectedBlueTeam.Name)
             {
-                Dialog.ShowDialog("Whoops!", "You can't use the same team twice!");
+                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_SameTeam);
             }
             else
             {

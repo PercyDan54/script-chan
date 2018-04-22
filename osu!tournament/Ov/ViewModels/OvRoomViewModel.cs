@@ -276,11 +276,11 @@ namespace Osu.Mvvm.Ov.ViewModels
                 {
                     if (room.Status != RoomStatus.Finished)
                     {
-                        return "Next team to pick : " + ((TeamVs)room.Ranking).NextTeam.Name;
+                        return Tournament.Properties.Resources.OvRoomView_NextTeamPick + " : " + ((TeamVs)room.Ranking).NextTeam.Name;
                     }
                     else
                     {
-                        return "Winner : " + ((((TeamVs)room.Ranking).Red.Points + ((TeamVs)room.Ranking).Red.PointAddition) > (((TeamVs)room.Ranking).Blue.Points + ((TeamVs)room.Ranking).Blue.PointAddition) ? ((TeamVs)room.Ranking).Red.Name : ((TeamVs)room.Ranking).Blue.Name);
+                        return Tournament.Properties.Resources.OvRoomView_Winner + " : " + ((((TeamVs)room.Ranking).Red.Points + ((TeamVs)room.Ranking).Red.PointAddition) > (((TeamVs)room.Ranking).Blue.Points + ((TeamVs)room.Ranking).Blue.PointAddition) ? ((TeamVs)room.Ranking).Red.Name : ((TeamVs)room.Ranking).Blue.Name);
                     }
                 }
                 else
@@ -298,9 +298,9 @@ namespace Osu.Mvvm.Ov.ViewModels
             get
             {
                 if (IsCreated)
-                    return "Link";
+                    return Tournament.Properties.Resources.OvRoomView_Link;
                 else
-                    return "Create";
+                    return Tournament.Properties.Resources.OvRoomView_Create;
             }
         }
 
@@ -326,7 +326,7 @@ namespace Osu.Mvvm.Ov.ViewModels
             get
             {
                 if (IsCreated && room.Ranking.GetType() == typeof(TeamVs))
-                    return "Scores :";
+                    return Tournament.Properties.Resources.OvRoomView_Scores + " :";
                 else
                     return string.Empty;
             }
@@ -340,7 +340,7 @@ namespace Osu.Mvvm.Ov.ViewModels
             get
             {
                 if (!IsCreated)
-                    return "Batch " + batch;
+                    return Tournament.Properties.Resources.OvRoomView_Batch + " " + batch;
                 else
                     return string.Empty;
             }
@@ -406,11 +406,11 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             if(string.IsNullOrEmpty(InfosHelper.TourneyInfos.Acronym))
             {
-                Dialog.ShowDialog("Whoops!", "Do not forget to set the acronym of your game before creating it!");
+                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_MissingAcronym);
             }
             else
             {
-                await Dialog.ShowProgress("Please wait", "Creating the room...");
+                await Dialog.ShowProgress(Tournament.Properties.Resources.Wait_Title, Tournament.Properties.Resources.Wait_CreatingRoom);
                 OsuIrcBot.GetInstancePrivate().CreateMatch(blueteam, redteam);
             }
         }
@@ -445,7 +445,7 @@ namespace Osu.Mvvm.Ov.ViewModels
                 }
                 else
                 {
-                    Dialog.ShowDialog("Whoops!", "The room doesn't exist in the view model");
+                    Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_RoomDoesNotExist);
                 }
             }
         }

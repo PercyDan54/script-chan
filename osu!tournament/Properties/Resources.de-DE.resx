@@ -153,8 +153,20 @@
   <data name="Error_IdIsNotNumber" xml:space="preserve">
     <value>Die eingegebene ID ist keine Nummer!</value>
   </data>
+  <data name="Error_MissingAcronym" xml:space="preserve">
+    <value>Es muss ein Akronym angegeben werden, um ein Spiel zu erstellen!</value>
+  </data>
+  <data name="Error_RoomDoesNotExist" xml:space="preserve">
+    <value>Raum nicht gefunden</value>
+  </data>
+  <data name="Error_SameTeam" xml:space="preserve">
+    <value>Bitte wähle zwei unterschiedliche Teams aus!</value>
+  </data>
   <data name="Error_Title" xml:space="preserve">
     <value>Hoppla!</value>
+  </data>
+  <data name="Error_ValueNotLetter" xml:space="preserve">
+    <value>Bitte gebe einen Buchstaben ein!</value>
   </data>
   <data name="General_Password" xml:space="preserve">
     <value>Passwort</value>
@@ -250,6 +262,78 @@
   <data name="OptionsView_RoomOptions" xml:space="preserve">
     <value>Raum</value>
   </data>
+  <data name="OvRoomView_Batch" xml:space="preserve">
+    <value>Gruppe</value>
+  </data>
+  <data name="OvRoomView_Create" xml:space="preserve">
+    <value>Erstellen</value>
+  </data>
+  <data name="OvRoomView_Link" xml:space="preserve">
+    <value>Öffnen</value>
+  </data>
+  <data name="OvRoomView_NextTeamPick" xml:space="preserve">
+    <value>Wählt als nächstes</value>
+  </data>
+  <data name="OvRoomView_Scores" xml:space="preserve">
+    <value>Ergebnisse</value>
+  </data>
+  <data name="OvRoomView_Winner" xml:space="preserve">
+    <value>Gewinner</value>
+  </data>
+  <data name="OvView_Acronym" xml:space="preserve">
+    <value>Kürzel</value>
+  </data>
+  <data name="OvView_Admins" xml:space="preserve">
+    <value>Admins (addref)</value>
+  </data>
+  <data name="OvView_AdminsWatermark" xml:space="preserve">
+    <value>Angabe optional. Mehrere Admins können durch ';' getrennt angegeben werden.</value>
+  </data>
+  <data name="OvView_BatchFilterWatermark" xml:space="preserve">
+    <value>Wähle eine Gruppe aus, um Spiele zu filtern</value>
+  </data>
+  <data name="OvView_BatchLetter" xml:space="preserve">
+    <value>Gruppe</value>
+  </data>
+  <data name="OvView_BlueTeam" xml:space="preserve">
+    <value>Blaues Team</value>
+  </data>
+  <data name="OvView_CreateMatch" xml:space="preserve">
+    <value>Spiel Konfiguration</value>
+  </data>
+  <data name="OvView_CreateMatchInOverview" xml:space="preserve">
+    <value>Spiel zur Übersicht hinzufügen</value>
+  </data>
+  <data name="OvView_DefaultMapId" xml:space="preserve">
+    <value>Standard Beatmap ID</value>
+  </data>
+  <data name="OvView_GameMode" xml:space="preserve">
+    <value>Spiel Modus</value>
+  </data>
+  <data name="OvView_PlayersPerTeam" xml:space="preserve">
+    <value>Spieler pro Team</value>
+  </data>
+  <data name="OvView_PleaseSelectTeam" xml:space="preserve">
+    <value>Bitte wähle ein Team aus...</value>
+  </data>
+  <data name="OvView_RedTeam" xml:space="preserve">
+    <value>Rotes Team</value>
+  </data>
+  <data name="OvView_RoomConfiguration" xml:space="preserve">
+    <value>Raum Konfiguration</value>
+  </data>
+  <data name="OvView_ScoreMode" xml:space="preserve">
+    <value>Score Modus</value>
+  </data>
+  <data name="OvView_Size" xml:space="preserve">
+    <value>Größe</value>
+  </data>
+  <data name="OvView_TeamMode" xml:space="preserve">
+    <value>Team Modus</value>
+  </data>
+  <data name="OvView_WelcomeMessage" xml:space="preserve">
+    <value>Willkommensnachricht</value>
+  </data>
   <data name="Update_NewVersionError" xml:space="preserve">
     <value>Ein Fehler ist während des Downloads aufgetreten. Bitte starte die App als Administrator.</value>
   </data>
@@ -258,5 +342,11 @@
   </data>
   <data name="Update_NewVersionTitle" xml:space="preserve">
     <value>Neue Version verfügbar</value>
+  </data>
+  <data name="Wait_CreatingRoom" xml:space="preserve">
+    <value>Raum wird erstellt...</value>
+  </data>
+  <data name="Wait_Title" xml:space="preserve">
+    <value>Bitte warten</value>
   </data>
 </root>
