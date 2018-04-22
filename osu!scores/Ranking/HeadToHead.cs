@@ -434,9 +434,13 @@ namespace Osu.Scores
                 Embed embed = new Embed();
                 embed.Author = new Author { Name = this.Room.Name, Url = "https://osu.ppy.sh/community/matches/" + this.room.Id, IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png" };
                 embed.Color = "6729778";
-                embed.Title = string.Format("{0} won the{1}pick with {2} points", room.Players[firstPlayer.UserId].Username, (bm == null ? " " : " __" + bm.PickType.ToString() + "__ "), string.Format("{0:n0}", firstPlayer.Score));
+
+                var bmMods = "";
+                bm?.PickType.ForEach(m => bmMods += " __" + m.ToString() + "__ ");
+
+                embed.Title = string.Format("{0} won the{1}pick with {2} points", room.Players[firstPlayer.UserId].Username.Replace("_", "\\_"), bmMods, string.Format("{0:n0}", firstPlayer.Score));
                 embed.Thumbnail = new Image { Url = "https://b.ppy.sh/thumb/" + obm.BeatmapSetID + "l.jpg" };
-                embed.Description = string.Format("**{0} - {1} [{2}]**", obm.Artist, obm.Title, obm.Version);
+                embed.Description = string.Format("**{0} - {1} [{2}]**", obm.Artist.Replace("_", "__").Replace("*", "\\*"), obm.Title.Replace("_", "__").Replace("*", "\\*"), obm.Version.Replace("_", "__").Replace("*", "\\*"));
                 embed.Fields = new List<Field>();
 
                 string players = string.Empty;
