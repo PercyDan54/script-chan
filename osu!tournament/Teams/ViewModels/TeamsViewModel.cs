@@ -126,7 +126,7 @@ namespace Osu.Mvvm.Teams.ViewModels
         public async void AddTeam()
         {
             // Get the team name
-            string name = await Dialog.ShowInput("Add a team", "Enter the team name");
+            string name = await Dialog.ShowInput(Tournament.Properties.Resources.TeamsView_AddTeamTitle, Tournament.Properties.Resources.TeamsView_AddTeamMessage);
 
             // If the user entered a name
             if (!string.IsNullOrEmpty(name))

@@ -156,6 +156,12 @@
   <data name="Error_MissingAcronym" xml:space="preserve">
     <value>Do not forget to set the acronym of your game before creating it!</value>
   </data>
+  <data name="Error_PlayerAlreadyInTeam" xml:space="preserve">
+    <value>The player already exists!</value>
+  </data>
+  <data name="Error_PlayerNotFound" xml:space="preserve">
+    <value>The player does not exist!</value>
+  </data>
   <data name="Error_RoomDoesNotExist" xml:space="preserve">
     <value>The room doesn't exist in the view model</value>
   </data>
@@ -333,6 +339,27 @@
   </data>
   <data name="OvView_WelcomeMessage" xml:space="preserve">
     <value>Welcome Message</value>
+  </data>
+  <data name="TeamsView_AddTeamMessage" xml:space="preserve">
+    <value>Enter the team name</value>
+  </data>
+  <data name="TeamsView_AddTeamTitle" xml:space="preserve">
+    <value>Add a team</value>
+  </data>
+  <data name="TeamsView_PleaseSelectTeam" xml:space="preserve">
+    <value>Please select a team or add a new one</value>
+  </data>
+  <data name="TeamsView_TeamNameAsPlayer" xml:space="preserve">
+    <value>Add team name as player</value>
+  </data>
+  <data name="TeamView_AddPlayers" xml:space="preserve">
+    <value>Add players</value>
+  </data>
+  <data name="TeamView_AddPlayersMessage" xml:space="preserve">
+    <value>Enter the players id or name. You can use ';' as a separator</value>
+  </data>
+  <data name="TeamView_AddPlayersTitle" xml:space="preserve">
+    <value>Add player(s)</value>
   </data>
   <data name="Update_NewVersionError" xml:space="preserve">
     <value>An error occured during the download, make sure you are running the tool with administrator rights.</value>

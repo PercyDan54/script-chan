@@ -151,6 +151,24 @@ namespace Osu.Tournament.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The player already exists!.
+        /// </summary>
+        public static string Error_PlayerAlreadyInTeam {
+            get {
+                return ResourceManager.GetString("Error_PlayerAlreadyInTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The player does not exist!.
+        /// </summary>
+        public static string Error_PlayerNotFound {
+            get {
+                return ResourceManager.GetString("Error_PlayerNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The room doesn&apos;t exist in the view model.
         /// </summary>
         public static string Error_RoomDoesNotExist {
@@ -720,6 +738,69 @@ namespace Osu.Tournament.Properties {
         public static string OvView_WelcomeMessage {
             get {
                 return ResourceManager.GetString("OvView_WelcomeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the team name.
+        /// </summary>
+        public static string TeamsView_AddTeamMessage {
+            get {
+                return ResourceManager.GetString("TeamsView_AddTeamMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a team.
+        /// </summary>
+        public static string TeamsView_AddTeamTitle {
+            get {
+                return ResourceManager.GetString("TeamsView_AddTeamTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a team or add a new one.
+        /// </summary>
+        public static string TeamsView_PleaseSelectTeam {
+            get {
+                return ResourceManager.GetString("TeamsView_PleaseSelectTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add team name as player.
+        /// </summary>
+        public static string TeamsView_TeamNameAsPlayer {
+            get {
+                return ResourceManager.GetString("TeamsView_TeamNameAsPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add players.
+        /// </summary>
+        public static string TeamView_AddPlayers {
+            get {
+                return ResourceManager.GetString("TeamView_AddPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the players id or name. You can use &apos;;&apos; as a separator.
+        /// </summary>
+        public static string TeamView_AddPlayersMessage {
+            get {
+                return ResourceManager.GetString("TeamView_AddPlayersMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add player(s).
+        /// </summary>
+        public static string TeamView_AddPlayersTitle {
+            get {
+                return ResourceManager.GetString("TeamView_AddPlayersTitle", resourceCulture);
             }
         }
         

@@ -156,6 +156,12 @@
   <data name="Error_MissingAcronym" xml:space="preserve">
     <value>Es muss ein Akronym angegeben werden, um ein Spiel zu erstellen!</value>
   </data>
+  <data name="Error_PlayerAlreadyInTeam" xml:space="preserve">
+    <value>Dieser Spieler ist bereits im Team!</value>
+  </data>
+  <data name="Error_PlayerNotFound" xml:space="preserve">
+    <value>Spieler nicht gefunden!</value>
+  </data>
   <data name="Error_RoomDoesNotExist" xml:space="preserve">
     <value>Raum nicht gefunden</value>
   </data>
@@ -333,6 +339,27 @@
   </data>
   <data name="OvView_WelcomeMessage" xml:space="preserve">
     <value>Willkommensnachricht</value>
+  </data>
+  <data name="TeamsView_AddTeamMessage" xml:space="preserve">
+    <value>Gebe einen Teamnamen ein.</value>
+  </data>
+  <data name="TeamsView_AddTeamTitle" xml:space="preserve">
+    <value>Team erstellen</value>
+  </data>
+  <data name="TeamsView_PleaseSelectTeam" xml:space="preserve">
+    <value>Bitte wähle ein Team aus oder erstelle eines</value>
+  </data>
+  <data name="TeamsView_TeamNameAsPlayer" xml:space="preserve">
+    <value>Team Name ist Spieler Name</value>
+  </data>
+  <data name="TeamView_AddPlayers" xml:space="preserve">
+    <value>Spieler hinzufügen</value>
+  </data>
+  <data name="TeamView_AddPlayersMessage" xml:space="preserve">
+    <value>Gebe einen Spieler ein (Name oder ID). Mehrere Spieler können durch ';' getrennt eingegeben werden.</value>
+  </data>
+  <data name="TeamView_AddPlayersTitle" xml:space="preserve">
+    <value>Spieler hinzufügen</value>
   </data>
   <data name="Update_NewVersionError" xml:space="preserve">
     <value>Ein Fehler ist während des Downloads aufgetreten. Bitte starte die App als Administrator.</value>
