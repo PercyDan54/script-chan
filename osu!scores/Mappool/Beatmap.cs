@@ -98,14 +98,14 @@ namespace Osu.Scores
         public void AddMod(PickType mod)
         {
             if (pick_type.Contains(mod)) return;
-            if (mod == Scores.PickType.None || mod == Scores.PickType.TieBreaker)
+            if (mod == Scores.PickType.NoMod || mod == Scores.PickType.TieBreaker)
                 pick_type.Clear();
             else if (mod == Scores.PickType.Freemod)
                 pick_type.RemoveAll(x => x != Scores.PickType.DT);
             else if (mod == Scores.PickType.DT)
-                pick_type.RemoveAll(x => x == Scores.PickType.None || x == Scores.PickType.TieBreaker);
+                pick_type.RemoveAll(x => x == Scores.PickType.NoMod || x == Scores.PickType.TieBreaker);
             else
-                pick_type.RemoveAll(x => x == Scores.PickType.None || x == Scores.PickType.Freemod || x == Scores.PickType.TieBreaker);
+                pick_type.RemoveAll(x => x == Scores.PickType.NoMod || x == Scores.PickType.Freemod || x == Scores.PickType.TieBreaker);
 
             pick_type.Add(mod);
 
@@ -122,7 +122,7 @@ namespace Osu.Scores
         {
             pick_type.RemoveAll(x => x == mod);
             if (pick_type.Count == 0)
-                AddMod(Scores.PickType.None);
+                AddMod(Scores.PickType.NoMod);
 
             pick_type = pick_type.OrderBy(x => (int)x).ToList();
 
@@ -145,14 +145,14 @@ namespace Osu.Scores
         /// <returns>an integer</returns>
         public int CompareTo(Beatmap other)
         {
-            if (pick_type.Contains(Scores.PickType.None))
+            if (pick_type.Contains(Scores.PickType.NoMod))
             {
-                if (other.pick_type.Contains(Scores.PickType.None))
+                if (other.pick_type.Contains(Scores.PickType.NoMod))
                     return 0;
                 return -1;
             }
 
-            if (other.pick_type.Contains(Scores.PickType.None))
+            if (other.pick_type.Contains(Scores.PickType.NoMod))
                 return 1;
 
             if (pick_type.Contains(Scores.PickType.TieBreaker))

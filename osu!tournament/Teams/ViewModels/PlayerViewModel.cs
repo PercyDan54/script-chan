@@ -41,7 +41,8 @@ namespace Osu.Mvvm.Teams.ViewModels
         {
             get
             {
-                return Player.Name + " [" + Player.Country + "]";
+                // Double underscore to escape the character
+                return Player.Name.Replace("_", "__") + " [" + Player.Country + "]";
             }
         }
         #endregion

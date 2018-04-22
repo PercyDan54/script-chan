@@ -179,10 +179,7 @@ namespace Osu.Scores
         /// <returns></returns>
         public Embed GenerateBanRecapMessage(Type rankingType)
         {
-            var printTeamVsMode = false;
-
-            if (rankingType == typeof(TeamVs))
-                printTeamVsMode = true;
+            bool printTeamVsMode = rankingType == typeof(TeamVs);
 
             //Check if both bans have been made or if there's a map banned for head to head
             if (CanShowBan(printTeamVsMode))
@@ -196,7 +193,10 @@ namespace Osu.Scores
 
                 for (int i = 0; i < BeatmapBanned.Count; i++)
                 {
-                    var res = string.Format("__{0}__ **{1} - {2} [{3}]**" + System.Environment.NewLine, BeatmapBanned[i].PickType, BeatmapBanned[i].OsuBeatmap.Artist, BeatmapBanned[i].OsuBeatmap.Title, BeatmapBanned[i].OsuBeatmap.Version);
+                    var bmMods = "";
+                    BeatmapBanned[i].PickType.ForEach(m => bmMods += "__" + m.ToString() + "__ ");
+
+                    var res = string.Format("{0}**{1} - {2} [{3}]**" + System.Environment.NewLine, bmMods, BeatmapBanned[i].OsuBeatmap.Artist.Replace("_", "__").Replace("*", "\\*"), BeatmapBanned[i].OsuBeatmap.Title.Replace("_", "__").Replace("*", "\\*"), BeatmapBanned[i].OsuBeatmap.Version.Replace("_", "__").Replace("*", "\\*"));
                     if(printTeamVsMode)
                     {
                         if (i % 2 == 0)
@@ -258,7 +258,11 @@ namespace Osu.Scores
             for(int counter = 0; counter < picks.Count; counter++)
             {
                 bm = picks[counter];
-                string sentence = string.Format("-{0}- __{1}__ **{2} - {3} [{4}]**" + Environment.NewLine, counter + 1, bm.PickType, bm.OsuBeatmap.Artist, bm.OsuBeatmap.Title, bm.OsuBeatmap.Version);
+
+                var bmMods = "";
+                bm.PickType.ForEach(m => bmMods += "__" + m.ToString() + "__ ");
+
+                string sentence = string.Format("-{0}- {1}**{2} - {3} [{4}]**" + Environment.NewLine, counter + 1, bmMods, bm.OsuBeatmap.Artist.Replace("_", "__").Replace("*", "\\*"), bm.OsuBeatmap.Title.Replace("_", "__").Replace("*", "\\*"), bm.OsuBeatmap.Version.Replace("_", "__").Replace("*", "\\*"));
                 if (counter % 2 == 0 && printTeamVsMode)
                 {
                     secondteam.Value += sentence;

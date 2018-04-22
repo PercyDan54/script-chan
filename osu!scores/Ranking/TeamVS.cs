@@ -430,15 +430,19 @@ namespace Osu.Scores
                     Embed embed = new Embed();
                     embed.Author = new Author { Name = string.Format("{0} VS {1}", teams[OsuTeam.Red].Name, teams[OsuTeam.Blue].Name), Url = "https://osu.ppy.sh/community/matches/" + this.room.Id, IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png" };
                     embed.Color = didCurrentTeamWon ? "6729778" : "14177041";
-                    embed.Title = string.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their{1}pick by {2} points", (abortHappened ? NextTeam.Name : CurrentTeam.Name), (bm == null ? " " : " __" + bm.PickType.ToString() + "__ "), string.Format("{0:n0}", diffPoint));
+
+                    var bmMods = "";
+                    bm?.PickType.ForEach(m => bmMods += " __" + m.ToString() + "__ ");
+
+                    embed.Title = string.Format("{0} " + (didCurrentTeamWon ? "won" : "lost") + " their{1}pick by {2} points", (abortHappened ? NextTeam.Name : CurrentTeam.Name), bmMods, string.Format("{0:n0}", diffPoint));
                     embed.Thumbnail = new Image { Url = didCurrentTeamWon ? "https://cdn.discordapp.com/attachments/130304896581763072/400388818127290369/section-pass.png" : "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png" };
-                    embed.Description = string.Format("**{0} - {1} [{2}]**", obm.Artist, obm.Title, obm.Version);
+                    embed.Description = string.Format("**{0} - {1} [{2}]**", obm.Artist.Replace("_", "__").Replace("*", "\\*"), obm.Title.Replace("_", "__").Replace("*", "\\*"), obm.Version.Replace("_", "__").Replace("*", "\\*"));
                     embed.Fields = new List<Field>();
                     embed.Fields.Add(new Field() { Name = teams[OsuTeam.Red].Name, Value = (teams[OsuTeam.Red].Points + teams[OsuTeam.Red].PointAddition).ToString(), Inline = true });
                     embed.Fields.Add(new Field() { Name = teams[OsuTeam.Blue].Name, Value = (teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition).ToString(), Inline = true });
                     if (mvpPlayer != null)
                     {
-                        embed.Fields.Add(new Field() { Name = "MVP", Value = string.Format(":flag_{1}: **{0}** with {2} points", mvpPlayer.Username, mvpPlayer.OsuUser.Country.ToLower(), string.Format("{0:n0}", mvp.Score)) });
+                        embed.Fields.Add(new Field() { Name = "MVP", Value = string.Format(":flag_{1}: **{0}** with {2} points", mvpPlayer.Username.Replace("_", "\\_"), mvpPlayer.OsuUser.Country.ToLower(), string.Format("{0:n0}", mvp.Score)) });
                     }
 
                     embed.Fields.Add(new Field() { Name = "Status", Value = GetStatus().Last() + " " + (room.Status == RoomStatus.Finished ? ":clap:" : ":loudspeaker:") });
