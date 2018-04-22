@@ -494,6 +494,11 @@ namespace Osu.Mvvm.General.ViewModels
         {
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/irc");
         }
+
+        public void ApiKeyHelp()
+        {
+            System.Diagnostics.Process.Start("https://osu.ppy.sh/p/api");
+        }
         #endregion
 
         #region Handlers

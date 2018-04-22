@@ -17,6 +17,7 @@ using Osu.Mvvm.Teams.ViewModels;
 using Osu.Utils.TeamsOv;
 using System;
 using System.ComponentModel;
+using Osu.Tournament.AutoUpdate;
 
 namespace Osu.Mvvm.General.ViewModels
 {
@@ -145,6 +146,9 @@ namespace Osu.Mvvm.General.ViewModels
             {
                 ShowOptions();
             }
+
+            // Check if there is an update for the tool
+            InitUpdate();
         }
         #endregion
 
@@ -237,10 +241,18 @@ namespace Osu.Mvvm.General.ViewModels
                 return string.IsNullOrEmpty(options.ApiKey) || !options.CanConnect || !options.IsConnected;
             }
         }
+
+        /// <summary>
+        /// NewVersionVisibility property
+        /// </summary>
+        public string NewVersionVisibility
+        {
+            get { return UpdateManager.GetInstance().UpdateAvailable ? "Visible" : "Hidden"; }
+        }
         #endregion
 
         #region Public Methods
-      
+
         /// <summary>
         /// Shows the overview screen
         /// </summary>
@@ -340,12 +352,26 @@ namespace Osu.Mvvm.General.ViewModels
 
             ActivateItem(options);
         }
+
+        /// <summary>
+        /// Bell button to update the tool
+        /// </summary>
+        public void DownloadLatestVersion()
+        {
+            UpdateManager.GetInstance().DownloadLatestVersion();
+        }
         #endregion
 
         #region Private Methods
         private void ShowOptionTabDialog()
         {
             Dialog.ShowDialog("Error", "You need to add the api key and connect to IRC before doing anything else!");
+        }
+
+        private async void InitUpdate()
+        {
+            await UpdateManager.GetInstance().CheckForUpdatesAsync();
+            NotifyOfPropertyChange(() => NewVersionVisibility);
         }
         #endregion
 

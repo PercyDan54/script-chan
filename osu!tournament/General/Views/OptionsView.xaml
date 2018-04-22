@@ -40,6 +40,9 @@
 
             <Label Content="General" FontSize="18" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" />
             <Label Content="osu!api key (required)" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" />
+            <Border Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Height="22" Width="22" CornerRadius="22" BorderBrush="Black" BorderThickness="1" Margin="0,0,10,0" >
+                <Button x:Name="ApiKeyHelp" Background="Transparent" Content="?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="DemiBold" Padding="1,-1,0,0" Foreground="Black" Cursor="Hand" ToolTip="Click here to get your API key." />
+            </Border>
             <PasswordBox misc:PasswordHelper.Attach="True" misc:PasswordHelper.Password="{Binding ApiKey, Mode=TwoWay}" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" />
             <Label Content="Public channel webhook" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" />
             <TextBox x:Name="DefaultWebhook" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>

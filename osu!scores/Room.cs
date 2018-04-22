@@ -648,7 +648,7 @@ namespace Osu.Scores
             status = RoomStatus.NotStarted;
 
             // If we are in warmup state in manual mode, we blacklist the last map
-            if (Warmup && Manual)
+            if (Warmup && Manual && osu_room.Games.Count > 0)
             {
                 Blacklist.Add(osu_room.Games.Last().GameId);
             }
