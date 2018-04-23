@@ -301,7 +301,7 @@ namespace Osu.Mvvm.General.ViewModels
                 {
                     cache["language"] = value;
                     NotifyOfPropertyChange(() => SelectedLanguage);
-                    Dialog.ShowDialog("Language", "Please restart the app to use your chosen language.");
+                    Dialog.ShowDialog("Language", "Please restart the app to apply language changes.");
                 }
             }
         }
