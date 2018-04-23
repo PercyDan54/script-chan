@@ -48,7 +48,7 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
         {
             this.room = room;
             ranking = (Osu.Scores.HeadToHead)room.Ranking;
-            status = "Please wait...";
+            status = Tournament.Properties.Resources.HeadToHeadRankingView_PleaseWait;
             lines = new BindableCollection<PlayerLineViewModel>();
 
             MappoolPicker = new MappoolPickerViewModel(room);
@@ -165,9 +165,9 @@ namespace Osu.Mvvm.Rooms.Ranking.HeadToHead.ViewModels
             long next = ranking.Next;
 
             if (next == 0)
-                Status = "No order defined";
+                Status = Tournament.Properties.Resources.HeadToHeadRankingView_NoMapPlayed;
             else
-                Status = "Current player: " + (current == 0 ? "No map played yet" : room.Players[current].OsuUser.Username) + ". Next player: " + room.Players[next].OsuUser.Username + ".";
+                Status = Tournament.Properties.Resources.HeadToHeadRankingView_CurrentPlayer + ": " + (current == 0 ? Tournament.Properties.Resources.HeadToHeadRankingView_NoMapPlayed  : room.Players[current].OsuUser.Username) + ". " + Tournament.Properties.Resources.HeadToHeadRankingView_NextPlayer + ": " + room.Players[next].OsuUser.Username + ".";
         }
 
         /// <summary>

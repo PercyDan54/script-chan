@@ -147,7 +147,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                         }
                         else
                         {
-                            Dialog.ShowDialog("Whoops!", "You have to remove the last pick, not removing things randomly! Don't break me, duh!");
+                            Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_UnpickOrder);
                         }
                     }
                     NotifyOfPropertyChange(() => Background);
@@ -253,7 +253,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
             else
             {
-                Dialog.ShowDialog("Whoops!", "All bans have been selected or you can't ban a beatmap which is already banned!");
+                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_BanLimit);
             }
         }
 
@@ -274,7 +274,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
             else
             {
-                Dialog.ShowDialog("Whoops!", "You have to unban the last banned map or ban a map first!");
+                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_UnbanOrder);
             }
         }
         #endregion

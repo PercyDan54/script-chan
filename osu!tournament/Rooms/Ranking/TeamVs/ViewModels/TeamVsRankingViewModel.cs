@@ -206,7 +206,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             Team current = abortHappened ? ranking.NextTeam : ranking.CurrentTeam;
             Team next = abortHappened ? ranking.CurrentTeam : ranking.NextTeam;
 
-            currentStatus = "Team picking: " + current.Name + " | Next Team: " + next.Name;
+            currentStatus = Tournament.Properties.Resources.TeamVsRankingView_TeamPicking + ": " + current.Name + " | " + Tournament.Properties.Resources.TeamVsRankingView_NextTeam + " Next Team: " + next.Name;
             NotifyOfPropertyChange(() => CurrentStatus);
             
         }
@@ -285,7 +285,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, "!mp abort");
             abortHappened = !abortHappened;
             ranking.DidAbortHappened = abortHappened;
-            Dialog.ShowDialog("Whoops!", "Abort taken in consideration!");
+            Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_Abort);
         }
         #endregion
     }

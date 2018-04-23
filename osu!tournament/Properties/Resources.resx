@@ -436,4 +436,232 @@
   <data name="Wait_Title" xml:space="preserve">
     <value>Please wait</value>
   </data>
+  <data name="Button_AbortMap" xml:space="preserve">
+    <value>Abort map</value>
+  </data>
+  <data name="Button_Ban" xml:space="preserve">
+    <value>Ban</value>
+  </data>
+  <data name="Button_BanRecap" xml:space="preserve">
+    <value>Ban recap</value>
+  </data>
+  <data name="Button_ChangeRankingType" xml:space="preserve">
+    <value>Change Ranking Type</value>
+  </data>
+  <data name="Button_CloseRoom" xml:space="preserve">
+    <value>Close the room</value>
+  </data>
+  <data name="Button_InvitePlayers" xml:space="preserve">
+    <value>Invite players</value>
+  </data>
+  <data name="Button_PickRecap" xml:space="preserve">
+    <value>Pick recap</value>
+  </data>
+  <data name="Button_RevertScore" xml:space="preserve">
+    <value>Revert score</value>
+  </data>
+  <data name="Button_SetPassword" xml:space="preserve">
+    <value>Set Password</value>
+  </data>
+  <data name="Button_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Button_StartGame" xml:space="preserve">
+    <value>Start game (5s)</value>
+  </data>
+  <data name="Button_SwitchServer" xml:space="preserve">
+    <value>Switch server</value>
+  </data>
+  <data name="Button_Unban" xml:space="preserve">
+    <value>Unban</value>
+  </data>
+  <data name="Button_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Button_WelcomeString" xml:space="preserve">
+    <value>Welcome String</value>
+  </data>
+  <data name="Error_Abort" xml:space="preserve">
+    <value>Abort taken in consideration!</value>
+  </data>
+  <data name="Error_BanLimit" xml:space="preserve">
+    <value>All bans have been selected or you can't ban a beatmap which is already banned!</value>
+  </data>
+  <data name="Error_BanSameNumber" xml:space="preserve">
+    <value>You need to ban the same number of maps for each team to display it!</value>
+  </data>
+  <data name="Error_GameAlreadyExists" xml:space="preserve">
+    <value>This game is already in the list!</value>
+  </data>
+  <data name="Error_UnbanOrder" xml:space="preserve">
+    <value>You have to unban the last banned map or ban a map first!</value>
+  </data>
+  <data name="Error_UnpickOrder" xml:space="preserve">
+    <value>You have to remove the last pick, not removing things randomly!</value>
+  </data>
+  <data name="HeadToHeadOptionsView_FreeForAllConfig" xml:space="preserve">
+    <value>Free for all configuration</value>
+  </data>
+  <data name="HeadToHeadOptionsView_PlayerPickOrder" xml:space="preserve">
+    <value>Player pick order</value>
+  </data>
+  <data name="HeadToHeadOptionsView_RankingPoints" xml:space="preserve">
+    <value>Ranking points</value>
+  </data>
+  <data name="HeadToHeadOptionsView_RoomConfig" xml:space="preserve">
+    <value>Room configuration</value>
+  </data>
+  <data name="HeadToHeadRankingView_CurrentPlayer" xml:space="preserve">
+    <value>Current player</value>
+  </data>
+  <data name="HeadToHeadRankingView_NextPlayer" xml:space="preserve">
+    <value>Next player</value>
+  </data>
+  <data name="HeadToHeadRankingView_NoMapPlayed" xml:space="preserve">
+    <value>No map played yet</value>
+  </data>
+  <data name="HeadToHeadRankingView_NoOrder" xml:space="preserve">
+    <value>No order defined</value>
+  </data>
+  <data name="HeadToHeadRankingView_Player" xml:space="preserve">
+    <value>Player</value>
+  </data>
+  <data name="HeadToHeadRankingView_PleaseWait" xml:space="preserve">
+    <value>Please wait...</value>
+  </data>
+  <data name="HeadToHeadRankingView_Score" xml:space="preserve">
+    <value>Score</value>
+  </data>
+  <data name="MappoolPickerView_MapPicker" xml:space="preserve">
+    <value>Map picker</value>
+  </data>
+  <data name="MappoolPickerView_SearchWatermark" xml:space="preserve">
+    <value>Filter beatmaps by Title or Artist</value>
+  </data>
+  <data name="MultiplayerCommandView_CloseRoomMessage" xml:space="preserve">
+    <value>Are you sure you want to close the osu! room?</value>
+  </data>
+  <data name="MultiplayerCommandView_CloseRoomTitle" xml:space="preserve">
+    <value>Close room</value>
+  </data>
+  <data name="MultiplayerCommandView_NewPasswordMessage" xml:space="preserve">
+    <value>Enter the new password for the room</value>
+  </data>
+  <data name="MultiplayerCommandView_NewPasswordTitle" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="MultiplayerCommandView_PlayerNotFoundMessage" xml:space="preserve">
+    <value>Enter usernames or userids separated by semicolons</value>
+  </data>
+  <data name="MultiplayerCommandView_PlayerNotFoundTitle" xml:space="preserve">
+    <value>not found</value>
+  </data>
+  <data name="PlayersView_AddPlayerMessage" xml:space="preserve">
+    <value>Enter the player username</value>
+  </data>
+  <data name="PlayersView_AddPlayerTitle" xml:space="preserve">
+    <value>Add player</value>
+  </data>
+  <data name="PlayersView_Uncheck" xml:space="preserve">
+    <value>Uncheck the players you wish to ignore</value>
+  </data>
+  <data name="RoomOptionsView_EnableNotifications" xml:space="preserve">
+    <value>Enable notifications</value>
+  </data>
+  <data name="RoomOptionsView_MpTimer" xml:space="preserve">
+    <value>Mp timer duration (0 = deactivated)</value>
+  </data>
+  <data name="RoomOptionsView_OsuMode" xml:space="preserve">
+    <value>Osu Mode selected for the maps</value>
+  </data>
+  <data name="RoomOptionsView_ScoreMode" xml:space="preserve">
+    <value>Score mode</value>
+  </data>
+  <data name="RoomOptionsView_Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="RoomOptionsView_TeamMode" xml:space="preserve">
+    <value>Team mode</value>
+  </data>
+  <data name="RoomOptionsView_UpdateRoomConfig" xml:space="preserve">
+    <value>Update room configuration</value>
+  </data>
+  <data name="RoomsView_AddRoomMessage" xml:space="preserve">
+    <value>Enter the room ID</value>
+  </data>
+  <data name="RoomsView_AddRoomTitle" xml:space="preserve">
+    <value>Add room</value>
+  </data>
+  <data name="RoomsView_CurrentRoom" xml:space="preserve">
+    <value>Current Room</value>
+  </data>
+  <data name="RoomsView_DeleteRoomMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the room?</value>
+  </data>
+  <data name="RoomsView_DeleteRoomTitle" xml:space="preserve">
+    <value>Delete room</value>
+  </data>
+  <data name="RoomView_ChangeRankingMessage" xml:space="preserve">
+    <value>Are you sure you want to change the room ranking type?</value>
+  </data>
+  <data name="RoomView_ChangeRankingTitle" xml:space="preserve">
+    <value>Change room ranking type</value>
+  </data>
+  <data name="RoomView_Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="RoomView_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="RoomView_Games" xml:space="preserve">
+    <value>Games</value>
+  </data>
+  <data name="RoomView_IRC" xml:space="preserve">
+    <value>IRC</value>
+  </data>
+  <data name="RoomView_Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="RoomView_Players" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="RoomView_Ranking" xml:space="preserve">
+    <value>Ranking</value>
+  </data>
+  <data name="TeamVsOptionsView_Blue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="TeamVsOptionsView_BO" xml:space="preserve">
+    <value>BO for the room</value>
+  </data>
+  <data name="TeamVsOptionsView_ClickRefreshHint" xml:space="preserve">
+    <value>Click refresh button after updating these options</value>
+  </data>
+  <data name="TeamVsOptionsView_OBSMessage" xml:space="preserve">
+    <value>Are you sure to set this match as streamed? It will set OBS bans to this match and remove the one currently set.</value>
+  </data>
+  <data name="TeamVsOptionsView_OBSTitle" xml:space="preserve">
+    <value>OBS Mode</value>
+  </data>
+  <data name="TeamVsOptionsView_Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="TeamVsOptionsView_RollWinner" xml:space="preserve">
+    <value>Roll winner and first pick team</value>
+  </data>
+  <data name="TeamVsRankingView_NextTeam" xml:space="preserve">
+    <value>Next Team</value>
+  </data>
+  <data name="TeamVsRankingView_TeamPicking" xml:space="preserve">
+    <value>Team picking</value>
+  </data>
+  <data name="Wait_RetrievePlayer" xml:space="preserve">
+    <value>Trying to retrieve and register the player</value>
+  </data>
+  <data name="Wait_RetrieveRoom" xml:space="preserve">
+    <value>Retrieving and creating the room...</value>
+  </data>
+  <data name="Wait_UpdatingRoom" xml:space="preserve">
+    <value>Updating the room...</value>
+  </data>
 </root>

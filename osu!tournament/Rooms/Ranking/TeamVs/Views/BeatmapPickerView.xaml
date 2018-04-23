@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:p="clr-namespace:Osu.Tournament.Properties"
     mc:Ignorable="d"
     d:DesignHeight="29"
     d:DesignWidth="500"
@@ -28,8 +29,8 @@
         <Button x:Name="PickTheMap" Background="{Binding Background}" Focusable="True" Content="{Binding ButtonMapText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1">
             <Button.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Ban" cal:Message.Attach="MapBannerino"/>
-                    <MenuItem Header="Unban" cal:Message.Attach="RevertBannerino"/>
+                    <MenuItem Header="{x:Static p:Resources.Button_Ban}" cal:Message.Attach="MapBannerino"/>
+                    <MenuItem Header="{x:Static p:Resources.Button_Unban}" cal:Message.Attach="RevertBannerino"/>
                 </ContextMenu>
             </Button.ContextMenu>
             <ToolTipService.ToolTip >

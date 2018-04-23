@@ -386,7 +386,7 @@
     <value>Team Modus</value>
   </data>
   <data name="OvView_WelcomeMessage" xml:space="preserve">
-    <value>Willkommensnachricht</value>
+    <value>Begrüßung</value>
   </data>
   <data name="Success_MessageSent" xml:space="preserve">
     <value>Nachricht wurde erfolgreich gesendet!</value>
@@ -435,5 +435,233 @@
   </data>
   <data name="Wait_Title" xml:space="preserve">
     <value>Bitte warten</value>
+  </data>
+  <data name="Button_AbortMap" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="Button_Ban" xml:space="preserve">
+    <value>Bannen</value>
+  </data>
+  <data name="Button_BanRecap" xml:space="preserve">
+    <value>Ban Zusammenfassung</value>
+  </data>
+  <data name="Button_ChangeRankingType" xml:space="preserve">
+    <value>Ranglistentyp verändern</value>
+  </data>
+  <data name="Button_CloseRoom" xml:space="preserve">
+    <value>Raum schließen</value>
+  </data>
+  <data name="Button_InvitePlayers" xml:space="preserve">
+    <value>Spieler einladen</value>
+  </data>
+  <data name="Button_PickRecap" xml:space="preserve">
+    <value>Pick Zusammenfassung</value>
+  </data>
+  <data name="Button_RevertScore" xml:space="preserve">
+    <value>Rückgängig</value>
+  </data>
+  <data name="Button_SetPassword" xml:space="preserve">
+    <value>Passwort setzen</value>
+  </data>
+  <data name="Button_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Button_StartGame" xml:space="preserve">
+    <value>Spiel starten (5s)</value>
+  </data>
+  <data name="Button_SwitchServer" xml:space="preserve">
+    <value>Server wechseln</value>
+  </data>
+  <data name="Button_Unban" xml:space="preserve">
+    <value>Entbannen</value>
+  </data>
+  <data name="Button_Update" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="Button_WelcomeString" xml:space="preserve">
+    <value>Begrüßung</value>
+  </data>
+  <data name="Error_Abort" xml:space="preserve">
+    <value>Versuche abzubrechen...</value>
+  </data>
+  <data name="Error_BanLimit" xml:space="preserve">
+    <value>Es können nicht mehr Beatmaps gebannt werden!</value>
+  </data>
+  <data name="Error_BanSameNumber" xml:space="preserve">
+    <value>Beide Teams müssen die gleiche Anzahl an Bans haben!</value>
+  </data>
+  <data name="Error_GameAlreadyExists" xml:space="preserve">
+    <value>Dieses Spiel ist bereits vorhanden!</value>
+  </data>
+  <data name="Error_UnbanOrder" xml:space="preserve">
+    <value>Bans müssen in umgekehrter Reihenfolge entfernt werden!</value>
+  </data>
+  <data name="Error_UnpickOrder" xml:space="preserve">
+    <value>Picks müssen in umgekehrter Reihenfolge entfernt werden!</value>
+  </data>
+  <data name="HeadToHeadOptionsView_FreeForAllConfig" xml:space="preserve">
+    <value>Free For All Konfiguration</value>
+  </data>
+  <data name="HeadToHeadOptionsView_PlayerPickOrder" xml:space="preserve">
+    <value>Spieler Wählreihenfolge</value>
+  </data>
+  <data name="HeadToHeadOptionsView_RankingPoints" xml:space="preserve">
+    <value>Punkte</value>
+  </data>
+  <data name="HeadToHeadOptionsView_RoomConfig" xml:space="preserve">
+    <value>Raum Konfiguration</value>
+  </data>
+  <data name="HeadToHeadRankingView_CurrentPlayer" xml:space="preserve">
+    <value>Aktueller Spieler</value>
+  </data>
+  <data name="HeadToHeadRankingView_NextPlayer" xml:space="preserve">
+    <value>Nächster Spieler</value>
+  </data>
+  <data name="HeadToHeadRankingView_NoMapPlayed" xml:space="preserve">
+    <value>Noch keine Map gespielt</value>
+  </data>
+  <data name="HeadToHeadRankingView_NoOrder" xml:space="preserve">
+    <value>Keine Reihenfolge festgelegt</value>
+  </data>
+  <data name="HeadToHeadRankingView_Player" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="HeadToHeadRankingView_PleaseWait" xml:space="preserve">
+    <value>Bitte warten...</value>
+  </data>
+  <data name="HeadToHeadRankingView_Score" xml:space="preserve">
+    <value>Punkte</value>
+  </data>
+  <data name="MappoolPickerView_MapPicker" xml:space="preserve">
+    <value>Map picker</value>
+  </data>
+  <data name="MappoolPickerView_SearchWatermark" xml:space="preserve">
+    <value>Filter Beatmaps nach Künstler oder Titel</value>
+  </data>
+  <data name="MultiplayerCommandView_CloseRoomMessage" xml:space="preserve">
+    <value>Willst du wirklich den Raum schließen?</value>
+  </data>
+  <data name="MultiplayerCommandView_CloseRoomTitle" xml:space="preserve">
+    <value>Raum schließen</value>
+  </data>
+  <data name="MultiplayerCommandView_NewPasswordMessage" xml:space="preserve">
+    <value>Gebe ein neues Passwort ein</value>
+  </data>
+  <data name="MultiplayerCommandView_NewPasswordTitle" xml:space="preserve">
+    <value>Neues Passwort</value>
+  </data>
+  <data name="MultiplayerCommandView_PlayerNotFoundMessage" xml:space="preserve">
+    <value>Gebe einen Spieler ein (Name oder ID). Mehrere Spieler können durch ';' getrennt eingegeben werden.</value>
+  </data>
+  <data name="MultiplayerCommandView_PlayerNotFoundTitle" xml:space="preserve">
+    <value>nicht gefunden</value>
+  </data>
+  <data name="PlayersView_AddPlayerMessage" xml:space="preserve">
+    <value>Gebe einen Spieler ein</value>
+  </data>
+  <data name="PlayersView_AddPlayerTitle" xml:space="preserve">
+    <value>Spieler hinzufügen</value>
+  </data>
+  <data name="PlayersView_Uncheck" xml:space="preserve">
+    <value>Ignoriere Spieler durch Entfernen des Hakens</value>
+  </data>
+  <data name="RoomOptionsView_EnableNotifications" xml:space="preserve">
+    <value>Nachrichten aktivieren</value>
+  </data>
+  <data name="RoomOptionsView_MpTimer" xml:space="preserve">
+    <value>mp timer Dauer (0 = deaktiviert)</value>
+  </data>
+  <data name="RoomOptionsView_OsuMode" xml:space="preserve">
+    <value>osu Modus beim Map Auswählen</value>
+  </data>
+  <data name="RoomOptionsView_ScoreMode" xml:space="preserve">
+    <value>Score Modus</value>
+  </data>
+  <data name="RoomOptionsView_Size" xml:space="preserve">
+    <value>Größe</value>
+  </data>
+  <data name="RoomOptionsView_TeamMode" xml:space="preserve">
+    <value>Team Modus</value>
+  </data>
+  <data name="RoomOptionsView_UpdateRoomConfig" xml:space="preserve">
+    <value>Raum Konfiguration aktualisieren</value>
+  </data>
+  <data name="RoomsView_AddRoomMessage" xml:space="preserve">
+    <value>Gebe eine Raum ID ein</value>
+  </data>
+  <data name="RoomsView_AddRoomTitle" xml:space="preserve">
+    <value>Raum hinzufügen</value>
+  </data>
+  <data name="RoomsView_CurrentRoom" xml:space="preserve">
+    <value>Aktueller Raum</value>
+  </data>
+  <data name="RoomsView_DeleteRoomMessage" xml:space="preserve">
+    <value>Soll der Raum wirklich gelöscht werden?</value>
+  </data>
+  <data name="RoomsView_DeleteRoomTitle" xml:space="preserve">
+    <value>Raum löschen</value>
+  </data>
+  <data name="RoomView_ChangeRankingMessage" xml:space="preserve">
+    <value>Soll der Ranglistentyp wirklich verändert werden?</value>
+  </data>
+  <data name="RoomView_ChangeRankingTitle" xml:space="preserve">
+    <value>Raum Ranglistentyp verändern</value>
+  </data>
+  <data name="RoomView_Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="RoomView_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="RoomView_Games" xml:space="preserve">
+    <value>Spiele</value>
+  </data>
+  <data name="RoomView_IRC" xml:space="preserve">
+    <value>IRC</value>
+  </data>
+  <data name="RoomView_Options" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
+  <data name="RoomView_Players" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="RoomView_Ranking" xml:space="preserve">
+    <value>Ranking</value>
+  </data>
+  <data name="TeamVsOptionsView_Blue" xml:space="preserve">
+    <value>Blau</value>
+  </data>
+  <data name="TeamVsOptionsView_BO" xml:space="preserve">
+    <value>BO</value>
+  </data>
+  <data name="TeamVsOptionsView_ClickRefreshHint" xml:space="preserve">
+    <value>Klicke 'Aktualisieren' nachdem du Veränderungen durchgeführt hast</value>
+  </data>
+  <data name="TeamVsOptionsView_OBSMessage" xml:space="preserve">
+    <value>Aktuelle Bans entfernen und durch OBS setzen lassen?</value>
+  </data>
+  <data name="TeamVsOptionsView_OBSTitle" xml:space="preserve">
+    <value>OBS Modus</value>
+  </data>
+  <data name="TeamVsOptionsView_Red" xml:space="preserve">
+    <value>Rot</value>
+  </data>
+  <data name="TeamVsOptionsView_RollWinner" xml:space="preserve">
+    <value>Würfel Gewinner / Wählt zuerst</value>
+  </data>
+  <data name="TeamVsRankingView_NextTeam" xml:space="preserve">
+    <value>Nächstes Team</value>
+  </data>
+  <data name="TeamVsRankingView_TeamPicking" xml:space="preserve">
+    <value>Team wählt</value>
+  </data>
+  <data name="Wait_RetrievePlayer" xml:space="preserve">
+    <value>Suche Spieler Daten...</value>
+  </data>
+  <data name="Wait_RetrieveRoom" xml:space="preserve">
+    <value>Raum wird erstellt...</value>
+  </data>
+  <data name="Wait_UpdatingRoom" xml:space="preserve">
+    <value>Raum wird aktualisiert...</value>
   </data>
 </root>

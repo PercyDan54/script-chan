@@ -113,7 +113,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
             else
             {
-                Dialog.ShowDialog("Whoops!", "You need to ban the same number of maps for each team to display it!");
+                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_BanSameNumber);
             }
         }
 
