@@ -433,7 +433,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                     if (mainview.ActiveItemName != Tournament.Properties.Resources.MainView_Rooms || selected == null || selected.Id != multi_room.MatchId || selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() != Tournament.Properties.Resources.RoomView_Chat)
                         room.AddNewMessageLine();
 
-                    room.AddMessage(new IrcMessage { Message = multi_room.Message, User = multi_room.PlayerName, Timestamp = DateTime.Now });
+                    room.AddMessage(new IrcMessage { Message = multi_room.Message, User = multi_room.PlayerName });
 
                     if (mainview.ActiveItemName == Tournament.Properties.Resources.MainView_Rooms && selected != null && selected.Id == multi_room.MatchId && selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() == Tournament.Properties.Resources.RoomView_Chat)
                         selected_view_model.UpdateChat(false);
