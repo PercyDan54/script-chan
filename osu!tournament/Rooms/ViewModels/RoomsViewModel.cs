@@ -62,7 +62,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// </summary>
         public RoomsViewModel(OvViewModel ov, MainViewModel mv)
         {
-            DisplayName = Tournament.Properties.Resources.RoomsView_CurrentRoom + ": ";
+            DisplayName = Utils.Properties.Resources.RoomsView_CurrentRoom + ": ";
             selected = null;
 
             bot = OsuIrcBot.GetInstancePrivate();
@@ -172,13 +172,13 @@ namespace Osu.Mvvm.Rooms.ViewModels
         public async void AddRoom()
         {
             // Get the room id
-            string input = await Dialog.ShowInput(Tournament.Properties.Resources.RoomsView_AddRoomTitle, Tournament.Properties.Resources.RoomsView_AddRoomMessage);
+            string input = await Dialog.ShowInput(Utils.Properties.Resources.RoomsView_AddRoomTitle, Utils.Properties.Resources.RoomsView_AddRoomMessage);
 
             // If we have an input
             if (input != null && !string.IsNullOrEmpty(input))
             {
                 // Show the progress dialog
-                await Dialog.ShowProgress(Tournament.Properties.Resources.Wait_Title, Tournament.Properties.Resources.Wait_RetrieveRoom);
+                await Dialog.ShowProgress(Utils.Properties.Resources.Wait_Title, Utils.Properties.Resources.Wait_RetrieveRoom);
 
                 // Parse an id from the input
                 long id = -1;
@@ -197,7 +197,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                     await Dialog.HideProgress();
 
                     // Error
-                    Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_IdIsNotNumber);
+                    Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_IdIsNotNumber);
                 }
                 // Valid number
                 else
@@ -209,7 +209,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                         await Dialog.HideProgress();
 
                         // Error
-                        Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_GameAlreadyExists);
+                        Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_GameAlreadyExists);
                     }
                     // Else
                     else
@@ -224,7 +224,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                             await Dialog.HideProgress();
 
                             // Error
-                            Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_RoomDoesNotExist);
+                            Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_RoomDoesNotExist);
                         }
                         // A room
                         else
@@ -306,7 +306,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// </summary>
         public async void DeleteRoom()
         {
-            if (await Dialog.ShowConfirmation(Tournament.Properties.Resources.RoomsView_DeleteRoomTitle, Tournament.Properties.Resources.RoomsView_DeleteRoomMessage))
+            if (await Dialog.ShowConfirmation(Utils.Properties.Resources.RoomsView_DeleteRoomTitle, Utils.Properties.Resources.RoomsView_DeleteRoomMessage))
             {
                 Log.Info("Deleting room \"" + SelectedRoom.Name + "\"");
 
@@ -430,12 +430,12 @@ namespace Osu.Mvvm.Rooms.ViewModels
             {
                 Execute.OnUIThread(() =>
                 {
-                    if (mainview.ActiveItemName != Tournament.Properties.Resources.MainView_Rooms || selected == null || selected.Id != multi_room.MatchId || selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() != Tournament.Properties.Resources.RoomView_Chat)
+                    if (mainview.ActiveItemName != Utils.Properties.Resources.MainView_Rooms || selected == null || selected.Id != multi_room.MatchId || selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() != Utils.Properties.Resources.RoomView_Chat)
                         room.AddNewMessageLine();
 
                     room.AddMessage(new IrcMessage { Message = multi_room.Message, User = multi_room.PlayerName });
 
-                    if (mainview.ActiveItemName == Tournament.Properties.Resources.MainView_Rooms && selected != null && selected.Id == multi_room.MatchId && selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() == Tournament.Properties.Resources.RoomView_Chat)
+                    if (mainview.ActiveItemName == Utils.Properties.Resources.MainView_Rooms && selected != null && selected.Id == multi_room.MatchId && selected_view_model?.SelectedTab != null && selected_view_model.SelectedTab.Header.ToString() == Utils.Properties.Resources.RoomView_Chat)
                         selected_view_model.UpdateChat(false);
                     else
                         selected_view_model?.UpdateChat(true);

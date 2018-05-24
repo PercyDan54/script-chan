@@ -310,7 +310,7 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
         {
             if(ObsBanHelper.IsValid)
             {
-                var confirm = await Dialog.ShowConfirmation(Tournament.Properties.Resources.TeamVsOptionsView_OBSTitle, Tournament.Properties.Resources.TeamVsOptionsView_OBSMessage);
+                var confirm = await Dialog.ShowConfirmation(Utils.Properties.Resources.TeamVsOptionsView_OBSTitle, Utils.Properties.Resources.TeamVsOptionsView_OBSMessage);
                 if (confirm)
                 {
                     var roomToUnstream = Room.Rooms.FirstOrDefault(x => x.Value.IsStreamed).Value;

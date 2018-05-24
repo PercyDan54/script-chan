@@ -103,7 +103,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         /// </summary>
         public async void SetPassword()
         {
-            var pw = await Dialog.ShowInput(Tournament.Properties.Resources.MultiplayerCommandView_NewPasswordTitle, Tournament.Properties.Resources.MultiplayerCommandView_NewPasswordMessage);
+            var pw = await Dialog.ShowInput(Utils.Properties.Resources.MultiplayerCommandView_NewPasswordTitle, Utils.Properties.Resources.MultiplayerCommandView_NewPasswordMessage);
             OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, "!mp password " + pw);
         }
 
@@ -149,7 +149,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
         public async void CloseRoom()
         {
-            var res = await Dialog.ShowConfirmation(Tournament.Properties.Resources.MultiplayerCommandView_CloseRoomTitle, Tournament.Properties.Resources.MultiplayerCommandView_CloseRoomMessage);
+            var res = await Dialog.ShowConfirmation(Utils.Properties.Resources.MultiplayerCommandView_CloseRoomTitle, Utils.Properties.Resources.MultiplayerCommandView_CloseRoomMessage);
 
             if (res)
                 OsuIrcBot.GetInstancePrivate().SendMessage("#mp_" + room.Id, "!mp close");
@@ -179,7 +179,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
             else
             {
-                var players = await Dialog.ShowInput(name + " " + Tournament.Properties.Resources.MultiplayerCommandView_PlayerNotFoundTitle, Tournament.Properties.Resources.MultiplayerCommandView_PlayerNotFoundMessage);
+                var players = await Dialog.ShowInput(name + " " + Utils.Properties.Resources.MultiplayerCommandView_PlayerNotFoundTitle, Utils.Properties.Resources.MultiplayerCommandView_PlayerNotFoundMessage);
                 if(!string.IsNullOrEmpty(players))
                 {
                     OsuIrcBot.GetInstancePublic().SwitchPlayers(players.Split(new char[] { ';' }).ToList());
@@ -202,7 +202,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
             else
             {
-                var players = await Dialog.ShowInput(name + " " + Tournament.Properties.Resources.MultiplayerCommandView_PlayerNotFoundTitle, Tournament.Properties.Resources.MultiplayerCommandView_PlayerNotFoundMessage);
+                var players = await Dialog.ShowInput(name + " " + Utils.Properties.Resources.MultiplayerCommandView_PlayerNotFoundTitle, Utils.Properties.Resources.MultiplayerCommandView_PlayerNotFoundMessage);
                 if (!string.IsNullOrEmpty(players))
                 {
                     OsuIrcBot.GetInstancePublic().InvitePlayers(room.Id, players.Split(new char[] { ';' }).ToList());

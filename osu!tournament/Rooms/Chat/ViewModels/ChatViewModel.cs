@@ -175,7 +175,7 @@ namespace Osu.Mvvm.Rooms.Chat.ViewModels
                     // If we need to print the new messages line
                     if (message.NewMessageLine)
                     {
-                        paragraph = new Paragraph(new Run(Tournament.Properties.Resources.NewMessage)) {Margin = new Thickness(0), Foreground = Brushes.Red, TextAlignment = TextAlignment.Center};
+                        paragraph = new Paragraph(new Run(Utils.Properties.Resources.NewMessage)) {Margin = new Thickness(0), Foreground = Brushes.Red, TextAlignment = TextAlignment.Center};
                         newMessageParagraph = paragraph;
                     }
                     else

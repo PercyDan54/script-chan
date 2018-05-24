@@ -113,7 +113,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
             else
             {
-                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_BanSameNumber);
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_BanSameNumber);
             }
         }
 

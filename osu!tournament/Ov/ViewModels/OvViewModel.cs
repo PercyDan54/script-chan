@@ -207,7 +207,7 @@ namespace Osu.Mvvm.Ov.ViewModels
                 }
                 else
                 {
-                    Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_ValueNotLetter);
+                    Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_ValueNotLetter);
                 }
             }
         }
@@ -255,7 +255,7 @@ namespace Osu.Mvvm.Ov.ViewModels
         {
             if(selectedRedTeam.Name == selectedBlueTeam.Name)
             {
-                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_SameTeam);
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_SameTeam);
             }
             else
             {

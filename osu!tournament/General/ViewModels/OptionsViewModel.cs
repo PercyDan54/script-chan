@@ -255,7 +255,7 @@ namespace Osu.Mvvm.General.ViewModels
         {
             get
             {
-                return bot.IsConnected ? Tournament.Properties.Resources.Button_Disconnect : Tournament.Properties.Resources.Button_Disconnect;
+                return bot.IsConnected ? Utils.Properties.Resources.Button_Disconnect : Utils.Properties.Resources.Button_Disconnect;
             }
         }
 

@@ -46,8 +46,8 @@ namespace Osu.Tournament.AutoUpdate
 
         public async void DownloadLatestVersion()
         {
-            if (await Dialog.ShowConfirmation(Tournament.Properties.Resources.Update_NewVersionTitle,
-                Tournament.Properties.Resources.Update_NewVersionMessage))
+            if (await Dialog.ShowConfirmation(Utils.Properties.Resources.Update_NewVersionTitle,
+                Utils.Properties.Resources.Update_NewVersionMessage))
             {
                 if (_service.DownloadNewVersion())
                 {
@@ -56,7 +56,7 @@ namespace Osu.Tournament.AutoUpdate
                 }
                 else
                 {
-                    Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Update_NewVersionError);
+                    Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Update_NewVersionError);
                 }
             }
         }

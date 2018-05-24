@@ -108,18 +108,18 @@ namespace Osu.Mvvm.Rooms.Players.ViewModels
         /// </summary>
         public async void Add()
         {
-            string input = await Dialog.ShowInput(Tournament.Properties.Resources.PlayersView_AddPlayerTitle, Tournament.Properties.Resources.PlayersView_AddPlayerMessage);
+            string input = await Dialog.ShowInput(Utils.Properties.Resources.PlayersView_AddPlayerTitle, Utils.Properties.Resources.PlayersView_AddPlayerMessage);
             
             if (!string.IsNullOrEmpty(input))
             {
-                await Dialog.ShowProgress(Tournament.Properties.Resources.Wait_Title, Tournament.Properties.Resources.Wait_RetrievePlayer);
+                await Dialog.ShowProgress(Utils.Properties.Resources.Wait_Title, Utils.Properties.Resources.Wait_RetrievePlayer);
 
                 OsuUser user = await OsuApi.GetUser(input, wctype, false);
                 if (user == null)
                 {
                     await Dialog.HideProgress();
 
-                    Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_PlayerNotFound);
+                    Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_PlayerNotFound);
                 }
                 else
                 {

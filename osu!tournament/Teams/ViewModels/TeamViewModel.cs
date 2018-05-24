@@ -81,13 +81,13 @@ namespace Osu.Mvvm.Teams.ViewModels
             // If the osu!api is not valid
             if (!OsuApi.Valid)
                 // Error
-                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_ApiKeyInvalid);
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_ApiKeyInvalid);
             // Else
             else
             {
                 // Get an input if none is given
                 if (input == null)
-                    input = await Dialog.ShowInput(Tournament.Properties.Resources.TeamView_AddPlayersTitle, Tournament.Properties.Resources.TeamView_AddPlayersMessage);
+                    input = await Dialog.ShowInput(Utils.Properties.Resources.TeamView_AddPlayersTitle, Utils.Properties.Resources.TeamView_AddPlayersMessage);
 
                 // If something was entered
                 if (!string.IsNullOrEmpty(input))
@@ -133,7 +133,7 @@ namespace Osu.Mvvm.Teams.ViewModels
                         if(Team.Players.Exists(x => x.Name == player || x.Id == id))
                         {
                             // Error
-                            Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_PlayerAlreadyInTeam);
+                            Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_PlayerAlreadyInTeam);
                         }
                         else
                         {
@@ -148,7 +148,7 @@ namespace Osu.Mvvm.Teams.ViewModels
                             // Beatmap doesn't exist
                             if (osu_player == null)
                                 // Error
-                                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_PlayerNotFound);
+                                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_PlayerNotFound);
                             // Beatmap exists
                             else
                             {

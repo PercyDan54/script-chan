@@ -147,7 +147,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                         }
                         else
                         {
-                            Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_UnpickOrder);
+                            Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_UnpickOrder);
                         }
                     }
                     NotifyOfPropertyChange(() => Background);
@@ -253,7 +253,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
             else
             {
-                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_BanLimit);
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_BanLimit);
             }
         }
 
@@ -274,7 +274,7 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
             }
             else
             {
-                Dialog.ShowDialog(Tournament.Properties.Resources.Error_Title, Tournament.Properties.Resources.Error_UnbanOrder);
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_UnbanOrder);
             }
         }
         #endregion

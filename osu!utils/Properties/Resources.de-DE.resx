@@ -117,11 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Countries" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\countries.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Button_AbortMap" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
   <data name="Button_Add" xml:space="preserve">
     <value>Hinzufügen</value>
   </data>
+  <data name="Button_Ban" xml:space="preserve">
+    <value>Bannen</value>
+  </data>
+  <data name="Button_BanRecap" xml:space="preserve">
+    <value>Ban Zusammenfassung</value>
+  </data>
+  <data name="Button_ChangeRankingType" xml:space="preserve">
+    <value>Ranglistentyp verändern</value>
+  </data>
   <data name="Button_Clear" xml:space="preserve">
     <value>Löschen</value>
+  </data>
+  <data name="Button_CloseRoom" xml:space="preserve">
+    <value>Raum schließen</value>
   </data>
   <data name="Button_Connect" xml:space="preserve">
     <value>Verbinden</value>
@@ -138,8 +157,17 @@
   <data name="Button_Export" xml:space="preserve">
     <value>Exportieren</value>
   </data>
+  <data name="Button_InvitePlayers" xml:space="preserve">
+    <value>Spieler einladen</value>
+  </data>
   <data name="Button_Manual" xml:space="preserve">
     <value>Manuell</value>
+  </data>
+  <data name="Button_PickRecap" xml:space="preserve">
+    <value>Pick Zusammenfassung</value>
+  </data>
+  <data name="Button_RevertScore" xml:space="preserve">
+    <value>Rückgängig</value>
   </data>
   <data name="Button_Save" xml:space="preserve">
     <value>Speichern</value>
@@ -147,8 +175,29 @@
   <data name="Button_Send" xml:space="preserve">
     <value>Senden</value>
   </data>
+  <data name="Button_SetPassword" xml:space="preserve">
+    <value>Passwort setzen</value>
+  </data>
+  <data name="Button_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Button_StartGame" xml:space="preserve">
+    <value>Spiel starten (5s)</value>
+  </data>
+  <data name="Button_SwitchServer" xml:space="preserve">
+    <value>Server wechseln</value>
+  </data>
+  <data name="Button_Unban" xml:space="preserve">
+    <value>Entbannen</value>
+  </data>
+  <data name="Button_Update" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
   <data name="Button_Warmup" xml:space="preserve">
     <value>Warm-up</value>
+  </data>
+  <data name="Button_WelcomeString" xml:space="preserve">
+    <value>Begrüßung</value>
   </data>
   <data name="ChatView_Commands" xml:space="preserve">
     <value>Befehle</value>
@@ -162,17 +211,29 @@
   <data name="ErrorView_Status" xml:space="preserve">
     <value>osu!status Twitter öffnen</value>
   </data>
+  <data name="Error_Abort" xml:space="preserve">
+    <value>Versuche abzubrechen...</value>
+  </data>
   <data name="Error_ApiKeyInvalid" xml:space="preserve">
     <value>API Key ist ungültig!</value>
   </data>
   <data name="Error_BanchoDisconnect" xml:space="preserve">
     <value>Verbindung zu Bancho abgebrochen!</value>
   </data>
+  <data name="Error_BanLimit" xml:space="preserve">
+    <value>Es können nicht mehr Beatmaps gebannt werden!</value>
+  </data>
+  <data name="Error_BanSameNumber" xml:space="preserve">
+    <value>Beide Teams müssen die gleiche Anzahl an Bans haben!</value>
+  </data>
   <data name="Error_BeatmapAlreadyInMappool" xml:space="preserve">
     <value>Die eingegebene Beatmap ist schon im Mappool vorhanden!</value>
   </data>
   <data name="Error_BeatmapIdNotFound" xml:space="preserve">
     <value>Die eingegebene Beatmap existiert nicht!</value>
+  </data>
+  <data name="Error_GameAlreadyExists" xml:space="preserve">
+    <value>Dieses Spiel ist bereits vorhanden!</value>
   </data>
   <data name="Error_IdIsNotNumber" xml:space="preserve">
     <value>Die eingegebene ID ist keine Nummer!</value>
@@ -204,6 +265,12 @@
   <data name="Error_Title" xml:space="preserve">
     <value>Hoppla!</value>
   </data>
+  <data name="Error_UnbanOrder" xml:space="preserve">
+    <value>Bans müssen in umgekehrter Reihenfolge entfernt werden!</value>
+  </data>
+  <data name="Error_UnpickOrder" xml:space="preserve">
+    <value>Picks müssen in umgekehrter Reihenfolge entfernt werden!</value>
+  </data>
   <data name="Error_ValueNotLetter" xml:space="preserve">
     <value>Bitte gebe einen Buchstaben ein!</value>
   </data>
@@ -222,15 +289,41 @@
   <data name="General_Username" xml:space="preserve">
     <value>Benutzername</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\favicon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="HeadToHeadOptionsView_FreeForAllConfig" xml:space="preserve">
+    <value>Free For All Konfiguration</value>
+  </data>
+  <data name="HeadToHeadOptionsView_PlayerPickOrder" xml:space="preserve">
+    <value>Spieler Wählreihenfolge</value>
+  </data>
+  <data name="HeadToHeadOptionsView_RankingPoints" xml:space="preserve">
+    <value>Punkte</value>
+  </data>
+  <data name="HeadToHeadOptionsView_RoomConfig" xml:space="preserve">
+    <value>Raum Konfiguration</value>
+  </data>
+  <data name="HeadToHeadRankingView_CurrentPlayer" xml:space="preserve">
+    <value>Aktueller Spieler</value>
+  </data>
+  <data name="HeadToHeadRankingView_NextPlayer" xml:space="preserve">
+    <value>Nächster Spieler</value>
+  </data>
+  <data name="HeadToHeadRankingView_NoMapPlayed" xml:space="preserve">
+    <value>Noch keine Map gespielt</value>
+  </data>
+  <data name="HeadToHeadRankingView_NoOrder" xml:space="preserve">
+    <value>Keine Reihenfolge festgelegt</value>
+  </data>
+  <data name="HeadToHeadRankingView_Player" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="HeadToHeadRankingView_PleaseWait" xml:space="preserve">
+    <value>Bitte warten...</value>
+  </data>
+  <data name="HeadToHeadRankingView_Score" xml:space="preserve">
+    <value>Punkte</value>
   </data>
   <data name="IrcView_SelectPlayers" xml:space="preserve">
     <value>Wähle Spieler aus an die Nachrichten gesendet werden sollen</value>
-  </data>
-  <data name="LoggerConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\logger.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="MainView_Mappools" xml:space="preserve">
     <value>Mappools</value>
@@ -250,6 +343,12 @@
   <data name="MainView_UpdateAvailable" xml:space="preserve">
     <value>Es ist eine neue Version verfügbar. Klick hier um das Update herunterzuladen.</value>
   </data>
+  <data name="MappoolPickerView_MapPicker" xml:space="preserve">
+    <value>Map picker</value>
+  </data>
+  <data name="MappoolPickerView_SearchWatermark" xml:space="preserve">
+    <value>Filter Beatmaps nach Künstler oder Titel</value>
+  </data>
   <data name="MappoolView_AddBeatmap" xml:space="preserve">
     <value>Neue Beatmap hinzufügen</value>
   </data>
@@ -267,6 +366,24 @@
   </data>
   <data name="MappoolView_EnterBeatmapIdTitle" xml:space="preserve">
     <value>Beatmap hinzufügen</value>
+  </data>
+  <data name="MultiplayerCommandView_CloseRoomMessage" xml:space="preserve">
+    <value>Willst du wirklich den Raum schließen?</value>
+  </data>
+  <data name="MultiplayerCommandView_CloseRoomTitle" xml:space="preserve">
+    <value>Raum schließen</value>
+  </data>
+  <data name="MultiplayerCommandView_NewPasswordMessage" xml:space="preserve">
+    <value>Gebe ein neues Passwort ein</value>
+  </data>
+  <data name="MultiplayerCommandView_NewPasswordTitle" xml:space="preserve">
+    <value>Neues Passwort</value>
+  </data>
+  <data name="MultiplayerCommandView_PlayerNotFoundMessage" xml:space="preserve">
+    <value>Gebe einen Spieler ein (Name oder ID). Mehrere Spieler können durch ';' getrennt eingegeben werden.</value>
+  </data>
+  <data name="MultiplayerCommandView_PlayerNotFoundTitle" xml:space="preserve">
+    <value>nicht gefunden</value>
   </data>
   <data name="NewMessage" xml:space="preserve">
     <value>------------------ NEUE NACHRICHTEN ------------------</value>
@@ -388,174 +505,6 @@
   <data name="OvView_WelcomeMessage" xml:space="preserve">
     <value>Begrüßung</value>
   </data>
-  <data name="Success_MessageSent" xml:space="preserve">
-    <value>Nachricht wurde erfolgreich gesendet!</value>
-  </data>
-  <data name="Success_Title" xml:space="preserve">
-    <value>Erfolg!</value>
-  </data>
-  <data name="TeamsView_AddTeamMessage" xml:space="preserve">
-    <value>Gebe einen Teamnamen ein.</value>
-  </data>
-  <data name="TeamsView_AddTeamTitle" xml:space="preserve">
-    <value>Team erstellen</value>
-  </data>
-  <data name="TeamsView_PleaseSelectTeam" xml:space="preserve">
-    <value>Bitte wähle ein Team aus oder erstelle eines</value>
-  </data>
-  <data name="TeamsView_TeamNameAsPlayer" xml:space="preserve">
-    <value>Team Name ist Spieler Name</value>
-  </data>
-  <data name="TeamView_AddPlayers" xml:space="preserve">
-    <value>Spieler hinzufügen</value>
-  </data>
-  <data name="TeamView_AddPlayersMessage" xml:space="preserve">
-    <value>Gebe einen Spieler ein (Name oder ID). Mehrere Spieler können durch ';' getrennt eingegeben werden.</value>
-  </data>
-  <data name="TeamView_AddPlayersTitle" xml:space="preserve">
-    <value>Spieler hinzufügen</value>
-  </data>
-  <data name="Update_NewVersionError" xml:space="preserve">
-    <value>Ein Fehler ist während des Downloads aufgetreten. Bitte starte die App als Administrator.</value>
-  </data>
-  <data name="Update_NewVersionMessage" xml:space="preserve">
-    <value>Soll die neue Version heruntergeladen werden? Bestätigen schließt die App.</value>
-  </data>
-  <data name="Update_NewVersionTitle" xml:space="preserve">
-    <value>Neue Version verfügbar</value>
-  </data>
-  <data name="Wait_CreatingRoom" xml:space="preserve">
-    <value>Raum wird erstellt...</value>
-  </data>
-  <data name="Wait_Export" xml:space="preserve">
-    <value>Raum wird exportiert...</value>
-  </data>
-  <data name="Wait_SendingMessage" xml:space="preserve">
-    <value>Nachricht wird gesendet...</value>
-  </data>
-  <data name="Wait_Title" xml:space="preserve">
-    <value>Bitte warten</value>
-  </data>
-  <data name="Button_AbortMap" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
-  <data name="Button_Ban" xml:space="preserve">
-    <value>Bannen</value>
-  </data>
-  <data name="Button_BanRecap" xml:space="preserve">
-    <value>Ban Zusammenfassung</value>
-  </data>
-  <data name="Button_ChangeRankingType" xml:space="preserve">
-    <value>Ranglistentyp verändern</value>
-  </data>
-  <data name="Button_CloseRoom" xml:space="preserve">
-    <value>Raum schließen</value>
-  </data>
-  <data name="Button_InvitePlayers" xml:space="preserve">
-    <value>Spieler einladen</value>
-  </data>
-  <data name="Button_PickRecap" xml:space="preserve">
-    <value>Pick Zusammenfassung</value>
-  </data>
-  <data name="Button_RevertScore" xml:space="preserve">
-    <value>Rückgängig</value>
-  </data>
-  <data name="Button_SetPassword" xml:space="preserve">
-    <value>Passwort setzen</value>
-  </data>
-  <data name="Button_Settings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="Button_StartGame" xml:space="preserve">
-    <value>Spiel starten (5s)</value>
-  </data>
-  <data name="Button_SwitchServer" xml:space="preserve">
-    <value>Server wechseln</value>
-  </data>
-  <data name="Button_Unban" xml:space="preserve">
-    <value>Entbannen</value>
-  </data>
-  <data name="Button_Update" xml:space="preserve">
-    <value>Aktualisieren</value>
-  </data>
-  <data name="Button_WelcomeString" xml:space="preserve">
-    <value>Begrüßung</value>
-  </data>
-  <data name="Error_Abort" xml:space="preserve">
-    <value>Versuche abzubrechen...</value>
-  </data>
-  <data name="Error_BanLimit" xml:space="preserve">
-    <value>Es können nicht mehr Beatmaps gebannt werden!</value>
-  </data>
-  <data name="Error_BanSameNumber" xml:space="preserve">
-    <value>Beide Teams müssen die gleiche Anzahl an Bans haben!</value>
-  </data>
-  <data name="Error_GameAlreadyExists" xml:space="preserve">
-    <value>Dieses Spiel ist bereits vorhanden!</value>
-  </data>
-  <data name="Error_UnbanOrder" xml:space="preserve">
-    <value>Bans müssen in umgekehrter Reihenfolge entfernt werden!</value>
-  </data>
-  <data name="Error_UnpickOrder" xml:space="preserve">
-    <value>Picks müssen in umgekehrter Reihenfolge entfernt werden!</value>
-  </data>
-  <data name="HeadToHeadOptionsView_FreeForAllConfig" xml:space="preserve">
-    <value>Free For All Konfiguration</value>
-  </data>
-  <data name="HeadToHeadOptionsView_PlayerPickOrder" xml:space="preserve">
-    <value>Spieler Wählreihenfolge</value>
-  </data>
-  <data name="HeadToHeadOptionsView_RankingPoints" xml:space="preserve">
-    <value>Punkte</value>
-  </data>
-  <data name="HeadToHeadOptionsView_RoomConfig" xml:space="preserve">
-    <value>Raum Konfiguration</value>
-  </data>
-  <data name="HeadToHeadRankingView_CurrentPlayer" xml:space="preserve">
-    <value>Aktueller Spieler</value>
-  </data>
-  <data name="HeadToHeadRankingView_NextPlayer" xml:space="preserve">
-    <value>Nächster Spieler</value>
-  </data>
-  <data name="HeadToHeadRankingView_NoMapPlayed" xml:space="preserve">
-    <value>Noch keine Map gespielt</value>
-  </data>
-  <data name="HeadToHeadRankingView_NoOrder" xml:space="preserve">
-    <value>Keine Reihenfolge festgelegt</value>
-  </data>
-  <data name="HeadToHeadRankingView_Player" xml:space="preserve">
-    <value>Spieler</value>
-  </data>
-  <data name="HeadToHeadRankingView_PleaseWait" xml:space="preserve">
-    <value>Bitte warten...</value>
-  </data>
-  <data name="HeadToHeadRankingView_Score" xml:space="preserve">
-    <value>Punkte</value>
-  </data>
-  <data name="MappoolPickerView_MapPicker" xml:space="preserve">
-    <value>Map picker</value>
-  </data>
-  <data name="MappoolPickerView_SearchWatermark" xml:space="preserve">
-    <value>Filter Beatmaps nach Künstler oder Titel</value>
-  </data>
-  <data name="MultiplayerCommandView_CloseRoomMessage" xml:space="preserve">
-    <value>Willst du wirklich den Raum schließen?</value>
-  </data>
-  <data name="MultiplayerCommandView_CloseRoomTitle" xml:space="preserve">
-    <value>Raum schließen</value>
-  </data>
-  <data name="MultiplayerCommandView_NewPasswordMessage" xml:space="preserve">
-    <value>Gebe ein neues Passwort ein</value>
-  </data>
-  <data name="MultiplayerCommandView_NewPasswordTitle" xml:space="preserve">
-    <value>Neues Passwort</value>
-  </data>
-  <data name="MultiplayerCommandView_PlayerNotFoundMessage" xml:space="preserve">
-    <value>Gebe einen Spieler ein (Name oder ID). Mehrere Spieler können durch ';' getrennt eingegeben werden.</value>
-  </data>
-  <data name="MultiplayerCommandView_PlayerNotFoundTitle" xml:space="preserve">
-    <value>nicht gefunden</value>
-  </data>
   <data name="PlayersView_AddPlayerMessage" xml:space="preserve">
     <value>Gebe einen Spieler ein</value>
   </data>
@@ -628,6 +577,33 @@
   <data name="RoomView_Ranking" xml:space="preserve">
     <value>Ranking</value>
   </data>
+  <data name="Success_MessageSent" xml:space="preserve">
+    <value>Nachricht wurde erfolgreich gesendet!</value>
+  </data>
+  <data name="Success_Title" xml:space="preserve">
+    <value>Erfolg!</value>
+  </data>
+  <data name="TeamsView_AddTeamMessage" xml:space="preserve">
+    <value>Gebe einen Teamnamen ein.</value>
+  </data>
+  <data name="TeamsView_AddTeamTitle" xml:space="preserve">
+    <value>Team erstellen</value>
+  </data>
+  <data name="TeamsView_PleaseSelectTeam" xml:space="preserve">
+    <value>Bitte wähle ein Team aus oder erstelle eines</value>
+  </data>
+  <data name="TeamsView_TeamNameAsPlayer" xml:space="preserve">
+    <value>Team Name ist Spieler Name</value>
+  </data>
+  <data name="TeamView_AddPlayers" xml:space="preserve">
+    <value>Spieler hinzufügen</value>
+  </data>
+  <data name="TeamView_AddPlayersMessage" xml:space="preserve">
+    <value>Gebe einen Spieler ein (Name oder ID). Mehrere Spieler können durch ';' getrennt eingegeben werden.</value>
+  </data>
+  <data name="TeamView_AddPlayersTitle" xml:space="preserve">
+    <value>Spieler hinzufügen</value>
+  </data>
   <data name="TeamVsOptionsView_Blue" xml:space="preserve">
     <value>Blau</value>
   </data>
@@ -655,11 +631,32 @@
   <data name="TeamVsRankingView_TeamPicking" xml:space="preserve">
     <value>Team wählt</value>
   </data>
+  <data name="Update_NewVersionError" xml:space="preserve">
+    <value>Ein Fehler ist während des Downloads aufgetreten. Bitte starte die App als Administrator.</value>
+  </data>
+  <data name="Update_NewVersionMessage" xml:space="preserve">
+    <value>Soll die neue Version heruntergeladen werden? Bestätigen schließt die App.</value>
+  </data>
+  <data name="Update_NewVersionTitle" xml:space="preserve">
+    <value>Neue Version verfügbar</value>
+  </data>
+  <data name="Wait_CreatingRoom" xml:space="preserve">
+    <value>Raum wird erstellt...</value>
+  </data>
+  <data name="Wait_Export" xml:space="preserve">
+    <value>Raum wird exportiert...</value>
+  </data>
   <data name="Wait_RetrievePlayer" xml:space="preserve">
     <value>Suche Spieler Daten...</value>
   </data>
   <data name="Wait_RetrieveRoom" xml:space="preserve">
     <value>Raum wird erstellt...</value>
+  </data>
+  <data name="Wait_SendingMessage" xml:space="preserve">
+    <value>Nachricht wird gesendet...</value>
+  </data>
+  <data name="Wait_Title" xml:space="preserve">
+    <value>Bitte warten</value>
   </data>
   <data name="Wait_UpdatingRoom" xml:space="preserve">
     <value>Raum wird aktualisiert...</value>

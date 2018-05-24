@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:misc="clr-namespace:Osu.Mvvm.Miscellaneous"
-    xmlns:p="clr-namespace:Osu.Tournament.Properties"
+    xmlns:p="clr-namespace:Osu.Utils.Properties;assembly=osuUtils"
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="500">
