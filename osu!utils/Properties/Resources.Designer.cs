@@ -335,6 +335,33 @@ namespace Osu.Utils.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Woah! So cool! :smirk:.
+        /// </summary>
+        public static string Discord_Footer {
+            get {
+                return ResourceManager.GetString("Discord_Footer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can join the match on IRC by typing ```/join #mp_{0}```.
+        /// </summary>
+        public static string Discord_NewMatchDescription {
+            get {
+                return ResourceManager.GetString("Discord_NewMatchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The match has been created!.
+        /// </summary>
+        public static string Discord_NewMatchTitle {
+            get {
+                return ResourceManager.GetString("Discord_NewMatchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abort taken in consideration!.
         /// </summary>
         public static string Error_Abort {
@@ -691,6 +718,15 @@ namespace Osu.Utils.Properties {
         public static string HeadToHeadRankingView_Score {
             get {
                 return ResourceManager.GetString("HeadToHeadRankingView_Score", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is RED, slots {2} to {3} --- {1} is BLUE, slots {4} to {5}.
+        /// </summary>
+        public static string Irc_SlotInfo {
+            get {
+                return ResourceManager.GetString("Irc_SlotInfo", resourceCulture);
             }
         }
         

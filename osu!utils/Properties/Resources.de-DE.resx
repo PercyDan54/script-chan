@@ -661,4 +661,17 @@
   <data name="Wait_UpdatingRoom" xml:space="preserve">
     <value>Raum wird aktualisiert...</value>
   </data>
+  <data name="Discord_Footer" xml:space="preserve">
+    <value>Woah! So cool! :smirk:</value>
+  </data>
+  <data name="Discord_NewMatchDescription" xml:space="preserve">
+    <value>Der Raum kann mit ```/join #mp_{0}``` betreten werden</value>
+  </data>
+  <data name="Discord_NewMatchTitle" xml:space="preserve">
+    <value>Spiel wurde erstellt!</value>
+  </data>
+  <data name="Irc_SlotInfo" xml:space="preserve">
+    <value>{0} ist ROT, Plätze {2} bis {3} --- {1} is BLAU, Plätze {4} bis {5}</value>
+    <comment>{0} red team name; {2} and {3} red team slot range; {1} blue team name; {4} and {5} blue team slot range</comment>
+  </data>
 </root>

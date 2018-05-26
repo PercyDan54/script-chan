@@ -661,4 +661,18 @@
   <data name="Wait_UpdatingRoom" xml:space="preserve">
     <value>Updating the room...</value>
   </data>
+  <data name="Discord_Footer" xml:space="preserve">
+    <value>Woah! So cool! :smirk:</value>
+  </data>
+  <data name="Discord_NewMatchDescription" xml:space="preserve">
+    <value>You can join the match on IRC by typing ```/join #mp_{0}```</value>
+    <comment>{0} is the match id</comment>
+  </data>
+  <data name="Discord_NewMatchTitle" xml:space="preserve">
+    <value>The match has been created!</value>
+  </data>
+  <data name="Irc_SlotInfo" xml:space="preserve">
+    <value>{0} is RED, slots {2} to {3} --- {1} is BLUE, slots {4} to {5}</value>
+    <comment>{0} red team name; {2} and {3} red team slot range; {1} blue team name; {4} and {5} blue team slot range</comment>
+  </data>
 </root>

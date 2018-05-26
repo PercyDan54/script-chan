@@ -82,8 +82,8 @@ namespace osu_discord
             Embed e = new Embed();
             e.Author = new Author() { IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400731693192839179/plus.png", Name = $"{redname} VS {bluename}", Url = "https://osu.ppy.sh/community/matches/" + id };
             e.Color = "2061822";
-            e.Title = "The match has been created!";
-            e.Description = "You can join the match on IRC by typing ```/join #mp_" + id + "```";
+            e.Title = Osu.Utils.Properties.Resources.Discord_NewMatchTitle;
+            e.Description = string.Format(Osu.Utils.Properties.Resources.Discord_NewMatchDescription, id);
 
             // Generate the base of the payload
             Payload p = GenerateBasePayload();
@@ -121,7 +121,7 @@ namespace osu_discord
         {
             // Create the footer
             embed.Footer = new Footer();
-            embed.Footer.Text = "Woah! So cool! :smirk:";
+            embed.Footer.Text = Osu.Utils.Properties.Resources.Discord_Footer;
             embed.Footer.IconUrl = "https://i.imgur.com/fKL31aD.jpg";
 
             return embed;
