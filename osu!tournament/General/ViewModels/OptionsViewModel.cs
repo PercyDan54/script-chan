@@ -101,7 +101,6 @@ namespace Osu.Mvvm.General.ViewModels
         private EventHandler<EventArgs> e_ChangeEvent()
         {
             NotifyOfPropertyChange(() => Mappools);
-            SelectedMappool = null;
             NotifyOfPropertyChange(() => SelectedMappool);
 
             return null;
