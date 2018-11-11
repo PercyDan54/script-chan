@@ -145,18 +145,20 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         /// <summary>
         /// Update UI function
         /// </summary>
-        public void Update()
+        public async void Update()
         {
             if (r.Mappool != null)
             {
                 beatmaps.Clear();
-                Task<Room> re = Room.Get(r.Id);
-                re.Wait();
-                foreach (KeyValuePair<long, Beatmap> kvp in re.Result.Mappool?.Pool)
+                Room re = await Room.Get(r.Id);
+                if (re?.Mappool != null)
                 {
-                    beatmaps.Add(new BeatmapPickerViewModel(r, kvp.Value));
+                    foreach (KeyValuePair<long, Beatmap> kvp in re.Mappool.Pool)
+                    {
+                        beatmaps.Add(new BeatmapPickerViewModel(r, kvp.Value));
+                    }
+                    NotifyOfPropertyChange(() => Beatmaps);
                 }
-                NotifyOfPropertyChange(() => Beatmaps);
             }
         }
 

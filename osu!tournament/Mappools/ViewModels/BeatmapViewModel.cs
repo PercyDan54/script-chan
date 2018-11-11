@@ -47,7 +47,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
             beatmap.ModsChanged += UpdateMods;
 
             if(beatmap.PickType.Count == 0)
-                beatmap.PickType.Add(Scores.PickType.None);
+                beatmap.PickType.Add(Scores.PickType.NoMod);
 
             UpdateMods();
         }
@@ -205,7 +205,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
         public void UpdateMods()
         {
             _mods = new List<BeatmapModViewModel>();
-            foreach (var mod in beatmap.PickType.Where(x => x != Scores.PickType.None))
+            foreach (var mod in beatmap.PickType.Where(x => x != Scores.PickType.NoMod))
                 _mods.Add(new BeatmapModViewModel(beatmap, mod));
 
             NotifyOfPropertyChange(() => Mods);

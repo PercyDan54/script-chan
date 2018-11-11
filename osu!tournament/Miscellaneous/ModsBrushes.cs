@@ -103,7 +103,7 @@ namespace Osu.Mvvm.Miscellaneous
         {
             switch (mod)
             {
-                case PickType.None:
+                case PickType.NoMod:
                     return None;
                 case PickType.HD:
                     return HD;
@@ -126,7 +126,7 @@ namespace Osu.Mvvm.Miscellaneous
         {
             switch (mod)
             {
-                case PickType.None:
+                case PickType.NoMod:
                     return NoneLight;
                 case PickType.HD:
                     return HDLight;
