@@ -37,7 +37,7 @@ namespace Osu.Tournament.AutoUpdate
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             string lastVersion = await res;
 
-            if (!version.StartsWith(lastVersion))
+            if (!version.StartsWith(lastVersion) && lastVersion != "ko")
             {
                 UpdateAvailable = true;
                 DownloadLatestVersion();

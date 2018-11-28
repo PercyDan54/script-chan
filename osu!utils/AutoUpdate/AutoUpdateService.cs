@@ -34,18 +34,26 @@ namespace Osu.Utils.AutoUpdate
         {
             using (var wc = new WebClient())
             {
-                string json = await wc.DownloadStringTaskAsync(_uri);
-                var obj = JObject.Parse("{ \"versions\":" + json + "}");
-                var token = obj["versions"].First;
-
-                var version = token["release"]["tag_name"].ToString();
-                var description = token["release"]["description"].ToString();
-
-                Regex regex = new Regex(DOWNLOAD_REGEX);
-                if (regex.IsMatch(description))
+                var version = "ko";
+                try
                 {
-                    var match = regex.Match(description);
-                    _downloadLink = PROJECT_URL + match.Groups[1].Value;
+                    System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                    string json = await wc.DownloadStringTaskAsync(_uri);
+                    var obj = JObject.Parse("{ \"versions\":" + json + "}");
+                    var token = obj["versions"].First;
+
+                    version = token["release"]["tag_name"].ToString();
+                    var description = token["release"]["description"].ToString();
+
+                    Regex regex = new Regex(DOWNLOAD_REGEX);
+                    if (regex.IsMatch(description))
+                    {
+                        var match = regex.Match(description);
+                        _downloadLink = PROJECT_URL + match.Groups[1].Value;
+                    }
+                }
+                catch(Exception e)
+                {
                 }
 
                 return version;
