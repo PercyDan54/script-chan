@@ -267,7 +267,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
             get => selectedTab;
             set
             {
-                if (selectedTab != null && selectedTab.Header.ToString() == "Chat" && value.Header.ToString() != "Chat")
+                if (selectedTab != null && selectedTab.Header.ToString() == Utils.Properties.Resources.RoomView_Chat && value.Header.ToString() != Utils.Properties.Resources.RoomView_Chat)
                 {
                     RemoveNewMessageLine();
                 }
@@ -307,7 +307,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
         public async Task Update(bool isIrcTrigger)
         {
             // Show progress
-            await Dialog.ShowProgress("Please wait", "Updating the room...");
+            await Dialog.ShowProgress(Utils.Properties.Resources.Wait_Title, Utils.Properties.Resources.Wait_UpdatingRoom);
 
             // No api
             if (!OsuApi.Valid)
@@ -316,7 +316,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
                 await Dialog.HideProgress();
 
                 // Error
-                Dialog.ShowDialog("Whoops!", "The osu!api key is not valid!");
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_ApiKeyInvalid);
             }
             // Api is set
             else
@@ -351,7 +351,7 @@ namespace Osu.Mvvm.Rooms.ViewModels
         /// </summary>
         public async void ChangeRankingType()
         {
-            if (await Dialog.ShowConfirmation("Change room ranking type", "Are you sure you want to change the room ranking type?"))
+            if (await Dialog.ShowConfirmation(Utils.Properties.Resources.RoomView_ChangeRankingTitle, Utils.Properties.Resources.RoomView_ChangeRankingMessage))
             {
                 room.ChangeRankingType();
 

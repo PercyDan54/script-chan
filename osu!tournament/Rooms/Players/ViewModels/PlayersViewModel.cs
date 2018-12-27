@@ -108,18 +108,18 @@ namespace Osu.Mvvm.Rooms.Players.ViewModels
         /// </summary>
         public async void Add()
         {
-            string input = await Dialog.ShowInput("Add Target", "Enter the player username");
+            string input = await Dialog.ShowInput(Utils.Properties.Resources.PlayersView_AddPlayerTitle, Utils.Properties.Resources.PlayersView_AddPlayerMessage);
             
             if (!string.IsNullOrEmpty(input))
             {
-                await Dialog.ShowProgress("Please wait", "Trying to retrieve and register the player");
+                await Dialog.ShowProgress(Utils.Properties.Resources.Wait_Title, Utils.Properties.Resources.Wait_RetrievePlayer);
 
                 OsuUser user = await OsuApi.GetUser(input, wctype, false);
                 if (user == null)
                 {
                     await Dialog.HideProgress();
 
-                    Dialog.ShowDialog("Whoops!", "The player does not exist!");
+                    Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_PlayerNotFound);
                 }
                 else
                 {

@@ -666,7 +666,6 @@
   </data>
   <data name="Discord_NewMatchDescription" xml:space="preserve">
     <value>You can join the match on IRC by typing ```/join #mp_{0}```</value>
-    <comment>{0} is the match id</comment>
   </data>
   <data name="Discord_NewMatchTitle" xml:space="preserve">
     <value>The match has been created!</value>

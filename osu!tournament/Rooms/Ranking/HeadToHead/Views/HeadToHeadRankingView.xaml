@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
+    xmlns:p="clr-namespace:Osu.Utils.Properties;assembly=osuUtils"
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="500">
@@ -24,8 +25,8 @@
         </Grid.ColumnDefinitions>
 
         <Label x:Name="Status" Content="Please Wait..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" FontSize="20" Grid.ColumnSpan="2"/>
-        <Label Content="Player" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="0"  Grid.Column="0" Grid.Row="1" FontSize="20" />
-        <Label Content="Score" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="0,0,5,0" Margin="0" Grid.Column="1" Grid.Row="1" FontSize="20" />
+        <Label Content="{x:Static p:Resources.HeadToHeadRankingView_Player}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="0"  Grid.Column="0" Grid.Row="1" FontSize="20" />
+        <Label Content="{x:Static p:Resources.HeadToHeadRankingView_Score}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="0,0,5,0" Margin="0" Grid.Column="1" Grid.Row="1" FontSize="20" />
         <ScrollViewer Padding="0" Margin="0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="{Binding RowSpanScore}">
             <ItemsControl x:Name="Lines" Padding="0" Margin="0,5,0,0"  />
         </ScrollViewer>

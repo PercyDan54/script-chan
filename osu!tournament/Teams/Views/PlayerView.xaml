@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
+    xmlns:p="clr-namespace:Osu.Utils.Properties;assembly=osuUtils"
     mc:Ignorable="d"
     d:DesignHeight="29"
     d:DesignWidth="500"
@@ -23,6 +24,6 @@
         </Grid.ColumnDefinitions>
 
         <Label x:Name="DisplayName" Content="PlayerName" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="0,0,2.5,0" Grid.Column="0" />
-        <Button x:Name="Delete" Content="Delete" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" />
+        <Button x:Name="Delete" Content="{x:Static p:Resources.Button_Delete}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" />
     </Grid>
 </UserControl>

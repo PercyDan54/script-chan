@@ -19,7 +19,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using Osu.Api.Enums;
+using System.Windows.Markup;
 using Osu.Tournament.AutoUpdate;
+using System.Globalization;
 
 namespace Osu.Mvvm
 {
@@ -46,6 +48,11 @@ namespace Osu.Mvvm
         /// <param name="e">the arguments</param>
         protected override async void OnStartup(object sender, StartupEventArgs e)
         {
+
+            var culture = Cache.GetCache("osu!options.db").Get("language", "en-US");
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
+
             Cache c = Cache.GetCache("osu!userdata.db");
             InfosHelper.UserDataInfos = c.GetObject<UserDataInfo>("infos", new UserDataInfo());
 

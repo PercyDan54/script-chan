@@ -90,7 +90,7 @@ namespace Osu.Mvvm.Rooms.Games.ViewModels
 
             // No beatmap
             if (beatmap == null)
-                beatmap_name = "Name not found!";
+                beatmap_name = Utils.Properties.Resources.GameView_MapNotFound;
             // A beatmap
             else
                 beatmap_name = beatmap.Artist + " - " + beatmap.Title + " [" + beatmap.Version + "]";

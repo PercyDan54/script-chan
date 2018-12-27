@@ -6,21 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
+    xmlns:p="clr-namespace:Osu.Utils.Properties;assembly=osuUtils"
     mc:Ignorable="d"
     d:DesignHeight="100"
     d:DesignWidth="500">
-<!--
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <ScrollViewer Margin="0,5,0,0" Grid.Column="0" Grid.Row="0">
-            
-        </ScrollViewer>
-    </Grid>-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30*"/>
@@ -32,14 +21,12 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="SendQuickSwitch" Visibility="{Binding IsOsuAdmin}" Content="Switch server" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="1" />
-        <Button x:Name="CloseRoom" Visibility="{Binding IsMpCloseVisible}" Content="Close the room" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="1" Background="OrangeRed"/>
-
-        <!--<Button x:Name="SwitchAll" Content="Switch All" FontSize="12" VerticalContentAlignment="Center" Padding="0" Grid.Row="0" Grid.Column="7"/>-->
-        <Button x:Name="SendInvitations" Content="Invite players" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="2" />
-        <Button x:Name="SendStart" Content="Start game (5s)" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="1" />
-        <Button x:Name="SendSettings" Content="Settings" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="2" />
-        <Button x:Name="SendWelcomeMessage" Content="Welcome String" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="3" />
-        <Button x:Name="SetPassword" Content="Set Password" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="3" />
+        <Button x:Name="SendQuickSwitch" Visibility="{Binding IsOsuAdmin}" Content="{x:Static p:Resources.Button_SwitchServer}" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="1" />
+        <Button x:Name="CloseRoom" Visibility="{Binding IsMpCloseVisible}" Content="{x:Static p:Resources.Button_CloseRoom}" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="1" Background="OrangeRed"/>
+        <Button x:Name="SendInvitations" Content="{x:Static p:Resources.Button_InvitePlayers}" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="2" />
+        <Button x:Name="SendStart" Content="{x:Static p:Resources.Button_StartGame}" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="1" />
+        <Button x:Name="SendSettings" Content="{x:Static p:Resources.Button_Settings}" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="2" />
+        <Button x:Name="SendWelcomeMessage" Content="{x:Static p:Resources.Button_WelcomeString}" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="0" Grid.Column="3" />
+        <Button x:Name="SetPassword" Content="{x:Static p:Resources.Button_SetPassword}" FontSize="12" VerticalContentAlignment="Center" Padding="0" Margin="1" Grid.Row="1" Grid.Column="3" />
     </Grid>
 </UserControl>

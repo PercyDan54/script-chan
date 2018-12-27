@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
+    xmlns:p="clr-namespace:Osu.Utils.Properties;assembly=osuUtils"
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="500">
@@ -48,8 +49,8 @@
         <Label x:Name="BlueTeamPoints" Content="{Binding BlueTeamScore}" FontSize="16" FontWeight="Bold" Foreground="#FF0180FF" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="2" />
         <Label x:Name="RedTeamPoints" Content="{Binding RedTeamScore}" FontSize="16" FontWeight="Bold" Foreground="#FFFF2727" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="1" />
 
-        <Button x:Name="RevertPointChanges" Content="Revert score" FontSize="10" VerticalContentAlignment="Center" Padding="0" Grid.Row="1" Grid.Column="5" Margin="1"/>
-        <Button x:Name="AbortHappened" Content="Abort map" FontSize="10" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="5" Margin="1"/>
+        <Button x:Name="RevertPointChanges" Content="{x:Static p:Resources.Button_RevertScore}" FontSize="10" VerticalContentAlignment="Center" Padding="0" Grid.Row="1" Grid.Column="5" Margin="1"/>
+        <Button x:Name="AbortHappened" Content="{x:Static p:Resources.Button_AbortMap}" FontSize="10" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="5" Margin="1"/>
 
         <ContentControl x:Name="MultiCommands" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
 

@@ -9,6 +9,7 @@
     xmlns:w="clr-namespace:Osu.Mvvm"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:misc="clr-namespace:Osu.Tournament.Miscellaneous"
+    xmlns:p="clr-namespace:Osu.Utils.Properties;assembly=osuUtils"
     mc:Ignorable="d"
     d:DesignHeight="29"
     d:DesignWidth="500"
@@ -45,7 +46,7 @@
             </ItemsControl>
             <Label x:Name="DisplayName" Content="Artist - Title [Version]" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="0,0,2.5,0" />
         </DockPanel>
-        <Button x:Name="Delete" Content="Delete" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" />
+        <Button x:Name="Delete" Content="{x:Static p:Resources.Button_Delete}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="2" />
         <Popup x:Name="ModPicker" IsOpen="{Binding ModPickerIsOpen}" StaysOpen="False" PlacementTarget="{Binding ElementName=ShowModPicker}" PopupAnimation="Slide" AllowsTransparency="True" Width="100">
             <Border BorderBrush="Black" BorderThickness="1" Padding="5" Background="White">
                 <ItemsControl ItemsSource="{Binding PickableMods}">

@@ -8,7 +8,7 @@ namespace Osu.Scores
     /// </summary>
     public enum PickType
     {
-        None = 0,
+        NoMod = 0,
         HD = 1,
         HR = 2,
         DT = 3,

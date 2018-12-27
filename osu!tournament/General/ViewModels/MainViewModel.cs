@@ -198,11 +198,11 @@ namespace Osu.Mvvm.General.ViewModels
             {
                 if (value != active_item_name)
                 {
-                    if (active_item_name != null && active_item_name == "Rooms" && rooms.ActiveItem != null && rooms.ActiveItem.SelectedTab.Header.ToString() == "Chat")
+                    if (active_item_name != null && active_item_name == Utils.Properties.Resources.MainView_Rooms && rooms.ActiveItem != null && rooms.ActiveItem.SelectedTab.Header.ToString() == "Chat")
                     {
                         rooms.ActiveItem.RemoveNewMessageLine();
                     }
-                    if (active_item_name != "Mappools")
+                    if (active_item_name != Utils.Properties.Resources.MainView_Mappools)
                     {
                         mappools.Update();
                     }
@@ -264,8 +264,8 @@ namespace Osu.Mvvm.General.ViewModels
                     Transition = TransitionType.LeftReplace;
                 else
                     Transition = TransitionType.RightReplace;
-
-                ActiveItemName = "Overview";
+                
+                ActiveItemName = Utils.Properties.Resources.MainView_Overview;
 
                 ActivateItem(overviewRooms);
             }
@@ -287,7 +287,7 @@ namespace Osu.Mvvm.General.ViewModels
                 else
                     Transition = TransitionType.RightReplace;
 
-                ActiveItemName = "Rooms";
+                ActiveItemName = Utils.Properties.Resources.MainView_Rooms;
 
                 ActivateItem(rooms);
             }
@@ -309,7 +309,7 @@ namespace Osu.Mvvm.General.ViewModels
                 else
                     Transition = TransitionType.RightReplace;
 
-                ActiveItemName = "Mappools";
+                ActiveItemName = Utils.Properties.Resources.MainView_Mappools;
 
                 ActivateItem(mappools);
             }
@@ -331,7 +331,7 @@ namespace Osu.Mvvm.General.ViewModels
                 else
                     Transition = TransitionType.RightReplace;
 
-                ActiveItemName = "Teams";
+                ActiveItemName = Utils.Properties.Resources.MainView_Teams;
 
                 ActivateItem(teams);
             }
@@ -348,7 +348,7 @@ namespace Osu.Mvvm.General.ViewModels
         {
             Transition = TransitionType.LeftReplace;
 
-            ActiveItemName = "Options";
+            ActiveItemName = Utils.Properties.Resources.MainView_Options;
 
             ActivateItem(options);
         }

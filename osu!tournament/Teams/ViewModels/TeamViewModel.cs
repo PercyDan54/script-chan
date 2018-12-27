@@ -81,13 +81,13 @@ namespace Osu.Mvvm.Teams.ViewModels
             // If the osu!api is not valid
             if (!OsuApi.Valid)
                 // Error
-                Dialog.ShowDialog("Whoops!", "The osu!api key is not valid!");
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_ApiKeyInvalid);
             // Else
             else
             {
                 // Get an input if none is given
                 if (input == null)
-                    input = await Dialog.ShowInput("Add player(s)", "Enter the players id or name. You can use ';' as a separator");
+                    input = await Dialog.ShowInput(Utils.Properties.Resources.TeamView_AddPlayersTitle, Utils.Properties.Resources.TeamView_AddPlayersMessage);
 
                 // If something was entered
                 if (!string.IsNullOrEmpty(input))
@@ -133,7 +133,7 @@ namespace Osu.Mvvm.Teams.ViewModels
                         if(Team.Players.Exists(x => x.Name == player || x.Id == id))
                         {
                             // Error
-                            Dialog.ShowDialog("Whoops!", "The player already exists!");
+                            Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_PlayerAlreadyInTeam);
                         }
                         else
                         {
@@ -148,7 +148,7 @@ namespace Osu.Mvvm.Teams.ViewModels
                             // Beatmap doesn't exist
                             if (osu_player == null)
                                 // Error
-                                Dialog.ShowDialog("Whoops!", "The player does not exist!");
+                                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_PlayerNotFound);
                             // Beatmap exists
                             else
                             {

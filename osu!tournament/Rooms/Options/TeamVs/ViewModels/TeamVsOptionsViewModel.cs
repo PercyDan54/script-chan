@@ -310,7 +310,7 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
         {
             if(ObsBanHelper.IsValid)
             {
-                var confirm = await Dialog.ShowConfirmation("OBS Mode", "Are you sure to set this match as streamed? It will set OBS bans to this match and remove the one currently set.");
+                var confirm = await Dialog.ShowConfirmation(Utils.Properties.Resources.TeamVsOptionsView_OBSTitle, Utils.Properties.Resources.TeamVsOptionsView_OBSMessage);
                 if (confirm)
                 {
                     var roomToUnstream = Room.Rooms.FirstOrDefault(x => x.Value.IsStreamed).Value;

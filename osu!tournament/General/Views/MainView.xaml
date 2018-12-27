@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
+    xmlns:p="clr-namespace:Osu.Utils.Properties;assembly=osuUtils"
     Icon="{Binding Icon}"
     Title="{Binding DisplayName}"
     TitleCaps="False"
@@ -23,17 +24,14 @@
 
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button ToolTip="Update available, click to download." Visibility="{Binding NewVersionVisibility}">
-                <iconPacks:PackIconOcticons Width="15"
-                                            Height="20"
-                                            Kind="Bell" Foreground="Yellow" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action DownloadLatestVersion]" />
+            <Button ToolTip="{x:Static p:Resources.MainView_UpdateAvailable}" Visibility="{Binding NewVersionVisibility}">
+                <iconPacks:PackIconOcticons Width="15" Height="20" Kind="Bell" Foreground="Yellow" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action DownloadLatestVersion]" />
             </Button>
-            <Button x:Name="ShowOverview" Content="Overview" cal:Message.Attach="ShowOverview" />
-            <Button x:Name="ShowRooms" Content="Rooms" cal:Message.Attach="ShowRooms" />
-            <Button x:Name="ShowMappools" Content="Mappools" cal:Message.Attach="ShowMappools" />
-            <Button x:Name="ShowTeams" Content="Teams" cal:Message.Attach="ShowTeams" />
-            <Button x:Name="ShowOptions" Content="Options" cal:Message.Attach="ShowOptions" />
-            
+            <Button x:Name="ShowOverview" Content="{x:Static p:Resources.MainView_Overview}" cal:Message.Attach="ShowOverview" />
+            <Button x:Name="ShowRooms" Content="{x:Static p:Resources.MainView_Rooms}" cal:Message.Attach="ShowRooms" />
+            <Button x:Name="ShowMappools" Content="{x:Static p:Resources.MainView_Mappools}" cal:Message.Attach="ShowMappools" />
+            <Button x:Name="ShowTeams" Content="{x:Static p:Resources.MainView_Teams}" cal:Message.Attach="ShowTeams" />
+            <Button x:Name="ShowOptions" Content="{x:Static p:Resources.MainView_Options}" cal:Message.Attach="ShowOptions" />
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
 

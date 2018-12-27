@@ -741,7 +741,7 @@ namespace Osu.Scores
         {
             if (!canAddNewMessagesLine) return;
             canAddNewMessagesLine = false;
-            AddMessage(new IrcMessage { Message = "------------------ NEW MESSAGES ------------------" });
+            AddMessage(new IrcMessage { NewMessageLine = true });
         }
 
         /// <summary>
@@ -749,7 +749,7 @@ namespace Osu.Scores
         /// </summary>
         public void RemoveNewMessageLine()
         {
-            RoomMessages.RemoveAll(x => x.Message == "------------------ NEW MESSAGES ------------------");
+            RoomMessages.RemoveAll(x => x.NewMessageLine == true);
             canAddNewMessagesLine = true;
         }
         #endregion

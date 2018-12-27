@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
+    xmlns:p="clr-namespace:Osu.Utils.Properties;assembly=osuUtils"
     mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="500">
     <Grid>
@@ -34,37 +35,34 @@
             <Style x:Key="CustomMetroToggleSwitch"
                        BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
                        TargetType="{x:Type controls:ToggleSwitch}">
-                <Setter Property="OffLabel" Value="Blue" />
-                <Setter Property="OnLabel" Value="Red" />
+                <Setter Property="OffLabel" Value="{x:Static p:Resources.TeamVsOptionsView_Blue}" />
+                <Setter Property="OnLabel" Value="{x:Static p:Resources.TeamVsOptionsView_Red}" />
                 <Setter Property="FontSize" Value="10" />
                 <Setter Property="SwitchForeground" Value="Red" />
                 <Setter Property="OffSwitchBrush" Value="Blue"/>
             </Style>
         </Grid.Resources>
-        <Label Content="Click refresh button after updating these options" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Row="0" Grid.ColumnSpan="5" />
-        <Label Content="Roll winner and first pick team" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Label Content="{x:Static p:Resources.TeamVsOptionsView_ClickRefreshHint}" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Row="0" Grid.ColumnSpan="5" />
+        <Label Content="{x:Static p:Resources.TeamVsOptionsView_RollWinner}" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="1" Grid.ColumnSpan="2"/>
         <controls:ToggleSwitch IsChecked="{Binding SelectedFirstTeamIsRed}" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="1" Grid.Column="2" Style="{DynamicResource CustomMetroToggleSwitch}"/>
-        <!--<ComboBox x:Name="FirstTeamIsRed" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="1" Grid.Column="2" Width="96"/>-->
-        <!--<CheckBox x:Name="EnableCommands" Content="Enable commands" Padding="5,0,0,0" Margin="2.5" Grid.Row="2" />-->
-        <!--<CheckBox x:Name="EnableStreamMode" IsEnabled="{Binding IsObsPathValid, Mode=OneWay}" Content="Match on stream (obs ban)" Padding="5,0,0,0" Margin="2.5" Grid.Row="3" />-->
-        <Label Content="BO for the room (press refresh)" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="2" Grid.ColumnSpan="2" />
+        <Label Content="{x:Static p:Resources.TeamVsOptionsView_BO}" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="2" Grid.ColumnSpan="2" />
         <ComboBox x:Name="Modes" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="2" Grid.Column="2" Width="96"/>
-        <Label Content="Osu Mode selected for the maps" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="3" Grid.ColumnSpan="2" />
+        <Label Content="{x:Static p:Resources.RoomOptionsView_OsuMode}" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="3" Grid.ColumnSpan="2" />
         <ComboBox x:Name="GameMode" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="3" Grid.Column="2" Width="96"/>
-        <Label Content="Enable notifications" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="4" Grid.ColumnSpan="2" />
+        <Label Content="{x:Static p:Resources.RoomOptionsView_EnableNotifications}" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="4" Grid.ColumnSpan="2" />
         <CheckBox x:Name="NotificationsEnabled" Grid.Row="4" Grid.Column="2" Margin="2,2,0,2" />
-        <Label Content="Mp timer duration (0 = deactivated)" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="5" Grid.ColumnSpan="2" />
+        <Label Content="{x:Static p:Resources.RoomOptionsView_MpTimer}" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="5" Grid.ColumnSpan="2" />
         <TextBox x:Name="Timer" VerticalContentAlignment="Center" FontSize="12" Margin="2,2,2,2" Grid.Row="5" Grid.Column="2" />
 
-        <Label Content="Update room configuration" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Row="7" Grid.ColumnSpan="5" />
-        <Label Content="Team mode" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="1"/>
-        <Label Content="Score mode" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1"/>
-        <Label Content="Size" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="1"/>
+        <Label Content="{x:Static p:Resources.RoomOptionsView_UpdateRoomConfig}" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Row="7" Grid.ColumnSpan="5" />
+        <Label Content="{x:Static p:Resources.RoomOptionsView_TeamMode}" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="1"/>
+        <Label Content="{x:Static p:Resources.RoomOptionsView_ScoreMode}" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1"/>
+        <Label Content="{x:Static p:Resources.RoomOptionsView_Size}" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="1"/>
 
         <ComboBox x:Name="TeamModeBox" HorizontalAlignment="Center" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="9" Grid.Column="0" Width="96"/>
         <ComboBox x:Name="ScoreModeBox" HorizontalAlignment="Center" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="9" Grid.Column="1" Width="96"/>
         <ComboBox x:Name="RoomSizeBox" HorizontalAlignment="Center" Padding="5,0,0,0" Margin="2,2,0,2" Grid.Row="9" Grid.Column="2" Width="96"/>
 
-        <Button x:Name="UpdateRoomConfiguration" Content="Update" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="4" Grid.Row="9" />
+        <Button x:Name="UpdateRoomConfiguration" Content="{x:Static p:Resources.Button_Update}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="4" Grid.Row="9" />
     </Grid>
 </UserControl>

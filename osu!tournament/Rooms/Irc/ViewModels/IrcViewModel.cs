@@ -66,13 +66,13 @@ namespace Osu.Mvvm.Rooms.Irc.ViewModels
             if (!OsuIrcBot.GetInstancePrivate().IsConnected)
             {
                 // Error
-                Dialog.ShowDialog("Whoops!", "You're not connected to bancho!");
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_BanchoDisconnect);
             }
             // Bot is connected
             else
             {
                 // Show progress
-                await Dialog.ShowProgress("Please wait", "Sending the message...");
+                await Dialog.ShowProgress(Utils.Properties.Resources.Wait_Title, Utils.Properties.Resources.Wait_SendingMessage);
 
                 //  Foreach messages we want to send
                 foreach (string sentence in roomVM.Room.Ranking.GetStatus())
@@ -85,7 +85,7 @@ namespace Osu.Mvvm.Rooms.Irc.ViewModels
                 await Dialog.HideProgress();
 
                 // Show success
-                Dialog.ShowDialog("Good!", "The message has been successfully sent");
+                Dialog.ShowDialog(Utils.Properties.Resources.Success_Title, Utils.Properties.Resources.Success_MessageSent);
             }
         }
         #endregion

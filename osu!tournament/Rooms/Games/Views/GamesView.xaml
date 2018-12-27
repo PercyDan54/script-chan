@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:w="clr-namespace:Osu.Mvvm"
+    xmlns:p="clr-namespace:Osu.Utils.Properties;assembly=osuUtils"
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="500">
@@ -23,11 +24,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Label Content="Select a mappool in the list or choose manual mode" VerticalContentAlignment="Center" FontSize="20" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
+        <Label Content="{x:Static p:Resources.GamesView_SelectMappoolOrManual}" VerticalContentAlignment="Center" FontSize="20" Padding="0" Margin="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
         <ComboBox x:Name="Mappools" IsEnabled="{Binding MappoolsEnabled}" DisplayMemberPath="Name" VerticalContentAlignment="Center" Padding="0" Margin="0,0,2.5,0" Grid.Column="0" Grid.Row="1" />
-        <CheckBox x:Name="Manual" Content="Manual" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="2.5,0,0,0" Grid.Column="1" Grid.Row="1" />
-        <Label Content="And uncheck the games you wish to ignore" FontSize="20" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Row="2" Grid.ColumnSpan="1" />
-        <Button x:Name="WarmupStatus" Content="Warm-up" Grid.Row="2" Grid.Column="1" Margin="2" Foreground="{Binding WarmupColor}" Visibility="{Binding WarmupEnabled}"/>
+        <CheckBox x:Name="Manual" Content="{x:Static p:Resources.Button_Manual}" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="2.5,0,0,0" Grid.Column="1" Grid.Row="1" />
+        <Label Content="{x:Static p:Resources.GamesView_UncheckGames}" FontSize="20" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Row="2" Grid.ColumnSpan="1" />
+        <Button x:Name="WarmupStatus" Content="{x:Static p:Resources.Button_Warmup}" Grid.Row="2" Grid.Column="1" Margin="2" Foreground="{Binding WarmupColor}" Visibility="{Binding WarmupEnabled}"/>
         
 
         <ScrollViewer Padding="0" Margin="0,5,0,0" Grid.Row="3" Grid.ColumnSpan="2">

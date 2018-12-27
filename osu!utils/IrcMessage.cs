@@ -6,6 +6,7 @@ namespace Osu.Utils
     {
         public string User { get; set; }
         public string Message { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTime Timestamp { get; set; } = DateTime.Now;
+        public bool NewMessageLine { get; set; } = false;
     }
 }

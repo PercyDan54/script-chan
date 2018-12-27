@@ -128,7 +128,7 @@ namespace Osu.Mvvm.Rooms.Export.ViewModels
         /// </summary>
         public async void Export()
         {
-            await Dialog.ShowProgress("Please wait", "Exporting the room...");
+            await Dialog.ShowProgress(Utils.Properties.Resources.Wait_Title, Utils.Properties.Resources.Wait_Export);
 
             // No selected value
             switch (selected)
@@ -163,7 +163,7 @@ namespace Osu.Mvvm.Rooms.Export.ViewModels
                 await Dialog.HideProgress();
 
                 // Error
-                Dialog.ShowDialog("Whoops!", "The room has no player!");
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_RoomHasNoPlayers);
                 return;
             }
 
@@ -174,7 +174,7 @@ namespace Osu.Mvvm.Rooms.Export.ViewModels
                 await Dialog.HideProgress();
 
                 // Error
-                Dialog.ShowDialog("Whoops!", "The room has no played games!");
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_RoomHasNoGames);
                 return;
             }
 
@@ -270,7 +270,7 @@ namespace Osu.Mvvm.Rooms.Export.ViewModels
                 // Hide progress
                 await Dialog.HideProgress();
 
-                Dialog.ShowDialog("Whoops!", "TeamVs export not yet implemented (Please blame shARPII) :(");
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_NotImplemented);
             }
 
             // Hide progress
@@ -285,7 +285,7 @@ namespace Osu.Mvvm.Rooms.Export.ViewModels
             // Hide progress
             await Dialog.HideProgress();
 
-            Dialog.ShowDialog("Whoops!", "Not yet implemented :(");
+            Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_NotImplemented);
         }
         #endregion
     }
