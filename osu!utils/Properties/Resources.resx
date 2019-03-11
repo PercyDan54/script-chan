@@ -675,4 +675,19 @@
     <value>{0} is RED, slots {2} to {3} --- {1} is BLUE, slots {4} to {5}</value>
     <comment>{0} red team name; {2} and {3} red team slot range; {1} blue team name; {4} and {5} blue team slot range</comment>
   </data>
+  <data name="Button_Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="MappoolsView_AddMappool" xml:space="preserve">
+    <value>Add a mappool</value>
+  </data>
+  <data name="MappoolsView_EnterMappoolName" xml:space="preserve">
+    <value>Enter the mappool name</value>
+  </data>
+  <data name="MappoolsView_RenameMappool" xml:space="preserve">
+    <value>Rename a mappool</value>
+  </data>
+  <data name="Error_DuplicateName" xml:space="preserve">
+    <value>This name is already in use</value>
+  </data>
 </root>

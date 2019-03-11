@@ -62,6 +62,24 @@ namespace Osu.Scores
         }
 
         /// <summary>
+        /// Renames a mappool by its name
+        /// </summary>
+        /// <param name="oldName">The current name of the mappool</param>
+        /// <param name="newName">The new name</param>
+        public static bool Rename(string oldName, string newName)
+        {
+            if (mappools.Exists(x => x.Name == newName))
+                return false;
+
+            var mappool = mappools.Find(x => x.Name == oldName);
+            if (mappool == null)
+                return false;
+
+            mappool.Name = newName;
+            return true;
+        }
+
+        /// <summary>
         /// Removes a mappool by its name
         /// </summary>
         /// <param name="name">the name of the mappool</param>

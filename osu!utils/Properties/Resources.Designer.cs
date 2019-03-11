@@ -196,6 +196,15 @@ namespace Osu.Utils.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string Button_Rename {
+            get {
+                return ResourceManager.GetString("Button_Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Revert score.
         /// </summary>
         public static string Button_RevertScore {
@@ -421,6 +430,15 @@ namespace Osu.Utils.Properties {
         public static string Error_BeatmapIdNotFound {
             get {
                 return ResourceManager.GetString("Error_BeatmapIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This name is already in use.
+        /// </summary>
+        public static string Error_DuplicateName {
+            get {
+                return ResourceManager.GetString("Error_DuplicateName", resourceCulture);
             }
         }
         
@@ -808,6 +826,33 @@ namespace Osu.Utils.Properties {
         public static string MappoolPickerView_SearchWatermark {
             get {
                 return ResourceManager.GetString("MappoolPickerView_SearchWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a mappool.
+        /// </summary>
+        public static string MappoolsView_AddMappool {
+            get {
+                return ResourceManager.GetString("MappoolsView_AddMappool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the mappool name.
+        /// </summary>
+        public static string MappoolsView_EnterMappoolName {
+            get {
+                return ResourceManager.GetString("MappoolsView_EnterMappoolName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename a mappool.
+        /// </summary>
+        public static string MappoolsView_RenameMappool {
+            get {
+                return ResourceManager.GetString("MappoolsView_RenameMappool", resourceCulture);
             }
         }
         
