@@ -8,7 +8,6 @@ using Osu.Scores;
 using Osu.Utils.TeamsOv;
 using Osu.Tournament.Properties;
 using Osu.Utils;
-using Osu.Utils.Bans;
 using Osu.Utils.Info;
 using osu_discord;
 using System;
@@ -83,10 +82,6 @@ namespace Osu.Mvvm
 
             // Initialize the BanHelper
             RefereeMatchHelper.Initialize();
-
-            ObsBanHelper.Initialize();
-
-            ObsBanHelper.CheckPath();
 
             // Initialize the mappools
             await Mappool.Initialize();

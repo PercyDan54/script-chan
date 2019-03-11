@@ -1,6 +1,5 @@
 ﻿using Osu.Api;
 using Osu.Utils;
-using Osu.Utils.Bans;
 using osu_utils.DiscordModels;
 using System;
 using System.Collections.Generic;

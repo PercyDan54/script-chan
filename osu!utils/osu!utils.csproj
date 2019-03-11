@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoUpdate\AutoUpdateService.cs" />
-    <Compile Include="Bans\ObsBanHelper.cs" />
     <Compile Include="Cache.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="Bans\CountryUtilities.cs" />
