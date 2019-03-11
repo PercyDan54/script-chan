@@ -161,7 +161,7 @@ namespace Osu.Utils
         private void Save()
         {
             // Serialize the dictionary in a json string
-            string json = JsonConvert.SerializeObject(values);
+            string json = JsonConvert.SerializeObject(values, Formatting.Indented);
 
             // Write the json string in the file given by the path
             File.WriteAllText(path, json, Encoding.UTF8);
