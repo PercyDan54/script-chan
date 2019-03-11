@@ -375,8 +375,8 @@ namespace Osu.Scores
                 var game = room.OsuRoom.Games.LastOrDefault();
                 if (game != null)
                 {
-                    room.Mappool?.Pool.TryGetValue(game.BeatmapId, out bm);
-                    
+                    bm = room.Mappool?.Pool.Find(x => x.Id == game.BeatmapId);
+
                     // If we found the beatmap in the mappool
                     if (bm != null)
                         obm = bm.OsuBeatmap;

@@ -61,7 +61,7 @@ namespace Osu.Mvvm.Rooms.Games.ViewModels
         {
             get
             {
-                return Mappool.Mappools.ToList();
+                return MappoolManager.Mappools.ToList();
             }
         }
 

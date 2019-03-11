@@ -84,7 +84,7 @@ namespace Osu.Mvvm
             RefereeMatchHelper.Initialize();
 
             // Initialize the mappools
-            await Mappool.Initialize();
+            await MappoolManager.Initialize();
 
             // Initialize the teams
             TeamManager.Initialize();
@@ -123,7 +123,7 @@ namespace Osu.Mvvm
             Log.Fatal("SEND HELP  : " + e.Exception.Message + e.Exception.Source + e.Exception.InnerException + e.Exception.StackTrace);
 
             // Save the mappools
-            Mappool.Save();
+            MappoolManager.Save();
             InfosHelper.TourneyInfos.Save();
             InfosHelper.UserDataInfos.Save();
             TeamManager.Save();

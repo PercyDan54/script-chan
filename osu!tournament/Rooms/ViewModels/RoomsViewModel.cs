@@ -409,9 +409,9 @@ namespace Osu.Mvvm.Rooms.ViewModels
                     // If we allow to use commands in this room and if we have selected a mappool for this room
                     if (room.Commands && !room.Manual)
                     {
-                        Beatmap beatmap;
                         // If the beatmap exists in the mappool, we're changing the map
-                        if (room.Mappool.Pool.TryGetValue(multi_room.Map_Id, out beatmap))
+                        Beatmap beatmap = room.Mappool.Pool.Find(x => x.Id == multi_room.Map_Id);
+                        if (beatmap != null)
                         {
                             OsuIrcBot.GetInstancePrivate().OnChangeMapRoom(room, multi_room.Map_Id, beatmap);
                         }

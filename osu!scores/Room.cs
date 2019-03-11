@@ -180,7 +180,7 @@ namespace Osu.Scores
                     break;
             }
 
-            mappool = Mappool.Mappools.FirstOrDefault(x => x.Name == mp);
+            mappool = MappoolManager.Mappools.FirstOrDefault(x => x.Name == mp);
             if(mappool != null && mp != null)
             {
                 manual = false;
@@ -614,7 +614,7 @@ namespace Osu.Scores
             // Room is in mappool mode
             else
                 // Check if mappool is set and the beatmap is in the mappool
-                return mappool != null && mappool.Pool.ContainsKey(game.BeatmapId);
+                return mappool != null && mappool.Pool.Exists(x => x.Id == game.BeatmapId);
         }
         #endregion
 
@@ -789,7 +789,7 @@ namespace Osu.Scores
                     mappoolSet.TryGetValue(match.Key, out poolname);
                     if (!string.IsNullOrEmpty(poolname))
                     {
-                        rooms[match.Key].Mappool = Mappool.Mappools.FirstOrDefault(x => x.Name == poolname);
+                        rooms[match.Key].Mappool = MappoolManager.Mappools.FirstOrDefault(x => x.Name == poolname);
                         if (rooms[match.Key].Mappool != null)
                         {
                             rooms[match.Key].Manual = false;

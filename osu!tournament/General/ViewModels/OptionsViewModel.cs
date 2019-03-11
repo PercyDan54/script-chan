@@ -91,9 +91,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
 
             if(!string.IsNullOrEmpty(pool))
-                SelectedMappool = Mappool.Mappools.FirstOrDefault(x => x.Name == pool);
+                SelectedMappool = MappoolManager.Mappools.FirstOrDefault(x => x.Name == pool);
 
-            Mappool.ChangeEvent += e_ChangeEvent(); 
+            MappoolManager.ChangeEvent += e_ChangeEvent(); 
 
             LoadBot();
         }
@@ -311,7 +311,7 @@ namespace Osu.Mvvm.General.ViewModels
         {
             get
             {
-                return Mappool.Mappools.ToList();
+                return MappoolManager.Mappools.ToList();
             }
         }
         /// <summary>

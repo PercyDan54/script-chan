@@ -32,7 +32,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
             mappools = new BindableCollection<MappoolViewModel>();
             selected = null;
 
-            foreach (Mappool mappool in Mappool.Mappools)
+            foreach (Mappool mappool in MappoolManager.Mappools)
                 mappools.Add(new MappoolViewModel(mappool));
         }
         #endregion
@@ -93,7 +93,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
             if (!string.IsNullOrEmpty(name))
             {
                 // Create a new mappool
-                Mappool mappool = Mappool.Get(name);
+                Mappool mappool = MappoolManager.Get(name);
                 mappool.Name = name;
 
                 MappoolViewModel model = new MappoolViewModel(mappool);
@@ -133,7 +133,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
 
             // Remove this mappool from our lists of mappools
             mappools.Remove(mappool);
-            Mappool.Remove(mappool.DisplayName);
+            MappoolManager.Remove(mappool.DisplayName);
 
             DeactivateItem(mappool, true);
 
