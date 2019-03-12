@@ -689,4 +689,7 @@
   <data name="Error_DuplicateName" xml:space="preserve">
     <value>Dieser Name ist schon vergeben.</value>
   </data>
+  <data name="TeamsView_RenameTeamTitle" xml:space="preserve">
+    <value>Team umbenennen</value>
+  </data>
 </root>

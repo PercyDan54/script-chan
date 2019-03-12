@@ -17,6 +17,7 @@
             <ColumnDefinition Width="160" />
             <ColumnDefinition Width="80" />
             <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="80" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
@@ -27,7 +28,8 @@
         <ComboBox x:Name="Teams" DisplayMemberPath="DisplayName" Text="{x:Static p:Resources.TeamsView_PleaseSelectTeam}" Padding="0" Margin="2.5,0,2.5,0" Grid.Row="0" Grid.Column="0" FontSize="11" />
 
         <Button x:Name="AddTeam" Content="{x:Static p:Resources.Button_Add}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Row="0" Grid.Column="2" />
-        <Button x:Name="DeleteTeam" Content="{x:Static p:Resources.Button_Delete}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Row="0" Grid.Column="3" IsEnabled="{Binding CanDeleteTeam}" />
-        <ContentControl x:Name="ActiveItem" Padding="0" Margin="0,2.5,0,2.5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" />
+        <Button x:Name="RenameTeam" Content="{x:Static p:Resources.Button_Rename}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Row="0" Grid.Column="3" />
+        <Button x:Name="DeleteTeam" Content="{x:Static p:Resources.Button_Delete}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Row="0" Grid.Column="4" IsEnabled="{Binding CanDeleteTeam}" />
+        <ContentControl x:Name="ActiveItem" Padding="0" Margin="0,2.5,0,2.5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" />
     </Grid>
 </UserControl>

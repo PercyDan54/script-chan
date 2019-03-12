@@ -1586,6 +1586,15 @@ namespace Osu.Utils.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rename a team.
+        /// </summary>
+        public static string TeamsView_RenameTeamTitle {
+            get {
+                return ResourceManager.GetString("TeamsView_RenameTeamTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add team name as player.
         /// </summary>
         public static string TeamsView_TeamNameAsPlayer {
