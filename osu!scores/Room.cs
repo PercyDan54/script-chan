@@ -110,6 +110,11 @@ namespace Osu.Scores
         protected int timer;
 
         /// <summary>
+        /// Points for second ban
+        /// </summary>
+        protected int secondBanCount;
+
+        /// <summary>
         /// The ban counter
         /// </summary>
         protected int countBans;
@@ -488,6 +493,18 @@ namespace Osu.Scores
                 if (timer != value)
                 {
                     timer = value;
+                }
+            }
+        }
+
+        public int SecondBanCount
+        {
+            get { return secondBanCount; }
+            set
+            {
+                if (secondBanCount != value)
+                {
+                    secondBanCount = value;
                 }
             }
         }

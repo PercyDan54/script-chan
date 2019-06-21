@@ -264,6 +264,19 @@ namespace Osu.Mvvm.Rooms.Options.TeamVs.ViewModels
                 }
             }
         }
+
+        public int SecondBanCount
+        {
+            get { return room.SecondBanCount; }
+            set
+            {
+                if (room.SecondBanCount != value)
+                {
+                    room.SecondBanCount = Math.Abs(value);
+                    NotifyOfPropertyChange(() => SecondBanCount);
+                }
+            }
+        }
         #endregion
 
         #region Public Methods

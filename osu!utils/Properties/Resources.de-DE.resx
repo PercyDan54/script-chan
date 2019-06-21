@@ -692,4 +692,7 @@
   <data name="TeamsView_RenameTeamTitle" xml:space="preserve">
     <value>Team umbenennen</value>
   </data>
+  <data name="RoomOptionsView_SecondBanCount" xml:space="preserve">
+    <value>Punkte für 2. Ban</value>
+  </data>
 </root>

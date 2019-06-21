@@ -1388,6 +1388,15 @@ namespace Osu.Utils.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Points for second ban (0 = deactivated).
+        /// </summary>
+        public static string RoomOptionsView_SecondBanCount {
+            get {
+                return ResourceManager.GetString("RoomOptionsView_SecondBanCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Size.
         /// </summary>
         public static string RoomOptionsView_Size {
