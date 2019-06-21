@@ -420,6 +420,19 @@ namespace Osu.Mvvm.General.ViewModels
                 NotifyOfPropertyChange(() => Timer);
             }
         }
+
+        /// <summary>
+        /// Timer interval property
+        /// </summary>
+        public int SecondBanCount
+        {
+            get { return InfosHelper.TourneyInfos.SecondBanCount; }
+            set
+            {
+                InfosHelper.TourneyInfos.SecondBanCount = Math.Abs(value);
+                NotifyOfPropertyChange(() => SecondBanCount);
+            }
+        }
         #endregion
 
         #region Private Methods

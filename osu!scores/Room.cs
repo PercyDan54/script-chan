@@ -163,6 +163,7 @@ namespace Osu.Scores
             var scoremode = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.ScoreMode) ? (OsuScoringType)Enum.Parse(typeof(OsuScoringType), InfosHelper.TourneyInfos.ScoreMode, true) : OsuScoringType.Score;
             var roomsize = !string.IsNullOrEmpty(InfosHelper.TourneyInfos.RoomSize) ? InfosHelper.TourneyInfos.RoomSize : "16";
             timer = InfosHelper.TourneyInfos.Timer;
+            secondBanCount = InfosHelper.TourneyInfos.SecondBanCount;
 
             roomConfiguration = new RoomConfiguration() { ScoreMode = scoremode, RoomSize = roomsize };
             mode = Cache.GetCache("osu!options.db").Get("mode", "3");

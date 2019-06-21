@@ -34,6 +34,8 @@
                 <RowDefinition Height="35" />
                 <RowDefinition Height="35" />
                 <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -74,6 +76,8 @@
             <ComboBox x:Name="Mappools" DisplayMemberPath="Name" controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="{x:Static p:Resources.OptionsView_MappoolWatermark}" VerticalContentAlignment="Center" Padding="0" Margin="0" Grid.Column="0" Grid.Row="18" Grid.ColumnSpan="1"  SelectedItem="{Binding SelectedMappool}" />
             <Label ToolTip="{x:Static p:Resources.OptionsView_MpTimerTooltip}" Content="{x:Static p:Resources.OptionsView_MpTimer}" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="1" Grid.Row="17" />
             <TextBox x:Name="Timer" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="1" Grid.Row="18" />
+            <Label ToolTip="{x:Static p:Resources.OptionsView_SecondBanCount}" Content="{x:Static p:Resources.OptionsView_SecondBanCount}" VerticalContentAlignment="Center" Padding="0" Margin="4,0,0,0" Grid.Column="0" Grid.Row="19" />
+            <TextBox x:Name="SecondBanCount" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Column="0" Grid.Row="20" />
         </Grid>
     </ScrollViewer>
 </UserControl>

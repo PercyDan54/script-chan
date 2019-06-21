@@ -695,4 +695,7 @@
   <data name="RoomOptionsView_SecondBanCount" xml:space="preserve">
     <value>Punkte für 2. Ban</value>
   </data>
+  <data name="OptionsView_SecondBanCount" xml:space="preserve">
+    <value>Punkte für 2. Ban</value>
+  </data>
 </root>
