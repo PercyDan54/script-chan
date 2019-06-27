@@ -2,6 +2,7 @@
 using Osu.Mvvm.Miscellaneous;
 using Osu.Mvvm.Ov.ViewModels;
 using Osu.Utils.TeamsOv;
+using Osu.Scores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -154,6 +155,36 @@ namespace Osu.Mvvm.Teams.ViewModels
                 {
                     model.AddPlayers(name);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Rename the currently selected team
+        /// </summary>
+        public async void RenameTeam()
+        {
+            // Get the team name
+            string name = await Dialog.ShowInput(Utils.Properties.Resources.TeamsView_RenameTeamTitle, Utils.Properties.Resources.TeamsView_AddTeamMessage);
+
+            // If the user entered a name
+            if (!string.IsNullOrEmpty(name))
+            {
+                // Rename
+                if (TeamManager.Rename(SelectedTeam.DisplayName, name))
+                {
+                    Log.Info("Renaming team \"" + SelectedTeam.DisplayName + "\" to \"" + name + "\"");
+
+                    SelectedTeam.DisplayName = name;
+
+                    // Update the overview view for team creation
+                    ov.UpdateTeams();
+
+                    // team list has changed
+                    NotifyOfPropertyChange(() => Teams);
+                    NotifyOfPropertyChange(() => SelectedTeam);
+                }
+                else
+                    Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_DuplicateName);
             }
         }
 

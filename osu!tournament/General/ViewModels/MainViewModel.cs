@@ -383,7 +383,7 @@ namespace Osu.Mvvm.General.ViewModels
         protected override void OnDeactivate(bool close)
         {
             // Save the mappools
-            Mappool.Save();
+            MappoolManager.Save();
             InfosHelper.TourneyInfos.Save();
             InfosHelper.UserDataInfos.Save();
             TeamManager.Save();

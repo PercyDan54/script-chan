@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Windows.Threading;
 using Osu.Scores;
 using System.Linq;
-using Osu.Utils.Bans;
 using MahApps.Metro;
 using System.Windows;
 using osu_discord;
@@ -92,9 +91,9 @@ namespace Osu.Mvvm.General.ViewModels
             }
 
             if(!string.IsNullOrEmpty(pool))
-                SelectedMappool = Mappool.Mappools.FirstOrDefault(x => x.Name == pool);
+                SelectedMappool = MappoolManager.Mappools.FirstOrDefault(x => x.Name == pool);
 
-            Mappool.ChangeEvent += e_ChangeEvent(); 
+            MappoolManager.ChangeEvent += e_ChangeEvent(); 
 
             LoadBot();
         }
@@ -312,7 +311,7 @@ namespace Osu.Mvvm.General.ViewModels
         {
             get
             {
-                return Mappool.Mappools.ToList();
+                return MappoolManager.Mappools.ToList();
             }
         }
         /// <summary>
@@ -421,6 +420,19 @@ namespace Osu.Mvvm.General.ViewModels
                 NotifyOfPropertyChange(() => Timer);
             }
         }
+
+        /// <summary>
+        /// Timer interval property
+        /// </summary>
+        public int SecondBanCount
+        {
+            get { return InfosHelper.TourneyInfos.SecondBanCount; }
+            set
+            {
+                InfosHelper.TourneyInfos.SecondBanCount = Math.Abs(value);
+                NotifyOfPropertyChange(() => SecondBanCount);
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -464,16 +476,6 @@ namespace Osu.Mvvm.General.ViewModels
                 Dialog.ShowDialog("Good!", "The osu!api key is valid!");
             else
                 Dialog.ShowDialog("Whoops!", "The provided osu!api key is not valid!");
-        }
-
-        public void SavePath()
-        {
-            ObsBanHelper.CheckPath();
-
-            if(ObsBanHelper.IsValid)
-                Dialog.ShowDialog("Good!", "The obs folder is valid!");
-            else
-                Dialog.ShowDialog("Whoops!", "The provided obs folder is not valid!");
         }
 
         /// <summary>

@@ -37,6 +37,9 @@ namespace Osu.Utils
         [DataMember(Name = "timer")]
         public int Timer { get; set; }
 
+        [DataMember(Name = "secondbancount")]
+        public int SecondBanCount { get; set; }
+
         [DataMember(Name = "welcomemessage")]
         public string WelcomeMessage { get; set; }
 

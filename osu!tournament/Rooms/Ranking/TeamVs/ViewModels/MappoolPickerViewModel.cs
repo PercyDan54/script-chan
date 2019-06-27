@@ -42,9 +42,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
 
             if (room.Mappool != null)
             {
-                foreach (KeyValuePair<long, Beatmap> kvp in room.Mappool?.Pool)
+                foreach (Beatmap beatmap in room.Mappool?.Pool)
                 {
-                    beatmaps.Add(new BeatmapPickerViewModel(room, kvp.Value));
+                    beatmaps.Add(new BeatmapPickerViewModel(room, beatmap));
                 }
             }
         }
@@ -153,9 +153,9 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
                 Room re = await Room.Get(r.Id);
                 if (re?.Mappool != null)
                 {
-                    foreach (KeyValuePair<long, Beatmap> kvp in re.Mappool.Pool)
+                    foreach (Beatmap beatmap in re.Mappool.Pool)
                     {
-                        beatmaps.Add(new BeatmapPickerViewModel(r, kvp.Value));
+                        beatmaps.Add(new BeatmapPickerViewModel(r, beatmap));
                     }
                     NotifyOfPropertyChange(() => Beatmaps);
                 }

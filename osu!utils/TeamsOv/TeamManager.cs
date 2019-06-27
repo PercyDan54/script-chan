@@ -40,10 +40,10 @@ namespace Osu.Utils.TeamsOv
         }
 
         /// <summary>
-        /// Returns a mappool from its id
+        /// Returns a team from its name
         /// </summary>
-        /// <param name="id">the mappool name</param>
-        /// <returns>the mappool</returns>
+        /// <param name="name">the mappool name</param>
+        /// <returns>the team</returns>
         public static TeamOv Get(string name)
         {
             if (!teams.Exists(x => x.Name == name))
@@ -55,9 +55,28 @@ namespace Osu.Utils.TeamsOv
         }
 
         /// <summary>
-        /// Removes a mappools by its name
+        /// Renames a team by its name
         /// </summary>
-        /// <param name="name">the name of the mappool</param>
+        /// <param name="oldName">The current name of the team</param>
+        /// <param name="newName">The new name</param>
+        /// <returns></returns>
+        public static bool Rename(string oldName, string newName)
+        {
+            if (teams.Exists(x => x.Name == newName))
+                return false;
+
+            var team = teams.Find(x => x.Name == oldName);
+            if (team == null)
+                return false;
+
+            team.Name = newName;
+            return true;
+        }
+
+        /// <summary>
+        /// Removes a team by its name
+        /// </summary>
+        /// <param name="name">the name of the team</param>
         public static void Remove(string name)
         {
             if (teams.Exists(x => x.Name == name))
@@ -67,7 +86,7 @@ namespace Osu.Utils.TeamsOv
         }
 
         /// <summary>
-        /// Saves the mappools list in the cache
+        /// Saves the team list in the cache
         /// </summary>
         public static void Save()
         {

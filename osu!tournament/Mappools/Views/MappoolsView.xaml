@@ -17,6 +17,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="80" />
             <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="80" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
@@ -26,7 +27,8 @@
         <ComboBox x:Name="Mappools" DisplayMemberPath="DisplayName" Text="Please select a mappool or add a new one" Padding="0" Margin="2.5,0,2.5,0" Grid.Row="0" Grid.Column="0" />
 
         <Button x:Name="AddMappool" Content="{x:Static p:Resources.Button_Add}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Row="0" Grid.Column="1" />
-        <Button x:Name="DeleteMappool" Content="{x:Static p:Resources.Button_Delete}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Row="0" Grid.Column="2" />
-        <ContentControl x:Name="ActiveItem" Padding="0" Margin="0,2.5,0,2.5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+        <Button x:Name="RenameMappool" Content="{x:Static p:Resources.Button_Rename}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,2.5,0" Grid.Row="0" Grid.Column="2" />
+        <Button x:Name="DeleteMappool" Content="{x:Static p:Resources.Button_Delete}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Row="0" Grid.Column="3" />
+        <ContentControl x:Name="ActiveItem" Padding="0" Margin="0,2.5,0,2.5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" />
     </Grid>
 </UserControl>

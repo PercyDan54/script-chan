@@ -8,7 +8,6 @@ using Osu.Scores;
 using Osu.Utils.TeamsOv;
 using Osu.Tournament.Properties;
 using Osu.Utils;
-using Osu.Utils.Bans;
 using Osu.Utils.Info;
 using osu_discord;
 using System;
@@ -84,12 +83,8 @@ namespace Osu.Mvvm
             // Initialize the BanHelper
             RefereeMatchHelper.Initialize();
 
-            ObsBanHelper.Initialize();
-
-            ObsBanHelper.CheckPath();
-
             // Initialize the mappools
-            await Mappool.Initialize();
+            await MappoolManager.Initialize();
 
             // Initialize the teams
             TeamManager.Initialize();
@@ -128,7 +123,7 @@ namespace Osu.Mvvm
             Log.Fatal("SEND HELP  : " + e.Exception.Message + e.Exception.Source + e.Exception.InnerException + e.Exception.StackTrace);
 
             // Save the mappools
-            Mappool.Save();
+            MappoolManager.Save();
             InfosHelper.TourneyInfos.Save();
             InfosHelper.UserDataInfos.Save();
             TeamManager.Save();

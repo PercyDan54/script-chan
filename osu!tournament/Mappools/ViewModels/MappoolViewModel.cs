@@ -36,7 +36,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
 
             beatmaps = new List<BeatmapViewModel>();
 
-            foreach (Beatmap beatmap in mappool.Pool.Values)
+            foreach (Beatmap beatmap in mappool.Pool)
                 beatmaps.Add(new BeatmapViewModel(this, beatmap));
         }
         #endregion
@@ -105,7 +105,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
                         else
                         {
                             // If the beatmap already exists in the mappool
-                            if (mappool.Pool.ContainsKey(id))
+                            if (mappool.Pool.Exists(x => x.Id == id))
                                 // Error
                                 Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_BeatmapAlreadyInMappool);
                             // Else
@@ -130,7 +130,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
                                     beatmap.AddMod(PickType.NoMod);
 
                                     // Add this beatmap to the mappool list
-                                    mappool.Pool[osu_beatmap.BeatmapID] = beatmap;
+                                    mappool.Pool.Add(beatmap);
 
                                     // Create a new view model and add it to our vm list
                                     beatmaps.Add(new BeatmapViewModel(this, beatmap));
@@ -160,7 +160,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
                 }
                 
                 beatmaps.Remove(model);
-                mappool.Pool.Remove(model.Beatmap.OsuBeatmap.BeatmapID);
+                mappool.Pool.Remove(model.Beatmap);
 
                 NotifyOfPropertyChange(() => Beatmaps);
             }

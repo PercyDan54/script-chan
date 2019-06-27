@@ -674,4 +674,28 @@
     <value>{0} ist ROT, Plätze {2} bis {3} --- {1} is BLAU, Plätze {4} bis {5}</value>
     <comment>{0} red team name; {2} and {3} red team slot range; {1} blue team name; {4} and {5} blue team slot range</comment>
   </data>
+  <data name="Button_Rename" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="MappoolsView_AddMappool" xml:space="preserve">
+    <value>Mappool hinzufügen</value>
+  </data>
+  <data name="MappoolsView_EnterMappoolName" xml:space="preserve">
+    <value>Gebe einen Namen für den Mappool ein</value>
+  </data>
+  <data name="MappoolsView_RenameMappool" xml:space="preserve">
+    <value>Mappool umbenennen</value>
+  </data>
+  <data name="Error_DuplicateName" xml:space="preserve">
+    <value>Dieser Name ist schon vergeben.</value>
+  </data>
+  <data name="TeamsView_RenameTeamTitle" xml:space="preserve">
+    <value>Team umbenennen</value>
+  </data>
+  <data name="RoomOptionsView_SecondBanCount" xml:space="preserve">
+    <value>Punkte für 2. Ban</value>
+  </data>
+  <data name="OptionsView_SecondBanCount" xml:space="preserve">
+    <value>Punkte für 2. Ban</value>
+  </data>
 </root>

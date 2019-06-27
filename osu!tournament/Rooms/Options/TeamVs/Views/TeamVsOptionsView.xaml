@@ -53,6 +53,8 @@
         <CheckBox x:Name="NotificationsEnabled" Grid.Row="4" Grid.Column="2" Margin="2,2,0,2" />
         <Label Content="{x:Static p:Resources.RoomOptionsView_MpTimer}" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="5" Grid.ColumnSpan="2" />
         <TextBox x:Name="Timer" VerticalContentAlignment="Center" FontSize="12" Margin="2,2,2,2" Grid.Row="5" Grid.Column="2" />
+        <Label Content="{x:Static p:Resources.RoomOptionsView_SecondBanCount}" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Row="6" Grid.ColumnSpan="2" />
+        <TextBox x:Name="SecondBanCount" VerticalContentAlignment="Center" FontSize="12" Margin="2,2,2,2" Grid.Row="6" Grid.Column="2" />
 
         <Label Content="{x:Static p:Resources.RoomOptionsView_UpdateRoomConfig}" VerticalContentAlignment="Center" FontSize="18" Padding="0" Margin="2.5" Grid.Row="7" Grid.ColumnSpan="5" />
         <Label Content="{x:Static p:Resources.RoomOptionsView_TeamMode}" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Padding="0" Margin="2.5" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="1"/>

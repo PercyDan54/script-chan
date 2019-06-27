@@ -345,7 +345,12 @@ namespace Osu.Scores
 
                 case RoomStatus.Playing:
                     sentences.Add(GetScoreFormatted());
-                    sentences.Add("Next team to pick: " + (abortHappened ? CurrentTeam.Name : NextTeam.Name) + ".");
+                    if (!abortHappened && blue_score > red_score && teams[OsuTeam.Blue].Points + teams[OsuTeam.Blue].PointAddition == room.SecondBanCount)
+                        sentences.Add(teams[OsuTeam.Red].Name + " can ban another map.");
+                    else if (!abortHappened && blue_score < red_score && teams[OsuTeam.Red].Points + teams[OsuTeam.Red].PointAddition == room.SecondBanCount)
+                        sentences.Add(teams[OsuTeam.Blue].Name + " can ban another map.");
+                    else
+                        sentences.Add("Next team to pick: " + (abortHappened ? CurrentTeam.Name : NextTeam.Name) + ".");
                     break;
                 case RoomStatus.Tiebreaker:
                     sentences.Add(GetScoreFormatted());
@@ -375,8 +380,8 @@ namespace Osu.Scores
                 var game = room.OsuRoom.Games.LastOrDefault();
                 if (game != null)
                 {
-                    room.Mappool?.Pool.TryGetValue(game.BeatmapId, out bm);
-                    
+                    bm = room.Mappool?.Pool.Find(x => x.Id == game.BeatmapId);
+
                     // If we found the beatmap in the mappool
                     if (bm != null)
                         obm = bm.OsuBeatmap;

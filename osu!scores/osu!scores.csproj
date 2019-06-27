@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BanHelper.cs" />
     <Compile Include="Mappool\Beatmap.cs" />
+    <Compile Include="Mappool\MappoolManager.cs" />
     <Compile Include="Ranking\HeadToHead.cs" />
     <Compile Include="Mappool\Mappool.cs" />
     <Compile Include="Mappool\PickType.cs" />

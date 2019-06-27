@@ -32,7 +32,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
             mappools = new BindableCollection<MappoolViewModel>();
             selected = null;
 
-            foreach (Mappool mappool in Mappool.Mappools)
+            foreach (Mappool mappool in MappoolManager.Mappools)
                 mappools.Add(new MappoolViewModel(mappool));
         }
         #endregion
@@ -87,13 +87,13 @@ namespace Osu.Mvvm.Mappools.ViewModels
         public async void AddMappool()
         {
             // Get the mappool name
-            string name = await Dialog.ShowInput("Add a mappool", "Enter the mappool name");
+            string name = await Dialog.ShowInput(Utils.Properties.Resources.MappoolsView_AddMappool, Utils.Properties.Resources.MappoolsView_EnterMappoolName);
 
             // If the user entered a name
             if (!string.IsNullOrEmpty(name))
             {
                 // Create a new mappool
-                Mappool mappool = Mappool.Get(name);
+                Mappool mappool = MappoolManager.Get(name);
                 mappool.Name = name;
 
                 MappoolViewModel model = new MappoolViewModel(mappool);
@@ -108,6 +108,27 @@ namespace Osu.Mvvm.Mappools.ViewModels
 
                 // Mappool list has changed
                 NotifyOfPropertyChange(() => Mappools);
+            }
+        }
+
+        public async void RenameMappool()
+        {
+            // Get new name for the current mappool
+            string name = await Dialog.ShowInput(Utils.Properties.Resources.MappoolsView_RenameMappool, Utils.Properties.Resources.MappoolsView_EnterMappoolName);
+
+            // If the user entered a name
+            if (!string.IsNullOrEmpty(name))
+            {
+                // Rename
+                if (MappoolManager.Rename(SelectedMappool.DisplayName, name))
+                {
+                    SelectedMappool.DisplayName = name;
+
+                    // Mappool list has changed
+                    NotifyOfPropertyChange(() => Mappools);
+                }
+                else
+                    Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_DuplicateName);
             }
         }
 
@@ -133,7 +154,7 @@ namespace Osu.Mvvm.Mappools.ViewModels
 
             // Remove this mappool from our lists of mappools
             mappools.Remove(mappool);
-            Mappool.Remove(mappool.DisplayName);
+            MappoolManager.Remove(mappool.DisplayName);
 
             DeactivateItem(mappool, true);
 
