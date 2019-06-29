@@ -623,7 +623,7 @@
     <value>Rot</value>
   </data>
   <data name="TeamVsOptionsView_RollWinner" xml:space="preserve">
-    <value>Würfel Gewinner / Wählt zuerst</value>
+    <value>Wählt zuerst</value>
   </data>
   <data name="TeamVsRankingView_NextTeam" xml:space="preserve">
     <value>Nächstes Team</value>

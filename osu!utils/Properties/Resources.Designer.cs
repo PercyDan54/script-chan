@@ -1703,7 +1703,7 @@ namespace Osu.Utils.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roll winner and first pick team.
+        ///   Looks up a localized string similar to First pick team.
         /// </summary>
         public static string TeamVsOptionsView_RollWinner {
             get {
