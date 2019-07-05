@@ -349,8 +349,7 @@ namespace Osu.Scores
                         sentences.Add(teams[OsuTeam.Red].Name + " can ban another map.");
                     else if (!abortHappened && blue_score < red_score && teams[OsuTeam.Red].Points + teams[OsuTeam.Red].PointAddition == room.SecondBanCount)
                         sentences.Add(teams[OsuTeam.Blue].Name + " can ban another map.");
-                    else
-                        sentences.Add("Next team to pick: " + (abortHappened ? CurrentTeam.Name : NextTeam.Name) + ".");
+                    sentences.Add("Next team to pick: " + (abortHappened ? CurrentTeam.Name : NextTeam.Name) + ".");
                     break;
                 case RoomStatus.Tiebreaker:
                     sentences.Add(GetScoreFormatted());
