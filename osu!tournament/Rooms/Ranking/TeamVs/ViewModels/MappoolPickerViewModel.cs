@@ -96,25 +96,25 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         public void SendBanRecap()
         {
             // Generate the embed for the ban recap
-            Embed message = RefereeMatchHelper.GetInstance(r.Id).GenerateBanRecapMessage(r.Ranking.GetType());
-            if(message != null)
+            Embed message = null;
+            // Depending of the ranking type, we change the name of the payload
+            string name = "";
+            if (r.Ranking.GetType() == typeof(Osu.Scores.TeamVs))
             {
-                // Depending of the ranking type, we change the name of the payload
-                string name;
-                if (r.Ranking.GetType() == typeof(Osu.Scores.TeamVs))
-                {
+                message = RefereeMatchHelper.GetInstance(r.Id).GenerateBanRecapMessage(r.Ranking.GetType(), ((Osu.Scores.TeamVs)r.Ranking).Blue, ((Osu.Scores.TeamVs)r.Ranking).Red);
+                if (message != null)
                     name = string.Format("{0} VS {1}", ((Osu.Scores.TeamVs)r.Ranking).Red.Name, ((Osu.Scores.TeamVs)r.Ranking).Blue.Name);
-                }
-                else
-                {
-                    name = r.Name;
-                }
-                DiscordHelper.SendRecap(message, new List<DiscordChannelEnum> { DiscordChannelEnum.Default, DiscordChannelEnum.Admins }, name, r.Id.ToString());
             }
             else
             {
-                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_BanSameNumber);
+                message = RefereeMatchHelper.GetInstance(r.Id).GenerateBanRecapMessage(r.Ranking.GetType(), null, null);
+                if (message != null)
+                    name = r.Name;
             }
+            if (message != null)
+                DiscordHelper.SendRecap(message, new List<DiscordChannelEnum> { DiscordChannelEnum.Default, DiscordChannelEnum.Admins }, name, r.Id.ToString());
+            else
+                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_BanSameNumber);
         }
 
         /// <summary>

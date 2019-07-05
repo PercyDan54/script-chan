@@ -29,7 +29,8 @@
         <Button x:Name="PickTheMap" Background="{Binding Background}" Focusable="True" Content="{Binding ButtonMapText}" VerticalContentAlignment="Center" Padding="0" Margin="2.5,0,0,0" Grid.Column="1">
             <Button.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="{x:Static p:Resources.Button_Ban}" cal:Message.Attach="MapBannerino"/>
+                    <MenuItem Header="{x:Static p:Resources.Button_Ban_Blue}" cal:Message.Attach="MapBannerinoBlue"/>
+                    <MenuItem Header="{x:Static p:Resources.Button_Ban_Red}" cal:Message.Attach="MapBannerinoRed"/>
                     <MenuItem Header="{x:Static p:Resources.Button_Unban}" cal:Message.Attach="RevertBannerino"/>
                 </ContextMenu>
             </Button.ContextMenu>

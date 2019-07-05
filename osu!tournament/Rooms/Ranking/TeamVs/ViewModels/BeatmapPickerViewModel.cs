@@ -238,15 +238,31 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         }
 
         /// <summary>
+        /// Function called to ban the map on the client (Blue Team)
+        /// </summary>
+        public void MapBannerinoBlue()
+        {
+            MapBannerino(Osu.Api.OsuTeam.Blue);
+        }
+
+        /// <summary>
+        /// Function called to ban the map on the client (Red Team)
+        /// </summary>
+        public void MapBannerinoRed()
+        {
+            MapBannerino(Osu.Api.OsuTeam.Red);
+        }
+
+        /// <summary>
         /// Function called to ban the map on the client
         /// </summary>
-        public void MapBannerino()
+        public void MapBannerino(Osu.Api.OsuTeam team)
         {
             RefereeMatchHelper bh = RefereeMatchHelper.GetInstance(room.Id);
             if (!isBanned)
             {
                 isBanned = true;
-                position = bh.ApplyBan(beatmap, room);
+                position = bh.ApplyBan(beatmap, team);
                 NotifyOfPropertyChange(() => Background);
                 NotifyOfPropertyChange(() => IsCheckboxEnabled);
                 NotifyOfPropertyChange(() => Position);
@@ -263,19 +279,12 @@ namespace Osu.Mvvm.Rooms.Ranking.TeamVs.ViewModels
         public void RevertBannerino()
         {
             RefereeMatchHelper bh = RefereeMatchHelper.GetInstance(room.Id);
-            if (bh.CanUnban(beatmap))
-            {
-                isBanned = false;
-                position = 0;
-                bh.RemoveBan();
-                NotifyOfPropertyChange(() => Background);
-                NotifyOfPropertyChange(() => IsCheckboxEnabled);
-                NotifyOfPropertyChange(() => Position);
-            }
-            else
-            {
-                Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Error_UnbanOrder);
-            }
+            isBanned = false;
+            position = 0;
+            bh.RemoveBan(beatmap);
+            NotifyOfPropertyChange(() => Background);
+            NotifyOfPropertyChange(() => IsCheckboxEnabled);
+            NotifyOfPropertyChange(() => Position);
         }
         #endregion
     }

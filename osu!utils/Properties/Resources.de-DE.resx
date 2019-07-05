@@ -698,4 +698,10 @@
   <data name="OptionsView_SecondBanCount" xml:space="preserve">
     <value>Punkte für 2. Ban</value>
   </data>
+  <data name="Button_Ban_Blue" xml:space="preserve">
+    <value>Gebannt von Blau</value>
+  </data>
+  <data name="Button_Ban_Red" xml:space="preserve">
+    <value>Gebannt von Rot</value>
+  </data>
 </root>

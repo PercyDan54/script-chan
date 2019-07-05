@@ -88,6 +88,24 @@ namespace Osu.Utils.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Banned by Blue.
+        /// </summary>
+        public static string Button_Ban_Blue {
+            get {
+                return ResourceManager.GetString("Button_Ban_Blue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banned by Red.
+        /// </summary>
+        public static string Button_Ban_Red {
+            get {
+                return ResourceManager.GetString("Button_Ban_Red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ban recap.
         /// </summary>
         public static string Button_BanRecap {

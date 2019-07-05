@@ -34,10 +34,16 @@ namespace Osu.Scores
         protected Team SecondTeamToBan { get; set; }
 
         /// <summary>
-        /// The list of beatmaps banned
+        /// The list of beatmaps banned by Red
         /// </summary>
         [DataMember]
-        protected List<Beatmap> BeatmapBanned;
+        protected List<Beatmap> BeatmapBannedRed;
+
+        /// <summary>
+        /// The list of beatmaps banned by Blue
+        /// </summary>
+        [DataMember]
+        protected List<Beatmap> BeatmapBannedBlue;
 
         /// <summary>
         /// The list of beatmaps picked
@@ -49,7 +55,8 @@ namespace Osu.Scores
         #region Constructors
         protected RefereeMatchHelper()
         {
-            BeatmapBanned = new List<Beatmap>();
+            BeatmapBannedRed = new List<Beatmap>();
+            BeatmapBannedBlue = new List<Beatmap>();
             picks = new List<Beatmap>();
         }
         #endregion
@@ -86,7 +93,7 @@ namespace Osu.Scores
         /// <returns></returns>
         public bool IsThisMapBanned(Beatmap bm)
         {
-            return BeatmapBanned.Exists(x => x.Id == bm.Id); 
+            return BeatmapBannedBlue.Exists(x => x.Id == bm.Id) || BeatmapBannedRed.Exists(x => x.Id == bm.Id); 
         }
 
         /// <summary>
@@ -96,23 +103,7 @@ namespace Osu.Scores
         /// <returns></returns>
         private bool CanShowBan(bool teamVsMode)
         {
-            if (teamVsMode)
-                return BeatmapBanned.Count % 2 == 0 && BeatmapBanned.Count != 0;
-            else
-                return BeatmapBanned.Count != 0;
-        }
-
-        /// <summary>
-        /// Check if a map can be unbanned or not
-        /// </summary>
-        /// <param name="bm">the beatmap to unban</param>
-        /// <returns></returns>
-        public bool CanUnban(Beatmap bm)
-        {
-            if (BeatmapBanned.Count != 0)
-                return BeatmapBanned.Last().Id == bm.Id;
-            else
-                return false;
+            return BeatmapBannedRed.Count + BeatmapBannedBlue.Count != 0;
         }
 
         /// <summary>
@@ -121,19 +112,23 @@ namespace Osu.Scores
         /// <param name="bm">the beatmap to ban</param>
         /// <param name="room">The room</param>
         /// <returns></returns>
-        public int ApplyBan(Beatmap bm, Room room)
+        public int ApplyBan(Beatmap bm, OsuTeam team)
         {
-            BeatmapBanned.Add(bm);
+            if (team == OsuTeam.Red)
+                BeatmapBannedRed.Add(bm);
+            else
+                BeatmapBannedBlue.Add(bm);
 
-            return BeatmapBanned.Count;
+            return BeatmapBannedRed.Count + BeatmapBannedBlue.Count;
         }
 
         /// <summary>
         /// Function which is removing the last ban
         /// </summary>
-        public void RemoveBan()
+        public void RemoveBan(Beatmap beatmap)
         {
-            BeatmapBanned.RemoveAt(BeatmapBanned.Count - 1);
+            BeatmapBannedBlue.RemoveAll(x => x.OsuBeatmap.BeatmapID == beatmap.OsuBeatmap.BeatmapID);
+            BeatmapBannedRed.RemoveAll(x => x.OsuBeatmap.BeatmapID == beatmap.OsuBeatmap.BeatmapID);
         }
 
         /// <summary>
@@ -176,7 +171,7 @@ namespace Osu.Scores
         /// </summary>
         /// <param name="rankingType">TeamVs or Headtohead</param>
         /// <returns></returns>
-        public Embed GenerateBanRecapMessage(Type rankingType)
+        public Embed GenerateBanRecapMessage(Type rankingType, Team blue, Team red)
         {
             bool printTeamVsMode = rankingType == typeof(TeamVs);
 
@@ -187,37 +182,51 @@ namespace Osu.Scores
                 e.Title = "Ban Recap " + (!printTeamVsMode ? "" : "(Roll Winner : " + SecondTeamToBan.Name + ")");
                 e.Fields = new List<Field>();
 
-                string first_team = "";
-                string second_team = "";
-
-                for (int i = 0; i < BeatmapBanned.Count; i++)
-                {
-                    var bmMods = "";
-                    BeatmapBanned[i].PickType.ForEach(m => bmMods += "__" + m.ToString() + "__ ");
-
-                    var res = string.Format("{0}**{1} - {2} [{3}]**" + System.Environment.NewLine, bmMods, BeatmapBanned[i].OsuBeatmap.Artist.Replace("_", "__").Replace("*", "\\*"), BeatmapBanned[i].OsuBeatmap.Title.Replace("_", "__").Replace("*", "\\*"), BeatmapBanned[i].OsuBeatmap.Version.Replace("_", "__").Replace("*", "\\*"));
-                    if(printTeamVsMode)
-                    {
-                        if (i % 2 == 0)
-                            first_team += res;
-                        else
-                            second_team += res;
-                    }
-                    else
-                    {
-                        first_team += (string.Format("-{0}- ", i+1) + res);
-                    }
-                    
-                }
-
                 if (printTeamVsMode)
                 {
-                    e.Fields.Add(new Field() { Name = FirstTeamToBan.Name, Value = first_team });
-                    e.Fields.Add(new Field() { Name = SecondTeamToBan.Name, Value = second_team });
+                    string blueTeam = "";
+                    string redTeam = "";
+                    foreach (Beatmap beatmap in BeatmapBannedBlue)
+                    {
+                        var bmMods = "";
+                        beatmap.PickType.ForEach(m => bmMods += "__" + m.ToString() + "__ ");
+
+                        blueTeam += string.Format("{0}**{1} - {2} [{3}]**" + System.Environment.NewLine, bmMods, beatmap.OsuBeatmap.Artist.Replace("_", "__").Replace("*", "\\*"), beatmap.OsuBeatmap.Title.Replace("_", "__").Replace("*", "\\*"), beatmap.OsuBeatmap.Version.Replace("_", "__").Replace("*", "\\*"));
+                    }
+                    foreach (Beatmap beatmap in BeatmapBannedRed)
+                    {
+                        var bmMods = "";
+                        beatmap.PickType.ForEach(m => bmMods += "__" + m.ToString() + "__ ");
+
+                        redTeam += string.Format("{0}**{1} - {2} [{3}]**" + System.Environment.NewLine, bmMods, beatmap.OsuBeatmap.Artist.Replace("_", "__").Replace("*", "\\*"), beatmap.OsuBeatmap.Title.Replace("_", "__").Replace("*", "\\*"), beatmap.OsuBeatmap.Version.Replace("_", "__").Replace("*", "\\*"));
+                    }
+
+                    if (BeatmapBannedBlue.Count > 0)
+                        e.Fields.Add(new Field() { Name = blue.Name, Value = blueTeam });
+                    if (BeatmapBannedRed.Count > 0)
+                        e.Fields.Add(new Field() { Name = red.Name, Value = redTeam });
                 }
                 else
                 {
-                    e.Fields.Add(new Field() { Name = "The list", Value = first_team });
+                    string generalTeam = "";
+                    for (int i = 0; i < BeatmapBannedBlue.Count; i++)
+                    {
+                        var beatmap = BeatmapBannedBlue[i];
+                        var bmMods = "";
+                        beatmap.PickType.ForEach(m => bmMods += "__" + m.ToString() + "__ ");
+
+                        generalTeam += string.Format("-{0}- ", i + 1) + string.Format("{0}**{1} - {2} [{3}]**" + System.Environment.NewLine, bmMods, beatmap.OsuBeatmap.Artist.Replace("_", "__").Replace("*", "\\*"), beatmap.OsuBeatmap.Title.Replace("_", "__").Replace("*", "\\*"), beatmap.OsuBeatmap.Version.Replace("_", "__").Replace("*", "\\*"));
+                    }
+                    for (int i = 0; i < BeatmapBannedRed.Count; i++)
+                    {
+                        var beatmap = BeatmapBannedRed[i];
+                        var bmMods = "";
+                        beatmap.PickType.ForEach(m => bmMods += "__" + m.ToString() + "__ ");
+
+                        generalTeam += string.Format("-{0}- ", i + BeatmapBannedBlue.Count + 1) + string.Format("{0}**{1} - {2} [{3}]**" + System.Environment.NewLine, bmMods, beatmap.OsuBeatmap.Artist.Replace("_", "__").Replace("*", "\\*"), beatmap.OsuBeatmap.Title.Replace("_", "__").Replace("*", "\\*"), beatmap.OsuBeatmap.Version.Replace("_", "__").Replace("*", "\\*"));
+                    }
+
+                    e.Fields.Add(new Field() { Name = "The list", Value = generalTeam });
                 }
 
                 return e;
