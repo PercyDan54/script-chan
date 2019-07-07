@@ -443,15 +443,13 @@ namespace Osu.Mvvm.Ov.ViewModels
                 long id;
                 if (long.TryParse(e.Id, out id))
                 {
-                    rooms.FirstOrDefault(x => x.TeamBlue == e.BlueTeam && x.TeamRed == e.RedTeam).SetCreation(id);
-                    System.Windows.Application.Current.Dispatcher.Invoke(new System.Action(async () => { await Dialog.HideProgress(); Dialog.ShowDialog("OK!", "Match has been created!"); }));
-                    DiscordHelper.SendNewMatch(id.ToString(), e.RedTeam, e.BlueTeam);
-                    //osu_discord.DiscordBot.GetInstance().SendMessage("Match created : https://osu.ppy.sh/community/matches/" + id + " . If you want to join, click irc://cho.ppy.sh:6667/mp_" + id);
-                    //}
-                    //else
-                    //{
-                    //Dialog.ShowDialog("Whoops!", "The match hasn't been created on script chan!");
-                    //}
+                    var room = rooms.FirstOrDefault(x => x.TeamBlue == e.BlueTeam && x.TeamRed == e.RedTeam);
+                    if (room != null)
+                    {
+                        room.SetCreation(id);
+                        System.Windows.Application.Current.Dispatcher.Invoke(new System.Action(async () => { await Dialog.HideProgress(); Dialog.ShowDialog("OK!", "Match has been created!"); }));
+                        DiscordHelper.SendNewMatch(id.ToString(), e.RedTeam, e.BlueTeam);
+                    }
                 }
                 else
                 {
