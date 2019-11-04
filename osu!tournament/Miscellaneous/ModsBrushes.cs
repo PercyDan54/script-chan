@@ -93,6 +93,16 @@ namespace Osu.Mvvm.Miscellaneous
         /// </summary>
         public static Brush TieBreakerLight = new SolidColorBrush(Color.FromRgb(217, 234, 211));
 
+        /// <summary>
+        /// NoFail
+        /// </summary>
+        public static Brush NoFail = new SolidColorBrush(Color.FromRgb(233, 30, 99));
+
+        /// <summary>
+        /// Light NoFail
+        /// </summary>
+        public static Brush NoFailLight = new SolidColorBrush(Color.FromRgb(249, 122, 228));
+
         public static Brush BannedMap = new SolidColorBrush(Color.FromRgb(255, 0, 0));
 
         public static Brush BlueTeam = new SolidColorBrush(Color.FromRgb(20, 141, 175));
@@ -117,6 +127,8 @@ namespace Osu.Mvvm.Miscellaneous
                     return FreeMod;
                 case PickType.TieBreaker:
                     return TieBreaker;
+                case PickType.NF:
+                    return NoFail;
                 default:
                     return None;
             }
@@ -140,6 +152,8 @@ namespace Osu.Mvvm.Miscellaneous
                     return FreeModLight;
                 case PickType.TieBreaker:
                     return TieBreakerLight;
+                case PickType.NF:
+                    return NoFailLight;
                 default:
                     return NoneLight;
             }

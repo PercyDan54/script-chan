@@ -14,6 +14,7 @@ namespace Osu.Scores
         DT = 3,
         FL = 4,
         Freemod = 5,
-        TieBreaker = 6
+        TieBreaker = 6,
+        NF = 7
     }
 }
