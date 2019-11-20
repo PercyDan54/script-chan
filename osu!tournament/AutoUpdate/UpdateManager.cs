@@ -9,6 +9,7 @@ using System.Net;
 using System.Windows;
 using Osu.Mvvm.Miscellaneous;
 using Osu.Utils.AutoUpdate;
+using System.Diagnostics;
 
 namespace Osu.Tournament.AutoUpdate
 {
@@ -49,15 +50,7 @@ namespace Osu.Tournament.AutoUpdate
             if (await Dialog.ShowConfirmation(Utils.Properties.Resources.Update_NewVersionTitle,
                 Utils.Properties.Resources.Update_NewVersionMessage))
             {
-                if (_service.DownloadNewVersion())
-                {
-                    HasUpdated = true;
-                    System.Windows.Application.Current.Shutdown();
-                }
-                else
-                {
-                    Dialog.ShowDialog(Utils.Properties.Resources.Error_Title, Utils.Properties.Resources.Update_NewVersionError);
-                }
+                Process.Start(@"https://git.cartooncraft.fr/shARPII/script-chan/-/tags");
             }
         }
 

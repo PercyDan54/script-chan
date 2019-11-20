@@ -635,7 +635,7 @@
     <value>An error occured during the download, make sure you are running the tool with administrator rights.</value>
   </data>
   <data name="Update_NewVersionMessage" xml:space="preserve">
-    <value>Would you like to download the latest version? The application will close.</value>
+    <value>Would you like to download the latest version?</value>
   </data>
   <data name="Update_NewVersionTitle" xml:space="preserve">
     <value>New version available</value>

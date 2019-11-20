@@ -635,7 +635,7 @@
     <value>Ein Fehler ist während des Downloads aufgetreten. Bitte starte die App als Administrator.</value>
   </data>
   <data name="Update_NewVersionMessage" xml:space="preserve">
-    <value>Soll die neue Version heruntergeladen werden? Bestätigen schließt die App.</value>
+    <value>Soll die neue Version heruntergeladen werden?</value>
   </data>
   <data name="Update_NewVersionTitle" xml:space="preserve">
     <value>Neue Version verfügbar</value>
