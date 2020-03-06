@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="script_chan2.GUI.MatchesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:script_chan2.GUI"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button Content="New" HorizontalAlignment="Left" Command="{x:Static md:DialogHost.OpenDialogCommand}" cal:Message.Attach="[Event Click] = [Action NewMatchDialogOpened]">
+            <Button.CommandParameter>
+                <Grid Margin="16" Width="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="200" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBox md:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="4">
+                        <TextBox.Text>
+                            <Binding Path="NewMatchName" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <ComboBox md:HintAssist.Hint="Tournament" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding NewMatchTournament}" Margin="0 10 5 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox md:HintAssist.Hint="Mappool" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding NewMatchMappool}" Margin="5 10 0 0" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox md:HintAssist.Hint="Game Mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="0" Margin="0 10 5 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding NewMatchGameMode}" />
+                    <ComboBox md:HintAssist.Hint="Win Condition" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="1" Margin="5 10 5 0" ItemsSource="{Binding WinConditionsList}" SelectedItem="{Binding NewMatchWinCondition}" />
+                    <ComboBox md:HintAssist.Hint="Team Mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="2" Margin="5 10 5 0" ItemsSource="{Binding TeamModesList}" SelectedItem="{Binding NewMatchTeamMode}" />
+                    <TextBox Text="{Binding NewMatchBO}" md:HintAssist.Hint="BO" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="2" Grid.Column="3" Margin="5 10 0 0" />
+                    <StackPanel Grid.Row="3" Grid.ColumnSpan="4" Visibility="{Binding TeamsEditorIsVisible}" Margin="0 10 0 0">
+                        <TextBlock>Teams</TextBlock>
+                        <ScrollViewer>
+                            <ItemsControl ItemsSource="{Binding TeamsViews}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ContentControl cal:View.Model="{Binding}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.ColumnSpan="4" Visibility="{Binding PlayersEditorIsVisible}" Margin="0 10 0 0">
+                        <TextBlock>Players</TextBlock>
+                        <ScrollViewer>
+                            <ItemsControl ItemsSource="{Binding TeamsViews}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ContentControl cal:View.Model="{Binding}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="4" Grid.ColumnSpan="4">
+                        <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
+                        <Button Content="Save" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action NewMatchDialogClosed]" IsEnabled="{Binding NewMatchSaveEnabled}" />
+                    </StackPanel>
+                </Grid>
+            </Button.CommandParameter>
+        </Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <ComboBox md:HintAssist.Hint="Tournament" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox md:HintAssist.Hint="Status" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Statuses}" SelectedItem="{Binding FilterStatus}" Width="200" Margin="10 0 0 0" />
+        </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl x:Name="MatchesViews">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

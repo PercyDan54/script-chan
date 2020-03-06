@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="script_chan2.GUI.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:script_chan2.GUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <ComboBox x:Name="Languages" Grid.Column="0" Grid.ColumnSpan="2" md:HintAssist.Hint="Language" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="5" />
+        <TextBox x:Name="ApiKey" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" md:HintAssist.Hint="API Key" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+        <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button x:Name="OpenApiKeyPage" Content="Get API key" Width="110" Margin="5" />
+            <Button x:Name="CheckApiKey" Content="Test" Width="60" Margin="5" />
+            <TextBlock x:Name="ApiStatus" Margin="5" VerticalAlignment="Center" />
+        </StackPanel>
+        <TextBox x:Name="IrcUsername" Grid.Row="2" Grid.Column="0" md:HintAssist.Hint="IRC Username" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <TextBox x:Name="IrcPassword" Grid.Row="2" Grid.Column="1" md:HintAssist.Hint="IRC Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button x:Name="OpenIrcPage" Content="Get IRC password" Width="150" Margin="5" />
+            <Button x:Name="CheckIrc" Content="Test" Width="60" Margin="5" />
+            <TextBlock x:Name="IrcStatus" Margin="5" VerticalAlignment="Center" />
+        </StackPanel>
+        <TextBox x:Name="IrcTimeout" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" md:HintAssist.Hint="IRC Timeout" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <TextBox x:Name="MpTimerDuration" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" md:HintAssist.Hint="MP Timer Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <StackPanel Grid.Row="7" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Dirty, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Button x:Name="Discard" Content="Discard" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignFlatButton}" />
+            <Button x:Name="Save" Content="Save" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignRaisedButton}" />
+        </StackPanel>
+    </Grid>
+</UserControl>
