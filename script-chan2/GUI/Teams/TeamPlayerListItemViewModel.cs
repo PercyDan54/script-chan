@@ -10,12 +10,15 @@ namespace script_chan2.GUI
 {
     public class TeamPlayerListItemViewModel : Screen
     {
+        #region Constructor
         public TeamPlayerListItemViewModel(Team team, Player player)
         {
             this.team = team;
             this.player = player;
         }
+        #endregion
 
+        #region Properties
         private Team team;
 
         private Player player;
@@ -24,11 +27,14 @@ namespace script_chan2.GUI
         {
             get { return player.Name; }
         }
+        #endregion
 
+        #region Actions
         public void Delete()
         {
             team.RemovePlayer(player);
             Events.Aggregator.PublishOnUIThread("RemovePlayerFromTeam");
         }
+        #endregion
     }
 }

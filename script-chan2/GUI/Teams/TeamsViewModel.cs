@@ -10,6 +10,7 @@ namespace script_chan2.GUI
 {
     public class TeamsViewModel : Screen, IHandle<string>
     {
+        #region Teams list
         public BindableCollection<Team> Teams { get; set; }
 
         public BindableCollection<TeamListItemViewModel> TeamsViews
@@ -22,24 +23,17 @@ namespace script_chan2.GUI
                 return list;
             }
         }
+        #endregion
 
-        public BindableCollection<Tournament> Tournaments
-        {
-            get
-            {
-                var list = new BindableCollection<Tournament>();
-                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Name))
-                    list.Add(tournament);
-                return list;
-            }
-        }
-
+        #region Constructor
         protected override void OnActivate()
         {
             Reload();
             Events.Aggregator.Subscribe(this);
         }
+        #endregion
 
+        #region Events
         public void Reload()
         {
             Teams = new BindableCollection<Team>();
@@ -58,7 +52,9 @@ namespace script_chan2.GUI
             if (message.ToString() == "DeleteTeam")
                 Reload();
         }
+        #endregion
 
+        #region Filter
         public Tournament FilterTournament
         {
             get { return Settings.DefaultTournament; }
@@ -72,7 +68,9 @@ namespace script_chan2.GUI
                 }
             }
         }
+        #endregion
 
+        #region New team dialog
         private string newTeamName;
         public string NewTeamName
         {
@@ -85,6 +83,17 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => NewTeamName);
                     NotifyOfPropertyChange(() => NewTeamSaveEnabled);
                 }
+            }
+        }
+
+        public BindableCollection<Tournament> Tournaments
+        {
+            get
+            {
+                var list = new BindableCollection<Tournament>();
+                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Name))
+                    list.Add(tournament);
+                return list;
             }
         }
 
@@ -129,5 +138,6 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => NewTeamTournament);
             Reload();
         }
+        #endregion
     }
 }

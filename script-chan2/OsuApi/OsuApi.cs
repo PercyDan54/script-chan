@@ -14,14 +14,7 @@ namespace script_chan2.OsuApi
 {
     public static class OsuApi
     {
-        private static string SendRequest(string method, string parameters)
-        {
-            using (var webClient = new WebClient())
-            {
-                return webClient.DownloadString("https://osu.ppy.sh/api/" + method + "?k=" + Settings.ApiKey + "&" + parameters);
-            }
-        }
-
+        #region API calls
         public static bool CheckApiKey(string key)
         {
             var request = (HttpWebRequest)WebRequest.Create("https://osu.ppy.sh/api/get_user?u=2&k=" + key);
@@ -134,6 +127,16 @@ namespace script_chan2.OsuApi
                     UpdateRoom(room);
             }
         }
+        #endregion
+
+        #region Helper methods
+        private static string SendRequest(string method, string parameters)
+        {
+            using (var webClient = new WebClient())
+            {
+                return webClient.DownloadString("https://osu.ppy.sh/api/" + method + "?k=" + Settings.ApiKey + "&" + parameters);
+            }
+        }
 
         public static List<GameMods> ModsFromBitEnum(string bitEnum)
         {
@@ -182,5 +185,6 @@ namespace script_chan2.OsuApi
             }
             return LobbyTeams.None;
         }
+        #endregion
     }
 }

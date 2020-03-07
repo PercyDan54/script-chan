@@ -11,30 +11,24 @@ namespace script_chan2.GUI
 {
     public class TeamListItemViewModel : Screen, IHandle<string>
     {
+        #region Constructor
         public TeamListItemViewModel(Team team)
         {
             this.team = team;
             Events.Aggregator.Subscribe(this);
         }
+        #endregion
 
-        private Team team;
-
-        public BindableCollection<TeamPlayerListItemViewModel> PlayersViews
-        {
-            get
-            {
-                var list = new BindableCollection<TeamPlayerListItemViewModel>();
-                foreach (var player in team.Players)
-                    list.Add(new TeamPlayerListItemViewModel(team, player));
-                return list;
-            }
-        }
-
+        #region Events
         public void Handle(string message)
         {
             if (message == "RemovePlayerFromTeam")
                 NotifyOfPropertyChange(() => PlayersViews);
         }
+        #endregion
+
+        #region Properties
+        private Team team;
 
         public string Name
         {
@@ -55,7 +49,9 @@ namespace script_chan2.GUI
                 return team.Tournament.Name;
             }
         }
+        #endregion
 
+        #region Edit team dialog
         private string editName;
         public string EditName
         {
@@ -109,6 +105,36 @@ namespace script_chan2.GUI
             }
         }
 
+        public void Edit()
+        {
+            EditName = team.Name;
+            EditTournament = team.Tournament;
+        }
+
+        public void Save()
+        {
+            if (EditTeamSaveEnabled)
+            {
+                team.Name = EditName;
+                team.Save();
+                NotifyOfPropertyChange(() => Name);
+                NotifyOfPropertyChange(() => TournamentName);
+            }
+        }
+        #endregion
+
+        #region Edit players dialog
+        public BindableCollection<TeamPlayerListItemViewModel> PlayersViews
+        {
+            get
+            {
+                var list = new BindableCollection<TeamPlayerListItemViewModel>();
+                foreach (var player in team.Players)
+                    list.Add(new TeamPlayerListItemViewModel(team, player));
+                return list;
+            }
+        }
+
         private string addPlayerNameOrId;
         public string AddPlayerNameOrId
         {
@@ -146,23 +172,7 @@ namespace script_chan2.GUI
         {
             AddPlayerNameOrId = "";
         }
-
-        public void Edit()
-        {
-            EditName = team.Name;
-            EditTournament = team.Tournament;
-        }
-
-        public void Save()
-        {
-            if (EditTeamSaveEnabled)
-            {
-                team.Name = EditName;
-                team.Save();
-                NotifyOfPropertyChange(() => Name);
-                NotifyOfPropertyChange(() => TournamentName);
-            }
-        }
+        #endregion
 
         public void Delete()
         {

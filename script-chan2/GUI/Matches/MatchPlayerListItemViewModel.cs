@@ -10,16 +10,20 @@ namespace script_chan2.GUI
 {
     public class MatchPlayerListItemViewModel : Screen
     {
+        #region Constructor
         public MatchPlayerListItemViewModel(Player player)
         {
             Player = player;
         }
+        #endregion
 
+        #region Properties
         public Player Player;
 
         public string Name
         {
             get { return $"{Player.Name} ({Player.Country})"; }
         }
+        #endregion
     }
 }

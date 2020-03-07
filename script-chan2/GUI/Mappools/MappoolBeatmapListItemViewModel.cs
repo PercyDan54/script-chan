@@ -10,11 +10,14 @@ namespace script_chan2.GUI
 {
     public class MappoolBeatmapListItemViewModel : Screen
     {
+        #region Constructor
         public MappoolBeatmapListItemViewModel(MappoolMap beatmap)
         {
             this.beatmap = beatmap;
         }
+        #endregion
 
+        #region Properties
         private MappoolMap beatmap;
 
         public string Title
@@ -125,7 +128,9 @@ namespace script_chan2.GUI
                 UpdateMods();
             }
         }
+        #endregion
 
+        #region Actions
         public void MoveUp()
         {
             beatmap.MoveUp();
@@ -143,5 +148,6 @@ namespace script_chan2.GUI
             beatmap.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMappoolMap");
         }
+        #endregion
     }
 }

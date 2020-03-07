@@ -13,6 +13,7 @@ namespace script_chan2.GUI
 {
     class MatchesViewModel : Screen, IHandle<string>
     {
+        #region Match list
         public BindableCollection<Match> Matches
         {
             get
@@ -40,45 +41,18 @@ namespace script_chan2.GUI
                 return list;
             }
         }
+        #endregion
 
-        public BindableCollection<Tournament> Tournaments
-        {
-            get
-            {
-                var list = new BindableCollection<Tournament>();
-                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Id))
-                    list.Add(tournament);
-                return list;
-            }
-        }
-
-        public BindableCollection<Mappool> Mappools
-        {
-            get
-            {
-                var list = new BindableCollection<Mappool>();
-                foreach (var mappool in Database.Database.Mappools.OrderBy(x => x.Name))
-                {
-                    if (mappool.Tournament != NewMatchTournament)
-                        continue;
-                    list.Add(mappool);
-                }
-                return list;
-            }
-        }
-
-        public List<MatchStatus> Statuses
-        {
-            get { return Enum.GetValues(typeof(MatchStatus)).Cast<MatchStatus>().ToList(); }
-        }
-
+        #region Constructor
         protected override void OnActivate()
         {
             newMatchTeams = new List<Team>();
             newMatchPlayers = new List<Player>();
             Events.Aggregator.Subscribe(this);
         }
+        #endregion
 
+        #region Events
         public void Reload()
         {
             NotifyOfPropertyChange(() => Matches);
@@ -92,7 +66,9 @@ namespace script_chan2.GUI
             else if (message.ToString() == "EditMatch")
                 Reload();
         }
+        #endregion
 
+        #region Filters
         public Tournament FilterTournament
         {
             get { return Settings.DefaultTournament; }
@@ -105,6 +81,11 @@ namespace script_chan2.GUI
                     Reload();
                 }
             }
+        }
+
+        public List<MatchStatus> Statuses
+        {
+            get { return Enum.GetValues(typeof(MatchStatus)).Cast<MatchStatus>().ToList(); }
         }
 
         private MatchStatus? filterStatus;
@@ -121,7 +102,9 @@ namespace script_chan2.GUI
                 }
             }
         }
+        #endregion
 
+        #region New match dialog
         private string newMatchName;
         public string NewMatchName
         {
@@ -134,6 +117,17 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => NewMatchName);
                     NotifyOfPropertyChange(() => NewMatchSaveEnabled);
                 }
+            }
+        }
+
+        public BindableCollection<Tournament> Tournaments
+        {
+            get
+            {
+                var list = new BindableCollection<Tournament>();
+                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Id))
+                    list.Add(tournament);
+                return list;
             }
         }
 
@@ -158,6 +152,21 @@ namespace script_chan2.GUI
                         NewMatchWinCondition = value.WinCondition;
                     }
                 }
+            }
+        }
+
+        public BindableCollection<Mappool> Mappools
+        {
+            get
+            {
+                var list = new BindableCollection<Mappool>();
+                foreach (var mappool in Database.Database.Mappools.OrderBy(x => x.Name))
+                {
+                    if (mappool.Tournament != NewMatchTournament)
+                        continue;
+                    list.Add(mappool);
+                }
+                return list;
             }
         }
 
@@ -421,5 +430,6 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => NewMatchTournament);
             Reload();
         }
+        #endregion
     }
 }

@@ -11,6 +11,7 @@ namespace script_chan2.GUI
 {
     public class TournamentsViewModel : Screen, IHandle<string>
     {
+        #region Tournaments list
         public BindableCollection<Tournament> Tournaments { get; set; }
 
         public BindableCollection<TournamentListItemViewModel> TournamentsViews
@@ -23,13 +24,17 @@ namespace script_chan2.GUI
                 return list;
             }
         }
+        #endregion
 
+        #region Constructor
         protected override void OnActivate()
         {
             Reload();
             Events.Aggregator.Subscribe(this);
         }
+        #endregion Constructor
 
+        #region Events
         public void Reload()
         {
             Tournaments = new BindableCollection<Tournament>();
@@ -46,7 +51,9 @@ namespace script_chan2.GUI
             if (message.ToString() == "DeleteTournament")
                 Reload();
         }
+        #endregion
 
+        #region New tournament dialog
         private string newTournamentName;
         public string NewTournamentName
         {
@@ -229,5 +236,6 @@ namespace script_chan2.GUI
             tournament.Save();
             Reload();
         }
+        #endregion
     }
 }

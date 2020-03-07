@@ -10,18 +10,23 @@ namespace script_chan2.GUI
 {
     public class WebhookListItemViewModel : PropertyChangedBase
     {
+        #region Constructor
         public WebhookListItemViewModel(Webhook webhook)
         {
             this.webhook = webhook;
         }
+        #endregion
 
+        #region Properties
         private Webhook webhook;
 
         public string Name
         {
             get { return webhook.Name; }
         }
+        #endregion
 
+        #region Edit webhook dialog
         private string editName;
         public string EditName
         {
@@ -81,11 +86,14 @@ namespace script_chan2.GUI
                 NotifyOfPropertyChange(() => Name);
             }
         }
+        #endregion
 
+        #region Actions
         public void Delete()
         {
             webhook.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteWebhook");
         }
+        #endregion
     }
 }

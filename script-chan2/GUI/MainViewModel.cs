@@ -10,11 +10,14 @@ namespace script_chan2.GUI
 {
     public class MainViewModel : Conductor<object>
     {
+        #region Constructor
         public MainViewModel()
         {
             ShowMatches();
         }
+        #endregion
 
+        #region Properties
         private bool drawerExpanded = false;
         public bool DrawerExpanded
         {
@@ -39,7 +42,9 @@ namespace script_chan2.GUI
                 }
             }
         }
+        #endregion
 
+        #region Actions
         public void ShowMatches()
         {
             ActivateItem(new MatchesViewModel());
@@ -81,5 +86,6 @@ namespace script_chan2.GUI
             Title = "Settings";
             DrawerExpanded = false;
         }
+        #endregion
     }
 }

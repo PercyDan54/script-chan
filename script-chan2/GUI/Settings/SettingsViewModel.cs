@@ -10,11 +10,7 @@ namespace script_chan2.GUI
 {
     public class SettingsViewModel : Screen
     {
-        public BindableCollection<string> Languages
-        {
-            get { return new BindableCollection<string>(new string[] { "en-US", "de-DE" }); }
-        }
-
+        #region Properties
         private bool dirty;
         public bool Dirty
         {
@@ -27,6 +23,11 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => Dirty);
                 }
             }
+        }
+
+        public BindableCollection<string> Languages
+        {
+            get { return new BindableCollection<string>(new string[] { "en-US", "de-DE" }); }
         }
 
         private string lang;
@@ -170,12 +171,16 @@ namespace script_chan2.GUI
                 }
             }
         }
+        #endregion
 
+        #region Constructor
         protected override void OnActivate()
         {
             Discard();
         }
+        #endregion
 
+        #region Actions
         public void Save()
         {
             Settings.Lang = lang;
@@ -197,5 +202,6 @@ namespace script_chan2.GUI
             MpTimerDuration = Settings.MpTimerDuration;
             Dirty = false;
         }
+        #endregion
     }
 }

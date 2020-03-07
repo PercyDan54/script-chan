@@ -11,13 +11,23 @@ namespace script_chan2.GUI
 {
     public class TournamentListItemViewModel : Screen
     {
+        #region Constructor
         public TournamentListItemViewModel(Tournament tournament)
         {
             this.tournament = tournament;
         }
+        #endregion
 
+        #region Properties
         private Tournament tournament;
 
+        public string Name
+        {
+            get { return tournament.Name; }
+        }
+        #endregion
+
+        #region Webhook list
         public BindableCollection<TournamentWebhookListItemViewModel> WebhooksViews
         {
             get
@@ -28,12 +38,9 @@ namespace script_chan2.GUI
                 return list;
             }
         }
+        #endregion
 
-        public string Name
-        {
-            get { return tournament.Name; }
-        }
-
+        #region Edit tournament dialog
         private string editName;
         public string EditName
         {
@@ -227,11 +234,14 @@ namespace script_chan2.GUI
                 NotifyOfPropertyChange(() => Name);
             }
         }
+        #endregion
 
+        #region Actions
         public void Delete()
         {
             tournament.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteTournament");
         }
+        #endregion
     }
 }

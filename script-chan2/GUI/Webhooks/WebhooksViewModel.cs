@@ -11,6 +11,7 @@ namespace script_chan2.GUI
 {
     public class WebhooksViewModel : Screen, IHandle<string>
     {
+        #region Webhooks list
         public BindableCollection<Webhook> Webhooks { get; set; }
 
         public BindableCollection<WebhookListItemViewModel> WebhooksViews
@@ -23,13 +24,17 @@ namespace script_chan2.GUI
                 return list;
             }
         }
+        #endregion
 
+        #region Constructor
         protected override void OnActivate()
         {
             Reload();
             Events.Aggregator.Subscribe(this);
         }
+        #endregion
 
+        #region Events
         public void Reload()
         {
             Webhooks = new BindableCollection<Webhook>();
@@ -46,7 +51,9 @@ namespace script_chan2.GUI
             if (message.ToString() == "DeleteWebhook")
                 Reload();
         }
+        #endregion
 
+        #region New webhook dialog
         private string newWebhookName;
         public string NewWebhookName
         {
@@ -103,5 +110,6 @@ namespace script_chan2.GUI
             webhook.Save();
             Reload();
         }
+        #endregion
     }
 }

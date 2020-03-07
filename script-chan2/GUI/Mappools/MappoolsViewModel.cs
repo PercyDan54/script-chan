@@ -10,6 +10,7 @@ namespace script_chan2.GUI
 {
     public class MappoolsViewModel : Screen, IHandle<string>
     {
+        #region Mappool list
         public BindableCollection<Mappool> Mappools { get; set; }
 
         public BindableCollection<MappoolListItemViewModel> MappoolsViews
@@ -22,24 +23,17 @@ namespace script_chan2.GUI
                 return list;
             }
         }
+        #endregion
 
-        public BindableCollection<Tournament> Tournaments
-        {
-            get
-            {
-                var list = new BindableCollection<Tournament>();
-                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Name))
-                    list.Add(tournament);
-                return list;
-            }
-        }
-
+        #region Constructor
         protected override void OnActivate()
         {
             Reload();
             Events.Aggregator.Subscribe(this);
         }
+        #endregion
 
+        #region Events
         public void Reload()
         {
             Mappools = new BindableCollection<Mappool>();
@@ -58,7 +52,9 @@ namespace script_chan2.GUI
             if (message.ToString() == "DeleteMappool")
                 Reload();
         }
+        #endregion
 
+        #region Filter
         public Tournament FilterTournament
         {
             get { return Settings.DefaultTournament; }
@@ -72,7 +68,9 @@ namespace script_chan2.GUI
                 }
             }
         }
+        #endregion
 
+        #region New mappool dialog
         private string newMappoolName;
         public string NewMappoolName
         {
@@ -85,6 +83,17 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => NewMappoolName);
                     NotifyOfPropertyChange(() => NewMappoolSaveEnabled);
                 }
+            }
+        }
+
+        public BindableCollection<Tournament> Tournaments
+        {
+            get
+            {
+                var list = new BindableCollection<Tournament>();
+                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Name))
+                    list.Add(tournament);
+                return list;
             }
         }
 
@@ -129,5 +138,6 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => NewMappoolTournament);
             Reload();
         }
+        #endregion
     }
 }

@@ -10,12 +10,15 @@ namespace script_chan2.GUI
 {
     public class TournamentWebhookListItemViewModel : Screen
     {
+        #region Constructor
         public TournamentWebhookListItemViewModel(Tournament tournament, Webhook webhook)
         {
             this.tournament = tournament;
             this.webhook = webhook;
         }
+        #endregion
 
+        #region Properties
         private Tournament tournament;
 
         private Webhook webhook;
@@ -37,5 +40,6 @@ namespace script_chan2.GUI
                 NotifyOfPropertyChange(() => Active);
             }
         }
+        #endregion
     }
 }

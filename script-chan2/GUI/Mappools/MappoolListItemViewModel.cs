@@ -13,30 +13,16 @@ namespace script_chan2.GUI
 {
     public class MappoolListItemViewModel : Screen, IHandle<string>
     {
+        #region Constructor
         public MappoolListItemViewModel(Mappool mappool)
         {
             this.mappool = mappool;
             Events.Aggregator.Subscribe(this);
         }
+        #endregion
 
+        #region Properties
         private Mappool mappool;
-
-        public BindableCollection<MappoolBeatmapListItemViewModel> BeatmapsViews
-        {
-            get
-            {
-                var list = new BindableCollection<MappoolBeatmapListItemViewModel>();
-                foreach (var beatmap in mappool.Beatmaps)
-                    list.Add(new MappoolBeatmapListItemViewModel(beatmap));
-                return list;
-            }
-        }
-
-        public void Handle(string message)
-        {
-            if (message == "DeleteMappoolMap" || message == "MoveMappoolMap")
-                NotifyOfPropertyChange(() => BeatmapsViews);
-        }
 
         public string Name
         {
@@ -57,7 +43,17 @@ namespace script_chan2.GUI
                 return mappool.Tournament.Name;
             }
         }
+        #endregion
 
+        #region Events
+        public void Handle(string message)
+        {
+            if (message == "DeleteMappoolMap" || message == "MoveMappoolMap")
+                NotifyOfPropertyChange(() => BeatmapsViews);
+        }
+        #endregion
+
+        #region Edit mappool dialog
         private string editName;
         public string EditName
         {
@@ -108,6 +104,37 @@ namespace script_chan2.GUI
                 if (Database.Database.Teams.Any(x => x.Name == editName && x.Tournament == editTournament && x.Id != mappool.Id))
                     return false;
                 return true;
+            }
+        }
+
+        public void Edit()
+        {
+            EditName = mappool.Name;
+            EditTournament = mappool.Tournament;
+        }
+
+        public void Save()
+        {
+            if (EditMappoolSaveEnabled)
+            {
+                mappool.Name = EditName;
+                mappool.Tournament = EditTournament;
+                mappool.Save();
+                NotifyOfPropertyChange(() => Name);
+                NotifyOfPropertyChange(() => TournamentName);
+            }
+        }
+        #endregion
+
+        #region Beatmap list dialog
+        public BindableCollection<MappoolBeatmapListItemViewModel> BeatmapsViews
+        {
+            get
+            {
+                var list = new BindableCollection<MappoolBeatmapListItemViewModel>();
+                foreach (var beatmap in mappool.Beatmaps)
+                    list.Add(new MappoolBeatmapListItemViewModel(beatmap));
+                return list;
             }
         }
 
@@ -184,24 +211,7 @@ namespace script_chan2.GUI
             if (keyArgs != null && keyArgs.Key == Key.Enter)
                 AddBeatmap();
         }
-
-        public void Edit()
-        {
-            EditName = mappool.Name;
-            EditTournament = mappool.Tournament;
-        }
-
-        public void Save()
-        {
-            if (EditMappoolSaveEnabled)
-            {
-                mappool.Name = EditName;
-                mappool.Tournament = EditTournament;
-                mappool.Save();
-                NotifyOfPropertyChange(() => Name);
-                NotifyOfPropertyChange(() => TournamentName);
-            }
-        }
+        #endregion
 
         public void Delete()
         {

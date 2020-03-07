@@ -13,39 +13,16 @@ namespace script_chan2.GUI
 {
     class MatchListItemViewModel : Screen
     {
+        #region Constructor
         public MatchListItemViewModel(Match match)
         {
             this.match = match;
             Events.Aggregator.Subscribe(this);
         }
+        #endregion
 
+        #region Properties
         private Match match;
-
-        public BindableCollection<Tournament> Tournaments
-        {
-            get
-            {
-                var list = new BindableCollection<Tournament>();
-                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Id))
-                    list.Add(tournament);
-                return list;
-            }
-        }
-
-        public BindableCollection<Mappool> Mappools
-        {
-            get
-            {
-                var list = new BindableCollection<Mappool>();
-                foreach (var mappool in Database.Database.Mappools.OrderBy(x => x.Name))
-                {
-                    if (mappool.Tournament != EditMatchTournament)
-                        continue;
-                    list.Add(mappool);
-                }
-                return list;
-            }
-        }
 
         public string Name
         {
@@ -66,7 +43,9 @@ namespace script_chan2.GUI
                 return match.Tournament.Name;
             }
         }
+        #endregion
 
+        #region Edit match dialog
         private string editMatchName;
         public string EditMatchName
         {
@@ -79,6 +58,17 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => EditMatchName);
                     NotifyOfPropertyChange(() => EditMatchSaveEnabled);
                 }
+            }
+        }
+
+        public BindableCollection<Tournament> Tournaments
+        {
+            get
+            {
+                var list = new BindableCollection<Tournament>();
+                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Id))
+                    list.Add(tournament);
+                return list;
             }
         }
 
@@ -100,6 +90,21 @@ namespace script_chan2.GUI
                         EditMatchWinCondition = value.WinCondition;
                     }
                 }
+            }
+        }
+
+        public BindableCollection<Mappool> Mappools
+        {
+            get
+            {
+                var list = new BindableCollection<Mappool>();
+                foreach (var mappool in Database.Database.Mappools.OrderBy(x => x.Name))
+                {
+                    if (mappool.Tournament != EditMatchTournament)
+                        continue;
+                    list.Add(mappool);
+                }
+                return list;
             }
         }
 
@@ -371,6 +376,7 @@ namespace script_chan2.GUI
                 Events.Aggregator.PublishOnUIThread("EditMatch");
             }
         }
+        #endregion
 
         public void Delete()
         {
