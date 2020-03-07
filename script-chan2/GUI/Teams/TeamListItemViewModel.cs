@@ -168,7 +168,7 @@ namespace script_chan2.GUI
 
             if (int.TryParse(text, out int id))
             {
-                Log.Information("GUI mappool beatmap list dialog clipboard event, found id {id}", id);
+                Log.Information("GUI team player list dialog clipboard event, found id {id}", id);
                 if (!string.IsNullOrEmpty(AddPlayerNameOrId))
                     AddPlayerNameOrId += ";";
                 AddPlayerNameOrId += text;
