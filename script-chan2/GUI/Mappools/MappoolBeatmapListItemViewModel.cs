@@ -134,21 +134,21 @@ namespace script_chan2.GUI
         #region Actions
         public void MoveUp()
         {
-            Log.Information("GUI mappool move beatmap up");
+            Log.Information("GUI mappool '{mappool}' move beatmap '{beatmap}' up", beatmap.Mappool.Name, beatmap.Beatmap.Id);
             beatmap.MoveUp();
             Events.Aggregator.PublishOnUIThread("MoveMappoolMap");
         }
 
         public void MoveDown()
         {
-            Log.Information("GUI mappool move beatmap down");
+            Log.Information("GUI mappool '{mappool}' move beatmap '{beatmap}' down", beatmap.Mappool.Name, beatmap.Beatmap.Id);
             beatmap.MoveDown();
             Events.Aggregator.PublishOnUIThread("MoveMappoolMap");
         }
 
         public void Delete()
         {
-            Log.Information("GUI mappool delete beatmap");
+            Log.Information("GUI mappool '{mappool}' delete beatmap '{beatmap}'", beatmap.Mappool.Name, beatmap.Beatmap.Id);
             beatmap.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMappoolMap");
         }

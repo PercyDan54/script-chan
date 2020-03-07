@@ -135,7 +135,7 @@ namespace script_chan2.GUI
 
         public void NewTeamDialogClosed()
         {
-            Log.Information("GUI new team save");
+            Log.Information("GUI new team '{name}' save", NewTeamName);
             var team = new Team(NewTeamTournament, NewTeamName);
             team.Save();
             Settings.DefaultTournament = NewTeamTournament;

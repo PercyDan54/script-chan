@@ -73,7 +73,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
-            Log.Information("GUI edit webhook dialog open");
+            Log.Information("GUI webhook '{name}' edit dialog open", webhook.Name);
             EditName = webhook.Name;
             EditUrl = webhook.URL;
         }
@@ -82,7 +82,7 @@ namespace script_chan2.GUI
         {
             if (EditWebhookSaveEnabled)
             {
-                Log.Information("GUI edit webhook save");
+                Log.Information("GUI edit webhook '{name}' save", webhook.Name);
                 webhook.Name = EditName;
                 webhook.URL = EditUrl;
                 webhook.Save();
@@ -94,7 +94,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Delete()
         {
-            Log.Information("GUI delete webhook");
+            Log.Information("GUI delete webhook '{name}'", webhook.Name);
             webhook.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteWebhook");
         }

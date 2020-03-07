@@ -252,9 +252,9 @@ namespace script_chan2.GUI
 
         public void AddTeam()
         {
-            Log.Information("GUI edit match add team");
             if (SelectedTeam == null)
                 return;
+            Log.Information("GUI edit match '{match}' add team '{team}'", match.Name, SelectedTeam.Name);
             editMatchTeams.Add(SelectedTeam);
             SelectedTeam = null;
             NotifyOfPropertyChange(() => TeamsViews);
@@ -263,7 +263,7 @@ namespace script_chan2.GUI
 
         public void RemoveTeam(MatchTeamListItemViewModel model)
         {
-            Log.Information("GUI edit match remove team");
+            Log.Information("GUI edit match '{match}' remove team '{team}'", match.Name, SelectedTeam.Name);
             editMatchTeams.Remove(model.Team);
             NotifyOfPropertyChange(() => TeamsViews);
             NotifyOfPropertyChange(() => Teams);
@@ -308,7 +308,6 @@ namespace script_chan2.GUI
 
         public void AddPlayer()
         {
-            Log.Information("GUI edit match add player");
             if (string.IsNullOrEmpty(addPlayerNameOrId))
                 return;
             var player = Database.Database.GetPlayer(addPlayerNameOrId);
@@ -316,6 +315,7 @@ namespace script_chan2.GUI
                 return;
             if (editMatchPlayers.Contains(player))
                 return;
+            Log.Information("GUI edit match '{match}' add player '{player}'", match.Name, player.Name);
             editMatchPlayers.Add(player);
             AddPlayerNameOrId = "";
             NotifyOfPropertyChange(() => PlayersViews);
@@ -330,7 +330,7 @@ namespace script_chan2.GUI
 
         public void RemovePlayer(MatchPlayerListItemViewModel model)
         {
-            Log.Information("GUI edit match remove player");
+            Log.Information("GUI edit match '{match}' remove player '{player}'", match.Name, model.Player.Name);
             editMatchPlayers.Remove(model.Player);
             NotifyOfPropertyChange(() => PlayersViews);
         }
@@ -387,7 +387,7 @@ namespace script_chan2.GUI
 
         public void Delete()
         {
-            Log.Information("GUI delete match");
+            Log.Information("GUI delete match '{name}'", match.Name);
             match.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMatch");
         }

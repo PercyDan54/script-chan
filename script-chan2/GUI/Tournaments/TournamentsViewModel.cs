@@ -234,7 +234,7 @@ namespace script_chan2.GUI
 
         public void NewTournamentDialogClosed()
         {
-            Log.Information("GUI new tournament save");
+            Log.Information("GUI new tournament '{name}' save", NewTournamentName);
             var tournament = new Tournament(NewTournamentName, NewTournamentGameMode, NewTournamentTeamMode, NewTournamentWinCondition, NewTournamentAcronym, NewTournamentTeamSize, NewTournamentRoomSize, NewTournamentPointsForSecondBan, NewTournamentAllPicksFreemod);
             tournament.Save();
             Reload();

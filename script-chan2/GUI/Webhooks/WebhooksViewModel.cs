@@ -108,7 +108,7 @@ namespace script_chan2.GUI
 
         public void NewWebhookDialogClosed()
         {
-            Log.Information("GUI new webhook save");
+            Log.Information("GUI new webhook '{name}' save", NewWebhookName);
             var webhook = new Webhook(NewWebhookName, NewWebhookUrl);
             webhook.Save();
             Reload();

@@ -37,7 +37,7 @@ namespace script_chan2.GUI
         #region Events
         public void Reload()
         {
-            Log.Information("GUI reload mappools list");
+            Log.Information("GUI reload mappool list");
             Mappools = new BindableCollection<Mappool>();
             foreach (var mappool in Database.Database.Mappools.OrderBy(x => x.Name))
             {
@@ -136,7 +136,7 @@ namespace script_chan2.GUI
 
         public void NewMappoolDialogClosed()
         {
-            Log.Information("GUI new mappool save");
+            Log.Information("GUI new mappool '{mappool}' save", NewMappoolName);
             var mappool = new Mappool(NewMappoolName, NewMappoolTournament);
             mappool.Save();
             Settings.DefaultTournament = NewMappoolTournament;

@@ -108,7 +108,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
-            Log.Information("GUI edit team dialog open");
+            Log.Information("GUI team '{name}' edit dialog open", team.Name);
             EditName = team.Name;
             EditTournament = team.Tournament;
         }
@@ -117,7 +117,7 @@ namespace script_chan2.GUI
         {
             if (EditTeamSaveEnabled)
             {
-                Log.Information("GUI edit team save");
+                Log.Information("GUI edit team '{name}' save", EditName);
                 team.Name = EditName;
                 team.Save();
                 NotifyOfPropertyChange(() => Name);
@@ -154,13 +154,17 @@ namespace script_chan2.GUI
 
         public void AddPlayer()
         {
-            Log.Information("GUI edit team add player");
             if (string.IsNullOrEmpty(addPlayerNameOrId))
                 return;
-            var player = Database.Database.GetPlayer(addPlayerNameOrId);
-            if (player == null)
-                return;
-            team.AddPlayer(player);
+            var playerList = addPlayerNameOrId.Split(';');
+            foreach (var playerId in playerList)
+            {
+                var player = Database.Database.GetPlayer(playerId);
+                if (player == null)
+                    continue;
+                Log.Information("GUI edit team '{team}' add player '{player}'", team.Name, player.Name);
+                team.AddPlayer(player);
+            }
             AddPlayerNameOrId = "";
             NotifyOfPropertyChange(() => PlayersViews);
         }
@@ -180,7 +184,7 @@ namespace script_chan2.GUI
 
         public void Delete()
         {
-            Log.Information("GUI team list delete team");
+            Log.Information("GUI delete team '{name}'", team.Name);
             team.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteTeam");
         }

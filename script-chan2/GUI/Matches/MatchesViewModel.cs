@@ -77,6 +77,7 @@ namespace script_chan2.GUI
             {
                 if (value != Settings.DefaultTournament)
                 {
+                    Log.Information("GUI match list set tournament filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     Reload();
@@ -97,6 +98,7 @@ namespace script_chan2.GUI
             {
                 if (value != filterStatus)
                 {
+                    Log.Information("GUI match list set status filter");
                     filterStatus = value;
                     NotifyOfPropertyChange(() => FilterStatus);
                     Reload();
@@ -420,7 +422,7 @@ namespace script_chan2.GUI
 
         public void NewMatchDialogClosed()
         {
-            Log.Information("GUI new match save");
+            Log.Information("GUI new match '{match}' save", NewMatchName);
             var pointsForSecondBan = 0;
             var allPicksFreemod = false;
             if (NewMatchTournament != null)

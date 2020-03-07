@@ -110,7 +110,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
-            Log.Information("GUI edit mappool dialog open");
+            Log.Information("GUI edit dialog of mappool '{mappool}' open", mappool.Name);
             EditName = mappool.Name;
             EditTournament = mappool.Tournament;
         }
@@ -119,7 +119,7 @@ namespace script_chan2.GUI
         {
             if (EditMappoolSaveEnabled)
             {
-                Log.Information("GUI edit mappool save");
+                Log.Information("GUI edit dialog of mappool '{mappool}' save", mappool.Name);
                 mappool.Name = EditName;
                 mappool.Tournament = EditTournament;
                 mappool.Save();
@@ -145,14 +145,14 @@ namespace script_chan2.GUI
 
         public void EditMaps()
         {
-            Log.Information("GUI edit mappool beatmap dialog open");
+            Log.Information("GUI beatmap list dialog of mappool '{mappool}' open", mappool.Name);
             clipboard = new SharpClipboard();
             clipboard.ClipboardChanged += Clipboard_ClipboardChanged;
         }
 
         public void EditMapsClose()
         {
-            Log.Information("GUI edit mappool beatmap dialog close");
+            Log.Information("GUI beatmap list dialog of mappool '{mappool}' close", mappool.Name);
             clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
         }
 
@@ -168,7 +168,7 @@ namespace script_chan2.GUI
 
             if (int.TryParse(text, out int id))
             {
-                Log.Information("GUI edit mappool beatmap dialog clipboard event, found id {id}", id);
+                Log.Information("GUI mappool beatmap list dialog clipboard event, found id {id}", id);
                 if (!string.IsNullOrEmpty(BeatmapId))
                     BeatmapId += ";";
                 BeatmapId += text;
@@ -193,7 +193,7 @@ namespace script_chan2.GUI
         {
             if (string.IsNullOrEmpty(beatmapId))
                 return;
-            Log.Information("GUI edit mappool beatmap dialog add beatmaps {beatmaps}", beatmapId);
+            Log.Information("GUI mappool beatmap list dialog: add beatmaps '{beatmaps}'", beatmapId);
             var beatmapIds = beatmapId.Split(';');
             foreach (var id in beatmapIds)
             {
@@ -222,7 +222,7 @@ namespace script_chan2.GUI
 
         public void Delete()
         {
-            Log.Information("GUI delete mappool");
+            Log.Information("GUI delete mappool '{mappool}'", mappool.Name);
             mappool.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMappool");
         }
