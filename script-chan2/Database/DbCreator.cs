@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
@@ -14,6 +15,7 @@ namespace script_chan2.Database
 
         public static void CreateDb()
         {
+            Log.Information("DB creation started");
             SQLiteConnection.CreateFile("Database.sqlite");
             conn = new SQLiteConnection("Data Source=Database.sqlite;Version=3");
             conn.Open();
@@ -34,6 +36,7 @@ namespace script_chan2.Database
             CreateGamesTable();
             CreateScoresTable();
             conn.Close();
+            Log.Information("DB creation finished");
         }
 
         public static bool DbExists

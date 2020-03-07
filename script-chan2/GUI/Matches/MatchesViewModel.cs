@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -315,6 +316,7 @@ namespace script_chan2.GUI
         {
             if (SelectedTeam == null)
                 return;
+            Log.Information("GUI new match add team {team}", SelectedTeam.Name);
             newMatchTeams.Add(SelectedTeam);
             SelectedTeam = null;
             NotifyOfPropertyChange(() => TeamsViews);
@@ -323,6 +325,7 @@ namespace script_chan2.GUI
 
         public void RemoveTeam(MatchTeamListItemViewModel model)
         {
+            Log.Information("GUI new match add team {team}", model.Team.Name);
             newMatchTeams.Remove(model.Team);
             NotifyOfPropertyChange(() => TeamsViews);
             NotifyOfPropertyChange(() => Teams);
@@ -374,6 +377,7 @@ namespace script_chan2.GUI
                 return;
             if (newMatchPlayers.Contains(player))
                 return;
+            Log.Information("GUI new match add player {name}", player.Name);
             newMatchPlayers.Add(player);
             AddPlayerNameOrId = "";
             NotifyOfPropertyChange(() => PlayersViews);
@@ -388,6 +392,7 @@ namespace script_chan2.GUI
 
         public void RemovePlayer(MatchPlayerListItemViewModel model)
         {
+            Log.Information("GUI new match remove player {name}", model.Player.Name);
             newMatchPlayers.Remove(model.Player);
             NotifyOfPropertyChange(() => PlayersViews);
         }
@@ -404,6 +409,7 @@ namespace script_chan2.GUI
 
         public void NewMatchDialogOpened()
         {
+            Log.Information("GUI new match dialog open");
             NewMatchName = "";
             NewMatchTournament = Settings.DefaultTournament;
             NewMatchBO = Settings.DefaultBO;
@@ -414,6 +420,7 @@ namespace script_chan2.GUI
 
         public void NewMatchDialogClosed()
         {
+            Log.Information("GUI new match save");
             var pointsForSecondBan = 0;
             var allPicksFreemod = false;
             if (NewMatchTournament != null)

@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -219,6 +220,7 @@ namespace script_chan2.GUI
 
         public void NewTournamentDialogOpened()
         {
+            Log.Information("GUI new tournament dialog open");
             NewTournamentName = "";
             NewTournamentGameMode = GameModes.Standard;
             NewTournamentTeamMode = TeamModes.TeamVS;
@@ -232,6 +234,7 @@ namespace script_chan2.GUI
 
         public void NewTournamentDialogClosed()
         {
+            Log.Information("GUI new tournament save");
             var tournament = new Tournament(NewTournamentName, NewTournamentGameMode, NewTournamentTeamMode, NewTournamentWinCondition, NewTournamentAcronym, NewTournamentTeamSize, NewTournamentRoomSize, NewTournamentPointsForSecondBan, NewTournamentAllPicksFreemod);
             tournament.Save();
             Reload();

@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,7 @@ namespace script_chan2.GUI
             {
                 if (value != Settings.DefaultTournament)
                 {
+                    Log.Information("GUI team list set tournament filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     Reload();
@@ -126,12 +128,14 @@ namespace script_chan2.GUI
 
         public void NewTeamDialogOpened()
         {
+            Log.Information("GUI new team dialog open");
             NewTeamName = "";
             NewTeamTournament = Settings.DefaultTournament;
         }
 
         public void NewTeamDialogClosed()
         {
+            Log.Information("GUI new team save");
             var team = new Team(NewTeamTournament, NewTeamName);
             team.Save();
             Settings.DefaultTournament = NewTeamTournament;

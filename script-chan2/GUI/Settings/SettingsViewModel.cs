@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,7 @@ namespace script_chan2.GUI
 
         public void OpenApiKeyPage()
         {
+            Log.Information("GUI open api key page");
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/api");
         }
 
@@ -81,6 +83,7 @@ namespace script_chan2.GUI
 
         public void CheckApiKey()
         {
+            Log.Information("GUI check api key");
             var testResult = OsuApi.OsuApi.CheckApiKey(apiKey);
             if (testResult)
                 ApiStatus = "API works!";
@@ -120,6 +123,7 @@ namespace script_chan2.GUI
 
         public void OpenIrcPage()
         {
+            Log.Information("GUI open irc credentials page");
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/irc");
         }
 
@@ -139,6 +143,7 @@ namespace script_chan2.GUI
 
         public void CheckIrc()
         {
+            Log.Information("GUI check irc credentials");
             throw new NotImplementedException();
         }
 
@@ -183,6 +188,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Save()
         {
+            Log.Information("GUI settings save changes");
             Settings.Lang = lang;
             Settings.ApiKey = apiKey;
             Settings.IrcUsername = ircUsername;
@@ -194,6 +200,7 @@ namespace script_chan2.GUI
 
         public void Discard()
         {
+            Log.Information("GUI settings discard changes");
             SelectedLanguage = Settings.Lang;
             ApiKey = Settings.ApiKey;
             IrcUsername = Settings.IrcUsername;

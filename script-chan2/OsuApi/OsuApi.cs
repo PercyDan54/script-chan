@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
+using Serilog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace script_chan2.OsuApi
         #region API calls
         public static bool CheckApiKey(string key)
         {
+            Log.Information("API check api key");
             var request = (HttpWebRequest)WebRequest.Create("https://osu.ppy.sh/api/get_user?u=2&k=" + key);
             try
             {
@@ -31,26 +33,35 @@ namespace script_chan2.OsuApi
 
         public static Beatmap GetBeatmap(int beatmapId)
         {
+            Log.Information("API get beatmap {id}", beatmapId);
             var response = SendRequest("get_beatmaps", "b=" + beatmapId);
             var data = JsonConvert.DeserializeObject<List<ApiBeatmap>>(response);
             if (data.Count == 0)
+            {
+                Log.Information("API beatmap {id} not found", beatmapId);
                 return null;
+            }
             var beatmap = data[0];
             return new Beatmap(Convert.ToInt32(beatmap.beatmap_id), Convert.ToInt32(beatmap.beatmapset_id), beatmap.artist, beatmap.title, beatmap.version, beatmap.creator);
         }
 
         public static Player GetPlayer(string playerId)
         {
+            Log.Information("API get player {id}", playerId);
             var response = SendRequest("get_user", "u=" + playerId);
             var data = JsonConvert.DeserializeObject<List<ApiPlayer>>(response);
             if (data.Count == 0)
+            {
+                Log.Information("API player {id} not found", playerId);
                 return null;
+            }
             var player = data[0];
             return new Player(player.username, player.country, Convert.ToInt32(player.user_id));
         }
 
         public static Room GetMatch(int matchId)
         {
+            Log.Information("API get match {id}", matchId);
             ApiMatch data;
             using (var webClient = new WebClient())
             {
@@ -93,6 +104,7 @@ namespace script_chan2.OsuApi
 
         public static void UpdateRoom(Room room)
         {
+            Log.Information("API refresh match {id}", room.Id);
             using (var webClient = new WebClient())
             {
                 var response = webClient.DownloadString("https://osu.ppy.sh/community/matches/" + room.Id + "/history?after=" + room.LastEventId);

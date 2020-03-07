@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,15 @@ namespace script_chan2.GUI
             set
             {
                 if (value)
+                {
+                    Log.Information("GUI add webhook to tournament");
                     tournament.AddWebhook(webhook);
+                }
                 else
+                {
+                    Log.Information("GUI remove webhook from tournament");
                     tournament.RemoveWebhook(webhook);
+                }
                 NotifyOfPropertyChange(() => Active);
             }
         }

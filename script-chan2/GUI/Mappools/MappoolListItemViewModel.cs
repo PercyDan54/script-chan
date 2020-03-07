@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,6 +110,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
+            Log.Information("GUI edit mappool dialog open");
             EditName = mappool.Name;
             EditTournament = mappool.Tournament;
         }
@@ -117,6 +119,7 @@ namespace script_chan2.GUI
         {
             if (EditMappoolSaveEnabled)
             {
+                Log.Information("GUI edit mappool save");
                 mappool.Name = EditName;
                 mappool.Tournament = EditTournament;
                 mappool.Save();
@@ -142,12 +145,14 @@ namespace script_chan2.GUI
 
         public void EditMaps()
         {
+            Log.Information("GUI edit mappool beatmap dialog open");
             clipboard = new SharpClipboard();
             clipboard.ClipboardChanged += Clipboard_ClipboardChanged;
         }
 
         public void EditMapsClose()
         {
+            Log.Information("GUI edit mappool beatmap dialog close");
             clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
         }
 
@@ -163,6 +168,7 @@ namespace script_chan2.GUI
 
             if (int.TryParse(text, out int id))
             {
+                Log.Information("GUI edit mappool beatmap dialog clipboard event, found id {id}", id);
                 if (!string.IsNullOrEmpty(BeatmapId))
                     BeatmapId += ";";
                 BeatmapId += text;
@@ -187,6 +193,7 @@ namespace script_chan2.GUI
         {
             if (string.IsNullOrEmpty(beatmapId))
                 return;
+            Log.Information("GUI edit mappool beatmap dialog add beatmaps {beatmaps}", beatmapId);
             var beatmapIds = beatmapId.Split(';');
             foreach (var id in beatmapIds)
             {
@@ -215,6 +222,7 @@ namespace script_chan2.GUI
 
         public void Delete()
         {
+            Log.Information("GUI delete mappool");
             mappool.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMappool");
         }

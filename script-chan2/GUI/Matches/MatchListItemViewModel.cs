@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -251,6 +252,7 @@ namespace script_chan2.GUI
 
         public void AddTeam()
         {
+            Log.Information("GUI edit match add team");
             if (SelectedTeam == null)
                 return;
             editMatchTeams.Add(SelectedTeam);
@@ -261,6 +263,7 @@ namespace script_chan2.GUI
 
         public void RemoveTeam(MatchTeamListItemViewModel model)
         {
+            Log.Information("GUI edit match remove team");
             editMatchTeams.Remove(model.Team);
             NotifyOfPropertyChange(() => TeamsViews);
             NotifyOfPropertyChange(() => Teams);
@@ -305,6 +308,7 @@ namespace script_chan2.GUI
 
         public void AddPlayer()
         {
+            Log.Information("GUI edit match add player");
             if (string.IsNullOrEmpty(addPlayerNameOrId))
                 return;
             var player = Database.Database.GetPlayer(addPlayerNameOrId);
@@ -326,6 +330,7 @@ namespace script_chan2.GUI
 
         public void RemovePlayer(MatchPlayerListItemViewModel model)
         {
+            Log.Information("GUI edit match remove player");
             editMatchPlayers.Remove(model.Player);
             NotifyOfPropertyChange(() => PlayersViews);
         }
@@ -344,6 +349,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
+            Log.Information("GUI edit match {name}", match.Name);
             EditMatchName = match.Name;
             EditMatchTournament = match.Tournament;
             EditMatchMappool = match.Mappool;
@@ -362,6 +368,7 @@ namespace script_chan2.GUI
         {
             if (EditMatchSaveEnabled)
             {
+                Log.Information("GUI save match {name}", match.Name);
                 match.Name = EditMatchName;
                 match.Tournament = EditMatchTournament;
                 match.Mappool = EditMatchMappool;
@@ -380,6 +387,7 @@ namespace script_chan2.GUI
 
         public void Delete()
         {
+            Log.Information("GUI delete match");
             match.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMatch");
         }

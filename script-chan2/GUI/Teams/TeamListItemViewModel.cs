@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,6 +108,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
+            Log.Information("GUI edit team dialog open");
             EditName = team.Name;
             EditTournament = team.Tournament;
         }
@@ -115,6 +117,7 @@ namespace script_chan2.GUI
         {
             if (EditTeamSaveEnabled)
             {
+                Log.Information("GUI edit team save");
                 team.Name = EditName;
                 team.Save();
                 NotifyOfPropertyChange(() => Name);
@@ -151,6 +154,7 @@ namespace script_chan2.GUI
 
         public void AddPlayer()
         {
+            Log.Information("GUI edit team add player");
             if (string.IsNullOrEmpty(addPlayerNameOrId))
                 return;
             var player = Database.Database.GetPlayer(addPlayerNameOrId);
@@ -176,6 +180,7 @@ namespace script_chan2.GUI
 
         public void Delete()
         {
+            Log.Information("GUI team list delete team");
             team.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteTeam");
         }

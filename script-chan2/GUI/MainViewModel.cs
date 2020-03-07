@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace script_chan2.GUI
         public MainViewModel()
         {
             ShowMatches();
+            Log.Information("GUI main view loaded");
         }
         #endregion
 
@@ -47,6 +49,7 @@ namespace script_chan2.GUI
         #region Actions
         public void ShowMatches()
         {
+            Log.Information("GUI show match list");
             ActivateItem(new MatchesViewModel());
             Title = "Matches";
             DrawerExpanded = false;
@@ -54,6 +57,7 @@ namespace script_chan2.GUI
 
         public void ShowTournaments()
         {
+            Log.Information("GUI show tournament list");
             ActivateItem(new TournamentsViewModel());
             Title = "Tournaments";
             DrawerExpanded = false;
@@ -61,6 +65,7 @@ namespace script_chan2.GUI
 
         public void ShowTeams()
         {
+            Log.Information("GUI show team list");
             ActivateItem(new TeamsViewModel());
             Title = "Teams";
             DrawerExpanded = false;
@@ -68,6 +73,7 @@ namespace script_chan2.GUI
 
         public void ShowMappools()
         {
+            Log.Information("GUI show mappool list");
             ActivateItem(new MappoolsViewModel());
             Title = "Mappools";
             DrawerExpanded = false;
@@ -75,6 +81,7 @@ namespace script_chan2.GUI
 
         public void ShowWebhooks()
         {
+            Log.Information("GUI show webhook list");
             ActivateItem(new WebhooksViewModel());
             Title = "Webhooks";
             DrawerExpanded = false;
@@ -82,6 +89,7 @@ namespace script_chan2.GUI
 
         public void ShowSettings()
         {
+            Log.Information("GUI show settings");
             ActivateItem(new SettingsViewModel());
             Title = "Settings";
             DrawerExpanded = false;

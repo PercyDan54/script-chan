@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -206,6 +207,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
+            Log.Information("GUI edit tournament dialog open");
             EditName = tournament.Name;
             EditGameMode = tournament.GameMode;
             EditTeamMode = tournament.TeamMode;
@@ -221,6 +223,7 @@ namespace script_chan2.GUI
         {
             if (EditTournamentSaveEnabled)
             {
+                Log.Information("GUI edit tournament save");
                 tournament.Name = EditName;
                 tournament.GameMode = EditGameMode;
                 tournament.TeamMode = EditTeamMode;
@@ -239,6 +242,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Delete()
         {
+            Log.Information("GUI delete team");
             tournament.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteTournament");
         }

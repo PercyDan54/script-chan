@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
+            Log.Information("GUI edit webhook dialog open");
             EditName = webhook.Name;
             EditUrl = webhook.URL;
         }
@@ -80,6 +82,7 @@ namespace script_chan2.GUI
         {
             if (EditWebhookSaveEnabled)
             {
+                Log.Information("GUI edit webhook save");
                 webhook.Name = EditName;
                 webhook.URL = EditUrl;
                 webhook.Save();
@@ -91,6 +94,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Delete()
         {
+            Log.Information("GUI delete webhook");
             webhook.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteWebhook");
         }

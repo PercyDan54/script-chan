@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Delete()
         {
+            Log.Information("GUI edit team remove player");
             team.RemovePlayer(player);
             Events.Aggregator.PublishOnUIThread("RemovePlayerFromTeam");
         }

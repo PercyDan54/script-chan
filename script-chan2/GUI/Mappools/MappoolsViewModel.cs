@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,7 @@ namespace script_chan2.GUI
         #region Events
         public void Reload()
         {
+            Log.Information("GUI reload mappools list");
             Mappools = new BindableCollection<Mappool>();
             foreach (var mappool in Database.Database.Mappools.OrderBy(x => x.Name))
             {
@@ -62,6 +64,7 @@ namespace script_chan2.GUI
             {
                 if (value != Settings.DefaultTournament)
                 {
+                    Log.Information("GUI mappool list set filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     Reload();
@@ -126,12 +129,14 @@ namespace script_chan2.GUI
 
         public void NewMappoolDialogOpened()
         {
+            Log.Information("GUI new mappool dialog open");
             NewMappoolName = "";
             NewMappoolTournament = Settings.DefaultTournament;
         }
 
         public void NewMappoolDialogClosed()
         {
+            Log.Information("GUI new mappool save");
             var mappool = new Mappool(NewMappoolName, NewMappoolTournament);
             mappool.Save();
             Settings.DefaultTournament = NewMappoolTournament;

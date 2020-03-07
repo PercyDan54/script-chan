@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,18 +134,21 @@ namespace script_chan2.GUI
         #region Actions
         public void MoveUp()
         {
+            Log.Information("GUI mappool move beatmap up");
             beatmap.MoveUp();
             Events.Aggregator.PublishOnUIThread("MoveMappoolMap");
         }
 
         public void MoveDown()
         {
+            Log.Information("GUI mappool move beatmap down");
             beatmap.MoveDown();
             Events.Aggregator.PublishOnUIThread("MoveMappoolMap");
         }
 
         public void Delete()
         {
+            Log.Information("GUI mappool delete beatmap");
             beatmap.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMappoolMap");
         }

@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,12 +101,14 @@ namespace script_chan2.GUI
 
         public void NewWebhookDialogOpened()
         {
+            Log.Information("GUI new webhook dialog open");
             NewWebhookName = "";
             NewWebhookUrl = "";
         }
 
         public void NewWebhookDialogClosed()
         {
+            Log.Information("GUI new webhook save");
             var webhook = new Webhook(NewWebhookName, NewWebhookUrl);
             webhook.Save();
             Reload();
