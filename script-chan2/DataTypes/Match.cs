@@ -91,7 +91,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
-            Database.Database.DeleteMatch(id);
+            Database.Database.DeleteMatch(this);
         }
     }
 }

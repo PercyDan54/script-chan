@@ -153,17 +153,17 @@ namespace script_chan2.Database
             return resultValue;
         }
 
-        public static void DeleteTournament(int tournament)
+        public static void DeleteTournament(Tournament tournament)
         {
-            Log.Information("DB delete tournament {id}", tournament);
+            Log.Information("DB delete tournament {name}", tournament.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM Tournaments WHERE id = @id", conn))
             {
-                command.Parameters.AddWithValue("@id", tournament);
+                command.Parameters.AddWithValue("@id", tournament.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }
-            Tournaments.Remove(Tournaments.First(x => x.Id == tournament));
+            Tournaments.Remove(tournament);
         }
 
         public static void UpdateTournament(Tournament tournament)
@@ -234,17 +234,17 @@ namespace script_chan2.Database
             return resultValue;
         }
 
-        public static void DeleteWebhook(int webhook)
+        public static void DeleteWebhook(Webhook webhook)
         {
-            Log.Information("DB delete webhook {id}", webhook);
+            Log.Information("DB delete webhook {name}", webhook.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM Webhooks WHERE id = @id", conn))
             {
-                command.Parameters.AddWithValue("@id", webhook);
+                command.Parameters.AddWithValue("@id", webhook.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }
-            Webhooks.Remove(Webhooks.First(x => x.Id == webhook));
+            Webhooks.Remove(webhook);
         }
 
         public static void UpdateWebhook(Webhook webhook)
@@ -283,22 +283,22 @@ namespace script_chan2.Database
             }
         }
 
-        public static void AddWebhookToTournament(int webhook, int tournament)
+        public static void AddWebhookToTournament(Webhook webhook, Tournament tournament)
         {
-            Log.Information("DB add webhook {webhook} to tournament {tournament}", webhook, tournament);
+            Log.Information("DB add webhook {webhook} to tournament {tournament}", webhook.Name, tournament.Name);
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand("SELECT COUNT(tournament) FROM WebhookLinks WHERE tournament = @tournament AND webhook = @webhook", conn))
                 {
-                    command.Parameters.AddWithValue("@webhook", webhook);
-                    command.Parameters.AddWithValue("@tournament", tournament);
+                    command.Parameters.AddWithValue("@webhook", webhook.Id);
+                    command.Parameters.AddWithValue("@tournament", tournament.Id);
                     var rowCount = Convert.ToInt32(command.ExecuteScalar());
                     if (rowCount == 0)
                     {
                         using (var command2 = new SQLiteCommand("INSERT INTO WebhookLinks (tournament, webhook) VALUES (@tournament, @webhook)", conn))
                         {
-                            command2.Parameters.AddWithValue("@webhook", webhook);
-                            command2.Parameters.AddWithValue("@tournament", tournament);
+                            command2.Parameters.AddWithValue("@webhook", webhook.Id);
+                            command2.Parameters.AddWithValue("@tournament", tournament.Id);
                             command2.ExecuteNonQuery();
                         }
                     }
@@ -307,14 +307,14 @@ namespace script_chan2.Database
             }
         }
 
-        public static void RemoveWebhookFromTournament(int webhook, int tournament)
+        public static void RemoveWebhookFromTournament(Webhook webhook, Tournament tournament)
         {
-            Log.Information("DB remove webhook {webhook} from tournament {tournament}", webhook, tournament);
+            Log.Information("DB remove webhook {webhook} from tournament {tournament}", webhook.Name, tournament.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM WebhookLinks WHERE webhook = @webhook AND tournament = @tournament", conn))
             {
-                command.Parameters.AddWithValue("@webhook", webhook);
-                command.Parameters.AddWithValue("@tournament", tournament);
+                command.Parameters.AddWithValue("@webhook", webhook.Id);
+                command.Parameters.AddWithValue("@tournament", tournament.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }
@@ -370,24 +370,24 @@ namespace script_chan2.Database
             return resultValue;
         }
 
-        public static void DeleteMappool(int mappool)
+        public static void DeleteMappool(Mappool mappool)
         {
-            Log.Information("DB delete mappool {id}", mappool);
+            Log.Information("DB delete mappool {name}", mappool.Name);
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand("DELETE FROM MappoolMaps WHERE mappool = @id", conn))
                 {
-                    command.Parameters.AddWithValue("@id", mappool);
+                    command.Parameters.AddWithValue("@id", mappool.Id);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("DELETE FROM Mappools WHERE id = @id", conn))
                 {
-                    command.Parameters.AddWithValue("@id", mappool);
+                    command.Parameters.AddWithValue("@id", mappool.Id);
                     command.ExecuteNonQuery();
                 }
                 conn.Close();
             }
-            Mappools.Remove(Mappools.First(x => x.Id == mappool));
+            Mappools.Remove(mappool);
         }
 
         public static void UpdateMappool(Mappool mappool)
@@ -505,13 +505,13 @@ namespace script_chan2.Database
             return resultValue;
         }
 
-        public static void DeleteMappoolMap(int map)
+        public static void DeleteMappoolMap(MappoolMap map)
         {
-            Log.Information("DB remove mappool map {id}", map);
+            Log.Information("DB remove mappool map {map} from mappool {mappool}", map.Beatmap.Id, map.Mappool.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM MappoolMaps WHERE id = @id", conn))
             {
-                command.Parameters.AddWithValue("@id", map);
+                command.Parameters.AddWithValue("@id", map.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }
@@ -607,27 +607,27 @@ namespace script_chan2.Database
             return returnValue;
         }
 
-        public static void AddPlayerToTeam(int player, int team)
+        public static void AddPlayerToTeam(Player player, Team team)
         {
-            Log.Information("DB add player {player} to team {team}", player, team);
+            Log.Information("DB add player {player} to team {team}", player.Name, team.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("INSERT INTO TeamPlayers (player, team) VALUES (@player, @team)", conn))
             {
-                command.Parameters.AddWithValue("@player", player);
-                command.Parameters.AddWithValue("@team", team);
+                command.Parameters.AddWithValue("@player", player.Id);
+                command.Parameters.AddWithValue("@team", team.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }
         }
 
-        public static void RemovePlayerFromTeam(int player, int team)
+        public static void RemovePlayerFromTeam(Player player, Team team)
         {
-            Log.Information("DB remove player {player} from team {team}", player, team);
+            Log.Information("DB remove player {player} from team {team}", player.Name, team.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM TeamPlayers WHERE player = @player AND team = @team", conn))
             {
-                command.Parameters.AddWithValue("@player", player);
-                command.Parameters.AddWithValue("@team", team);
+                command.Parameters.AddWithValue("@player", player.Id);
+                command.Parameters.AddWithValue("@team", team.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }
@@ -696,17 +696,17 @@ namespace script_chan2.Database
             }
         }
 
-        public static void DeleteTeam(int id)
+        public static void DeleteTeam(Team team)
         {
-            Log.Information("DB delete team {team}", id);
+            Log.Information("DB delete team {name}", team.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM Teams WHERE id = @id", conn))
             {
-                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@id", team.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }
-            Teams.RemoveAll(x => x.Id == id);
+            Teams.Remove(team);
         }
 
         public static void InitTeamPlayers()
@@ -983,29 +983,29 @@ namespace script_chan2.Database
             }
         }
 
-        public static void DeleteMatch(int id)
+        public static void DeleteMatch(Match match)
         {
-            Log.Information("DB delete match {match}", id);
+            Log.Information("DB delete match {name}", match.Name);
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand("DELETE FROM MatchTeams WHERE match = @match", conn))
                 {
-                    command.Parameters.AddWithValue("@match", id);
+                    command.Parameters.AddWithValue("@match", match.Id);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("DELETE FROM MatchPlayers WHERE match = @match", conn))
                 {
-                    command.Parameters.AddWithValue("@match", id);
+                    command.Parameters.AddWithValue("@match", match.Id);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("DELETE FROM Matches WHERE id = @id", conn))
                 {
-                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@id", match.Id);
                     command.ExecuteNonQuery();
                 }
                 conn.Close();
             }
-            Matches.RemoveAll(x => x.Id == id);
+            Matches.Remove(match);
         }
 
         public static void InitMatchTeamsAndPlayers()

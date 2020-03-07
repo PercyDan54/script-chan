@@ -56,7 +56,7 @@ namespace script_chan2.DataTypes
             {
                 tournament.RemoveWebhook(this);
             }
-            Database.Database.DeleteWebhook(Id);
+            Database.Database.DeleteWebhook(this);
         }
     }
 }

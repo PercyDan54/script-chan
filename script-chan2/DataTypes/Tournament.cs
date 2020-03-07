@@ -162,7 +162,7 @@ namespace script_chan2.DataTypes
             if (!Webhooks.Contains(webhook))
             {
                 Webhooks.Add(webhook);
-                Database.Database.AddWebhookToTournament(webhook.Id, Id);
+                Database.Database.AddWebhookToTournament(webhook, this);
             }
         }
 
@@ -170,7 +170,7 @@ namespace script_chan2.DataTypes
         {
             if (Webhooks.Remove(webhook))
             {
-                Database.Database.RemoveWebhookFromTournament(webhook.Id, Id);
+                Database.Database.RemoveWebhookFromTournament(webhook, this);
             }
         }
 
@@ -202,7 +202,7 @@ namespace script_chan2.DataTypes
             {
                 Settings.DefaultTournament = null;
             }
-            Database.Database.DeleteTournament(Id);
+            Database.Database.DeleteTournament(this);
         }
     }
 }

@@ -119,7 +119,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
-            Database.Database.DeleteMappool(Id);
+            Database.Database.DeleteMappool(this);
         }
     }
 }

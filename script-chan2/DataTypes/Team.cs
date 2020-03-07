@@ -49,7 +49,7 @@ namespace script_chan2.DataTypes
             if (!Players.Contains(player))
             {
                 Players.Add(player);
-                Database.Database.AddPlayerToTeam(player.Id, Id);
+                Database.Database.AddPlayerToTeam(player, this);
             }
         }
 
@@ -57,7 +57,7 @@ namespace script_chan2.DataTypes
         {
             if (Players.Remove(player))
             {
-                Database.Database.RemovePlayerFromTeam(player.Id, Id);
+                Database.Database.RemovePlayerFromTeam(player, this);
             }
         }
 
@@ -71,7 +71,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
-            Database.Database.DeleteTeam(id);
+            Database.Database.DeleteTeam(this);
         }
     }
 }

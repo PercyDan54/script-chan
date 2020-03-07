@@ -106,7 +106,7 @@ namespace script_chan2.DataTypes
         public void Delete()
         {
             Mappool.RemoveBeatmap(this);
-            Database.Database.DeleteMappoolMap(id);
+            Database.Database.DeleteMappoolMap(this);
         }
     }
 }
