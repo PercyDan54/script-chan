@@ -72,7 +72,7 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
-                            <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" HorizontalAlignment="Right" />
+                            <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" HorizontalAlignment="Right" cal:Message.Attach="[Event Click] = [Action EditPlayersClose]" />
                         </Grid>
                     </Button.CommandParameter>
                 </Button>
