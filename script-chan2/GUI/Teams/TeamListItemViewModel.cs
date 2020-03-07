@@ -128,6 +128,8 @@ namespace script_chan2.GUI
             if (string.IsNullOrEmpty(addPlayerNameOrId))
                 return;
             var player = Database.Database.GetPlayer(addPlayerNameOrId);
+            if (player == null)
+                return;
             team.AddPlayer(player);
             AddPlayerNameOrId = "";
             NotifyOfPropertyChange(() => PlayersViews);

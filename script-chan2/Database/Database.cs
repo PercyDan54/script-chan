@@ -29,6 +29,7 @@ namespace script_chan2.Database
             InitMappoolMaps();
             InitTournamentWebhooks();
             InitMatches();
+            InitMatchTeamsAndPlayers();
         }
 
         private static SQLiteConnection GetConnection()
@@ -988,6 +989,47 @@ namespace script_chan2.Database
                 conn.Close();
             }
             Matches.RemoveAll(x => x.Id == id);
+        }
+
+        public static void InitMatchTeamsAndPlayers()
+        {
+            using (var conn = GetConnection())
+            {
+                foreach (var match in Matches)
+                {
+                    if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    {
+                        using (var command = new SQLiteCommand("SELECT team FROM MatchTeams WHERE match = @match", conn))
+                        {
+                            command.Parameters.AddWithValue("@match", match.Id);
+                            using (var reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    match.Teams.Add(Teams.First(x => x.Id == Convert.ToInt32(reader["team"])));
+                                }
+                                reader.Close();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        using (var command = new SQLiteCommand("SELECT player FROM MatchPlayers WHERE match = @match", conn))
+                        {
+                            command.Parameters.AddWithValue("@match", match.Id);
+                            using (var reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    match.Players.Add(Players.First(x => x.Id == Convert.ToInt32(reader["player"])));
+                                }
+                                reader.Close();
+                            }
+                        }
+                    }
+                }
+                conn.Close();
+            }
         }
         #endregion
     }

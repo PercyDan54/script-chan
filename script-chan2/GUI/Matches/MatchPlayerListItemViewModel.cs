@@ -19,7 +19,7 @@ namespace script_chan2.GUI
 
         public string Name
         {
-            get { return Player.Name; }
+            get { return $"{Player.Name} ({Player.Country})"; }
         }
     }
 }

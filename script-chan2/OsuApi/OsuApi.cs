@@ -50,6 +50,8 @@ namespace script_chan2.OsuApi
         {
             var response = SendRequest("get_user", "u=" + playerId);
             var data = JsonConvert.DeserializeObject<List<ApiPlayer>>(response);
+            if (data.Count == 0)
+                return null;
             var player = data[0];
             return new Player(player.username, player.country, Convert.ToInt32(player.user_id));
         }

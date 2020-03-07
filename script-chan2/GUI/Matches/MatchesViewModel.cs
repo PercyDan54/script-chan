@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace script_chan2.GUI
 {
@@ -66,23 +67,6 @@ namespace script_chan2.GUI
             }
         }
 
-        public BindableCollection<Team> Teams
-        {
-            get
-            {
-                var list = new BindableCollection<Team>();
-                foreach (var team in Database.Database.Teams.OrderBy(x => x.Name))
-                {
-                    if (team.Tournament != NewMatchTournament)
-                        continue;
-                    if (newMatchTeams.Contains(team))
-                        continue;
-                    list.Add(team);
-                }
-                return list;
-            }
-        }
-
         public List<MatchStatus> Statuses
         {
             get { return Enum.GetValues(typeof(MatchStatus)).Cast<MatchStatus>().ToList(); }
@@ -90,6 +74,8 @@ namespace script_chan2.GUI
 
         protected override void OnActivate()
         {
+            newMatchTeams = new List<Team>();
+            newMatchPlayers = new List<Player>();
             Events.Aggregator.Subscribe(this);
         }
 
@@ -160,8 +146,11 @@ namespace script_chan2.GUI
                 if (value != newMatchTournament)
                 {
                     newMatchTournament = value;
+                    newMatchTeams = new List<Team>();
                     NotifyOfPropertyChange(() => NewMatchTournament);
                     NotifyOfPropertyChange(() => Mappools);
+                    NotifyOfPropertyChange(() => Teams);
+                    NotifyOfPropertyChange(() => TeamsViews);
                     if (value != null)
                     {
                         NewMatchGameMode = value.GameMode;
@@ -269,6 +258,37 @@ namespace script_chan2.GUI
             }
         }
 
+        public BindableCollection<Team> Teams
+        {
+            get
+            {
+                var list = new BindableCollection<Team>();
+                foreach (var team in Database.Database.Teams.OrderBy(x => x.Name))
+                {
+                    if (team.Tournament != NewMatchTournament)
+                        continue;
+                    if (newMatchTeams.Contains(team))
+                        continue;
+                    list.Add(team);
+                }
+                return list;
+            }
+        }
+
+        private Team selectedTeam;
+        public Team SelectedTeam
+        {
+            get { return selectedTeam; }
+            set
+            {
+                if (value != selectedTeam)
+                {
+                    selectedTeam = value;
+                    NotifyOfPropertyChange(() => SelectedTeam);
+                }
+            }
+        }
+
         private List<Team> newMatchTeams;
 
         public BindableCollection<MatchTeamListItemViewModel> TeamsViews
@@ -282,9 +302,19 @@ namespace script_chan2.GUI
             }
         }
 
-        public void RemoveTeam(Team team)
+        public void AddTeam()
         {
-            newMatchTeams.Remove(team);
+            if (SelectedTeam == null)
+                return;
+            newMatchTeams.Add(SelectedTeam);
+            SelectedTeam = null;
+            NotifyOfPropertyChange(() => TeamsViews);
+            NotifyOfPropertyChange(() => Teams);
+        }
+
+        public void RemoveTeam(MatchTeamListItemViewModel model)
+        {
+            newMatchTeams.Remove(model.Team);
             NotifyOfPropertyChange(() => TeamsViews);
             NotifyOfPropertyChange(() => Teams);
         }
@@ -312,9 +342,44 @@ namespace script_chan2.GUI
             }
         }
 
-        public void RemovePlayer(Player player)
+        private string addPlayerNameOrId;
+        public string AddPlayerNameOrId
         {
-            newMatchPlayers.Remove(player);
+            get { return addPlayerNameOrId; }
+            set
+            {
+                if (value != addPlayerNameOrId)
+                {
+                    addPlayerNameOrId = value;
+                    NotifyOfPropertyChange(() => AddPlayerNameOrId);
+                }
+            }
+        }
+
+        public void AddPlayer()
+        {
+            if (string.IsNullOrEmpty(addPlayerNameOrId))
+                return;
+            var player = Database.Database.GetPlayer(addPlayerNameOrId);
+            if (player == null)
+                return;
+            if (newMatchPlayers.Contains(player))
+                return;
+            newMatchPlayers.Add(player);
+            AddPlayerNameOrId = "";
+            NotifyOfPropertyChange(() => PlayersViews);
+        }
+
+        public void AddPlayerNameKeyDown(ActionExecutionContext context)
+        {
+            var keyArgs = context.EventArgs as KeyEventArgs;
+            if (keyArgs != null && keyArgs.Key == Key.Enter)
+                AddPlayer();
+        }
+
+        public void RemovePlayer(MatchPlayerListItemViewModel model)
+        {
+            newMatchPlayers.Remove(model.Player);
             NotifyOfPropertyChange(() => PlayersViews);
         }
 
@@ -348,6 +413,8 @@ namespace script_chan2.GUI
                 allPicksFreemod = NewMatchTournament.AllPicksFreemod;
             }
             var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, null, null, null, null, NewMatchBO, true, Settings.MpTimerDuration, pointsForSecondBan, allPicksFreemod, MatchStatus.New);
+            match.Teams = newMatchTeams;
+            match.Players = newMatchPlayers;
             match.Save();
             Settings.DefaultTournament = NewMatchTournament;
             Settings.DefaultBO = NewMatchBO;
