@@ -24,7 +24,7 @@ namespace script_chan2.OsuApi
             {
                 _ = request.GetResponse();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
