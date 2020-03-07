@@ -11,41 +11,21 @@ namespace script_chan2.DataTypes
     {
         public Webhook(string name, string url, int id = 0)
         {
-            this.name = name;
-            this.url = url;
-            this.id = id;
+            Name = name;
+            URL = url;
+            Id = id;
         }
 
-        private int id;
-        public int Id
-        {
-            get { return id; }
-        }
+        public int Id { get; private set; }
 
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                name = value;
-            }
-        }
+        public string Name { get; set; }
 
-        private string url;
-        public string URL
-        {
-            get { return url; }
-            set
-            {
-                url = value;
-            }
-        }
+        public string URL { get; set; }
 
         public void Save()
         {
-            if (id == 0)
-                id = Database.Database.AddWebhook(this);
+            if (Id == 0)
+                Id = Database.Database.AddWebhook(this);
             else
                 Database.Database.UpdateWebhook(this);
         }

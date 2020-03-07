@@ -13,28 +13,14 @@ namespace script_chan2.DataTypes
         {
             Scores = new List<Score>();
             Mods = new List<GameMods>();
-            this.room = room;
-            this.id = id;
-            this.beatmap = beatmap;
+            Room = room;
+            Id = id;
+            Beatmap = beatmap;
         }
 
-        private int id;
-        public int Id
-        {
-            get { return id; }
-        }
-
-        private Room room;
-        public Room Room
-        {
-            get { return room; }
-        }
-
-        private Beatmap beatmap;
-        public Beatmap Beatmap
-        {
-            get { return beatmap; }
-        }
+        public int Id { get; }
+        public Room Room { get; }
+        public Beatmap Beatmap { get; }
 
         public List<GameMods> Mods;
 

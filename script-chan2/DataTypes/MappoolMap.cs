@@ -20,48 +20,17 @@ namespace script_chan2.DataTypes
                     Mods.Add(gameMod);
                 }
             }
-            this.mappool = mappool;
-            this.beatmap = beatmap;
-            this.id = id;
+            Mappool = mappool;
+            Beatmap = beatmap;
+            Id = id;
         }
 
-        private int id;
-        public int Id
-        {
-            get { return id; }
-        }
+        public int Id { get; private set; }
 
-        private Beatmap beatmap;
-        public Beatmap Beatmap
-        {
-            get { return beatmap; }
-            set
-            {
-                if (value != beatmap)
-                {
-                    beatmap = value;
-                }
-            }
-        }
+        public Beatmap Beatmap { get; set; }
+        public Mappool Mappool { get; }
 
-        private Mappool mappool;
-        public Mappool Mappool
-        {
-            get { return mappool; }
-        }
-
-        private int listIndex;
-        public int ListIndex
-        {
-            get { return listIndex; }
-            set
-            {
-                if (value != listIndex)
-                {
-                    listIndex = value;
-                }
-            }
-        }
+        public int ListIndex { get; set; }
 
         public List<GameMods> Mods;
 
@@ -87,18 +56,18 @@ namespace script_chan2.DataTypes
 
         public void MoveUp()
         {
-            mappool.MoveBeatmapUp(this);
+            Mappool.MoveBeatmapUp(this);
         }
 
         public void MoveDown()
         {
-            mappool.MoveBeatmapDown(this);
+            Mappool.MoveBeatmapDown(this);
         }
 
         public void Save()
         {
-            if (id == 0)
-                id = Database.Database.AddMappoolMap(this);
+            if (Id == 0)
+                Id = Database.Database.AddMappoolMap(this);
             else
                 Database.Database.UpdateMappoolMap(this);
         }

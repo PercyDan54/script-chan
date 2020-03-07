@@ -20,15 +20,5 @@ namespace script_chan2.DataTypes
         public string Name { get; }
 
         public string Country { get; }
-
-        public override bool Equals(object obj)
-        {
-            var other = obj as Player;
-
-            if (other == null)
-                return false;
-
-            return Id == other.Id;
-        }
     }
 }

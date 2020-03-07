@@ -12,35 +12,15 @@ namespace script_chan2.DataTypes
         public Team(Tournament tournament, string name, int id = 0)
         {
             Players = new List<Player>();
-            this.tournament = tournament;
-            this.name = name;
-            this.id = id;
+            Tournament = tournament;
+            Name = name;
+            Id = id;
         }
 
-        private int id;
-        public int Id
-        {
-            get { return id; }
-        }
+        public int Id { get; private set; }
+        public Tournament Tournament { get; }
 
-        private Tournament tournament;
-        public Tournament Tournament
-        {
-            get { return tournament; }
-        }
-
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                if (value != name)
-                {
-                    name = value;
-                }
-            }
-        }
+        public string Name { get; set; }
 
         public List<Player> Players;
 
@@ -63,8 +43,8 @@ namespace script_chan2.DataTypes
 
         public void Save()
         {
-            if (id == 0)
-                id = Database.Database.AddTeam(this);
+            if (Id == 0)
+                Id = Database.Database.AddTeam(this);
             else
                 Database.Database.UpdateTeam(this);
         }

@@ -12,145 +12,42 @@ namespace script_chan2.DataTypes
         public Tournament(string name, Enums.GameModes gameMode, Enums.TeamModes teamMode, Enums.WinConditions winCondition, string acronym, int teamSize, int roomSize, int pointsForSecondBan, bool allPicksFreemod, int id = 0)
         {
             Webhooks = new List<Webhook>();
-            this.name = name;
-            this.gameMode = gameMode;
-            this.teamMode = teamMode;
-            this.winCondition = winCondition;
-            this.acronym = acronym;
-            this.teamSize = teamSize;
-            this.roomSize = roomSize;
-            this.pointsForSecondBan = pointsForSecondBan;
-            this.allPicksFreemod = allPicksFreemod;
-            this.id = id;
+            Name = name;
+            GameMode = gameMode;
+            TeamMode = teamMode;
+            WinCondition = winCondition;
+            Acronym = acronym;
+            TeamSize = teamSize;
+            RoomSize = roomSize;
+            PointsForSecondBan = pointsForSecondBan;
+            AllPicksFreemod = allPicksFreemod;
+            Id = id;
         }
 
-        private int id;
-        public int Id
-        {
-            get { return id; }
-        }
+        public int Id { get; private set; }
 
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                if (value != name)
-                {
-                    name = value;
-                }
-            }
-        }
+        public string Name { get; set; }
 
-        private Enums.GameModes gameMode;
-        public Enums.GameModes GameMode
-        {
-            get { return gameMode; }
-            set
-            {
-                if (value != gameMode)
-                {
-                    gameMode = value;
-                }
-            }
-        }
+        public Enums.GameModes GameMode { get; set; }
 
-        private Enums.TeamModes teamMode;
-        public Enums.TeamModes TeamMode
-        {
-            get { return teamMode; }
-            set
-            {
-                if (value != teamMode)
-                {
-                    teamMode = value;
-                }
-            }
-        }
+        public Enums.TeamModes TeamMode { get; set; }
 
-        private Enums.WinConditions winCondition;
-        public Enums.WinConditions WinCondition
-        {
-            get { return winCondition; }
-            set
-            {
-                if (value != winCondition)
-                {
-                    winCondition = value;
-                }
-            }
-        }
+        public Enums.WinConditions WinCondition { get; set; }
 
-        private string acronym;
-        public string Acronym
-        {
-            get { return acronym; }
-            set
-            {
-                if (value != acronym)
-                {
-                    acronym = value;
-                }
-            }
-        }
+        public string Acronym { get; set; }
 
-        private int teamSize;
-        public int TeamSize
-        {
-            get { return teamSize; }
-            set
-            {
-                if (value != teamSize)
-                {
-                    teamSize = value;
-                }
-            }
-        }
+        public int TeamSize { get; set; }
 
-        private int roomSize;
-        public int RoomSize
-        {
-            get { return roomSize; }
-            set
-            {
-                if (value != roomSize)
-                {
-                    roomSize = value;
-                }
-            }
-        }
+        public int RoomSize { get; set; }
 
-        private int pointsForSecondBan;
-        public int PointsForSecondBan
-        {
-            get { return pointsForSecondBan; }
-            set
-            {
-                if (value != pointsForSecondBan)
-                {
-                    pointsForSecondBan = value;
-                }
-            }
-        }
+        public int PointsForSecondBan { get; set; }
 
-        private bool allPicksFreemod;
-        public bool AllPicksFreemod
-        {
-            get { return allPicksFreemod; }
-            set
-            {
-                if (value != allPicksFreemod)
-                {
-                    allPicksFreemod = value;
-                }
-            }
-        }
+        public bool AllPicksFreemod { get; set; }
 
         public void Save()
         {
-            if (id == 0)
-                id = Database.Database.AddTournament(this);
+            if (Id == 0)
+                Id = Database.Database.AddTournament(this);
             else
                 Database.Database.UpdateTournament(this);
         }

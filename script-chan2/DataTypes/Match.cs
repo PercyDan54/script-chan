@@ -36,14 +36,10 @@ namespace script_chan2.DataTypes
             PointsForSecondBan = pointsForSecondBan;
             AllPicksFreemod = allPicksFreemod;
             Status = status;
-            this.id = id;
+            Id = id;
         }
 
-        private int id;
-        public int Id
-        {
-            get { return id; }
-        }
+        public int Id { get; private set; }
 
         public Tournament Tournament { get; set; }
 
@@ -84,7 +80,7 @@ namespace script_chan2.DataTypes
         public void Save()
         {
             if (Id == 0)
-                id = Database.Database.AddMatch(this);
+                Id = Database.Database.AddMatch(this);
             else
                 Database.Database.UpdateMatch(this);
         }

@@ -12,50 +12,24 @@ namespace script_chan2.DataTypes
         public Mappool(string name, Tournament tournament = null, int id = 0)
         {
             Beatmaps = new List<MappoolMap>();
-            this.name = name;
-            this.id = id;
-            this.tournament = tournament;
+            Name = name;
+            Id = id;
+            Tournament = tournament;
         }
 
-        private int id;
-        public int Id
-        {
-            get { return id; }
-        }
+        public int Id { get; private set; }
 
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                if (value != name)
-                {
-                    name = value;
-                }
-            }
-        }
+        public string Name { get; set; }
 
         public void Save()
         {
-            if (id == 0)
-                id = Database.Database.AddMappool(this);
+            if (Id == 0)
+                Id = Database.Database.AddMappool(this);
             else
                 Database.Database.UpdateMappool(this);
         }
 
-        private Tournament tournament;
-        public Tournament Tournament
-        {
-            get { return tournament; }
-            set
-            {
-                if (value != tournament)
-                {
-                    tournament = value;
-                }
-            }
-        }
+        public Tournament Tournament { get; set; }
 
         public List<MappoolMap> Beatmaps;
 
