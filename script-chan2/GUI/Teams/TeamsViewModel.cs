@@ -12,15 +12,17 @@ namespace script_chan2.GUI
     public class TeamsViewModel : Screen, IHandle<string>
     {
         #region Teams list
-        public BindableCollection<Team> Teams { get; set; }
-
         public BindableCollection<TeamListItemViewModel> TeamsViews
         {
             get
             {
                 var list = new BindableCollection<TeamListItemViewModel>();
-                foreach (var team in Teams)
+                foreach (var team in Database.Database.Teams.OrderBy(x => x.Name))
+                {
+                    if (team.Tournament != Settings.DefaultTournament)
+                        continue;
                     list.Add(new TeamListItemViewModel(team));
+                }
                 return list;
             }
         }
@@ -29,29 +31,15 @@ namespace script_chan2.GUI
         #region Constructor
         protected override void OnActivate()
         {
-            Reload();
             Events.Aggregator.Subscribe(this);
         }
         #endregion
 
         #region Events
-        public void Reload()
-        {
-            Teams = new BindableCollection<Team>();
-            foreach (var team in Database.Database.Teams.OrderBy(x => x.Name))
-            {
-                if (Settings.DefaultTournament != null && team.Tournament != Settings.DefaultTournament)
-                    continue;
-                Teams.Add(team);
-            }
-            NotifyOfPropertyChange(() => Teams);
-            NotifyOfPropertyChange(() => TeamsViews);
-        }
-
         public void Handle(string message)
         {
             if (message.ToString() == "DeleteTeam")
-                Reload();
+                NotifyOfPropertyChange(() => TeamsViews);
         }
         #endregion
 
@@ -66,7 +54,7 @@ namespace script_chan2.GUI
                     Log.Information("GUI team list set tournament filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
-                    Reload();
+                    NotifyOfPropertyChange(() => TeamsViews);
                 }
             }
         }
@@ -120,7 +108,7 @@ namespace script_chan2.GUI
             {
                 if (string.IsNullOrEmpty(newTeamName))
                     return false;
-                if (Teams.Any(x => x.Name == newTeamName && x.Tournament == newTeamTournament))
+                if (Database.Database.Teams.Any(x => x.Name == newTeamName && x.Tournament == newTeamTournament))
                     return false;
                 return true;
             }
@@ -140,7 +128,7 @@ namespace script_chan2.GUI
             team.Save();
             Settings.DefaultTournament = NewTeamTournament;
             NotifyOfPropertyChange(() => NewTeamTournament);
-            Reload();
+            NotifyOfPropertyChange(() => TeamsViews);
         }
         #endregion
     }
