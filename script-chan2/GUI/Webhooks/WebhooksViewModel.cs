@@ -13,14 +13,12 @@ namespace script_chan2.GUI
     public class WebhooksViewModel : Screen, IHandle<string>
     {
         #region Webhooks list
-        public BindableCollection<Webhook> Webhooks { get; set; }
-
         public BindableCollection<WebhookListItemViewModel> WebhooksViews
         {
             get
             {
                 var list = new BindableCollection<WebhookListItemViewModel>();
-                foreach (var webhook in Webhooks)
+                foreach (var webhook in Database.Database.Webhooks.OrderBy(x => x.Name))
                     list.Add(new WebhookListItemViewModel(webhook));
                 return list;
             }
@@ -30,27 +28,15 @@ namespace script_chan2.GUI
         #region Constructor
         protected override void OnActivate()
         {
-            Reload();
             Events.Aggregator.Subscribe(this);
         }
         #endregion
 
         #region Events
-        public void Reload()
-        {
-            Webhooks = new BindableCollection<Webhook>();
-            foreach (var webhook in Database.Database.Webhooks.OrderBy(x => x.Name))
-            {
-                Webhooks.Add(webhook);
-            }
-            NotifyOfPropertyChange(() => Webhooks);
-            NotifyOfPropertyChange(() => WebhooksViews);
-        }
-
         public void Handle(string message)
         {
             if (message.ToString() == "DeleteWebhook")
-                Reload();
+                NotifyOfPropertyChange(() => WebhooksViews);
         }
         #endregion
 
@@ -91,7 +77,7 @@ namespace script_chan2.GUI
             {
                 if (string.IsNullOrEmpty(newWebhookName))
                     return false;
-                if (Webhooks.Any(x => x.Name == newWebhookName))
+                if (Database.Database.Webhooks.Any(x => x.Name == newWebhookName))
                     return false;
                 if (string.IsNullOrEmpty(newWebhookUrl))
                     return false;
@@ -111,7 +97,7 @@ namespace script_chan2.GUI
             Log.Information("GUI new webhook '{name}' save", NewWebhookName);
             var webhook = new Webhook(NewWebhookName, NewWebhookUrl);
             webhook.Save();
-            Reload();
+            NotifyOfPropertyChange(() => WebhooksViews);
         }
         #endregion
     }
