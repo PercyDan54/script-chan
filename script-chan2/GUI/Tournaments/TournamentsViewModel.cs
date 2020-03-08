@@ -200,6 +200,48 @@ namespace script_chan2.GUI
             }
         }
 
+        private int newTournamentMpTimerCommand;
+        public int NewTournamentMpTimerCommand
+        {
+            get { return newTournamentMpTimerCommand; }
+            set
+            {
+                if (value != newTournamentMpTimerCommand)
+                {
+                    newTournamentMpTimerCommand = value;
+                    NotifyOfPropertyChange(() => NewTournamentMpTimerCommand);
+                }
+            }
+        }
+
+        private int newTournamentMpTimerAfterGame;
+        public int NewTournamentMpTimerAfterGame
+        {
+            get { return newTournamentMpTimerAfterGame; }
+            set
+            {
+                if (value != newTournamentMpTimerAfterGame)
+                {
+                    newTournamentMpTimerAfterGame = value;
+                    NotifyOfPropertyChange(() => NewTournamentMpTimerAfterGame);
+                }
+            }
+        }
+
+        private int newTournamentMpTimerAfterPick;
+        public int NewTournamentMpTimerAfterPick
+        {
+            get { return newTournamentMpTimerAfterPick; }
+            set
+            {
+                if (value != newTournamentMpTimerAfterPick)
+                {
+                    newTournamentMpTimerAfterPick = value;
+                    NotifyOfPropertyChange(() => NewTournamentMpTimerAfterPick);
+                }
+            }
+        }
+
         public bool NewTournamentSaveEnabled
         {
             get
@@ -230,12 +272,15 @@ namespace script_chan2.GUI
             NewTournamentRoomSize = 8;
             NewTournamentPointsForSecondBan = 0;
             NewTournamentAllPicksFreemod = false;
+            NewTournamentMpTimerCommand = Settings.DefaultTimerCommand;
+            NewTournamentMpTimerAfterGame = Settings.DefaultTimerAfterGame;
+            NewTournamentMpTimerAfterPick = Settings.DefaultTimerAfterPick;
         }
 
         public void NewTournamentDialogClosed()
         {
             Log.Information("GUI new tournament '{name}' save", NewTournamentName);
-            var tournament = new Tournament(NewTournamentName, NewTournamentGameMode, NewTournamentTeamMode, NewTournamentWinCondition, NewTournamentAcronym, NewTournamentTeamSize, NewTournamentRoomSize, NewTournamentPointsForSecondBan, NewTournamentAllPicksFreemod);
+            var tournament = new Tournament(NewTournamentName, NewTournamentGameMode, NewTournamentTeamMode, NewTournamentWinCondition, NewTournamentAcronym, NewTournamentTeamSize, NewTournamentRoomSize, NewTournamentPointsForSecondBan, NewTournamentAllPicksFreemod, NewTournamentMpTimerCommand, NewTournamentMpTimerAfterGame, NewTournamentMpTimerAfterPick);
             tournament.Save();
             Reload();
         }

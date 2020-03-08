@@ -162,16 +162,46 @@ namespace script_chan2.GUI
             }
         }
 
-        private int mpTimerDuration;
-        public int MpTimerDuration
+        private int defaultTimerCommand;
+        public int DefaultTimerCommand
         {
-            get { return mpTimerDuration; }
+            get { return defaultTimerCommand; }
             set
             {
-                if (value != mpTimerDuration)
+                if (value != defaultTimerCommand)
                 {
-                    mpTimerDuration = value;
-                    NotifyOfPropertyChange(() => MpTimerDuration);
+                    defaultTimerCommand = value;
+                    NotifyOfPropertyChange(() => DefaultTimerCommand);
+                    Dirty = true;
+                }
+            }
+        }
+
+        private int defaultTimerAfterGame;
+        public int DefaultTimerAfterGame
+        {
+            get { return defaultTimerAfterGame; }
+            set
+            {
+                if (value != defaultTimerAfterGame)
+                {
+                    defaultTimerAfterGame = value;
+                    NotifyOfPropertyChange(() => DefaultTimerAfterGame);
+                    Dirty = true;
+                }
+            }
+        }
+
+        private int defaultTimerAfterPick;
+        public int DefaultTimerAfterPick
+        {
+            get { return defaultTimerAfterPick; }
+            set
+            {
+                if (value != defaultTimerAfterPick)
+                {
+                    defaultTimerAfterPick = value;
+                    NotifyOfPropertyChange(() => DefaultTimerAfterPick);
                     Dirty = true;
                 }
             }
@@ -194,7 +224,9 @@ namespace script_chan2.GUI
             Settings.IrcUsername = ircUsername;
             Settings.IrcPassword = ircPassword;
             Settings.IrcTimeout = ircTimeout;
-            Settings.MpTimerDuration = mpTimerDuration;
+            Settings.DefaultTimerCommand = defaultTimerCommand;
+            Settings.DefaultTimerAfterGame = defaultTimerAfterGame;
+            Settings.DefaultTimerAfterPick = defaultTimerAfterPick;
             Dirty = false;
         }
 
@@ -206,7 +238,9 @@ namespace script_chan2.GUI
             IrcUsername = Settings.IrcUsername;
             IrcPassword = Settings.IrcPassword;
             IrcTimeout = Settings.IrcTimeout;
-            MpTimerDuration = Settings.MpTimerDuration;
+            DefaultTimerCommand = Settings.DefaultTimerCommand;
+            DefaultTimerAfterGame = Settings.DefaultTimerAfterGame;
+            DefaultTimerAfterPick = Settings.DefaultTimerAfterPick;
             Dirty = false;
         }
         #endregion

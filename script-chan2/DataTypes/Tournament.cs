@@ -9,7 +9,7 @@ namespace script_chan2.DataTypes
 {
     public class Tournament
     {
-        public Tournament(string name, Enums.GameModes gameMode, Enums.TeamModes teamMode, Enums.WinConditions winCondition, string acronym, int teamSize, int roomSize, int pointsForSecondBan, bool allPicksFreemod, int id = 0)
+        public Tournament(string name, Enums.GameModes gameMode, Enums.TeamModes teamMode, Enums.WinConditions winCondition, string acronym, int teamSize, int roomSize, int pointsForSecondBan, bool allPicksFreemod, int mpTimerCommand, int mpTimerAfterGame, int mpTimerAfterPick, int id = 0)
         {
             Webhooks = new List<Webhook>();
             Name = name;
@@ -21,6 +21,9 @@ namespace script_chan2.DataTypes
             RoomSize = roomSize;
             PointsForSecondBan = pointsForSecondBan;
             AllPicksFreemod = allPicksFreemod;
+            MpTimerCommand = mpTimerCommand;
+            MpTimerAfterGame = mpTimerAfterGame;
+            MpTimerAfterPick = mpTimerAfterPick;
             Id = id;
         }
 
@@ -43,6 +46,12 @@ namespace script_chan2.DataTypes
         public int PointsForSecondBan { get; set; }
 
         public bool AllPicksFreemod { get; set; }
+
+        public int MpTimerCommand { get; set; }
+
+        public int MpTimerAfterGame { get; set; }
+
+        public int MpTimerAfterPick { get; set; }
 
         public void Save()
         {

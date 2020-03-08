@@ -42,7 +42,9 @@
             <TextBlock x:Name="IrcStatus" Margin="5" VerticalAlignment="Center" />
         </StackPanel>
         <TextBox x:Name="IrcTimeout" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" md:HintAssist.Hint="IRC Timeout" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
-        <TextBox x:Name="MpTimerDuration" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" md:HintAssist.Hint="MP Timer Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <TextBox x:Name="DefaultTimerCommand" Grid.Row="4" Grid.Column="0" md:HintAssist.Hint="Timer Command Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <TextBox x:Name="DefaultTimerAfterGame" Grid.Row="4" Grid.Column="1" md:HintAssist.Hint="Timer After Game Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <TextBox x:Name="DefaultTimerAfterPick" Grid.Row="4" Grid.Column="2" md:HintAssist.Hint="Timer After Pick Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <StackPanel Grid.Row="7" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Dirty, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <Button x:Name="Discard" Content="Discard" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignFlatButton}" />
             <Button x:Name="Save" Content="Save" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignRaisedButton}" />

@@ -56,7 +56,9 @@ namespace script_chan2.Database
                 ('ircTimeout', '1000'),
                 ('defaultBO', '3'),
                 ('defaultTournament', ''),
-                ('mpTimerDuration', '180')", conn);
+                ('defaultTimerCommand', '120'),
+                ('defaultTimerAfterGame', '120'),
+                ('defaultTimerAfterPick', '120')", conn);
             command.ExecuteNonQuery();
             command.Dispose();
         }
@@ -73,7 +75,10 @@ namespace script_chan2.Database
                 teamSize INTEGER,
                 roomSize INTEGER,
                 pointsForSecondBan INTEGER,
-                allPicksFreemod BOOL)", conn);
+                allPicksFreemod BOOL,
+                mpTimerCommand INTEGER,
+                mpTimerAfterGame INTEGER,
+                mpTimerAfterPick INTEGER)", conn);
             command.ExecuteNonQuery();
             command.Dispose();
         }
@@ -193,7 +198,9 @@ namespace script_chan2.Database
                 firstPicker INTEGER,
                 BO INTEGER,
                 enableWebhooks BOOL,
-                mpTimer INTEGER,
+                mpTimerCommand INTEGER,
+                mpTimerAfterGame INTEGER,
+                mpTimerAfterPick INTEGER,
                 pointsForSecondBan INTEGER,
                 allPicksFreemod BOOL,
                 status TEXT,

@@ -187,6 +187,48 @@ namespace script_chan2.GUI
             }
         }
 
+        private int editMpTimerCommand;
+        public int EditMpTimerCommand
+        {
+            get { return editMpTimerCommand; }
+            set
+            {
+                if (value != editMpTimerCommand)
+                {
+                    editMpTimerCommand = value;
+                    NotifyOfPropertyChange(() => EditMpTimerCommand);
+                }
+            }
+        }
+
+        private int editMpTimerAfterGame;
+        public int EditMpTimerAfterGame
+        {
+            get { return editMpTimerAfterGame; }
+            set
+            {
+                if (value != editMpTimerAfterGame)
+                {
+                    editMpTimerAfterGame = value;
+                    NotifyOfPropertyChange(() => EditMpTimerAfterGame);
+                }
+            }
+        }
+
+        private int editMpTimerAfterPick;
+        public int EditMpTimerAfterPick
+        {
+            get { return editMpTimerAfterPick; }
+            set
+            {
+                if (value != editMpTimerAfterPick)
+                {
+                    editMpTimerAfterPick = value;
+                    NotifyOfPropertyChange(() => EditMpTimerAfterPick);
+                }
+            }
+        }
+
         public bool EditTournamentSaveEnabled
         {
             get
@@ -217,6 +259,9 @@ namespace script_chan2.GUI
             EditRoomSize = tournament.RoomSize;
             EditPointsForSecondBan = tournament.PointsForSecondBan;
             EditAllPicksFreemod = tournament.AllPicksFreemod;
+            EditMpTimerCommand = tournament.MpTimerCommand;
+            EditMpTimerAfterGame = tournament.MpTimerAfterGame;
+            EditMpTimerAfterPick = tournament.MpTimerAfterPick;
         }
 
         public void Save()
@@ -233,6 +278,9 @@ namespace script_chan2.GUI
                 tournament.RoomSize = EditRoomSize;
                 tournament.PointsForSecondBan = EditPointsForSecondBan;
                 tournament.AllPicksFreemod = EditAllPicksFreemod;
+                tournament.MpTimerCommand = EditMpTimerCommand;
+                tournament.MpTimerAfterGame = EditMpTimerAfterGame;
+                tournament.MpTimerAfterPick = EditMpTimerAfterPick;
                 tournament.Save();
                 NotifyOfPropertyChange(() => Name);
             }

@@ -425,12 +425,18 @@ namespace script_chan2.GUI
             Log.Information("GUI new match '{match}' save", NewMatchName);
             var pointsForSecondBan = 0;
             var allPicksFreemod = false;
+            var mpTimerCommand = Settings.DefaultTimerCommand;
+            var mpTimerAfterGame = Settings.DefaultTimerAfterGame;
+            var mpTimerAfterPick = Settings.DefaultTimerAfterPick;
             if (NewMatchTournament != null)
             {
                 pointsForSecondBan = NewMatchTournament.PointsForSecondBan;
                 allPicksFreemod = NewMatchTournament.AllPicksFreemod;
+                mpTimerCommand = NewMatchTournament.MpTimerCommand;
+                mpTimerAfterGame = NewMatchTournament.MpTimerAfterGame;
+                mpTimerAfterPick = NewMatchTournament.MpTimerAfterPick;
             }
-            var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, null, null, null, null, NewMatchBO, true, Settings.MpTimerDuration, pointsForSecondBan, allPicksFreemod, MatchStatus.New);
+            var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, null, null, null, null, NewMatchBO, true, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, MatchStatus.New);
             match.Teams = newMatchTeams;
             match.Players = newMatchPlayers;
             match.Save();

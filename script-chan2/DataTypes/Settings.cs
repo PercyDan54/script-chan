@@ -47,7 +47,9 @@ namespace script_chan2.DataTypes
             var defaultTournamentId = settings["defaultTournament"];
             if (!string.IsNullOrEmpty(defaultTournamentId))
                 defaultTournament = Database.Database.Tournaments.First(x => x.Id == Convert.ToInt32(defaultTournamentId));
-            mpTimerDuration = Convert.ToInt32(settings["mpTimerDuration"]);
+            defaultTimerCommand = Convert.ToInt32(settings["defaultTimerCommand"]);
+            defaultTimerAfterGame = Convert.ToInt32(settings["defaultTimerAfterGame"]);
+            defaultTimerAfterPick = Convert.ToInt32(settings["defaultTimerAfterPick"]);
         }
 
         private static string lang;
@@ -151,16 +153,44 @@ namespace script_chan2.DataTypes
             }
         }
 
-        private static int mpTimerDuration;
-        public static int MpTimerDuration
+        private static int defaultTimerCommand;
+        public static int DefaultTimerCommand
         {
-            get { return mpTimerDuration; }
+            get { return defaultTimerCommand; }
             set
             {
-                if (value != mpTimerDuration)
+                if (value != defaultTimerCommand)
                 {
-                    mpTimerDuration = value;
-                    Database.Database.UpdateSettings("mpTimerDuration", value.ToString());
+                    defaultTimerCommand = value;
+                    Database.Database.UpdateSettings("defaultTimerCommand", value.ToString());
+                }
+            }
+        }
+
+        private static int defaultTimerAfterGame;
+        public static int DefaultTimerAfterGame
+        {
+            get { return defaultTimerAfterGame; }
+            set
+            {
+                if (value != defaultTimerAfterGame)
+                {
+                    defaultTimerAfterGame = value;
+                    Database.Database.UpdateSettings("defaultTimerAfterGame", value.ToString());
+                }
+            }
+        }
+
+        private static int defaultTimerAfterPick;
+        public static int DefaultTimerAfterPick
+        {
+            get { return defaultTimerAfterPick; }
+            set
+            {
+                if (value != defaultTimerAfterPick)
+                {
+                    defaultTimerAfterPick = value;
+                    Database.Database.UpdateSettings("defaultTimerAfterPick", value.ToString());
                 }
             }
         }

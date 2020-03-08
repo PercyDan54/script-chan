@@ -10,7 +10,7 @@ namespace script_chan2.DataTypes
     public class Match
     {
         public Match(Tournament tournament, Mappool mappool, string name, GameModes gameMode, TeamModes teamMode, WinConditions winCondition, Team rollWinnerTeam, Player rollWinnerPlayer, Team firstPickerTeam, Player firstPickerPlayer,
-            int bo, bool enableWebhooks, int mpTimer, int pointsForSecondBan, bool allPicksFreemod, MatchStatus status, int id = 0)
+            int bo, bool enableWebhooks, int mpTimerCommand, int mpTimerAfterGame, int mpTimerAfterPick, int pointsForSecondBan, bool allPicksFreemod, MatchStatus status, int id = 0)
         {
             Players = new List<Player>();
             Teams = new List<Team>();
@@ -32,7 +32,9 @@ namespace script_chan2.DataTypes
             }
             BO = bo;
             EnableWebhooks = enableWebhooks;
-            MpTimer = mpTimer;
+            MpTimerCommand = mpTimerCommand;
+            MpTimerAfterGame = mpTimerAfterGame;
+            MpTimerAfterPick = mpTimerAfterPick;
             PointsForSecondBan = pointsForSecondBan;
             AllPicksFreemod = allPicksFreemod;
             Status = status;
@@ -65,7 +67,11 @@ namespace script_chan2.DataTypes
 
         public bool EnableWebhooks { get; set; }
 
-        public int MpTimer { get; set; }
+        public int MpTimerCommand { get; set; }
+
+        public int MpTimerAfterGame { get; set; }
+
+        public int MpTimerAfterPick { get; set; }
 
         public int PointsForSecondBan { get; set; }
 

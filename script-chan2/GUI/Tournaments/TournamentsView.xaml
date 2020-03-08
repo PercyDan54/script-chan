@@ -30,6 +30,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBox md:HintAssist.Hint="Acronym" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="0">
@@ -82,7 +83,10 @@
                         </TextBox.Text>
                     </TextBox>
                     <CheckBox Content="All picks as freemod" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5 10 0 0" IsChecked="{Binding NewTournamentAllPicksFreemod}" />
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4">
+                    <TextBox md:HintAssist.Hint="Command Timer" Text="{Binding NewTournamentMpTimerCommand}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="0" Margin="0 10 5 0" />
+                    <TextBox md:HintAssist.Hint="Timer After Game" Text="{Binding NewTournamentMpTimerAfterGame}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="1" Margin="5 10 5 0" />
+                    <TextBox md:HintAssist.Hint="Timer After Pick" Text="{Binding NewTournamentMpTimerAfterPick}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="2" Margin="5 10 5 0" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4">
                         <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
                         <Button Content="Save" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action NewTournamentDialogClosed]" IsEnabled="{Binding NewTournamentSaveEnabled}" />
                     </StackPanel>
