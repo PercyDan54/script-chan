@@ -13,14 +13,12 @@ namespace script_chan2.GUI
     public class TournamentsViewModel : Screen, IHandle<string>
     {
         #region Tournaments list
-        public BindableCollection<Tournament> Tournaments { get; set; }
-
         public BindableCollection<TournamentListItemViewModel> TournamentsViews
         {
             get
             {
                 var list = new BindableCollection<TournamentListItemViewModel>();
-                foreach (var tournament in Tournaments)
+                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Name))
                     list.Add(new TournamentListItemViewModel(tournament));
                 return list;
             }
@@ -30,27 +28,15 @@ namespace script_chan2.GUI
         #region Constructor
         protected override void OnActivate()
         {
-            Reload();
             Events.Aggregator.Subscribe(this);
         }
         #endregion Constructor
 
         #region Events
-        public void Reload()
-        {
-            Tournaments = new BindableCollection<Tournament>();
-            foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Name))
-            {
-                Tournaments.Add(tournament);
-            }
-            NotifyOfPropertyChange(() => Tournaments);
-            NotifyOfPropertyChange(() => TournamentsViews);
-        }
-
         public void Handle(string message)
         {
             if (message.ToString() == "DeleteTournament")
-                Reload();
+                NotifyOfPropertyChange(() => TournamentsViews);
         }
         #endregion
 
@@ -248,7 +234,7 @@ namespace script_chan2.GUI
             {
                 if (string.IsNullOrEmpty(newTournamentName))
                     return false;
-                if (Tournaments.Any(x => x.Name == newTournamentName))
+                if (Database.Database.Tournaments.Any(x => x.Name == newTournamentName))
                     return false;
                 if (string.IsNullOrEmpty(newTournamentAcronym))
                     return false;
@@ -282,7 +268,7 @@ namespace script_chan2.GUI
             Log.Information("GUI new tournament '{name}' save", NewTournamentName);
             var tournament = new Tournament(NewTournamentName, NewTournamentGameMode, NewTournamentTeamMode, NewTournamentWinCondition, NewTournamentAcronym, NewTournamentTeamSize, NewTournamentRoomSize, NewTournamentPointsForSecondBan, NewTournamentAllPicksFreemod, NewTournamentMpTimerCommand, NewTournamentMpTimerAfterGame, NewTournamentMpTimerAfterPick);
             tournament.Save();
-            Reload();
+            NotifyOfPropertyChange(() => TournamentsViews);
         }
         #endregion
     }
