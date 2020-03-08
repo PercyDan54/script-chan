@@ -15,30 +15,19 @@ namespace script_chan2.GUI
     class MatchesViewModel : Screen, IHandle<string>
     {
         #region Match list
-        public BindableCollection<Match> Matches
-        {
-            get
-            {
-                var list = new BindableCollection<Match>();
-                foreach (var match in Database.Database.Matches.OrderBy(x => x.Name))
-                {
-                    if (Settings.DefaultTournament != null && match.Tournament != Settings.DefaultTournament)
-                        continue;
-                    if (FilterStatus != null && match.Status != FilterStatus)
-                        continue;
-                    list.Add(match);
-                }
-                return list;
-            }
-        }
-
         public BindableCollection<MatchListItemViewModel> MatchesViews
         {
             get
             {
                 var list = new BindableCollection<MatchListItemViewModel>();
-                foreach (var match in Matches)
+                foreach (var match in Database.Database.Matches.OrderBy(x => x.Name))
+                {
+                    if (match.Tournament != Settings.DefaultTournament)
+                        continue;
+                    if (FilterStatus != null && match.Status != FilterStatus)
+                        continue;
                     list.Add(new MatchListItemViewModel(match));
+                }
                 return list;
             }
         }
@@ -54,18 +43,12 @@ namespace script_chan2.GUI
         #endregion
 
         #region Events
-        public void Reload()
-        {
-            NotifyOfPropertyChange(() => Matches);
-            NotifyOfPropertyChange(() => MatchesViews);
-        }
-
         public void Handle(string message)
         {
             if (message.ToString() == "DeleteMatch")
-                Reload();
+                NotifyOfPropertyChange(() => MatchesViews);
             else if (message.ToString() == "EditMatch")
-                Reload();
+                NotifyOfPropertyChange(() => MatchesViews);
         }
         #endregion
 
@@ -80,7 +63,7 @@ namespace script_chan2.GUI
                     Log.Information("GUI match list set tournament filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
-                    Reload();
+                    NotifyOfPropertyChange(() => MatchesViews);
                 }
             }
         }
@@ -101,7 +84,7 @@ namespace script_chan2.GUI
                     Log.Information("GUI match list set status filter");
                     filterStatus = value;
                     NotifyOfPropertyChange(() => FilterStatus);
-                    Reload();
+                    NotifyOfPropertyChange(() => MatchesViews);
                 }
             }
         }
@@ -443,7 +426,7 @@ namespace script_chan2.GUI
             Settings.DefaultTournament = NewMatchTournament;
             Settings.DefaultBO = NewMatchBO;
             NotifyOfPropertyChange(() => NewMatchTournament);
-            Reload();
+            NotifyOfPropertyChange(() => MatchesViews);
         }
         #endregion
     }
