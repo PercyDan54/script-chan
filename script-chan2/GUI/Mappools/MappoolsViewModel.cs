@@ -12,15 +12,17 @@ namespace script_chan2.GUI
     public class MappoolsViewModel : Screen, IHandle<string>
     {
         #region Mappool list
-        public BindableCollection<Mappool> Mappools { get; set; }
-
         public BindableCollection<MappoolListItemViewModel> MappoolsViews
         {
             get
             {
                 var list = new BindableCollection<MappoolListItemViewModel>();
-                foreach (var mappool in Mappools)
+                foreach (var mappool in Database.Database.Mappools)
+                {
+                    if (mappool.Tournament != Settings.DefaultTournament)
+                        continue;
                     list.Add(new MappoolListItemViewModel(mappool));
+                }
                 return list;
             }
         }
@@ -29,30 +31,15 @@ namespace script_chan2.GUI
         #region Constructor
         protected override void OnActivate()
         {
-            Reload();
             Events.Aggregator.Subscribe(this);
         }
         #endregion
 
         #region Events
-        public void Reload()
-        {
-            Log.Information("GUI reload mappool list");
-            Mappools = new BindableCollection<Mappool>();
-            foreach (var mappool in Database.Database.Mappools.OrderBy(x => x.Name))
-            {
-                if (Settings.DefaultTournament != null && mappool.Tournament != Settings.DefaultTournament)
-                    continue;
-                Mappools.Add(mappool);
-            }
-            NotifyOfPropertyChange(() => Mappools);
-            NotifyOfPropertyChange(() => MappoolsViews);
-        }
-
         public void Handle(string message)
         {
             if (message.ToString() == "DeleteMappool")
-                Reload();
+                NotifyOfPropertyChange(() => MappoolsViews);
         }
         #endregion
 
@@ -67,7 +54,7 @@ namespace script_chan2.GUI
                     Log.Information("GUI mappool list set filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
-                    Reload();
+                    NotifyOfPropertyChange(() => MappoolsViews);
                 }
             }
         }
@@ -121,7 +108,7 @@ namespace script_chan2.GUI
             {
                 if (string.IsNullOrEmpty(newMappoolName))
                     return false;
-                if (Mappools.Any(x => x.Name == newMappoolName && x.Tournament == newMappoolTournament))
+                if (Database.Database.Mappools.Any(x => x.Name == newMappoolName && x.Tournament == newMappoolTournament))
                     return false;
                 return true;
             }
@@ -141,7 +128,7 @@ namespace script_chan2.GUI
             mappool.Save();
             Settings.DefaultTournament = NewMappoolTournament;
             NotifyOfPropertyChange(() => NewMappoolTournament);
-            Reload();
+            NotifyOfPropertyChange(() => MappoolsViews);
         }
         #endregion
     }
