@@ -203,7 +203,7 @@ namespace script_chan2.GUI
             {
                 if (EditMatchTeamMode == TeamModes.TeamVS)
                     return Visibility.Visible;
-                return Visibility.Hidden;
+                return Visibility.Collapsed;
             }
         }
 
@@ -286,7 +286,7 @@ namespace script_chan2.GUI
             {
                 if (EditMatchTeamMode == TeamModes.HeadToHead)
                     return Visibility.Visible;
-                return Visibility.Hidden;
+                return Visibility.Collapsed;
             }
         }
 
