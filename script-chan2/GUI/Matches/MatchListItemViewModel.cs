@@ -19,6 +19,8 @@ namespace script_chan2.GUI
         {
             this.match = match;
             Events.Aggregator.Subscribe(this);
+            editMatchTeams = new List<Team>();
+            editMatchPlayers = new List<Player>();
         }
         #endregion
 
@@ -385,11 +387,24 @@ namespace script_chan2.GUI
         }
         #endregion
 
+        #region Actions
         public void Delete()
         {
             Log.Information("GUI delete match '{name}'", match.Name);
             match.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMatch");
         }
+
+        public void Open()
+        {
+            if (!MatchList.OpenedMatches.Contains(match))
+            {
+                Log.Information("GUI open match '{name}'", match.Name);
+                var windowManager = new WindowManager();
+                windowManager.ShowWindow(new MatchViewModel(match));
+                MatchList.OpenedMatches.Add(match);
+            }
+        }
+        #endregion
     }
 }
