@@ -34,5 +34,10 @@ namespace script_chan2
         {
             DisplayRootViewFor<MainViewModel>();
         }
+
+        protected override void OnExit(object sender, EventArgs e)
+        {
+            Log.Information("App shutdown");
+        }
     }
 }

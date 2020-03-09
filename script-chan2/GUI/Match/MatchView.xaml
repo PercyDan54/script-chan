@@ -34,7 +34,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid x:Name="RankingGrid" Margin="5">
-                        <ScrollViewer>
+                        <ScrollViewer Visibility="{Binding TeamsListIsVisible}">
                             <ItemsControl ItemsSource="{Binding TeamsViews}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -48,7 +48,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
-                        <ScrollViewer>
+                        <ScrollViewer Visibility="{Binding PlayersListIsVisible}">
                             <ItemsControl ItemsSource="{Binding PlayersViews}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>

@@ -1,0 +1,73 @@
+﻿using Caliburn.Micro;
+using script_chan2.DataTypes;
+using script_chan2.Enums;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace script_chan2.GUI
+{
+    public class MatchTeamViewModel : Screen
+    {
+        #region Constructor
+        public MatchTeamViewModel(Match match, TeamColors teamColor)
+        {
+            this.match = match;
+            this.teamColor = teamColor;
+        }
+        #endregion
+
+        #region Properties
+        private Match match;
+
+        private TeamColors teamColor;
+
+        public string Name
+        {
+            get
+            {
+                if (teamColor == TeamColors.Blue)
+                    return match.TeamBlue.Name;
+                return match.TeamRed.Name;
+            }
+        }
+
+        public int Points
+        {
+            get
+            {
+                if (teamColor == TeamColors.Blue)
+                    return match.TeamBluePoints;
+                return match.TeamRedPoints;
+            }
+        }
+        #endregion
+
+        #region Actions
+        public void DecreasePoints()
+        {
+            Log.Information("GUI match '{match}' decrease points for team '{team}'", match.Name, Name);
+            if (teamColor == TeamColors.Blue)
+                match.TeamBluePoints--;
+            else
+                match.TeamRedPoints--;
+            match.Save();
+            NotifyOfPropertyChange(() => Points);
+        }
+
+        public void IncreasePoints()
+        {
+            Log.Information("GUI match '{match}' increase points for team '{team}'", match.Name, Name);
+            if (teamColor == TeamColors.Blue)
+                match.TeamBluePoints++;
+            else
+                match.TeamRedPoints++;
+            match.Save();
+            NotifyOfPropertyChange(() => Points);
+        }
+        #endregion
+    }
+}
