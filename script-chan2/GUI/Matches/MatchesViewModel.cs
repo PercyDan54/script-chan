@@ -36,7 +36,6 @@ namespace script_chan2.GUI
         #region Constructor
         protected override void OnActivate()
         {
-            newMatchTeams = new List<Team>();
             newMatchPlayers = new List<Player>();
             Events.Aggregator.Subscribe(this);
         }
@@ -126,16 +125,18 @@ namespace script_chan2.GUI
                 if (value != newMatchTournament)
                 {
                     newMatchTournament = value;
-                    newMatchTeams = new List<Team>();
+                    NewMatchTeamRed = null;
+                    NewMatchTeamBlue = null;
                     NotifyOfPropertyChange(() => NewMatchTournament);
                     NotifyOfPropertyChange(() => Mappools);
                     NotifyOfPropertyChange(() => Teams);
-                    NotifyOfPropertyChange(() => TeamsViews);
                     if (value != null)
                     {
                         NewMatchGameMode = value.GameMode;
                         NewMatchTeamMode = value.TeamMode;
                         NewMatchWinCondition = value.WinCondition;
+                        NewMatchTeamSize = value.TeamSize;
+                        NewMatchRoomSize = value.RoomSize;
                     }
                 }
             }
@@ -262,58 +263,68 @@ namespace script_chan2.GUI
                 {
                     if (team.Tournament != NewMatchTournament)
                         continue;
-                    if (newMatchTeams.Contains(team))
-                        continue;
                     list.Add(team);
                 }
                 return list;
             }
         }
 
-        private Team selectedTeam;
-        public Team SelectedTeam
+        private Team newMatchTeamBlue;
+        public Team NewMatchTeamBlue
         {
-            get { return selectedTeam; }
+            get { return newMatchTeamBlue; }
             set
             {
-                if (value != selectedTeam)
+                if (value != newMatchTeamBlue)
                 {
-                    selectedTeam = value;
-                    NotifyOfPropertyChange(() => SelectedTeam);
+                    newMatchTeamBlue = value;
+                    NotifyOfPropertyChange(() => NewMatchTeamBlue);
+                    NotifyOfPropertyChange(() => NewMatchSaveEnabled);
                 }
             }
         }
 
-        private List<Team> newMatchTeams;
-
-        public BindableCollection<MatchTeamListItemViewModel> TeamsViews
+        private Team newMatchTeamRed;
+        public Team NewMatchTeamRed
         {
-            get
+            get { return newMatchTeamRed; }
+            set
             {
-                var list = new BindableCollection<MatchTeamListItemViewModel>();
-                foreach (var team in newMatchTeams)
-                    list.Add(new MatchTeamListItemViewModel(team));
-                return list;
+                if (value != newMatchTeamRed)
+                {
+                    newMatchTeamRed = value;
+                    NotifyOfPropertyChange(() => NewMatchTeamRed);
+                    NotifyOfPropertyChange(() => NewMatchSaveEnabled);
+                }
             }
         }
 
-        public void AddTeam()
+        private int newMatchTeamSize;
+        public int NewMatchTeamSize
         {
-            if (SelectedTeam == null)
-                return;
-            Log.Information("GUI new match add team {team}", SelectedTeam.Name);
-            newMatchTeams.Add(SelectedTeam);
-            SelectedTeam = null;
-            NotifyOfPropertyChange(() => TeamsViews);
-            NotifyOfPropertyChange(() => Teams);
+            get { return newMatchTeamSize; }
+            set
+            {
+                if (value != newMatchTeamSize)
+                {
+                    newMatchTeamSize = value;
+                    NotifyOfPropertyChange(() => NewMatchTeamSize);
+                }
+            }
         }
 
-        public void RemoveTeam(MatchTeamListItemViewModel model)
+        private int newMatchRoomSize;
+        public int NewMatchRoomSize
         {
-            Log.Information("GUI new match add team {team}", model.Team.Name);
-            newMatchTeams.Remove(model.Team);
-            NotifyOfPropertyChange(() => TeamsViews);
-            NotifyOfPropertyChange(() => Teams);
+            get { return newMatchRoomSize; }
+            set
+            {
+                if (value != newMatchRoomSize)
+                {
+                    newMatchRoomSize = value;
+                    NotifyOfPropertyChange(() => NewMatchRoomSize);
+                }
+            }
         }
 
         public Visibility PlayersEditorIsVisible
@@ -388,6 +399,15 @@ namespace script_chan2.GUI
             {
                 if (string.IsNullOrEmpty(newMatchName))
                     return false;
+                if (NewMatchTeamMode == TeamModes.TeamVS)
+                {
+                    if (NewMatchTeamBlue == null)
+                        return false;
+                    if (NewMatchTeamRed == null)
+                        return false;
+                    if (NewMatchTeamBlue == NewMatchTeamRed)
+                        return false;
+                }
                 return true;
             }
         }
@@ -396,11 +416,13 @@ namespace script_chan2.GUI
         {
             Log.Information("GUI new match dialog open");
             NewMatchName = "";
+            NewMatchTeamBlue = null;
+            NewMatchTeamRed = null;
+            NewMatchTeamSize = 4;
+            NewMatchRoomSize = 8;
             NewMatchTournament = Settings.DefaultTournament;
             NewMatchBO = Settings.DefaultBO;
-            newMatchTeams = new List<Team>();
             newMatchPlayers = new List<Player>();
-            NotifyOfPropertyChange(() => Teams);
         }
 
         public void NewMatchDialogClosed()
@@ -419,9 +441,11 @@ namespace script_chan2.GUI
                 mpTimerAfterGame = NewMatchTournament.MpTimerAfterGame;
                 mpTimerAfterPick = NewMatchTournament.MpTimerAfterPick;
             }
-            var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, null, null, null, null, NewMatchBO, true, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, MatchStatus.New);
-            match.Teams = newMatchTeams;
-            match.Players = newMatchPlayers;
+            var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, NewMatchTeamBlue, 0, NewMatchTeamRed, 0, NewMatchTeamSize, NewMatchRoomSize, null, null, null, null, NewMatchBO, true, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, MatchStatus.New);
+            foreach (var player in newMatchPlayers)
+            {
+                match.Players.Add(player, 0);
+            }
             match.Save();
             Settings.DefaultTournament = NewMatchTournament;
             Settings.DefaultBO = NewMatchBO;

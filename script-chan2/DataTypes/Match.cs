@@ -9,19 +9,25 @@ namespace script_chan2.DataTypes
 {
     public class Match
     {
-        public Match(Tournament tournament, Mappool mappool, string name, GameModes gameMode, TeamModes teamMode, WinConditions winCondition, Team rollWinnerTeam, Player rollWinnerPlayer, Team firstPickerTeam, Player firstPickerPlayer,
-            int bo, bool enableWebhooks, int mpTimerCommand, int mpTimerAfterGame, int mpTimerAfterPick, int pointsForSecondBan, bool allPicksFreemod, MatchStatus status, int id = 0)
+        public Match(Tournament tournament, Mappool mappool, string name, GameModes gameMode, TeamModes teamMode, WinConditions winCondition, Team teamBlue, int teamBluePoints, Team teamRed, int teamRedPoints,
+            int teamSize, int roomSize, Team rollWinnerTeam, Player rollWinnerPlayer, Team firstPickerTeam, Player firstPickerPlayer, int bo, bool enableWebhooks, int mpTimerCommand, int mpTimerAfterGame,
+            int mpTimerAfterPick, int pointsForSecondBan, bool allPicksFreemod, MatchStatus status, int id = 0)
         {
-            Players = new List<Player>();
-            Teams = new List<Team>();
+            Players = new Dictionary<Player, int>();
             Tournament = tournament;
             Mappool = mappool;
             Name = name;
             GameMode = gameMode;
             TeamMode = teamMode;
             WinCondition = winCondition;
+            TeamSize = teamSize;
+            RoomSize = roomSize;
             if (TeamMode == TeamModes.TeamVS)
             {
+                TeamBlue = teamBlue;
+                TeamBluePoints = teamBluePoints;
+                TeamRed = teamRed;
+                TeamRedPoints = teamRedPoints;
                 RollWinnerTeam = rollWinnerTeam;
                 FirstPickerTeam = firstPickerTeam;
             }
@@ -55,6 +61,18 @@ namespace script_chan2.DataTypes
 
         public WinConditions WinCondition { get; set; }
 
+        public Team TeamBlue { get; set; }
+
+        public int TeamBluePoints { get; set; }
+
+        public Team TeamRed { get; set; }
+
+        public int TeamRedPoints { get; set; }
+
+        public int TeamSize { get; set; }
+
+        public int RoomSize { get; set; }
+
         public Team RollWinnerTeam { get; set; }
 
         public Player RollWinnerPlayer { get; set; }
@@ -79,9 +97,7 @@ namespace script_chan2.DataTypes
 
         public MatchStatus Status { get; set; }
 
-        public List<Team> Teams { get; set; }
-
-        public List<Player> Players { get; set; }
+        public Dictionary<Player, int> Players { get; set; }
 
         public void Save()
         {

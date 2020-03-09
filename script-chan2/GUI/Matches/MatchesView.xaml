@@ -59,36 +59,26 @@
                     <Grid Grid.Row="3" Grid.ColumnSpan="4" Visibility="{Binding TeamsEditorIsVisible}" Margin="0 10 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
-                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ComboBox md:HintAssist.Hint="Team" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding SelectedTeam}">
+                        <ComboBox md:HintAssist.Hint="Team Red" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding NewMatchTeamBlue}" Margin="0 0 5 0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Add" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action AddTeam]">
-                            <md:PackIcon Kind="Add" />
-                        </Button>
-                        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
-                            <ItemsControl ItemsSource="{Binding TeamsViews}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <ContentControl cal:View.Model="{Binding}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
+                        <ComboBox md:HintAssist.Hint="Team Blue" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding NewMatchTeamRed}" Grid.Column="1" Margin="5 0 0 0">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
                     <Grid Grid.Row="3" Grid.ColumnSpan="4" Visibility="{Binding PlayersEditorIsVisible}" Margin="0 10 0 0">
                         <Grid.ColumnDefinitions>

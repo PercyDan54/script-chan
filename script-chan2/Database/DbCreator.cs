@@ -30,7 +30,6 @@ namespace script_chan2.Database
             CreatePlayersTable();
             CreateTeamPlayersTable();
             CreateMatchesTable();
-            CreateMatchTeamsTable();
             CreateMatchPlayersTable();
             CreateRoomsTable();
             CreateGamesTable();
@@ -124,14 +123,7 @@ namespace script_chan2.Database
                 artist TEXT,
                 title TEXT,
                 version TEXT,
-                creator TEXT,
-                bpm REAL,
-                diffStar REAL,
-                diffSize REAL,
-                diffOverall REAL,
-                diffAR REAL,
-                diffHP REAL,
-                length INTEGER)", conn);
+                creator TEXT)", conn);
             command.ExecuteNonQuery();
             command.Dispose();
         }
@@ -194,6 +186,12 @@ namespace script_chan2.Database
                 gameMode TEXT,
                 teamMode TEXT,
                 winCondition TEXT,
+                teamBlue INTEGER,
+                teamBluePoints INTEGER,
+                teamRed INTEGER,
+                teamRedPoints INTEGER,
+                teamSize INTEGER,
+                roomSize INTEGER,
                 rollWinner INTEGER,
                 firstPicker INTEGER,
                 BO INTEGER,
@@ -205,19 +203,9 @@ namespace script_chan2.Database
                 allPicksFreemod BOOL,
                 status TEXT,
                 FOREIGN KEY(tournament) REFERENCES Tournaments(id),
-                FOREIGN KEY(mappool) REFERENCES Mappools(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
-        }
-
-        private static void CreateMatchTeamsTable()
-        {
-            var command = new SQLiteCommand(@"CREATE TABLE MatchTeams
-                (match INTEGER NOT NULL,
-                team INTEGER NOT NULL,
-                PRIMARY KEY(match, team),
-                FOREIGN KEY(match) REFERENCES Matches(id),
-                FOREIGN KEY(team) REFERENCES Teams(id))", conn);
+                FOREIGN KEY(mappool) REFERENCES Mappools(id),
+                FOREIGN KEY(teamBlue) REFERENCES Teams(id),
+                FOREIGN KEY(teamRed) REFERENCES Teams(id))", conn);
             command.ExecuteNonQuery();
             command.Dispose();
         }

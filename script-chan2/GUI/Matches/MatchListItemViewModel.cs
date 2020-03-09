@@ -19,7 +19,6 @@ namespace script_chan2.GUI
         {
             this.match = match;
             Events.Aggregator.Subscribe(this);
-            editMatchTeams = new List<Team>();
             editMatchPlayers = new List<Player>();
         }
         #endregion
@@ -217,58 +216,68 @@ namespace script_chan2.GUI
                 {
                     if (team.Tournament != EditMatchTournament)
                         continue;
-                    if (editMatchTeams.Contains(team))
-                        continue;
                     list.Add(team);
                 }
                 return list;
             }
         }
 
-        private Team selectedTeam;
-        public Team SelectedTeam
+        private Team editMatchTeamBlue;
+        public Team EditMatchTeamBlue
         {
-            get { return selectedTeam; }
+            get { return editMatchTeamBlue; }
             set
             {
-                if (value != selectedTeam)
+                if (value != editMatchTeamBlue)
                 {
-                    selectedTeam = value;
-                    NotifyOfPropertyChange(() => SelectedTeam);
+                    editMatchTeamBlue = value;
+                    NotifyOfPropertyChange(() => EditMatchTeamBlue);
+                    NotifyOfPropertyChange(() => EditMatchSaveEnabled);
                 }
             }
         }
 
-        private List<Team> editMatchTeams;
-
-        public BindableCollection<MatchTeamListItemViewModel> TeamsViews
+        private Team editMatchTeamRed;
+        public Team EditMatchTeamRed
         {
-            get
+            get { return editMatchTeamRed; }
+            set
             {
-                var list = new BindableCollection<MatchTeamListItemViewModel>();
-                foreach (var team in editMatchTeams)
-                    list.Add(new MatchTeamListItemViewModel(team));
-                return list;
+                if (value != editMatchTeamRed)
+                {
+                    editMatchTeamRed = value;
+                    NotifyOfPropertyChange(() => EditMatchTeamRed);
+                    NotifyOfPropertyChange(() => EditMatchSaveEnabled);
+                }
             }
         }
 
-        public void AddTeam()
+        private int editMatchTeamSize;
+        public int EditMatchTeamSize
         {
-            if (SelectedTeam == null)
-                return;
-            Log.Information("GUI edit match '{match}' add team '{team}'", match.Name, SelectedTeam.Name);
-            editMatchTeams.Add(SelectedTeam);
-            SelectedTeam = null;
-            NotifyOfPropertyChange(() => TeamsViews);
-            NotifyOfPropertyChange(() => Teams);
+            get { return editMatchTeamSize; }
+            set
+            {
+                if (value != editMatchTeamSize)
+                {
+                    editMatchTeamSize = value;
+                    NotifyOfPropertyChange(() => EditMatchTeamSize);
+                }
+            }
         }
 
-        public void RemoveTeam(MatchTeamListItemViewModel model)
+        private int editMatchRoomSize;
+        public int EditMatchRoomSize
         {
-            Log.Information("GUI edit match '{match}' remove team '{team}'", match.Name, SelectedTeam.Name);
-            editMatchTeams.Remove(model.Team);
-            NotifyOfPropertyChange(() => TeamsViews);
-            NotifyOfPropertyChange(() => Teams);
+            get { return editMatchRoomSize; }
+            set
+            {
+                if (value != editMatchRoomSize)
+                {
+                    editMatchRoomSize = value;
+                    NotifyOfPropertyChange(() => EditMatchRoomSize);
+                }
+            }
         }
 
         public Visibility PlayersEditorIsVisible
@@ -345,6 +354,15 @@ namespace script_chan2.GUI
                     return false;
                 if (string.IsNullOrEmpty(editMatchName))
                     return false;
+                if (EditMatchTeamMode == TeamModes.TeamVS)
+                {
+                    if (EditMatchTeamBlue == null)
+                        return false;
+                    if (EditMatchTeamRed == null)
+                        return false;
+                    if (EditMatchTeamBlue == EditMatchTeamRed)
+                        return false;
+                }
                 return true;
             }
         }
@@ -359,10 +377,15 @@ namespace script_chan2.GUI
             EditMatchTeamMode = match.TeamMode;
             EditMatchWinCondition = match.WinCondition;
             EditMatchBO = match.BO;
-            editMatchTeams = match.Teams.ToList();
-            editMatchPlayers = match.Players.ToList();
-            NotifyOfPropertyChange(() => TeamsViews);
-            NotifyOfPropertyChange(() => Teams);
+            EditMatchTeamBlue = match.TeamBlue;
+            EditMatchTeamRed = match.TeamRed;
+            EditMatchTeamSize = match.TeamSize;
+            EditMatchRoomSize = match.RoomSize;
+            editMatchPlayers = new List<Player>();
+            foreach (var player in match.Players)
+            {
+                editMatchPlayers.Add(player.Key);
+            }
             NotifyOfPropertyChange(() => PlayersViews);
         }
 
@@ -378,8 +401,15 @@ namespace script_chan2.GUI
                 match.TeamMode = EditMatchTeamMode;
                 match.WinCondition = EditMatchWinCondition;
                 match.BO = EditMatchBO;
-                match.Teams = editMatchTeams;
-                match.Players = editMatchPlayers;
+                match.TeamBlue = EditMatchTeamBlue;
+                match.TeamRed = EditMatchTeamRed;
+                match.TeamSize = EditMatchTeamSize;
+                match.RoomSize = EditMatchRoomSize;
+                match.Players.Clear();
+                foreach (var player in editMatchPlayers)
+                {
+                    match.Players.Add(player, 0);
+                }
                 match.Save();
                 NotifyOfPropertyChange(() => Name);
                 Events.Aggregator.PublishOnUIThread("EditMatch");

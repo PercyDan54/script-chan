@@ -31,7 +31,7 @@ namespace script_chan2.Database
             InitMappoolMaps();
             InitTournamentWebhooks();
             InitMatches();
-            InitMatchTeamsAndPlayers();
+            InitMatchPlayers();
             Log.Information("DB init finished");
         }
 
@@ -745,7 +745,8 @@ namespace script_chan2.Database
             Log.Information("DB init matches");
             Matches = new List<Match>();
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, tournament, mappool, name, gameMode, teamMode, winCondition, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status FROM Matches", conn))
+            using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
+                rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status FROM Matches", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -782,22 +783,32 @@ namespace script_chan2.Database
                     }
                     Player rollWinnerPlayer = null;
                     Team rollWinnerTeam = null;
-                    if (reader["rollWinner"] != DBNull.Value)
-                    {
-                        if (teamMode == Enums.TeamModes.TeamVS)
-                            rollWinnerTeam = Teams.First(x => x.Id == Convert.ToInt32(reader["rollWinner"]));
-                        else
-                            rollWinnerPlayer = Players.First(x => x.Id == Convert.ToInt32(reader["rollWinner"]));
-                    }
                     Player firstPickerPlayer = null;
                     Team firstPickerTeam = null;
-                    if (reader["firstPicker"] != DBNull.Value)
+                    Team teamRed = null;
+                    Team teamBlue = null;
+                    if (teamMode == Enums.TeamModes.TeamVS)
                     {
-                        if (teamMode == Enums.TeamModes.TeamVS)
+                        if (reader["rollWinner"] != DBNull.Value)
+                            rollWinnerTeam = Teams.First(x => x.Id == Convert.ToInt32(reader["rollWinner"]));
+                        if (reader["firstPicker"] != DBNull.Value)
                             firstPickerTeam = Teams.First(x => x.Id == Convert.ToInt32(reader["firstPicker"]));
-                        else
+                        if (reader["teamRed"] != DBNull.Value)
+                            teamRed = Teams.First(x => x.Id == Convert.ToInt32(reader["teamRed"]));
+                        if (reader["teamBlue"] != DBNull.Value)
+                            teamBlue = Teams.First(x => x.Id == Convert.ToInt32(reader["teamBlue"]));
+                    }
+                    else
+                    {
+                        if (reader["rollWinner"] != DBNull.Value)
+                            rollWinnerPlayer = Players.First(x => x.Id == Convert.ToInt32(reader["rollWinner"]));
+                        if (reader["firstPicker"] != DBNull.Value)
                             firstPickerPlayer = Players.First(x => x.Id == Convert.ToInt32(reader["firstPicker"]));
                     }
+                    var teamRedPoints = Convert.ToInt32(reader["teamRedPoints"]);
+                    var teamBluePoints = Convert.ToInt32(reader["teamBluePoints"]);
+                    var teamSize = Convert.ToInt32(reader["teamSize"]);
+                    var roomSize = Convert.ToInt32(reader["roomSize"]);
                     var bo = Convert.ToInt32(reader["BO"]);
                     var enableWebhooks = Convert.ToBoolean(reader["enableWebhooks"]);
                     var mpTimerCommand = Convert.ToInt32(reader["mpTimerCommand"]);
@@ -812,7 +823,7 @@ namespace script_chan2.Database
                         case "InProgress": status = Enums.MatchStatus.InProgress; break;
                         case "Finished": status = Enums.MatchStatus.Finished; break;
                     }
-                    var match = new Match(tournament, mappool, name, gameMode, teamMode, winCondition, rollWinnerTeam, rollWinnerPlayer, firstPickerTeam, firstPickerPlayer, bo, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, id);
+                    var match = new Match(tournament, mappool, name, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinnerTeam, rollWinnerPlayer, firstPickerTeam, firstPickerPlayer, bo, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, id);
                     Matches.Add(match);
                 }
                 reader.Close();
@@ -826,8 +837,8 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, gameMode, teamMode, winCondition, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status)" +
-                    "VALUES (@tournament, @mappool, @name, @gameMode, @teamMode, @winCondition, @rollWinner, @firstPicker, @BO, @enableWebhooks, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status)" +
+                    "VALUES (@tournament, @mappool, @name, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @enableWebhooks, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status)", conn))
                 {
                     if (match.Tournament == null)
                         command.Parameters.AddWithValue("@tournament", DBNull.Value);
@@ -851,6 +862,14 @@ namespace script_chan2.Database
                             command.Parameters.AddWithValue("@firstPicker", match.FirstPickerTeam.Id);
                         else
                             command.Parameters.AddWithValue("@firstPicker", DBNull.Value);
+                        if (match.TeamBlue != null)
+                            command.Parameters.AddWithValue("@teamBlue", match.TeamBlue.Id);
+                        else
+                            command.Parameters.AddWithValue("@teamBlue", DBNull.Value);
+                        if (match.TeamRed != null)
+                            command.Parameters.AddWithValue("@teamRed", match.TeamRed.Id);
+                        else
+                            command.Parameters.AddWithValue("@teamRed", DBNull.Value);
                     }
                     else
                     {
@@ -863,6 +882,10 @@ namespace script_chan2.Database
                         else
                             command.Parameters.AddWithValue("@firstPicker", DBNull.Value);
                     }
+                    command.Parameters.AddWithValue("@teamBluePoints", match.TeamBluePoints);
+                    command.Parameters.AddWithValue("@teamRedPoints", match.TeamRedPoints);
+                    command.Parameters.AddWithValue("@teamSize", match.TeamSize);
+                    command.Parameters.AddWithValue("@roomSize", match.RoomSize);
                     command.Parameters.AddWithValue("@BO", match.BO);
                     command.Parameters.AddWithValue("@enableWebhooks", match.EnableWebhooks);
                     command.Parameters.AddWithValue("@mpTimerCommand", match.MpTimerCommand);
@@ -877,26 +900,15 @@ namespace script_chan2.Database
                 {
                     resultValue = Convert.ToInt32(command.ExecuteScalar());
                 }
-                if (match.TeamMode == Enums.TeamModes.TeamVS)
-                {
-                    foreach (var team in match.Teams)
-                    {
-                        using (var command = new SQLiteCommand("INSERT INTO MatchTeams (match, team) VALUES (@match, @team)", conn))
-                        {
-                            command.Parameters.AddWithValue("@match", resultValue);
-                            command.Parameters.AddWithValue("@team", team.Id);
-                            command.ExecuteNonQuery();
-                        }
-                    }
-                }
-                else
+                if (match.TeamMode == Enums.TeamModes.HeadToHead)
                 {
                     foreach (var player in match.Players)
                     {
-                        using (var command = new SQLiteCommand("INSERT INTO MatchPlayers (match, player) VALUES (@match, @player)", conn))
+                        using (var command = new SQLiteCommand("INSERT INTO MatchPlayers (match, player, points) VALUES (@match, @player, @points)", conn))
                         {
                             command.Parameters.AddWithValue("@match", resultValue);
-                            command.Parameters.AddWithValue("@player", player.Id);
+                            command.Parameters.AddWithValue("@player", player.Key.Id);
+                            command.Parameters.AddWithValue("@points", player.Value);
                             command.ExecuteNonQuery();
                         }
                     }
@@ -913,7 +925,8 @@ namespace script_chan2.Database
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand(@"UPDATE Matches
-                SET tournament = @tournament, mappool = @mappool, name = @name, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, rollWinner = @rollWinner, firstPicker = @firstPicker, BO = @BO,
+                SET tournament = @tournament, mappool = @mappool, name = @name, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
+                teamRed = @teamRed, teamRedPoints = @teamRedPoints, teamSize = @teamSize, roomSize = @roomSize, rollWinner = @rollWinner, firstPicker = @firstPicker, BO = @BO,
                 enableWebhooks = @enableWebhooks, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, pointsForSecondBan = @pointsForSecondBan,
                 allPicksFreemod = @allPicksFreemod, status = @status
                 WHERE id = @id", conn))
@@ -940,6 +953,14 @@ namespace script_chan2.Database
                             command.Parameters.AddWithValue("@firstPicker", match.FirstPickerTeam.Id);
                         else
                             command.Parameters.AddWithValue("@firstPicker", DBNull.Value);
+                        if (match.TeamBlue != null)
+                            command.Parameters.AddWithValue("@teamBlue", match.TeamBlue.Id);
+                        else
+                            command.Parameters.AddWithValue("@teamBlue", DBNull.Value);
+                        if (match.TeamRed != null)
+                            command.Parameters.AddWithValue("@teamRed", match.TeamRed.Id);
+                        else
+                            command.Parameters.AddWithValue("@teamRed", DBNull.Value);
                     }
                     else
                     {
@@ -952,6 +973,10 @@ namespace script_chan2.Database
                         else
                             command.Parameters.AddWithValue("@firstPicker", DBNull.Value);
                     }
+                    command.Parameters.AddWithValue("@teamBluePoints", match.TeamBluePoints);
+                    command.Parameters.AddWithValue("@teamRedPoints", match.TeamRedPoints);
+                    command.Parameters.AddWithValue("@teamSize", match.TeamSize);
+                    command.Parameters.AddWithValue("@roomSize", match.RoomSize);
                     command.Parameters.AddWithValue("@BO", match.BO);
                     command.Parameters.AddWithValue("@enableWebhooks", match.EnableWebhooks);
                     command.Parameters.AddWithValue("@mpTimerCommand", match.MpTimerCommand);
@@ -963,24 +988,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@id", match.Id);
                     command.ExecuteNonQuery();
                 }
-                if (match.TeamMode == Enums.TeamModes.TeamVS)
-                {
-                    using (var command = new SQLiteCommand("DELETE FROM MatchTeams WHERE match = @match", conn))
-                    {
-                        command.Parameters.AddWithValue("@match", match.Id);
-                        command.ExecuteNonQuery();
-                    }
-                    foreach (var team in match.Teams)
-                    {
-                        using (var command = new SQLiteCommand("INSERT INTO MatchTeams (match, team) VALUES (@match, @team)", conn))
-                        {
-                            command.Parameters.AddWithValue("@match", match.Id);
-                            command.Parameters.AddWithValue("@team", team.Id);
-                            command.ExecuteNonQuery();
-                        }
-                    }
-                }
-                else
+                if (match.TeamMode == Enums.TeamModes.HeadToHead)
                 {
                     using (var command = new SQLiteCommand("DELETE FROM MatchPlayers WHERE match = @match", conn))
                     {
@@ -989,10 +997,11 @@ namespace script_chan2.Database
                     }
                     foreach (var player in match.Players)
                     {
-                        using (var command = new SQLiteCommand("INSERT INTO MatchPlayers (match, player) VALUES (@match, @player)", conn))
+                        using (var command = new SQLiteCommand("INSERT INTO MatchPlayers (match, player, points) VALUES (@match, @player, @points)", conn))
                         {
                             command.Parameters.AddWithValue("@match", match.Id);
-                            command.Parameters.AddWithValue("@player", player.Id);
+                            command.Parameters.AddWithValue("@player", player.Key.Id);
+                            command.Parameters.AddWithValue("@points", player.Value);
                             command.ExecuteNonQuery();
                         }
                     }
@@ -1006,11 +1015,6 @@ namespace script_chan2.Database
             Log.Information("DB delete match '{name}'", match.Name);
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("DELETE FROM MatchTeams WHERE match = @match", conn))
-                {
-                    command.Parameters.AddWithValue("@match", match.Id);
-                    command.ExecuteNonQuery();
-                }
                 using (var command = new SQLiteCommand("DELETE FROM MatchPlayers WHERE match = @match", conn))
                 {
                     command.Parameters.AddWithValue("@match", match.Id);
@@ -1026,38 +1030,23 @@ namespace script_chan2.Database
             Matches.Remove(match);
         }
 
-        public static void InitMatchTeamsAndPlayers()
+        public static void InitMatchPlayers()
         {
             Log.Information("DB init match teams and players");
             using (var conn = GetConnection())
             {
                 foreach (var match in Matches)
                 {
-                    if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    if (match.TeamMode == Enums.TeamModes.HeadToHead)
                     {
-                        using (var command = new SQLiteCommand("SELECT team FROM MatchTeams WHERE match = @match", conn))
+                        using (var command = new SQLiteCommand("SELECT player, points FROM MatchPlayers WHERE match = @match", conn))
                         {
                             command.Parameters.AddWithValue("@match", match.Id);
                             using (var reader = command.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
-                                    match.Teams.Add(Teams.First(x => x.Id == Convert.ToInt32(reader["team"])));
-                                }
-                                reader.Close();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (var command = new SQLiteCommand("SELECT player FROM MatchPlayers WHERE match = @match", conn))
-                        {
-                            command.Parameters.AddWithValue("@match", match.Id);
-                            using (var reader = command.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    match.Players.Add(Players.First(x => x.Id == Convert.ToInt32(reader["player"])));
+                                    match.Players.Add(Players.First(x => x.Id == Convert.ToInt32(reader["player"])), Convert.ToInt32(reader["points"]));
                                 }
                                 reader.Close();
                             }
