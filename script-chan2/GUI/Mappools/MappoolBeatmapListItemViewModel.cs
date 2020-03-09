@@ -21,19 +21,9 @@ namespace script_chan2.GUI
         #region Properties
         private MappoolMap beatmap;
 
-        public string Title
+        public string Name
         {
-            get { return beatmap.Beatmap.Title; }
-        }
-
-        public string Artist
-        {
-            get { return beatmap.Beatmap.Artist; }
-        }
-
-        public string Version
-        {
-            get { return beatmap.Beatmap.Version; }
+            get { return $"{beatmap.Beatmap.Artist} - {beatmap.Beatmap.Title} [{beatmap.Beatmap.Version}]"; }
         }
 
         public void UpdateMods()

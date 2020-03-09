@@ -144,6 +144,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Match\MatchBeatmapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Match\MatchTeamView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,6 +199,7 @@
     <Compile Include="GUI\Matches\MatchPlayerListItemViewModel.cs" />
     <Compile Include="GUI\Matches\MatchTeamListItemViewModel.cs" />
     <Compile Include="GUI\MatchList.cs" />
+    <Compile Include="GUI\Match\MatchBeatmapViewModel.cs" />
     <Compile Include="GUI\Match\MatchTeamViewModel.cs" />
     <Compile Include="GUI\Match\MatchViewModel.cs" />
     <Compile Include="GUI\Settings\SettingsViewModel.cs" />

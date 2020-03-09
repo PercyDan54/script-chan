@@ -18,15 +18,7 @@
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="1">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}{0} - {1} [{2}]">
-                        <Binding Path="Artist" />
-                        <Binding Path="Title" />
-                        <Binding Path="Version" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
+            <TextBlock x:Name="Name" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" />
             <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1">
                 <md:PackIcon Kind="Delete" />
             </Button>

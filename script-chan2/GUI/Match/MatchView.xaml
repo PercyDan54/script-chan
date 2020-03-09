@@ -34,7 +34,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid x:Name="RankingGrid" Margin="5">
-                        <ScrollViewer Visibility="{Binding TeamsListIsVisible}">
+                        <ScrollViewer Visibility="{Binding TeamVsVisible}">
                             <ItemsControl ItemsSource="{Binding TeamsViews}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -48,7 +48,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
-                        <ScrollViewer Visibility="{Binding PlayersListIsVisible}">
+                        <ScrollViewer Visibility="{Binding HeadToHeadVisible}">
                             <ItemsControl ItemsSource="{Binding PlayersViews}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -73,7 +73,13 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <ComboBox md:HintAssist.Hint="Mappool" Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Center" Width="150" />
+                        <ComboBox md:HintAssist.Hint="Mappool" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding SelectedMappool}" VerticalAlignment="Center" Width="150">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <CheckBox x:Name="WarmupMode" Content="Warmup mode" Grid.Column="1" Margin="10 0 0 0" />
                         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
                             <ItemsControl ItemsSource="{Binding BeatmapsViews}">
@@ -137,9 +143,21 @@
                         </TextBlock>
                     </Expander.Header>
                     <StackPanel Width="200" Margin="10">
-                        <ComboBox x:Name="RollWinnerTeam" md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-                        <ComboBox x:Name="RollWinnerPlayer" md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" />
-                        <ComboBox x:Name="GameMode" md:HintAssist.Hint="Game mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" />
+                        <ComboBox md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Visibility="{Binding TeamVsVisible}" ItemsSource="{Binding Teams}" SelectedItem="{Binding RollWinnerTeam}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" Visibility="{Binding HeadToHeadVisible}" ItemsSource="{Binding Players}" SelectedItem="{Binding RollWinnerPlayer}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox md:HintAssist.Hint="Game mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" />
                         <TextBox x:Name="BO" md:HintAssist.Hint="BO" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
                         <TextBox x:Name="RoomSize" md:HintAssist.Hint="Room size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
                         <TextBox x:Name="TeamSize" md:HintAssist.Hint="Team size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
