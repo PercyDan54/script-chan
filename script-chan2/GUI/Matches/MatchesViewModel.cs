@@ -441,7 +441,7 @@ namespace script_chan2.GUI
                 mpTimerAfterGame = NewMatchTournament.MpTimerAfterGame;
                 mpTimerAfterPick = NewMatchTournament.MpTimerAfterPick;
             }
-            var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, NewMatchTeamBlue, 0, NewMatchTeamRed, 0, NewMatchTeamSize, NewMatchRoomSize, null, null, null, null, NewMatchBO, true, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, MatchStatus.New);
+            var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, 0, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, NewMatchTeamBlue, 0, NewMatchTeamRed, 0, NewMatchTeamSize, NewMatchRoomSize, null, null, null, null, NewMatchBO, true, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, MatchStatus.New);
             foreach (var player in newMatchPlayers)
             {
                 match.Players.Add(player, 0);

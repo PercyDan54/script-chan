@@ -31,6 +31,7 @@ namespace script_chan2.Database
             CreateTeamPlayersTable();
             CreateMatchesTable();
             CreateMatchPlayersTable();
+            CreateMatchPicksTable();
             CreateRoomsTable();
             CreateGamesTable();
             CreateScoresTable();
@@ -218,6 +219,19 @@ namespace script_chan2.Database
                 PRIMARY KEY(match, player),
                 FOREIGN KEY(match) REFERENCES Matches(id),
                 FOREIGN KEY(player) REFERENCES Players(id))", conn);
+            command.ExecuteNonQuery();
+            command.Dispose();
+        }
+
+        private static void CreateMatchPicksTable()
+        {
+            var command = new SQLiteCommand(@"CREATE TABLE MatchPicks
+                (match INTEGER NOT NULL,
+                beatmap INTEGER NOT NULL,
+                picker INTEGER NOT NULL,
+                PRIMARY KEY(match, beatmap),
+                FOREIGN KEY(match) REFERENCES Matches(id),
+                FOREIGN KEY(beatmap) REFERENCES MappoolMaps(id))", conn);
             command.ExecuteNonQuery();
             command.Dispose();
         }

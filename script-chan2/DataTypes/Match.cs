@@ -9,7 +9,7 @@ namespace script_chan2.DataTypes
 {
     public class Match
     {
-        public Match(Tournament tournament, Mappool mappool, string name, GameModes gameMode, TeamModes teamMode, WinConditions winCondition, Team teamBlue, int teamBluePoints, Team teamRed, int teamRedPoints,
+        public Match(Tournament tournament, Mappool mappool, string name, int roomId, GameModes gameMode, TeamModes teamMode, WinConditions winCondition, Team teamBlue, int teamBluePoints, Team teamRed, int teamRedPoints,
             int teamSize, int roomSize, Team rollWinnerTeam, Player rollWinnerPlayer, Team firstPickerTeam, Player firstPickerPlayer, int bo, bool enableWebhooks, int mpTimerCommand, int mpTimerAfterGame,
             int mpTimerAfterPick, int pointsForSecondBan, bool allPicksFreemod, MatchStatus status, int id = 0)
         {
@@ -17,6 +17,7 @@ namespace script_chan2.DataTypes
             Tournament = tournament;
             Mappool = mappool;
             Name = name;
+            RoomId = roomId;
             GameMode = gameMode;
             TeamMode = teamMode;
             WinCondition = winCondition;
@@ -54,6 +55,8 @@ namespace script_chan2.DataTypes
         public Mappool Mappool { get; set; }
 
         public string Name { get; set; }
+
+        public int RoomId { get; set; }
 
         public GameModes GameMode { get; set; }
 

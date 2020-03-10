@@ -19,7 +19,9 @@ namespace script_chan2.DataTypes
         }
 
         public int Id { get; }
+
         public Room Room { get; }
+
         public Beatmap Beatmap { get; }
 
         public List<GameMods> Mods;

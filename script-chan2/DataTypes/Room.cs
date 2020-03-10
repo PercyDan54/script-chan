@@ -12,12 +12,9 @@ namespace script_chan2.DataTypes
         {
             Games = new List<Game>();
             Id = id;
-            LastEventId = 0;
         }
 
         public int Id { get; }
-
-        public int LastEventId { get; set; }
 
         public string Name { get; set; }
 

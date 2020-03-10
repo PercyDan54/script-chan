@@ -12,19 +12,19 @@ namespace script_chan2.Database
 {
     public static class Database
     {
-        public static List<Tournament> Tournaments;
-        public static List<Webhook> Webhooks;
-        public static List<Mappool> Mappools;
-        public static List<Player> Players;
-        public static List<Team> Teams;
-        public static List<Match> Matches;
+        public static List<Tournament> Tournaments = new List<Tournament>();
+        public static List<Webhook> Webhooks = new List<Webhook>();
+        public static List<Mappool> Mappools = new List<Mappool>();
+        public static List<Player> Players = new List<Player>();
+        public static List<Team> Teams = new List<Team>();
+        public static List<Match> Matches = new List<Match>();
+        public static List<Beatmap> Beatmaps = new List<Beatmap>();
 
         public static void Initialize()
         {
             Log.Information("DB init started");
             InitTournaments();
             InitTeams();
-            InitPlayers();
             InitTeamPlayers();
             InitWebhooks();
             InitMappools();
@@ -79,7 +79,6 @@ namespace script_chan2.Database
         private static void InitTournaments()
         {
             Log.Information("DB init tournaments");
-            Tournaments = new List<Tournament>();
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick FROM Tournaments", conn))
             using (var reader = command.ExecuteReader())
@@ -203,7 +202,6 @@ namespace script_chan2.Database
         public static void InitWebhooks()
         {
             Log.Information("DB init webhooks");
-            Webhooks = new List<Webhook>();
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, name, url FROM Webhooks", conn))
             using (var reader = command.ExecuteReader())
@@ -334,7 +332,6 @@ namespace script_chan2.Database
         public static void InitMappools()
         {
             Log.Information("DB init mappools");
-            Mappools = new List<Mappool>();
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, name, tournament FROM Mappools", conn))
             using (var reader = command.ExecuteReader())
@@ -439,7 +436,9 @@ namespace script_chan2.Database
         public static Beatmap GetBeatmap(int id)
         {
             Log.Information("DB get beatmap '{id}'", id);
-            Beatmap returnValue = null;
+            Beatmap returnValue = Beatmaps.FirstOrDefault(x => x.Id == id);
+            if (returnValue != null)
+                return returnValue;
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand("SELECT id, beatmapsetId, artist, title, version, creator FROM Beatmaps WHERE id = @id", conn))
@@ -468,6 +467,8 @@ namespace script_chan2.Database
                 }
                 conn.Close();
             }
+            if (returnValue != null)
+                Beatmaps.Add(returnValue);
             return returnValue;
         }
 
@@ -545,27 +546,6 @@ namespace script_chan2.Database
         #endregion
 
         #region Players
-        public static void InitPlayers()
-        {
-            Log.Information("DB init players");
-            Players = new List<Player>();
-            using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, name, country FROM Players", conn))
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var id = Convert.ToInt32(reader["id"]);
-                    var name = reader["name"].ToString();
-                    var country = reader["country"].ToString();
-                    var player = new Player(name, country, id);
-                    Players.Add(player);
-                }
-                reader.Close();
-                conn.Close();
-            }
-        }
-
         public static void AddPlayer(Player player)
         {
             Log.Information("DB add new player '{name}'", player.Name);
@@ -649,7 +629,6 @@ namespace script_chan2.Database
         public static void InitTeams()
         {
             Log.Information("DB init teams");
-            Teams = new List<Team>();
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, name, tournament FROM Teams", conn))
             using (var reader = command.ExecuteReader())
@@ -731,7 +710,7 @@ namespace script_chan2.Database
                 {
                     var playerId = Convert.ToInt32(reader["player"]);
                     var teamId = Convert.ToInt32(reader["team"]);
-                    Teams.First(x => x.Id == teamId).Players.Add(Players.First(x => x.Id == playerId));
+                    Teams.First(x => x.Id == teamId).Players.Add(GetPlayer(playerId.ToString()));
                 }
                 reader.Close();
                 conn.Close();
@@ -743,7 +722,6 @@ namespace script_chan2.Database
         public static void InitMatches()
         {
             Log.Information("DB init matches");
-            Matches = new List<Match>();
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
                 rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status FROM Matches", conn))
@@ -801,9 +779,9 @@ namespace script_chan2.Database
                     else
                     {
                         if (reader["rollWinner"] != DBNull.Value)
-                            rollWinnerPlayer = Players.First(x => x.Id == Convert.ToInt32(reader["rollWinner"]));
+                            rollWinnerPlayer = GetPlayer(reader["rollWinner"].ToString());
                         if (reader["firstPicker"] != DBNull.Value)
-                            firstPickerPlayer = Players.First(x => x.Id == Convert.ToInt32(reader["firstPicker"]));
+                            firstPickerPlayer = GetPlayer(reader["firstPicker"].ToString());
                     }
                     var teamRedPoints = Convert.ToInt32(reader["teamRedPoints"]);
                     var teamBluePoints = Convert.ToInt32(reader["teamBluePoints"]);
@@ -823,7 +801,7 @@ namespace script_chan2.Database
                         case "InProgress": status = Enums.MatchStatus.InProgress; break;
                         case "Finished": status = Enums.MatchStatus.Finished; break;
                     }
-                    var match = new Match(tournament, mappool, name, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinnerTeam, rollWinnerPlayer, firstPickerTeam, firstPickerPlayer, bo, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, id);
+                    var match = new Match(tournament, mappool, name, 0, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinnerTeam, rollWinnerPlayer, firstPickerTeam, firstPickerPlayer, bo, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, id);
                     Matches.Add(match);
                 }
                 reader.Close();
@@ -1046,7 +1024,7 @@ namespace script_chan2.Database
                             {
                                 while (reader.Read())
                                 {
-                                    match.Players.Add(Players.First(x => x.Id == Convert.ToInt32(reader["player"])), Convert.ToInt32(reader["points"]));
+                                    match.Players.Add(GetPlayer(reader["player"].ToString()), Convert.ToInt32(reader["points"]));
                                 }
                                 reader.Close();
                             }

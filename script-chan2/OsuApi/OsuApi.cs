@@ -62,81 +62,62 @@ namespace script_chan2.OsuApi
         public static Room GetMatch(int matchId)
         {
             Log.Information("API get match {id}", matchId);
-            ApiMatch data;
-            using (var webClient = new WebClient())
+            var response = SendRequest("get_match", "mp=" + matchId);
+            var data = JsonConvert.DeserializeObject<ApiMatch>(response);
+            var room = new Room(matchId);
+            room.Name = data.match.name;
+            foreach (var gameData in data.games)
             {
-                var response = webClient.DownloadString("https://osu.ppy.sh/community/matches/" + matchId + "/history?after=0");
-                data = JsonConvert.DeserializeObject<ApiMatch>(response);
-                var room = new Room(matchId);
-                foreach (var eventData in data.events)
+                if (gameData.end_time == null)
+                    continue;
+
+                var beatmap = Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
+                var game = new Game(room, Convert.ToInt32(gameData.game_id), beatmap);
+                game.Mods = ModsFromBitEnum(gameData.mods);
+
+                foreach (var scoreData in gameData.scores)
                 {
-                    if (eventData.detail.type == "other" && eventData.game.end_time != null)
-                    {
-                        room.Name = eventData.detail.text;
-                        var beatmapData = eventData.game.beatmap;
-                        var beatmap = new Beatmap(beatmapData.id, beatmapData.beatmapset.id, beatmapData.beatmapset.artist, beatmapData.beatmapset.title, beatmapData.version, beatmapData.beatmapset.creator);
-                        var game = new Game(room, eventData.id, beatmap);
-                        game.Mods = ModsFromList(eventData.game.mods);
+                    var player = Database.Database.GetPlayer(scoreData.user_id);
+                    var score = new Score(game, player, Convert.ToInt32(scoreData.score), TeamFromString(scoreData.team), scoreData.pass == "1");
+                    score.Mods = ModsFromBitEnum(scoreData.enabled_mods);
 
-                        foreach (var scoreData in eventData.game.scores)
-                        {
-                            var playerData = data.users.First(x => x.id == scoreData.user_id);
-                            var player = new Player(playerData.username, playerData.country_code, playerData.id);
-                            Database.Database.AddPlayer(player);
-                            var score = new Score(game, player, scoreData.score, TeamFromString(scoreData.multiplayer.team), scoreData.multiplayer.pass == 1);
-                            score.Mods = ModsFromList(scoreData.mods);
-
-                            game.Scores.Add(score);
-                        }
-
-                        room.Games.Add(game);
-                    }
-
-                    room.LastEventId = eventData.id;
+                    game.Scores.Add(score);
                 }
 
-                if (room.LastEventId != data.latest_event_id)
-                    UpdateRoom(room);
-
-                return room;
+                room.Games.Add(game);
             }
+
+            return room;
         }
 
         public static void UpdateRoom(Room room)
         {
             Log.Information("API refresh match {id}", room.Id);
-            using (var webClient = new WebClient())
+            var response = SendRequest("get_match", "mp=" + room.Id);
+            var data = JsonConvert.DeserializeObject<ApiMatch>(response);
+            room.Name = data.match.name;
+            foreach (var gameData in data.games)
             {
-                var response = webClient.DownloadString("https://osu.ppy.sh/community/matches/" + room.Id + "/history?after=" + room.LastEventId);
-                var data = JsonConvert.DeserializeObject<ApiMatch>(response);
-                foreach (var eventData in data.events)
+                if (room.Games.Any(x => x.Id == Convert.ToInt32(gameData.game_id)))
+                    continue;
+
+                if (gameData.end_time == null)
+                    continue;
+
+                var beatmap = Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
+                var game = new Game(room, Convert.ToInt32(gameData.game_id), beatmap);
+                game.Mods = ModsFromBitEnum(gameData.mods);
+
+                foreach (var scoreData in gameData.scores)
                 {
-                    if (eventData.detail.type == "other" && eventData.game.end_time != null)
-                    {
-                        room.Name = eventData.detail.text;
-                        var beatmapData = eventData.game.beatmap;
-                        var beatmap = new Beatmap(beatmapData.id, beatmapData.beatmapset.id, beatmapData.beatmapset.artist, beatmapData.beatmapset.title, beatmapData.version, beatmapData.beatmapset.creator);
-                        var game = new Game(room, eventData.id, beatmap);
-                        game.Mods = ModsFromList(eventData.game.mods);
+                    var player = Database.Database.GetPlayer(scoreData.user_id);
+                    var score = new Score(game, player, Convert.ToInt32(scoreData.score), TeamFromString(scoreData.team), scoreData.pass == "1");
+                    score.Mods = ModsFromBitEnum(scoreData.enabled_mods);
 
-                        foreach (var scoreData in eventData.game.scores)
-                        {
-                            var playerData = data.users.First(x => x.id == scoreData.user_id);
-                            var player = new Player(playerData.username, playerData.country_code, playerData.id);
-                            var score = new Score(game, player, scoreData.score, TeamFromString(scoreData.multiplayer.team), scoreData.multiplayer.pass == 1);
-                            score.Mods = ModsFromList(scoreData.mods);
-
-                            game.Scores.Add(score);
-                        }
-
-                        room.Games.Add(game);
-                    }
-
-                    room.LastEventId = eventData.id;
+                    game.Scores.Add(score);
                 }
 
-                if (room.LastEventId != data.latest_event_id)
-                    UpdateRoom(room);
+                room.Games.Add(game);
             }
         }
         #endregion
@@ -192,8 +173,8 @@ namespace script_chan2.OsuApi
         {
             switch (team)
             {
-                case "red": return LobbyTeams.Red;
-                case "blue": return LobbyTeams.Blue;
+                case "2": return LobbyTeams.Red;
+                case "1": return LobbyTeams.Blue;
             }
             return LobbyTeams.None;
         }

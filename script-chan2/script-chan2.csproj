@@ -176,6 +176,7 @@
     <Compile Include="DataTypes\Mappool.cs" />
     <Compile Include="DataTypes\MappoolMap.cs" />
     <Compile Include="DataTypes\Match.cs" />
+    <Compile Include="DataTypes\MatchPick.cs" />
     <Compile Include="DataTypes\Player.cs" />
     <Compile Include="DataTypes\Room.cs" />
     <Compile Include="DataTypes\Score.cs" />
@@ -278,7 +279,11 @@
   <ItemGroup>
     <Resource Include="favicon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="sectionpass.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
