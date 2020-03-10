@@ -27,7 +27,7 @@ namespace Test
         [TestMethod]
         public void CreateTournament()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             Assert.AreEqual(1, Database.Tournaments.Count, "Tournament was not created");
             Assert.AreEqual(tournament.Name, Database.Tournaments[0].Name, "Tournament was not created");
@@ -37,7 +37,7 @@ namespace Test
         public void GetTournaments()
         {
             Assert.AreEqual(0, Database.Tournaments.Count, "Database is not empty");
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             Assert.AreEqual(1, Database.Tournaments.Count, "Tournament was not created");
         }
@@ -45,7 +45,7 @@ namespace Test
         [TestMethod]
         public void DeleteTournament()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             Assert.AreEqual(1, Database.Tournaments.Count, "Tournament was not created");
             tournament.Delete();
@@ -55,7 +55,7 @@ namespace Test
         [TestMethod]
         public void UpdateTournament()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             tournament.Name = "Renamed";
             tournament.GameMode = script_chan2.Enums.GameModes.Mania;
@@ -106,7 +106,7 @@ namespace Test
         [TestMethod]
         public void AddWebhookToTournament()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             var webhook = new Webhook("TestWebhook", "http://localhost");
             webhook.Save();
@@ -117,7 +117,7 @@ namespace Test
         [TestMethod]
         public void RemoveWebhookFromTournament()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             var webhook = new Webhook("TestWebhook", "http://localhost");
             webhook.Save();
@@ -130,11 +130,12 @@ namespace Test
         [TestMethod]
         public void CreateMappool()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             var mappool = new Mappool("TestMappool", tournament);
             mappool.Save();
             var mappool2 = new Mappool("TestMappool2");
+            mappool2.Tournament = tournament;
             mappool2.Save();
             Assert.AreEqual(2, Database.Mappools.Count, "Mappools were not created");
         }
@@ -162,22 +163,16 @@ namespace Test
         [TestMethod]
         public void AddMappoolToTournament()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             var mappool = new Mappool("TestMappool", tournament);
             mappool.Save();
 
-            var tournament2 = new Tournament("TestTournament2", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament2 = new Tournament("TestTournament2", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament2.Save();
             var mappool2 = new Mappool("TestMappool2");
+            mappool2.Tournament = tournament2;
             mappool2.Save();
-            tournament2.AddMappool(mappool2);
-
-            var tournament3 = new Tournament("TestTournament3", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
-            tournament3.Save();
-            var mappool3 = new Mappool("TestMappool3");
-            mappool3.Save();
-            mappool3.Tournament = tournament3;
 
             Assert.AreEqual(1, tournament.Mappools.Count, "Mappool was not added to tournament mappool list");
             Assert.AreEqual("TestMappool", tournament.Mappools[0].Name, "Wrong mappool added?");
@@ -186,33 +181,19 @@ namespace Test
             Assert.AreEqual(1, tournament2.Mappools.Count, "Mappool was not added to tournament mappool list");
             Assert.AreEqual("TestMappool2", tournament2.Mappools[0].Name, "Wrong mappool added?");
             Assert.AreEqual(mappool2.Tournament, tournament2, "Mappool tournament reference was not set");
-
-            Assert.AreEqual(1, tournament3.Mappools.Count, "Mappool was not added to tournament mappool list");
-            Assert.AreEqual("TestMappool3", tournament3.Mappools[0].Name, "Wrong mappool added?");
-            Assert.AreEqual(mappool3.Tournament, tournament3, "Mappool tournament reference was not set");
         }
 
         [TestMethod]
         public void RemoveMappoolFromTournament()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             var mappool = new Mappool("TestMappool", tournament);
-            mappool.Save();
-
-            var tournament2 = new Tournament("TestTournament2", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
-            tournament2.Save();
-            var mappool2 = new Mappool("TestMappool2", tournament2);
-            mappool2.Save();
-
             mappool.Tournament = null;
-            tournament2.RemoveMappool(mappool2);
+            mappool.Save();
 
             Assert.AreEqual(0, tournament.Mappools.Count, "Mappool was not removed from tournament mappool list");
             Assert.AreEqual(null, mappool.Tournament, "Mappool tournament reference was not removed");
-
-            Assert.AreEqual(0, tournament2.Mappools.Count, "Mappool was not removed from tournament mappool list");
-            Assert.AreEqual(null, mappool2.Tournament, "Mappool tournament reference was not removed");
         }
 
         [TestMethod]
@@ -221,7 +202,9 @@ namespace Test
             Assert.AreEqual(3, Settings.DefaultBO, "Unexpected default BO");
             Assert.AreEqual(1000, Settings.IrcTimeout, "Unexpected default irc timeout");
             Assert.AreEqual("en-US", Settings.Lang, "Unexpected default language");
-            Assert.AreEqual(180, Settings.MpTimerDuration, "Unexpected default mp timer duration");
+            Assert.AreEqual(120, Settings.DefaultTimerCommand, "Unexpected default mp timer duration");
+            Assert.AreEqual(120, Settings.DefaultTimerAfterGame, "Unexpected default timer after game duration");
+            Assert.AreEqual(120, Settings.DefaultTimerAfterPick, "Unexpected default timer after pick duration");
         }
 
         [TestMethod]
@@ -229,17 +212,21 @@ namespace Test
         {
             Settings.IrcUsername = "Borengar";
             Settings.Lang = "de-DE";
-            Settings.MpTimerDuration = 300;
+            Settings.DefaultTimerCommand = 300;
+            Settings.DefaultTimerAfterGame = 400;
+            Settings.DefaultTimerAfterPick = 500;
 
             Assert.AreEqual("Borengar", Settings.IrcUsername, "Unexpected irc username");
             Assert.AreEqual("de-DE", Settings.Lang, "Unexpected language");
-            Assert.AreEqual(300, Settings.MpTimerDuration, "Unexpected mp timer duration");
+            Assert.AreEqual(300, Settings.DefaultTimerCommand, "Unexpected mp timer duration");
+            Assert.AreEqual(400, Settings.DefaultTimerAfterGame, "Unexpected mp timer after game duration");
+            Assert.AreEqual(500, Settings.DefaultTimerAfterPick, "Unexpected mp timer after pick duration");
         }
 
         [TestMethod]
         public void AddBeatmapToMappool()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             var mappool = new Mappool("TestMappool", tournament);
             mappool.Save();
@@ -262,7 +249,7 @@ namespace Test
         [TestMethod]
         public void RemoveBeatmapFromMappool()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             var mappool = new Mappool("TestMappool", tournament);
             mappool.Save();
@@ -286,7 +273,7 @@ namespace Test
         [TestMethod]
         public void CreateTeam()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
 
             var team = new Team(tournament, "TestTeam");
@@ -300,7 +287,7 @@ namespace Test
         [TestMethod]
         public void DeleteTeam()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
 
             var team = new Team(tournament, "TestTeam");
@@ -313,7 +300,7 @@ namespace Test
         [TestMethod]
         public void AddPlayerToTeam()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
 
             var team = new Team(tournament, "TestTeam");
@@ -328,7 +315,7 @@ namespace Test
         [TestMethod]
         public void RemovePlayerFromTeam()
         {
-            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8);
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
 
             var team = new Team(tournament, "TestTeam");
