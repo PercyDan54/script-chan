@@ -14,6 +14,7 @@ namespace script_chan2.DataTypes
             int mpTimerAfterPick, int pointsForSecondBan, bool allPicksFreemod, MatchStatus status, int id = 0)
         {
             Players = new Dictionary<Player, int>();
+            Picks = new List<MatchPick>();
             Tournament = tournament;
             Mappool = mappool;
             Name = name;
@@ -101,6 +102,8 @@ namespace script_chan2.DataTypes
         public MatchStatus Status { get; set; }
 
         public Dictionary<Player, int> Players { get; set; }
+
+        public List<MatchPick> Picks { get; set; }
 
         public void Save()
         {

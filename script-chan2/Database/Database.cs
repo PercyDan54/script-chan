@@ -32,6 +32,7 @@ namespace script_chan2.Database
             InitTournamentWebhooks();
             InitMatches();
             InitMatchPlayers();
+            InitMatchPicks();
             Log.Information("DB init finished");
         }
 
@@ -891,6 +892,19 @@ namespace script_chan2.Database
                         }
                     }
                 }
+                foreach (var pick in match.Picks)
+                {
+                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker) VALUES (@match, @beatmap, @picker)", conn))
+                    {
+                        command.Parameters.AddWithValue("@match", match.Id);
+                        command.Parameters.AddWithValue("@beatmap", pick.Map.Id);
+                        if (match.TeamMode == Enums.TeamModes.TeamVS)
+                            command.Parameters.AddWithValue("@picker", pick.Team.Id);
+                        else if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                            command.Parameters.AddWithValue("@picker", pick.Player.Id);
+                        command.ExecuteNonQuery();
+                    }
+                }
                 conn.Close();
             }
             Matches.Add(match);
@@ -984,6 +998,24 @@ namespace script_chan2.Database
                         }
                     }
                 }
+                using (var command = new SQLiteCommand("DELETE FROM MatchPicks WHERE match = @match", conn))
+                {
+                    command.Parameters.AddWithValue("@match", match.Id);
+                    command.ExecuteNonQuery();
+                }
+                foreach (var pick in match.Picks)
+                {
+                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker) VALUES (@match, @beatmap, @picker)", conn))
+                    {
+                        command.Parameters.AddWithValue("@match", match.Id);
+                        command.Parameters.AddWithValue("@beatmap", pick.Map.Id);
+                        if (match.TeamMode == Enums.TeamModes.TeamVS)
+                            command.Parameters.AddWithValue("@picker", pick.Team.Id);
+                        else if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                            command.Parameters.AddWithValue("@picker", pick.Player.Id);
+                        command.ExecuteNonQuery();
+                    }
+                }
                 conn.Close();
             }
         }
@@ -994,6 +1026,11 @@ namespace script_chan2.Database
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand("DELETE FROM MatchPlayers WHERE match = @match", conn))
+                {
+                    command.Parameters.AddWithValue("@match", match.Id);
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("DELETE FROM MatchPicks WHERE match = @match", conn))
                 {
                     command.Parameters.AddWithValue("@match", match.Id);
                     command.ExecuteNonQuery();
@@ -1030,6 +1067,29 @@ namespace script_chan2.Database
                             }
                         }
                     }
+                }
+                conn.Close();
+            }
+        }
+
+        public static void InitMatchPicks()
+        {
+            using (var conn = GetConnection())
+            using (var command = new SQLiteCommand("SELECT match, beatmap, picker FROM MatchPicks", conn))
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var match = Matches.First(x => x.Id == Convert.ToInt32(reader["match"]));
+                    var beatmap = match.Mappool.Beatmaps.First(x => x.Id == Convert.ToInt32(reader["beatmap"]));
+                    Team team = null;
+                    Player player = null;
+                    if (match.TeamMode == Enums.TeamModes.TeamVS)
+                        team = Teams.First(x => x.Id == Convert.ToInt32(reader["picker"]));
+                    else if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                        player = GetPlayer(reader["picker"].ToString());
+                    var pick = new MatchPick(match, beatmap, team, player);
+                    match.Picks.Add(pick);
                 }
                 conn.Close();
             }
