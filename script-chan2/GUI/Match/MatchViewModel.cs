@@ -305,6 +305,92 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        public string TeamBlueName
+        {
+            get
+            {
+                if (match.TeamMode == TeamModes.TeamVS)
+                    return match.TeamBlue.Name;
+                return "";
+            }
+        }
+
+        public string TeamRedName
+        {
+            get
+            {
+                if (match.TeamMode == TeamModes.TeamVS)
+                    return match.TeamRed.Name;
+                return "";
+            }
+        }
+
+        public string RoomLinkName
+        {
+            get
+            {
+                return "#mp__" + match.RoomId;
+            }
+        }
+        #endregion
+
+        #region Window Events
+        public void Drag()
+        {
+            ((MatchView)GetView()).DragMove();
+        }
+
+        public void MinimizeWindow()
+        {
+            ((MatchView)GetView()).WindowState = WindowState.Minimized;
+        }
+
+        public Visibility WindowMaximizeVisible
+        {
+            get
+            {
+                if (((MatchView)GetView()).WindowState != WindowState.Maximized)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public void MaximizeWindow()
+        {
+            ((MatchView)GetView()).WindowState = WindowState.Maximized;
+            NotifyOfPropertyChange(() => WindowMaximizeVisible);
+            NotifyOfPropertyChange(() => WindowRestoreVisible);
+        }
+
+        public Visibility WindowRestoreVisible
+        {
+            get
+            {
+                if (((MatchView)GetView()).WindowState == WindowState.Maximized)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public void RestoreWindow()
+        {
+            ((MatchView)GetView()).WindowState = WindowState.Normal;
+            NotifyOfPropertyChange(() => WindowMaximizeVisible);
+            NotifyOfPropertyChange(() => WindowRestoreVisible);
+        }
+
+        public void CloseWindow()
+        {
+            TryClose();
+        }
+        #endregion
+
+        #region Actions
+        public void OpenMpLink()
+        {
+            System.Diagnostics.Process.Start("https://osu.ppy.sh/community/matches/" + match.RoomId);
+        }
         #endregion
     }
 }

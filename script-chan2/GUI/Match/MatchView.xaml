@@ -14,162 +14,198 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{md:MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="700" Width="1000">
-    <md:DialogHost>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        Title="{Binding WindowTitle}" Height="700" Width="1000" WindowStyle="None">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Height="30" Background="LightGray" cal:Message.Attach="[Event MouseDown] = [Action Drag]">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Visibility="{Binding TeamVsVisible}" Orientation="Horizontal" VerticalAlignment="Center" Margin="5 0 0 0">
+                    <TextBlock Foreground="Blue" Text="{Binding TeamBlueName}" FontSize="20" />
+                    <TextBlock Text=" VS " FontSize="20" />
+                    <TextBlock Foreground="Red" Text="{Binding TeamRedName}" FontSize="20" />
+                </StackPanel>
+                <Button x:Name="OpenMpLink" Content="{Binding RoomLinkName}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="Black" HorizontalAlignment="Left" Grid.Column="1" FontSize="20" Margin="5 0 0 0" />
+                <Button x:Name="MinimizeWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Minimize" Height="30" Width="30" Grid.Column="2" VerticalContentAlignment="Bottom">
+                    <md:PackIcon Kind="WindowMinimize" />
+                </Button>
+                <Button x:Name="MaximizeWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Maximize" Height="30" Width="30" Visibility="{Binding WindowMaximizeVisible}" Grid.Column="3">
+                    <md:PackIcon Kind="WindowMaximize" />
+                </Button>
+                <Button x:Name="RestoreWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Restore" Height="30" Width="30" Visibility="{Binding WindowRestoreVisible}" Grid.Column="3">
+                    <md:PackIcon Kind="WindowRestore" />
+                </Button>
+                <Button x:Name="CloseWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Close" Height="30" Width="30" Grid.Column="4">
+                    <md:PackIcon Kind="Close" />
+                </Button>
+            </Grid>
+            <md:DialogHost Grid.Row="1">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid x:Name="RankingGrid" Margin="5">
-                        <ScrollViewer Visibility="{Binding TeamVsVisible}">
-                            <ItemsControl ItemsSource="{Binding TeamsViews}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <ContentControl cal:View.Model="{Binding}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                        <ScrollViewer Visibility="{Binding HeadToHeadVisible}">
-                            <ItemsControl ItemsSource="{Binding PlayersViews}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <ContentControl cal:View.Model="{Binding}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </Grid>
-                    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="Black" Width="3" />
-                    <Grid x:Name="MappoolGrid" Grid.Column="2" Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <ComboBox md:HintAssist.Hint="Mappool" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding SelectedMappool}" VerticalAlignment="Center" Width="150">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <CheckBox x:Name="WarmupMode" Content="Warmup mode" Grid.Column="1" Margin="10 0 0 0" />
-                        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
-                            <ItemsControl ItemsSource="{Binding BeatmapsViews}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <ContentControl cal:View.Model="{Binding}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </Grid>
-                </Grid>
-                <GridSplitter Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="Black" Height="3" />
-                <Grid x:Name="ChatGrid" Grid.Row="2" Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
-                    <FlowDocumentScrollViewer x:Name="ChatWindow" Grid.ColumnSpan="2" Margin="0 0 0 5" />
-                    <TextBox x:Name="ChatMessage" Grid.Row="1" md:HintAssist.Hint="Message" VerticalAlignment="Center" />
-                    <Button x:Name="SendMessage" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Send" Grid.Row="1" Grid.Column="1" Height="35" Width="35" Margin="5 0 0 0">
-                        <md:PackIcon Kind="Send" />
-                    </Button>
-                    <Border Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="0 2 0 0" BorderBrush="LightGray">
-                        <Expander ExpandDirection="Up" IsExpanded="True">
-                            <Expander.Header>
-                                <TextBlock Text="Commands" />
-                            </Expander.Header>
-                            <WrapPanel>
-                                <Button x:Name="InvitePlayers" Content="Invite players" Margin="5" />
-                                <Button x:Name="SendWelcomeString" Content="Welcome string" Margin="5" />
-                                <Button x:Name="StartGame" Content="Start game (5s)" Margin="5" />
-                                <Button x:Name="SendSettings" Content="Settings" Margin="5" />
-                                <Button x:Name="SetPassword" Content="Set password" Margin="5" />
-                                <Button x:Name="SendBanRecap" Content="Ban recap" Margin="5" />
-                                <Button x:Name="SendPickRecap" Content="Pick recap" Margin="5" />
-                                <Button x:Name="AbortMap" Content="Abort map" Margin="5" />
-                                <Button x:Name="CloseRoom" Content="Close the room" Margin="5" Background="Red" />
-                            </WrapPanel>
-                        </Expander>
-                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="RankingGrid" Margin="5">
+                            <ScrollViewer Visibility="{Binding TeamVsVisible}">
+                                <ItemsControl ItemsSource="{Binding TeamsViews}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentControl cal:View.Model="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                            <ScrollViewer Visibility="{Binding HeadToHeadVisible}">
+                                <ItemsControl ItemsSource="{Binding PlayersViews}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentControl cal:View.Model="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="Black" Width="3" />
+                        <Grid x:Name="MappoolGrid" Grid.Column="2" Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <ComboBox md:HintAssist.Hint="Mappool" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding SelectedMappool}" VerticalAlignment="Center" Width="150">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <CheckBox x:Name="WarmupMode" Content="Warmup mode" Grid.Column="1" Margin="10 0 0 0" />
+                            <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
+                                <ItemsControl ItemsSource="{Binding BeatmapsViews}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentControl cal:View.Model="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+                    <GridSplitter Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="Black" Height="3" />
+                    <Grid x:Name="ChatGrid" Grid.Row="2" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <FlowDocumentScrollViewer x:Name="ChatWindow" Grid.ColumnSpan="2" Margin="0 0 0 5" />
+                        <TextBox x:Name="ChatMessage" Grid.Row="1" md:HintAssist.Hint="Message" VerticalAlignment="Center" />
+                        <Button x:Name="SendMessage" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Send" Grid.Row="1" Grid.Column="1" Height="35" Width="35" Margin="5 0 0 0">
+                            <md:PackIcon Kind="Send" />
+                        </Button>
+                        <Border Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="0 2 0 0" BorderBrush="LightGray">
+                            <Expander ExpandDirection="Up" IsExpanded="True">
+                                <Expander.Header>
+                                    <TextBlock Text="Commands" />
+                                </Expander.Header>
+                                <WrapPanel>
+                                    <Button x:Name="InvitePlayers" Content="Invite players" Margin="5" />
+                                    <Button x:Name="SendWelcomeString" Content="Welcome string" Margin="5" />
+                                    <Button x:Name="StartGame" Content="Start game (5s)" Margin="5" />
+                                    <Button x:Name="SendSettings" Content="Settings" Margin="5" />
+                                    <Button x:Name="SetPassword" Content="Set password" Margin="5" />
+                                    <Button x:Name="SendBanRecap" Content="Ban recap" Margin="5" />
+                                    <Button x:Name="SendPickRecap" Content="Pick recap" Margin="5" />
+                                    <Button x:Name="AbortMap" Content="Abort map" Margin="5" />
+                                    <Button x:Name="CloseRoom" Content="Close the room" Margin="5" Background="Red" />
+                                </WrapPanel>
+                            </Expander>
+                        </Border>
+                    </Grid>
                 </Grid>
+                <Border Grid.Column="1" BorderThickness="2 0 0 0" BorderBrush="LightGray">
+                    <Expander ExpandDirection="Left" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Options" RenderTransformOrigin=".5,.5">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+                        <StackPanel Width="200" Margin="10">
+                            <ComboBox md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Visibility="{Binding TeamVsVisible}" ItemsSource="{Binding Teams}" SelectedItem="{Binding RollWinnerTeam}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ComboBox md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" Visibility="{Binding HeadToHeadVisible}" ItemsSource="{Binding Players}" SelectedItem="{Binding RollWinnerPlayer}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ComboBox md:HintAssist.Hint="Game mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" />
+                            <TextBox x:Name="BO" md:HintAssist.Hint="BO" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                            <TextBox x:Name="RoomSize" md:HintAssist.Hint="Room size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                            <TextBox x:Name="TeamSize" md:HintAssist.Hint="Team size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                            <TextBox x:Name="TimerCommand" md:HintAssist.Hint="Timer Command" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                            <TextBox x:Name="TimerAfterGame" md:HintAssist.Hint="Timer after game" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                            <TextBox x:Name="TimerAfterPick" md:HintAssist.Hint="Timer after pick" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                            <TextBox x:Name="PointsForSecondBan" md:HintAssist.Hint="Points for second ban" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                            <CheckBox x:Name="AllPicksFreemod" Content="All picks as freemod" Margin="0 10 0 0" />
+                            <CheckBox x:Name="EnableWebhooks" Content="Enable Webhooks" Margin="0 10 0 0" />
+                        </StackPanel>
+                    </Expander>
+                </Border>
             </Grid>
-            <Border Grid.Column="1" BorderThickness="2 0 0 0" BorderBrush="LightGray">
-                <Expander ExpandDirection="Left" IsExpanded="True">
-                    <Expander.Header>
-                        <TextBlock Text="Options" RenderTransformOrigin=".5,.5">
-                            <TextBlock.LayoutTransform>
-                                <RotateTransform Angle="90" />
-                            </TextBlock.LayoutTransform>
-                        </TextBlock>
-                    </Expander.Header>
-                    <StackPanel Width="200" Margin="10">
-                        <ComboBox md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Visibility="{Binding TeamVsVisible}" ItemsSource="{Binding Teams}" SelectedItem="{Binding RollWinnerTeam}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ComboBox md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" Visibility="{Binding HeadToHeadVisible}" ItemsSource="{Binding Players}" SelectedItem="{Binding RollWinnerPlayer}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ComboBox md:HintAssist.Hint="Game mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" />
-                        <TextBox x:Name="BO" md:HintAssist.Hint="BO" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                        <TextBox x:Name="RoomSize" md:HintAssist.Hint="Room size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                        <TextBox x:Name="TeamSize" md:HintAssist.Hint="Team size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                        <TextBox x:Name="TimerCommand" md:HintAssist.Hint="Timer Command" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                        <TextBox x:Name="TimerAfterGame" md:HintAssist.Hint="Timer after game" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                        <TextBox x:Name="TimerAfterPick" md:HintAssist.Hint="Timer after pick" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                        <TextBox x:Name="PointsForSecondBan" md:HintAssist.Hint="Points for second ban" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                        <CheckBox x:Name="AllPicksFreemod" Content="All picks as freemod" Margin="0 10 0 0" />
-                        <CheckBox x:Name="EnableWebhooks" Content="Enable Webhooks" Margin="0 10 0 0" />
-                    </StackPanel>
-                </Expander>
-            </Border>
-        </Grid>
-    </md:DialogHost>
+        </md:DialogHost>
+    </Grid>
 </Window>
