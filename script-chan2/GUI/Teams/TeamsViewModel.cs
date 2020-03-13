@@ -17,9 +17,9 @@ namespace script_chan2.GUI
             get
             {
                 var list = new BindableCollection<TeamListItemViewModel>();
-                foreach (var team in Database.Database.Teams.OrderBy(x => x.Name))
+                foreach (var team in Database.Database.Teams.OrderBy(x => x.Name).OrderBy(y => y.Tournament.Name))
                 {
-                    if (team.Tournament != Settings.DefaultTournament)
+                    if (team.Tournament != Settings.DefaultTournament && Settings.DefaultTournament != null)
                         continue;
                     list.Add(new TeamListItemViewModel(team));
                 }
@@ -106,7 +106,7 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (string.IsNullOrEmpty(newTeamName))
+                if (string.IsNullOrEmpty(newTeamName) || NewTeamTournament == null)
                     return false;
                 if (Database.Database.Teams.Any(x => x.Name == newTeamName && x.Tournament == newTeamTournament))
                     return false;
@@ -126,8 +126,7 @@ namespace script_chan2.GUI
             Log.Information("GUI new team '{name}' save", NewTeamName);
             var team = new Team(NewTeamTournament, NewTeamName);
             team.Save();
-            Settings.DefaultTournament = NewTeamTournament;
-            NotifyOfPropertyChange(() => NewTeamTournament);
+            NotifyOfPropertyChange(() => FilterTournament);
             NotifyOfPropertyChange(() => TeamsViews);
         }
         #endregion
