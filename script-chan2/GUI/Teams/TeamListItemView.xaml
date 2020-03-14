@@ -89,7 +89,7 @@
                     </Button.CommandParameter>
                 </Button>
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding Path=TournamentName, StringFormat=({0})}" VerticalAlignment="Center" Margin="10 0 0 0" Visibility="{Binding Path=HasTournament, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBlock Text="{Binding Path=TournamentName, StringFormat=({0})}" VerticalAlignment="Center" Margin="10 0 0 0" />
             </StackPanel>
         </Border>
     </Grid>

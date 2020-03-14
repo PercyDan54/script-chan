@@ -19,7 +19,7 @@ namespace script_chan2.GUI
                 var list = new BindableCollection<MappoolListItemViewModel>();
                 foreach (var mappool in Database.Database.Mappools)
                 {
-                    if (mappool.Tournament != Settings.DefaultTournament)
+                    if (Settings.DefaultTournament != null && mappool.Tournament != Settings.DefaultTournament)
                         continue;
                     list.Add(new MappoolListItemViewModel(mappool));
                 }
@@ -106,9 +106,11 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (string.IsNullOrEmpty(newMappoolName))
+                if (string.IsNullOrEmpty(NewMappoolName))
                     return false;
-                if (Database.Database.Mappools.Any(x => x.Name == newMappoolName && x.Tournament == newMappoolTournament))
+                if (NewMappoolTournament == null)
+                    return false;
+                if (Database.Database.Mappools.Any(x => x.Name == NewMappoolName && x.Tournament == NewMappoolTournament))
                     return false;
                 return true;
             }

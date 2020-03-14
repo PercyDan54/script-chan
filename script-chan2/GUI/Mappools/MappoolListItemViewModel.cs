@@ -39,8 +39,6 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (mappool.Tournament == null)
-                    return "";
                 return mappool.Tournament.Name;
             }
         }
@@ -100,9 +98,11 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (string.IsNullOrEmpty(editName))
+                if (string.IsNullOrEmpty(EditName))
                     return false;
-                if (Database.Database.Teams.Any(x => x.Name == editName && x.Tournament == editTournament && x.Id != mappool.Id))
+                if (EditTournament == null)
+                    return false;
+                if (Database.Database.Teams.Any(x => x.Name == EditName && x.Tournament == EditTournament && x.Id != mappool.Id))
                     return false;
                 return true;
             }

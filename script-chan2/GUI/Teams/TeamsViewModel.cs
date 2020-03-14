@@ -19,7 +19,7 @@ namespace script_chan2.GUI
                 var list = new BindableCollection<TeamListItemViewModel>();
                 foreach (var team in Database.Database.Teams.OrderBy(x => x.Name).OrderBy(y => y.Tournament.Name))
                 {
-                    if (team.Tournament != Settings.DefaultTournament && Settings.DefaultTournament != null)
+                    if (Settings.DefaultTournament != null && team.Tournament != Settings.DefaultTournament)
                         continue;
                     list.Add(new TeamListItemViewModel(team));
                 }

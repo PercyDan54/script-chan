@@ -38,17 +38,10 @@ namespace script_chan2.GUI
             get { return team.Name; }
         }
 
-        public bool HasTournament
-        {
-            get { return team.Tournament != null; }
-        }
-
         public string TournamentName
         {
             get
             {
-                if (team.Tournament == null)
-                    return "";
                 return team.Tournament.Name;
             }
         }
@@ -100,9 +93,11 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (string.IsNullOrEmpty(editName))
+                if (string.IsNullOrEmpty(EditName))
                     return false;
-                if (Database.Database.Teams.Any(x => x.Name == editName && x.Tournament == editTournament && x.Id != team.Id))
+                if (EditTournament == null)
+                    return false;
+                if (Database.Database.Teams.Any(x => x.Name == EditName && x.Tournament == EditTournament && x.Id != team.Id))
                     return false;
                 return true;
             }

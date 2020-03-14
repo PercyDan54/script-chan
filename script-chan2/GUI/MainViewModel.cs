@@ -14,7 +14,10 @@ namespace script_chan2.GUI
         #region Constructor
         public MainViewModel()
         {
-            ShowMatches();
+            if (Database.Database.Tournaments.Count == 0)
+                ShowTournaments();
+            else
+                ShowMatches();
             Log.Information("GUI main view loaded");
         }
         #endregion

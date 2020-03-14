@@ -340,9 +340,7 @@ namespace script_chan2.Database
                 while (reader.Read())
                 {
                     var id = Convert.ToInt32(reader["id"]);
-                    Tournament tournament = null;
-                    if (reader["tournament"] != DBNull.Value)
-                        tournament = Tournaments.First(x => x.Id == Convert.ToInt32(reader["tournament"]));
+                    var tournament = Tournaments.First(x => x.Id == Convert.ToInt32(reader["tournament"]));
                     var name = reader["name"].ToString();
                     var mappool = new Mappool(name, tournament, id);
                     Mappools.Add(mappool);
@@ -360,10 +358,7 @@ namespace script_chan2.Database
             {
                 using (var command = new SQLiteCommand("INSERT INTO Mappools (name, tournament) VALUES (@name, @tournament)", conn))
                 {
-                    if (mappool.Tournament == null)
-                        command.Parameters.AddWithValue("@tournament", DBNull.Value);
-                    else
-                        command.Parameters.AddWithValue("@tournament", mappool.Tournament.Id);
+                    command.Parameters.AddWithValue("@tournament", mappool.Tournament.Id);
                     command.Parameters.AddWithValue("@name", mappool.Name);
                     command.ExecuteNonQuery();
                 }
@@ -406,10 +401,7 @@ namespace script_chan2.Database
                 WHERE id = @id", conn))
             {
                 command.Parameters.AddWithValue("@name", mappool.Name);
-                if (mappool.Tournament == null)
-                    command.Parameters.AddWithValue("@tournament", DBNull.Value);
-                else
-                    command.Parameters.AddWithValue("@tournament", mappool.Tournament.Id);
+                command.Parameters.AddWithValue("@tournament", mappool.Tournament.Id);
                 command.Parameters.AddWithValue("@id", mappool.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
@@ -637,9 +629,7 @@ namespace script_chan2.Database
                 while (reader.Read())
                 {
                     var id = Convert.ToInt32(reader["id"]);
-                    Tournament tournament = null;
-                    if (reader["tournament"] != DBNull.Value)
-                        tournament = Tournaments.First(x => x.Id == Convert.ToInt32(reader["tournament"]));
+                    var tournament = Tournaments.First(x => x.Id == Convert.ToInt32(reader["tournament"]));
                     var name = reader["name"].ToString();
                     var team = new Team(tournament, name, id);
                     Teams.Add(team);
@@ -657,10 +647,7 @@ namespace script_chan2.Database
             {
                 using (var command = new SQLiteCommand("INSERT INTO Teams (tournament, name) VALUES (@tournament, @name)", conn))
                 {
-                    if (team.Tournament == null)
-                        command.Parameters.AddWithValue("@tournament", DBNull.Value);
-                    else
-                        command.Parameters.AddWithValue("@tournament", team.Tournament.Id);
+                    command.Parameters.AddWithValue("@tournament", team.Tournament.Id);
                     command.Parameters.AddWithValue("@name", team.Name);
                     command.ExecuteNonQuery();
                 }
@@ -731,9 +718,7 @@ namespace script_chan2.Database
                 while (reader.Read())
                 {
                     var id = Convert.ToInt32(reader["id"]);
-                    Tournament tournament = null;
-                    if (reader["tournament"] != DBNull.Value)
-                        tournament = Tournaments.First(x => x.Id == Convert.ToInt32(reader["tournament"]));
+                    var tournament = Tournaments.First(x => x.Id == Convert.ToInt32(reader["tournament"]));
                     Mappool mappool = null;
                     if (reader["mappool"] != DBNull.Value)
                         mappool = Mappools.First(x => x.Id == Convert.ToInt32(reader["mappool"]));
@@ -819,10 +804,7 @@ namespace script_chan2.Database
                 using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status)" +
                     "VALUES (@tournament, @mappool, @name, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @enableWebhooks, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status)", conn))
                 {
-                    if (match.Tournament == null)
-                        command.Parameters.AddWithValue("@tournament", DBNull.Value);
-                    else
-                        command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
+                    command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
                     if (match.Mappool == null)
                         command.Parameters.AddWithValue("@mappool", DBNull.Value);
                     else
@@ -923,10 +905,7 @@ namespace script_chan2.Database
                 allPicksFreemod = @allPicksFreemod, status = @status
                 WHERE id = @id", conn))
                 {
-                    if (match.Tournament == null)
-                        command.Parameters.AddWithValue("@tournament", DBNull.Value);
-                    else
-                        command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
+                    command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
                     if (match.Mappool == null)
                         command.Parameters.AddWithValue("@mappool", DBNull.Value);
                     else

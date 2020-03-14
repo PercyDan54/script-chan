@@ -31,17 +31,10 @@ namespace script_chan2.GUI
             get { return match.Name; }
         }
 
-        public bool HasTournament
-        {
-            get { return match.Tournament != null; }
-        }
-
         public string TournamentName
         {
             get
             {
-                if (match.Tournament == null)
-                    return "";
                 return match.Tournament.Name;
             }
         }
@@ -85,6 +78,7 @@ namespace script_chan2.GUI
                     editMatchTournament = value;
                     NotifyOfPropertyChange(() => EditMatchTournament);
                     NotifyOfPropertyChange(() => Mappools);
+                    NotifyOfPropertyChange(() => EditMatchSaveEnabled);
                     if (value != null)
                     {
                         EditMatchGameMode = value.GameMode;
@@ -352,7 +346,9 @@ namespace script_chan2.GUI
             {
                 if (match.Status != MatchStatus.New)
                     return false;
-                if (string.IsNullOrEmpty(editMatchName))
+                if (string.IsNullOrEmpty(EditMatchName))
+                    return false;
+                if (EditMatchTournament == null)
                     return false;
                 if (EditMatchTeamMode == TeamModes.TeamVS)
                 {

@@ -22,7 +22,7 @@ namespace script_chan2.GUI
                 var list = new BindableCollection<MatchListItemViewModel>();
                 foreach (var match in Database.Database.Matches.OrderBy(x => x.Name))
                 {
-                    if (match.Tournament != Settings.DefaultTournament)
+                    if (Settings.DefaultTournament != null && match.Tournament != Settings.DefaultTournament)
                         continue;
                     if (FilterStatus != null && match.Status != FilterStatus)
                         continue;
@@ -130,6 +130,7 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => NewMatchTournament);
                     NotifyOfPropertyChange(() => Mappools);
                     NotifyOfPropertyChange(() => Teams);
+                    NotifyOfPropertyChange(() => NewMatchSaveEnabled);
                     if (value != null)
                     {
                         NewMatchGameMode = value.GameMode;
@@ -397,7 +398,9 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (string.IsNullOrEmpty(newMatchName))
+                if (string.IsNullOrEmpty(NewMatchName))
+                    return false;
+                if (NewMatchTournament == null)
                     return false;
                 if (NewMatchTeamMode == TeamModes.TeamVS)
                 {
@@ -428,20 +431,7 @@ namespace script_chan2.GUI
         public void NewMatchDialogClosed()
         {
             Log.Information("GUI new match '{match}' save", NewMatchName);
-            var pointsForSecondBan = 0;
-            var allPicksFreemod = false;
-            var mpTimerCommand = Settings.DefaultTimerCommand;
-            var mpTimerAfterGame = Settings.DefaultTimerAfterGame;
-            var mpTimerAfterPick = Settings.DefaultTimerAfterPick;
-            if (NewMatchTournament != null)
-            {
-                pointsForSecondBan = NewMatchTournament.PointsForSecondBan;
-                allPicksFreemod = NewMatchTournament.AllPicksFreemod;
-                mpTimerCommand = NewMatchTournament.MpTimerCommand;
-                mpTimerAfterGame = NewMatchTournament.MpTimerAfterGame;
-                mpTimerAfterPick = NewMatchTournament.MpTimerAfterPick;
-            }
-            var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, 0, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, NewMatchTeamBlue, 0, NewMatchTeamRed, 0, NewMatchTeamSize, NewMatchRoomSize, null, null, null, null, NewMatchBO, true, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, MatchStatus.New);
+            var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, 0, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, NewMatchTeamBlue, 0, NewMatchTeamRed, 0, NewMatchTeamSize, NewMatchRoomSize, null, null, null, null, NewMatchBO, true, NewMatchTournament.MpTimerCommand, NewMatchTournament.MpTimerAfterGame, NewMatchTournament.MpTimerAfterPick, NewMatchTournament.PointsForSecondBan, NewMatchTournament.AllPicksFreemod, MatchStatus.New);
             foreach (var player in newMatchPlayers)
             {
                 match.Players.Add(player, 0);
