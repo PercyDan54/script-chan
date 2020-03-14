@@ -38,8 +38,10 @@ namespace script_chan2.GUI
         #region Events
         public void Handle(string message)
         {
-            if (message.ToString() == "DeleteMappool")
+            if (message == "DeleteMappool")
                 NotifyOfPropertyChange(() => MappoolsViews);
+            else if (message == "UpdateDefaultTournament")
+                NotifyOfPropertyChange(() => FilterTournament);
         }
         #endregion
 

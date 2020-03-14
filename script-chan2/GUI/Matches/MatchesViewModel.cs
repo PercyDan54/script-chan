@@ -44,10 +44,10 @@ namespace script_chan2.GUI
         #region Events
         public void Handle(string message)
         {
-            if (message.ToString() == "DeleteMatch")
+            if (message == "DeleteMatch" || message == "EditMatch")
                 NotifyOfPropertyChange(() => MatchesViews);
-            else if (message.ToString() == "EditMatch")
-                NotifyOfPropertyChange(() => MatchesViews);
+            else if (message == "UpdateDefaultTournament")
+                NotifyOfPropertyChange(() => FilterTournament);
         }
         #endregion
 

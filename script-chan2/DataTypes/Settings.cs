@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Caliburn.Micro;
+using Newtonsoft.Json;
+using script_chan2.GUI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -149,6 +151,7 @@ namespace script_chan2.DataTypes
                         Database.Database.UpdateSettings("defaultTournament", "");
                     else
                         Database.Database.UpdateSettings("defaultTournament", value.Id.ToString());
+                    Events.Aggregator.PublishOnUIThread("UpdateDefaultTournament");
                 }
             }
         }

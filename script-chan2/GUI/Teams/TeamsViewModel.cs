@@ -38,8 +38,10 @@ namespace script_chan2.GUI
         #region Events
         public void Handle(string message)
         {
-            if (message.ToString() == "DeleteTeam")
+            if (message == "DeleteTeam")
                 NotifyOfPropertyChange(() => TeamsViews);
+            else if (message == "UpdateDefaultTournament")
+                NotifyOfPropertyChange(() => FilterTournament);
         }
         #endregion
 
@@ -126,7 +128,7 @@ namespace script_chan2.GUI
             Log.Information("GUI new team '{name}' save", NewTeamName);
             var team = new Team(NewTeamTournament, NewTeamName);
             team.Save();
-            NotifyOfPropertyChange(() => FilterTournament);
+            Settings.DefaultTournament = NewTeamTournament;
             NotifyOfPropertyChange(() => TeamsViews);
         }
         #endregion

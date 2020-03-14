@@ -35,7 +35,7 @@ namespace script_chan2.GUI
         #region Events
         public void Handle(string message)
         {
-            if (message.ToString() == "DeleteTournament")
+            if (message == "DeleteTournament")
                 NotifyOfPropertyChange(() => TournamentsViews);
         }
         #endregion
@@ -268,6 +268,7 @@ namespace script_chan2.GUI
             Log.Information("GUI new tournament '{name}' save", NewTournamentName);
             var tournament = new Tournament(NewTournamentName, NewTournamentGameMode, NewTournamentTeamMode, NewTournamentWinCondition, NewTournamentAcronym, NewTournamentTeamSize, NewTournamentRoomSize, NewTournamentPointsForSecondBan, NewTournamentAllPicksFreemod, NewTournamentMpTimerCommand, NewTournamentMpTimerAfterGame, NewTournamentMpTimerAfterPick);
             tournament.Save();
+            Settings.DefaultTournament = tournament;
             NotifyOfPropertyChange(() => TournamentsViews);
         }
         #endregion
