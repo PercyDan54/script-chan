@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace script_chan2.GUI
 {
@@ -91,6 +93,15 @@ namespace script_chan2.GUI
         protected override void OnActivate()
         {
             Events.Aggregator.Subscribe(this);
+            Execute.OnUIThread(() =>
+            {
+                MultiplayerChat = new FlowDocument
+                {
+                    FontFamily = new System.Windows.Media.FontFamily("Lucida Console"),
+                    FontSize = 14,
+                    TextAlignment = TextAlignment.Left
+                };
+            });
         }
         protected override void OnDeactivate(bool close)
         {
@@ -111,6 +122,14 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => RoomClosedVisible);
                     NotifyOfPropertyChange(() => RoomOpenVisible);
                     OsuIrc.OsuIrc.JoinChannel("#mp_" + data.Id);
+                }
+            }
+            else if (message is ChannelMessageData)
+            {
+                var data = (ChannelMessageData)message;
+                if (data.Channel == "#mp_" + match.RoomId)
+                {
+                    AddMessageToChat(data.User, data.Message);
                 }
             }
         }
@@ -374,11 +393,41 @@ namespace script_chan2.GUI
                 return "#mp__" + match.RoomId;
             }
         }
+
+        private FlowDocument multiplayerChat;
+        public FlowDocument MultiplayerChat
+        {
+            get { return multiplayerChat; }
+            set
+            {
+                if (value != multiplayerChat)
+                {
+                    multiplayerChat = value;
+                    NotifyOfPropertyChange(() => MultiplayerChat);
+                }
+            }
+        }
+
+        private string chatMessage;
+        public string ChatMessage
+        {
+            get { return chatMessage; }
+            set
+            {
+                if (value != chatMessage)
+                {
+                    chatMessage = value;
+                    NotifyOfPropertyChange(() => ChatMessage);
+                }
+            }
+        }
         #endregion
 
         #region Window Events
-        public void Drag()
+        public void Drag(MouseButtonEventArgs e)
         {
+            if (e.ChangedButton != MouseButton.Left)
+                return;
             ((MatchView)GetView()).DragMove();
         }
 
@@ -446,6 +495,30 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => RoomLinkName);
             NotifyOfPropertyChange(() => RoomClosedVisible);
             NotifyOfPropertyChange(() => RoomOpenVisible);
+        }
+
+        public void SendMessage()
+        {
+            if (string.IsNullOrEmpty(ChatMessage))
+                return;
+            var message = ChatMessage;
+            ChatMessage = "";
+            OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, message);
+            AddMessageToChat(Settings.IrcUsername, message);
+        }
+
+        private void AddMessageToChat(string user, string message)
+        {
+            var paragraph = new Paragraph(new Run($"[{DateTime.Now.ToString("HH:mm")}] {user.PadRight(15)} {message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202 };
+            MultiplayerChat.Blocks.Add(paragraph);
+            NotifyOfPropertyChange(() => MultiplayerChat);
+        }
+
+        public void ChatMessageKeyDown(ActionExecutionContext context)
+        {
+            var keyArgs = context.EventArgs as KeyEventArgs;
+            if (keyArgs != null && keyArgs.Key == Key.Enter)
+                SendMessage();
         }
         #endregion
     }

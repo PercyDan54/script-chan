@@ -113,14 +113,13 @@ namespace script_chan2.OsuIrc
         {
             log.Information("#{channel} | {user}: {message}", e.Channel, e.From, e.Message);
 
-            if (e.From == "BanchoBot")
+            var data = new ChannelMessageData()
             {
-
-            }
-            else
-            {
-
-            }
+                Channel = e.Channel,
+                User = e.From,
+                Message = e.Message
+            };
+            Events.Aggregator.PublishOnUIThread(data);
         }
 
         private static void Client_PrivateMessage(object sender, PrivateMessageEventArgs e)

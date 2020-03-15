@@ -17,4 +17,11 @@ namespace script_chan2.OsuIrc
         public string Name { get; set; }
         public int Id { get; set; }
     }
+
+    public class ChannelMessageData
+    {
+        public string Channel { get; set; }
+        public string User { get; set; }
+        public string Message { get; set; }
+    }
 }
