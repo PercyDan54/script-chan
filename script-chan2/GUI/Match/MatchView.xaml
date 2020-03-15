@@ -24,33 +24,33 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Height="30" Background="LightGray" cal:Message.Attach="[Event MouseDown] = [Action Drag]">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Visibility="{Binding TeamVsVisible}" Orientation="Horizontal" VerticalAlignment="Center" Margin="5 0 0 0">
-                    <TextBlock Foreground="Blue" Text="{Binding TeamBlueName}" FontSize="20" />
-                    <TextBlock Text=" VS " FontSize="20" />
-                    <TextBlock Foreground="Red" Text="{Binding TeamRedName}" FontSize="20" />
-                </StackPanel>
-                <Button x:Name="OpenMpLink" Content="{Binding RoomLinkName}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="Black" HorizontalAlignment="Left" Grid.Column="1" FontSize="20" Margin="5 0 0 0" />
-                <Button x:Name="MinimizeWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Minimize" Height="30" Width="30" Grid.Column="2" VerticalContentAlignment="Bottom">
-                    <md:PackIcon Kind="WindowMinimize" />
-                </Button>
-                <Button x:Name="MaximizeWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Maximize" Height="30" Width="30" Visibility="{Binding WindowMaximizeVisible}" Grid.Column="3">
-                    <md:PackIcon Kind="WindowMaximize" />
-                </Button>
-                <Button x:Name="RestoreWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Restore" Height="30" Width="30" Visibility="{Binding WindowRestoreVisible}" Grid.Column="3">
-                    <md:PackIcon Kind="WindowRestore" />
-                </Button>
-                <Button x:Name="CloseWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Close" Height="30" Width="30" Grid.Column="4">
-                    <md:PackIcon Kind="Close" />
-                </Button>
-            </Grid>
-            <md:DialogHost Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Visibility="{Binding TeamVsVisible}" Orientation="Horizontal" VerticalAlignment="Center" Margin="5 0 0 0">
+                <TextBlock Foreground="Blue" Text="{Binding TeamBlueName}" FontSize="20" />
+                <TextBlock Text=" VS " FontSize="20" />
+                <TextBlock Foreground="Red" Text="{Binding TeamRedName}" FontSize="20" />
+            </StackPanel>
+            <Button x:Name="OpenMpLink" Content="{Binding RoomLinkName}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="Black" HorizontalAlignment="Left" Grid.Column="1" FontSize="20" Margin="5 0 0 0" Visibility="{Binding RoomOpenVisible}" />
+            <Button x:Name="MinimizeWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Minimize" Height="30" Width="30" Grid.Column="2" VerticalContentAlignment="Bottom">
+                <md:PackIcon Kind="WindowMinimize" />
+            </Button>
+            <Button x:Name="MaximizeWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Maximize" Height="30" Width="30" Visibility="{Binding WindowMaximizeVisible}" Grid.Column="3">
+                <md:PackIcon Kind="WindowMaximize" />
+            </Button>
+            <Button x:Name="RestoreWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Restore" Height="30" Width="30" Visibility="{Binding WindowRestoreVisible}" Grid.Column="3">
+                <md:PackIcon Kind="WindowRestore" />
+            </Button>
+            <Button x:Name="CloseWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Close" Height="30" Width="30" Grid.Column="4">
+                <md:PackIcon Kind="Close" />
+            </Button>
+        </Grid>
+        <md:DialogHost Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -98,15 +98,15 @@
                         </ScrollViewer>
                     </Grid>
                     <WrapPanel x:Name="Control1" Grid.Row="1" Margin="2">
-                        <Button x:Name="SendSettings" Content="Settings" Margin="5" />
-                        <Button x:Name="StartGame" Content="Start game (5s)" Margin="5" />
-                        <Button x:Name="AbortMap" Content="Abort map" Margin="5" />
+                        <Button x:Name="SendSettings" Content="Settings" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="StartGame" Content="Start game (5s)" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="AbortMap" Content="Abort map" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                     </WrapPanel>
                     <Grid x:Name="Overview2" Grid.Row="2" Margin="2">
 
                     </Grid>
                     <GridSplitter Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="Black" Height="3" />
-                    <Grid x:Name="ChatGrid" Grid.Row="4" Margin="2">
+                    <Grid x:Name="ChatGrid" Grid.Row="4" Margin="2" Visibility="{Binding RoomOpenVisible}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
@@ -163,11 +163,12 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <WrapPanel x:Name="Control2" Grid.Row="0" Margin="2">
-                        <Button x:Name="SwitchPlayers" Content="Switch players" Margin="5" />
-                        <Button x:Name="InvitePlayers" Content="Invite players" Margin="5" />
-                        <Button x:Name="SendWelcomeString" Content="Welcome string" Margin="5" />
-                        <Button x:Name="SetPassword" Content="Set password" Margin="5" />
-                        <Button x:Name="CloseRoom" Content="Close the room" Margin="5" Background="Red" />
+                        <Button x:Name="SwitchPlayers" Content="Switch players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="InvitePlayers" Content="Invite players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SendWelcomeString" Content="Welcome string" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SetPassword" Content="Set password" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="CloseRoom" Content="Close the room" Margin="5" Background="Red" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="CreateRoom" Content="Create room" Margin="5" Background="Green" Visibility="{Binding RoomClosedVisible}" />
                     </WrapPanel>
                     <Border x:Name="Control3" Grid.Row="1" Margin="2" BorderBrush="LightGray" BorderThickness="0 3 0 3">
                         <WrapPanel>

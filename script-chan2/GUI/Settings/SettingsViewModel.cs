@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace script_chan2.GUI
 {
@@ -67,28 +68,34 @@ namespace script_chan2.GUI
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/api");
         }
 
-        private string apiStatus;
-        public string ApiStatus
+        public Visibility ApiWorks
         {
-            get { return apiStatus; }
-            set
+            get
             {
-                if (value != apiStatus)
-                {
-                    apiStatus = value;
-                    NotifyOfPropertyChange(() => ApiStatus);
-                }
+                if (apiStatus)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
             }
         }
+
+        public Visibility ApiError
+        {
+            get
+            {
+                if (!apiStatus)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        private bool apiStatus;
 
         public void CheckApiKey()
         {
             Log.Information("GUI check api key");
-            var testResult = OsuApi.OsuApi.CheckApiKey(apiKey);
-            if (testResult)
-                ApiStatus = "API works!";
-            else
-                ApiStatus = "API does not work";
+            apiStatus = OsuApi.OsuApi.CheckApiKey(apiKey);
+            NotifyOfPropertyChange(() => ApiWorks);
+            NotifyOfPropertyChange(() => ApiError);
         }
 
         private string ircUsername;
@@ -127,24 +134,30 @@ namespace script_chan2.GUI
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/irc");
         }
 
-        private string ircStatus;
-        public string IrcStatus
+        public void CheckIrc()
         {
-            get { return ircStatus; }
-            set
+            NotifyOfPropertyChange(() => IrcIsConnected);
+            NotifyOfPropertyChange(() => IrcIsDisconnected);
+        }
+
+        public Visibility IrcIsConnected
+        {
+            get
             {
-                if (value != ircStatus)
-                {
-                    ircStatus = value;
-                    NotifyOfPropertyChange(() => IrcStatus);
-                }
+                if (OsuIrc.OsuIrc.IsConnected)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
             }
         }
 
-        public void CheckIrc()
+        public Visibility IrcIsDisconnected
         {
-            Log.Information("GUI check irc credentials");
-            throw new NotImplementedException();
+            get
+            {
+                if (!OsuIrc.OsuIrc.IsConnected)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
         }
 
         private int ircTimeout;
@@ -157,6 +170,31 @@ namespace script_chan2.GUI
                 {
                     ircTimeout = value;
                     NotifyOfPropertyChange(() => IrcTimeout);
+                    Dirty = true;
+                }
+            }
+        }
+
+        public Visibility PrivateIrcVisible
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Settings.IrcIpPrivate))
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        private bool enablePrivateIrc;
+        public bool EnablePrivateIrc
+        {
+            get { return enablePrivateIrc; }
+            set
+            {
+                if (value != enablePrivateIrc)
+                {
+                    enablePrivateIrc = value;
+                    NotifyOfPropertyChange(() => EnablePrivateIrc);
                     Dirty = true;
                 }
             }
@@ -212,6 +250,7 @@ namespace script_chan2.GUI
         protected override void OnActivate()
         {
             Discard();
+            CheckApiKey();
         }
         #endregion
 
@@ -224,6 +263,7 @@ namespace script_chan2.GUI
             Settings.IrcUsername = ircUsername;
             Settings.IrcPassword = ircPassword;
             Settings.IrcTimeout = ircTimeout;
+            Settings.EnablePrivateIrc = enablePrivateIrc;
             Settings.DefaultTimerCommand = defaultTimerCommand;
             Settings.DefaultTimerAfterGame = defaultTimerAfterGame;
             Settings.DefaultTimerAfterPick = defaultTimerAfterPick;
@@ -238,6 +278,7 @@ namespace script_chan2.GUI
             IrcUsername = Settings.IrcUsername;
             IrcPassword = Settings.IrcPassword;
             IrcTimeout = Settings.IrcTimeout;
+            EnablePrivateIrc = Settings.EnablePrivateIrc;
             DefaultTimerCommand = Settings.DefaultTimerCommand;
             DefaultTimerAfterGame = Settings.DefaultTimerAfterGame;
             DefaultTimerAfterPick = Settings.DefaultTimerAfterPick;

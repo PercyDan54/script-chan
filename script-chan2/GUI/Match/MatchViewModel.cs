@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
+using script_chan2.OsuIrc;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Windows;
 
 namespace script_chan2.GUI
 {
-    public class MatchViewModel : Screen
+    public class MatchViewModel : Screen, IHandle<object>
     {
         #region Lists
         public BindableCollection<MatchTeamViewModel> TeamsViews
@@ -83,15 +84,35 @@ namespace script_chan2.GUI
         public MatchViewModel(Match match)
         {
             this.match = match;
-
         }
         #endregion
 
         #region Events
+        protected override void OnActivate()
+        {
+            Events.Aggregator.Subscribe(this);
+        }
         protected override void OnDeactivate(bool close)
         {
             Log.Information("GUI close match '{name}'", match.Name);
             MatchList.OpenedMatches.Remove(match);
+        }
+
+        public void Handle(object message)
+        {
+            if (message is RoomCreatedData)
+            {
+                var data = (RoomCreatedData)message;
+                if (data.Name == match.Name)
+                {
+                    match.RoomId = data.Id;
+                    match.Save();
+                    NotifyOfPropertyChange(() => RoomLinkName);
+                    NotifyOfPropertyChange(() => RoomClosedVisible);
+                    NotifyOfPropertyChange(() => RoomOpenVisible);
+                    OsuIrc.OsuIrc.JoinChannel("#mp_" + data.Id);
+                }
+            }
         }
         #endregion
 
@@ -118,6 +139,26 @@ namespace script_chan2.GUI
             get
             {
                 if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility RoomClosedVisible
+        {
+            get
+            {
+                if (match.RoomId == 0)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility RoomOpenVisible
+        {
+            get
+            {
+                if (match.RoomId > 0)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }
@@ -390,6 +431,21 @@ namespace script_chan2.GUI
         public void OpenMpLink()
         {
             System.Diagnostics.Process.Start("https://osu.ppy.sh/community/matches/" + match.RoomId);
+        }
+
+        public void CreateRoom()
+        {
+            OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
+        }
+
+        public void CloseRoom()
+        {
+            OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp close");
+            match.RoomId = 0;
+            match.Save();
+            NotifyOfPropertyChange(() => RoomLinkName);
+            NotifyOfPropertyChange(() => RoomClosedVisible);
+            NotifyOfPropertyChange(() => RoomOpenVisible);
         }
         #endregion
     }

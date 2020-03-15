@@ -30,14 +30,6 @@ namespace script_chan2.GUI
         {
             get { return match.Name; }
         }
-
-        public string TournamentName
-        {
-            get
-            {
-                return match.Tournament.Name;
-            }
-        }
         #endregion
 
         #region Edit match dialog

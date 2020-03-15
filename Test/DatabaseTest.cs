@@ -134,16 +134,15 @@ namespace Test
             tournament.Save();
             var mappool = new Mappool("TestMappool", tournament);
             mappool.Save();
-            var mappool2 = new Mappool("TestMappool2");
-            mappool2.Tournament = tournament;
-            mappool2.Save();
-            Assert.AreEqual(2, Database.Mappools.Count, "Mappools were not created");
+            Assert.AreEqual(1, Database.Mappools.Count, "Mappools were not created");
         }
 
         [TestMethod]
         public void DeleteMappool()
         {
-            var mappool = new Mappool("TestMappool");
+            var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
+            tournament.Save();
+            var mappool = new Mappool("TestMappool", tournament);
             mappool.Save();
             Assert.AreEqual(1, Database.Mappools.Count, "Mappool was not created");
             mappool.Delete();
@@ -153,34 +152,13 @@ namespace Test
         [TestMethod]
         public void UpdateMappool()
         {
-            var mappool = new Mappool("TestMappool");
-            mappool.Save();
-            mappool.Name = "Renamed";
-            mappool.Save();
-            Assert.AreEqual("Renamed", Database.Mappools[0].Name, "Mappool was not updated");
-        }
-
-        [TestMethod]
-        public void AddMappoolToTournament()
-        {
             var tournament = new Tournament("TestTournament", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
             tournament.Save();
             var mappool = new Mappool("TestMappool", tournament);
             mappool.Save();
-
-            var tournament2 = new Tournament("TestTournament2", script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, "Test", 4, 8, 2, false, 180, 120, 120);
-            tournament2.Save();
-            var mappool2 = new Mappool("TestMappool2");
-            mappool2.Tournament = tournament2;
-            mappool2.Save();
-
-            Assert.AreEqual(1, tournament.Mappools.Count, "Mappool was not added to tournament mappool list");
-            Assert.AreEqual("TestMappool", tournament.Mappools[0].Name, "Wrong mappool added?");
-            Assert.AreEqual(mappool.Tournament, tournament, "Mappool tournament reference was not set");
-
-            Assert.AreEqual(1, tournament2.Mappools.Count, "Mappool was not added to tournament mappool list");
-            Assert.AreEqual("TestMappool2", tournament2.Mappools[0].Name, "Wrong mappool added?");
-            Assert.AreEqual(mappool2.Tournament, tournament2, "Mappool tournament reference was not set");
+            mappool.Name = "Renamed";
+            mappool.Save();
+            Assert.AreEqual("Renamed", Database.Mappools[0].Name, "Mappool was not updated");
         }
 
         [TestMethod]

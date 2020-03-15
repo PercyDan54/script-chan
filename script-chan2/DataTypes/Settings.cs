@@ -19,6 +19,7 @@ namespace script_chan2.DataTypes
             public string apiKey { get; set; }
             public string ircUsername { get; set; }
             public string ircPassword { get; set; }
+            public string ircIpPrivate { get; set; }
         }
 
         private static void SaveConfig()
@@ -27,7 +28,8 @@ namespace script_chan2.DataTypes
             {
                 apiKey = ApiKey,
                 ircUsername = IrcUsername,
-                ircPassword = IrcPassword
+                ircPassword = IrcPassword,
+                ircIpPrivate = IrcIpPrivate
             };
             File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(config));
         }
@@ -36,7 +38,7 @@ namespace script_chan2.DataTypes
         {
             Directory.CreateDirectory(CONFIG_PATH);
             if (!File.Exists(CONFIG_PATH + "\\config.json"))
-                File.WriteAllText(CONFIG_PATH + "\\config.json", "{\"apiKey\":\"\",\"ircUsername\":\"\",\"ircPassword\":\"\"}");
+                File.WriteAllText(CONFIG_PATH + "\\config.json", "{\"apiKey\":\"\",\"ircUsername\":\"\",\"ircPassword\":\"\",\"ircIpPrivate\":\"\"}");
 
             var settings = Database.Database.GetSettings();
             var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(CONFIG_PATH + "\\config.json"));
@@ -44,7 +46,9 @@ namespace script_chan2.DataTypes
             apiKey = config.apiKey;
             ircUsername = config.ircUsername;
             ircPassword = config.ircPassword;
+            ircIpPrivate = config.ircIpPrivate;
             ircTimeout = Convert.ToInt32(settings["ircTimeout"]);
+            enablePrivateIrc = Convert.ToBoolean(settings["enablePrivateIrc"]);
             defaultBO = Convert.ToInt32(settings["defaultBO"]);
             var defaultTournamentId = settings["defaultTournament"];
             if (!string.IsNullOrEmpty(defaultTournamentId))
@@ -92,6 +96,7 @@ namespace script_chan2.DataTypes
                 {
                     ircUsername = value;
                     SaveConfig();
+                    OsuIrc.OsuIrc.Login();
                 }
             }
         }
@@ -106,6 +111,28 @@ namespace script_chan2.DataTypes
                 {
                     ircPassword = value;
                     SaveConfig();
+                    OsuIrc.OsuIrc.Login();
+                }
+            }
+        }
+
+        private static string ircIpPrivate;
+        public static string IrcIpPrivate
+        {
+            get { return ircIpPrivate; }
+        }
+
+        private static bool enablePrivateIrc;
+        public static bool EnablePrivateIrc
+        {
+            get { return enablePrivateIrc; }
+            set
+            {
+                if (value != enablePrivateIrc)
+                {
+                    enablePrivateIrc = value;
+                    OsuIrc.OsuIrc.Login();
+                    Database.Database.UpdateSettings("enablePrivateIrc", value.ToString());
                 }
             }
         }

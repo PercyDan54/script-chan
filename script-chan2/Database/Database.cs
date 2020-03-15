@@ -711,7 +711,7 @@ namespace script_chan2.Database
         {
             Log.Information("DB init matches");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
+            using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
                 rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status FROM Matches", conn))
             using (var reader = command.ExecuteReader())
             {
@@ -723,6 +723,7 @@ namespace script_chan2.Database
                     if (reader["mappool"] != DBNull.Value)
                         mappool = Mappools.First(x => x.Id == Convert.ToInt32(reader["mappool"]));
                     var name = reader["name"].ToString();
+                    var roomId = Convert.ToInt32(reader["roomId"]);
                     var gameMode = Enums.GameModes.Standard;
                     switch (reader["gameMode"].ToString())
                     {
@@ -787,7 +788,7 @@ namespace script_chan2.Database
                         case "InProgress": status = Enums.MatchStatus.InProgress; break;
                         case "Finished": status = Enums.MatchStatus.Finished; break;
                     }
-                    var match = new Match(tournament, mappool, name, 0, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinnerTeam, rollWinnerPlayer, firstPickerTeam, firstPickerPlayer, bo, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, id);
+                    var match = new Match(tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinnerTeam, rollWinnerPlayer, firstPickerTeam, firstPickerPlayer, bo, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, id);
                     Matches.Add(match);
                 }
                 reader.Close();
@@ -801,8 +802,8 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status)" +
-                    "VALUES (@tournament, @mappool, @name, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @enableWebhooks, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status)" +
+                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @enableWebhooks, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status)", conn))
                 {
                     command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
                     if (match.Mappool == null)
@@ -810,6 +811,7 @@ namespace script_chan2.Database
                     else
                         command.Parameters.AddWithValue("@mappool", match.Mappool.Id);
                     command.Parameters.AddWithValue("@name", match.Name);
+                    command.Parameters.AddWithValue("@roomId", match.RoomId);
                     command.Parameters.AddWithValue("@gameMode", match.GameMode.ToString());
                     command.Parameters.AddWithValue("@teamMode", match.TeamMode.ToString());
                     command.Parameters.AddWithValue("@winCondition", match.WinCondition.ToString());
@@ -899,7 +901,7 @@ namespace script_chan2.Database
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand(@"UPDATE Matches
-                SET tournament = @tournament, mappool = @mappool, name = @name, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
+                SET tournament = @tournament, mappool = @mappool, name = @name, roomId = @roomId, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
                 teamRed = @teamRed, teamRedPoints = @teamRedPoints, teamSize = @teamSize, roomSize = @roomSize, rollWinner = @rollWinner, firstPicker = @firstPicker, BO = @BO,
                 enableWebhooks = @enableWebhooks, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, pointsForSecondBan = @pointsForSecondBan,
                 allPicksFreemod = @allPicksFreemod, status = @status
@@ -911,6 +913,7 @@ namespace script_chan2.Database
                     else
                         command.Parameters.AddWithValue("@mappool", match.Mappool.Id);
                     command.Parameters.AddWithValue("@name", match.Name);
+                    command.Parameters.AddWithValue("@roomId", match.RoomId);
                     command.Parameters.AddWithValue("@gameMode", match.GameMode.ToString());
                     command.Parameters.AddWithValue("@teamMode", match.TeamMode.ToString());
                     command.Parameters.AddWithValue("@winCondition", match.WinCondition.ToString());

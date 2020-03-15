@@ -25,6 +25,8 @@ namespace script_chan2
                 DbCreator.CreateDb();
             Database.Database.Initialize();
 
+            OsuIrc.OsuIrc.Login();
+
             Initialize();
 
             Log.Information("App started");

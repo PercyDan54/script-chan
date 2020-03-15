@@ -18,34 +18,36 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ComboBox x:Name="Languages" Grid.Column="0" Grid.ColumnSpan="2" md:HintAssist.Hint="Language" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="5" />
         <TextBox x:Name="ApiKey" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" md:HintAssist.Hint="API Key" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
         <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
             <Button x:Name="OpenApiKeyPage" Content="Get API key" Width="110" Margin="5" />
             <Button x:Name="CheckApiKey" Content="Test" Width="60" Margin="5" />
-            <TextBlock x:Name="ApiStatus" Margin="5" VerticalAlignment="Center" />
+            <md:PackIcon Kind="Check" VerticalAlignment="Center" Foreground="Green" Height="30" Width="30" Visibility="{Binding ApiWorks}" />
+            <md:PackIcon Kind="Clear" VerticalAlignment="Center" Foreground="Red" Height="30" Width="30" Visibility="{Binding ApiError}" />
         </StackPanel>
         <TextBox x:Name="IrcUsername" Grid.Row="2" Grid.Column="0" md:HintAssist.Hint="IRC Username" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <TextBox x:Name="IrcPassword" Grid.Row="2" Grid.Column="1" md:HintAssist.Hint="IRC Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
             <Button x:Name="OpenIrcPage" Content="Get IRC password" Width="150" Margin="5" />
             <Button x:Name="CheckIrc" Content="Test" Width="60" Margin="5" />
-            <TextBlock x:Name="IrcStatus" Margin="5" VerticalAlignment="Center" />
+            <md:PackIcon Kind="Check" VerticalAlignment="Center" Foreground="Green" Height="30" Width="30" Visibility="{Binding IrcIsConnected}" />
+            <md:PackIcon Kind="Clear" VerticalAlignment="Center" Foreground="Red" Height="30" Width="30" Visibility="{Binding IrcIsDisconnected}" />
         </StackPanel>
-        <TextBox x:Name="IrcTimeout" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" md:HintAssist.Hint="IRC Timeout" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <TextBox x:Name="IrcTimeout" Grid.Row="3" Grid.Column="0" md:HintAssist.Hint="IRC Timeout" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <CheckBox x:Name="EnablePrivateIrc" Content="Use private bancho" Grid.Row="3" Grid.Column="1" Visibility="{Binding PrivateIrcVisible}" />
         <TextBox x:Name="DefaultTimerCommand" Grid.Row="4" Grid.Column="0" md:HintAssist.Hint="Timer Command Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <TextBox x:Name="DefaultTimerAfterGame" Grid.Row="4" Grid.Column="1" md:HintAssist.Hint="Timer After Game Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <TextBox x:Name="DefaultTimerAfterPick" Grid.Row="4" Grid.Column="2" md:HintAssist.Hint="Timer After Pick Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
-        <StackPanel Grid.Row="7" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Dirty, Converter={StaticResource BooleanToVisibilityConverter}}" >
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Dirty, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <Button x:Name="Discard" Content="Discard" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignFlatButton}" />
             <Button x:Name="Save" Content="Save" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignRaisedButton}" />
         </StackPanel>

@@ -32,7 +32,6 @@ namespace script_chan2.Database
             CreateMatchesTable();
             CreateMatchPlayersTable();
             CreateMatchPicksTable();
-            CreateRoomsTable();
             CreateGamesTable();
             CreateScoresTable();
             conn.Close();
@@ -54,6 +53,7 @@ namespace script_chan2.Database
             command = new SQLiteCommand(@"INSERT INTO UserSettings (name, value) VALUES
                 ('lang', 'en-US'),
                 ('ircTimeout', '1000'),
+                ('enablePrivateIrc', 'False'),
                 ('defaultBO', '3'),
                 ('defaultTournament', ''),
                 ('defaultTimerCommand', '120'),
@@ -182,6 +182,7 @@ namespace script_chan2.Database
             var command = new SQLiteCommand(@"CREATE TABLE Matches
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT,
+                roomId INTEGER,
                 tournament INTEGER,
                 mappool TEXT,
                 gameMode TEXT,
@@ -232,18 +233,6 @@ namespace script_chan2.Database
                 PRIMARY KEY(match, beatmap),
                 FOREIGN KEY(match) REFERENCES Matches(id),
                 FOREIGN KEY(beatmap) REFERENCES MappoolMaps(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
-        }
-
-        private static void CreateRoomsTable()
-        {
-            var command = new SQLiteCommand(@"CREATE TABLE Rooms
-                (id INTEGER NOT NULL PRIMARY KEY,
-                match INTEGER,
-                name TEXT,
-                status TEXT,
-                FOREIGN KEY(match) REFERENCES Matches(id))", conn);
             command.ExecuteNonQuery();
             command.Dispose();
         }
