@@ -21,6 +21,7 @@ namespace script_chan2.OsuIrc
             .CreateLogger();
 
         private static IrcClient client;
+        private static IrcClient privateClient;
 
         private static Regex regexPlayerLine = new Regex("^Slot (\\d+)\\s+(\\w+)\\s+https:\\/\\/osu\\.ppy\\.sh\\/u\\/(\\d+)\\s+([a-zA-Z0-9_ ]+)\\s+\\[Team (\\w+)\\s*(?:\\/ ([\\w, ]+))?\\]$");
         private static Regex regexRoomLine = new Regex("^Room name: ([^,]*), History:");
@@ -41,10 +42,7 @@ namespace script_chan2.OsuIrc
                 if (client != null && client.Connected)
                     client.Disconnect();
 
-                var ircIp = "irc.ppy.sh";
-                if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate))
-                    ircIp = Settings.IrcIpPrivate;
-                client = new IrcClient(ircIp);
+                client = new IrcClient("irc.ppy.sh");
                 client.ServerMessage += Client_ServerMessage;
                 client.PrivateMessage += Client_PrivateMessage;
                 client.ChannelMessage += Client_ChannelMessage;
@@ -53,6 +51,22 @@ namespace script_chan2.OsuIrc
                 client.Nick = Settings.IrcUsername;
                 client.ServerPass = Settings.IrcPassword;
                 client.Connect();
+
+                if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate))
+                {
+                    if (privateClient != null && privateClient.Connected)
+                        privateClient.Disconnect();
+
+                    privateClient = new IrcClient(Settings.IrcIpPrivate);
+                    privateClient.ServerMessage += Client_ServerMessage;
+                    privateClient.PrivateMessage += Client_PrivateMessage;
+                    privateClient.ChannelMessage += Client_ChannelMessage;
+                    privateClient.OnConnect += Client_OnConnect;
+                    privateClient.ExceptionThrown += Client_ExceptionThrown;
+                    privateClient.Nick = Settings.IrcUsername;
+                    privateClient.ServerPass = Settings.IrcPassword;
+                    privateClient.Connect();
+                }
 
                 messageQueue = new Queue<IrcMessage>();
 
@@ -76,7 +90,10 @@ namespace script_chan2.OsuIrc
                 return;
 
             var ircMessage = messageQueue.Dequeue();
-            client.SendMessage(ircMessage.User, ircMessage.Message);
+            if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate) && !ircMessage.Message.StartsWith("!mp switch"))
+                privateClient.SendMessage(ircMessage.User, ircMessage.Message);
+            else
+                client.SendMessage(ircMessage.User, ircMessage.Message);
         }
 
         private static void Client_ExceptionThrown(object sender, ExceptionEventArgs e)
