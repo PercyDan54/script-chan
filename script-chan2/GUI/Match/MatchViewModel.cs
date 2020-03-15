@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace script_chan2.GUI
 {
@@ -509,7 +510,12 @@ namespace script_chan2.GUI
 
         private void AddMessageToChat(string user, string message)
         {
-            var paragraph = new Paragraph(new Run($"[{DateTime.Now.ToString("HH:mm")}] {user.PadRight(15)} {message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202 };
+            var brush = new SolidColorBrush();
+            if (user == Settings.IrcUsername)
+                brush.Color = Settings.SelfColor;
+            else if (user == "BanchoBot")
+                brush.Color = Settings.BanchoBotColor;
+            var paragraph = new Paragraph(new Run($"[{DateTime.Now.ToString("HH:mm")}] {user.PadRight(15)} {message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush };
             MultiplayerChat.Blocks.Add(paragraph);
             NotifyOfPropertyChange(() => MultiplayerChat);
         }

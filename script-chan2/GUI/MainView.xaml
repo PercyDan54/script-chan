@@ -30,6 +30,7 @@
                         <ListBoxItem Content="Mappools" cal:Message.Attach="[Event MouseUp] = [Action ShowMappools]" />
                         <ListBoxItem Content="Webhooks" cal:Message.Attach="[Event MouseUp] = [Action ShowWebhooks]" />
                         <ListBoxItem Content="Settings" cal:Message.Attach="[Event MouseUp] = [Action ShowSettings]" />
+                        <ListBoxItem Content="Colors" cal:Message.Attach="[Event MouseUp] = [Action ShowColors]" />
                     </ListBox>
                 </DockPanel>
             </md:DrawerHost.LeftDrawerContent>

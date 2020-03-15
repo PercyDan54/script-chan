@@ -97,6 +97,14 @@ namespace script_chan2.GUI
             Title = "Settings";
             DrawerExpanded = false;
         }
+
+        public void ShowColors()
+        {
+            Log.Information("GUI show colors");
+            ActivateItem(new ColorsViewModel());
+            Title = "Colors";
+            DrawerExpanded = false;
+        }
         #endregion
     }
 }

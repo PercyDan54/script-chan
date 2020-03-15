@@ -127,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GUI\Colors\ColorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Mappools\MappoolBeatmapListItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,6 +206,7 @@
     <Compile Include="Enums\TeamColors.cs" />
     <Compile Include="Enums\TeamModes.cs" />
     <Compile Include="Enums\WinConditions.cs" />
+    <Compile Include="GUI\Colors\ColorsViewModel.cs" />
     <Compile Include="GUI\Events.cs" />
     <Compile Include="GUI\Mappools\MappoolBeatmapListItemViewModel.cs" />
     <Compile Include="GUI\Mappools\MappoolListItemViewModel.cs" />

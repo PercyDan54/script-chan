@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace script_chan2.DataTypes
 {
@@ -20,6 +21,8 @@ namespace script_chan2.DataTypes
             public string ircUsername { get; set; }
             public string ircPassword { get; set; }
             public string ircIpPrivate { get; set; }
+            public string banchoBotColor { get; set; }
+            public string selfColor { get; set; }
         }
 
         private static void SaveConfig()
@@ -29,7 +32,9 @@ namespace script_chan2.DataTypes
                 apiKey = ApiKey,
                 ircUsername = IrcUsername,
                 ircPassword = IrcPassword,
-                ircIpPrivate = IrcIpPrivate
+                ircIpPrivate = IrcIpPrivate,
+                banchoBotColor = BanchoBotColor.ToString(),
+                selfColor = SelfColor.ToString()
             };
             File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(config));
         }
@@ -56,6 +61,14 @@ namespace script_chan2.DataTypes
             defaultTimerCommand = Convert.ToInt32(settings["defaultTimerCommand"]);
             defaultTimerAfterGame = Convert.ToInt32(settings["defaultTimerAfterGame"]);
             defaultTimerAfterPick = Convert.ToInt32(settings["defaultTimerAfterPick"]);
+            if (string.IsNullOrEmpty(config.banchoBotColor))
+                banchoBotColor = Colors.Pink;
+            else
+                banchoBotColor = (Color)ColorConverter.ConvertFromString(config.banchoBotColor);
+            if (string.IsNullOrEmpty(config.selfColor))
+                selfColor = Colors.Green;
+            else
+                selfColor = (Color)ColorConverter.ConvertFromString(config.selfColor);
         }
 
         private static string lang;
@@ -221,6 +234,34 @@ namespace script_chan2.DataTypes
                 {
                     defaultTimerAfterPick = value;
                     Database.Database.UpdateSettings("defaultTimerAfterPick", value.ToString());
+                }
+            }
+        }
+
+        private static Color banchoBotColor;
+        public static Color BanchoBotColor
+        {
+            get { return banchoBotColor; }
+            set
+            {
+                if (value != banchoBotColor)
+                {
+                    banchoBotColor = value;
+                    SaveConfig();
+                }
+            }
+        }
+
+        private static Color selfColor;
+        public static Color SelfColor
+        {
+            get { return selfColor; }
+            set
+            {
+                if (value != selfColor)
+                {
+                    selfColor = value;
+                    SaveConfig();
                 }
             }
         }
