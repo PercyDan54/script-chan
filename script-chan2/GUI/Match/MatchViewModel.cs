@@ -483,6 +483,12 @@ namespace script_chan2.GUI
             System.Diagnostics.Process.Start("https://osu.ppy.sh/community/matches/" + match.RoomId);
         }
 
+        private void SendRoomMessage(string message)
+        {
+            OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, message);
+            AddMessageToChat(Settings.IrcUsername, message);
+        }
+
         public void CreateRoom()
         {
             OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
@@ -490,12 +496,38 @@ namespace script_chan2.GUI
 
         public void CloseRoom()
         {
-            OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp close");
+            SendRoomMessage("!mp close");
             match.RoomId = 0;
             match.Save();
             NotifyOfPropertyChange(() => RoomLinkName);
             NotifyOfPropertyChange(() => RoomClosedVisible);
             NotifyOfPropertyChange(() => RoomOpenVisible);
+        }
+
+        public void SwitchPlayers()
+        {
+            foreach (var player in match.GetPlayerList())
+            {
+                OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch " + player);
+            }
+        }
+
+        public void InvitePlayers()
+        {
+            foreach (var player in match.GetPlayerList())
+            {
+                SendRoomMessage("!mp invite " + player);
+            }
+        }
+
+        public void SendWelcomeString()
+        {
+            if (match.TeamMode == TeamModes.TeamVS)
+            {
+                SendRoomMessage($"{TeamRedName} is RED, slots 1 to {match.TeamSize} --- {TeamBlueName} is BLUE, slots {match.TeamSize + 1} to {match.TeamSize * 2}");
+            }
+
+            SendRoomMessage(match.Tournament.WelcomeString);
         }
 
         public void SendMessage()
@@ -504,8 +536,7 @@ namespace script_chan2.GUI
                 return;
             var message = ChatMessage;
             ChatMessage = "";
-            OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, message);
-            AddMessageToChat(Settings.IrcUsername, message);
+            SendRoomMessage(message);
         }
 
         private void AddMessageToChat(string user, string message)

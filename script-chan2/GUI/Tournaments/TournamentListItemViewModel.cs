@@ -229,6 +229,20 @@ namespace script_chan2.GUI
             }
         }
 
+        private string editWelcomeString;
+        public string EditWelcomeString
+        {
+            get { return editWelcomeString; }
+            set
+            {
+                if (value != editWelcomeString)
+                {
+                    editWelcomeString = value;
+                    NotifyOfPropertyChange(() => EditWelcomeString);
+                }
+            }
+        }
+
         public bool EditTournamentSaveEnabled
         {
             get
@@ -262,6 +276,7 @@ namespace script_chan2.GUI
             EditMpTimerCommand = tournament.MpTimerCommand;
             EditMpTimerAfterGame = tournament.MpTimerAfterGame;
             EditMpTimerAfterPick = tournament.MpTimerAfterPick;
+            EditWelcomeString = tournament.WelcomeString;
         }
 
         public void Save()
@@ -281,6 +296,7 @@ namespace script_chan2.GUI
                 tournament.MpTimerCommand = EditMpTimerCommand;
                 tournament.MpTimerAfterGame = EditMpTimerAfterGame;
                 tournament.MpTimerAfterPick = EditMpTimerAfterPick;
+                tournament.WelcomeString = EditWelcomeString;
                 tournament.Save();
                 NotifyOfPropertyChange(() => Name);
             }

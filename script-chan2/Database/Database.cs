@@ -81,7 +81,7 @@ namespace script_chan2.Database
         {
             Log.Information("DB init tournaments");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick FROM Tournaments", conn))
+            using (var command = new SQLiteCommand("SELECT id, name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, welcomeString FROM Tournaments", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -118,7 +118,8 @@ namespace script_chan2.Database
                     var mpTimerCommand = Convert.ToInt32(reader["mpTimerCommand"]);
                     var mpTimerAfterGame = Convert.ToInt32(reader["mpTimerAfterGame"]);
                     var mpTimerAfterPick = Convert.ToInt32(reader["mpTimerAfterPick"]);
-                    var tournament = new Tournament(name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, id);
+                    var welcomeString = reader["welcomeString"].ToString();
+                    var tournament = new Tournament(name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, welcomeString, id);
                     Tournaments.Add(tournament);
                 }
                 reader.Close();
@@ -132,8 +133,8 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand(@"INSERT INTO Tournaments (name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick)
-                VALUES (@name, @gameMode, @teamMode, @winCondition, @acronym, @teamSize, @roomSize, @pointsForSecondBan, @allPicksFreemod, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick)", conn))
+                using (var command = new SQLiteCommand(@"INSERT INTO Tournaments (name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, welcomeString)
+                VALUES (@name, @gameMode, @teamMode, @winCondition, @acronym, @teamSize, @roomSize, @pointsForSecondBan, @allPicksFreemod, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @welcomeString)", conn))
                 {
                     command.Parameters.AddWithValue("@name", tournament.Name);
                     command.Parameters.AddWithValue("@gameMode", tournament.GameMode.ToString());
@@ -147,6 +148,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@mpTimerCommand", tournament.MpTimerCommand);
                     command.Parameters.AddWithValue("@mpTimerAfterGame", tournament.MpTimerAfterGame);
                     command.Parameters.AddWithValue("@mpTimerAfterPick", tournament.MpTimerAfterPick);
+                    command.Parameters.AddWithValue("@welcomeString", tournament.WelcomeString);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -177,7 +179,7 @@ namespace script_chan2.Database
             Log.Information("DB update tournament '{name}'", tournament.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE Tournaments
-                SET name = @name, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, acronym = @acronym, teamSize = @teamSize, roomSize = @roomSize, pointsForSecondBan = @pointsForSecondBan, allPicksFreemod = @allPicksFreemod, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick
+                SET name = @name, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, acronym = @acronym, teamSize = @teamSize, roomSize = @roomSize, pointsForSecondBan = @pointsForSecondBan, allPicksFreemod = @allPicksFreemod, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, welcomeString = @welcomeString
                 WHERE id = @id", conn))
             {
                 command.Parameters.AddWithValue("@name", tournament.Name);
@@ -192,6 +194,7 @@ namespace script_chan2.Database
                 command.Parameters.AddWithValue("@mpTimerCommand", tournament.MpTimerCommand);
                 command.Parameters.AddWithValue("@mpTimerAfterGame", tournament.MpTimerAfterGame);
                 command.Parameters.AddWithValue("@mpTimerAfterPick", tournament.MpTimerAfterPick);
+                command.Parameters.AddWithValue("@welcomeString", tournament.WelcomeString);
                 command.Parameters.AddWithValue("@id", tournament.Id);
                 command.ExecuteNonQuery();
                 conn.Close();

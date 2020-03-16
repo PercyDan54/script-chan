@@ -228,6 +228,20 @@ namespace script_chan2.GUI
             }
         }
 
+        private string newTournamentWelcomeString;
+        public string NewTournamentWelcomeString
+        {
+            get { return newTournamentWelcomeString; }
+            set
+            {
+                if (value != newTournamentWelcomeString)
+                {
+                    newTournamentWelcomeString = value;
+                    NotifyOfPropertyChange(() => NewTournamentWelcomeString);
+                }
+            }
+        }
+
         public bool NewTournamentSaveEnabled
         {
             get
@@ -261,12 +275,13 @@ namespace script_chan2.GUI
             NewTournamentMpTimerCommand = Settings.DefaultTimerCommand;
             NewTournamentMpTimerAfterGame = Settings.DefaultTimerAfterGame;
             NewTournamentMpTimerAfterPick = Settings.DefaultTimerAfterPick;
+            NewTournamentWelcomeString = "";
         }
 
         public void NewTournamentDialogClosed()
         {
             Log.Information("GUI new tournament '{name}' save", NewTournamentName);
-            var tournament = new Tournament(NewTournamentName, NewTournamentGameMode, NewTournamentTeamMode, NewTournamentWinCondition, NewTournamentAcronym, NewTournamentTeamSize, NewTournamentRoomSize, NewTournamentPointsForSecondBan, NewTournamentAllPicksFreemod, NewTournamentMpTimerCommand, NewTournamentMpTimerAfterGame, NewTournamentMpTimerAfterPick);
+            var tournament = new Tournament(NewTournamentName, NewTournamentGameMode, NewTournamentTeamMode, NewTournamentWinCondition, NewTournamentAcronym, NewTournamentTeamSize, NewTournamentRoomSize, NewTournamentPointsForSecondBan, NewTournamentAllPicksFreemod, NewTournamentMpTimerCommand, NewTournamentMpTimerAfterGame, NewTournamentMpTimerAfterPick, NewTournamentWelcomeString);
             tournament.Save();
             Settings.DefaultTournament = tournament;
             NotifyOfPropertyChange(() => TournamentsViews);

@@ -78,7 +78,8 @@ namespace script_chan2.Database
                 allPicksFreemod BOOL,
                 mpTimerCommand INTEGER,
                 mpTimerAfterGame INTEGER,
-                mpTimerAfterPick INTEGER)", conn);
+                mpTimerAfterPick INTEGER,
+                welcomeString TEXT)", conn);
             command.ExecuteNonQuery();
             command.Dispose();
         }

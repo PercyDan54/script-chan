@@ -117,5 +117,25 @@ namespace script_chan2.DataTypes
         {
             Database.Database.DeleteMatch(this);
         }
+
+        public List<string> GetPlayerList()
+        {
+            var players = new List<string>();
+
+            if (TeamMode == TeamModes.TeamVS)
+            {
+                foreach (var player in TeamBlue.Players)
+                    players.Add(player.Name);
+                foreach (var player in TeamRed.Players)
+                    players.Add(player.Name);
+            }
+            else
+            {
+                foreach (var player in Players)
+                    players.Add(player.Key.Name);
+            }
+
+            return players;
+        }
     }
 }
