@@ -1,4 +1,5 @@
-﻿using System;
+﻿using script_chan2.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace script_chan2.OsuIrc
 {
     public class IrcMessage
     {
+        public Match Match { get; set; }
+        public DateTime Timestamp { get; set; }
         public string User { get; set; }
         public string Message { get; set; }
     }

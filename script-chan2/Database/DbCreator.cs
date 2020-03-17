@@ -34,6 +34,7 @@ namespace script_chan2.Database
             CreateMatchPicksTable();
             CreateGamesTable();
             CreateScoresTable();
+            CreateIrcMessagesTable();
             conn.Close();
             Log.Information("DB creation finished");
         }
@@ -264,6 +265,18 @@ namespace script_chan2.Database
                 FOREIGN KEY(player) REFERENCES Players(id),
                 FOREIGN KEY(game) REFERENCES Games(id),
                 CONSTRAINT unique_score UNIQUE (player, game))", conn);
+            command.ExecuteNonQuery();
+            command.Dispose();
+        }
+
+        private static void CreateIrcMessagesTable()
+        {
+            var command = new SQLiteCommand(@"CREATE TABLE IrcMessages
+                (match INTEGER,
+                timestamp TEXT,
+                user TEXT,
+                message TEXT,
+                FOREIGN KEY(match) REFERENCES Matches(id))", conn);
             command.ExecuteNonQuery();
             command.Dispose();
         }

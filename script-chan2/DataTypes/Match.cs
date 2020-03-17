@@ -1,4 +1,5 @@
 ﻿using script_chan2.Enums;
+using script_chan2.OsuIrc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace script_chan2.DataTypes
         {
             Players = new Dictionary<Player, int>();
             Picks = new List<MatchPick>();
+            ChatMessages = new List<IrcMessage>();
             Tournament = tournament;
             Mappool = mappool;
             Name = name;
@@ -105,6 +107,8 @@ namespace script_chan2.DataTypes
 
         public List<MatchPick> Picks { get; set; }
 
+        public List<IrcMessage> ChatMessages { get; set; }
+
         public void Save()
         {
             if (Id == 0)
@@ -136,6 +140,16 @@ namespace script_chan2.DataTypes
             }
 
             return players;
+        }
+
+        public void ReloadMessages()
+        {
+            ChatMessages = Database.Database.GetIrcMessages(this);
+        }
+
+        public void ClearMessages()
+        {
+            ChatMessages.Clear();
         }
     }
 }

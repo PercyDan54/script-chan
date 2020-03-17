@@ -81,6 +81,8 @@ namespace script_chan2.GUI
         {
             get { return Enum.GetValues(typeof(GameModes)).Cast<GameModes>().ToList(); }
         }
+
+        private List<IrcMessage> messagesToSave = new List<IrcMessage>();
         #endregion
 
         #region Constructor
@@ -94,6 +96,7 @@ namespace script_chan2.GUI
         protected override void OnActivate()
         {
             Events.Aggregator.Subscribe(this);
+            match.ReloadMessages();
             Execute.OnUIThread(() =>
             {
                 MultiplayerChat = new FlowDocument
@@ -102,12 +105,17 @@ namespace script_chan2.GUI
                     FontSize = 14,
                     TextAlignment = TextAlignment.Left
                 };
+                foreach (var message in match.ChatMessages)
+                {
+                    AddMessageToChat(message);
+                }
             });
         }
         protected override void OnDeactivate(bool close)
         {
             Log.Information("GUI close match '{name}'", match.Name);
             MatchList.OpenedMatches.Remove(match);
+            Database.Database.AddIrcMessages(messagesToSave);
         }
 
         public void Handle(object message)
@@ -130,7 +138,9 @@ namespace script_chan2.GUI
                 var data = (ChannelMessageData)message;
                 if (data.Channel == "#mp_" + match.RoomId)
                 {
-                    AddMessageToChat(data.User, data.Message);
+                    var ircMessage = new IrcMessage() { User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
+                    messagesToSave.Add(ircMessage);
+                    AddMessageToChat(ircMessage);
                 }
             }
         }
@@ -486,12 +496,20 @@ namespace script_chan2.GUI
         private void SendRoomMessage(string message)
         {
             OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, message);
-            AddMessageToChat(Settings.IrcUsername, message);
+            var ircMessage = new IrcMessage() { Match = match, User = Settings.IrcUsername, Timestamp = DateTime.Now, Message = message };
+            AddMessageToChat(ircMessage);
+            messagesToSave.Add(ircMessage);
+            if (messagesToSave.Count >= 5)
+            {
+                Database.Database.AddIrcMessages(messagesToSave);
+                messagesToSave.Clear();
+            }
         }
 
         public void CreateRoom()
         {
             OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
+            messagesToSave.Add(new IrcMessage() { Match = null, User = Settings.IrcUsername, Timestamp = DateTime.Now, Message = "!mp make " + match.Name });
         }
 
         public void CloseRoom()
@@ -509,6 +527,7 @@ namespace script_chan2.GUI
             foreach (var player in match.GetPlayerList())
             {
                 OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch " + player);
+                messagesToSave.Add(new IrcMessage() { Match = null, User = Settings.IrcUsername, Timestamp = DateTime.Now, Message = "!mp switch " + player });
             }
         }
 
@@ -539,14 +558,14 @@ namespace script_chan2.GUI
             SendRoomMessage(message);
         }
 
-        private void AddMessageToChat(string user, string message)
+        private void AddMessageToChat(IrcMessage message)
         {
             var brush = new SolidColorBrush();
-            if (user == Settings.IrcUsername)
+            if (message.User == Settings.IrcUsername)
                 brush.Color = Settings.SelfColor;
-            else if (user == "BanchoBot")
+            else if (message.User == "BanchoBot")
                 brush.Color = Settings.BanchoBotColor;
-            var paragraph = new Paragraph(new Run($"[{DateTime.Now.ToString("HH:mm")}] {user.PadRight(15)} {message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush };
+            var paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush };
             MultiplayerChat.Blocks.Add(paragraph);
             NotifyOfPropertyChange(() => MultiplayerChat);
         }
