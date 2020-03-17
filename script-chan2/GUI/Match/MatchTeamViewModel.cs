@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace script_chan2.GUI
 {
@@ -42,6 +43,16 @@ namespace script_chan2.GUI
                 if (teamColor == TeamColors.Blue)
                     return match.TeamBluePoints;
                 return match.TeamRedPoints;
+            }
+        }
+
+        public Brush FontColor
+        {
+            get
+            {
+                if (teamColor == TeamColors.Blue)
+                    return Brushes.Blue;
+                return Brushes.Red;
             }
         }
         #endregion
