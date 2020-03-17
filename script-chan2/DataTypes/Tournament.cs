@@ -9,22 +9,9 @@ namespace script_chan2.DataTypes
 {
     public class Tournament
     {
-        public Tournament(string name, Enums.GameModes gameMode, Enums.TeamModes teamMode, Enums.WinConditions winCondition, string acronym, int teamSize, int roomSize, int pointsForSecondBan, bool allPicksFreemod, int mpTimerCommand, int mpTimerAfterGame, int mpTimerAfterPick, string welcomeString, int id = 0)
+        public Tournament(int id = 0)
         {
             Webhooks = new List<Webhook>();
-            Name = name;
-            GameMode = gameMode;
-            TeamMode = teamMode;
-            WinCondition = winCondition;
-            Acronym = acronym;
-            TeamSize = teamSize;
-            RoomSize = roomSize;
-            PointsForSecondBan = pointsForSecondBan;
-            AllPicksFreemod = allPicksFreemod;
-            MpTimerCommand = mpTimerCommand;
-            MpTimerAfterGame = mpTimerAfterGame;
-            MpTimerAfterPick = mpTimerAfterPick;
-            WelcomeString = welcomeString;
             Id = id;
         }
 

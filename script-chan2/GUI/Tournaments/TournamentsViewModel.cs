@@ -281,7 +281,22 @@ namespace script_chan2.GUI
         public void NewTournamentDialogClosed()
         {
             Log.Information("GUI new tournament '{name}' save", NewTournamentName);
-            var tournament = new Tournament(NewTournamentName, NewTournamentGameMode, NewTournamentTeamMode, NewTournamentWinCondition, NewTournamentAcronym, NewTournamentTeamSize, NewTournamentRoomSize, NewTournamentPointsForSecondBan, NewTournamentAllPicksFreemod, NewTournamentMpTimerCommand, NewTournamentMpTimerAfterGame, NewTournamentMpTimerAfterPick, NewTournamentWelcomeString);
+            var tournament = new Tournament()
+            {
+                Name = NewTournamentName,
+                GameMode = NewTournamentGameMode,
+                TeamMode = NewTournamentTeamMode,
+                WinCondition = NewTournamentWinCondition,
+                Acronym = NewTournamentAcronym,
+                TeamSize = NewTournamentTeamSize,
+                RoomSize = NewTournamentRoomSize,
+                PointsForSecondBan = NewTournamentPointsForSecondBan,
+                AllPicksFreemod = NewTournamentAllPicksFreemod,
+                MpTimerCommand = NewTournamentMpTimerCommand,
+                MpTimerAfterGame = NewTournamentMpTimerAfterGame,
+                MpTimerAfterPick = NewTournamentMpTimerAfterPick,
+                WelcomeString = NewTournamentWelcomeString
+            };
             tournament.Save();
             Settings.DefaultTournament = tournament;
             NotifyOfPropertyChange(() => TournamentsViews);

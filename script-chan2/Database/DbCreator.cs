@@ -46,12 +46,13 @@ namespace script_chan2.Database
 
         private static void CreateUserSettingsTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE UserSettings
+            using (var command = new SQLiteCommand(@"CREATE TABLE UserSettings
                 (name TEXT NOT NULL PRIMARY KEY,
-                value TEXT)", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
-            command = new SQLiteCommand(@"INSERT INTO UserSettings (name, value) VALUES
+                value TEXT)", conn))
+            {
+                command.ExecuteNonQuery();
+            }
+            using (var command = new SQLiteCommand(@"INSERT INTO UserSettings (name, value) VALUES
                 ('lang', 'en-US'),
                 ('ircTimeout', '1000'),
                 ('enablePrivateIrc', 'False'),
@@ -59,14 +60,15 @@ namespace script_chan2.Database
                 ('defaultTournament', ''),
                 ('defaultTimerCommand', '120'),
                 ('defaultTimerAfterGame', '120'),
-                ('defaultTimerAfterPick', '120')", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                ('defaultTimerAfterPick', '120')", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateTournamentsTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE Tournaments
+            using (var command = new SQLiteCommand(@"CREATE TABLE Tournaments
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
                 gameMode TEXT,
@@ -80,108 +82,117 @@ namespace script_chan2.Database
                 mpTimerCommand INTEGER,
                 mpTimerAfterGame INTEGER,
                 mpTimerAfterPick INTEGER,
-                welcomeString TEXT)", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                welcomeString TEXT)", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateWebhooksTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE Webhooks
+            using (var command = new SQLiteCommand(@"CREATE TABLE Webhooks
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
-                url TEXT)", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                url TEXT)", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateWebhookLinksTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE WebhookLinks
+            using (var command = new SQLiteCommand(@"CREATE TABLE WebhookLinks
                 (tournament INTEGER NOT NULL,
                 webhook INTEGER NOT NULL,
                 PRIMARY KEY(tournament, webhook),
                 FOREIGN KEY(tournament) REFERENCES Tournaments(id),
-                FOREIGN KEY(webhook) REFERENCES Webhooks(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                FOREIGN KEY(webhook) REFERENCES Webhooks(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateMappoolsTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE Mappools
+            using (var command = new SQLiteCommand(@"CREATE TABLE Mappools
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
                 tournament INTEGER,
-                FOREIGN KEY(tournament) REFERENCES Tournaments(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                FOREIGN KEY(tournament) REFERENCES Tournaments(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateBeatmapsTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE Beatmaps
+            using (var command = new SQLiteCommand(@"CREATE TABLE Beatmaps
                 (id INTEGER NOT NULL PRIMARY KEY,
                 beatmapsetId INT,
                 artist TEXT,
                 title TEXT,
                 version TEXT,
-                creator TEXT)", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                creator TEXT)", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateMappoolMapsTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE MappoolMaps
+            using (var command = new SQLiteCommand(@"CREATE TABLE MappoolMaps
                 (id INTEGER NOT NULL PRIMARY KEY,
                 mappool INTEGER NOT NULL,
                 beatmap INTEGER NOT NULL,
                 listIndex INTEGER,
                 mods TEXT,
                 FOREIGN KEY(mappool) REFERENCES Mappools(id),
-                FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateTeamsTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE Teams
+            using (var command = new SQLiteCommand(@"CREATE TABLE Teams
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
                 tournament INTEGER,
                 FOREIGN KEY(tournament) REFERENCES Tournaments(id),
-                CONSTRAINT unique_team UNIQUE (name, tournament))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                CONSTRAINT unique_team UNIQUE (name, tournament))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreatePlayersTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE Players
+            using (var command = new SQLiteCommand(@"CREATE TABLE Players
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
-                country TEXT)", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                country TEXT)", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateTeamPlayersTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE TeamPlayers
+            using (var command = new SQLiteCommand(@"CREATE TABLE TeamPlayers
                 (player INTEGER NOT NULL,
                 team INTEGER NOT NULL,
                 PRIMARY KEY (player, team),
                 FOREIGN KEY(player) REFERENCES Players(id),
-                FOREIGN KEY(team) REFERENCES Teams(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                FOREIGN KEY(team) REFERENCES Teams(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateMatchesTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE Matches
+            using (var command = new SQLiteCommand(@"CREATE TABLE Matches
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT,
                 roomId INTEGER,
@@ -209,53 +220,57 @@ namespace script_chan2.Database
                 FOREIGN KEY(tournament) REFERENCES Tournaments(id),
                 FOREIGN KEY(mappool) REFERENCES Mappools(id),
                 FOREIGN KEY(teamBlue) REFERENCES Teams(id),
-                FOREIGN KEY(teamRed) REFERENCES Teams(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                FOREIGN KEY(teamRed) REFERENCES Teams(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateMatchPlayersTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE MatchPlayers
+            using (var command = new SQLiteCommand(@"CREATE TABLE MatchPlayers
                 (match INTEGER NOT NULL,
                 player INTEGER NOT NULL,
                 PRIMARY KEY(match, player),
                 FOREIGN KEY(match) REFERENCES Matches(id),
-                FOREIGN KEY(player) REFERENCES Players(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                FOREIGN KEY(player) REFERENCES Players(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateMatchPicksTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE MatchPicks
+            using (var command = new SQLiteCommand(@"CREATE TABLE MatchPicks
                 (match INTEGER NOT NULL,
                 beatmap INTEGER NOT NULL,
                 picker INTEGER NOT NULL,
                 PRIMARY KEY(match, beatmap),
                 FOREIGN KEY(match) REFERENCES Matches(id),
-                FOREIGN KEY(beatmap) REFERENCES MappoolMaps(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                FOREIGN KEY(beatmap) REFERENCES MappoolMaps(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateGamesTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE Games
+            using (var command = new SQLiteCommand(@"CREATE TABLE Games
                 (id INTEGER NOT NULL PRIMARY KEY,
                 match INTEGER,
                 beatmap INTEGER,
                 mods TEXT,
                 counts BOOL,
                 FOREIGN KEY(match) REFERENCES Matches(id),
-                FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateScoresTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE Scores
+            using (var command = new SQLiteCommand(@"CREATE TABLE Scores
                 (player INTEGER NOT NULL,
                 game INTEGER NOT NULL,
                 mods TEXT,
@@ -264,21 +279,23 @@ namespace script_chan2.Database
                 passed BOOL,
                 FOREIGN KEY(player) REFERENCES Players(id),
                 FOREIGN KEY(game) REFERENCES Games(id),
-                CONSTRAINT unique_score UNIQUE (player, game))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                CONSTRAINT unique_score UNIQUE (player, game))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private static void CreateIrcMessagesTable()
         {
-            var command = new SQLiteCommand(@"CREATE TABLE IrcMessages
+            using (var command = new SQLiteCommand(@"CREATE TABLE IrcMessages
                 (match INTEGER,
                 timestamp TEXT,
                 user TEXT,
                 message TEXT,
-                FOREIGN KEY(match) REFERENCES Matches(id))", conn);
-            command.ExecuteNonQuery();
-            command.Dispose();
+                FOREIGN KEY(match) REFERENCES Matches(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
     }
 }

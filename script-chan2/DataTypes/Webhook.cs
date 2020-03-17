@@ -9,10 +9,8 @@ namespace script_chan2.DataTypes
 {
     public class Webhook
     {
-        public Webhook(string name, string url, int id = 0)
+        public Webhook(int id = 0)
         {
-            Name = name;
-            URL = url;
             Id = id;
         }
 

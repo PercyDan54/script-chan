@@ -120,7 +120,22 @@ namespace script_chan2.Database
                     var mpTimerAfterGame = Convert.ToInt32(reader["mpTimerAfterGame"]);
                     var mpTimerAfterPick = Convert.ToInt32(reader["mpTimerAfterPick"]);
                     var welcomeString = reader["welcomeString"].ToString();
-                    var tournament = new Tournament(name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, welcomeString, id);
+                    var tournament = new Tournament(id)
+                    {
+                        Name = name,
+                        GameMode = gameMode,
+                        TeamMode = teamMode,
+                        WinCondition = winCondition,
+                        Acronym = acronym,
+                        TeamSize = teamSize,
+                        RoomSize = roomSize,
+                        PointsForSecondBan = pointsForSecondBan,
+                        AllPicksFreemod = allPicksFreemod,
+                        MpTimerCommand = mpTimerCommand,
+                        MpTimerAfterGame = mpTimerAfterGame,
+                        MpTimerAfterPick = mpTimerAfterPick,
+                        WelcomeString = welcomeString
+                    };
                     Tournaments.Add(tournament);
                 }
                 reader.Close();
@@ -216,7 +231,11 @@ namespace script_chan2.Database
                     var id = Convert.ToInt32(reader["id"]);
                     var name = reader["name"].ToString();
                     var url = reader["URL"].ToString();
-                    var webhook = new Webhook(name, url, id);
+                    var webhook = new Webhook(id)
+                    {
+                        Name = name,
+                        URL = url
+                    };
                     Webhooks.Add(webhook);
                 }
                 reader.Close();
