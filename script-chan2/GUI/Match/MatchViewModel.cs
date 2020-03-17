@@ -23,10 +23,10 @@ namespace script_chan2.GUI
             get
             {
                 var list = new BindableCollection<MatchTeamViewModel>();
-                if (match.TeamMode == Enums.TeamModes.TeamVS)
+                if (match.TeamMode == TeamModes.TeamVS)
                 {
-                    list.Add(new MatchTeamViewModel(match, Enums.TeamColors.Blue));
-                    list.Add(new MatchTeamViewModel(match, Enums.TeamColors.Red));
+                    list.Add(new MatchTeamViewModel(match, TeamColors.Red));
+                    list.Add(new MatchTeamViewModel(match, TeamColors.Blue));
                 }
                 return list;
             }
@@ -52,7 +52,7 @@ namespace script_chan2.GUI
             get
             {
                 var list = new BindableCollection<Team>();
-                if (match.TeamMode == Enums.TeamModes.TeamVS)
+                if (match.TeamMode == TeamModes.TeamVS)
                 {
                     list.Add(match.TeamBlue);
                     list.Add(match.TeamRed);
@@ -70,7 +70,7 @@ namespace script_chan2.GUI
                 {
                     foreach (var beatmap in SelectedMappool.Beatmaps)
                     {
-                        list.Add(new MatchBeatmapViewModel(this.match, beatmap));
+                        list.Add(new MatchBeatmapViewModel(match, beatmap));
                     }
                 }
                 return list;
@@ -101,8 +101,8 @@ namespace script_chan2.GUI
             {
                 MultiplayerChat = new FlowDocument
                 {
-                    FontFamily = new System.Windows.Media.FontFamily("Lucida Console"),
-                    FontSize = 14,
+                    FontFamily = new FontFamily("Lucida Console"),
+                    FontSize = 12,
                     TextAlignment = TextAlignment.Left
                 };
                 foreach (var message in match.ChatMessages)

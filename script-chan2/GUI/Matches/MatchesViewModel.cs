@@ -139,6 +139,7 @@ namespace script_chan2.GUI
                         NewMatchTeamSize = value.TeamSize;
                         NewMatchRoomSize = value.RoomSize;
                     }
+                    GenerateName();
                 }
             }
         }
@@ -208,6 +209,7 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => NewMatchTeamMode);
                     NotifyOfPropertyChange(() => TeamsEditorIsVisible);
                     NotifyOfPropertyChange(() => PlayersEditorIsVisible);
+                    GenerateName();
                 }
             }
         }
@@ -281,6 +283,7 @@ namespace script_chan2.GUI
                     newMatchTeamBlue = value;
                     NotifyOfPropertyChange(() => NewMatchTeamBlue);
                     NotifyOfPropertyChange(() => NewMatchSaveEnabled);
+                    GenerateName();
                 }
             }
         }
@@ -296,6 +299,7 @@ namespace script_chan2.GUI
                     newMatchTeamRed = value;
                     NotifyOfPropertyChange(() => NewMatchTeamRed);
                     NotifyOfPropertyChange(() => NewMatchSaveEnabled);
+                    GenerateName();
                 }
             }
         }
@@ -392,6 +396,14 @@ namespace script_chan2.GUI
             Log.Information("GUI new match remove player {name}", model.Player.Name);
             newMatchPlayers.Remove(model.Player);
             NotifyOfPropertyChange(() => PlayersViews);
+        }
+
+        private void GenerateName()
+        {
+            if (string.IsNullOrEmpty(NewMatchName) && NewMatchTeamMode == TeamModes.TeamVS && NewMatchTournament != null && NewMatchTeamBlue != null && NewMatchTeamRed != null)
+            {
+                NewMatchName = $"{NewMatchTournament.Acronym}: ({NewMatchTeamRed.Name}) VS ({NewMatchTeamBlue.Name})";
+            }
         }
 
         public bool NewMatchSaveEnabled

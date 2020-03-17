@@ -84,14 +84,14 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ComboBox md:HintAssist.Hint="Team Red" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding NewMatchTeamBlue}" Margin="0 0 5 0">
+                        <ComboBox md:HintAssist.Hint="Team Red" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding NewMatchTeamRed}" Margin="0 0 5 0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox md:HintAssist.Hint="Team Blue" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding NewMatchTeamRed}" Grid.Column="1" Margin="5 0 0 0">
+                        <ComboBox md:HintAssist.Hint="Team Blue" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding NewMatchTeamBlue}" Grid.Column="1" Margin="5 0 0 0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
