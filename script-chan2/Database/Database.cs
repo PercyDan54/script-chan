@@ -1021,6 +1021,11 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@match", match.Id);
                     command.ExecuteNonQuery();
                 }
+                using (var command = new SQLiteCommand("DELETE FROM IrcMessages WHERE match = @match", conn))
+                {
+                    command.Parameters.AddWithValue("@match", match.Id);
+                    command.ExecuteNonQuery();
+                }
                 using (var command = new SQLiteCommand("DELETE FROM Matches WHERE id = @id", conn))
                 {
                     command.Parameters.AddWithValue("@id", match.Id);
