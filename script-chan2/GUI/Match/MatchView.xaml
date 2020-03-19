@@ -176,7 +176,18 @@
                         <Button x:Name="SwitchPlayers" Content="Switch players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="InvitePlayers" Content="Invite players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="SendWelcomeString" Content="Welcome string" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SetPassword" Content="Set password" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button Content="Set password" Margin="5" Visibility="{Binding RoomOpenVisible}" Command="{x:Static md:DialogHost.OpenDialogCommand}">
+                            <Button.CommandParameter>
+                                <StackPanel Margin="16">
+                                    <TextBlock>Set password</TextBlock>
+                                    <TextBox md:HintAssist.Hint="Password" Text="{Binding NewPassword}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
+                                        <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
+                                        <Button Content="Set" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action SetPassword]" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button.CommandParameter>
+                        </Button>
                         <Button Content="Close the room" Margin="5" Background="Red" Visibility="{Binding RoomOpenVisible}" Command="{x:Static md:DialogHost.OpenDialogCommand}">
                             <Button.CommandParameter>
                                 <StackPanel Margin="16">

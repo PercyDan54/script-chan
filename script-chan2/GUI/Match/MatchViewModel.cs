@@ -432,6 +432,20 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        private string newPassword;
+        public string NewPassword
+        {
+            get { return newPassword; }
+            set
+            {
+                if (value != newPassword)
+                {
+                    newPassword = value;
+                    NotifyOfPropertyChange(() => NewPassword);
+                }
+            }
+        }
         #endregion
 
         #region Window Events
@@ -571,6 +585,11 @@ namespace script_chan2.GUI
         public void AbortMatch()
         {
             SendRoomMessage("!mp abort");
+        }
+
+        public void SetPassword()
+        {
+            SendRoomMessage("!mp password " + NewPassword);
         }
 
         private void AddMessageToChat(IrcMessage message)
