@@ -42,7 +42,15 @@ namespace script_chan2.OsuApi
                 return null;
             }
             var beatmap = data[0];
-            return new Beatmap(Convert.ToInt32(beatmap.beatmap_id), Convert.ToInt32(beatmap.beatmapset_id), beatmap.artist, beatmap.title, beatmap.version, beatmap.creator);
+            return new Beatmap()
+            {
+                Id = Convert.ToInt32(beatmap.beatmap_id),
+                SetId = Convert.ToInt32(beatmap.beatmapset_id),
+                Artist = beatmap.artist,
+                Title = beatmap.title,
+                Version = beatmap.version,
+                Creator = beatmap.creator
+            };
         }
 
         public static Player GetPlayer(string playerId)
@@ -56,7 +64,12 @@ namespace script_chan2.OsuApi
                 return null;
             }
             var player = data[0];
-            return new Player(player.username, player.country, Convert.ToInt32(player.user_id));
+            return new Player()
+            {
+                Name = player.username,
+                Country = player.country,
+                Id = Convert.ToInt32(player.user_id)
+            };
         }
 
         public static Room GetMatch(int matchId)
@@ -72,14 +85,26 @@ namespace script_chan2.OsuApi
                     continue;
 
                 var beatmap = Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
-                var game = new Game(room, Convert.ToInt32(gameData.game_id), beatmap);
-                game.Mods = ModsFromBitEnum(gameData.mods);
+                var game = new Game()
+                {
+                    Room = room,
+                    Id = Convert.ToInt32(gameData.game_id),
+                    Beatmap = beatmap,
+                    Mods = ModsFromBitEnum(gameData.mods)
+                };
 
                 foreach (var scoreData in gameData.scores)
                 {
                     var player = Database.Database.GetPlayer(scoreData.user_id);
-                    var score = new Score(game, player, Convert.ToInt32(scoreData.score), TeamFromString(scoreData.team), scoreData.pass == "1");
-                    score.Mods = ModsFromBitEnum(scoreData.enabled_mods);
+                    var score = new Score()
+                    {
+                        Game = game,
+                        Player = player,
+                        Points = Convert.ToInt32(scoreData.score),
+                        Team = TeamFromString(scoreData.team),
+                        Passed = scoreData.pass == "1",
+                        Mods = ModsFromBitEnum(scoreData.enabled_mods)
+                    };
 
                     game.Scores.Add(score);
                 }
@@ -105,14 +130,26 @@ namespace script_chan2.OsuApi
                     continue;
 
                 var beatmap = Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
-                var game = new Game(room, Convert.ToInt32(gameData.game_id), beatmap);
-                game.Mods = ModsFromBitEnum(gameData.mods);
+                var game = new Game()
+                {
+                    Room = room,
+                    Id = Convert.ToInt32(gameData.game_id),
+                    Beatmap = beatmap,
+                    Mods = ModsFromBitEnum(gameData.mods)
+                };
 
                 foreach (var scoreData in gameData.scores)
                 {
                     var player = Database.Database.GetPlayer(scoreData.user_id);
-                    var score = new Score(game, player, Convert.ToInt32(scoreData.score), TeamFromString(scoreData.team), scoreData.pass == "1");
-                    score.Mods = ModsFromBitEnum(scoreData.enabled_mods);
+                    var score = new Score()
+                    {
+                        Game = game,
+                        Player = player,
+                        Points = Convert.ToInt32(scoreData.score),
+                        Team = TeamFromString(scoreData.team),
+                        Passed = scoreData.pass == "1",
+                        Mods = ModsFromBitEnum(scoreData.enabled_mods)
+                    };
 
                     game.Scores.Add(score);
                 }

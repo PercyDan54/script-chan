@@ -8,17 +8,10 @@ namespace script_chan2.DataTypes
 {
     public class Player
     {
-        public Player(string name, string country, int id)
-        {
-            Name = name;
-            Country = country;
-            Id = id;
-        }
+        public int Id { get; set; }
 
-        public int Id { get; }
+        public string Name { get; set; }
 
-        public string Name { get; }
-
-        public string Country { get; }
+        public string Country { get; set; }
     }
 }

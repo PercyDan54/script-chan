@@ -8,14 +8,6 @@ namespace script_chan2.DataTypes
 {
     public class MatchPick
     {
-        public MatchPick(Match match, MappoolMap map, Team team, Player player)
-        {
-            Match = match;
-            Map = map;
-            Team = team;
-            Player = player;
-        }
-
         public Match Match { get; set; }
 
         public MappoolMap Map { get; set; }

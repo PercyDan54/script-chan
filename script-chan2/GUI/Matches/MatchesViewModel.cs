@@ -443,7 +443,25 @@ namespace script_chan2.GUI
         public void NewMatchDialogClosed()
         {
             Log.Information("GUI new match '{match}' save", NewMatchName);
-            var match = new Match(NewMatchTournament, NewMatchMappool, NewMatchName, 0, NewMatchGameMode, NewMatchTeamMode, NewMatchWinCondition, NewMatchTeamBlue, 0, NewMatchTeamRed, 0, NewMatchTeamSize, NewMatchRoomSize, null, null, null, null, NewMatchBO, true, NewMatchTournament.MpTimerCommand, NewMatchTournament.MpTimerAfterGame, NewMatchTournament.MpTimerAfterPick, NewMatchTournament.PointsForSecondBan, NewMatchTournament.AllPicksFreemod, MatchStatus.New);
+            var match = new Match()
+            {
+                Tournament = NewMatchTournament,
+                Mappool = NewMatchMappool,
+                Name = NewMatchName,
+                GameMode = NewMatchGameMode,
+                TeamMode = NewMatchTeamMode,
+                WinCondition = NewMatchWinCondition,
+                TeamBlue = NewMatchTeamBlue,
+                TeamRed = NewMatchTeamRed,
+                TeamSize = NewMatchTeamSize,
+                RoomSize = NewMatchRoomSize,
+                BO = NewMatchBO,
+                MpTimerCommand = NewMatchTournament.MpTimerCommand,
+                MpTimerAfterGame = NewMatchTournament.MpTimerAfterGame,
+                MpTimerAfterPick = NewMatchTournament.MpTimerAfterPick,
+                PointsForSecondBan = NewMatchTournament.PointsForSecondBan,
+                AllPicksFreemod = NewMatchTournament.AllPicksFreemod
+            };
             foreach (var player in newMatchPlayers)
             {
                 match.Players.Add(player, 0);

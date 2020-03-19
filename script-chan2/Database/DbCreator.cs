@@ -231,6 +231,7 @@ namespace script_chan2.Database
             using (var command = new SQLiteCommand(@"CREATE TABLE MatchPlayers
                 (match INTEGER NOT NULL,
                 player INTEGER NOT NULL,
+                points INTEGER,
                 PRIMARY KEY(match, player),
                 FOREIGN KEY(match) REFERENCES Matches(id),
                 FOREIGN KEY(player) REFERENCES Players(id))", conn))

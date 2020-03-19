@@ -1,4 +1,5 @@
 ﻿using script_chan2.DataTypes;
+using script_chan2.Enums;
 using script_chan2.OsuIrc;
 using Serilog;
 using System;
@@ -365,7 +366,11 @@ namespace script_chan2.Database
                     var id = Convert.ToInt32(reader["id"]);
                     var tournament = Tournaments.First(x => x.Id == Convert.ToInt32(reader["tournament"]));
                     var name = reader["name"].ToString();
-                    var mappool = new Mappool(name, tournament, id);
+                    var mappool = new Mappool(id)
+                    {
+                        Name = name,
+                        Tournament = tournament
+                    };
                     Mappools.Add(mappool);
                 }
                 reader.Close();
@@ -470,7 +475,15 @@ namespace script_chan2.Database
                             var title = reader["title"].ToString();
                             var version = reader["version"].ToString();
                             var creator = reader["creator"].ToString();
-                            returnValue = new Beatmap(id, setId, artist, title, version, creator);
+                            returnValue = new Beatmap()
+                            {
+                                Id = id,
+                                SetId = setId,
+                                Artist = artist,
+                                Title = title,
+                                Version = version,
+                                Creator = creator
+                            };
                         }
                         else
                         {
@@ -500,7 +513,18 @@ namespace script_chan2.Database
                     var id = Convert.ToInt32(reader["id"]);
                     var mappool = Mappools.First(x => x.Id == Convert.ToInt32(reader["mappool"]));
                     var beatmap = GetBeatmap(Convert.ToInt32(reader["beatmap"]));
-                    var mappoolMap = new MappoolMap(mappool, beatmap, reader["mods"].ToString(), id);
+                    var mappoolMap = new MappoolMap(id)
+                    {
+                        Mappool = mappool,
+                        Beatmap = beatmap
+                    };
+                    foreach (string mod in reader["mods"].ToString().Split(','))
+                    {
+                        if (Enum.TryParse(mod, out GameMods gameMod))
+                        {
+                            mappoolMap.Mods.Add(gameMod);
+                        }
+                    }
                     mappool.Beatmaps.Add(mappoolMap);
                 }
                 reader.Close();
@@ -596,7 +620,12 @@ namespace script_chan2.Database
                             var id = Convert.ToInt32(reader["id"]);
                             var name = reader["name"].ToString();
                             var country = reader["country"].ToString();
-                            returnValue = new Player(name, country, id);
+                            returnValue = new Player()
+                            {
+                                Name = name,
+                                Country = country,
+                                Id = id
+                            };
                         }
                         else
                         {
@@ -654,7 +683,11 @@ namespace script_chan2.Database
                     var id = Convert.ToInt32(reader["id"]);
                     var tournament = Tournaments.First(x => x.Id == Convert.ToInt32(reader["tournament"]));
                     var name = reader["name"].ToString();
-                    var team = new Team(tournament, name, id);
+                    var team = new Team(id)
+                    {
+                        Tournament = tournament,
+                        Name = name,
+                    };
                     Teams.Add(team);
                 }
                 reader.Close();
@@ -747,27 +780,27 @@ namespace script_chan2.Database
                         mappool = Mappools.First(x => x.Id == Convert.ToInt32(reader["mappool"]));
                     var name = reader["name"].ToString();
                     var roomId = Convert.ToInt32(reader["roomId"]);
-                    var gameMode = Enums.GameModes.Standard;
+                    var gameMode = GameModes.Standard;
                     switch (reader["gameMode"].ToString())
                     {
-                        case "Standard": gameMode = Enums.GameModes.Standard; break;
-                        case "Taiko": gameMode = Enums.GameModes.Taiko; break;
-                        case "Catch": gameMode = Enums.GameModes.Catch; break;
-                        case "Mania": gameMode = Enums.GameModes.Mania; break;
+                        case "Standard": gameMode = GameModes.Standard; break;
+                        case "Taiko": gameMode = GameModes.Taiko; break;
+                        case "Catch": gameMode = GameModes.Catch; break;
+                        case "Mania": gameMode = GameModes.Mania; break;
                     }
-                    var teamMode = Enums.TeamModes.TeamVS;
+                    var teamMode = TeamModes.TeamVS;
                     switch (reader["teamMode"].ToString())
                     {
-                        case "HeadToHead": teamMode = Enums.TeamModes.HeadToHead; break;
-                        case "TeamVS": teamMode = Enums.TeamModes.TeamVS; break;
+                        case "HeadToHead": teamMode = TeamModes.HeadToHead; break;
+                        case "TeamVS": teamMode = TeamModes.TeamVS; break;
                     }
-                    var winCondition = Enums.WinConditions.ScoreV2;
+                    var winCondition = WinConditions.ScoreV2;
                     switch (reader["winCondition"].ToString())
                     {
-                        case "Score": winCondition = Enums.WinConditions.Score; break;
-                        case "ScoreV2": winCondition = Enums.WinConditions.ScoreV2; break;
-                        case "Accuracy": winCondition = Enums.WinConditions.Accuracy; break;
-                        case "Combo": winCondition = Enums.WinConditions.Combo; break;
+                        case "Score": winCondition = WinConditions.Score; break;
+                        case "ScoreV2": winCondition = WinConditions.ScoreV2; break;
+                        case "Accuracy": winCondition = WinConditions.Accuracy; break;
+                        case "Combo": winCondition = WinConditions.Combo; break;
                     }
                     Player rollWinnerPlayer = null;
                     Team rollWinnerTeam = null;
@@ -775,7 +808,7 @@ namespace script_chan2.Database
                     Team firstPickerTeam = null;
                     Team teamRed = null;
                     Team teamBlue = null;
-                    if (teamMode == Enums.TeamModes.TeamVS)
+                    if (teamMode == TeamModes.TeamVS)
                     {
                         if (reader["rollWinner"] != DBNull.Value)
                             rollWinnerTeam = Teams.First(x => x.Id == Convert.ToInt32(reader["rollWinner"]));
@@ -804,14 +837,41 @@ namespace script_chan2.Database
                     var mpTimerAfterPick = Convert.ToInt32(reader["mpTimerAfterPick"]);
                     var pointsForSecondBan = Convert.ToInt32(reader["pointsForSecondBan"]);
                     var allPicksFreemod = Convert.ToBoolean(reader["allPicksFreemod"]);
-                    var status = Enums.MatchStatus.New;
+                    var status = MatchStatus.New;
                     switch (reader["status"].ToString())
                     {
-                        case "New": status = Enums.MatchStatus.New; break;
-                        case "InProgress": status = Enums.MatchStatus.InProgress; break;
-                        case "Finished": status = Enums.MatchStatus.Finished; break;
+                        case "New": status = MatchStatus.New; break;
+                        case "InProgress": status = MatchStatus.InProgress; break;
+                        case "Finished": status = MatchStatus.Finished; break;
                     }
-                    var match = new Match(tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinnerTeam, rollWinnerPlayer, firstPickerTeam, firstPickerPlayer, bo, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, id);
+                    var match = new Match(id)
+                    {
+                        Tournament = tournament,
+                        Mappool = mappool,
+                        Name = name,
+                        RoomId = roomId,
+                        GameMode = gameMode,
+                        TeamMode = teamMode,
+                        WinCondition = winCondition,
+                        TeamBlue = teamBlue,
+                        TeamBluePoints = teamBluePoints,
+                        TeamRed = teamRed,
+                        TeamRedPoints = teamRedPoints,
+                        TeamSize = teamSize,
+                        RoomSize = roomSize,
+                        RollWinnerTeam = rollWinnerTeam,
+                        RollWinnerPlayer = rollWinnerPlayer,
+                        FirstPickerTeam = firstPickerTeam,
+                        FirstPickerPlayer = firstPickerPlayer,
+                        BO = bo,
+                        EnableWebhooks = enableWebhooks,
+                        MpTimerCommand = mpTimerCommand,
+                        MpTimerAfterGame = mpTimerAfterGame,
+                        MpTimerAfterPick = mpTimerAfterPick,
+                        PointsForSecondBan = pointsForSecondBan,
+                        AllPicksFreemod = allPicksFreemod,
+                        Status = status
+                    };
                     Matches.Add(match);
                 }
                 reader.Close();
@@ -838,7 +898,15 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@gameMode", match.GameMode.ToString());
                     command.Parameters.AddWithValue("@teamMode", match.TeamMode.ToString());
                     command.Parameters.AddWithValue("@winCondition", match.WinCondition.ToString());
-                    if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    if (match.TeamBlue != null)
+                        command.Parameters.AddWithValue("@teamBlue", match.TeamBlue.Id);
+                    else
+                        command.Parameters.AddWithValue("@teamBlue", DBNull.Value);
+                    if (match.TeamRed != null)
+                        command.Parameters.AddWithValue("@teamRed", match.TeamRed.Id);
+                    else
+                        command.Parameters.AddWithValue("@teamRed", DBNull.Value);
+                    if (match.TeamMode == TeamModes.TeamVS)
                     {
                         if (match.RollWinnerTeam != null)
                             command.Parameters.AddWithValue("@rollWinner", match.RollWinnerTeam.Id);
@@ -848,14 +916,6 @@ namespace script_chan2.Database
                             command.Parameters.AddWithValue("@firstPicker", match.FirstPickerTeam.Id);
                         else
                             command.Parameters.AddWithValue("@firstPicker", DBNull.Value);
-                        if (match.TeamBlue != null)
-                            command.Parameters.AddWithValue("@teamBlue", match.TeamBlue.Id);
-                        else
-                            command.Parameters.AddWithValue("@teamBlue", DBNull.Value);
-                        if (match.TeamRed != null)
-                            command.Parameters.AddWithValue("@teamRed", match.TeamRed.Id);
-                        else
-                            command.Parameters.AddWithValue("@teamRed", DBNull.Value);
                     }
                     else
                     {
@@ -886,7 +946,7 @@ namespace script_chan2.Database
                 {
                     resultValue = Convert.ToInt32(command.ExecuteScalar());
                 }
-                if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                if (match.TeamMode == TeamModes.HeadToHead)
                 {
                     foreach (var player in match.Players)
                     {
@@ -905,9 +965,9 @@ namespace script_chan2.Database
                     {
                         command.Parameters.AddWithValue("@match", match.Id);
                         command.Parameters.AddWithValue("@beatmap", pick.Map.Id);
-                        if (match.TeamMode == Enums.TeamModes.TeamVS)
+                        if (match.TeamMode == TeamModes.TeamVS)
                             command.Parameters.AddWithValue("@picker", pick.Team.Id);
-                        else if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                        else if (match.TeamMode == TeamModes.HeadToHead)
                             command.Parameters.AddWithValue("@picker", pick.Player.Id);
                         command.ExecuteNonQuery();
                     }
@@ -1014,9 +1074,9 @@ namespace script_chan2.Database
                     {
                         command.Parameters.AddWithValue("@match", match.Id);
                         command.Parameters.AddWithValue("@beatmap", pick.Map.Id);
-                        if (match.TeamMode == Enums.TeamModes.TeamVS)
+                        if (match.TeamMode == TeamModes.TeamVS)
                             command.Parameters.AddWithValue("@picker", pick.Team.Id);
-                        else if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                        else if (match.TeamMode == TeamModes.HeadToHead)
                             command.Parameters.AddWithValue("@picker", pick.Player.Id);
                         command.ExecuteNonQuery();
                     }
@@ -1094,11 +1154,17 @@ namespace script_chan2.Database
                     var beatmap = match.Mappool.Beatmaps.First(x => x.Id == Convert.ToInt32(reader["beatmap"]));
                     Team team = null;
                     Player player = null;
-                    if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    if (match.TeamMode == TeamModes.TeamVS)
                         team = Teams.First(x => x.Id == Convert.ToInt32(reader["picker"]));
-                    else if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                    else if (match.TeamMode == TeamModes.HeadToHead)
                         player = GetPlayer(reader["picker"].ToString());
-                    var pick = new MatchPick(match, beatmap, team, player);
+                    var pick = new MatchPick()
+                    {
+                        Match = match,
+                        Map = beatmap,
+                        Team = team,
+                        Player = player
+                    };
                     match.Picks.Add(pick);
                 }
                 conn.Close();

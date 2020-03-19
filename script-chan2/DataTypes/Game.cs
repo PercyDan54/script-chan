@@ -9,20 +9,17 @@ namespace script_chan2.DataTypes
 {
     public class Game
     {
-        public Game(Room room, int id, Beatmap beatmap)
+        public Game()
         {
             Scores = new List<Score>();
             Mods = new List<GameMods>();
-            Room = room;
-            Id = id;
-            Beatmap = beatmap;
         }
 
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public Room Room { get; }
+        public Room Room { get; set; }
 
-        public Beatmap Beatmap { get; }
+        public Beatmap Beatmap { get; set; }
 
         public List<GameMods> Mods;
 

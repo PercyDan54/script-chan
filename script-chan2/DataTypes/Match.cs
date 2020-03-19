@@ -10,45 +10,17 @@ namespace script_chan2.DataTypes
 {
     public class Match
     {
-        public Match(Tournament tournament, Mappool mappool, string name, int roomId, GameModes gameMode, TeamModes teamMode, WinConditions winCondition, Team teamBlue, int teamBluePoints, Team teamRed, int teamRedPoints,
-            int teamSize, int roomSize, Team rollWinnerTeam, Player rollWinnerPlayer, Team firstPickerTeam, Player firstPickerPlayer, int bo, bool enableWebhooks, int mpTimerCommand, int mpTimerAfterGame,
-            int mpTimerAfterPick, int pointsForSecondBan, bool allPicksFreemod, MatchStatus status, int id = 0)
+        public Match(int id = 0)
         {
             Players = new Dictionary<Player, int>();
             Picks = new List<MatchPick>();
             ChatMessages = new List<IrcMessage>();
-            Tournament = tournament;
-            Mappool = mappool;
-            Name = name;
-            RoomId = roomId;
-            GameMode = gameMode;
-            TeamMode = teamMode;
-            WinCondition = winCondition;
-            TeamSize = teamSize;
-            RoomSize = roomSize;
-            if (TeamMode == TeamModes.TeamVS)
-            {
-                TeamBlue = teamBlue;
-                TeamBluePoints = teamBluePoints;
-                TeamRed = teamRed;
-                TeamRedPoints = teamRedPoints;
-                RollWinnerTeam = rollWinnerTeam;
-                FirstPickerTeam = firstPickerTeam;
-            }
-            else
-            {
-                RollWinnerPlayer = rollWinnerPlayer;
-                FirstPickerPlayer = firstPickerPlayer;
-            }
-            BO = bo;
-            EnableWebhooks = enableWebhooks;
-            MpTimerCommand = mpTimerCommand;
-            MpTimerAfterGame = mpTimerAfterGame;
-            MpTimerAfterPick = mpTimerAfterPick;
-            PointsForSecondBan = pointsForSecondBan;
-            AllPicksFreemod = allPicksFreemod;
-            Status = status;
             Id = id;
+            RoomId = 0;
+            TeamBluePoints = 0;
+            TeamRedPoints = 0;
+            EnableWebhooks = true;
+            Status = MatchStatus.New;
         }
 
         public int Id { get; private set; }

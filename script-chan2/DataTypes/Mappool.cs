@@ -9,12 +9,10 @@ namespace script_chan2.DataTypes
 {
     public class Mappool
     {
-        public Mappool(string name, Tournament tournament, int id = 0)
+        public Mappool(int id = 0)
         {
             Beatmaps = new List<MappoolMap>();
-            Name = name;
             Id = id;
-            Tournament = tournament;
         }
 
         public int Id { get; private set; }

@@ -202,7 +202,11 @@ namespace script_chan2.GUI
                     var beatmap = Database.Database.GetBeatmap(actualId);
                     if (beatmap != null)
                     {
-                        var mappoolMap = new MappoolMap(mappool, beatmap, "");
+                        var mappoolMap = new MappoolMap()
+                        {
+                            Mappool = mappool,
+                            Beatmap = beatmap
+                        };
                         mappool.AddBeatmap(mappoolMap);
                         mappoolMap.Save();
                     }

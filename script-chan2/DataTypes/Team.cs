@@ -9,16 +9,14 @@ namespace script_chan2.DataTypes
 {
     public class Team
     {
-        public Team(Tournament tournament, string name, int id = 0)
+        public Team(int id = 0)
         {
             Players = new List<Player>();
-            Tournament = tournament;
-            Name = name;
             Id = id;
         }
 
         public int Id { get; private set; }
-        public Tournament Tournament { get; }
+        public Tournament Tournament { get; set; }
 
         public string Name { get; set; }
 

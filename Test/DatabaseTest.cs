@@ -20,14 +20,6 @@ namespace Test
             Database.Initialize();
         }
 
-        [TestCleanup]
-        public void Cleanup()
-        {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            File.Delete("Database.sqlite");
-        }
-
         [TestMethod]
         public void CreateDatabase()
         {
@@ -189,7 +181,11 @@ namespace Test
                 Name = "TestTournament"
             };
             tournament.Save();
-            var mappool = new Mappool("TestMappool", tournament);
+            var mappool = new Mappool()
+            {
+                Name = "TestMappool",
+                Tournament = tournament
+            };
             mappool.Save();
             Assert.AreEqual(1, Database.Mappools.Count, "Mappools were not created");
         }
@@ -202,7 +198,11 @@ namespace Test
                 Name = "TestTournament"
             };
             tournament.Save();
-            var mappool = new Mappool("TestMappool", tournament);
+            var mappool = new Mappool()
+            {
+                Name = "TestMappool",
+                Tournament = tournament
+            };
             mappool.Save();
             Assert.AreEqual(1, Database.Mappools.Count, "Mappool was not created");
             mappool.Delete();
@@ -217,7 +217,11 @@ namespace Test
                 Name = "TestTournament"
             };
             tournament.Save();
-            var mappool = new Mappool("TestMappool", tournament);
+            var mappool = new Mappool()
+            {
+                Name = "TestMappool",
+                Tournament = tournament
+            };
             mappool.Save();
             mappool.Name = "Renamed";
             mappool.Save();
@@ -259,16 +263,31 @@ namespace Test
                 Name = "TestTournament"
             };
             tournament.Save();
-            var mappool = new Mappool("TestMappool", tournament);
+            var mappool = new Mappool()
+            {
+                Name = "TestMappool",
+                Tournament = tournament
+            };
             mappool.Save();
             var beatmap = Database.GetBeatmap(922172);
             var beatmap2 = Database.GetBeatmap(180092);
 
-            var mappoolMap = new MappoolMap(mappool, beatmap, "Hidden");
+            var mappoolMap = new MappoolMap()
+            {
+                Mappool = mappool,
+                Beatmap = beatmap
+            };
+            mappoolMap.Mods.Add(script_chan2.Enums.GameMods.Hidden);
             mappool.AddBeatmap(mappoolMap);
             mappoolMap.Save();
 
-            var mappoolMap2 = new MappoolMap(mappool, beatmap2, "Hidden,HardRock");
+            var mappoolMap2 = new MappoolMap()
+            {
+                Mappool = mappool,
+                Beatmap = beatmap2
+            };
+            mappoolMap2.Mods.Add(script_chan2.Enums.GameMods.Hidden);
+            mappoolMap2.Mods.Add(script_chan2.Enums.GameMods.HardRock);
             mappool.AddBeatmap(mappoolMap2);
             mappoolMap2.Save();
 
@@ -285,16 +304,31 @@ namespace Test
                 Name = "TestTournament"
             };
             tournament.Save();
-            var mappool = new Mappool("TestMappool", tournament);
+            var mappool = new Mappool()
+            {
+                Name = "TestMappool",
+                Tournament = tournament
+            };
             mappool.Save();
             var beatmap = Database.GetBeatmap(922172);
             var beatmap2 = Database.GetBeatmap(180092);
 
-            var mappoolMap = new MappoolMap(mappool, beatmap, "Hidden");
+            var mappoolMap = new MappoolMap()
+            {
+                Mappool = mappool,
+                Beatmap = beatmap
+            };
+            mappoolMap.Mods.Add(script_chan2.Enums.GameMods.Hidden);
             mappool.AddBeatmap(mappoolMap);
             mappoolMap.Save();
 
-            var mappoolMap2 = new MappoolMap(mappool, beatmap2, "Hidden,HardRock");
+            var mappoolMap2 = new MappoolMap()
+            {
+                Mappool = mappool,
+                Beatmap = beatmap2
+            };
+            mappoolMap.Mods.Add(script_chan2.Enums.GameMods.Hidden);
+            mappoolMap.Mods.Add(script_chan2.Enums.GameMods.HardRock);
             mappool.AddBeatmap(mappoolMap2);
             mappoolMap2.Save();
 
@@ -313,7 +347,11 @@ namespace Test
             };
             tournament.Save();
 
-            var team = new Team(tournament, "TestTeam");
+            var team = new Team()
+            {
+                Tournament = tournament,
+                Name = "TestTeam"
+            };
             team.Save();
 
             Assert.AreEqual(team.Tournament, tournament, "Unexpected tournament");
@@ -330,7 +368,11 @@ namespace Test
             };
             tournament.Save();
 
-            var team = new Team(tournament, "TestTeam");
+            var team = new Team()
+            {
+                Tournament = tournament,
+                Name = "TestTeam"
+            };
             team.Save();
             team.Delete();
 
@@ -346,7 +388,11 @@ namespace Test
             };
             tournament.Save();
 
-            var team = new Team(tournament, "TestTeam");
+            var team = new Team()
+            {
+                Tournament = tournament,
+                Name = "TestTeam"
+            };
             team.Save();
 
             var player = Database.GetPlayer("3312177");
@@ -364,7 +410,11 @@ namespace Test
             };
             tournament.Save();
 
-            var team = new Team(tournament, "TestTeam");
+            var team = new Team()
+            {
+                Tournament = tournament,
+                Name = "TestTeam"
+            };
             team.Save();
 
             var player = Database.GetPlayer("3312177");
@@ -403,7 +453,11 @@ namespace Test
                 Name = "TestTournament"
             };
             tournament.Save();
-            var match = new Match(tournament, null, "", 0, script_chan2.Enums.GameModes.Standard, script_chan2.Enums.TeamModes.TeamVS, script_chan2.Enums.WinConditions.ScoreV2, null, 0, null, 0, 4, 8, null, null, null, null, 7, true, 120, 120, 120, 2, false, script_chan2.Enums.MatchStatus.New);
+            var match = new Match()
+            {
+                Tournament = tournament,
+                Name = "TestMatch"
+            };
             match.Save();
             var list = new List<IrcMessage>();
             list.Add(new IrcMessage() { Match = match, User = "User 1", Timestamp = DateTime.Now, Message = "Message 1" });

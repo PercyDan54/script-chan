@@ -126,7 +126,11 @@ namespace script_chan2.GUI
         public void NewTeamDialogClosed()
         {
             Log.Information("GUI new team '{name}' save", NewTeamName);
-            var team = new Team(NewTeamTournament, NewTeamName);
+            var team = new Team()
+            {
+                Tournament = NewTeamTournament,
+                Name = NewTeamName
+            };
             team.Save();
             Settings.DefaultTournament = NewTeamTournament;
             NotifyOfPropertyChange(() => TeamsViews);

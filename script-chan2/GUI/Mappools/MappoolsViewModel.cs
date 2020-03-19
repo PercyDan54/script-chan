@@ -128,7 +128,11 @@ namespace script_chan2.GUI
         public void NewMappoolDialogClosed()
         {
             Log.Information("GUI new mappool '{mappool}' save", NewMappoolName);
-            var mappool = new Mappool(NewMappoolName, NewMappoolTournament);
+            var mappool = new Mappool()
+            {
+                Name = NewMappoolName,
+                Tournament = NewMappoolTournament
+            };
             mappool.Save();
             Settings.DefaultTournament = NewMappoolTournament;
             NotifyOfPropertyChange(() => NewMappoolTournament);

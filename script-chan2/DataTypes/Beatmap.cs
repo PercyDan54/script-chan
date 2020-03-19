@@ -8,26 +8,16 @@ namespace script_chan2.DataTypes
 {
     public class Beatmap
     {
-        public Beatmap(int id, int setId, string artist, string title, string version, string creator)
-        {
-            Id = id;
-            SetId = setId;
-            Artist = artist;
-            Title = title;
-            Version = version;
-            Creator = creator;
-        }
+        public int Id { get; set; }
 
-        public int Id { get; }
+        public int SetId { get; set; }
 
-        public int SetId { get; }
+        public string Artist { get; set; }
 
-        public string Artist { get; }
+        public string Title { get; set; }
 
-        public string Title { get; }
+        public string Version { get; set; }
 
-        public string Version { get; }
-
-        public string Creator { get; }
+        public string Creator { get; set; }
     }
 }

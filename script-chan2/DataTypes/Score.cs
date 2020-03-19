@@ -9,22 +9,17 @@ namespace script_chan2.DataTypes
 {
     public class Score
     {
-        public Score(Game game, Player player, int points, LobbyTeams team, bool passed)
+        public Score()
         {
-            Player = player;
-            Game = game;
-            Points = points;
-            Team = team;
-            Passed = passed;
             Mods = new List<GameMods>();
         }
 
-        public Player Player { get; }
-        public Game Game { get; }
+        public Player Player { get; set; }
+        public Game Game { get; set; }
 
         public List<GameMods> Mods { get; set; }
-        public int Points { get; }
-        public LobbyTeams Team { get; }
-        public bool Passed { get; }
+        public int Points { get; set; }
+        public LobbyTeams Team { get; set; }
+        public bool Passed { get; set; }
     }
 }

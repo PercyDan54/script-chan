@@ -10,25 +10,16 @@ namespace script_chan2.DataTypes
 {
     public class MappoolMap
     {
-        public MappoolMap(Mappool mappool, Beatmap beatmap, string mods, int id = 0)
+        public MappoolMap(int id = 0)
         {
-            Mods = new List<GameMods>();
-            foreach (string mod in mods.Split(','))
-            {
-                if (Enum.TryParse(mod, out GameMods gameMod))
-                {
-                    Mods.Add(gameMod);
-                }
-            }
-            Mappool = mappool;
-            Beatmap = beatmap;
             Id = id;
+            Mods = new List<GameMods>();
         }
 
         public int Id { get; private set; }
 
         public Beatmap Beatmap { get; set; }
-        public Mappool Mappool { get; }
+        public Mappool Mappool { get; set; }
 
         public int ListIndex { get; set; }
 
