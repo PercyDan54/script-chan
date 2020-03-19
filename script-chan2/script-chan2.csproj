@@ -187,13 +187,16 @@
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\DbCreator.cs" />
     <Compile Include="DataTypes\Beatmap.cs" />
+    <Compile Include="DataTypes\ChannelMessageData.cs" />
     <Compile Include="DataTypes\Game.cs" />
+    <Compile Include="DataTypes\IrcMessage.cs" />
     <Compile Include="DataTypes\Mappool.cs" />
     <Compile Include="DataTypes\MappoolMap.cs" />
     <Compile Include="DataTypes\Match.cs" />
     <Compile Include="DataTypes\MatchPick.cs" />
     <Compile Include="DataTypes\Player.cs" />
     <Compile Include="DataTypes\Room.cs" />
+    <Compile Include="DataTypes\RoomCreatedData.cs" />
     <Compile Include="DataTypes\Score.cs" />
     <Compile Include="DataTypes\Settings.cs" />
     <Compile Include="DataTypes\Team.cs" />
@@ -266,7 +269,6 @@
     <Compile Include="GUI\Webhooks\WebhookListItemViewModel.cs" />
     <Compile Include="OsuApi\ApiDataTypes.cs" />
     <Compile Include="OsuApi\OsuApi.cs" />
-    <Compile Include="OsuIrc\IrcDataTypes.cs" />
     <Compile Include="OsuIrc\OsuIrc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
