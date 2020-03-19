@@ -558,6 +558,21 @@ namespace script_chan2.GUI
             SendRoomMessage(message);
         }
 
+        public void SendSettings()
+        {
+            SendRoomMessage("!mp settings");
+        }
+
+        public void StartGame()
+        {
+            SendRoomMessage("!mp start 5");
+        }
+
+        public void AbortMatch()
+        {
+            SendRoomMessage("!mp abort");
+        }
+
         private void AddMessageToChat(IrcMessage message)
         {
             var brush = new SolidColorBrush();
