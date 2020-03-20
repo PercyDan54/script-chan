@@ -249,6 +249,7 @@ namespace script_chan2.Database
                 (match INTEGER NOT NULL,
                 beatmap INTEGER NOT NULL,
                 picker INTEGER NOT NULL,
+                ban BOOL,
                 PRIMARY KEY(match, beatmap),
                 FOREIGN KEY(match) REFERENCES Matches(id),
                 FOREIGN KEY(beatmap) REFERENCES MappoolMaps(id))", conn))
