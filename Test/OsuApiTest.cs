@@ -29,6 +29,9 @@ namespace Test
             Assert.AreEqual(427166, beatmap.SetId, "Unexpected set id");
             Assert.AreEqual("The Azure Arbitrator", beatmap.Title, "Unexpected title");
             Assert.AreEqual("Chrono Collapse", beatmap.Version, "Unexpected version");
+            Assert.AreEqual(274, beatmap.BPM, "Unexpected BPM");
+            Assert.AreEqual(4, beatmap.CS, "Unexpected CS");
+            Assert.AreEqual(10, beatmap.AR, "Unexpected AR");
         }
 
         [TestMethod]

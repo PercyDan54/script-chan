@@ -132,7 +132,10 @@ namespace script_chan2.Database
                 artist TEXT,
                 title TEXT,
                 version TEXT,
-                creator TEXT)", conn))
+                creator TEXT,
+                bpm REAL,
+                ar REAL,
+                cs REAL)", conn))
             {
                 command.ExecuteNonQuery();
             }

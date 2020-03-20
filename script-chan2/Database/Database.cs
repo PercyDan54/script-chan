@@ -440,8 +440,8 @@ namespace script_chan2.Database
         {
             Log.Information("DB add new beatmap '{id}'", beatmap.Id);
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand(@"INSERT INTO Beatmaps (id, beatmapsetId, artist, title, version, creator)
-                VALUES (@id, @beatmapsetId, @artist, @title, @version, @creator)", conn))
+            using (var command = new SQLiteCommand(@"INSERT INTO Beatmaps (id, beatmapsetId, artist, title, version, creator, bpm, ar, cs)
+                VALUES (@id, @beatmapsetId, @artist, @title, @version, @creator, @bpm, @ar, @cs)", conn))
             {
                 command.Parameters.AddWithValue("@id", beatmap.Id);
                 command.Parameters.AddWithValue("@beatmapsetId", beatmap.SetId);
@@ -449,6 +449,9 @@ namespace script_chan2.Database
                 command.Parameters.AddWithValue("@title", beatmap.Title);
                 command.Parameters.AddWithValue("@version", beatmap.Version);
                 command.Parameters.AddWithValue("@creator", beatmap.Creator);
+                command.Parameters.AddWithValue("@bpm", beatmap.BPM);
+                command.Parameters.AddWithValue("@ar", beatmap.AR);
+                command.Parameters.AddWithValue("@cs", beatmap.CS);
                 command.ExecuteNonQuery();
                 conn.Close();
             }
@@ -462,7 +465,7 @@ namespace script_chan2.Database
                 return returnValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("SELECT id, beatmapsetId, artist, title, version, creator FROM Beatmaps WHERE id = @id", conn))
+                using (var command = new SQLiteCommand("SELECT id, beatmapsetId, artist, title, version, creator, bpm, ar, cs FROM Beatmaps WHERE id = @id", conn))
                 {
                     command.Parameters.AddWithValue("@id", id);
                     using (var reader = command.ExecuteReader())
@@ -475,6 +478,9 @@ namespace script_chan2.Database
                             var title = reader["title"].ToString();
                             var version = reader["version"].ToString();
                             var creator = reader["creator"].ToString();
+                            var bpm = Convert.ToDecimal(reader["bpm"]);
+                            var ar = Convert.ToDecimal(reader["ar"]);
+                            var cs = Convert.ToDecimal(reader["cs"]);
                             returnValue = new Beatmap()
                             {
                                 Id = id,
@@ -482,7 +488,10 @@ namespace script_chan2.Database
                                 Artist = artist,
                                 Title = title,
                                 Version = version,
-                                Creator = creator
+                                Creator = creator,
+                                BPM = bpm,
+                                AR = ar,
+                                CS = cs
                             };
                         }
                         else

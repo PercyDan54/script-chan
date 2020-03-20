@@ -19,5 +19,11 @@ namespace script_chan2.DataTypes
         public string Version { get; set; }
 
         public string Creator { get; set; }
+
+        public decimal BPM { get; set; }
+
+        public decimal AR { get; set; }
+
+        public decimal CS { get; set; }
     }
 }

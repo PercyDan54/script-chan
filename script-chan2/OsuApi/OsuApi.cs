@@ -49,7 +49,10 @@ namespace script_chan2.OsuApi
                 Artist = beatmap.artist,
                 Title = beatmap.title,
                 Version = beatmap.version,
-                Creator = beatmap.creator
+                Creator = beatmap.creator,
+                BPM = Convert.ToDecimal(beatmap.bpm),
+                AR = Convert.ToDecimal(beatmap.diff_approach),
+                CS = Convert.ToDecimal(beatmap.diff_size)
             };
         }
 
