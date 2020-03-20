@@ -89,6 +89,8 @@ namespace script_chan2.GUI
         public MatchViewModel(Match match)
         {
             this.match = match;
+            if (match.RoomId > 0)
+                OsuIrc.OsuIrc.JoinChannel("#mp_" + match.RoomId);
         }
         #endregion
 
