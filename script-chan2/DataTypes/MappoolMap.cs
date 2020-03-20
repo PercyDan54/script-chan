@@ -19,7 +19,10 @@ namespace script_chan2.DataTypes
         public int Id { get; private set; }
 
         public Beatmap Beatmap { get; set; }
+
         public Mappool Mappool { get; set; }
+
+        public string Tag { get; set; }
 
         public int ListIndex { get; set; }
 

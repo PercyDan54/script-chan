@@ -446,6 +446,20 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        private bool warmupMode;
+        public bool WarmupMode
+        {
+            get { return warmupMode; }
+            set
+            {
+                if (value != warmupMode)
+                {
+                    warmupMode = value;
+                    NotifyOfPropertyChange(() => WarmupMode);
+                }
+            }
+        }
         #endregion
 
         #region Window Events

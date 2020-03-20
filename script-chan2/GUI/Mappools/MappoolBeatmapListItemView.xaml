@@ -16,9 +16,11 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="Name" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" />
+            <TextBox x:Name="Tag" Grid.Column="1" VerticalAlignment="Center" Margin="5" />
+            <TextBlock x:Name="Name" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" />
             <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1">
                 <md:PackIcon Kind="Delete" />
             </Button>
@@ -28,7 +30,7 @@
             <Button x:Name="MoveDown" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Down" Grid.Row="1" Grid.Column="0">
                 <md:PackIcon Kind="ArrowDown" />
             </Button>
-            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Grid.Column="2">
                 <CheckBox x:Name="HasModHD">HD</CheckBox>
                 <CheckBox x:Name="HasModHR" Margin="10 0 0 0">HR</CheckBox>
                 <CheckBox x:Name="HasModDT" Margin="10 0 0 0">DT</CheckBox>

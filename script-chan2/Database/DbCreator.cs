@@ -149,6 +149,7 @@ namespace script_chan2.Database
                 beatmap INTEGER NOT NULL,
                 listIndex INTEGER,
                 mods TEXT,
+                tag TEXT,
                 FOREIGN KEY(mappool) REFERENCES Mappools(id),
                 FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn))
             {

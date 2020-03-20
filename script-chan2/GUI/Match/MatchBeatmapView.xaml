@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:script_chan2.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400" Height="50">
-    <Border BorderThickness="0 0 0 2" BorderBrush="LightGray">
-        <TextBlock x:Name="Name" VerticalAlignment="Center" />
+    <Border BorderThickness="0 0 0 2" BorderBrush="LightGray" ToolTip="{Binding ToolTip}" Background="{Binding Background}">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock x:Name="Tag" Width="40" />
+            <TextBlock x:Name="Name" />
+        </StackPanel>
     </Border>
 </UserControl>

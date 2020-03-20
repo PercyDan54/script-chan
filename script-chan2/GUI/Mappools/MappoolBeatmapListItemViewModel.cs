@@ -26,6 +26,20 @@ namespace script_chan2.GUI
             get { return $"{beatmap.Beatmap.Artist} - {beatmap.Beatmap.Title} [{beatmap.Beatmap.Version}]"; }
         }
 
+        public string Tag
+        {
+            get { return beatmap.Tag; }
+            set
+            {
+                if (value != beatmap.Tag)
+                {
+                    beatmap.Tag = value;
+                    beatmap.Save();
+                    NotifyOfPropertyChange(() => Tag);
+                }
+            }
+        }
+
         public void UpdateMods()
         {
             NotifyOfPropertyChange(() => HasModHD);
