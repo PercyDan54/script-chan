@@ -5,7 +5,9 @@ using script_chan2.OsuIrc;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -197,6 +199,12 @@ namespace script_chan2.GUI
                     var ircMessage = new IrcMessage() { User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
                     messagesToSave.Add(ircMessage);
                     AddMessageToChat(ircMessage, false);
+                }
+                if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
+                {
+                    var player = new MediaPlayer();
+                    player.Open(new Uri(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "sectionpass.mp3")));
+                    player.Play();
                 }
             }
         }
