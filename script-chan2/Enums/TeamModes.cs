@@ -8,7 +8,7 @@ namespace script_chan2.Enums
 {
     public enum TeamModes
     {
-        HeadToHead,
-        TeamVS
+        HeadToHead = 0,
+        TeamVS = 2
     }
 }

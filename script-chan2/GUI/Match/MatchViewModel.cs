@@ -143,6 +143,9 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => RoomClosedVisible);
                     NotifyOfPropertyChange(() => RoomOpenVisible);
                     OsuIrc.OsuIrc.JoinChannel("#mp_" + data.Id);
+                    SendRoomMessage($"!mp set {(int)match.TeamMode} {(int)match.WinCondition} {match.RoomSize}");
+                    SendRoomMessage("!mp unlock");
+                    SendRoomMessage("!mp settings");
                 }
             }
             else if (message is ChannelMessageData)

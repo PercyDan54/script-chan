@@ -8,9 +8,9 @@ namespace script_chan2.Enums
 {
     public enum WinConditions
     {
-        Score,
-        ScoreV2,
-        Accuracy,
-        Combo
+        Score = 0,
+        ScoreV2 = 3,
+        Accuracy = 1,
+        Combo = 2
     }
 }
