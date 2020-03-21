@@ -15,7 +15,5 @@ namespace script_chan2.DataTypes
         public Team Team { get; set; }
 
         public Player Player { get; set; }
-
-        public bool IsBan { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace script_chan2.GUI
@@ -67,6 +68,172 @@ namespace script_chan2.GUI
                 }
                 return brush;
             }
+        }
+
+        public Visibility CanUnban
+        {
+            get
+            {
+                if (match.Bans.Any(x => x.Map == beatmap))
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility CanBanOrPick
+        {
+            get
+            {
+                if (match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap))
+                    return Visibility.Collapsed;
+                return Visibility.Visible;
+            }
+        }
+
+        public Visibility CanUnpick
+        {
+            get
+            {
+                if (match.Picks.Any(x => x.Map == beatmap))
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public TextDecorationCollection TextDecoration
+        {
+            get
+            {
+                if (match.Bans.Any(x => x.Map == beatmap))
+                    return TextDecorations.Strikethrough;
+                return null;
+            }
+        }
+
+        public Brush FontColor
+        {
+            get
+            {
+                if (match.TeamMode == Enums.TeamModes.TeamVS && match.Bans.Any(x => x.Map == beatmap))
+                {
+                    if (match.Bans.First(x => x.Map == beatmap).Team == match.TeamRed)
+                        return Brushes.Red;
+                    return Brushes.Blue;
+                }
+                if (match.TeamMode == Enums.TeamModes.TeamVS && match.Picks.Any(x => x.Map == beatmap))
+                {
+                    if (match.Picks.First(x => x.Map == beatmap).Team == match.TeamRed)
+                        return Brushes.Red;
+                    return Brushes.Blue;
+                }
+                return Brushes.Black;
+            }
+        }
+        #endregion
+
+        #region Actions
+        public void BanRed()
+        {
+            match.Bans.Add(new MatchPick()
+            {
+                Match = match,
+                Map = beatmap,
+                Team = match.TeamRed
+            });
+            match.Save();
+            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => TextDecoration);
+            NotifyOfPropertyChange(() => FontColor);
+        }
+
+        public void BanBlue()
+        {
+            match.Bans.Add(new MatchPick()
+            {
+                Match = match,
+                Map = beatmap,
+                Team = match.TeamBlue
+            });
+            match.Save();
+            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => TextDecoration);
+            NotifyOfPropertyChange(() => FontColor);
+        }
+
+        public void RemoveBan()
+        {
+            match.Bans.RemoveAll(x => x.Map == beatmap);
+            match.Save();
+            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => TextDecoration);
+            NotifyOfPropertyChange(() => FontColor);
+        }
+
+        public void PickRed()
+        {
+            match.Picks.Add(new MatchPick()
+            {
+                Match = match,
+                Map = beatmap,
+                Team = match.TeamRed
+            });
+            match.Save();
+            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanUnpick);
+            NotifyOfPropertyChange(() => FontColor);
+            if (match.RoomId > 0)
+                SendPickMessage();
+        }
+
+        public void PickBlue()
+        {
+            match.Picks.Add(new MatchPick()
+            {
+                Match = match,
+                Map = beatmap,
+                Team = match.TeamBlue
+            });
+            match.Save();
+            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanUnpick);
+            NotifyOfPropertyChange(() => FontColor);
+            if (match.RoomId > 0)
+                SendPickMessage();
+        }
+
+        public void RemovePick()
+        {
+            match.Picks.RemoveAll(x => x.Map == beatmap);
+            match.Save();
+            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanUnpick);
+            NotifyOfPropertyChange(() => FontColor);
+        }
+
+        private void SendPickMessage()
+        {
+            var mods = Utils.ConvertGameModsToString(beatmap.Mods);
+            if (match.AllPicksFreemod && !mods.Contains("Freemod"))
+                mods += " Freemod";
+            OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp mods " + mods);
+            var data = new ChannelMessageData()
+            {
+                Channel = "#mp_" + match.RoomId,
+                User = Settings.IrcUsername,
+                Message = "!mp mods " + mods
+            };
+            Events.Aggregator.PublishOnUIThread(data);
+            OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp map {beatmap.Beatmap.Id} {(int)match.GameMode}");
+            data = new ChannelMessageData()
+            {
+                Channel = "#mp_" + match.RoomId,
+                User = Settings.IrcUsername,
+                Message = $"!mp map {beatmap.Beatmap.Id} {(int)match.GameMode}"
+            };
+            Events.Aggregator.PublishOnUIThread(data);
         }
         #endregion
     }

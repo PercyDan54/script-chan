@@ -3,13 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:script_chan2.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400" Height="50">
     <Border BorderThickness="0 0 0 2" BorderBrush="LightGray" ToolTip="{Binding ToolTip}" Background="{Binding Background}">
+        <Border.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Banned by Red" Visibility="{Binding CanBanOrPick}" cal:Message.Attach="[Event Click] = [Action BanRed]" />
+                <MenuItem Header="Banned by Blue" Visibility="{Binding CanBanOrPick}" cal:Message.Attach="[Event Click] = [Action BanBlue]" />
+                <MenuItem Header="Unban" Visibility="{Binding CanUnban}" cal:Message.Attach="[Event Click] = [Action RemoveBan]" />
+                <MenuItem Header="Picked by Red" Visibility="{Binding CanBanOrPick}" cal:Message.Attach="[Event Click] = [Action PickRed]" />
+                <MenuItem Header="Picked by Blue" Visibility="{Binding CanBanOrPick}" cal:Message.Attach="[Event Click] = [Action PickBlue]" />
+                <MenuItem Header="Unpick" Visibility="{Binding CanUnpick}" cal:Message.Attach="[Event Click] = [Action RemovePick]" />
+            </ContextMenu>
+        </Border.ContextMenu>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <TextBlock x:Name="Tag" Width="40" />
-            <TextBlock x:Name="Name" />
+            <TextBlock x:Name="Tag" Width="40" TextDecorations="{Binding TextDecoration}" Foreground="{Binding FontColor}" />
+            <TextBlock x:Name="Name"  TextDecorations="{Binding TextDecoration}" Foreground="{Binding FontColor}" />
         </StackPanel>
     </Border>
 </UserControl>

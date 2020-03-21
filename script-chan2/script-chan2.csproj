@@ -202,6 +202,7 @@
     <Compile Include="DataTypes\Settings.cs" />
     <Compile Include="DataTypes\Team.cs" />
     <Compile Include="DataTypes\Tournament.cs" />
+    <Compile Include="DataTypes\Utils.cs" />
     <Compile Include="DataTypes\Webhook.cs" />
     <Compile Include="Enums\GameModes.cs" />
     <Compile Include="Enums\GameMods.cs" />
