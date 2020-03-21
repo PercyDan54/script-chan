@@ -21,11 +21,16 @@ namespace script_chan2.DataTypes
             public string ircUsername { get; set; }
             public string ircPassword { get; set; }
             public string ircIpPrivate { get; set; }
-            public string banchoBotColor { get; set; }
-            public string selfColor { get; set; }
+            public List<ConfigColor> colors { get; set; }
         }
 
-        private static void SaveConfig()
+        private class ConfigColor
+        {
+            public string key { get; set; }
+            public string color { get; set; }
+        }
+
+        public static void SaveConfig()
         {
             var config = new Config
             {
@@ -33,17 +38,41 @@ namespace script_chan2.DataTypes
                 ircUsername = IrcUsername,
                 ircPassword = IrcPassword,
                 ircIpPrivate = IrcIpPrivate,
-                banchoBotColor = BanchoBotColor.ToString(),
-                selfColor = SelfColor.ToString()
+                colors = new List<ConfigColor>()
             };
-            File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(config));
+            foreach (var colorData in UserColors)
+            {
+                config.colors.Add(new ConfigColor { key = colorData.Key, color = colorData.Color.ToString() });
+            }
+            File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(config, Formatting.Indented));
         }
 
         static Settings()
         {
             Directory.CreateDirectory(CONFIG_PATH);
             if (!File.Exists(CONFIG_PATH + "\\config.json"))
-                File.WriteAllText(CONFIG_PATH + "\\config.json", "{\"apiKey\":\"\",\"ircUsername\":\"\",\"ircPassword\":\"\",\"ircIpPrivate\":\"\"}");
+            {
+                var configNew = new Config
+                {
+                    apiKey = "",
+                    ircUsername = "",
+                    ircPassword = "",
+                    ircIpPrivate = "",
+                    colors = new List<ConfigColor>
+                    {
+                        new ConfigColor { key = "BanchoBot", color = Colors.Pink.ToString() },
+                        new ConfigColor { key = "Self", color = Colors.Green.ToString() },
+                        new ConfigColor { key = "HD", color = "#FFF2CC" },
+                        new ConfigColor { key = "HR", color = "#f4cccc" },
+                        new ConfigColor { key = "DT", color = "#cfe2f3" },
+                        new ConfigColor { key = "FL", color = "#bdbdbd" },
+                        new ConfigColor { key = "Freemod", color = "#d9d2e9" },
+                        new ConfigColor { key = "Tiebreaker", color = "#d9ead3" },
+                        new ConfigColor { key = "NoFail", color = "#f97ae4" }
+                    }
+                };
+                File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(configNew, Formatting.Indented));
+            }
 
             var settings = Database.Database.GetSettings();
             var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(CONFIG_PATH + "\\config.json"));
@@ -61,14 +90,11 @@ namespace script_chan2.DataTypes
             defaultTimerCommand = Convert.ToInt32(settings["defaultTimerCommand"]);
             defaultTimerAfterGame = Convert.ToInt32(settings["defaultTimerAfterGame"]);
             defaultTimerAfterPick = Convert.ToInt32(settings["defaultTimerAfterPick"]);
-            if (string.IsNullOrEmpty(config.banchoBotColor))
-                banchoBotColor = Colors.Pink;
-            else
-                banchoBotColor = (Color)ColorConverter.ConvertFromString(config.banchoBotColor);
-            if (string.IsNullOrEmpty(config.selfColor))
-                selfColor = Colors.Green;
-            else
-                selfColor = (Color)ColorConverter.ConvertFromString(config.selfColor);
+            UserColors = new List<UserColor>();
+            foreach (var configColor in config.colors)
+            {
+                UserColors.Add(new UserColor { Key = configColor.key, Color = (Color)ColorConverter.ConvertFromString(configColor.color) });
+            }
         }
 
         private static string lang;
@@ -238,32 +264,6 @@ namespace script_chan2.DataTypes
             }
         }
 
-        private static Color banchoBotColor;
-        public static Color BanchoBotColor
-        {
-            get { return banchoBotColor; }
-            set
-            {
-                if (value != banchoBotColor)
-                {
-                    banchoBotColor = value;
-                    SaveConfig();
-                }
-            }
-        }
-
-        private static Color selfColor;
-        public static Color SelfColor
-        {
-            get { return selfColor; }
-            set
-            {
-                if (value != selfColor)
-                {
-                    selfColor = value;
-                    SaveConfig();
-                }
-            }
-        }
+        public static List<UserColor> UserColors;
     }
 }

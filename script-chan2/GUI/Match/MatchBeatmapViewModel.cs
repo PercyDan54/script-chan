@@ -10,13 +10,24 @@ using System.Windows.Media;
 
 namespace script_chan2.GUI
 {
-    public class MatchBeatmapViewModel : Screen
+    public class MatchBeatmapViewModel : Screen, IHandle<string>
     {
         #region Constructor
         public MatchBeatmapViewModel(Match match, MappoolMap beatmap)
         {
             this.match = match;
             this.beatmap = beatmap;
+            Events.Aggregator.Subscribe(this);
+        }
+        #endregion
+
+        #region Events
+        public void Handle(string message)
+        {
+            if (message == "UpdateColors")
+            {
+                NotifyOfPropertyChange(() => Background);
+            }
         }
         #endregion
 
@@ -56,13 +67,13 @@ namespace script_chan2.GUI
                     Brush brushToAdd = Brushes.White;
                     switch (beatmap.Mods[i])
                     {
-                        case Enums.GameMods.Hidden: brushToAdd = ModBrushes.HDLight; break;
-                        case Enums.GameMods.HardRock: brushToAdd = ModBrushes.HRLight; break;
-                        case Enums.GameMods.DoubleTime: brushToAdd = ModBrushes.DTLight; break;
-                        case Enums.GameMods.Flashlight: brushToAdd = ModBrushes.FLLight; break;
-                        case Enums.GameMods.Freemod: brushToAdd = ModBrushes.FreeModLight; break;
-                        case Enums.GameMods.TieBreaker: brushToAdd = ModBrushes.TieBreakerLight; break;
-                        case Enums.GameMods.NoFail: brushToAdd = ModBrushes.NoFailLight; break;
+                        case Enums.GameMods.Hidden: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "HD").Color); break;
+                        case Enums.GameMods.HardRock: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "HR").Color); break;
+                        case Enums.GameMods.DoubleTime: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "DT").Color); break;
+                        case Enums.GameMods.Flashlight: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "FL").Color); break;
+                        case Enums.GameMods.Freemod: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "Freemod").Color); break;
+                        case Enums.GameMods.TieBreaker: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "Tiebreaker").Color); break;
+                        case Enums.GameMods.NoFail: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "NoFail").Color); break;
                     }
                     brush.GradientStops.Add(new GradientStop(((SolidColorBrush)brushToAdd).Color, 1f / (beatmap.Mods.Count - 1) * i));
                 }

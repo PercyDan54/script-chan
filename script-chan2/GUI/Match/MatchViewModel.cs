@@ -15,7 +15,7 @@ using System.Windows.Media;
 
 namespace script_chan2.GUI
 {
-    public class MatchViewModel : Screen, IHandle<object>
+    public class MatchViewModel : Screen, IHandle<object>, IHandle<string>
     {
         #region Lists
         public BindableCollection<MatchTeamViewModel> TeamsViews
@@ -144,6 +144,26 @@ namespace script_chan2.GUI
                     messagesToSave.Add(ircMessage);
                     AddMessageToChat(ircMessage);
                 }
+            }
+        }
+
+        public void Handle(string message)
+        {
+            if (message == "UpdateColors")
+            {
+                Execute.OnUIThread(() =>
+                {
+                    MultiplayerChat = new FlowDocument
+                    {
+                        FontFamily = new FontFamily("Lucida Console"),
+                        FontSize = 12,
+                        TextAlignment = TextAlignment.Left
+                    };
+                    foreach (var chatMessage in match.ChatMessages)
+                    {
+                        AddMessageToChat(chatMessage);
+                    }
+                });
             }
         }
         #endregion
@@ -612,9 +632,9 @@ namespace script_chan2.GUI
         {
             var brush = new SolidColorBrush();
             if (message.User == Settings.IrcUsername)
-                brush.Color = Settings.SelfColor;
+                brush.Color = Settings.UserColors.First(x => x.Key == "Self").Color;
             else if (message.User == "BanchoBot")
-                brush.Color = Settings.BanchoBotColor;
+                brush.Color = Settings.UserColors.First(x => x.Key == "BanchoBot").Color;
             var paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush };
             MultiplayerChat.Blocks.Add(paragraph);
             NotifyOfPropertyChange(() => MultiplayerChat);

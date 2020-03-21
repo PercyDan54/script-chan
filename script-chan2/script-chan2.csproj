@@ -127,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GUI\Colors\ColorListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Colors\ColorsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -194,7 +198,6 @@
     <Compile Include="DataTypes\MappoolMap.cs" />
     <Compile Include="DataTypes\Match.cs" />
     <Compile Include="DataTypes\MatchPick.cs" />
-    <Compile Include="DataTypes\ModBrushes.cs" />
     <Compile Include="DataTypes\Player.cs" />
     <Compile Include="DataTypes\Room.cs" />
     <Compile Include="DataTypes\RoomCreatedData.cs" />
@@ -202,6 +205,7 @@
     <Compile Include="DataTypes\Settings.cs" />
     <Compile Include="DataTypes\Team.cs" />
     <Compile Include="DataTypes\Tournament.cs" />
+    <Compile Include="DataTypes\UserColor.cs" />
     <Compile Include="DataTypes\Utils.cs" />
     <Compile Include="DataTypes\Webhook.cs" />
     <Compile Include="Enums\GameModes.cs" />
@@ -211,6 +215,7 @@
     <Compile Include="Enums\TeamColors.cs" />
     <Compile Include="Enums\TeamModes.cs" />
     <Compile Include="Enums\WinConditions.cs" />
+    <Compile Include="GUI\Colors\ColorListItemViewModel.cs" />
     <Compile Include="GUI\Colors\ColorsViewModel.cs" />
     <Compile Include="GUI\Events.cs" />
     <Compile Include="GUI\Mappools\MappoolBeatmapListItemViewModel.cs" />
