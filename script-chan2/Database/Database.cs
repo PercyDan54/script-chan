@@ -522,11 +522,13 @@ namespace script_chan2.Database
                     var id = Convert.ToInt32(reader["id"]);
                     var mappool = Mappools.First(x => x.Id == Convert.ToInt32(reader["mappool"]));
                     var beatmap = GetBeatmap(Convert.ToInt32(reader["beatmap"]));
+                    var listIndex = Convert.ToInt32(reader["listIndex"]);
                     var tag = reader["tag"].ToString();
                     var mappoolMap = new MappoolMap(id)
                     {
                         Mappool = mappool,
                         Beatmap = beatmap,
+                        ListIndex = listIndex,
                         Tag = tag
                     };
                     foreach (string mod in reader["mods"].ToString().Split(','))
