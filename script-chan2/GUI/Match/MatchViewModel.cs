@@ -78,6 +78,40 @@ namespace script_chan2.GUI
             }
         }
 
+        public BindableCollection<MatchBanchoEventViewModel> BanchoEventsViews
+        {
+            get
+            {
+                var list = new BindableCollection<MatchBanchoEventViewModel>();
+                foreach (var message in match.ChatMessages)
+                {
+                    if (message.User == "BanchoBot")
+                    {
+                        if (message.Message.Contains("All players are ready"))
+                            list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.AllPlayersReady, message.Timestamp));
+                        if (message.Message.Contains("The match has finished"))
+                            list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.AllPlayersFinished, message.Timestamp));
+                        if (message.Message.Contains("rolls"))
+                        {
+                            var data = message.Message.Replace(" rolls", "").Replace(" point(s)", "");
+                            var user = data.Split(' ')[0];
+                            var roll = data.Split(' ')[1];
+                            TeamColors? team = null;
+                            if (match.TeamMode == TeamModes.TeamVS)
+                            {
+                                if (match.TeamRed.Players.Any(x => x.Name == user))
+                                    team = TeamColors.Red;
+                                if (match.TeamBlue.Players.Any(x => x.Name == user))
+                                    team = TeamColors.Blue;
+                            }
+                            list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.PlayerRoll, message.Timestamp, user, team, roll));
+                        }
+                    }
+                }
+                return list;
+            }
+        }
+
         public List<GameModes> GameModesList
         {
             get { return Enum.GetValues(typeof(GameModes)).Cast<GameModes>().ToList(); }
@@ -110,7 +144,7 @@ namespace script_chan2.GUI
                 };
                 foreach (var message in match.ChatMessages)
                 {
-                    AddMessageToChat(message);
+                    AddMessageToChat(message, true);
                 }
             });
         }
@@ -162,7 +196,7 @@ namespace script_chan2.GUI
                 {
                     var ircMessage = new IrcMessage() { User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
                     messagesToSave.Add(ircMessage);
-                    AddMessageToChat(ircMessage);
+                    AddMessageToChat(ircMessage, false);
                 }
             }
         }
@@ -181,7 +215,7 @@ namespace script_chan2.GUI
                     };
                     foreach (var chatMessage in match.ChatMessages)
                     {
-                        AddMessageToChat(chatMessage);
+                        AddMessageToChat(chatMessage, false);
                     }
                 });
             }
@@ -567,7 +601,7 @@ namespace script_chan2.GUI
         {
             OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, message);
             var ircMessage = new IrcMessage() { Match = match, User = Settings.IrcUsername, Timestamp = DateTime.Now, Message = message };
-            AddMessageToChat(ircMessage);
+            AddMessageToChat(ircMessage, false);
             messagesToSave.Add(ircMessage);
             if (messagesToSave.Count >= 5)
             {
@@ -648,10 +682,14 @@ namespace script_chan2.GUI
             SendRoomMessage("!mp password " + NewPassword);
         }
 
-        private void AddMessageToChat(IrcMessage message)
+        private void AddMessageToChat(IrcMessage message, bool init)
         {
+            if (!init)
+                match.ChatMessages.Add(message);
+
             var scrollToEnd = false;
-            var chatWindow = ((MatchView)GetView()).ChatWindow;
+            var view = (MatchView)GetView();
+            var chatWindow = view.ChatWindow;
             var scrollViewer = FindScroll(chatWindow);
             if (scrollViewer != null)
             {
@@ -659,7 +697,12 @@ namespace script_chan2.GUI
                     scrollToEnd = true;
             }
 
-            var brush = new SolidColorBrush();
+            var scrollEventsToEnd = false;
+            var eventsScrollViewer = view.BanchoEventsScrollViewer;
+            if (eventsScrollViewer.VerticalOffset == eventsScrollViewer.ScrollableHeight)
+                scrollEventsToEnd = true;
+
+                var brush = new SolidColorBrush();
             if (message.User == Settings.IrcUsername)
                 brush.Color = Settings.UserColors.First(x => x.Key == "Self").Color;
             else if (message.User == "BanchoBot")
@@ -667,9 +710,13 @@ namespace script_chan2.GUI
             var paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush };
             MultiplayerChat.Blocks.Add(paragraph);
             NotifyOfPropertyChange(() => MultiplayerChat);
+            NotifyOfPropertyChange(() => BanchoEventsViews);
 
             if (scrollToEnd)
                 scrollViewer.ScrollToEnd();
+
+            if (scrollEventsToEnd)
+                eventsScrollViewer.ScrollToEnd();
         }
 
         public void ChatMessageKeyDown(ActionExecutionContext context)
