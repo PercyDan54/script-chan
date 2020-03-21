@@ -203,7 +203,7 @@ namespace script_chan2.GUI
                 if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
                 {
                     var player = new MediaPlayer();
-                    player.Open(new Uri(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "sectionpass.mp3")));
+                    player.Open(new Uri(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "notification.mp3")));
                     player.Play();
                 }
             }
