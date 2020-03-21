@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -113,6 +114,15 @@ namespace script_chan2.GUI
                 }
             });
         }
+
+        protected override void OnViewLoaded(object view)
+        {
+            var chatWindow = ((MatchView)GetView()).ChatWindow;
+            var scrollViewer = FindScroll(chatWindow);
+            if (scrollViewer != null)
+                scrollViewer.ScrollToEnd();
+        }
+
         protected override void OnDeactivate(bool close)
         {
             Log.Information("GUI close match '{name}'", match.Name);
@@ -630,6 +640,15 @@ namespace script_chan2.GUI
 
         private void AddMessageToChat(IrcMessage message)
         {
+            var scrollToEnd = false;
+            var chatWindow = ((MatchView)GetView()).ChatWindow;
+            var scrollViewer = FindScroll(chatWindow);
+            if (scrollViewer != null)
+            {
+                if (scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight)
+                    scrollToEnd = true;
+            }
+
             var brush = new SolidColorBrush();
             if (message.User == Settings.IrcUsername)
                 brush.Color = Settings.UserColors.First(x => x.Key == "Self").Color;
@@ -638,6 +657,9 @@ namespace script_chan2.GUI
             var paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush };
             MultiplayerChat.Blocks.Add(paragraph);
             NotifyOfPropertyChange(() => MultiplayerChat);
+
+            if (scrollToEnd)
+                scrollViewer.ScrollToEnd();
         }
 
         public void ChatMessageKeyDown(ActionExecutionContext context)
@@ -645,6 +667,30 @@ namespace script_chan2.GUI
             var keyArgs = context.EventArgs as KeyEventArgs;
             if (keyArgs != null && keyArgs.Key == Key.Enter)
                 SendMessage();
+        }
+
+        private ScrollViewer FindScroll(FlowDocumentScrollViewer flowDocumentScrollViewer)
+        {
+            if (VisualTreeHelper.GetChildrenCount(flowDocumentScrollViewer) == 0)
+            {
+                return null;
+            }
+
+            // Border is the first child of first child of a ScrolldocumentViewer
+            DependencyObject firstChild = VisualTreeHelper.GetChild(flowDocumentScrollViewer, 0);
+            if (firstChild == null)
+            {
+                return null;
+            }
+
+            Decorator border = VisualTreeHelper.GetChild(firstChild, 0) as Decorator;
+
+            if (border == null)
+            {
+                return null;
+            }
+
+            return border.Child as ScrollViewer;
         }
         #endregion
     }
