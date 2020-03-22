@@ -47,7 +47,7 @@ namespace script_chan2.DataTypes
             File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(config, Formatting.Indented));
         }
 
-        static Settings()
+        internal static void Initialize()
         {
             Directory.CreateDirectory(CONFIG_PATH);
             if (!File.Exists(CONFIG_PATH + "\\config.json"))
@@ -91,9 +91,13 @@ namespace script_chan2.DataTypes
             defaultTimerAfterGame = Convert.ToInt32(settings["defaultTimerAfterGame"]);
             defaultTimerAfterPick = Convert.ToInt32(settings["defaultTimerAfterPick"]);
             UserColors = new List<UserColor>();
-            foreach (var configColor in config.colors)
+            
+            if(config.colors != null)
             {
-                UserColors.Add(new UserColor { Key = configColor.key, Color = (Color)ColorConverter.ConvertFromString(configColor.color) });
+                foreach (var configColor in config.colors)
+                {
+                    UserColors.Add(new UserColor { Key = configColor.key, Color = (Color)ColorConverter.ConvertFromString(configColor.color) });
+                }
             }
         }
 

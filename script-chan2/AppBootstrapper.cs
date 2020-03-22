@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.Database;
+using script_chan2.DataTypes;
 using script_chan2.GUI;
 using Serilog;
 using System;
@@ -24,6 +25,8 @@ namespace script_chan2
             if (!DbCreator.DbExists)
                 DbCreator.CreateDb();
             Database.Database.Initialize();
+
+            Settings.Initialize();
 
             OsuIrc.OsuIrc.Login();
 
