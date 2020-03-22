@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using script_chan2.Discord;
 using script_chan2.Enums;
 using script_chan2.OsuIrc;
 using Serilog;
@@ -195,6 +196,8 @@ namespace script_chan2.GUI
                     }
                     SendRoomMessage("!mp unlock");
                     SendRoomMessage("!mp settings");
+
+                    DiscordApi.SendMatchCreated(match);
                 }
             }
             else if (message is ChannelMessageData)
