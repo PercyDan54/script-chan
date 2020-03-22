@@ -221,6 +221,7 @@ namespace script_chan2.Database
                 pointsForSecondBan INTEGER,
                 allPicksFreemod BOOL,
                 status TEXT,
+                warmupMode BOOL,
                 FOREIGN KEY(tournament) REFERENCES Tournaments(id),
                 FOREIGN KEY(mappool) REFERENCES Mappools(id),
                 FOREIGN KEY(teamBlue) REFERENCES Teams(id),
@@ -266,7 +267,7 @@ namespace script_chan2.Database
                 match INTEGER,
                 beatmap INTEGER,
                 mods TEXT,
-                counts BOOL,
+                counted BOOL,
                 FOREIGN KEY(match) REFERENCES Matches(id),
                 FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn))
             {

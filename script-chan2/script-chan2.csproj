@@ -203,7 +203,6 @@
     <Compile Include="DataTypes\Match.cs" />
     <Compile Include="DataTypes\MatchPick.cs" />
     <Compile Include="DataTypes\Player.cs" />
-    <Compile Include="DataTypes\Room.cs" />
     <Compile Include="DataTypes\RoomCreatedData.cs" />
     <Compile Include="DataTypes\Score.cs" />
     <Compile Include="DataTypes\Settings.cs" />

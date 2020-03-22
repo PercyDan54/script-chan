@@ -206,6 +206,12 @@ namespace script_chan2.GUI
                     player.Open(new Uri(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "notification.mp3")));
                     player.Play();
                 }
+                if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
+                {
+                    OsuApi.OsuApi.UpdateGames(match);
+                    match.UpdateScores();
+                    NotifyOfPropertyChange(() => TeamsViews);
+                }
             }
         }
 
@@ -531,15 +537,15 @@ namespace script_chan2.GUI
             }
         }
 
-        private bool warmupMode;
         public bool WarmupMode
         {
-            get { return warmupMode; }
+            get { return match.WarmupMode; }
             set
             {
-                if (value != warmupMode)
+                if (value != match.WarmupMode)
                 {
-                    warmupMode = value;
+                    match.WarmupMode = value;
+                    match.Save();
                     NotifyOfPropertyChange(() => WarmupMode);
                 }
             }

@@ -17,12 +17,14 @@ namespace script_chan2.DataTypes
 
         public int Id { get; set; }
 
-        public Room Room { get; set; }
+        public Match Match { get; set; }
 
         public Beatmap Beatmap { get; set; }
 
         public List<GameMods> Mods;
 
         public List<Score> Scores;
+
+        public bool Counted { get; set; }
     }
 }

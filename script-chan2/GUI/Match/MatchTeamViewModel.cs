@@ -79,6 +79,11 @@ namespace script_chan2.GUI
             match.Save();
             NotifyOfPropertyChange(() => Points);
         }
+
+        public void Update()
+        {
+            NotifyOfPropertyChange(() => Points);
+        }
         #endregion
     }
 }

@@ -75,22 +75,23 @@ namespace script_chan2.OsuApi
             };
         }
 
-        public static Room GetMatch(int matchId)
+        public static void UpdateGames(Match match)
         {
-            Log.Information("API get match {id}", matchId);
-            var response = SendRequest("get_match", "mp=" + matchId);
+            Log.Information("API refresh match {id}", match.RoomId);
+            var response = SendRequest("get_match", "mp=" + match.RoomId);
             var data = JsonConvert.DeserializeObject<ApiMatch>(response);
-            var room = new Room(matchId);
-            room.Name = data.match.name;
             foreach (var gameData in data.games)
             {
+                if (match.Games.Any(x => x.Id == Convert.ToInt32(gameData.game_id)))
+                    continue;
+
                 if (gameData.end_time == null)
                     continue;
 
                 var beatmap = Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
                 var game = new Game()
                 {
-                    Room = room,
+                    Match = match,
                     Id = Convert.ToInt32(gameData.game_id),
                     Beatmap = beatmap,
                     Mods = ModsFromBitEnum(gameData.mods)
@@ -112,52 +113,7 @@ namespace script_chan2.OsuApi
                     game.Scores.Add(score);
                 }
 
-                room.Games.Add(game);
-            }
-
-            return room;
-        }
-
-        public static void UpdateRoom(Room room)
-        {
-            Log.Information("API refresh match {id}", room.Id);
-            var response = SendRequest("get_match", "mp=" + room.Id);
-            var data = JsonConvert.DeserializeObject<ApiMatch>(response);
-            room.Name = data.match.name;
-            foreach (var gameData in data.games)
-            {
-                if (room.Games.Any(x => x.Id == Convert.ToInt32(gameData.game_id)))
-                    continue;
-
-                if (gameData.end_time == null)
-                    continue;
-
-                var beatmap = Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
-                var game = new Game()
-                {
-                    Room = room,
-                    Id = Convert.ToInt32(gameData.game_id),
-                    Beatmap = beatmap,
-                    Mods = ModsFromBitEnum(gameData.mods)
-                };
-
-                foreach (var scoreData in gameData.scores)
-                {
-                    var player = Database.Database.GetPlayer(scoreData.user_id);
-                    var score = new Score()
-                    {
-                        Game = game,
-                        Player = player,
-                        Points = Convert.ToInt32(scoreData.score),
-                        Team = TeamFromString(scoreData.team),
-                        Passed = scoreData.pass == "1",
-                        Mods = ModsFromBitEnum(scoreData.enabled_mods)
-                    };
-
-                    game.Scores.Add(score);
-                }
-
-                room.Games.Add(game);
+                match.Games.Add(game);
             }
         }
         #endregion

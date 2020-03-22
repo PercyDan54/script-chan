@@ -16,6 +16,7 @@ namespace script_chan2.DataTypes
             Picks = new List<MatchPick>();
             Bans = new List<MatchPick>();
             ChatMessages = new List<IrcMessage>();
+            Games = new List<Game>();
             Id = id;
             RoomId = 0;
             TeamBluePoints = 0;
@@ -76,6 +77,8 @@ namespace script_chan2.DataTypes
 
         public MatchStatus Status { get; set; }
 
+        public bool WarmupMode { get; set; }
+
         public Dictionary<Player, int> Players { get; set; }
 
         public List<MatchPick> Picks { get; set; }
@@ -83,6 +86,8 @@ namespace script_chan2.DataTypes
         public List<MatchPick> Bans { get; set; }
 
         public List<IrcMessage> ChatMessages { get; set; }
+
+        public List<Game> Games { get; set; }
 
         public void Save()
         {
@@ -125,6 +130,41 @@ namespace script_chan2.DataTypes
         public void ClearMessages()
         {
             ChatMessages.Clear();
+        }
+
+        public void UpdateScores()
+        {
+            foreach (var game in Games.Where(x => !x.Counted))
+            {
+                if (!WarmupMode)
+                {
+                    if (TeamMode == TeamModes.TeamVS)
+                    {
+                        var teamRedScore = 0;
+                        var teamBlueScore = 0;
+                        foreach (var score in game.Scores)
+                        {
+                            if (score.Passed)
+                            {
+                                if (TeamRed.Players.Any(x => x.Id == score.Player.Id))
+                                    teamRedScore += score.Points;
+                                if (TeamBlue.Players.Any(x => x.Id == score.Player.Id))
+                                    teamBlueScore += score.Points;
+                            }
+                        }
+                        if (teamRedScore > teamBlueScore)
+                            TeamRedPoints++;
+                        if (teamBlueScore > teamRedScore)
+                            TeamBluePoints++;
+                    }
+                    if (TeamMode == TeamModes.HeadToHead)
+                    {
+                        //TODO!
+                    }
+                }
+                game.Counted = true;
+            }
+            Save();
         }
     }
 }

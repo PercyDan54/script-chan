@@ -35,6 +35,7 @@ namespace script_chan2.Database
             InitMatches();
             InitMatchPlayers();
             InitMatchPicks();
+            InitMatchGames();
             Log.Information("DB init finished");
         }
 
@@ -783,7 +784,7 @@ namespace script_chan2.Database
             Log.Information("DB init matches");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
-                rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status FROM Matches", conn))
+                rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode FROM Matches", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -853,6 +854,7 @@ namespace script_chan2.Database
                     var pointsForSecondBan = Convert.ToInt32(reader["pointsForSecondBan"]);
                     var allPicksFreemod = Convert.ToBoolean(reader["allPicksFreemod"]);
                     var status = MatchStatus.New;
+                    var warmupMode = Convert.ToBoolean(reader["warmupMode"]);
                     switch (reader["status"].ToString())
                     {
                         case "New": status = MatchStatus.New; break;
@@ -885,7 +887,8 @@ namespace script_chan2.Database
                         MpTimerAfterPick = mpTimerAfterPick,
                         PointsForSecondBan = pointsForSecondBan,
                         AllPicksFreemod = allPicksFreemod,
-                        Status = status
+                        Status = status,
+                        WarmupMode = warmupMode
                     };
                     Matches.Add(match);
                 }
@@ -900,8 +903,8 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status)" +
-                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @enableWebhooks, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode)" +
+                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @enableWebhooks, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status, @warmupMode)", conn))
                 {
                     command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
                     if (match.Mappool == null)
@@ -955,6 +958,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@pointsForSecondBan", match.PointsForSecondBan);
                     command.Parameters.AddWithValue("@allPicksFreemod", match.AllPicksFreemod);
                     command.Parameters.AddWithValue("@status", match.Status.ToString());
+                    command.Parameters.AddWithValue("@warmupMode", match.WarmupMode);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -1000,6 +1004,31 @@ namespace script_chan2.Database
                         command.ExecuteNonQuery();
                     }
                 }
+                foreach (var game in match.Games)
+                {
+                    using (var command = new SQLiteCommand("INSERT INTO Games (id, match, beatmap, mods, counted) VALUES (@id, @match, @beatmap, @mods, @counted)", conn))
+                    {
+                        command.Parameters.AddWithValue("@id", game.Id);
+                        command.Parameters.AddWithValue("@match", match.Id);
+                        command.Parameters.AddWithValue("@beatmap", game.Beatmap.Id);
+                        command.Parameters.AddWithValue("@mods", string.Join(",", game.Mods));
+                        command.Parameters.AddWithValue("@counted", game.Counted);
+                        command.ExecuteNonQuery();
+                    }
+                    foreach (var score in game.Scores)
+                    {
+                        using (var command = new SQLiteCommand("INSERT INTO Scores (player, game, mods, score, team, passed) VALUES (@player, @game, @mods, @score, @team, @passed)", conn))
+                        {
+                            command.Parameters.AddWithValue("@player", score.Player.Id);
+                            command.Parameters.AddWithValue("@game", game.Id);
+                            command.Parameters.AddWithValue("@mods", string.Join(",", score.Mods));
+                            command.Parameters.AddWithValue("@score", score.Points);
+                            command.Parameters.AddWithValue("@team", score.Team.ToString());
+                            command.Parameters.AddWithValue("@passed", score.Passed);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
                 conn.Close();
             }
             Matches.Add(match);
@@ -1015,7 +1044,7 @@ namespace script_chan2.Database
                 SET tournament = @tournament, mappool = @mappool, name = @name, roomId = @roomId, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
                 teamRed = @teamRed, teamRedPoints = @teamRedPoints, teamSize = @teamSize, roomSize = @roomSize, rollWinner = @rollWinner, firstPicker = @firstPicker, BO = @BO,
                 enableWebhooks = @enableWebhooks, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, pointsForSecondBan = @pointsForSecondBan,
-                allPicksFreemod = @allPicksFreemod, status = @status
+                allPicksFreemod = @allPicksFreemod, status = @status, warmupMode = @warmupMode
                 WHERE id = @id", conn))
                 {
                     command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
@@ -1070,6 +1099,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@pointsForSecondBan", match.PointsForSecondBan);
                     command.Parameters.AddWithValue("@allPicksFreemod", match.AllPicksFreemod);
                     command.Parameters.AddWithValue("@status", match.Status.ToString());
+                    command.Parameters.AddWithValue("@warmupMode", match.WarmupMode);
                     command.Parameters.AddWithValue("@id", match.Id);
                     command.ExecuteNonQuery();
                 }
@@ -1122,6 +1152,41 @@ namespace script_chan2.Database
                         command.ExecuteNonQuery();
                     }
                 }
+                using (var command = new SQLiteCommand("DELETE FROM Games WHERE match = @match", conn))
+                {
+                    command.Parameters.AddWithValue("@match", match.Id);
+                    command.ExecuteNonQuery();
+                }
+                foreach (var game in match.Games)
+                {
+                    using (var command = new SQLiteCommand("INSERT INTO Games (id, match, beatmap, mods, counted) VALUES (@id, @match, @beatmap, @mods, @counted)", conn))
+                    {
+                        command.Parameters.AddWithValue("@id", game.Id);
+                        command.Parameters.AddWithValue("@match", match.Id);
+                        command.Parameters.AddWithValue("@beatmap", game.Beatmap.Id);
+                        command.Parameters.AddWithValue("@mods", string.Join(",", game.Mods));
+                        command.Parameters.AddWithValue("@counted", game.Counted);
+                        command.ExecuteNonQuery();
+                    }
+                    using (var command = new SQLiteCommand("DELETE FROM Scores WHERE game = @game", conn))
+                    {
+                        command.Parameters.AddWithValue("@game", game.Id);
+                        command.ExecuteNonQuery();
+                    }
+                    foreach (var score in game.Scores)
+                    {
+                        using (var command = new SQLiteCommand("INSERT INTO Scores (player, game, mods, score, team, passed) VALUES (@player, @game, @mods, @score, @team, @passed)", conn))
+                        {
+                            command.Parameters.AddWithValue("@player", score.Player.Id);
+                            command.Parameters.AddWithValue("@game", game.Id);
+                            command.Parameters.AddWithValue("@mods", string.Join(",", score.Mods));
+                            command.Parameters.AddWithValue("@score", score.Points);
+                            command.Parameters.AddWithValue("@team", score.Team.ToString());
+                            command.Parameters.AddWithValue("@passed", score.Passed);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
                 conn.Close();
             }
         }
@@ -1131,6 +1196,19 @@ namespace script_chan2.Database
             Log.Information("DB delete match '{name}'", match.Name);
             using (var conn = GetConnection())
             {
+                foreach (var game in match.Games)
+                {
+                    using (var command = new SQLiteCommand("DELETE FROM Scores WHERE game = @game", conn))
+                    {
+                        command.Parameters.AddWithValue("@game", game.Id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                using (var command = new SQLiteCommand("DELETE FROM Games WHERE match = @match", conn))
+                {
+                    command.Parameters.AddWithValue("@match", match.Id);
+                    command.ExecuteNonQuery();
+                }
                 using (var command = new SQLiteCommand("DELETE FROM MatchPlayers WHERE match = @match", conn))
                 {
                     command.Parameters.AddWithValue("@match", match.Id);
@@ -1211,6 +1289,39 @@ namespace script_chan2.Database
                         match.Bans.Add(pick);
                     else
                         match.Picks.Add(pick);
+                }
+                conn.Close();
+            }
+        }
+
+        public static void InitMatchGames()
+        {
+            using (var conn = GetConnection())
+            using (var command = new SQLiteCommand("SELECT id, match, beatmap, mods, counted FROM Games", conn))
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var id = Convert.ToInt32(reader["id"]);
+                    var match = Matches.First(x => x.Id == Convert.ToInt32(reader["match"]));
+                    var beatmap = GetBeatmap(Convert.ToInt32(reader["beatmap"]));
+
+                    var counted = Convert.ToBoolean(reader["counted"]);
+                    var game = new Game()
+                    {
+                        Id = id,
+                        Match = match,
+                        Beatmap = beatmap,
+                        Counted = counted
+                    };
+                    foreach (string mod in reader["mods"].ToString().Split(','))
+                    {
+                        if (Enum.TryParse(mod, out GameMods gameMod))
+                        {
+                            game.Mods.Add(gameMod);
+                        }
+                    }
+                    match.Games.Add(game);
                 }
                 conn.Close();
             }
