@@ -119,6 +119,11 @@ namespace script_chan2.GUI
             get { return Enum.GetValues(typeof(GameModes)).Cast<GameModes>().ToList(); }
         }
 
+        public List<WinConditions> WinConditionsList
+        {
+            get { return Enum.GetValues(typeof(WinConditions)).Cast<WinConditions>().ToList(); }
+        }
+
         private List<IrcMessage> messagesToSave = new List<IrcMessage>();
         #endregion
 
@@ -174,12 +179,13 @@ namespace script_chan2.GUI
                 if (data.Name == match.Name)
                 {
                     match.RoomId = data.Id;
+                    match.Status = MatchStatus.InProgress;
                     match.Save();
                     NotifyOfPropertyChange(() => RoomLinkName);
                     NotifyOfPropertyChange(() => RoomClosedVisible);
                     NotifyOfPropertyChange(() => RoomOpenVisible);
                     OsuIrc.OsuIrc.JoinChannel("#mp_" + data.Id);
-                    SendRoomMessage($"!mp set {(int)match.TeamMode} {(int)match.WinCondition} {match.RoomSize}");
+                    SendRoomSet();
                     if (match.Mappool != null && match.Mappool.Beatmaps.Count > 0)
                     {
                         if (match.Mappool.Beatmaps.Any(x => x.Mods.Contains(GameMods.TieBreaker)))
@@ -326,13 +332,39 @@ namespace script_chan2.GUI
         public GameModes GameMode
         {
             get { return match.GameMode; }
+            set { }
+        }
+
+        private GameModes editGameMode;
+        public GameModes EditGameMode
+        {
+            get { return editGameMode; }
             set
             {
-                if (value != match.GameMode)
+                if (value != editGameMode)
                 {
-                    match.GameMode = value;
-                    match.Save();
-                    NotifyOfPropertyChange(() => GameMode);
+                    editGameMode = value;
+                    NotifyOfPropertyChange(() => EditGameMode);
+                }
+            }
+        }
+
+        public WinConditions WinCondition
+        {
+            get { return match.WinCondition; }
+            set { }
+        }
+
+        private WinConditions editWinCondition;
+        public WinConditions EditWinCondition
+        {
+            get { return editWinCondition; }
+            set
+            {
+                if (value != editWinCondition)
+                {
+                    editWinCondition = value;
+                    NotifyOfPropertyChange(() => EditWinCondition);
                 }
             }
         }
@@ -354,13 +386,20 @@ namespace script_chan2.GUI
         public int RoomSize
         {
             get { return match.RoomSize; }
+            set { }
+        }
+
+        private int editRoomSize;
+        public int EditRoomSize
+        {
+            get { return editRoomSize; }
             set
             {
-                if (value != match.RoomSize)
+                if (value != editRoomSize)
                 {
-                    match.RoomSize = value;
-                    match.Save();
-                    NotifyOfPropertyChange(() => RoomSize);
+                    editRoomSize = value;
+                    NotifyOfPropertyChange(() => EditRoomSize);
+                    NotifyOfPropertyChange(() => SetRoomOptionsEnabled);
                 }
             }
         }
@@ -368,13 +407,20 @@ namespace script_chan2.GUI
         public int TeamSize
         {
             get { return match.TeamSize; }
+            set { }
+        }
+
+        private int editTeamSize;
+        public int EditTeamSize
+        {
+            get { return editTeamSize; }
             set
             {
-                if (value != match.TeamSize)
+                if (value != editTeamSize)
                 {
-                    match.TeamSize = value;
-                    match.Save();
-                    NotifyOfPropertyChange(() => TeamSize);
+                    editTeamSize = value;
+                    NotifyOfPropertyChange(() => EditTeamSize);
+                    NotifyOfPropertyChange(() => SetRoomOptionsEnabled);
                 }
             }
         }
@@ -546,6 +592,20 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        public bool SetRoomOptionsEnabled
+        {
+            get
+            {
+                if (EditRoomSize <= 0)
+                    return false;
+                if (EditTeamSize <= 0)
+                    return false;
+                if (EditTeamSize > EditRoomSize / 2)
+                    return false;
+                return true;
+            }
+        }
         #endregion
 
         #region Window Events
@@ -630,6 +690,7 @@ namespace script_chan2.GUI
         {
             SendRoomMessage("!mp close");
             match.RoomId = 0;
+            match.Status = MatchStatus.Finished;
             match.Save();
             NotifyOfPropertyChange(() => RoomLinkName);
             NotifyOfPropertyChange(() => RoomClosedVisible);
@@ -769,9 +830,35 @@ namespace script_chan2.GUI
 
         public void UpdateScore()
         {
-            OsuApi.OsuApi.UpdateGames(match);
             match.UpdateScores();
             NotifyOfPropertyChange(() => TeamsViews);
+        }
+
+        private void SendRoomSet()
+        {
+            SendRoomMessage($"!mp set {(int)match.TeamMode} {(int)match.WinCondition} {match.RoomSize}");
+        }
+
+        public void EditRoomOptionsOpen()
+        {
+            EditGameMode = match.GameMode;
+            EditWinCondition = match.WinCondition;
+            EditTeamSize = match.TeamSize;
+            EditRoomSize = match.RoomSize;
+        }
+
+        public void SetRoomOptions()
+        {
+            match.GameMode = EditGameMode;
+            match.WinCondition = EditWinCondition;
+            match.TeamSize = EditTeamSize;
+            match.RoomSize = EditRoomSize;
+            match.Save();
+            NotifyOfPropertyChange(() => GameMode);
+            NotifyOfPropertyChange(() => WinCondition);
+            NotifyOfPropertyChange(() => RoomSize);
+            NotifyOfPropertyChange(() => TeamSize);
+            SendRoomSet();
         }
         #endregion
     }

@@ -36,6 +36,7 @@
                 <TextBlock Text=" VS " FontSize="20" />
                 <TextBlock Foreground="Red" Text="{Binding TeamBlueName}" FontSize="20" />
             </StackPanel>
+            <TextBlock Text="{Binding WindowTitle}" Visibility="{Binding HeadToHeadVisible}" FontSize="20" VerticalAlignment="Center" />
             <Button x:Name="OpenMpLink" Content="{Binding RoomLinkName}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="Black" HorizontalAlignment="Left" Grid.Column="1" FontSize="20" Margin="5 0 0 0" Visibility="{Binding RoomOpenVisible}" />
             <Button x:Name="MinimizeWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Minimize" Height="30" Width="30" Grid.Column="2" VerticalContentAlignment="Bottom">
                 <md:PackIcon Kind="WindowMinimize" />
@@ -208,6 +209,31 @@
                                 </StackPanel>
                             </Button.CommandParameter>
                         </Button>
+                        <Button Content="Set room options" Margin="5" Visibility="{Binding RoomOpenVisible}" Command="{x:Static md:DialogHost.OpenDialogCommand}" cal:Message.Attach="[Event Click] = [EditRoomOptionsOpen]">
+                            <Button.CommandParameter>
+                                <Grid Margin="16" Width="200">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2">Set room options</TextBlock>
+                                    <ComboBox md:HintAssist.Hint="Game mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 5 0" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding EditGameMode}" />
+                                    <ComboBox md:HintAssist.Hint="Score mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="5 10 0 0" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding WinConditionsList}" SelectedItem="{Binding EditWinCondition}" />
+                                    <TextBox md:HintAssist.Hint="Room size" Text="{Binding EditRoomSize}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="2" Grid.Column="0" Margin="0 10 5 0" />
+                                    <TextBox md:HintAssist.Hint="Team size" Text="{Binding EditTeamSize}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="2" Grid.Column="1" Margin="5 10 0 0" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="3" Grid.ColumnSpan="2">
+                                        <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
+                                        <Button Content="Set" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action SetRoomOptions]" IsEnabled="{Binding SetRoomOptionsEnabled}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Button.CommandParameter>
+                        </Button>
                         <Button Content="Close the room" Margin="5" Background="Red" Visibility="{Binding RoomOpenVisible}" Command="{x:Static md:DialogHost.OpenDialogCommand}">
                             <Button.CommandParameter>
                                 <StackPanel Margin="16">
@@ -244,10 +270,10 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <ComboBox md:HintAssist.Hint="Game mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" />
+                                <ComboBox md:HintAssist.Hint="Game mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" IsEnabled="False" />
                                 <TextBox x:Name="BO" md:HintAssist.Hint="BO" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                                <TextBox x:Name="RoomSize" md:HintAssist.Hint="Room size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                                <TextBox x:Name="TeamSize" md:HintAssist.Hint="Team size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                                <TextBox x:Name="RoomSize" md:HintAssist.Hint="Room size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" IsEnabled="False" />
+                                <TextBox x:Name="TeamSize" md:HintAssist.Hint="Team size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" IsEnabled="False" />
                                 <TextBox x:Name="TimerCommand" md:HintAssist.Hint="Timer Command" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
                                 <TextBox x:Name="TimerAfterGame" md:HintAssist.Hint="Timer after game" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
                                 <TextBox x:Name="TimerAfterPick" md:HintAssist.Hint="Timer after pick" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />

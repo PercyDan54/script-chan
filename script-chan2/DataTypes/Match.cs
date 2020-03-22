@@ -134,6 +134,7 @@ namespace script_chan2.DataTypes
 
         public void UpdateScores()
         {
+            OsuApi.OsuApi.UpdateGames(this);
             foreach (var game in Games.Where(x => !x.Counted))
             {
                 if (!WarmupMode)
