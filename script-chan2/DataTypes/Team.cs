@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace script_chan2.DataTypes
 
         public void AddPlayer(Player player)
         {
+            Log.Information("Team: '{name}' add player '{player}'", Name, player.Name);
             if (!Players.Contains(player))
             {
                 Players.Add(player);
@@ -33,6 +35,7 @@ namespace script_chan2.DataTypes
 
         public void RemovePlayer(Player player)
         {
+            Log.Information("Team: '{name}' remove player '{player}'", Name, player.Name);
             if (Players.Remove(player))
             {
                 Database.Database.RemovePlayerFromTeam(player, this);
@@ -41,6 +44,7 @@ namespace script_chan2.DataTypes
 
         public void Save()
         {
+            Log.Information("Team: '{name}' save", Name);
             if (Id == 0)
                 Id = Database.Database.AddTeam(this);
             else
@@ -49,6 +53,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
+            Log.Information("Team: '{name}' delete", Name);
             Database.Database.DeleteTeam(this);
         }
     }

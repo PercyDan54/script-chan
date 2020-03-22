@@ -87,14 +87,14 @@ namespace script_chan2.GUI
 
         public void NewWebhookDialogOpened()
         {
-            Log.Information("GUI new webhook dialog open");
+            Log.Information("WebhooksViewModel: new webhook dialog open");
             NewWebhookName = "";
             NewWebhookUrl = "";
         }
 
         public void NewWebhookDialogClosed()
         {
-            Log.Information("GUI new webhook '{name}' save", NewWebhookName);
+            Log.Information("WebhooksViewModel: new webhook '{name}' save", NewWebhookName);
             var webhook = new Webhook()
             {
                 Name = NewWebhookName,

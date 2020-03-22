@@ -53,7 +53,7 @@ namespace script_chan2.GUI
             {
                 if (value != Settings.DefaultTournament)
                 {
-                    Log.Information("GUI mappool list set filter");
+                    Log.Information("MappoolsViewModel: mappool list set filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     NotifyOfPropertyChange(() => MappoolsViews);
@@ -120,14 +120,14 @@ namespace script_chan2.GUI
 
         public void NewMappoolDialogOpened()
         {
-            Log.Information("GUI new mappool dialog open");
+            Log.Information("MappoolsViewModel: new mappool dialog open");
             NewMappoolName = "";
             NewMappoolTournament = Settings.DefaultTournament;
         }
 
         public void NewMappoolDialogClosed()
         {
-            Log.Information("GUI new mappool '{mappool}' save", NewMappoolName);
+            Log.Information("MappoolsViewModel: new mappool '{mappool}' save", NewMappoolName);
             var mappool = new Mappool()
             {
                 Name = NewMappoolName,

@@ -1,4 +1,5 @@
 ﻿using script_chan2.Enums;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,6 +31,7 @@ namespace script_chan2.DataTypes
 
         public void AddMod(GameMods mod)
         {
+            Log.Information("MappoolMap: '{name}' add mod '{mod}'", Beatmap.Id, mod);
             if (Mods.Contains(mod))
                 return;
 
@@ -45,21 +47,25 @@ namespace script_chan2.DataTypes
 
         public void RemoveMod(GameMods mod)
         {
+            Log.Information("MappoolMap: '{name}' remove mod '{mod}'", Beatmap.Id, mod);
             Mods.RemoveAll(x => x == mod);
         }
 
         public void MoveUp()
         {
+            Log.Information("MappoolMap: '{name}' move up", Beatmap.Id);
             Mappool.MoveBeatmapUp(this);
         }
 
         public void MoveDown()
         {
+            Log.Information("MappoolMap: '{name}' move down", Beatmap.Id);
             Mappool.MoveBeatmapDown(this);
         }
 
         public void Save()
         {
+            Log.Information("MappoolMap: '{name}' save");
             if (Id == 0)
                 Id = Database.Database.AddMappoolMap(this);
             else
@@ -68,6 +74,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
+            Log.Information("MappoolMap: '{name}' delete", Beatmap.Id);
             Mappool.RemoveBeatmap(this);
             Database.Database.DeleteMappoolMap(this);
         }

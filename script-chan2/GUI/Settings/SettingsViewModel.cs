@@ -64,7 +64,7 @@ namespace script_chan2.GUI
 
         public void OpenApiKeyPage()
         {
-            Log.Information("GUI open api key page");
+            Log.Information("SettingsViewModel: open api key page");
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/api");
         }
 
@@ -92,7 +92,7 @@ namespace script_chan2.GUI
 
         public void CheckApiKey()
         {
-            Log.Information("GUI check api key");
+            Log.Information("SettingsViewModel: check api key");
             apiStatus = OsuApi.OsuApi.CheckApiKey(apiKey);
             NotifyOfPropertyChange(() => ApiWorks);
             NotifyOfPropertyChange(() => ApiError);
@@ -130,12 +130,13 @@ namespace script_chan2.GUI
 
         public void OpenIrcPage()
         {
-            Log.Information("GUI open irc credentials page");
+            Log.Information("SettingsViewModel: open irc credentials page");
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/irc");
         }
 
         public void CheckIrc()
         {
+            Log.Information("SettingsViewModel: check irc");
             NotifyOfPropertyChange(() => IrcIsConnected);
             NotifyOfPropertyChange(() => IrcIsDisconnected);
         }
@@ -257,7 +258,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Save()
         {
-            Log.Information("GUI settings save changes");
+            Log.Information("SettingsViewModel: settings save changes");
             Settings.Lang = lang;
             Settings.ApiKey = apiKey;
             Settings.IrcUsername = ircUsername;
@@ -272,7 +273,7 @@ namespace script_chan2.GUI
 
         public void Discard()
         {
-            Log.Information("GUI settings discard changes");
+            Log.Information("SettingsViewModel: settings discard changes");
             SelectedLanguage = Settings.Lang;
             ApiKey = Settings.ApiKey;
             IrcUsername = Settings.IrcUsername;

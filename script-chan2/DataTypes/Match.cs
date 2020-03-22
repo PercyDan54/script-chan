@@ -1,5 +1,6 @@
 ﻿using script_chan2.Enums;
 using script_chan2.OsuIrc;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,6 +92,7 @@ namespace script_chan2.DataTypes
 
         public void Save()
         {
+            Log.Information("Match: '{name}' save", Name);
             if (Id == 0)
                 Id = Database.Database.AddMatch(this);
             else
@@ -99,11 +101,13 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
+            Log.Information("Match: '{name}' delete", Name);
             Database.Database.DeleteMatch(this);
         }
 
         public List<string> GetPlayerList()
         {
+            Log.Information("Match: '{name}' get player list", Name);
             var players = new List<string>();
 
             if (TeamMode == TeamModes.TeamVS)
@@ -124,16 +128,19 @@ namespace script_chan2.DataTypes
 
         public void ReloadMessages()
         {
+            Log.Information("Match: '{name}' reload messages", Name);
             ChatMessages = Database.Database.GetIrcMessages(this);
         }
 
         public void ClearMessages()
         {
+            Log.Information("Match: '{name}' clear messages", Name);
             ChatMessages.Clear();
         }
 
         public void UpdateScores()
         {
+            Log.Information("Match: '{name}' update scores", Name);
             OsuApi.OsuApi.UpdateGames(this);
             foreach (var game in Games.Where(x => !x.Counted))
             {

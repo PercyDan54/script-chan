@@ -18,7 +18,7 @@ namespace script_chan2.GUI
                 ShowTournaments();
             else
                 ShowMatches();
-            Log.Information("GUI main view loaded");
+            Log.Information("MainViewModel: main view loaded");
         }
         #endregion
 
@@ -52,7 +52,7 @@ namespace script_chan2.GUI
         #region Actions
         public void ShowMatches()
         {
-            Log.Information("GUI show match list");
+            Log.Information("MainViewModel: show match list");
             ActivateItem(new MatchesViewModel());
             Title = "Matches";
             DrawerExpanded = false;
@@ -60,7 +60,7 @@ namespace script_chan2.GUI
 
         public void ShowTournaments()
         {
-            Log.Information("GUI show tournament list");
+            Log.Information("MainViewModel: show tournament list");
             ActivateItem(new TournamentsViewModel());
             Title = "Tournaments";
             DrawerExpanded = false;
@@ -68,7 +68,7 @@ namespace script_chan2.GUI
 
         public void ShowTeams()
         {
-            Log.Information("GUI show team list");
+            Log.Information("MainViewModel: show team list");
             ActivateItem(new TeamsViewModel());
             Title = "Teams";
             DrawerExpanded = false;
@@ -76,7 +76,7 @@ namespace script_chan2.GUI
 
         public void ShowMappools()
         {
-            Log.Information("GUI show mappool list");
+            Log.Information("MainViewModel: show mappool list");
             ActivateItem(new MappoolsViewModel());
             Title = "Mappools";
             DrawerExpanded = false;
@@ -84,7 +84,7 @@ namespace script_chan2.GUI
 
         public void ShowWebhooks()
         {
-            Log.Information("GUI show webhook list");
+            Log.Information("MainViewModel: show webhook list");
             ActivateItem(new WebhooksViewModel());
             Title = "Webhooks";
             DrawerExpanded = false;
@@ -92,7 +92,7 @@ namespace script_chan2.GUI
 
         public void ShowSettings()
         {
-            Log.Information("GUI show settings");
+            Log.Information("MainViewModel: show settings");
             ActivateItem(new SettingsViewModel());
             Title = "Settings";
             DrawerExpanded = false;
@@ -100,7 +100,7 @@ namespace script_chan2.GUI
 
         public void ShowColors()
         {
-            Log.Information("GUI show colors");
+            Log.Information("MainViewModel: show colors");
             ActivateItem(new ColorsViewModel());
             Title = "Colors";
             DrawerExpanded = false;

@@ -262,7 +262,7 @@ namespace script_chan2.GUI
 
         public void NewTournamentDialogOpened()
         {
-            Log.Information("GUI new tournament dialog open");
+            Log.Information("TournamentsViewModel: new tournament dialog open");
             NewTournamentName = "";
             NewTournamentGameMode = GameModes.Standard;
             NewTournamentTeamMode = TeamModes.TeamVS;
@@ -280,7 +280,7 @@ namespace script_chan2.GUI
 
         public void NewTournamentDialogClosed()
         {
-            Log.Information("GUI new tournament '{name}' save", NewTournamentName);
+            Log.Information("TournamentsViewModel: new tournament '{name}' save", NewTournamentName);
             var tournament = new Tournament()
             {
                 Name = NewTournamentName,

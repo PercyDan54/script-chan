@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -155,6 +156,7 @@ namespace script_chan2.GUI
         #region Actions
         public void BanRed()
         {
+            Log.Information("MatchBeatmapViewModel: match '{match}' ban map by red", match.Name);
             match.Bans.Add(new MatchPick()
             {
                 Match = match,
@@ -170,6 +172,7 @@ namespace script_chan2.GUI
 
         public void BanBlue()
         {
+            Log.Information("MatchBeatmapViewModel: match '{match}' ban map by blue", match.Name);
             match.Bans.Add(new MatchPick()
             {
                 Match = match,
@@ -185,6 +188,7 @@ namespace script_chan2.GUI
 
         public void RemoveBan()
         {
+            Log.Information("MatchBeatmapViewModel: match '{match}' remove ban", match.Name);
             match.Bans.RemoveAll(x => x.Map == beatmap);
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPick);
@@ -195,6 +199,7 @@ namespace script_chan2.GUI
 
         public void PickRed()
         {
+            Log.Information("MatchBeatmapViewModel: match '{match}' pick map by red", match.Name);
             match.Picks.Add(new MatchPick()
             {
                 Match = match,
@@ -211,6 +216,7 @@ namespace script_chan2.GUI
 
         public void PickBlue()
         {
+            Log.Information("MatchBeatmapViewModel: match '{match}' pick map by blue", match.Name);
             match.Picks.Add(new MatchPick()
             {
                 Match = match,
@@ -227,6 +233,7 @@ namespace script_chan2.GUI
 
         public void RemovePick()
         {
+            Log.Information("MatchBeatmapViewModel: match '{match}' remove pick", match.Name);
             match.Picks.RemoveAll(x => x.Map == beatmap);
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPick);

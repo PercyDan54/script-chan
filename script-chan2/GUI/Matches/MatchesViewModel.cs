@@ -59,7 +59,7 @@ namespace script_chan2.GUI
             {
                 if (value != Settings.DefaultTournament)
                 {
-                    Log.Information("GUI match list set tournament filter");
+                    Log.Information("MatchesViewModel: match list set tournament filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     NotifyOfPropertyChange(() => MatchesViews);
@@ -80,7 +80,7 @@ namespace script_chan2.GUI
             {
                 if (value != filterStatus)
                 {
-                    Log.Information("GUI match list set status filter");
+                    Log.Information("MatchesViewModel: match list set status filter");
                     filterStatus = value;
                     NotifyOfPropertyChange(() => FilterStatus);
                     NotifyOfPropertyChange(() => MatchesViews);
@@ -378,7 +378,7 @@ namespace script_chan2.GUI
                 return;
             if (newMatchPlayers.Contains(player))
                 return;
-            Log.Information("GUI new match add player {name}", player.Name);
+            Log.Information("MatchesViewModel: new match add player {name}", player.Name);
             newMatchPlayers.Add(player);
             AddPlayerNameOrId = "";
             NotifyOfPropertyChange(() => PlayersViews);
@@ -393,7 +393,7 @@ namespace script_chan2.GUI
 
         public void RemovePlayer(MatchPlayerListItemViewModel model)
         {
-            Log.Information("GUI new match remove player {name}", model.Player.Name);
+            Log.Information("MatchesViewModel: new match remove player {name}", model.Player.Name);
             newMatchPlayers.Remove(model.Player);
             NotifyOfPropertyChange(() => PlayersViews);
         }
@@ -429,7 +429,7 @@ namespace script_chan2.GUI
 
         public void NewMatchDialogOpened()
         {
-            Log.Information("GUI new match dialog open");
+            Log.Information("MatchesViewModel: new match dialog open");
             NewMatchName = "";
             NewMatchTeamBlue = null;
             NewMatchTeamRed = null;
@@ -442,7 +442,7 @@ namespace script_chan2.GUI
 
         public void NewMatchDialogClosed()
         {
-            Log.Information("GUI new match '{match}' save", NewMatchName);
+            Log.Information("MatchesViewModel: new match '{match}' save", NewMatchName);
             var match = new Match()
             {
                 Tournament = NewMatchTournament,

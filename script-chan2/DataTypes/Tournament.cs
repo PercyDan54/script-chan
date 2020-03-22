@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -45,6 +46,7 @@ namespace script_chan2.DataTypes
 
         public void Save()
         {
+            Log.Information("Tournament: '{name}' save", Name);
             if (Id == 0)
                 Id = Database.Database.AddTournament(this);
             else
@@ -55,6 +57,7 @@ namespace script_chan2.DataTypes
 
         public void AddWebhook(Webhook webhook)
         {
+            Log.Information("Tournament: '{name}' add webhook '{webhook}'", Name, webhook.Name);
             if (!Webhooks.Contains(webhook))
             {
                 Webhooks.Add(webhook);
@@ -64,6 +67,7 @@ namespace script_chan2.DataTypes
 
         public void RemoveWebhook(Webhook webhook)
         {
+            Log.Information("Tournament: '{name}' remove webhook '{webhook}'", Name, webhook.Name);
             if (Webhooks.Remove(webhook))
             {
                 Database.Database.RemoveWebhookFromTournament(webhook, this);
@@ -82,6 +86,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
+            Log.Information("Tournament: '{name}' delete", Name);
             foreach (var webhook in Webhooks.ToList())
             {
                 RemoveWebhook(webhook);

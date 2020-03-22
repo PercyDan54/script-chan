@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace script_chan2.DataTypes
 
         public void Save()
         {
+            Log.Information("Mappool: '{name}' save", Name);
             if (Id == 0)
                 Id = Database.Database.AddMappool(this);
             else
@@ -33,6 +35,7 @@ namespace script_chan2.DataTypes
 
         private void ReindexBeatmaps()
         {
+            Log.Information("Mappool: '{name}' reindex beatmaps", Name);
             for (var i = 0; i < Beatmaps.Count; i++)
             {
                 Beatmaps[i].ListIndex = i + 1;
@@ -42,6 +45,7 @@ namespace script_chan2.DataTypes
 
         public void AddBeatmap(MappoolMap beatmap)
         {
+            Log.Information("Mappool: '{name}' add beatmap '{beatmap}'", Name, beatmap.Beatmap.Id);
             if (!Beatmaps.Contains(beatmap))
             {
                 Beatmaps.Add(beatmap);
@@ -51,6 +55,7 @@ namespace script_chan2.DataTypes
 
         public void RemoveBeatmap(MappoolMap beatmap)
         {
+            Log.Information("Mappool: '{name}' remove beatmap '{beatmap}'", Name, beatmap.Beatmap.Id);
             if (Beatmaps.Remove(beatmap))
             {
                 ReindexBeatmaps();
@@ -59,6 +64,7 @@ namespace script_chan2.DataTypes
 
         public void MoveBeatmapUp(MappoolMap beatmap)
         {
+            Log.Information("Mappool: '{name}' move beatmap '{beatmap}' up", Name, beatmap.Beatmap.Id);
             if (!Beatmaps.Contains(beatmap))
                 return;
 
@@ -75,6 +81,7 @@ namespace script_chan2.DataTypes
 
         public void MoveBeatmapDown(MappoolMap beatmap)
         {
+            Log.Information("Mappool: '{name}' move beatmap '{beatmap}' down", Name, beatmap.Beatmap.Id);
             if (!Beatmaps.Contains(beatmap))
                 return;
 
@@ -91,6 +98,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
+            Log.Information("Mappool: '{name}' delete", Name);
             Database.Database.DeleteMappool(this);
         }
     }

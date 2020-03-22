@@ -140,6 +140,7 @@ namespace script_chan2.GUI
         #region Events
         protected override void OnActivate()
         {
+            Log.Information("MatchViewModel: open match '{match}'", match.Name);
             Events.Aggregator.Subscribe(this);
             match.ReloadMessages();
             Execute.OnUIThread(() =>
@@ -167,7 +168,7 @@ namespace script_chan2.GUI
 
         protected override void OnDeactivate(bool close)
         {
-            Log.Information("GUI close match '{name}'", match.Name);
+            Log.Information("MatchViewModel: close match '{name}'", match.Name);
             MatchList.OpenedMatches.Remove(match);
             Database.Database.AddIrcMessages(messagesToSave);
         }
@@ -179,6 +180,7 @@ namespace script_chan2.GUI
                 var data = (RoomCreatedData)message;
                 if (data.Name == match.Name)
                 {
+                    Log.Information("MatchViewModel: match '{match}' room creation data received", match.Name);
                     match.RoomId = data.Id;
                     match.Status = MatchStatus.InProgress;
                     match.Save();
@@ -203,6 +205,7 @@ namespace script_chan2.GUI
             else if (message is ChannelMessageData)
             {
                 var data = (ChannelMessageData)message;
+                Log.Information("MatchViewModel: match '{match}' irc message received '{message}'", match.Name, data.Message);
                 if (data.Channel == "#mp_" + match.RoomId)
                 {
                     var ircMessage = new IrcMessage() { User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
@@ -225,6 +228,7 @@ namespace script_chan2.GUI
         {
             if (message == "UpdateColors")
             {
+                Log.Information("MatchViewModel: match '{match}' update colors", match.Name);
                 Execute.OnUIThread(() =>
                 {
                     MultiplayerChat = new FlowDocument
@@ -615,6 +619,7 @@ namespace script_chan2.GUI
         #region Window Events
         public void Drag(MouseButtonEventArgs e)
         {
+            Log.Information("MatchViewModel: match '{match}' drag window", match.Name);
             if (e.ChangedButton != MouseButton.Left)
                 return;
             ((MatchView)GetView()).DragMove();
@@ -622,6 +627,7 @@ namespace script_chan2.GUI
 
         public void MinimizeWindow()
         {
+            Log.Information("MatchViewModel: match '{match}' minimize window", match.Name);
             ((MatchView)GetView()).WindowState = WindowState.Minimized;
         }
 
@@ -637,6 +643,7 @@ namespace script_chan2.GUI
 
         public void MaximizeWindow()
         {
+            Log.Information("MatchViewModel: match '{match}' maximize window", match.Name);
             ((MatchView)GetView()).WindowState = WindowState.Maximized;
             NotifyOfPropertyChange(() => WindowMaximizeVisible);
             NotifyOfPropertyChange(() => WindowRestoreVisible);
@@ -654,6 +661,7 @@ namespace script_chan2.GUI
 
         public void RestoreWindow()
         {
+            Log.Information("MatchViewModel: match '{match}' restore window", match.Name);
             ((MatchView)GetView()).WindowState = WindowState.Normal;
             NotifyOfPropertyChange(() => WindowMaximizeVisible);
             NotifyOfPropertyChange(() => WindowRestoreVisible);
@@ -661,6 +669,7 @@ namespace script_chan2.GUI
 
         public void CloseWindow()
         {
+            Log.Information("MatchViewModel: match '{match}' close window", match.Name);
             TryClose();
         }
         #endregion
@@ -668,6 +677,7 @@ namespace script_chan2.GUI
         #region Actions
         public void OpenMpLink()
         {
+            Log.Information("MatchViewModel: match '{match}' open mp link", match.Name);
             System.Diagnostics.Process.Start("https://osu.ppy.sh/community/matches/" + match.RoomId);
         }
 
@@ -686,12 +696,14 @@ namespace script_chan2.GUI
 
         public void CreateRoom()
         {
+            Log.Information("MatchViewModel: match '{match}' create room", match.Name);
             OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
             messagesToSave.Add(new IrcMessage() { Match = null, User = Settings.IrcUsername, Timestamp = DateTime.Now, Message = "!mp make " + match.Name });
         }
 
         public void CloseRoom()
         {
+            Log.Information("MatchViewModel: match '{match}' close room", match.Name);
             SendRoomMessage("!mp close");
             match.RoomId = 0;
             match.Status = MatchStatus.Finished;
@@ -703,6 +715,7 @@ namespace script_chan2.GUI
 
         public void SwitchPlayers()
         {
+            Log.Information("MatchViewModel: match '{match}' switch players", match.Name);
             foreach (var player in match.GetPlayerList())
             {
                 OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch " + player);
@@ -712,6 +725,7 @@ namespace script_chan2.GUI
 
         public void InvitePlayers()
         {
+            Log.Information("MatchViewModel: match '{match}' invite players", match.Name);
             foreach (var player in match.GetPlayerList())
             {
                 SendRoomMessage("!mp invite " + player);
@@ -720,6 +734,7 @@ namespace script_chan2.GUI
 
         public void SendWelcomeString()
         {
+            Log.Information("MatchViewModel: match '{match}' send welcome string", match.Name);
             if (match.TeamMode == TeamModes.TeamVS)
             {
                 SendRoomMessage($"{TeamRedName} is RED, slots 1 to {match.TeamSize} --- {TeamBlueName} is BLUE, slots {match.TeamSize + 1} to {match.TeamSize * 2}");
@@ -732,6 +747,7 @@ namespace script_chan2.GUI
         {
             if (string.IsNullOrEmpty(ChatMessage))
                 return;
+            Log.Information("MatchViewModel: match '{match}' send irc message '{message}'", match.Name, ChatMessage);
             var message = ChatMessage;
             ChatMessage = "";
             SendRoomMessage(message);
@@ -739,21 +755,28 @@ namespace script_chan2.GUI
 
         public void SendSettings()
         {
+            Log.Information("MatchViewModel: match '{match}' send settings", match.Name);
             SendRoomMessage("!mp settings");
         }
 
         public void StartGame()
         {
+            Log.Information("MatchViewModel: match '{match}' start game", match.Name);
             SendRoomMessage("!mp start 5");
         }
 
         public void AbortMatch()
         {
+            Log.Information("MatchViewModel: match '{match}' abort game", match.Name);
             SendRoomMessage("!mp abort");
         }
 
         public void SetPassword()
         {
+            if (string.IsNullOrEmpty(NewPassword))
+                Log.Information("MatchViewModel: match '{match}' remove password", match.Name);
+            else
+                Log.Information("MatchViewModel: match '{match}' set password", match.Name);
             SendRoomMessage("!mp password " + NewPassword);
         }
 
@@ -827,6 +850,7 @@ namespace script_chan2.GUI
 
         private void PlayNotificationSound()
         {
+            Log.Information("MatchViewModel: match '{match}' play notification sound", match.Name);
             var player = new MediaPlayer();
             player.Open(new Uri(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "notification.mp3")));
             player.Play();
@@ -834,17 +858,20 @@ namespace script_chan2.GUI
 
         public void UpdateScore()
         {
+            Log.Information("MatchViewModel: match '{match}' update scores", match.Name);
             match.UpdateScores();
             NotifyOfPropertyChange(() => TeamsViews);
         }
 
         private void SendRoomSet()
         {
+            Log.Information("MatchViewModel: match '{match}' set room {mode}", match.Name, $"{(int)match.TeamMode} {(int)match.WinCondition} {match.RoomSize}");
             SendRoomMessage($"!mp set {(int)match.TeamMode} {(int)match.WinCondition} {match.RoomSize}");
         }
 
         public void EditRoomOptionsOpen()
         {
+            Log.Information("MatchViewModel: match '{match}' open room options dialog", match.Name);
             EditGameMode = match.GameMode;
             EditWinCondition = match.WinCondition;
             EditTeamSize = match.TeamSize;
@@ -853,6 +880,7 @@ namespace script_chan2.GUI
 
         public void SetRoomOptions()
         {
+            Log.Information("MatchViewModel: match '{match}' set room options", match.Name);
             match.GameMode = EditGameMode;
             match.WinCondition = EditWinCondition;
             match.TeamSize = EditTeamSize;
@@ -867,11 +895,13 @@ namespace script_chan2.GUI
 
         public void SendBanRecap()
         {
+            Log.Information("MatchViewModel: match '{match}' send ban recap", match.Name);
             DiscordApi.SendMatchBanRecap(match);
         }
 
         public void SendPickRecap()
         {
+            Log.Information("MatchViewModel: match '{match}' send pick recap", match.Name);
             DiscordApi.SendMatchPickRecap(match);
         }
         #endregion

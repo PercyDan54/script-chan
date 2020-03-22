@@ -15,7 +15,7 @@ namespace script_chan2.Database
 
         public static void CreateDb()
         {
-            Log.Information("DB creation started");
+            Log.Information("DbCreator: database creation started");
             SQLiteConnection.CreateFile("Database.sqlite");
             conn = new SQLiteConnection("Data Source=Database.sqlite;Version=3");
             conn.Open();
@@ -36,7 +36,7 @@ namespace script_chan2.Database
             CreateScoresTable();
             CreateIrcMessagesTable();
             conn.Close();
-            Log.Information("DB creation finished");
+            Log.Information("DbCreator: database creation finished");
         }
 
         public static bool DbExists
@@ -46,6 +46,7 @@ namespace script_chan2.Database
 
         private static void CreateUserSettingsTable()
         {
+            Log.Information("DbCreator: create table UserSettings");
             using (var command = new SQLiteCommand(@"CREATE TABLE UserSettings
                 (name TEXT NOT NULL PRIMARY KEY,
                 value TEXT)", conn))
@@ -69,6 +70,7 @@ namespace script_chan2.Database
 
         private static void CreateTournamentsTable()
         {
+            Log.Information("DbCreator: create table Tournaments");
             using (var command = new SQLiteCommand(@"CREATE TABLE Tournaments
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
@@ -91,6 +93,7 @@ namespace script_chan2.Database
 
         private static void CreateWebhooksTable()
         {
+            Log.Information("DbCreator: create table Webhooks");
             using (var command = new SQLiteCommand(@"CREATE TABLE Webhooks
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
@@ -102,6 +105,7 @@ namespace script_chan2.Database
 
         private static void CreateWebhookLinksTable()
         {
+            Log.Information("DbCreator: create table WebhookLinks");
             using (var command = new SQLiteCommand(@"CREATE TABLE WebhookLinks
                 (tournament INTEGER NOT NULL,
                 webhook INTEGER NOT NULL,
@@ -115,6 +119,7 @@ namespace script_chan2.Database
 
         private static void CreateMappoolsTable()
         {
+            Log.Information("DbCreator: create table Mappools");
             using (var command = new SQLiteCommand(@"CREATE TABLE Mappools
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
@@ -127,6 +132,7 @@ namespace script_chan2.Database
 
         private static void CreateBeatmapsTable()
         {
+            Log.Information("DbCreator: create table Beatmaps");
             using (var command = new SQLiteCommand(@"CREATE TABLE Beatmaps
                 (id INTEGER NOT NULL PRIMARY KEY,
                 beatmapsetId INT,
@@ -144,6 +150,7 @@ namespace script_chan2.Database
 
         private static void CreateMappoolMapsTable()
         {
+            Log.Information("DbCreator: create table MappoolMaps");
             using (var command = new SQLiteCommand(@"CREATE TABLE MappoolMaps
                 (id INTEGER NOT NULL PRIMARY KEY,
                 mappool INTEGER NOT NULL,
@@ -160,6 +167,7 @@ namespace script_chan2.Database
 
         private static void CreateTeamsTable()
         {
+            Log.Information("DbCreator: create table Teams");
             using (var command = new SQLiteCommand(@"CREATE TABLE Teams
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
@@ -173,6 +181,7 @@ namespace script_chan2.Database
 
         private static void CreatePlayersTable()
         {
+            Log.Information("DbCreator: create table Players");
             using (var command = new SQLiteCommand(@"CREATE TABLE Players
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
@@ -184,6 +193,7 @@ namespace script_chan2.Database
 
         private static void CreateTeamPlayersTable()
         {
+            Log.Information("DbCreator: create table TeamPlayers");
             using (var command = new SQLiteCommand(@"CREATE TABLE TeamPlayers
                 (player INTEGER NOT NULL,
                 team INTEGER NOT NULL,
@@ -197,6 +207,7 @@ namespace script_chan2.Database
 
         private static void CreateMatchesTable()
         {
+            Log.Information("DbCreator: create table Matches");
             using (var command = new SQLiteCommand(@"CREATE TABLE Matches
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT,
@@ -234,6 +245,7 @@ namespace script_chan2.Database
 
         private static void CreateMatchPlayersTable()
         {
+            Log.Information("DbCreator: create table MatchPlayers");
             using (var command = new SQLiteCommand(@"CREATE TABLE MatchPlayers
                 (match INTEGER NOT NULL,
                 player INTEGER NOT NULL,
@@ -248,6 +260,7 @@ namespace script_chan2.Database
 
         private static void CreateMatchPicksTable()
         {
+            Log.Information("DbCreator: create table MatchPicks");
             using (var command = new SQLiteCommand(@"CREATE TABLE MatchPicks
                 (match INTEGER NOT NULL,
                 beatmap INTEGER NOT NULL,
@@ -263,6 +276,7 @@ namespace script_chan2.Database
 
         private static void CreateGamesTable()
         {
+            Log.Information("DbCreator: create table Games");
             using (var command = new SQLiteCommand(@"CREATE TABLE Games
                 (id INTEGER NOT NULL PRIMARY KEY,
                 match INTEGER,
@@ -278,6 +292,7 @@ namespace script_chan2.Database
 
         private static void CreateScoresTable()
         {
+            Log.Information("DbCreator: create table Scores");
             using (var command = new SQLiteCommand(@"CREATE TABLE Scores
                 (player INTEGER NOT NULL,
                 game INTEGER NOT NULL,
@@ -295,6 +310,7 @@ namespace script_chan2.Database
 
         private static void CreateIrcMessagesTable()
         {
+            Log.Information("DbCreator: create table IrcMessages");
             using (var command = new SQLiteCommand(@"CREATE TABLE IrcMessages
                 (match INTEGER,
                 timestamp TEXT,

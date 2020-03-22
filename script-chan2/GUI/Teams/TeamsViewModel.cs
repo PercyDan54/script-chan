@@ -53,7 +53,7 @@ namespace script_chan2.GUI
             {
                 if (value != Settings.DefaultTournament)
                 {
-                    Log.Information("GUI team list set tournament filter");
+                    Log.Information("TeamsViewModel: team list set tournament filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     NotifyOfPropertyChange(() => TeamsViews);
@@ -118,14 +118,14 @@ namespace script_chan2.GUI
 
         public void NewTeamDialogOpened()
         {
-            Log.Information("GUI new team dialog open");
+            Log.Information("TeamsViewModel: new team dialog open");
             NewTeamName = "";
             NewTeamTournament = Settings.DefaultTournament;
         }
 
         public void NewTeamDialogClosed()
         {
-            Log.Information("GUI new team '{name}' save", NewTeamName);
+            Log.Information("TeamsViewModel: new team '{name}' save", NewTeamName);
             var team = new Team()
             {
                 Tournament = NewTeamTournament,

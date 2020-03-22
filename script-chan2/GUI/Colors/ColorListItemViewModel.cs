@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,11 +56,13 @@ namespace script_chan2.GUI
         #region Actions
         public void Edit()
         {
+            Log.Information("ColorListItemViewModel: edit color '{name}'", userColor.Key);
             EditColor = userColor.Color;
         }
 
         public void Save()
         {
+            Log.Information("ColorListItemViewModel: save color '{name}'", userColor.Key);
             userColor.Color = EditColor;
             NotifyOfPropertyChange(() => Color);
             Settings.SaveConfig();

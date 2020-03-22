@@ -105,7 +105,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
-            Log.Information("GUI team '{name}' edit dialog open", team.Name);
+            Log.Information("TeamListItemViewModel: team '{name}' edit dialog open", team.Name);
             EditName = team.Name;
             EditTournament = team.Tournament;
         }
@@ -114,7 +114,7 @@ namespace script_chan2.GUI
         {
             if (EditTeamSaveEnabled)
             {
-                Log.Information("GUI edit team '{name}' save", EditName);
+                Log.Information("TeamListItemViewModel: edit team '{name}' save", EditName);
                 team.Name = EditName;
                 team.Save();
                 NotifyOfPropertyChange(() => Name);
@@ -139,7 +139,7 @@ namespace script_chan2.GUI
 
         public void EditPlayers()
         {
-            Log.Information("GUI player list dialog of team '{team}' open", team.Name);
+            Log.Information("TeamListItemViewModel: player list dialog of team '{team}' open", team.Name);
             AddPlayerNameOrId = "";
             clipboard = new SharpClipboard();
             clipboard.ClipboardChanged += Clipboard_ClipboardChanged;
@@ -147,7 +147,7 @@ namespace script_chan2.GUI
 
         public void EditPlayersClose()
         {
-            Log.Information("GUI player list dialog of team '{team}' close", team.Name);
+            Log.Information("TeamListItemViewModel: player list dialog of team '{team}' close", team.Name);
             clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
         }
 
@@ -163,7 +163,7 @@ namespace script_chan2.GUI
 
             if (int.TryParse(text, out int id))
             {
-                Log.Information("GUI team player list dialog clipboard event, found id {id}", id);
+                Log.Information("TeamListItemViewModel: team player list dialog clipboard event, found id {id}", id);
                 if (!string.IsNullOrEmpty(AddPlayerNameOrId))
                     AddPlayerNameOrId += ";";
                 AddPlayerNameOrId += text;
@@ -194,7 +194,7 @@ namespace script_chan2.GUI
                 var player = Database.Database.GetPlayer(playerId);
                 if (player == null)
                     continue;
-                Log.Information("GUI edit team '{team}' add player '{player}'", team.Name, player.Name);
+                Log.Information("TeamListItemViewModel: edit team '{team}' add player '{player}'", team.Name, player.Name);
                 team.AddPlayer(player);
             }
             AddPlayerNameOrId = "";
@@ -211,7 +211,7 @@ namespace script_chan2.GUI
 
         public void Delete()
         {
-            Log.Information("GUI delete team '{name}'", team.Name);
+            Log.Information("TeamListItemViewModel: delete team '{name}'", team.Name);
             team.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteTeam");
         }

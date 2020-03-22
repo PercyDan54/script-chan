@@ -263,7 +263,7 @@ namespace script_chan2.GUI
 
         public void Edit()
         {
-            Log.Information("GUI tournament '{name}' edit dialog open", tournament.Name);
+            Log.Information("TournamentListItemViewModel: tournament '{name}' edit dialog open", tournament.Name);
             EditName = tournament.Name;
             EditGameMode = tournament.GameMode;
             EditTeamMode = tournament.TeamMode;
@@ -283,7 +283,7 @@ namespace script_chan2.GUI
         {
             if (EditTournamentSaveEnabled)
             {
-                Log.Information("GUI edit tournament '{name}' save", tournament.Name);
+                Log.Information("TournamentListItemViewModel: edit tournament '{name}' save", tournament.Name);
                 tournament.Name = EditName;
                 tournament.GameMode = EditGameMode;
                 tournament.TeamMode = EditTeamMode;
@@ -306,7 +306,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Delete()
         {
-            Log.Information("GUI delete team '{name}'", tournament.Name);
+            Log.Information("TournamentListItemViewModel: delete team '{name}'", tournament.Name);
             tournament.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteTournament");
         }

@@ -36,12 +36,12 @@ namespace script_chan2.GUI
             {
                 if (value)
                 {
-                    Log.Information("GUI add webhook '{webhook}' to tournament '{tournament}'", webhook.Name, tournament.Name);
+                    Log.Information("TournamentWebhookListItemViewModel: add webhook '{webhook}' to tournament '{tournament}'", webhook.Name, tournament.Name);
                     tournament.AddWebhook(webhook);
                 }
                 else
                 {
-                    Log.Information("GUI remove webhook '{webhook}' from tournament '{tournament}'", webhook.Name, tournament.Name);
+                    Log.Information("TournamentWebhookListItemViewModel: remove webhook '{webhook}' from tournament '{tournament}'", webhook.Name, tournament.Name);
                     tournament.RemoveWebhook(webhook);
                 }
                 NotifyOfPropertyChange(() => Active);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace script_chan2.DataTypes
 
         public void Save()
         {
+            Log.Information("Webhook: '{name}' save", Name);
             if (Id == 0)
                 Id = Database.Database.AddWebhook(this);
             else
@@ -30,6 +32,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
+            Log.Information("Webhook: '{name}' delete", Name);
             foreach (var tournament in Database.Database.Tournaments)
             {
                 tournament.RemoveWebhook(this);

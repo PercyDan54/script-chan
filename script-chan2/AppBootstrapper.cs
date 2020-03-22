@@ -17,6 +17,7 @@ namespace script_chan2
     {
         public AppBootstrapper()
         {
+            Log.Information("AppBootstrapper: start");
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day)
@@ -32,7 +33,7 @@ namespace script_chan2
 
             Initialize();
 
-            Log.Information("App started");
+            Log.Information("AppBootstrapper: app started");
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
@@ -42,7 +43,7 @@ namespace script_chan2
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            Log.Information("App shutdown");
+            Log.Information("AppBootstrapper: shutdown");
         }
     }
 }

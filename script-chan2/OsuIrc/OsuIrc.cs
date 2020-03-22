@@ -34,6 +34,7 @@ namespace script_chan2.OsuIrc
 
         public static void Login()
         {
+            Log.Information("OsuIrc: login");
             IsConnected = false;
             if (Settings.IrcUsername == null || Settings.IrcPassword == null)
                 return;
@@ -80,7 +81,7 @@ namespace script_chan2.OsuIrc
             }
             catch (Exception ex)
             {
-                log.Information("IRC login - " + ex.Message);
+                Log.Information("OsuIrc: " + ex.Message);
             }
         }
 
@@ -98,14 +99,14 @@ namespace script_chan2.OsuIrc
 
         private static void Client_ExceptionThrown(object sender, ExceptionEventArgs e)
         {
-            log.Error("IRC error - " + e.Exception.Message);
+            Log.Error("OsuIrc: " + e.Exception.Message);
             client.Disconnect();
             IsConnected = false;
         }
 
         private static void Client_OnConnect(object sender, EventArgs e)
         {
-            log.Information("IRC connected");
+            Log.Information("OsuIrc: connected");
             IsConnected = true;
         }
 
@@ -155,12 +156,14 @@ namespace script_chan2.OsuIrc
 
         public static void JoinChannel(string channel)
         {
+            Log.Information("OsuIrc: join channel '{name}'", channel);
             if (client != null)
                 client.JoinChannel(channel);
         }
 
         public static void LeaveChannel(string channel)
         {
+            Log.Information("OsuIrc: leave channel '{name}'", channel);
             if (client != null)
                 client.PartChannel(channel);
         }

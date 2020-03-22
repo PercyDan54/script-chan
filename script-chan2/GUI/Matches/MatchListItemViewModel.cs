@@ -408,7 +408,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Delete()
         {
-            Log.Information("GUI delete match '{name}'", match.Name);
+            Log.Information("MatchListItemViewModel: delete match '{name}'", match.Name);
             match.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMatch");
         }
@@ -417,7 +417,7 @@ namespace script_chan2.GUI
         {
             if (!MatchList.OpenedMatches.Contains(match))
             {
-                Log.Information("GUI open match '{name}'", match.Name);
+                Log.Information("MatchListItemViewModel: open match '{name}'", match.Name);
                 var windowManager = new WindowManager();
                 windowManager.ShowWindow(new MatchViewModel(match));
                 MatchList.OpenedMatches.Add(match);

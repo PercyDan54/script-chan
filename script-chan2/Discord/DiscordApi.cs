@@ -14,7 +14,7 @@ namespace script_chan2.Discord
     {
         public static void SendMatchCreated(Match match)
         {
-            Log.Information("Discord match '{match}' send room created", match.Name);
+            Log.Information("Discord: match '{match}' send room created", match.Name);
             var embed = new EmbedBuilder
             {
                 Author = new EmbedAuthorBuilder
@@ -33,7 +33,7 @@ namespace script_chan2.Discord
 
         public static void SendMatchBanRecap(Match match)
         {
-            Log.Information("Discord match '{match}' send ban recap", match.Name);
+            Log.Information("Discord: match '{match}' send ban recap", match.Name);
             EmbedBuilder embed = null;
             if (match.TeamMode == Enums.TeamModes.TeamVS)
             {
@@ -77,7 +77,7 @@ namespace script_chan2.Discord
 
         public static void SendMatchPickRecap(Match match)
         {
-            Log.Information("Discord match '{match}' send pick recap", match.Name);
+            Log.Information("Discord: match '{match}' send pick recap", match.Name);
             EmbedBuilder embed = null;
             if (match.TeamMode == Enums.TeamModes.TeamVS)
             {
@@ -122,7 +122,7 @@ namespace script_chan2.Discord
 
         public static void SendGameRecap(Match match)
         {
-            Log.Information("Discord match '{match}' send game recap", match.Name);
+            Log.Information("Discord: match '{match}' send game recap", match.Name);
             EmbedBuilder embed = null;
             if (match.TeamMode == Enums.TeamModes.TeamVS)
             {

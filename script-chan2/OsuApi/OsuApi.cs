@@ -18,7 +18,7 @@ namespace script_chan2.OsuApi
         #region API calls
         public static bool CheckApiKey(string key)
         {
-            Log.Information("API check api key");
+            Log.Information("OsuApi: check api key");
             var request = (HttpWebRequest)WebRequest.Create("https://osu.ppy.sh/api/get_user?u=2&k=" + key);
             try
             {
@@ -33,12 +33,12 @@ namespace script_chan2.OsuApi
 
         public static Beatmap GetBeatmap(int beatmapId)
         {
-            Log.Information("API get beatmap {id}", beatmapId);
+            Log.Information("OsuApi: get beatmap {id}", beatmapId);
             var response = SendRequest("get_beatmaps", "b=" + beatmapId);
             var data = JsonConvert.DeserializeObject<List<ApiBeatmap>>(response);
             if (data.Count == 0)
             {
-                Log.Information("API beatmap {id} not found", beatmapId);
+                Log.Information("OsuApi: beatmap {id} not found", beatmapId);
                 return null;
             }
             var beatmap = data[0];
@@ -58,12 +58,12 @@ namespace script_chan2.OsuApi
 
         public static Player GetPlayer(string playerId)
         {
-            Log.Information("API get player {id}", playerId);
+            Log.Information("OsuApi: get player {id}", playerId);
             var response = SendRequest("get_user", "u=" + playerId);
             var data = JsonConvert.DeserializeObject<List<ApiPlayer>>(response);
             if (data.Count == 0)
             {
-                Log.Information("API player {id} not found", playerId);
+                Log.Information("OsuApi: player {id} not found", playerId);
                 return null;
             }
             var player = data[0];
@@ -77,7 +77,7 @@ namespace script_chan2.OsuApi
 
         public static void UpdateGames(Match match)
         {
-            Log.Information("API refresh match {id}", match.RoomId);
+            Log.Information("OsuApi: refresh match {id}", match.RoomId);
             var response = SendRequest("get_match", "mp=" + match.RoomId);
             var data = JsonConvert.DeserializeObject<ApiMatch>(response);
             foreach (var gameData in data.games)
@@ -126,6 +126,7 @@ namespace script_chan2.OsuApi
         {
             using (var webClient = new WebClient())
             {
+                Log.Information("OsuApi: send request 'https://osu.ppy.sh/api/" + method + "?" + parameters + "'");
                 return webClient.DownloadString("https://osu.ppy.sh/api/" + method + "?k=" + Settings.ApiKey + "&" + parameters);
             }
         }

@@ -33,7 +33,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Delete()
         {
-            Log.Information("GUI edit team '{team}' remove player '{player}'", team.Name, player.Name);
+            Log.Information("TeamPlayerListItemViewModel: edit team '{team}' remove player '{player}'", team.Name, player.Name);
             team.RemovePlayer(player);
             Events.Aggregator.PublishOnUIThread("RemovePlayerFromTeam");
         }

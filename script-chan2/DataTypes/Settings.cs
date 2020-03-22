@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using Newtonsoft.Json;
 using script_chan2.GUI;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,6 +33,7 @@ namespace script_chan2.DataTypes
 
         public static void SaveConfig()
         {
+            Log.Information("Settings: save config");
             var config = new Config
             {
                 apiKey = ApiKey,
@@ -49,9 +51,11 @@ namespace script_chan2.DataTypes
 
         internal static void Initialize()
         {
+            Log.Information("Settings: initialize");
             Directory.CreateDirectory(CONFIG_PATH);
             if (!File.Exists(CONFIG_PATH + "\\config.json"))
             {
+                Log.Information("Settings: create config file");
                 var configNew = new Config
                 {
                     apiKey = "",
