@@ -68,7 +68,14 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid x:Name="Overview1" Grid.Row="0" Margin="2">
-                        <ScrollViewer Visibility="{Binding TeamVsVisible}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="UpdateScore" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Refresh" Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center" Visibility="{Binding RoomOpenVisible}">
+                            <md:PackIcon Kind="Refresh" />
+                        </Button>
+                        <ScrollViewer Visibility="{Binding TeamVsVisible}" Grid.Column="1">
                             <ItemsControl ItemsSource="{Binding TeamsViews}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -82,7 +89,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
-                        <ScrollViewer Visibility="{Binding HeadToHeadVisible}">
+                        <ScrollViewer Visibility="{Binding HeadToHeadVisible}" Grid.Column="1">
                             <ItemsControl ItemsSource="{Binding PlayersViews}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>

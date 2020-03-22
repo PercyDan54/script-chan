@@ -202,15 +202,11 @@ namespace script_chan2.GUI
                 }
                 if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
                 {
-                    var player = new MediaPlayer();
-                    player.Open(new Uri(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "notification.mp3")));
-                    player.Play();
+                    PlayNotificationSound();
                 }
                 if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
                 {
-                    OsuApi.OsuApi.UpdateGames(match);
-                    match.UpdateScores();
-                    NotifyOfPropertyChange(() => TeamsViews);
+                    UpdateScore();
                 }
             }
         }
@@ -762,6 +758,20 @@ namespace script_chan2.GUI
             }
 
             return border.Child as ScrollViewer;
+        }
+
+        private void PlayNotificationSound()
+        {
+            var player = new MediaPlayer();
+            player.Open(new Uri(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "notification.mp3")));
+            player.Play();
+        }
+
+        public void UpdateScore()
+        {
+            OsuApi.OsuApi.UpdateGames(match);
+            match.UpdateScores();
+            NotifyOfPropertyChange(() => TeamsViews);
         }
         #endregion
     }
