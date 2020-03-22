@@ -868,6 +868,11 @@ namespace script_chan2.GUI
         {
             DiscordApi.SendMatchBanRecap(match);
         }
+
+        public void SendPickRecap()
+        {
+            DiscordApi.SendMatchPickRecap(match);
+        }
         #endregion
     }
 }

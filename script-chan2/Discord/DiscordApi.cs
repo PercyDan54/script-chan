@@ -72,6 +72,50 @@ namespace script_chan2.Discord
                 SendEmbed(match, embed);
         }
 
+        public static void SendMatchPickRecap(Match match)
+        {
+            EmbedBuilder embed = null;
+            if (match.TeamMode == Enums.TeamModes.TeamVS)
+            {
+                embed = new EmbedBuilder
+                {
+                    Author = new EmbedAuthorBuilder
+                    {
+                        IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400744720772628481/more-info-button.png",
+                        Name = match.Name,
+                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
+                    },
+                    Color = Color.Gold,
+                    Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
+                    Title = "Pick Recap " + (match.RollWinnerTeam != null ? "(Roll Winner: " + match.RollWinnerTeam.Name + ")" : ""),
+                };
+                var redTeam = "";
+                var blueTeam = "";
+                for (var i = 0; i < match.Picks.Count; i++)
+                {
+                    var pick = match.Picks[i];
+                    var mod = pick.Map.Tag;
+                    if (string.IsNullOrEmpty(mod))
+                        mod = Utils.ConvertGameModsToString(pick.Map.Mods);
+                    if (pick.Team == match.TeamRed)
+                        redTeam += $"-{i + 1}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                    if (pick.Team == match.TeamBlue)
+                        blueTeam += $"-{i + 1}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                }
+                if (!string.IsNullOrEmpty(redTeam))
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = redTeam });
+                if (!string.IsNullOrEmpty(blueTeam))
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = blueTeam });
+            }
+            else
+            {
+                //TODO!
+            }
+
+            if (embed != null)
+                SendEmbed(match, embed);
+        }
+
         private static void SendEmbed(Match match, EmbedBuilder embed)
         {
             embed.Footer = new EmbedFooterBuilder
