@@ -161,8 +161,8 @@ namespace script_chan2.Discord
                 embed.Color = pickingTeamWon ? Color.Green : Color.Red;
                 embed.ThumbnailUrl = pickingTeamWon ? "https://cdn.discordapp.com/attachments/130304896581763072/400388818127290369/section-pass.png" : "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png";
                 embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**";
-                embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = teamRedScore });
-                embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = teamBlueScore });
+                embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = teamRedScore, IsInline = true });
+                embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = teamBlueScore, IsInline = true });
                 embed.Fields.Add(new EmbedFieldBuilder { Name = "MVP", Value = $":flag_{mvp.Player.Country.ToLower()}: **{mvp.Player.Name.Replace("_", "__")}** with {string.Format("{0:n0}", mvp.Points)} points" });
                 embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = "Next team to pick: " + (map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) + " :loudspeaker:" });
             }
