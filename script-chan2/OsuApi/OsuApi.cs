@@ -88,6 +88,9 @@ namespace script_chan2.OsuApi
                 if (gameData.end_time == null)
                     continue;
 
+                if (gameData.scores.Count == 0)
+                    continue;
+
                 var beatmap = Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
                 var game = new Game()
                 {

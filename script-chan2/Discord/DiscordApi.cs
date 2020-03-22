@@ -131,6 +131,8 @@ namespace script_chan2.Discord
                     }
                 };
 
+                var map = match.Picks.Last();
+
                 bool pickingTeamWon = false;
                 var teamRedScore = 0;
                 var teamBlueScore = 0;
@@ -144,12 +146,12 @@ namespace script_chan2.Discord
                             teamBlueScore += score.Points;
                     }
                 }
-                if (teamRedScore > teamBlueScore && match.Picks.Last().Team == match.TeamRed)
+                if (teamRedScore > teamBlueScore && map.Team == match.TeamRed)
                     pickingTeamWon = true;
-                if (teamBlueScore > teamRedScore && match.Picks.Last().Team == match.TeamBlue)
+                if (teamBlueScore > teamRedScore && map.Team == match.TeamBlue)
                     pickingTeamWon = true;
 
-                var map = match.Picks.Last();
+                var lastGame = match.TeamRedPoints * 2 >= match.BO || match.TeamBluePoints * 2 >= match.BO;
 
                 var mod = map.Map.Tag;
                 if (string.IsNullOrEmpty(mod))
@@ -158,13 +160,31 @@ namespace script_chan2.Discord
                 var mvp = match.Games.Last().Scores.OrderByDescending(x => x.Points).First();
 
                 embed.Title = $"{map.Team.Name} {(pickingTeamWon ? "won" : "lost")} their __{mod}__ pick by {string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore))}";
-                embed.Color = pickingTeamWon ? Color.Green : Color.Red;
-                embed.ThumbnailUrl = pickingTeamWon ? "https://cdn.discordapp.com/attachments/130304896581763072/400388818127290369/section-pass.png" : "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png";
+                if (lastGame)
+                {
+                    embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/130304896581763072/411660079771811870/crown.png";
+                    embed.Color = Color.Purple;
+                    embed.ImageUrl = "https://78.media.tumblr.com/b94193615145d12bfb64aa77b677269e/tumblr_njzqukOpBP1ti1gm1o1_500.gif";
+                }
+                else if (pickingTeamWon)
+                {
+                    embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400388818127290369/section-pass.png";
+                    embed.Color = Color.Green;
+                }
+                else
+                {
+                    embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png";
+                    embed.Color = Color.Red;
+                }
                 embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**";
-                embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = teamRedScore, IsInline = true });
-                embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = teamBlueScore, IsInline = true });
+                embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = match.TeamRedPoints, IsInline = true });
+                embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = match.TeamBluePoints, IsInline = true });
                 embed.Fields.Add(new EmbedFieldBuilder { Name = "MVP", Value = $":flag_{mvp.Player.Country.ToLower()}: **{mvp.Player.Name.Replace("_", "__")}** with {string.Format("{0:n0}", mvp.Points)} points" });
-                embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = "Next team to pick: " + (map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) + " :loudspeaker:" });
+                if (lastGame)
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = $"{(match.TeamRedPoints * 2 >= match.BO ? match.TeamRed.Name : match.TeamBlue.Name)} wins the match :clap:" });
+                else
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = "Next team to pick: " + (map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) + " :loudspeaker:" });
+
             }
             else
             {
