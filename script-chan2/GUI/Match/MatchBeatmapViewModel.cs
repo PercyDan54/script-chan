@@ -140,6 +140,16 @@ namespace script_chan2.GUI
                 return Brushes.Black;
             }
         }
+
+        public string TeamRedName
+        {
+            get { return match.TeamRed.Name; }
+        }
+
+        public string TeamBlueName
+        {
+            get { return match.TeamBlue.Name; }
+        }
         #endregion
 
         #region Actions
