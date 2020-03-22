@@ -863,6 +863,11 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => TeamSize);
             SendRoomSet();
         }
+
+        public void SendBanRecap()
+        {
+            DiscordApi.SendMatchBanRecap(match);
+        }
         #endregion
     }
 }
