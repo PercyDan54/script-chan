@@ -159,7 +159,7 @@ namespace script_chan2.Database
                 mods TEXT,
                 tag TEXT,
                 FOREIGN KEY(mappool) REFERENCES Mappools(id) ON DELETE CASCADE,
-                FOREIGN KEY(beatmap) REFERENCES Beatmaps(id) ON DELETE SET NULL)", conn))
+                FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -198,7 +198,7 @@ namespace script_chan2.Database
                 (player INTEGER NOT NULL,
                 team INTEGER NOT NULL,
                 PRIMARY KEY (player, team),
-                FOREIGN KEY(player) REFERENCES Players(id) ON DELETE CASCADE,
+                FOREIGN KEY(player) REFERENCES Players(id),
                 FOREIGN KEY(team) REFERENCES Teams(id) ON DELETE CASCADE)", conn))
             {
                 command.ExecuteNonQuery();
@@ -252,7 +252,7 @@ namespace script_chan2.Database
                 points INTEGER,
                 PRIMARY KEY(match, player),
                 FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,
-                FOREIGN KEY(player) REFERENCES Players(id) ON DELETE CASCADE)", conn))
+                FOREIGN KEY(player) REFERENCES Players(id))", conn))
             {
                 command.ExecuteNonQuery();
             }
