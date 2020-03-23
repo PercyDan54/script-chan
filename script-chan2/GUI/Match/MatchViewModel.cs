@@ -685,7 +685,6 @@ namespace script_chan2.GUI
         {
             OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, message);
             var ircMessage = new IrcMessage() { Match = match, User = Settings.IrcUsername, Timestamp = DateTime.Now, Message = message };
-            AddMessageToChat(ircMessage, false);
             messagesToSave.Add(ircMessage);
             if (messagesToSave.Count >= 5)
             {

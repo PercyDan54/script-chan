@@ -95,6 +95,17 @@ namespace script_chan2.OsuIrc
                 privateClient.SendMessage(ircMessage.User, ircMessage.Message);
             else
                 client.SendMessage(ircMessage.User, ircMessage.Message);
+
+            if (ircMessage.User.StartsWith("#"))
+            {
+                var data = new ChannelMessageData()
+                {
+                    Channel = ircMessage.User,
+                    User = Settings.IrcUsername,
+                    Message = ircMessage.Message
+                };
+                Events.Aggregator.PublishOnUIThread(data);
+            }
         }
 
         private static void Client_ExceptionThrown(object sender, ExceptionEventArgs e)
