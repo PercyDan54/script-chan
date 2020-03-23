@@ -43,6 +43,10 @@ namespace script_chan2.Database
         {
             var conn = new SQLiteConnection("Data Source=Database.sqlite;Version=3");
             conn.Open();
+            using (var command = new SQLiteCommand("PRAGMA foreign_keys = ON", conn))
+            {
+                command.ExecuteNonQuery();
+            }
             return conn;
         }
 
@@ -91,27 +95,27 @@ namespace script_chan2.Database
                 {
                     var id = Convert.ToInt32(reader["id"]);
                     var name = reader["name"].ToString();
-                    var gameMode = Enums.GameModes.Standard;
+                    var gameMode = GameModes.Standard;
                     switch (reader["gameMode"].ToString())
                     {
-                        case "Standard": gameMode = Enums.GameModes.Standard; break;
-                        case "Taiko": gameMode = Enums.GameModes.Taiko; break;
-                        case "Catch": gameMode = Enums.GameModes.Catch; break;
-                        case "Mania": gameMode = Enums.GameModes.Mania; break;
+                        case "Standard": gameMode = GameModes.Standard; break;
+                        case "Taiko": gameMode = GameModes.Taiko; break;
+                        case "Catch": gameMode = GameModes.Catch; break;
+                        case "Mania": gameMode = GameModes.Mania; break;
                     }
-                    var teamMode = Enums.TeamModes.TeamVS;
+                    var teamMode = TeamModes.TeamVS;
                     switch (reader["teamMode"].ToString())
                     {
-                        case "HeadToHead": teamMode = Enums.TeamModes.HeadToHead; break;
-                        case "TeamVS": teamMode = Enums.TeamModes.TeamVS; break;
+                        case "HeadToHead": teamMode = TeamModes.HeadToHead; break;
+                        case "TeamVS": teamMode = TeamModes.TeamVS; break;
                     }
-                    var winCondition = Enums.WinConditions.ScoreV2;
+                    var winCondition = WinConditions.ScoreV2;
                     switch (reader["winCondition"].ToString())
                     {
-                        case "Score": winCondition = Enums.WinConditions.Score; break;
-                        case "ScoreV2": winCondition = Enums.WinConditions.ScoreV2; break;
-                        case "Accuracy": winCondition = Enums.WinConditions.Accuracy; break;
-                        case "Combo": winCondition = Enums.WinConditions.Combo; break;
+                        case "Score": winCondition = WinConditions.Score; break;
+                        case "ScoreV2": winCondition = WinConditions.ScoreV2; break;
+                        case "Accuracy": winCondition = WinConditions.Accuracy; break;
+                        case "Combo": winCondition = WinConditions.Combo; break;
                     }
                     var acronym = reader["acronym"].ToString();
                     var teamSize = Convert.ToInt32(reader["teamSize"]);
@@ -1051,7 +1055,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@gameMode", match.GameMode.ToString());
                     command.Parameters.AddWithValue("@teamMode", match.TeamMode.ToString());
                     command.Parameters.AddWithValue("@winCondition", match.WinCondition.ToString());
-                    if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    if (match.TeamMode == TeamModes.TeamVS)
                     {
                         if (match.RollWinnerTeam != null)
                             command.Parameters.AddWithValue("@rollWinner", match.RollWinnerTeam.Id);
@@ -1097,7 +1101,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@id", match.Id);
                     command.ExecuteNonQuery();
                 }
-                if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                if (match.TeamMode == TeamModes.HeadToHead)
                 {
                     using (var command = new SQLiteCommand("DELETE FROM MatchPlayers WHERE match = @match", conn))
                     {
@@ -1162,11 +1166,6 @@ namespace script_chan2.Database
                         command.Parameters.AddWithValue("@counted", game.Counted);
                         command.ExecuteNonQuery();
                     }
-                    using (var command = new SQLiteCommand("DELETE FROM Scores WHERE game = @game", conn))
-                    {
-                        command.Parameters.AddWithValue("@game", game.Id);
-                        command.ExecuteNonQuery();
-                    }
                     foreach (var score in game.Scores)
                     {
                         using (var command = new SQLiteCommand("INSERT INTO Scores (player, game, mods, score, team, passed) VALUES (@player, @game, @mods, @score, @team, @passed)", conn))
@@ -1190,42 +1189,10 @@ namespace script_chan2.Database
         {
             Log.Information("Database: delete match '{name}'", match.Name);
             using (var conn = GetConnection())
-            using (var transaction = conn.BeginTransaction())
+            using (var command = new SQLiteCommand("DELETE FROM Matches WHERE id = @id", conn))
             {
-                foreach (var game in match.Games)
-                {
-                    using (var command = new SQLiteCommand("DELETE FROM Scores WHERE game = @game", conn))
-                    {
-                        command.Parameters.AddWithValue("@game", game.Id);
-                        command.ExecuteNonQuery();
-                    }
-                }
-                using (var command = new SQLiteCommand("DELETE FROM Games WHERE match = @match", conn))
-                {
-                    command.Parameters.AddWithValue("@match", match.Id);
-                    command.ExecuteNonQuery();
-                }
-                using (var command = new SQLiteCommand("DELETE FROM MatchPlayers WHERE match = @match", conn))
-                {
-                    command.Parameters.AddWithValue("@match", match.Id);
-                    command.ExecuteNonQuery();
-                }
-                using (var command = new SQLiteCommand("DELETE FROM MatchPicks WHERE match = @match", conn))
-                {
-                    command.Parameters.AddWithValue("@match", match.Id);
-                    command.ExecuteNonQuery();
-                }
-                using (var command = new SQLiteCommand("DELETE FROM IrcMessages WHERE match = @match", conn))
-                {
-                    command.Parameters.AddWithValue("@match", match.Id);
-                    command.ExecuteNonQuery();
-                }
-                using (var command = new SQLiteCommand("DELETE FROM Matches WHERE id = @id", conn))
-                {
-                    command.Parameters.AddWithValue("@id", match.Id);
-                    command.ExecuteNonQuery();
-                }
-                transaction.Commit();
+                command.Parameters.AddWithValue("@id", match.Id);
+                command.ExecuteNonQuery();
                 conn.Close();
             }
             Matches.Remove(match);

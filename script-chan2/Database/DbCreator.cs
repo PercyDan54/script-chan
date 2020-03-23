@@ -110,8 +110,8 @@ namespace script_chan2.Database
                 (tournament INTEGER NOT NULL,
                 webhook INTEGER NOT NULL,
                 PRIMARY KEY(tournament, webhook),
-                FOREIGN KEY(tournament) REFERENCES Tournaments(id),
-                FOREIGN KEY(webhook) REFERENCES Webhooks(id))", conn))
+                FOREIGN KEY(tournament) REFERENCES Tournaments(id) ON DELETE CASCADE,
+                FOREIGN KEY(webhook) REFERENCES Webhooks(id) ON DELETE CASCADE)", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -124,7 +124,7 @@ namespace script_chan2.Database
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
                 tournament INTEGER,
-                FOREIGN KEY(tournament) REFERENCES Tournaments(id))", conn))
+                FOREIGN KEY(tournament) REFERENCES Tournaments(id) ON DELETE CASCADE)", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -158,8 +158,8 @@ namespace script_chan2.Database
                 listIndex INTEGER,
                 mods TEXT,
                 tag TEXT,
-                FOREIGN KEY(mappool) REFERENCES Mappools(id),
-                FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn))
+                FOREIGN KEY(mappool) REFERENCES Mappools(id) ON DELETE CASCADE,
+                FOREIGN KEY(beatmap) REFERENCES Beatmaps(id) ON DELETE SET NULL)", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -172,7 +172,7 @@ namespace script_chan2.Database
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
                 tournament INTEGER,
-                FOREIGN KEY(tournament) REFERENCES Tournaments(id),
+                FOREIGN KEY(tournament) REFERENCES Tournaments(id) ON DELETE CASCADE,
                 CONSTRAINT unique_team UNIQUE (name, tournament))", conn))
             {
                 command.ExecuteNonQuery();
@@ -198,8 +198,8 @@ namespace script_chan2.Database
                 (player INTEGER NOT NULL,
                 team INTEGER NOT NULL,
                 PRIMARY KEY (player, team),
-                FOREIGN KEY(player) REFERENCES Players(id),
-                FOREIGN KEY(team) REFERENCES Teams(id))", conn))
+                FOREIGN KEY(player) REFERENCES Players(id) ON DELETE CASCADE,
+                FOREIGN KEY(team) REFERENCES Teams(id) ON DELETE CASCADE)", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -234,10 +234,10 @@ namespace script_chan2.Database
                 allPicksFreemod BOOL,
                 status TEXT,
                 warmupMode BOOL,
-                FOREIGN KEY(tournament) REFERENCES Tournaments(id),
-                FOREIGN KEY(mappool) REFERENCES Mappools(id),
-                FOREIGN KEY(teamBlue) REFERENCES Teams(id),
-                FOREIGN KEY(teamRed) REFERENCES Teams(id))", conn))
+                FOREIGN KEY(tournament) REFERENCES Tournaments(id) ON DELETE CASCADE,
+                FOREIGN KEY(mappool) REFERENCES Mappools(id) ON DELETE SET NULL,
+                FOREIGN KEY(teamBlue) REFERENCES Teams(id) ON DELETE RESTRICT,
+                FOREIGN KEY(teamRed) REFERENCES Teams(id) ON DELETE RESTRICT)", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -251,8 +251,8 @@ namespace script_chan2.Database
                 player INTEGER NOT NULL,
                 points INTEGER,
                 PRIMARY KEY(match, player),
-                FOREIGN KEY(match) REFERENCES Matches(id),
-                FOREIGN KEY(player) REFERENCES Players(id))", conn))
+                FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,
+                FOREIGN KEY(player) REFERENCES Players(id) ON DELETE CASCADE)", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -267,8 +267,8 @@ namespace script_chan2.Database
                 picker INTEGER NOT NULL,
                 ban BOOL,
                 PRIMARY KEY(match, beatmap),
-                FOREIGN KEY(match) REFERENCES Matches(id),
-                FOREIGN KEY(beatmap) REFERENCES MappoolMaps(id))", conn))
+                FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,
+                FOREIGN KEY(beatmap) REFERENCES MappoolMaps(id) ON DELETE CASCADE)", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -283,7 +283,7 @@ namespace script_chan2.Database
                 beatmap INTEGER,
                 mods TEXT,
                 counted BOOL,
-                FOREIGN KEY(match) REFERENCES Matches(id),
+                FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,
                 FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn))
             {
                 command.ExecuteNonQuery();
@@ -301,7 +301,7 @@ namespace script_chan2.Database
                 team TEXT,
                 passed BOOL,
                 FOREIGN KEY(player) REFERENCES Players(id),
-                FOREIGN KEY(game) REFERENCES Games(id),
+                FOREIGN KEY(game) REFERENCES Games(id) ON DELETE CASCADE,
                 CONSTRAINT unique_score UNIQUE (player, game))", conn))
             {
                 command.ExecuteNonQuery();
@@ -316,7 +316,7 @@ namespace script_chan2.Database
                 timestamp TEXT,
                 user TEXT,
                 message TEXT,
-                FOREIGN KEY(match) REFERENCES Matches(id))", conn))
+                FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE)", conn))
             {
                 command.ExecuteNonQuery();
             }
