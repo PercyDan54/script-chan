@@ -211,15 +211,16 @@ namespace script_chan2.GUI
                     var ircMessage = new IrcMessage() { User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
                     messagesToSave.Add(ircMessage);
                     AddMessageToChat(ircMessage, false);
-                }
-                if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
-                {
-                    PlayNotificationSound();
-                }
-                if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
-                {
-                    UpdateScore();
-                    DiscordApi.SendGameRecap(match);
+
+                    if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
+                    {
+                        PlayNotificationSound();
+                    }
+                    if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
+                    {
+                        UpdateScore();
+                        DiscordApi.SendGameRecap(match);
+                    }
                 }
             }
         }
