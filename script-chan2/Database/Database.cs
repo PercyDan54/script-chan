@@ -398,6 +398,7 @@ namespace script_chan2.Database
         {
             Log.Information("Database: delete mappool '{name}'", mappool.Name);
             using (var conn = GetConnection())
+            using (var transaction = conn.BeginTransaction())
             {
                 using (var command = new SQLiteCommand("DELETE FROM MappoolMaps WHERE mappool = @id", conn))
                 {
@@ -409,6 +410,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@id", mappool.Id);
                     command.ExecuteNonQuery();
                 }
+                transaction.Commit();
                 conn.Close();
             }
             Mappools.Remove(mappool);
@@ -458,44 +460,42 @@ namespace script_chan2.Database
             if (returnValue != null)
                 return returnValue;
             using (var conn = GetConnection())
+            using (var command = new SQLiteCommand("SELECT id, beatmapsetId, artist, title, version, creator, bpm, ar, cs FROM Beatmaps WHERE id = @id", conn))
             {
-                using (var command = new SQLiteCommand("SELECT id, beatmapsetId, artist, title, version, creator, bpm, ar, cs FROM Beatmaps WHERE id = @id", conn))
+                command.Parameters.AddWithValue("@id", id);
+                using (var reader = command.ExecuteReader())
                 {
-                    command.Parameters.AddWithValue("@id", id);
-                    using (var reader = command.ExecuteReader())
+                    if (reader.HasRows)
                     {
-                        if (reader.HasRows)
+                        reader.Read();
+                        var setId = Convert.ToInt32(reader["beatmapsetId"]);
+                        var artist = reader["artist"].ToString();
+                        var title = reader["title"].ToString();
+                        var version = reader["version"].ToString();
+                        var creator = reader["creator"].ToString();
+                        var bpm = Convert.ToDecimal(reader["bpm"]);
+                        var ar = Convert.ToDecimal(reader["ar"]);
+                        var cs = Convert.ToDecimal(reader["cs"]);
+                        returnValue = new Beatmap()
                         {
-                            reader.Read();
-                            var setId = Convert.ToInt32(reader["beatmapsetId"]);
-                            var artist = reader["artist"].ToString();
-                            var title = reader["title"].ToString();
-                            var version = reader["version"].ToString();
-                            var creator = reader["creator"].ToString();
-                            var bpm = Convert.ToDecimal(reader["bpm"]);
-                            var ar = Convert.ToDecimal(reader["ar"]);
-                            var cs = Convert.ToDecimal(reader["cs"]);
-                            returnValue = new Beatmap()
-                            {
-                                Id = id,
-                                SetId = setId,
-                                Artist = artist,
-                                Title = title,
-                                Version = version,
-                                Creator = creator,
-                                BPM = bpm,
-                                AR = ar,
-                                CS = cs
-                            };
-                        }
-                        else
-                        {
-                            returnValue = OsuApi.OsuApi.GetBeatmap(id);
-                            if (returnValue != null)
-                                AddBeatmap(returnValue);
-                        }
-                        reader.Close();
+                            Id = id,
+                            SetId = setId,
+                            Artist = artist,
+                            Title = title,
+                            Version = version,
+                            Creator = creator,
+                            BPM = bpm,
+                            AR = ar,
+                            CS = cs
+                        };
                     }
+                    else
+                    {
+                        returnValue = OsuApi.OsuApi.GetBeatmap(id);
+                        if (returnValue != null)
+                            AddBeatmap(returnValue);
+                    }
+                    reader.Close();
                 }
                 conn.Close();
             }
@@ -616,34 +616,32 @@ namespace script_chan2.Database
             if (returnValue != null)
                 return returnValue;
             using (var conn = GetConnection())
+            using (var command = new SQLiteCommand("SELECT id, name, country FROM Players WHERE id = @id OR name = @name", conn))
             {
-                using (var command = new SQLiteCommand("SELECT id, name, country FROM Players WHERE id = @id OR name = @name", conn))
+                command.Parameters.AddWithValue("@id", idOrName);
+                command.Parameters.AddWithValue("@name", idOrName);
+                using (var reader = command.ExecuteReader())
                 {
-                    command.Parameters.AddWithValue("@id", idOrName);
-                    command.Parameters.AddWithValue("@name", idOrName);
-                    using (var reader = command.ExecuteReader())
+                    if (reader.HasRows)
                     {
-                        if (reader.HasRows)
+                        reader.Read();
+                        var id = Convert.ToInt32(reader["id"]);
+                        var name = reader["name"].ToString();
+                        var country = reader["country"].ToString();
+                        returnValue = new Player()
                         {
-                            reader.Read();
-                            var id = Convert.ToInt32(reader["id"]);
-                            var name = reader["name"].ToString();
-                            var country = reader["country"].ToString();
-                            returnValue = new Player()
-                            {
-                                Name = name,
-                                Country = country,
-                                Id = id
-                            };
-                        }
-                        else
-                        {
-                            returnValue = OsuApi.OsuApi.GetPlayer(idOrName);
-                            if (returnValue != null)
-                                AddPlayer(returnValue);
-                        }
-                        reader.Close();
+                            Name = name,
+                            Country = country,
+                            Id = id
+                        };
                     }
+                    else
+                    {
+                        returnValue = OsuApi.OsuApi.GetPlayer(idOrName);
+                        if (returnValue != null)
+                            AddPlayer(returnValue);
+                    }
+                    reader.Close();
                 }
                 conn.Close();
             }
@@ -895,6 +893,7 @@ namespace script_chan2.Database
             Log.Information("Database: add new match '{name}'", match.Name);
             int resultValue;
             using (var conn = GetConnection())
+            using (var transaction = conn.BeginTransaction())
             {
                 using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode)" +
                     "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @enableWebhooks, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status, @warmupMode)", conn))
@@ -1022,6 +1021,7 @@ namespace script_chan2.Database
                         }
                     }
                 }
+                transaction.Commit();
                 conn.Close();
             }
             Matches.Add(match);
@@ -1032,6 +1032,7 @@ namespace script_chan2.Database
         {
             Log.Information("Database: update match '{name}'", match.Name);
             using (var conn = GetConnection())
+            using (var transaction = conn.BeginTransaction())
             {
                 using (var command = new SQLiteCommand(@"UPDATE Matches
                 SET tournament = @tournament, mappool = @mappool, name = @name, roomId = @roomId, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
@@ -1180,6 +1181,7 @@ namespace script_chan2.Database
                         }
                     }
                 }
+                transaction.Commit();
                 conn.Close();
             }
         }
@@ -1188,6 +1190,7 @@ namespace script_chan2.Database
         {
             Log.Information("Database: delete match '{name}'", match.Name);
             using (var conn = GetConnection())
+            using (var transaction = conn.BeginTransaction())
             {
                 foreach (var game in match.Games)
                 {
@@ -1222,6 +1225,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@id", match.Id);
                     command.ExecuteNonQuery();
                 }
+                transaction.Commit();
                 conn.Close();
             }
             Matches.Remove(match);
@@ -1234,7 +1238,7 @@ namespace script_chan2.Database
             {
                 foreach (var match in Matches)
                 {
-                    if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                    if (match.TeamMode == TeamModes.HeadToHead)
                     {
                         using (var command = new SQLiteCommand("SELECT player, points FROM MatchPlayers WHERE match = @match", conn))
                         {
