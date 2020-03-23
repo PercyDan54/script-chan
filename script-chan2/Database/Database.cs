@@ -320,22 +320,15 @@ namespace script_chan2.Database
         {
             Log.Information("Database: add webhook '{webhook}' to tournament '{tournament}'", webhook.Name, tournament.Name);
             using (var conn = GetConnection())
+            using (var command = new SQLiteCommand(@"INSERT INTO WebhookLinks (tournament, webhook)
+                SELECT @tournament, @webhook
+                WHERE NOT EXISTS (SELECT 1 FROM WebhookLinks WHERE tournament = @tournament2 AND webhook = @webhook2)", conn))
             {
-                using (var command = new SQLiteCommand("SELECT COUNT(tournament) FROM WebhookLinks WHERE tournament = @tournament AND webhook = @webhook", conn))
-                {
-                    command.Parameters.AddWithValue("@webhook", webhook.Id);
-                    command.Parameters.AddWithValue("@tournament", tournament.Id);
-                    var rowCount = Convert.ToInt32(command.ExecuteScalar());
-                    if (rowCount == 0)
-                    {
-                        using (var command2 = new SQLiteCommand("INSERT INTO WebhookLinks (tournament, webhook) VALUES (@tournament, @webhook)", conn))
-                        {
-                            command2.Parameters.AddWithValue("@webhook", webhook.Id);
-                            command2.Parameters.AddWithValue("@tournament", tournament.Id);
-                            command2.ExecuteNonQuery();
-                        }
-                    }
-                }
+                command.Parameters.AddWithValue("@webhook", webhook.Id);
+                command.Parameters.AddWithValue("@tournament", tournament.Id);
+                command.Parameters.AddWithValue("@webhook2", webhook.Id);
+                command.Parameters.AddWithValue("@tournament2", tournament.Id);
+                command.ExecuteNonQuery();
                 conn.Close();
             }
         }
