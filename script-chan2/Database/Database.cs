@@ -1297,7 +1297,7 @@ namespace script_chan2.Database
         {
             Log.Information("Database: add irc messages");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("INSERT INTO IrcMessages (match, timestamp, user, message) VALUES (@match, @timestamp, @user, @message)", conn))
+            using (var command = new SQLiteCommand("INSERT INTO IrcMessages (match, timestamp, channel, user, message) VALUES (@match, @timestamp, @channel, @user, @message)", conn))
             using (var transaction = conn.BeginTransaction())
             {
                 foreach (var message in messages)
@@ -1307,6 +1307,7 @@ namespace script_chan2.Database
                     else
                         command.Parameters.AddWithValue("@match", DBNull.Value);
                     command.Parameters.AddWithValue("@timestamp", message.Timestamp);
+                    command.Parameters.AddWithValue("@channel", message.Channel);
                     command.Parameters.AddWithValue("@user", message.User);
                     command.Parameters.AddWithValue("@message", message.Message);
                     command.ExecuteNonQuery();
@@ -1321,7 +1322,7 @@ namespace script_chan2.Database
             Log.Information("Database: get irc messages for match '{match}'", match.Name);
             var messages = new List<IrcMessage>();
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT timestamp, user, message FROM IrcMessages WHERE match = @match", conn))
+            using (var command = new SQLiteCommand("SELECT timestamp, channel, user, message FROM IrcMessages WHERE match = @match", conn))
             {
                 command.Parameters.AddWithValue("@match", match.Id);
                 using (var reader = command.ExecuteReader())
@@ -1331,6 +1332,7 @@ namespace script_chan2.Database
                         var message = new IrcMessage()
                         {
                             Timestamp = DateTime.Parse(reader["timestamp"].ToString()),
+                            Channel = reader["channel"].ToString(),
                             User = reader["user"].ToString(),
                             Message = reader["message"].ToString(),
                             Match = match
@@ -1344,14 +1346,14 @@ namespace script_chan2.Database
             return messages;
         }
 
-        public static List<IrcMessage> GetIrcMessages(string user)
+        public static List<IrcMessage> GetIrcMessages(string channel)
         {
-            Log.Information("Database: get irc messages for user '{user}'", user);
+            Log.Information("Database: get irc messages for channel '{channel}'", channel);
             var messages = new List<IrcMessage>();
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT timestamp, message FROM IrcMessages WHERE match IS NULL AND user = @user", conn))
+            using (var command = new SQLiteCommand("SELECT timestamp, user, message FROM IrcMessages WHERE match IS NULL AND channel = @channel", conn))
             {
-                command.Parameters.AddWithValue("@user", user);
+                command.Parameters.AddWithValue("@channel", channel);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -1359,7 +1361,8 @@ namespace script_chan2.Database
                         var message = new IrcMessage()
                         {
                             Timestamp = DateTime.Parse(reader["timestamp"].ToString()),
-                            User = user,
+                            Channel = channel,
+                            User = reader["user"].ToString(),
                             Message = reader["message"].ToString(),
                             Match = null
                         };

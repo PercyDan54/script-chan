@@ -314,6 +314,7 @@ namespace script_chan2.Database
             using (var command = new SQLiteCommand(@"CREATE TABLE IrcMessages
                 (match INTEGER,
                 timestamp TEXT,
+                channel TEXT,
                 user TEXT,
                 message TEXT,
                 FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE)", conn))

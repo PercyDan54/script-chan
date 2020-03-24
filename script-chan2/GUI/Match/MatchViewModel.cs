@@ -208,8 +208,13 @@ namespace script_chan2.GUI
                 Log.Information("MatchViewModel: match '{match}' irc message received '{message}'", match.Name, data.Message);
                 if (data.Channel == "#mp_" + match.RoomId)
                 {
-                    var ircMessage = new IrcMessage() { User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
+                    var ircMessage = new IrcMessage() { Channel = "#mp_" + match.RoomId, User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
                     messagesToSave.Add(ircMessage);
+                    if (messagesToSave.Count >= 5)
+                    {
+                        Database.Database.AddIrcMessages(messagesToSave);
+                        messagesToSave.Clear();
+                    }
                     AddMessageToChat(ircMessage, false);
 
                     if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
@@ -685,20 +690,12 @@ namespace script_chan2.GUI
         private void SendRoomMessage(string message)
         {
             OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, message);
-            var ircMessage = new IrcMessage() { Match = match, User = Settings.IrcUsername, Timestamp = DateTime.Now, Message = message };
-            messagesToSave.Add(ircMessage);
-            if (messagesToSave.Count >= 5)
-            {
-                Database.Database.AddIrcMessages(messagesToSave);
-                messagesToSave.Clear();
-            }
         }
 
         public void CreateRoom()
         {
             Log.Information("MatchViewModel: match '{match}' create room", match.Name);
             OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
-            messagesToSave.Add(new IrcMessage() { Match = null, User = Settings.IrcUsername, Timestamp = DateTime.Now, Message = "!mp make " + match.Name });
         }
 
         public void CloseRoom()
@@ -719,7 +716,6 @@ namespace script_chan2.GUI
             foreach (var player in match.GetPlayerList())
             {
                 OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch " + player);
-                messagesToSave.Add(new IrcMessage() { Match = null, User = Settings.IrcUsername, Timestamp = DateTime.Now, Message = "!mp switch " + player });
             }
         }
 

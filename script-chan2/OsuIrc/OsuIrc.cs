@@ -91,16 +91,39 @@ namespace script_chan2.OsuIrc
                 return;
 
             var ircMessage = messageQueue.Dequeue();
-            if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate) && !ircMessage.Message.StartsWith("!mp switch"))
-                privateClient.SendMessage(ircMessage.User, ircMessage.Message);
-            else
-                client.SendMessage(ircMessage.User, ircMessage.Message);
+            if (ircMessage.Message.StartsWith("/msg ") || ircMessage.Message.StartsWith("/notice ") || ircMessage.Message.StartsWith("/privmsg ") || ircMessage.Message.StartsWith("/query "))
+            {
+                var split = ircMessage.Message.Split(' ');
+                if (split.Length > 2)
+                {
+                    ircMessage = new IrcMessage()
+                    {
+                        Channel = split[1],
+                        Message = string.Join(" ", split.Skip(2))
+                    };
+                }
+            }
 
-            if (ircMessage.User.StartsWith("#"))
+            if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate) && !ircMessage.Message.StartsWith("!mp switch"))
+                privateClient.SendMessage(ircMessage.Channel, ircMessage.Message);
+            else
+                client.SendMessage(ircMessage.Channel, ircMessage.Message);
+
+            if (ircMessage.Channel.StartsWith("#"))
             {
                 var data = new ChannelMessageData()
                 {
-                    Channel = ircMessage.User,
+                    Channel = ircMessage.Channel,
+                    User = Settings.IrcUsername,
+                    Message = ircMessage.Message
+                };
+                Events.Aggregator.PublishOnUIThread(data);
+            }
+            else
+            {
+                var data = new PrivateMessageData()
+                {
+                    Channel = ircMessage.Channel,
                     User = Settings.IrcUsername,
                     Message = ircMessage.Message
                 };
@@ -151,18 +174,34 @@ namespace script_chan2.OsuIrc
                     Events.Aggregator.PublishOnUIThread(data);
                 }
             }
+
+            var data2 = new PrivateMessageData()
+            {
+                Channel = e.From,
+                User = e.From,
+                Message = e.Message
+            };
+            Events.Aggregator.PublishOnUIThread(data2);
         }
 
         private static void Client_ServerMessage(object sender, StringEventArgs e)
         {
             log.Information("$server$: {message}", e.Result);
+
+            var data = new PrivateMessageData()
+            {
+                Channel = "Server",
+                User = "Server",
+                Message = e.Result
+            };
+            Events.Aggregator.PublishOnUIThread(data);
         }
 
         public static bool IsConnected { get; private set; } = false;
 
-        public static void SendMessage(string user, string message)
+        public static void SendMessage(string channel, string message)
         {
-            messageQueue.Enqueue(new IrcMessage { User = user, Message = message });
+            messageQueue.Enqueue(new IrcMessage { Channel = channel, Message = message });
         }
 
         public static void JoinChannel(string channel)

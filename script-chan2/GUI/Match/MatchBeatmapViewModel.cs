@@ -247,21 +247,7 @@ namespace script_chan2.GUI
             if (match.AllPicksFreemod && !mods.Contains("Freemod"))
                 mods += " Freemod";
             OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp mods " + mods);
-            var data = new ChannelMessageData()
-            {
-                Channel = "#mp_" + match.RoomId,
-                User = Settings.IrcUsername,
-                Message = "!mp mods " + mods
-            };
-            Events.Aggregator.PublishOnUIThread(data);
             OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp map {beatmap.Beatmap.Id} {(int)match.GameMode}");
-            data = new ChannelMessageData()
-            {
-                Channel = "#mp_" + match.RoomId,
-                User = Settings.IrcUsername,
-                Message = $"!mp map {beatmap.Beatmap.Id} {(int)match.GameMode}"
-            };
-            Events.Aggregator.PublishOnUIThread(data);
         }
         #endregion
     }

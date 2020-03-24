@@ -273,6 +273,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GUI\Chat\ChatUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Chat\ChatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Colors\ColorListItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -349,11 +357,13 @@
     <Compile Include="DataTypes\Match.cs" />
     <Compile Include="DataTypes\MatchPick.cs" />
     <Compile Include="DataTypes\Player.cs" />
+    <Compile Include="DataTypes\PrivateMessageData.cs" />
     <Compile Include="DataTypes\RoomCreatedData.cs" />
     <Compile Include="DataTypes\Score.cs" />
     <Compile Include="DataTypes\Settings.cs" />
     <Compile Include="DataTypes\Team.cs" />
     <Compile Include="DataTypes\Tournament.cs" />
+    <Compile Include="DataTypes\UserChat.cs" />
     <Compile Include="DataTypes\UserColor.cs" />
     <Compile Include="DataTypes\Utils.cs" />
     <Compile Include="DataTypes\Webhook.cs" />
@@ -366,6 +376,8 @@
     <Compile Include="Enums\TeamColors.cs" />
     <Compile Include="Enums\TeamModes.cs" />
     <Compile Include="Enums\WinConditions.cs" />
+    <Compile Include="GUI\Chat\ChatUserViewModel.cs" />
+    <Compile Include="GUI\Chat\ChatViewModel.cs" />
     <Compile Include="GUI\Colors\ColorListItemViewModel.cs" />
     <Compile Include="GUI\Colors\ColorsViewModel.cs" />
     <Compile Include="GUI\Events.cs" />
