@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
@@ -12,21 +13,12 @@ using WK.Libraries.SharpClipboardNS;
 
 namespace script_chan2.GUI
 {
-    public class TeamListItemViewModel : Screen, IHandle<string>
+    public class TeamListItemViewModel : Screen
     {
         #region Constructor
         public TeamListItemViewModel(Team team)
         {
             this.team = team;
-            Events.Aggregator.Subscribe(this);
-        }
-        #endregion
-
-        #region Events
-        public void Handle(string message)
-        {
-            if (message == "RemovePlayerFromTeam")
-                NotifyOfPropertyChange(() => PlayersViews);
         }
         #endregion
 
@@ -47,173 +39,53 @@ namespace script_chan2.GUI
         }
         #endregion
 
-        #region Edit team dialog
-        private string editName;
-        public string EditName
-        {
-            get { return editName; }
-            set
-            {
-                if (value != editName)
-                {
-                    editName = value;
-                    NotifyOfPropertyChange(() => EditName);
-                    NotifyOfPropertyChange(() => EditTeamSaveEnabled);
-                }
-            }
-        }
-
-        public BindableCollection<Tournament> Tournaments
-        {
-            get
-            {
-                var list = new BindableCollection<Tournament>();
-                foreach (var tournament in Database.Database.Tournaments.OrderBy(x => x.Name))
-                    list.Add(tournament);
-                return list;
-            }
-        }
-
-        private Tournament editTournament;
-        public Tournament EditTournament
-        {
-            get { return editTournament; }
-            set
-            {
-                if (value != editTournament)
-                {
-                    editTournament = value;
-                    NotifyOfPropertyChange(() => EditTournament);
-                    NotifyOfPropertyChange(() => EditTeamSaveEnabled);
-                }
-            }
-        }
-
-        public bool EditTeamSaveEnabled
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(EditName))
-                    return false;
-                if (EditTournament == null)
-                    return false;
-                if (Database.Database.Teams.Any(x => x.Name == EditName && x.Tournament == EditTournament && x.Id != team.Id))
-                    return false;
-                return true;
-            }
-        }
-
-        public void Edit()
-        {
-            Log.Information("TeamListItemViewModel: team '{name}' edit dialog open", team.Name);
-            EditName = team.Name;
-            EditTournament = team.Tournament;
-        }
-
-        public void Save()
-        {
-            if (EditTeamSaveEnabled)
-            {
-                Log.Information("TeamListItemViewModel: edit team '{name}' save", EditName);
-                team.Name = EditName;
-                team.Save();
-                NotifyOfPropertyChange(() => Name);
-                NotifyOfPropertyChange(() => TournamentName);
-            }
-        }
-        #endregion
-
         #region Edit players dialog
-        public BindableCollection<TeamPlayerListItemViewModel> PlayersViews
-        {
-            get
-            {
-                var list = new BindableCollection<TeamPlayerListItemViewModel>();
-                foreach (var player in team.Players)
-                    list.Add(new TeamPlayerListItemViewModel(team, player));
-                return list;
-            }
-        }
-
-        private SharpClipboard clipboard;
-
-        public void EditPlayers()
+        public async void EditPlayers()
         {
             Log.Information("TeamListItemViewModel: player list dialog of team '{team}' open", team.Name);
-            AddPlayerNameOrId = "";
-            clipboard = new SharpClipboard();
-            clipboard.ClipboardChanged += Clipboard_ClipboardChanged;
-        }
+            var model = new TeamPlayersDialogViewModel(team);
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
 
-        public void EditPlayersClose()
-        {
-            Log.Information("TeamListItemViewModel: player list dialog of team '{team}' close", team.Name);
-            clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
-        }
-
-        private void Clipboard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
-        {
-            if (e.ContentType != SharpClipboard.ContentTypes.Text)
-                return;
-
-            var text = clipboard.ClipboardText;
-
-            if (Regex.IsMatch(text, @"https://osu.ppy.sh/users/\d*"))
-                text = text.Split('/').Last();
-
-            if (int.TryParse(text, out int id))
-            {
-                Log.Information("TeamListItemViewModel: team player list dialog clipboard event, found id {id}", id);
-                if (!string.IsNullOrEmpty(AddPlayerNameOrId))
-                    AddPlayerNameOrId += ";";
-                AddPlayerNameOrId += text;
-            }
-        }
-
-        private string addPlayerNameOrId;
-        public string AddPlayerNameOrId
-        {
-            get { return addPlayerNameOrId; }
-            set
-            {
-                if (value != addPlayerNameOrId)
-                {
-                    addPlayerNameOrId = value;
-                    NotifyOfPropertyChange(() => AddPlayerNameOrId);
-                }
-            }
-        }
-
-        public void AddPlayer()
-        {
-            if (string.IsNullOrEmpty(addPlayerNameOrId))
-                return;
-            var playerList = addPlayerNameOrId.Split(';');
-            foreach (var playerId in playerList)
-            {
-                var player = Database.Database.GetPlayer(playerId);
-                if (player == null)
-                    continue;
-                Log.Information("TeamListItemViewModel: edit team '{team}' add player '{player}'", team.Name, player.Name);
-                team.AddPlayer(player);
-            }
-            AddPlayerNameOrId = "";
-            NotifyOfPropertyChange(() => PlayersViews);
-        }
-
-        public void AddPlayerNameKeyDown(ActionExecutionContext context)
-        {
-            var keyArgs = context.EventArgs as KeyEventArgs;
-            if (keyArgs != null && keyArgs.Key == Key.Enter)
-                AddPlayer();
+            model.Activate();
+            await DialogHost.Show(view);
+            model.Deactivate();
         }
         #endregion
 
-        public void Delete()
+        #region Actions
+        public async void Edit()
         {
-            Log.Information("TeamListItemViewModel: delete team '{name}'", team.Name);
-            team.Delete();
-            Events.Aggregator.PublishOnUIThread("DeleteTeam");
+            Log.Information("TeamListItemViewModel: team '{name}' edit dialog open", team.Name);
+            var model = new EditTeamDialogViewModel(team.Id);
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
+            {
+                team.Name = model.Name;
+                team.Save();
+                NotifyOfPropertyChange(() => Name);
+            }
         }
+
+        public async void Delete()
+        {
+            Log.Information("TeamListItemViewModel: team '{name}' delete dialog open", team.Name);
+            var model = new DeleteTeamDialogViewModel(team);
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
+            {
+                team.Delete();
+                Events.Aggregator.PublishOnUIThread("DeleteTeam");
+            }
+        }
+        #endregion
     }
 }

@@ -404,11 +404,23 @@
     <Compile Include="GUI\Match\MatchViewModel.cs" />
     <Compile Include="GUI\Settings\SettingsViewModel.cs" />
     <Compile Include="GUI\MainViewModel.cs" />
+    <Page Include="GUI\Teams\DeleteTeamDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Teams\EditTeamDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Teams\TeamListItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\Teams\TeamPlayerListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Teams\TeamPlayersDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -458,8 +470,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\Teams\DeleteTeamDialogViewModel.cs" />
+    <Compile Include="GUI\Teams\EditTeamDialogViewModel.cs" />
     <Compile Include="GUI\Teams\TeamListItemViewModel.cs" />
     <Compile Include="GUI\Teams\TeamPlayerListItemViewModel.cs" />
+    <Compile Include="GUI\Teams\TeamPlayersDialogViewModel.cs" />
     <Compile Include="GUI\Teams\TeamsViewModel.cs" />
     <Compile Include="GUI\Tournaments\DeleteTournamentDialogViewModel.cs" />
     <Compile Include="GUI\Tournaments\EditTournamentDialogViewModel.cs" />

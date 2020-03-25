@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
@@ -12,7 +13,7 @@ namespace script_chan2.GUI
     public class TeamsViewModel : Screen, IHandle<string>
     {
         #region Teams list
-        public BindableCollection<TeamListItemViewModel> TeamsViews
+        public BindableCollection<TeamListItemViewModel> TeamViews
         {
             get
             {
@@ -39,45 +40,13 @@ namespace script_chan2.GUI
         public void Handle(string message)
         {
             if (message == "DeleteTeam")
-                NotifyOfPropertyChange(() => TeamsViews);
+                NotifyOfPropertyChange(() => TeamViews);
             else if (message == "UpdateDefaultTournament")
                 NotifyOfPropertyChange(() => FilterTournament);
         }
         #endregion
 
         #region Filter
-        public Tournament FilterTournament
-        {
-            get { return Settings.DefaultTournament; }
-            set
-            {
-                if (value != Settings.DefaultTournament)
-                {
-                    Log.Information("TeamsViewModel: team list set tournament filter");
-                    Settings.DefaultTournament = value;
-                    NotifyOfPropertyChange(() => FilterTournament);
-                    NotifyOfPropertyChange(() => TeamsViews);
-                }
-            }
-        }
-        #endregion
-
-        #region New team dialog
-        private string newTeamName;
-        public string NewTeamName
-        {
-            get { return newTeamName; }
-            set
-            {
-                if (value != newTeamName)
-                {
-                    newTeamName = value;
-                    NotifyOfPropertyChange(() => NewTeamName);
-                    NotifyOfPropertyChange(() => NewTeamSaveEnabled);
-                }
-            }
-        }
-
         public BindableCollection<Tournament> Tournaments
         {
             get
@@ -89,51 +58,42 @@ namespace script_chan2.GUI
             }
         }
 
-        private Tournament newTeamTournament;
-        public Tournament NewTeamTournament
+        public Tournament FilterTournament
         {
-            get { return newTeamTournament; }
+            get { return Settings.DefaultTournament; }
             set
             {
-                if (value != newTeamTournament)
+                if (value != Settings.DefaultTournament)
                 {
-                    newTeamTournament = value;
-                    NotifyOfPropertyChange(() => NewTeamTournament);
-                    NotifyOfPropertyChange(() => NewTeamSaveEnabled);
+                    Log.Information("TeamsViewModel: team list set tournament filter");
+                    Settings.DefaultTournament = value;
+                    NotifyOfPropertyChange(() => FilterTournament);
+                    NotifyOfPropertyChange(() => TeamViews);
                 }
             }
         }
+        #endregion
 
-        public bool NewTeamSaveEnabled
+        #region Actions
+        public async void OpenNewTeamDialog()
         {
-            get
+            var model = new EditTeamDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
             {
-                if (string.IsNullOrEmpty(newTeamName) || NewTeamTournament == null)
-                    return false;
-                if (Database.Database.Teams.Any(x => x.Name == newTeamName && x.Tournament == newTeamTournament))
-                    return false;
-                return true;
+                var team = new Team()
+                {
+                    Name = model.Name,
+                    Tournament = model.Tournament
+                };
+                team.Save();
+                Settings.DefaultTournament = model.Tournament;
+                NotifyOfPropertyChange(() => TeamViews);
             }
-        }
-
-        public void NewTeamDialogOpened()
-        {
-            Log.Information("TeamsViewModel: new team dialog open");
-            NewTeamName = "";
-            NewTeamTournament = Settings.DefaultTournament;
-        }
-
-        public void NewTeamDialogClosed()
-        {
-            Log.Information("TeamsViewModel: new team '{name}' save", NewTeamName);
-            var team = new Team()
-            {
-                Tournament = NewTeamTournament,
-                Name = NewTeamName
-            };
-            team.Save();
-            Settings.DefaultTournament = NewTeamTournament;
-            NotifyOfPropertyChange(() => TeamsViews);
         }
         #endregion
     }
