@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
 using Serilog;
@@ -40,266 +41,37 @@ namespace script_chan2.GUI
         }
         #endregion
 
-        #region New tournament dialog
-        private string newTournamentName;
-        public string NewTournamentName
+        #region Actions
+        public async void OpenNewTournamentDialog()
         {
-            get { return newTournamentName; }
-            set
+            var model = new EditTournamentDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
             {
-                if (value != newTournamentName)
+                var tournament = new Tournament()
                 {
-                    newTournamentName = value;
-                    NotifyOfPropertyChange(() => NewTournamentName);
-                    NotifyOfPropertyChange(() => NewTournamentSaveEnabled);
-                }
+                    Name = model.Name,
+                    GameMode = model.GameMode,
+                    TeamMode = model.TeamMode,
+                    WinCondition = model.WinCondition,
+                    Acronym = model.Acronym,
+                    TeamSize = model.TeamSize,
+                    RoomSize = model.RoomSize,
+                    PointsForSecondBan = model.PointsForSecondBan,
+                    AllPicksFreemod = model.AllPicksFreemod,
+                    MpTimerCommand = model.MpTimerCommand,
+                    MpTimerAfterGame = model.MpTimerAfterGame,
+                    MpTimerAfterPick = model.MpTimerAfterPick,
+                    WelcomeString = model.WelcomeString
+                };
+                tournament.Save();
+                Settings.DefaultTournament = tournament;
+                NotifyOfPropertyChange(() => TournamentsViews);
             }
-        }
-
-        public List<GameModes> GameModesList
-        {
-            get { return Enum.GetValues(typeof(GameModes)).Cast<GameModes>().ToList(); }
-        }
-
-        private GameModes newTournamentGameMode;
-        public GameModes NewTournamentGameMode
-        {
-            get { return newTournamentGameMode; }
-            set
-            {
-                if (value != newTournamentGameMode)
-                {
-                    newTournamentGameMode = value;
-                    NotifyOfPropertyChange(() => NewTournamentGameMode);
-                }
-            }
-        }
-
-        public List<TeamModes> TeamModesList
-        {
-            get { return Enum.GetValues(typeof(TeamModes)).Cast<TeamModes>().ToList(); }
-        }
-
-        private TeamModes newTournamentTeamMode;
-        public TeamModes NewTournamentTeamMode
-        {
-            get { return newTournamentTeamMode; }
-            set
-            {
-                if (value != newTournamentTeamMode)
-                {
-                    newTournamentTeamMode = value;
-                    NotifyOfPropertyChange(() => NewTournamentTeamMode);
-                }
-            }
-        }
-
-        public List<WinConditions> WinConditionsList
-        {
-            get { return Enum.GetValues(typeof(WinConditions)).Cast<WinConditions>().ToList(); }
-        }
-
-        private WinConditions newTournamentWinCondition;
-        public WinConditions NewTournamentWinCondition
-        {
-            get { return newTournamentWinCondition; }
-            set
-            {
-                if (value != newTournamentWinCondition)
-                {
-                    newTournamentWinCondition = value;
-                    NotifyOfPropertyChange(() => NewTournamentWinCondition);
-                }
-            }
-        }
-
-        private string newTournamentAcronym;
-        public string NewTournamentAcronym
-        {
-            get { return newTournamentAcronym; }
-            set
-            {
-                if (value != newTournamentAcronym)
-                {
-                    newTournamentAcronym = value;
-                    NotifyOfPropertyChange(() => NewTournamentAcronym);
-                    NotifyOfPropertyChange(() => NewTournamentSaveEnabled);
-                }
-            }
-        }
-
-        private int newTournamentTeamSize;
-        public int NewTournamentTeamSize
-        {
-            get { return newTournamentTeamSize; }
-            set
-            {
-                if (value != newTournamentTeamSize)
-                {
-                    newTournamentTeamSize = value;
-                    NotifyOfPropertyChange(() => NewTournamentTeamSize);
-                    NotifyOfPropertyChange(() => NewTournamentSaveEnabled);
-                }
-            }
-        }
-
-        private int newTournamentRoomSize;
-        public int NewTournamentRoomSize
-        {
-            get { return newTournamentRoomSize; }
-            set
-            {
-                if (value != newTournamentRoomSize)
-                {
-                    newTournamentRoomSize = value;
-                    NotifyOfPropertyChange(() => NewTournamentRoomSize);
-                    NotifyOfPropertyChange(() => NewTournamentSaveEnabled);
-                }
-            }
-        }
-
-        private int newTournamentPointsForSecondBan;
-        public int NewTournamentPointsForSecondBan
-        {
-            get { return newTournamentPointsForSecondBan; }
-            set
-            {
-                if (value != newTournamentPointsForSecondBan)
-                {
-                    newTournamentPointsForSecondBan = value;
-                    NotifyOfPropertyChange(() => NewTournamentPointsForSecondBan);
-                }
-            }
-        }
-
-        private bool newTournamentAllPicksFreemod;
-        public bool NewTournamentAllPicksFreemod
-        {
-            get { return newTournamentAllPicksFreemod; }
-            set
-            {
-                if (value != newTournamentAllPicksFreemod)
-                {
-                    newTournamentAllPicksFreemod = value;
-                    NotifyOfPropertyChange(() => NewTournamentAllPicksFreemod);
-                }
-            }
-        }
-
-        private int newTournamentMpTimerCommand;
-        public int NewTournamentMpTimerCommand
-        {
-            get { return newTournamentMpTimerCommand; }
-            set
-            {
-                if (value != newTournamentMpTimerCommand)
-                {
-                    newTournamentMpTimerCommand = value;
-                    NotifyOfPropertyChange(() => NewTournamentMpTimerCommand);
-                }
-            }
-        }
-
-        private int newTournamentMpTimerAfterGame;
-        public int NewTournamentMpTimerAfterGame
-        {
-            get { return newTournamentMpTimerAfterGame; }
-            set
-            {
-                if (value != newTournamentMpTimerAfterGame)
-                {
-                    newTournamentMpTimerAfterGame = value;
-                    NotifyOfPropertyChange(() => NewTournamentMpTimerAfterGame);
-                }
-            }
-        }
-
-        private int newTournamentMpTimerAfterPick;
-        public int NewTournamentMpTimerAfterPick
-        {
-            get { return newTournamentMpTimerAfterPick; }
-            set
-            {
-                if (value != newTournamentMpTimerAfterPick)
-                {
-                    newTournamentMpTimerAfterPick = value;
-                    NotifyOfPropertyChange(() => NewTournamentMpTimerAfterPick);
-                }
-            }
-        }
-
-        private string newTournamentWelcomeString;
-        public string NewTournamentWelcomeString
-        {
-            get { return newTournamentWelcomeString; }
-            set
-            {
-                if (value != newTournamentWelcomeString)
-                {
-                    newTournamentWelcomeString = value;
-                    NotifyOfPropertyChange(() => NewTournamentWelcomeString);
-                }
-            }
-        }
-
-        public bool NewTournamentSaveEnabled
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(newTournamentName))
-                    return false;
-                if (Database.Database.Tournaments.Any(x => x.Name == newTournamentName))
-                    return false;
-                if (string.IsNullOrEmpty(newTournamentAcronym))
-                    return false;
-                if (newTournamentTeamSize < 1)
-                    return false;
-                if (newTournamentRoomSize < 1)
-                    return false;
-                return true;
-            }
-        }
-
-        public void NewTournamentDialogOpened()
-        {
-            Log.Information("TournamentsViewModel: new tournament dialog open");
-            NewTournamentName = "";
-            NewTournamentGameMode = GameModes.Standard;
-            NewTournamentTeamMode = TeamModes.TeamVS;
-            NewTournamentWinCondition = WinConditions.ScoreV2;
-            NewTournamentAcronym = "";
-            NewTournamentTeamSize = 4;
-            NewTournamentRoomSize = 8;
-            NewTournamentPointsForSecondBan = 0;
-            NewTournamentAllPicksFreemod = false;
-            NewTournamentMpTimerCommand = Settings.DefaultTimerCommand;
-            NewTournamentMpTimerAfterGame = Settings.DefaultTimerAfterGame;
-            NewTournamentMpTimerAfterPick = Settings.DefaultTimerAfterPick;
-            NewTournamentWelcomeString = "";
-        }
-
-        public void NewTournamentDialogClosed()
-        {
-            Log.Information("TournamentsViewModel: new tournament '{name}' save", NewTournamentName);
-            var tournament = new Tournament()
-            {
-                Name = NewTournamentName,
-                GameMode = NewTournamentGameMode,
-                TeamMode = NewTournamentTeamMode,
-                WinCondition = NewTournamentWinCondition,
-                Acronym = NewTournamentAcronym,
-                TeamSize = NewTournamentTeamSize,
-                RoomSize = NewTournamentRoomSize,
-                PointsForSecondBan = NewTournamentPointsForSecondBan,
-                AllPicksFreemod = NewTournamentAllPicksFreemod,
-                MpTimerCommand = NewTournamentMpTimerCommand,
-                MpTimerAfterGame = NewTournamentMpTimerAfterGame,
-                MpTimerAfterPick = NewTournamentMpTimerAfterPick,
-                WelcomeString = NewTournamentWelcomeString
-            };
-            tournament.Save();
-            Settings.DefaultTournament = tournament;
-            NotifyOfPropertyChange(() => TournamentsViews);
         }
         #endregion
     }

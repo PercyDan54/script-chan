@@ -223,7 +223,6 @@ namespace script_chan2.GUI
 
         public async void OpenNewChatDialog()
         {
-
             var model = new NewChatDialogViewModel();
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
