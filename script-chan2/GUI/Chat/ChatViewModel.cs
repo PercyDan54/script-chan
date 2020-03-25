@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
@@ -122,31 +123,6 @@ namespace script_chan2.GUI
                 }
             }
         }
-
-        private string newChatChannel;
-        public string NewChatChannel
-        {
-            get { return newChatChannel; }
-            set
-            {
-                if (value != newChatChannel)
-                {
-                    newChatChannel = value;
-                    NotifyOfPropertyChange(() => NewChatChannel);
-                    NotifyOfPropertyChange(() => NewChatOpenEnabled);
-                }
-            }
-        }
-
-        public bool NewChatOpenEnabled
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(NewChatChannel))
-                    return false;
-                return true;
-            }
-        }
         #endregion
 
         #region Actions
@@ -240,11 +216,42 @@ namespace script_chan2.GUI
             UserViews.Remove(UserViews.First(x => x.User == dataContext.User));
         }
 
-        public void ChatMessageKeyDown(ActionExecutionContext context)
+        public void ChatMessageEnter()
         {
-            var keyArgs = context.EventArgs as KeyEventArgs;
-            if (keyArgs != null && keyArgs.Key == Key.Enter)
-                SendMessage();
+            SendMessage();
+        }
+
+        public async void OpenNewChatDialog()
+        {
+
+            var model = new NewChatDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
+            {
+                if (!userChats.Any(x => x.User == model.NewChatChannel))
+                {
+                    var newUserChat = new UserChat() { User = model.NewChatChannel };
+                    newUserChat.LoadMessages();
+                    userChats.Add(newUserChat);
+
+                    UserViews.Add(new ChatUserViewModel(model.NewChatChannel, true));
+                }
+
+                currentChat = userChats.First(x => x.User == model.NewChatChannel);
+                foreach (var userView in UserViews)
+                {
+                    if (userView.User == model.NewChatChannel)
+                        userView.SetActive();
+                    else
+                        userView.SetInactive();
+                }
+
+                ReloadChat();
+            }
         }
 
         public void SendMessage()
@@ -257,36 +264,6 @@ namespace script_chan2.GUI
             var message = ChatMessage;
             ChatMessage = "";
             OsuIrc.OsuIrc.SendMessage(currentChat.User, message);
-        }
-
-        public void NewChatDialogOpened()
-        {
-            NewChatChannel = "";
-        }
-
-        public void NewChatDialogClosed()
-        {
-            if (!userChats.Any(x => x.User == NewChatChannel))
-            {
-                var newUserChat = new UserChat() { User = NewChatChannel };
-                newUserChat.LoadMessages();
-                userChats.Add(newUserChat);
-
-                UserViews.Add(new ChatUserViewModel(NewChatChannel, true));
-            }
-
-            currentChat = userChats.First(x => x.User == NewChatChannel);
-            foreach (var model in UserViews)
-            {
-                if (model.User == NewChatChannel)
-                    model.SetActive();
-                else
-                    model.SetInactive();
-            }
-
-            ReloadChat();
-
-            NewChatChannel = "";
         }
         #endregion
     }

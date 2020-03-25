@@ -281,6 +281,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Chat\NewChatDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Colors\ColorListItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -346,6 +350,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Caliburn\KeySequence.cs" />
+    <Compile Include="Caliburn\KeyTrigger.cs" />
+    <Compile Include="Caliburn\MultiKeyGesture.cs" />
+    <Compile Include="Caliburn\MultiKeyGestureConverter.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\DbCreator.cs" />
     <Compile Include="DataTypes\Beatmap.cs" />
@@ -378,6 +386,7 @@
     <Compile Include="Enums\WinConditions.cs" />
     <Compile Include="GUI\Chat\ChatUserViewModel.cs" />
     <Compile Include="GUI\Chat\ChatViewModel.cs" />
+    <Compile Include="GUI\Chat\NewChatDialogViewModel.cs" />
     <Compile Include="GUI\Colors\ColorListItemViewModel.cs" />
     <Compile Include="GUI\Colors\ColorsViewModel.cs" />
     <Compile Include="GUI\Events.cs" />

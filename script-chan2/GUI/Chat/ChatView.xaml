@@ -7,6 +7,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:script_chan2.GUI"
              mc:Ignorable="d" 
+             cal:Message.Attach="[Gesture Ctrl+T] = [Action OpenNewChatDialog]"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -33,21 +34,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <Button Content="+" Grid.Row="1" Command="{x:Static md:DialogHost.OpenDialogCommand}" cal:Message.Attach="[Event Click] = [Action NewChatDialogOpened]">
-                <Button.CommandParameter>
-                    <Grid Margin="16" Width="200">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBox md:HintAssist.Hint="User" Text="{Binding NewChatChannel, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="1">
-                            <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
-                            <Button Content="Open" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action NewChatDialogClosed]" IsEnabled="{Binding NewChatOpenEnabled}" />
-                        </StackPanel>
-                    </Grid>
-                </Button.CommandParameter>
-            </Button>
+            <Button x:Name="OpenNewChatDialog" Content="+" Grid.Row="1" ToolTip="Open new tab (Ctrl+T)" />
         </Grid>
         <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="Black" Width="3" />
         <Grid x:Name="ChatWrapper" Grid.Column="2" Margin="2">
@@ -60,7 +47,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <FlowDocumentScrollViewer x:Name="ChatWindow" Document="{Binding Chat}" Grid.ColumnSpan="2" Margin="0 0 0 5" />
-            <TextBox x:Name="ChatMessage" Grid.Row="1" md:HintAssist.Hint="Message" VerticalAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action ChatMessageKeyDown($executionContext)]" />
+            <TextBox x:Name="ChatMessage" Grid.Row="1" md:HintAssist.Hint="Message" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action ChatMessageEnter]" />
             <Button x:Name="SendMessage" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Send" Grid.Row="1" Grid.Column="1" Height="35" Width="35" Margin="5 0 0 0">
                 <md:PackIcon Kind="Send" />
             </Button>
