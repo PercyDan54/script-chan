@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
@@ -12,7 +13,7 @@ namespace script_chan2.GUI
     public class MappoolsViewModel : Screen, IHandle<string>
     {
         #region Mappool list
-        public BindableCollection<MappoolListItemViewModel> MappoolsViews
+        public BindableCollection<MappoolListItemViewModel> MappoolViews
         {
             get
             {
@@ -39,45 +40,13 @@ namespace script_chan2.GUI
         public void Handle(string message)
         {
             if (message == "DeleteMappool")
-                NotifyOfPropertyChange(() => MappoolsViews);
+                NotifyOfPropertyChange(() => MappoolViews);
             else if (message == "UpdateDefaultTournament")
                 NotifyOfPropertyChange(() => FilterTournament);
         }
         #endregion
 
         #region Filter
-        public Tournament FilterTournament
-        {
-            get { return Settings.DefaultTournament; }
-            set
-            {
-                if (value != Settings.DefaultTournament)
-                {
-                    Log.Information("MappoolsViewModel: mappool list set filter");
-                    Settings.DefaultTournament = value;
-                    NotifyOfPropertyChange(() => FilterTournament);
-                    NotifyOfPropertyChange(() => MappoolsViews);
-                }
-            }
-        }
-        #endregion
-
-        #region New mappool dialog
-        private string newMappoolName;
-        public string NewMappoolName
-        {
-            get { return newMappoolName; }
-            set
-            {
-                if (value != newMappoolName)
-                {
-                    newMappoolName = value;
-                    NotifyOfPropertyChange(() => NewMappoolName);
-                    NotifyOfPropertyChange(() => NewMappoolSaveEnabled);
-                }
-            }
-        }
-
         public BindableCollection<Tournament> Tournaments
         {
             get
@@ -89,54 +58,43 @@ namespace script_chan2.GUI
             }
         }
 
-        private Tournament newMappoolTournament;
-        public Tournament NewMappoolTournament
+        public Tournament FilterTournament
         {
-            get { return newMappoolTournament; }
+            get { return Settings.DefaultTournament; }
             set
             {
-                if (value != newMappoolTournament)
+                if (value != Settings.DefaultTournament)
                 {
-                    newMappoolTournament = value;
-                    NotifyOfPropertyChange(() => NewMappoolTournament);
-                    NotifyOfPropertyChange(() => NewMappoolSaveEnabled);
+                    Log.Information("MappoolsViewModel: mappool list set filter");
+                    Settings.DefaultTournament = value;
+                    NotifyOfPropertyChange(() => FilterTournament);
+                    NotifyOfPropertyChange(() => MappoolViews);
                 }
             }
         }
+        #endregion
 
-        public bool NewMappoolSaveEnabled
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(NewMappoolName))
-                    return false;
-                if (NewMappoolTournament == null)
-                    return false;
-                if (Database.Database.Mappools.Any(x => x.Name == NewMappoolName && x.Tournament == NewMappoolTournament))
-                    return false;
-                return true;
-            }
-        }
-
-        public void NewMappoolDialogOpened()
+        #region Actions
+        public async void OpenNewMappoolDialog()
         {
             Log.Information("MappoolsViewModel: new mappool dialog open");
-            NewMappoolName = "";
-            NewMappoolTournament = Settings.DefaultTournament;
-        }
+            var model = new EditMappoolDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
 
-        public void NewMappoolDialogClosed()
-        {
-            Log.Information("MappoolsViewModel: new mappool '{mappool}' save", NewMappoolName);
-            var mappool = new Mappool()
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
             {
-                Name = NewMappoolName,
-                Tournament = NewMappoolTournament
-            };
-            mappool.Save();
-            Settings.DefaultTournament = NewMappoolTournament;
-            NotifyOfPropertyChange(() => NewMappoolTournament);
-            NotifyOfPropertyChange(() => MappoolsViews);
+                var mappool = new Mappool()
+                {
+                    Name = model.Name,
+                    Tournament = model.Tournament
+                };
+                mappool.Save();
+                Settings.DefaultTournament = model.Tournament;
+                NotifyOfPropertyChange(() => MappoolViews);
+            }
         }
         #endregion
     }

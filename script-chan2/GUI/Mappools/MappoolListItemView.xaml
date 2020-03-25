@@ -11,82 +11,17 @@
     <Grid>
         <Border BorderBrush="LightGray" BorderThickness="0 0 0 2">
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit" Command="{x:Static md:DialogHost.OpenDialogCommand}">
+                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit">
                     <md:PackIcon Kind="Edit" />
-                    <Button.CommandParameter>
-                        <StackPanel Margin="16" Width="300">
-                            <TextBox md:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                <TextBox.Text>
-                                    <Binding Path="EditName" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <ComboBox md:HintAssist.Hint="Tournament" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding EditTournament}" Margin="0 20 0 0">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}" />
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-                                <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
-                                <Button Content="Save" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action Save]" IsEnabled="{Binding EditTeamSaveEnabled}" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Button.CommandParameter>
                 </Button>
-                <Button x:Name="EditMaps" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit Maps" Command="{x:Static md:DialogHost.OpenDialogCommand}">
+                <Button x:Name="EditMaps" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit Maps">
                     <md:PackIcon Kind="ViewList" />
-                    <Button.CommandParameter>
-                        <Grid Margin="16" Width="600" Height="500">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="50" />
-                            </Grid.ColumnDefinitions>
-                            <TextBox md:HintAssist.Hint="Beatmap ID" ToolTip="Can add multiple beatmaps delimited by ';'&#10;Copy single beatmap links to clipboard to add them here" Text="{Binding BeatmapId, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action BeatmapIdKeyDown($executionContext)]" />
-                            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Add" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action AddBeatmap]">
-                                <md:PackIcon Kind="Add" />
-                            </Button>
-                            <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
-                                <ItemsControl ItemsSource="{Binding BeatmapsViews}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ContentControl cal:View.Model="{Binding}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </ScrollViewer>
-                            <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" HorizontalAlignment="Right" cal:Message.Attach="[Event Click] = [Action EditMapsClose]" />
-                        </Grid>
-                    </Button.CommandParameter>
                 </Button>
-                <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete" Command="{x:Static md:DialogHost.OpenDialogCommand}">
+                <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete">
                     <md:PackIcon Kind="Delete" />
-                    <Button.CommandParameter>
-                        <StackPanel Margin="16" MinWidth="200">
-                            <TextBlock Text="{Binding Path=Name, StringFormat=Do you really want to delete {0}?}" />
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-                                <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
-                                <Button Content="Delete" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action Delete]" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Button.CommandParameter>
                 </Button>
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding Path=TournamentName, StringFormat=({0})}" VerticalAlignment="Center" Margin="10 0 0 0" Visibility="{Binding Path=HasTournament, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBlock Text="{Binding Path=TournamentName, StringFormat=({0})}" VerticalAlignment="Center" Margin="10 0 0 0" />
             </StackPanel>
         </Border>
     </Grid>
