@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
@@ -27,76 +28,39 @@ namespace script_chan2.GUI
         }
         #endregion
 
-        #region Edit webhook dialog
-        private string editName;
-        public string EditName
-        {
-            get { return editName; }
-            set
-            {
-                if (value != editName)
-                {
-                    editName = value;
-                    NotifyOfPropertyChange(() => EditName);
-                    NotifyOfPropertyChange(() => EditWebhookSaveEnabled);
-                }
-            }
-        }
-
-        private string editUrl;
-        public string EditUrl
-        {
-            get { return editUrl; }
-            set
-            {
-                if (value != editUrl)
-                {
-                    editUrl = value;
-                    NotifyOfPropertyChange(() => EditUrl);
-                }
-            }
-        }
-
-        public bool EditWebhookSaveEnabled
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(editName))
-                    return false;
-                if (Database.Database.Webhooks.Any(x => x.Name == editName && x.Id != webhook.Id))
-                    return false;
-                if (string.IsNullOrEmpty(editUrl))
-                    return false;
-                return true;
-            }
-        }
-
-        public void Edit()
+        #region Actions
+        public async void Edit()
         {
             Log.Information("WebhookListItemViewModel: webhook '{name}' edit dialog open", webhook.Name);
-            EditName = webhook.Name;
-            EditUrl = webhook.URL;
-        }
+            var model = new EditWebhookDialogViewModel(webhook.Id);
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
 
-        public void Save()
-        {
-            if (EditWebhookSaveEnabled)
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
             {
-                Log.Information("WebhookListItemViewModel: edit webhook '{name}' save", webhook.Name);
-                webhook.Name = EditName;
-                webhook.URL = EditUrl;
+                webhook.Name = model.Name;
+                webhook.URL = model.Url;
                 webhook.Save();
                 NotifyOfPropertyChange(() => Name);
             }
         }
-        #endregion
 
-        #region Actions
-        public void Delete()
+        public async void Delete()
         {
-            Log.Information("WebhookListItemViewModel: delete webhook '{name}'", webhook.Name);
-            webhook.Delete();
-            Events.Aggregator.PublishOnUIThread("DeleteWebhook");
+            Log.Information("WebhookListItemViewModel: webhook '{name}' delete dialog open", webhook.Name);
+            var model = new DeleteWebhookDialogViewModel(webhook);
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
+            {
+                webhook.Delete();
+                Events.Aggregator.PublishOnUIThread("DeleteWebhook");
+            }
         }
         #endregion
     }

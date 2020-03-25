@@ -13,7 +13,7 @@ namespace script_chan2.GUI
     public class WebhooksViewModel : Screen, IHandle<string>
     {
         #region Webhooks list
-        public BindableCollection<WebhookListItemViewModel> WebhooksViews
+        public BindableCollection<WebhookListItemViewModel> WebhookViews
         {
             get
             {
@@ -36,72 +36,29 @@ namespace script_chan2.GUI
         public void Handle(string message)
         {
             if (message.ToString() == "DeleteWebhook")
-                NotifyOfPropertyChange(() => WebhooksViews);
+                NotifyOfPropertyChange(() => WebhookViews);
         }
         #endregion
 
-        #region New webhook dialog
-        private string newWebhookName;
-        public string NewWebhookName
+        #region Actions
+        public async void OpenNewWebhookDialog()
         {
-            get { return newWebhookName; }
-            set
+            var model = new EditWebhookDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
             {
-                if (value != newWebhookName)
+                var webhook = new Webhook()
                 {
-                    newWebhookName = value;
-                    NotifyOfPropertyChange(() => NewWebhookName);
-                    NotifyOfPropertyChange(() => NewWebhookSaveEnabled);
-                }
+                    Name = model.Name,
+                    URL = model.Url
+                };
+                webhook.Save();
+                NotifyOfPropertyChange(() => WebhookViews);
             }
-        }
-
-        private string newWebhookUrl;
-        public string NewWebhookUrl
-        {
-            get { return newWebhookUrl; }
-            set
-            {
-                if (value != newWebhookUrl)
-                {
-                    newWebhookUrl = value;
-                    NotifyOfPropertyChange(() => NewWebhookUrl);
-                    NotifyOfPropertyChange(() => NewWebhookSaveEnabled);
-                }
-            }
-        }
-
-        public bool NewWebhookSaveEnabled
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(newWebhookName))
-                    return false;
-                if (Database.Database.Webhooks.Any(x => x.Name == newWebhookName))
-                    return false;
-                if (string.IsNullOrEmpty(newWebhookUrl))
-                    return false;
-                return true;
-            }
-        }
-
-        public void NewWebhookDialogOpened()
-        {
-            Log.Information("WebhooksViewModel: new webhook dialog open");
-            NewWebhookName = "";
-            NewWebhookUrl = "";
-        }
-
-        public void NewWebhookDialogClosed()
-        {
-            Log.Information("WebhooksViewModel: new webhook '{name}' save", NewWebhookName);
-            var webhook = new Webhook()
-            {
-                Name = NewWebhookName,
-                URL = NewWebhookUrl
-            };
-            webhook.Save();
-            NotifyOfPropertyChange(() => WebhooksViews);
         }
         #endregion
     }
