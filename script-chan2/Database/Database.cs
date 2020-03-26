@@ -1084,6 +1084,8 @@ namespace script_chan2.Database
                             command.Parameters.AddWithValue("@firstPicker", match.FirstPickerPlayer.Id);
                         else
                             command.Parameters.AddWithValue("@firstPicker", DBNull.Value);
+                        command.Parameters.AddWithValue("@teamBlue", DBNull.Value);
+                        command.Parameters.AddWithValue("@teamRed", DBNull.Value);
                     }
                     command.Parameters.AddWithValue("@teamBluePoints", match.TeamBluePoints);
                     command.Parameters.AddWithValue("@teamRedPoints", match.TeamRedPoints);
