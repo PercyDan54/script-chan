@@ -91,9 +91,7 @@ namespace script_chan2.GUI
             if (int.TryParse(text, out int id))
             {
                 Log.Information("MappoolListItemViewModel: mappool beatmap list dialog clipboard event, found id {id}", id);
-                if (!string.IsNullOrEmpty(BeatmapId))
-                    BeatmapId += ";";
-                BeatmapId += text;
+                AddBeatmapInternal(id);
             }
         }
 
@@ -107,21 +105,26 @@ namespace script_chan2.GUI
             {
                 if (int.TryParse(id, out int actualId))
                 {
-                    var beatmap = Database.Database.GetBeatmap(actualId);
-                    if (beatmap != null)
-                    {
-                        var mappoolMap = new MappoolMap()
-                        {
-                            Mappool = mappool,
-                            Beatmap = beatmap
-                        };
-                        mappool.AddBeatmap(mappoolMap);
-                        mappoolMap.Save();
-                    }
+                    AddBeatmapInternal(actualId);
                 }
             }
             BeatmapId = "";
-            NotifyOfPropertyChange(() => BeatmapViews);
+        }
+
+        private void AddBeatmapInternal(int id)
+        {
+            var beatmap = Database.Database.GetBeatmap(id);
+            if (beatmap != null)
+            {
+                var mappoolMap = new MappoolMap()
+                {
+                    Mappool = mappool,
+                    Beatmap = beatmap
+                };
+                mappool.AddBeatmap(mappoolMap);
+                mappoolMap.Save();
+                NotifyOfPropertyChange(() => BeatmapViews);
+            }
         }
 
         public void DialogEscape()
