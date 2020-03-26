@@ -341,10 +341,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\Matches\MatchTeamListItemView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="GUI\Match\MatchAbortMapDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -442,7 +438,6 @@
     <Compile Include="GUI\Matches\MatchesViewModel.cs" />
     <Compile Include="GUI\Matches\MatchListItemViewModel.cs" />
     <Compile Include="GUI\Matches\MatchPlayerListItemViewModel.cs" />
-    <Compile Include="GUI\Matches\MatchTeamListItemViewModel.cs" />
     <Compile Include="GUI\MatchList.cs" />
     <Compile Include="GUI\Match\MatchAbortMapDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchBanchoEventViewModel.cs" />
