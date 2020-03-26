@@ -9,19 +9,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="800">
     <Grid>
-        <Border BorderBrush="LightGray" BorderThickness="0 0 0 2">
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit">
+        <Border BorderBrush="LightGray" BorderThickness="0 0 0 2" Background="{Binding Background}" cal:Message.Attach="[Event MouseEnter] = [Action MouseEnter]; [Event MouseLeave] = [Action MouseLeave]">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="0" Margin="10 0 0 0" />
+                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit" Grid.Column="1">
                     <md:PackIcon Kind="Edit" />
                 </Button>
-                <Button x:Name="EditWebhooks" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Webhooks">
+                <Button x:Name="EditWebhooks" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Webhooks" Grid.Column="2">
                     <md:PackIcon Kind="Discord" />
                 </Button>
-                <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete">
+                <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete" Grid.Column="3">
                     <md:PackIcon Kind="Delete" />
                 </Button>
-                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-            </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

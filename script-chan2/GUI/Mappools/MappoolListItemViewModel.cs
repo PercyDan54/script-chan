@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using WK.Libraries.SharpClipboardNS;
 
 namespace script_chan2.GUI
@@ -28,14 +29,17 @@ namespace script_chan2.GUI
 
         public string Name
         {
-            get { return mappool.Name; }
+            get { return $"{mappool.Name} ({mappool.Tournament.Name})"; }
         }
 
-        public string TournamentName
+        private bool hover = false;
+        public SolidColorBrush Background
         {
             get
             {
-                return mappool.Tournament.Name;
+                if (hover)
+                    return Brushes.LightGray;
+                return Brushes.Transparent;
             }
         }
         #endregion
@@ -84,6 +88,18 @@ namespace script_chan2.GUI
                 mappool.Delete();
                 Events.Aggregator.PublishOnUIThread("DeleteMappool");
             }
+        }
+
+        public void MouseEnter()
+        {
+            hover = true;
+            NotifyOfPropertyChange(() => Background);
+        }
+
+        public void MouseLeave()
+        {
+            hover = false;
+            NotifyOfPropertyChange(() => Background);
         }
         #endregion
     }

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace script_chan2.GUI
 {
@@ -28,6 +29,17 @@ namespace script_chan2.GUI
         public string Name
         {
             get { return match.Name; }
+        }
+
+        private bool hover = false;
+        public SolidColorBrush Background
+        {
+            get
+            {
+                if (hover)
+                    return Brushes.LightGray;
+                return Brushes.Transparent;
+            }
         }
         #endregion
 
@@ -89,6 +101,18 @@ namespace script_chan2.GUI
                 windowManager.ShowWindow(new MatchViewModel(match));
                 MatchList.OpenedMatches.Add(match);
             }
+        }
+
+        public void MouseEnter()
+        {
+            hover = true;
+            NotifyOfPropertyChange(() => Background);
+        }
+
+        public void MouseLeave()
+        {
+            hover = false;
+            NotifyOfPropertyChange(() => Background);
         }
         #endregion
     }

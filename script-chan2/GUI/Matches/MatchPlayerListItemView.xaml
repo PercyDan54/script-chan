@@ -8,12 +8,16 @@
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="800">
-    <Border BorderBrush="LightGray" BorderThickness="0 0 0 2" Height="40">
-        <StackPanel Orientation="Horizontal">
-            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Remove Team" VerticalAlignment="Center" cal:Message.Attach="[Event Click] = [Action RemovePlayer($dataContext)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
+    <Border BorderBrush="LightGray" BorderThickness="0 0 0 2" Height="40" Background="{Binding Background}" cal:Message.Attach="[Event MouseEnter] = [Action MouseEnter]; [Event MouseLeave] = [Action MouseLeave]">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="Name" Margin="10 0 0 0" VerticalAlignment="Center" Grid.Column="0" />
+            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Remove Player" VerticalAlignment="Center" cal:Message.Attach="[Event Click] = [Action RemovePlayer($dataContext)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Grid.Column="1">
                 <md:PackIcon Kind="Delete" />
             </Button>
-            <TextBlock x:Name="Name" Margin="10 0 0 0" VerticalAlignment="Center" />
-        </StackPanel>
+        </Grid>
     </Border>
 </UserControl>

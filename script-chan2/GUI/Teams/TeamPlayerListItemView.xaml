@@ -5,14 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:script_chan2.GUI"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="800">
-    <Border BorderBrush="LightGray" BorderThickness="0 0 0 2" Height="40">
-        <StackPanel Orientation="Horizontal">
-            <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Remove Player" VerticalAlignment="Center">
+    <Border BorderBrush="LightGray" BorderThickness="0 0 0 2" Height="40" Background="{Binding Background}" cal:Message.Attach="[Event MouseEnter] = [Action MouseEnter]; [Event MouseLeave] = [Action MouseLeave]">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="Name" Grid.Column="0" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Remove Player" VerticalAlignment="Center" Grid.Column="1">
                 <md:PackIcon Kind="Delete" />
             </Button>
-            <TextBlock x:Name="Name" Margin="10 0 0 0" VerticalAlignment="Center" />
-        </StackPanel>
+        </Grid>
     </Border>
 </UserControl>

@@ -12,19 +12,25 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
-        <Border BorderBrush="LightGray" BorderThickness="0 0 0 2">
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="Open" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Open">
+        <Border BorderBrush="LightGray" BorderThickness="0 0 0 2" Background="{Binding Background}" cal:Message.Attach="[Event MouseEnter] = [Action MouseEnter]; [Event MouseLeave] = [Action MouseLeave]">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="Open" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Open" Grid.Column="0">
                     <md:PackIcon Kind="OpenInNew" />
                 </Button>
-                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit">
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="1" />
+                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit" Grid.Column="2">
                     <md:PackIcon Kind="Edit" />
                 </Button>
-                <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete">
+                <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete" Grid.Column="3">
                     <md:PackIcon Kind="Delete" />
                 </Button>
-                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-            </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>
