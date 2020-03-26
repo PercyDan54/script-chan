@@ -20,7 +20,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Left" />
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Left" Margin="10 0 0 0" />
                 <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit" Grid.Column="1">
                     <md:PackIcon Kind="Edit" />
                 </Button>
