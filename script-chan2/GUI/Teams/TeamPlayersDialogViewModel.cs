@@ -75,9 +75,7 @@ namespace script_chan2.GUI
             if (int.TryParse(text, out int id))
             {
                 Log.Information("TeamListItemViewModel: team player list dialog clipboard event, found id {id}", id);
-                if (!string.IsNullOrEmpty(AddPlayerNameOrId))
-                    AddPlayerNameOrId += ";";
-                AddPlayerNameOrId += text;
+                AddPlayerInternal(id.ToString());
             }
         }
 
@@ -104,14 +102,19 @@ namespace script_chan2.GUI
             var playerList = AddPlayerNameOrId.Split(';');
             foreach (var playerId in playerList)
             {
-                var player = Database.Database.GetPlayer(playerId);
-                if (player == null)
-                    continue;
-                Log.Information("TeamListItemViewModel: edit team '{team}' add player '{player}'", team.Name, player.Name);
-                team.AddPlayer(player);
+                AddPlayerInternal(playerId);
             }
             AddPlayerNameOrId = "";
-            NotifyOfPropertyChange(() => PlayerViews);
+        }
+
+        private void AddPlayerInternal(string idOrName)
+        {
+            var player = Database.Database.GetPlayer(idOrName);
+            if (player != null)
+            {
+                team.AddPlayer(player);
+                NotifyOfPropertyChange(() => PlayerViews);
+            }
         }
 
         public void DialogEscape()
