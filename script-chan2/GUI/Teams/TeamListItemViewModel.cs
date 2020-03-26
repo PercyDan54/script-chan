@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using WK.Libraries.SharpClipboardNS;
 
 namespace script_chan2.GUI
@@ -27,14 +28,17 @@ namespace script_chan2.GUI
 
         public string Name
         {
-            get { return team.Name; }
+            get { return $"{team.Name} ({team.Tournament.Name})"; }
         }
 
-        public string TournamentName
+        private bool hover = false;
+        public SolidColorBrush Background
         {
             get
             {
-                return team.Tournament.Name;
+                if (hover)
+                    return Brushes.LightGray;
+                return Brushes.Transparent;
             }
         }
         #endregion
@@ -83,6 +87,18 @@ namespace script_chan2.GUI
                 team.Delete();
                 Events.Aggregator.PublishOnUIThread("DeleteTeam");
             }
+        }
+
+        public void MouseEnter()
+        {
+            hover = true;
+            NotifyOfPropertyChange(() => Background);
+        }
+
+        public void MouseLeave()
+        {
+            hover = false;
+            NotifyOfPropertyChange(() => Background);
         }
         #endregion
     }
