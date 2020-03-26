@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
@@ -31,42 +32,25 @@ namespace script_chan2.GUI
         {
             get { return new SolidColorBrush(userColor.Color); }
         }
-
-        private Color editColor;
-        public Color EditColor
-        {
-            get { return editColor; }
-            set
-            {
-                if (value != editColor)
-                {
-                    editColor = value;
-                    NotifyOfPropertyChange(() => EditColor);
-                    NotifyOfPropertyChange(() => EditPreviewColor);
-                }
-            }
-        }
-
-        public SolidColorBrush EditPreviewColor
-        {
-            get { return new SolidColorBrush(EditColor); }
-        }
         #endregion
 
         #region Actions
-        public void Edit()
+        public async void Edit()
         {
             Log.Information("ColorListItemViewModel: edit color '{name}'", userColor.Key);
-            EditColor = userColor.Color;
-        }
+            var model = new EditColorDialogViewModel(userColor.Color);
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
 
-        public void Save()
-        {
-            Log.Information("ColorListItemViewModel: save color '{name}'", userColor.Key);
-            userColor.Color = EditColor;
-            NotifyOfPropertyChange(() => Color);
-            Settings.SaveConfig();
-            Events.Aggregator.PublishOnUIThread("UpdateColors");
+            var result = Convert.ToBoolean(await DialogHost.Show(view));
+
+            if (result)
+            {
+                userColor.Color = model.Color;
+                NotifyOfPropertyChange(() => Color);
+                Settings.SaveConfig();
+                Events.Aggregator.PublishOnUIThread("UpdateColors");
+            }
         }
         #endregion
     }

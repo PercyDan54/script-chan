@@ -293,6 +293,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Colors\EditColorDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Mappools\DeleteMappoolDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -401,6 +405,7 @@
     <Compile Include="GUI\Chat\NewChatDialogViewModel.cs" />
     <Compile Include="GUI\Colors\ColorListItemViewModel.cs" />
     <Compile Include="GUI\Colors\ColorsViewModel.cs" />
+    <Compile Include="GUI\Colors\EditColorDialogViewModel.cs" />
     <Compile Include="GUI\Events.cs" />
     <Compile Include="GUI\Mappools\DeleteMappoolDialogViewModel.cs" />
     <Compile Include="GUI\Mappools\EditMappoolDialogViewModel.cs" />

@@ -13,23 +13,6 @@
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit" Command="{x:Static md:DialogHost.OpenDialogCommand}" Foreground="{Binding Color}">
                     <md:PackIcon Kind="Edit" />
-                    <Button.CommandParameter>
-                        <Grid Margin="16" Width="400">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="300" />
-                                <RowDefinition Height="40" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding Name}" />
-                            <md:ColorPicker Grid.Row="1" Margin="5" Color="{Binding EditColor}" />
-                            <Rectangle Grid.Row="2" Margin="5" Fill="{Binding EditPreviewColor}" />
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="3">
-                                <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
-                                <Button Content="Save" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action Save]" />
-                            </StackPanel>
-                        </Grid>
-                    </Button.CommandParameter>
                 </Button>
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
             </StackPanel>

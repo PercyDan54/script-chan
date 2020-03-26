@@ -39,20 +39,6 @@ namespace script_chan2.GUI
         }
         #endregion
 
-        #region Edit players dialog
-        public async void EditPlayers()
-        {
-            Log.Information("TeamListItemViewModel: player list dialog of team '{team}' open", team.Name);
-            var model = new TeamPlayersDialogViewModel(team);
-            var view = ViewLocator.LocateForModel(model, null, null);
-            ViewModelBinder.Bind(model, view, null);
-
-            model.Activate();
-            await DialogHost.Show(view);
-            model.Deactivate();
-        }
-        #endregion
-
         #region Actions
         public async void Edit()
         {
@@ -69,6 +55,18 @@ namespace script_chan2.GUI
                 team.Save();
                 NotifyOfPropertyChange(() => Name);
             }
+        }
+
+        public async void EditPlayers()
+        {
+            Log.Information("TeamListItemViewModel: player list dialog of team '{team}' open", team.Name);
+            var model = new TeamPlayersDialogViewModel(team);
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            model.Activate();
+            await DialogHost.Show(view);
+            model.Deactivate();
         }
 
         public async void Delete()
