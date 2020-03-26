@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using script_chan2.Discord;
 using script_chan2.Enums;
@@ -349,38 +350,10 @@ namespace script_chan2.GUI
             set { }
         }
 
-        private GameModes editGameMode;
-        public GameModes EditGameMode
-        {
-            get { return editGameMode; }
-            set
-            {
-                if (value != editGameMode)
-                {
-                    editGameMode = value;
-                    NotifyOfPropertyChange(() => EditGameMode);
-                }
-            }
-        }
-
         public WinConditions WinCondition
         {
             get { return match.WinCondition; }
             set { }
-        }
-
-        private WinConditions editWinCondition;
-        public WinConditions EditWinCondition
-        {
-            get { return editWinCondition; }
-            set
-            {
-                if (value != editWinCondition)
-                {
-                    editWinCondition = value;
-                    NotifyOfPropertyChange(() => EditWinCondition);
-                }
-            }
         }
 
         public int BO
@@ -403,40 +376,10 @@ namespace script_chan2.GUI
             set { }
         }
 
-        private int editRoomSize;
-        public int EditRoomSize
-        {
-            get { return editRoomSize; }
-            set
-            {
-                if (value != editRoomSize)
-                {
-                    editRoomSize = value;
-                    NotifyOfPropertyChange(() => EditRoomSize);
-                    NotifyOfPropertyChange(() => SetRoomOptionsEnabled);
-                }
-            }
-        }
-
         public int TeamSize
         {
             get { return match.TeamSize; }
             set { }
-        }
-
-        private int editTeamSize;
-        public int EditTeamSize
-        {
-            get { return editTeamSize; }
-            set
-            {
-                if (value != editTeamSize)
-                {
-                    editTeamSize = value;
-                    NotifyOfPropertyChange(() => EditTeamSize);
-                    NotifyOfPropertyChange(() => SetRoomOptionsEnabled);
-                }
-            }
         }
 
         public int TimerCommand
@@ -579,20 +522,6 @@ namespace script_chan2.GUI
             }
         }
 
-        private string newPassword;
-        public string NewPassword
-        {
-            get { return newPassword; }
-            set
-            {
-                if (value != newPassword)
-                {
-                    newPassword = value;
-                    NotifyOfPropertyChange(() => NewPassword);
-                }
-            }
-        }
-
         public bool WarmupMode
         {
             get { return match.WarmupMode; }
@@ -604,20 +533,6 @@ namespace script_chan2.GUI
                     match.Save();
                     NotifyOfPropertyChange(() => WarmupMode);
                 }
-            }
-        }
-
-        public bool SetRoomOptionsEnabled
-        {
-            get
-            {
-                if (EditRoomSize <= 0)
-                    return false;
-                if (EditTeamSize <= 0)
-                    return false;
-                if (EditTeamSize > EditRoomSize / 2)
-                    return false;
-                return true;
             }
         }
         #endregion
@@ -698,16 +613,26 @@ namespace script_chan2.GUI
             OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
         }
 
-        public void CloseRoom()
+        public async void CloseRoom()
         {
-            Log.Information("MatchViewModel: match '{match}' close room", match.Name);
-            SendRoomMessage("!mp close");
-            match.RoomId = 0;
-            match.Status = MatchStatus.Finished;
-            match.Save();
-            NotifyOfPropertyChange(() => RoomLinkName);
-            NotifyOfPropertyChange(() => RoomClosedVisible);
-            NotifyOfPropertyChange(() => RoomOpenVisible);
+            Log.Information("MatchViewModel: match '{match}' open close room dialog", match.Name);
+            var model = new MatchCloseRoomDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+
+            if (result)
+            {
+                Log.Information("MatchViewModel: match '{match}' close room", match.Name);
+                SendRoomMessage("!mp close");
+                match.RoomId = 0;
+                match.Status = MatchStatus.Finished;
+                match.Save();
+                NotifyOfPropertyChange(() => RoomLinkName);
+                NotifyOfPropertyChange(() => RoomClosedVisible);
+                NotifyOfPropertyChange(() => RoomOpenVisible);
+            }
         }
 
         public void SwitchPlayers()
@@ -761,19 +686,38 @@ namespace script_chan2.GUI
             SendRoomMessage("!mp start 5");
         }
 
-        public void AbortMatch()
+        public async void AbortMatch()
         {
-            Log.Information("MatchViewModel: match '{match}' abort game", match.Name);
-            SendRoomMessage("!mp abort");
+            Log.Information("MatchViewModel: match '{match}' open abort game dialog", match.Name);
+            var model = new MatchAbortMapDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+
+            if (result)
+            {
+                Log.Information("MatchViewModel: match '{match}' abort game", match.Name);
+                SendRoomMessage("!mp abort");
+            }
         }
 
-        public void SetPassword()
+        public async void SetPassword()
         {
-            if (string.IsNullOrEmpty(NewPassword))
-                Log.Information("MatchViewModel: match '{match}' remove password", match.Name);
-            else
-                Log.Information("MatchViewModel: match '{match}' set password", match.Name);
-            SendRoomMessage("!mp password " + NewPassword);
+            var model = new MatchPasswordDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+
+            if (result)
+            {
+                if (string.IsNullOrEmpty(model.Password))
+                    Log.Information("MatchViewModel: match '{match}' remove password", match.Name);
+                else
+                    Log.Information("MatchViewModel: match '{match}' set password", match.Name);
+                SendRoomMessage("!mp password " + model.Password);
+            }
         }
 
         private void AddMessageToChat(IrcMessage message, bool init)
@@ -865,28 +809,34 @@ namespace script_chan2.GUI
             SendRoomMessage($"!mp set {(int)match.TeamMode} {(int)match.WinCondition} {match.RoomSize}");
         }
 
-        public void EditRoomOptionsOpen()
+        public async void EditRoomOptions()
         {
             Log.Information("MatchViewModel: match '{match}' open room options dialog", match.Name);
-            EditGameMode = match.GameMode;
-            EditWinCondition = match.WinCondition;
-            EditTeamSize = match.TeamSize;
-            EditRoomSize = match.RoomSize;
-        }
+            var model = new MatchRoomOptionsDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
 
-        public void SetRoomOptions()
-        {
-            Log.Information("MatchViewModel: match '{match}' set room options", match.Name);
-            match.GameMode = EditGameMode;
-            match.WinCondition = EditWinCondition;
-            match.TeamSize = EditTeamSize;
-            match.RoomSize = EditRoomSize;
-            match.Save();
-            NotifyOfPropertyChange(() => GameMode);
-            NotifyOfPropertyChange(() => WinCondition);
-            NotifyOfPropertyChange(() => RoomSize);
-            NotifyOfPropertyChange(() => TeamSize);
-            SendRoomSet();
+            model.GameMode = match.GameMode;
+            model.WinCondition = match.WinCondition;
+            model.TeamSize = match.TeamSize;
+            model.RoomSize = match.RoomSize;
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+
+            if (result)
+            {
+                Log.Information("MatchViewModel: match '{match}' set room options", match.Name);
+                match.GameMode = model.GameMode;
+                match.WinCondition = model.WinCondition;
+                match.TeamSize = model.TeamSize;
+                match.RoomSize = model.RoomSize;
+                match.Save();
+                NotifyOfPropertyChange(() => GameMode);
+                NotifyOfPropertyChange(() => WinCondition);
+                NotifyOfPropertyChange(() => RoomSize);
+                NotifyOfPropertyChange(() => TeamSize);
+                SendRoomSet();
+            }
         }
 
         public void SendBanRecap()

@@ -51,7 +51,7 @@
                 <md:PackIcon Kind="Close" />
             </Button>
         </Grid>
-        <md:DialogHost Grid.Row="1">
+        <md:DialogHost Grid.Row="1" Identifier="MatchDialogHost">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -108,17 +108,7 @@
                     <WrapPanel x:Name="Control1" Grid.Row="1" Margin="2">
                         <Button x:Name="SendSettings" Content="Settings" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="StartGame" Content="Start game (5s)" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button Content="Abort map" Margin="5" Visibility="{Binding RoomOpenVisible}" Command="{x:Static md:DialogHost.OpenDialogCommand}">
-                            <Button.CommandParameter>
-                                <StackPanel Margin="16">
-                                    <TextBlock>Abort map?</TextBlock>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-                                        <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
-                                        <Button Content="Abort" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action AbortMatch]" />
-                                    </StackPanel>
-                                </StackPanel>
-                            </Button.CommandParameter>
-                        </Button>
+                        <Button x:Name="AbortMatch" Content="Abort map" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                     </WrapPanel>
                     <Grid x:Name="Overview2" Grid.Row="2" Margin="2">
                         <ScrollViewer x:Name="BanchoEventsScrollViewer">
@@ -147,7 +137,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <FlowDocumentScrollViewer x:Name="ChatWindow" Document="{Binding MultiplayerChat}" Grid.ColumnSpan="2" Margin="0 0 0 5" />
-                        <TextBox x:Name="ChatMessage" Grid.Row="1" md:HintAssist.Hint="Message" VerticalAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action ChatMessageKeyDown($executionContext)]" Visibility="{Binding RoomOpenVisible}" />
+                        <TextBox x:Name="ChatMessage" Grid.Row="1" md:HintAssist.Hint="Message" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action SendMessage]" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="SendMessage" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Send" Grid.Row="1" Grid.Column="1" Height="35" Width="35" Margin="5 0 0 0" Visibility="{Binding RoomOpenVisible}">
                             <md:PackIcon Kind="Send" />
                         </Button>
@@ -197,54 +187,9 @@
                         <Button x:Name="SwitchPlayers" Content="Switch players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="InvitePlayers" Content="Invite players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="SendWelcomeString" Content="Welcome string" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button Content="Set password" Margin="5" Visibility="{Binding RoomOpenVisible}" Command="{x:Static md:DialogHost.OpenDialogCommand}">
-                            <Button.CommandParameter>
-                                <StackPanel Margin="16">
-                                    <TextBlock>Set password</TextBlock>
-                                    <TextBox md:HintAssist.Hint="Password" Text="{Binding NewPassword}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-                                        <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
-                                        <Button Content="Set" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action SetPassword]" />
-                                    </StackPanel>
-                                </StackPanel>
-                            </Button.CommandParameter>
-                        </Button>
-                        <Button Content="Set room options" Margin="5" Visibility="{Binding RoomOpenVisible}" Command="{x:Static md:DialogHost.OpenDialogCommand}" cal:Message.Attach="[Event Click] = [EditRoomOptionsOpen]">
-                            <Button.CommandParameter>
-                                <Grid Margin="16" Width="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.ColumnSpan="2">Set room options</TextBlock>
-                                    <ComboBox md:HintAssist.Hint="Game mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 5 0" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding EditGameMode}" />
-                                    <ComboBox md:HintAssist.Hint="Score mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="5 10 0 0" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding WinConditionsList}" SelectedItem="{Binding EditWinCondition}" />
-                                    <TextBox md:HintAssist.Hint="Room size" Text="{Binding EditRoomSize}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="2" Grid.Column="0" Margin="0 10 5 0" />
-                                    <TextBox md:HintAssist.Hint="Team size" Text="{Binding EditTeamSize}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="2" Grid.Column="1" Margin="5 10 0 0" />
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="3" Grid.ColumnSpan="2">
-                                        <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
-                                        <Button Content="Set" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action SetRoomOptions]" IsEnabled="{Binding SetRoomOptionsEnabled}" />
-                                    </StackPanel>
-                                </Grid>
-                            </Button.CommandParameter>
-                        </Button>
-                        <Button Content="Close the room" Margin="5" Background="Red" Visibility="{Binding RoomOpenVisible}" Command="{x:Static md:DialogHost.OpenDialogCommand}">
-                            <Button.CommandParameter>
-                                <StackPanel Margin="16">
-                                    <TextBlock>Close the room?</TextBlock>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-                                        <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
-                                        <Button Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action CloseRoom]" />
-                                    </StackPanel>
-                                </StackPanel>
-                            </Button.CommandParameter>
-                        </Button>
+                        <Button x:Name="SetPassword" Content="Set password" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="EditRoomOptions" Content="Set room options" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="CloseRoom" Content="Close the room" Margin="5" Background="Red" Visibility="{Binding RoomOpenVisible}"/>
                         <Button x:Name="CreateRoom" Content="Create room" Margin="5" Background="Green" Visibility="{Binding RoomClosedVisible}" />
                     </WrapPanel>
                     <Border x:Name="Control3" Grid.Row="1" Margin="2" BorderBrush="LightGray" BorderThickness="0 3 0 3">
