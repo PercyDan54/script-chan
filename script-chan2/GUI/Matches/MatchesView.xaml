@@ -13,127 +13,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button Content="New" HorizontalAlignment="Left" Command="{x:Static md:DialogHost.OpenDialogCommand}" cal:Message.Attach="[Event Click] = [Action NewMatchDialogOpened]">
-            <Button.CommandParameter>
-                <Grid Margin="16" Width="400">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBox md:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="4">
-                        <TextBox.Text>
-                            <Binding Path="NewMatchName" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <ComboBox md:HintAssist.Hint="Tournament" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding NewMatchTournament}" Margin="0 10 5 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <ComboBox md:HintAssist.Hint="Mappool" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding NewMatchMappool}" Margin="5 10 0 0" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <ComboBox md:HintAssist.Hint="Game Mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="0" Margin="0 10 5 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding NewMatchGameMode}" />
-                    <ComboBox md:HintAssist.Hint="Win Condition" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="1" Margin="5 10 5 0" ItemsSource="{Binding WinConditionsList}" SelectedItem="{Binding NewMatchWinCondition}" />
-                    <ComboBox md:HintAssist.Hint="Team Mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="2" Margin="5 10 5 0" ItemsSource="{Binding TeamModesList}" SelectedItem="{Binding NewMatchTeamMode}" />
-                    <TextBox Text="{Binding NewMatchBO}" md:HintAssist.Hint="BO" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="2" Grid.Column="3" Margin="5 10 0 0" />
-                    <TextBox md:HintAssist.Hint="Team Size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="3" Margin="0 10 5 0">
-                        <TextBox.Text>
-                            <Binding Path="NewMatchTeamSize" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBox md:HintAssist.Hint="Room Size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="3" Grid.Column="1" Margin="5 10 5 0">
-                        <TextBox.Text>
-                            <Binding Path="NewMatchRoomSize" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <Grid Grid.Row="4" Grid.ColumnSpan="4" Visibility="{Binding TeamsEditorIsVisible}" Margin="0 10 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <ComboBox md:HintAssist.Hint="Team Red" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding NewMatchTeamRed}" Margin="0 0 5 0">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ComboBox md:HintAssist.Hint="Team Blue" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding NewMatchTeamBlue}" Grid.Column="1" Margin="5 0 0 0">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </Grid>
-                    <Grid Grid.Row="4" Grid.ColumnSpan="4" Visibility="{Binding PlayersEditorIsVisible}" Margin="0 10 0 0" Height="200">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="50" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBox md:HintAssist.Hint="Player name or ID" Text="{Binding AddPlayerNameOrId, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action AddPlayerNameKeyDown($executionContext)]" />
-                        <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Add" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action AddPlayer]">
-                            <md:PackIcon Kind="Add" />
-                        </Button>
-                        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
-                            <ItemsControl ItemsSource="{Binding PlayersViews}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <ContentControl cal:View.Model="{Binding}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </Grid>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="5" Grid.ColumnSpan="4">
-                        <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
-                        <Button Content="Save" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" cal:Message.Attach="[Event Click] = [Action NewMatchDialogClosed]" IsEnabled="{Binding NewMatchSaveEnabled}" />
-                    </StackPanel>
-                </Grid>
-            </Button.CommandParameter>
-        </Button>
+        <Button x:Name="OpenNewMatchDialog" Content="New" HorizontalAlignment="Left" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <ComboBox md:HintAssist.Hint="Tournament" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200">
                 <ComboBox.ItemTemplate>
@@ -145,7 +25,7 @@
             <ComboBox md:HintAssist.Hint="Status" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Statuses}" SelectedItem="{Binding FilterStatus}" Width="200" Margin="10 0 0 0" />
         </StackPanel>
         <ScrollViewer Grid.Row="1">
-            <ItemsControl x:Name="MatchesViews">
+            <ItemsControl x:Name="MatchViews">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel />
