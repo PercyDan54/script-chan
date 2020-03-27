@@ -149,37 +149,6 @@ namespace script_chan2.Discord
                     },
                     Color = Color.Gold,
                     Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
-                    Title = "Pick Recap " + (match.RollWinnerTeam != null ? "(Roll Winner: " + match.RollWinnerTeam.Name + ")" : ""),
-                };
-                var picks = "";
-                foreach (var pick in match.Picks)
-                {
-                    var mod = pick.Map.Tag;
-                    if (string.IsNullOrEmpty(mod))
-                        mod = Utils.ConvertGameModsToString(pick.Map.Mods);
-                    picks += $"-{pick.Player.Name}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
-                }
-                if (!string.IsNullOrEmpty(picks))
-                    embed.Fields.Add(new EmbedFieldBuilder { Name = "Picks", Value = picks });
-
-                embed.Footer = new EmbedFooterBuilder
-                {
-                    Text = "Woah! So cool! :smirk:",
-                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
-                };
-            }
-            else
-            {
-                embed = new EmbedBuilder
-                {
-                    Author = new EmbedAuthorBuilder
-                    {
-                        IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400744720772628481/more-info-button.png",
-                        Name = match.Name,
-                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
-                    },
-                    Color = Color.Gold,
-                    Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
                     Title = "Pick Recap " + (match.RollWinnerPlayer != null ? "(Roll Winner: " + match.RollWinnerPlayer.Name + ")" : ""),
                 };
                 var redTeam = "";
@@ -199,6 +168,37 @@ namespace script_chan2.Discord
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = redTeam });
                 if (!string.IsNullOrEmpty(blueTeam))
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = blueTeam });
+
+                embed.Footer = new EmbedFooterBuilder
+                {
+                    Text = "Woah! So cool! :smirk:",
+                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                };
+            }
+            else
+            {
+                embed = new EmbedBuilder
+                {
+                    Author = new EmbedAuthorBuilder
+                    {
+                        IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400744720772628481/more-info-button.png",
+                        Name = match.Name,
+                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
+                    },
+                    Color = Color.Gold,
+                    Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
+                    Title = "Pick Recap " + (match.RollWinnerTeam != null ? "(Roll Winner: " + match.RollWinnerTeam.Name + ")" : ""),
+                };
+                var picks = "";
+                foreach (var pick in match.Picks)
+                {
+                    var mod = pick.Map.Tag;
+                    if (string.IsNullOrEmpty(mod))
+                        mod = Utils.ConvertGameModsToString(pick.Map.Mods);
+                    picks += $"-{pick.Player.Name}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                }
+                if (!string.IsNullOrEmpty(picks))
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = "Picks", Value = picks });
 
                 embed.Footer = new EmbedFooterBuilder
                 {
