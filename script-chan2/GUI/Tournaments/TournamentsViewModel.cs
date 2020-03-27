@@ -68,6 +68,8 @@ namespace script_chan2.GUI
                     MpTimerAfterPick = model.MpTimerAfterPick,
                     WelcomeString = model.WelcomeString
                 };
+                foreach (var point in model.HeadToHeadPoints)
+                    tournament.HeadToHeadPoints.Add(point.Key, point.Value);
                 tournament.Save();
                 Settings.DefaultTournament = tournament;
                 NotifyOfPropertyChange(() => TournamentsViews);

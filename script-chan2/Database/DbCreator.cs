@@ -35,6 +35,7 @@ namespace script_chan2.Database
             CreateGamesTable();
             CreateScoresTable();
             CreateIrcMessagesTable();
+            CreateHeadToHeadPointsTable();
             conn.Close();
             Log.Information("DbCreator: database creation finished");
         }
@@ -322,6 +323,19 @@ namespace script_chan2.Database
                 user TEXT,
                 message TEXT,
                 FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE)", conn))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private static void CreateHeadToHeadPointsTable()
+        {
+            Log.Information("DbCreator: create table HeadToHeadPoints");
+            using (var command = new SQLiteCommand(@"CREATE TABLE HeadToHeadPoints
+                (tournament INTEGER NOT NULL,
+                place INTEGER,
+                points INTEGER,
+                FOREIGN KEY (tournament) REFERENCES Tournaments(id) ON DELETE CASCADE)", conn))
             {
                 command.ExecuteNonQuery();
             }

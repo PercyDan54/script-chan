@@ -26,6 +26,7 @@ namespace script_chan2.Database
         {
             Log.Information("Database: init started");
             InitTournaments();
+            InitTournamentHeadToHeadPoints();
             InitTeams();
             InitTeamPlayers();
             InitWebhooks();
@@ -149,6 +150,31 @@ namespace script_chan2.Database
             }
         }
 
+        public static void InitTournamentHeadToHeadPoints()
+        {
+            using (var conn = GetConnection())
+            {
+                foreach (var tournament in Tournaments.Where(x => x.TeamMode == TeamModes.HeadToHead))
+                {
+                    using (var command = new SQLiteCommand("SELECT place, points FROM HeadToHeadPoints WHERE tournament = @tournament", conn))
+                    {
+                        command.Parameters.AddWithValue("@tournament", tournament.Id);
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var place = Convert.ToInt32(reader["place"]);
+                                var points = Convert.ToInt32(reader["points"]);
+                                tournament.HeadToHeadPoints.Add(place, points);
+                            }
+                            reader.Close();
+                        }
+                    }
+                }
+                conn.Close();
+            }
+        }
+
         public static int AddTournament(Tournament tournament)
         {
             Log.Information("Database: add new tournament '{name}'", tournament.Name);
@@ -177,6 +203,20 @@ namespace script_chan2.Database
                 {
                     resultValue = Convert.ToInt32(command.ExecuteScalar());
                 }
+                using (var transaction = conn.BeginTransaction())
+                {
+                    foreach (var headToHeadPoint in tournament.HeadToHeadPoints)
+                    {
+                        using (var command = new SQLiteCommand("INSERT INTO HeadToHeadPoints (tournament, place, points) VALUES (@tournament, @place, @points)", conn))
+                        {
+                            command.Parameters.AddWithValue("@tournament", resultValue);
+                            command.Parameters.AddWithValue("@place", headToHeadPoint.Key);
+                            command.Parameters.AddWithValue("@points", headToHeadPoint.Value);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    transaction.Commit();
+                }
                 conn.Close();
             }
             Tournaments.Add(tournament);
@@ -200,25 +240,46 @@ namespace script_chan2.Database
         {
             Log.Information("Database: update tournament '{name}'", tournament.Name);
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand(@"UPDATE Tournaments
+            {
+                using (var command = new SQLiteCommand(@"UPDATE Tournaments
                 SET name = @name, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, acronym = @acronym, teamSize = @teamSize, roomSize = @roomSize, pointsForSecondBan = @pointsForSecondBan, allPicksFreemod = @allPicksFreemod, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, welcomeString = @welcomeString
                 WHERE id = @id", conn))
-            {
-                command.Parameters.AddWithValue("@name", tournament.Name);
-                command.Parameters.AddWithValue("@gameMode", tournament.GameMode.ToString());
-                command.Parameters.AddWithValue("@teamMode", tournament.TeamMode.ToString());
-                command.Parameters.AddWithValue("@winCondition", tournament.WinCondition.ToString());
-                command.Parameters.AddWithValue("@acronym", tournament.Acronym);
-                command.Parameters.AddWithValue("@teamSize", tournament.TeamSize);
-                command.Parameters.AddWithValue("@roomSize", tournament.RoomSize);
-                command.Parameters.AddWithValue("@pointsForSecondBan", tournament.PointsForSecondBan);
-                command.Parameters.AddWithValue("@allPicksFreemod", tournament.AllPicksFreemod);
-                command.Parameters.AddWithValue("@mpTimerCommand", tournament.MpTimerCommand);
-                command.Parameters.AddWithValue("@mpTimerAfterGame", tournament.MpTimerAfterGame);
-                command.Parameters.AddWithValue("@mpTimerAfterPick", tournament.MpTimerAfterPick);
-                command.Parameters.AddWithValue("@welcomeString", tournament.WelcomeString);
-                command.Parameters.AddWithValue("@id", tournament.Id);
-                command.ExecuteNonQuery();
+                {
+                    command.Parameters.AddWithValue("@name", tournament.Name);
+                    command.Parameters.AddWithValue("@gameMode", tournament.GameMode.ToString());
+                    command.Parameters.AddWithValue("@teamMode", tournament.TeamMode.ToString());
+                    command.Parameters.AddWithValue("@winCondition", tournament.WinCondition.ToString());
+                    command.Parameters.AddWithValue("@acronym", tournament.Acronym);
+                    command.Parameters.AddWithValue("@teamSize", tournament.TeamSize);
+                    command.Parameters.AddWithValue("@roomSize", tournament.RoomSize);
+                    command.Parameters.AddWithValue("@pointsForSecondBan", tournament.PointsForSecondBan);
+                    command.Parameters.AddWithValue("@allPicksFreemod", tournament.AllPicksFreemod);
+                    command.Parameters.AddWithValue("@mpTimerCommand", tournament.MpTimerCommand);
+                    command.Parameters.AddWithValue("@mpTimerAfterGame", tournament.MpTimerAfterGame);
+                    command.Parameters.AddWithValue("@mpTimerAfterPick", tournament.MpTimerAfterPick);
+                    command.Parameters.AddWithValue("@welcomeString", tournament.WelcomeString);
+                    command.Parameters.AddWithValue("@id", tournament.Id);
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("DELETE FROM HeadToHeadPoints WHERE tournament = @tournament", conn))
+                {
+                    command.Parameters.AddWithValue("@tournament", tournament.Id);
+                    command.ExecuteNonQuery();
+                }
+                using (var transaction = conn.BeginTransaction())
+                {
+                    foreach (var headToHeadPoint in tournament.HeadToHeadPoints)
+                    {
+                        using (var command = new SQLiteCommand("INSERT INTO HeadToHeadPoints (tournament, place, points) VALUES (@tournament, @place, @points)", conn))
+                        {
+                            command.Parameters.AddWithValue("@tournament", tournament.Id);
+                            command.Parameters.AddWithValue("@place", headToHeadPoint.Key);
+                            command.Parameters.AddWithValue("@points", headToHeadPoint.Value);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    transaction.Commit();
+                }
                 conn.Close();
             }
         }

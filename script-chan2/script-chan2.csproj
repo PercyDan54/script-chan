@@ -486,6 +486,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Tournaments\TournamentPointListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Tournaments\TournamentsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -525,6 +529,7 @@
     <Compile Include="GUI\Tournaments\DeleteTournamentDialogViewModel.cs" />
     <Compile Include="GUI\Tournaments\EditTournamentDialogViewModel.cs" />
     <Compile Include="GUI\Tournaments\TournamentListItemViewModel.cs" />
+    <Compile Include="GUI\Tournaments\TournamentPointListItemViewModel.cs" />
     <Compile Include="GUI\Tournaments\TournamentsViewModel.cs" />
     <Compile Include="GUI\Tournaments\TournamentWebhookListItemViewModel.cs" />
     <Compile Include="GUI\Tournaments\TournamentWebhooksDialogViewModel.cs" />
@@ -566,7 +571,6 @@
     <Resource Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\discord_matchcreated.png" />
     <Content Include="discord_banrecap.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

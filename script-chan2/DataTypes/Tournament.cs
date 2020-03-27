@@ -13,6 +13,7 @@ namespace script_chan2.DataTypes
         public Tournament(int id = 0)
         {
             Webhooks = new List<Webhook>();
+            HeadToHeadPoints = new Dictionary<int, int>();
             Id = id;
         }
 
@@ -43,6 +44,8 @@ namespace script_chan2.DataTypes
         public int MpTimerAfterPick { get; set; }
 
         public string WelcomeString { get; set; }
+
+        public Dictionary<int, int> HeadToHeadPoints { get; set; }
 
         public void Save()
         {

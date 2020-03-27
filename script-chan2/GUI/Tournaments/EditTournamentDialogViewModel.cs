@@ -2,11 +2,13 @@
 using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace script_chan2.GUI
 {
@@ -32,6 +34,12 @@ namespace script_chan2.GUI
                 MpTimerAfterGame = tournament.MpTimerAfterGame;
                 MpTimerAfterPick = tournament.MpTimerAfterPick;
                 WelcomeString = tournament.WelcomeString;
+                HeadToHeadPoints = new Dictionary<int, int>();
+                foreach (var headToHeadPoint in tournament.HeadToHeadPoints)
+                    HeadToHeadPoints.Add(headToHeadPoint.Key, headToHeadPoint.Value);
+                if (HeadToHeadPoints.Count > 0)
+                    HeadToHeadPointPlace = HeadToHeadPoints.Keys.Max() + 1;
+                HeadToHeadPointPoints = 0;
             }
             else
             {
@@ -48,6 +56,9 @@ namespace script_chan2.GUI
                 MpTimerAfterGame = Settings.DefaultTimerAfterGame;
                 MpTimerAfterPick = Settings.DefaultTimerAfterPick;
                 WelcomeString = "";
+                HeadToHeadPoints = new Dictionary<int, int>();
+                HeadToHeadPointPlace = 1;
+                HeadToHeadPointPoints = 0;
             }
         }
         #endregion
@@ -186,6 +197,7 @@ namespace script_chan2.GUI
                 {
                     teamMode = value;
                     NotifyOfPropertyChange(() => TeamMode);
+                    NotifyOfPropertyChange(() => HeadToHeadVisible);
                 }
             }
         }
@@ -273,9 +285,90 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        public Visibility HeadToHeadVisible
+        {
+            get
+            {
+                if (TeamMode == TeamModes.HeadToHead)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Dictionary<int, int> HeadToHeadPoints;
+        public BindableCollection<TournamentPointListItemViewModel> HeadToHeadPointViews
+        {
+            get
+            {
+                var list = new BindableCollection<TournamentPointListItemViewModel>();
+                foreach (var point in HeadToHeadPoints.OrderBy(x => x.Key))
+                    list.Add(new TournamentPointListItemViewModel(point.Key, point.Value));
+                return list;
+            }
+        }
+
+        private int headToHeadPointPlace;
+        public int HeadToHeadPointPlace
+        {
+            get { return headToHeadPointPlace; }
+            set
+            {
+                if (value != headToHeadPointPlace)
+                {
+                    headToHeadPointPlace = value;
+                    NotifyOfPropertyChange(() => HeadToHeadPointPlace);
+                    NotifyOfPropertyChange(() => AddPointsEnabled);
+                }
+            }
+        }
+
+        private int headToHeadPointPoints;
+        public int HeadToHeadPointPoints
+        {
+            get { return headToHeadPointPoints; }
+            set
+            {
+                if (value != headToHeadPointPoints)
+                {
+                    headToHeadPointPoints = value;
+                    NotifyOfPropertyChange(() => HeadToHeadPointPoints);
+                    NotifyOfPropertyChange(() => AddPointsEnabled);
+                }
+            }
+        }
+
+        public bool AddPointsEnabled
+        {
+            get
+            {
+                if (HeadToHeadPointPlace <= 0)
+                    return false;
+                if (headToHeadPointPoints <= 0)
+                    return false;
+                if (HeadToHeadPoints.ContainsKey(HeadToHeadPointPlace))
+                    return false;
+                return true;
+            }
+        }
         #endregion
 
         #region Actions
+        public void AddPoints()
+        {
+            HeadToHeadPoints.Add(HeadToHeadPointPlace, HeadToHeadPointPoints);
+            HeadToHeadPointPlace = HeadToHeadPoints.Keys.Max() + 1;
+            HeadToHeadPointPoints = 0;
+            NotifyOfPropertyChange(() => HeadToHeadPointViews);
+        }
+
+        public void RemovePoints(TournamentPointListItemViewModel model)
+        {
+            Log.Information("EditTournamentDialogViewModel: remove points");
+            HeadToHeadPoints.Remove(model.Place);
+            NotifyOfPropertyChange(() => HeadToHeadPointViews);
+        }
+
         public void DialogEscape()
         {
             DialogHost.CloseDialogCommand.Execute(false, null);
