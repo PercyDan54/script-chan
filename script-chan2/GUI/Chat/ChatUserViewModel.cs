@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using script_chan2.DataTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,31 +12,23 @@ namespace script_chan2.GUI
 {
     public class ChatUserViewModel : Screen
     {
-        public ChatUserViewModel(string user, bool canBeClosed)
+        public ChatUserViewModel(UserChat userChat)
         {
-            User = user;
-            this.canBeClosed = canBeClosed;
-            newMessages = false;
+            UserChat = userChat;
         }
 
-        public string User { get; }
-
-        private bool newMessages;
-
-        private bool canBeClosed;
-
-        private bool active;
+        public UserChat UserChat;
         
         public string Name
         {
-            get { return User; }
+            get { return UserChat.User; }
         }
 
         public Visibility NewMessagesVisible
         {
             get
             {
-                if (newMessages)
+                if (UserChat.NewMessages)
                     return Visibility.Visible;
                 return Visibility.Hidden;
             }
@@ -45,7 +38,7 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (canBeClosed)
+                if (UserChat.User != "Server")
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }
@@ -55,30 +48,10 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (active)
+                if (UserChat.Active)
                     return Brushes.LightGray;
                 return Brushes.White;
             }
-        }
-
-        public void AddedNewMessages()
-        {
-            newMessages = true;
-            NotifyOfPropertyChange(() => NewMessagesVisible);
-        }
-
-        public void SetActive()
-        {
-            newMessages = false;
-            active = true;
-            NotifyOfPropertyChange(() => NewMessagesVisible);
-            NotifyOfPropertyChange(() => Background);
-        }
-
-        public void SetInactive()
-        {
-            active = false;
-            NotifyOfPropertyChange(() => Background);
         }
     }
 }

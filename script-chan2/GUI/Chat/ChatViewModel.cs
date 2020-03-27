@@ -18,35 +18,34 @@ namespace script_chan2.GUI
     public class ChatViewModel : Screen, IHandle<object>
     {
         #region Lists
-        public BindableCollection<ChatUserViewModel> UserViews { get; set; }
-
-        private List<UserChat> userChats;
+        public BindableCollection<ChatUserViewModel> UserViews
+        {
+            get
+            {
+                var list = new BindableCollection<ChatUserViewModel>();
+                foreach (var chat in ChatList.UserChats)
+                {
+                    list.Add(new ChatUserViewModel(chat));
+                }
+                return list;
+            }
+        }
 
         private List<IrcMessage> messagesToSave;
         #endregion
 
         #region Constructor
-        public ChatViewModel()
+        protected override void OnActivate()
         {
-            userChats = new List<UserChat>();
-            UserViews = new BindableCollection<ChatUserViewModel>();
             messagesToSave = new List<IrcMessage>();
-
-            userChats.Add(new UserChat() { User = "Server" });
-            var serverModel = new ChatUserViewModel("Server", false);
-            serverModel.SetActive();
-            UserViews.Add(serverModel);
-
-            currentChat = userChats[0];
-
             ReloadChat();
-
             Events.Aggregator.Subscribe(this);
         }
 
         protected override void OnDeactivate(bool close)
         {
             Database.Database.AddIrcMessages(messagesToSave);
+            messagesToSave.Clear();
         }
         #endregion
 
@@ -69,33 +68,25 @@ namespace script_chan2.GUI
                     }
                 }
 
-                if (!userChats.Any(x => x.User == data.Channel))
+                if (!ChatList.UserChats.Any(x => x.User == data.Channel))
                 {
                     var newUserChat = new UserChat() { User = data.Channel };
                     newUserChat.LoadMessages();
-                    userChats.Add(newUserChat);
-
-                    UserViews.Add(new ChatUserViewModel(data.Channel, true));
+                    ChatList.UserChats.Add(newUserChat);
                 }
 
-                var userChat = userChats.First(x => x.User == data.Channel);
-                userChat.Messages.Add(ircMessage);
+                var userChat = ChatList.UserChats.First(x => x.User == data.Channel);
+                userChat.AddMessage(ircMessage);
 
-                if (currentChat.User != data.Channel)
-                {
-                    var userModel = UserViews.First(x => x.User == data.Channel);
-                    userModel.AddedNewMessages();
-                }
+                NotifyOfPropertyChange(() => UserViews);
 
-                if (currentChat.User == data.Channel)
+                if (ChatList.GetActiveChat().User == data.Channel)
                     AddMessageToChat(ircMessage);
             }
         }
         #endregion
 
         #region Properties
-        private UserChat currentChat;
-
         private FlowDocument chat;
         public FlowDocument Chat
         {
@@ -176,7 +167,7 @@ namespace script_chan2.GUI
                     FontSize = 12,
                     TextAlignment = TextAlignment.Left
                 };
-                foreach (var message in currentChat.Messages)
+                foreach (var message in ChatList.GetActiveChat().Messages)
                 {
                     AddMessageToChat(message);
                 }
@@ -185,35 +176,21 @@ namespace script_chan2.GUI
 
         public void OpenChat(ChatUserViewModel dataContext)
         {
-            if (currentChat.User == dataContext.User)
+            if (ChatList.GetActiveChat() == dataContext.UserChat)
                 return;
 
-            currentChat = userChats.First(x => x.User == dataContext.User);
-            foreach (var model in UserViews)
-            {
-                if (model.User == dataContext.User)
-                    model.SetActive();
-                else
-                    model.SetInactive();
-            }
+            ChatList.ActivateChat(dataContext.UserChat);
+            NotifyOfPropertyChange(() => UserViews);
 
             ReloadChat();
         }
 
         public void CloseChat(ChatUserViewModel dataContext)
         {
-            if (currentChat.User == dataContext.User)
-            {
-                currentChat = userChats[0];
-                foreach (var model in UserViews)
-                    model.SetInactive();
-                UserViews[0].SetActive();
+            ChatList.RemoveChat(dataContext.UserChat);
+            NotifyOfPropertyChange(() => UserViews);
 
-                ReloadChat();
-            }
-
-            userChats.RemoveAll(x => x.User == dataContext.User);
-            UserViews.Remove(UserViews.First(x => x.User == dataContext.User));
+            ReloadChat();
         }
 
         public void ChatMessageEnter()
@@ -231,23 +208,15 @@ namespace script_chan2.GUI
 
             if (result)
             {
-                if (!userChats.Any(x => x.User == model.NewChatChannel))
+                if (!ChatList.UserChats.Any(x => x.User == model.NewChatChannel))
                 {
                     var newUserChat = new UserChat() { User = model.NewChatChannel };
                     newUserChat.LoadMessages();
-                    userChats.Add(newUserChat);
-
-                    UserViews.Add(new ChatUserViewModel(model.NewChatChannel, true));
+                    ChatList.UserChats.Add(newUserChat);
                 }
 
-                currentChat = userChats.First(x => x.User == model.NewChatChannel);
-                foreach (var userView in UserViews)
-                {
-                    if (userView.User == model.NewChatChannel)
-                        userView.SetActive();
-                    else
-                        userView.SetInactive();
-                }
+                ChatList.ActivateChat(ChatList.UserChats.First(x => x.User == model.NewChatChannel));
+                NotifyOfPropertyChange(() => UserViews);
 
                 ReloadChat();
             }
@@ -255,14 +224,12 @@ namespace script_chan2.GUI
 
         public void SendMessage()
         {
-            if (currentChat.User == "Server")
-                return;
             if (string.IsNullOrEmpty(ChatMessage))
                 return;
-            Log.Information("ChatViewModel: user '{user}' send irc message '{message}'", currentChat.User, ChatMessage);
+            Log.Information("ChatViewModel: user '{user}' send irc message '{message}'", ChatList.GetActiveChat().User, ChatMessage);
             var message = ChatMessage;
             ChatMessage = "";
-            OsuIrc.OsuIrc.SendMessage(currentChat.User, message);
+            OsuIrc.OsuIrc.SendMessage(ChatList.GetActiveChat().User, message);
         }
         #endregion
     }

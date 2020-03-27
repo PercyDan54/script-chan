@@ -104,6 +104,9 @@ namespace script_chan2.OsuIrc
                 }
             }
 
+            if (ircMessage.Channel == "Server")
+                return;
+
             if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate) && !ircMessage.Message.StartsWith("!mp switch"))
                 privateClient.SendMessage(ircMessage.Channel, ircMessage.Message);
             else

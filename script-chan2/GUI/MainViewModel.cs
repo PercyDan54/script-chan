@@ -18,7 +18,6 @@ namespace script_chan2.GUI
                 ShowTournaments();
             else
                 ShowMatches();
-            chatViewModel = new ChatViewModel();
             Log.Information("MainViewModel: main view loaded");
         }
         #endregion
@@ -48,8 +47,6 @@ namespace script_chan2.GUI
                 }
             }
         }
-
-        private ChatViewModel chatViewModel;
         #endregion
 
         #region Actions
@@ -112,7 +109,7 @@ namespace script_chan2.GUI
         public void ShowChat()
         {
             Log.Information("MainViewModel: show chat");
-            ActivateItem(chatViewModel);
+            ActivateItem(new ChatViewModel());
             Title = "Chat";
             DrawerExpanded = false;
         }

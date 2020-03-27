@@ -425,6 +425,7 @@
     <Compile Include="Enums\TeamColors.cs" />
     <Compile Include="Enums\TeamModes.cs" />
     <Compile Include="Enums\WinConditions.cs" />
+    <Compile Include="GUI\ChatList.cs" />
     <Compile Include="GUI\Chat\ChatUserViewModel.cs" />
     <Compile Include="GUI\Chat\ChatViewModel.cs" />
     <Compile Include="GUI\Chat\NewChatDialogViewModel.cs" />
