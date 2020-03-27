@@ -167,7 +167,20 @@ namespace script_chan2.DataTypes
                     }
                     if (TeamMode == TeamModes.HeadToHead)
                     {
-                        //TODO!
+                        var list = new List<Player>();
+                        foreach (var score in game.Scores.Where(x => x.Passed && Players.Keys.Contains(x.Player)).OrderByDescending(x => x.Points))
+                        {
+                            list.Add(score.Player);
+                        }
+                        foreach (var score in game.Scores.Where(x => !x.Passed && Players.Keys.Contains(x.Player)).OrderByDescending(x => x.Points))
+                        {
+                            list.Add(score.Player);
+                        }
+                        for (var i = 0; i < list.Count; i++)
+                        {
+                            if (Tournament.HeadToHeadPoints.ContainsKey(i + 1))
+                                Players[list[i]] += Tournament.HeadToHeadPoints[i + 1];
+                        }
                     }
                 }
                 game.Counted = true;

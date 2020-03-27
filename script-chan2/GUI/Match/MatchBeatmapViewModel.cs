@@ -92,10 +92,24 @@ namespace script_chan2.GUI
             }
         }
 
-        public Visibility CanBanOrPick
+        public Visibility CanBanOrPickTeam
         {
             get
             {
+                if (match.TeamMode != Enums.TeamModes.TeamVS)
+                    return Visibility.Collapsed;
+                if (match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap))
+                    return Visibility.Collapsed;
+                return Visibility.Visible;
+            }
+        }
+
+        public Visibility CanBanOrPickPlayer
+        {
+            get
+            {
+                if (match.TeamMode != Enums.TeamModes.HeadToHead)
+                    return Visibility.Collapsed;
                 if (match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap))
                     return Visibility.Collapsed;
                 return Visibility.Visible;
@@ -138,22 +152,137 @@ namespace script_chan2.GUI
                         return Brushes.Red;
                     return Brushes.Blue;
                 }
+                if (match.TeamMode == Enums.TeamModes.HeadToHead && match.Picks.Any(x => x.Map == beatmap))
+                    return Brushes.Green;
                 return Brushes.Black;
             }
         }
 
         public string TeamRedName
         {
-            get { return match.TeamRed.Name; }
+            get
+            {
+                if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    return match.TeamRed.Name;
+                return "";
+            }
         }
 
         public string TeamBlueName
         {
-            get { return match.TeamBlue.Name; }
+            get
+            {
+                if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    return match.TeamBlue.Name;
+                return "";
+            }
+        }
+
+        public BindableCollection<Player> Players
+        {
+            get
+            {
+                var list = new BindableCollection<Player>();
+                if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                {
+                    foreach (var player in match.Players.OrderBy(x => x.Key.Name))
+                        list.Add(player.Key);
+                }
+                return list;
+            }
+        }
+
+        private bool canBanOrPick
+        {
+            get { return !(match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap)); }
+        }
+
+        private bool canUnban
+        {
+            get { return match.Bans.Any(x => x.Map == beatmap); }
+        }
+
+        private bool canUnpick
+        {
+            get { return match.Picks.Any(x => x.Map == beatmap); }
+        }
+
+        public BindableCollection<MatchBeatmapMenuItem> MenuItems
+        {
+            get
+            {
+                var list = new BindableCollection<MatchBeatmapMenuItem>();
+                if (canBanOrPick)
+                {
+                    if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    {
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Team = match.TeamRed });
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Team = match.TeamBlue });
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick, Team = match.TeamRed });
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick, Team = match.TeamBlue });
+                    }
+                    else
+                    {
+                        foreach (var player in match.Players)
+                            list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Player = player.Key });
+                        foreach (var player in match.Players)
+                            list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick, Player = player.Key });
+                    }
+                }
+                else
+                {
+                    if (canUnban)
+                    {
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Unban });
+                    }
+                    else if (canUnpick)
+                    {
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Unpick });
+                    }
+                }
+                return list;
+            }
         }
         #endregion
 
         #region Actions
+        public void MenuItemClick(MatchBeatmapMenuItem context)
+        {
+            if (context.Type == MatchBeatmapMenuItemTypes.Unban)
+                RemoveBan();
+            else if (context.Type == MatchBeatmapMenuItemTypes.Unpick)
+                RemovePick();
+            else if (context.Type == MatchBeatmapMenuItemTypes.Ban)
+            {
+                if (context.Player != null)
+                {
+                    BanPlayer(context.Player);
+                }
+                else
+                {
+                    if (context.Team == match.TeamRed)
+                        BanRed();
+                    else
+                        BanBlue();
+                }
+            }
+            else if (context.Type == MatchBeatmapMenuItemTypes.Pick)
+            {
+                if (context.Player != null)
+                {
+                    PickPlayer(context.Player);
+                }
+                else
+                {
+                    if (context.Team == match.TeamRed)
+                        PickRed();
+                    else
+                        PickBlue();
+                }
+            }
+            NotifyOfPropertyChange(() => MenuItems);
+        }
+
         public void BanRed()
         {
             Log.Information("MatchBeatmapViewModel: match '{match}' ban map by red", match.Name);
@@ -164,7 +293,7 @@ namespace script_chan2.GUI
                 Team = match.TeamRed
             });
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
@@ -180,7 +309,23 @@ namespace script_chan2.GUI
                 Team = match.TeamBlue
             });
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => TextDecoration);
+            NotifyOfPropertyChange(() => FontColor);
+        }
+
+        public void BanPlayer(Player player)
+        {
+            Log.Information("MatchBeatmapViewModel: match '{match}' ban map by player '{player}'", match.Name, player.Name);
+            match.Bans.Add(new MatchPick()
+            {
+                Match = match,
+                Map = beatmap,
+                Player = player
+            });
+            match.Save();
+            NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
@@ -191,7 +336,7 @@ namespace script_chan2.GUI
             Log.Information("MatchBeatmapViewModel: match '{match}' remove ban", match.Name);
             match.Bans.RemoveAll(x => x.Map == beatmap);
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
@@ -207,7 +352,7 @@ namespace script_chan2.GUI
                 Team = match.TeamRed
             });
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnpick);
             NotifyOfPropertyChange(() => FontColor);
             if (match.RoomId > 0)
@@ -224,8 +369,26 @@ namespace script_chan2.GUI
                 Team = match.TeamBlue
             });
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnpick);
+            NotifyOfPropertyChange(() => FontColor);
+            if (match.RoomId > 0)
+                SendPickMessage();
+        }
+
+        public void PickPlayer(Player player)
+        {
+            Log.Information("MatchBeatmapViewModel: match '{match}' pick map by player '{player}'", match.Name, player.Name);
+            match.Picks.Add(new MatchPick()
+            {
+                Match = match,
+                Map = beatmap,
+                Player = player
+            });
+            match.Save();
+            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             if (match.RoomId > 0)
                 SendPickMessage();
@@ -236,7 +399,7 @@ namespace script_chan2.GUI
             Log.Information("MatchBeatmapViewModel: match '{match}' remove pick", match.Name);
             match.Picks.RemoveAll(x => x.Map == beatmap);
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPick);
+            NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnpick);
             NotifyOfPropertyChange(() => FontColor);
         }
@@ -250,5 +413,50 @@ namespace script_chan2.GUI
             OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp map {beatmap.Beatmap.Id} {(int)match.GameMode}");
         }
         #endregion
+    }
+
+    public enum MatchBeatmapMenuItemTypes
+    {
+        Pick,
+        Ban,
+        Unpick,
+        Unban
+    }
+
+    public class MatchBeatmapMenuItem
+    {
+        public MatchBeatmapMenuItemTypes Type { get; set; }
+
+        public Player Player;
+
+        public Team Team;
+
+        public string Name
+        {
+            get
+            {
+                if (Type == MatchBeatmapMenuItemTypes.Ban)
+                {
+                    if (Player != null)
+                    {
+                        return "Banned by " + Player.Name;
+                    }
+                    return "Banned by " + Team.Name;
+                }
+                if (Type == MatchBeatmapMenuItemTypes.Pick)
+                {
+                    if (Player != null)
+                    {
+                        return "Picked by " + Player.Name;
+                    }
+                    return "Picked by " + Team.Name;
+                }
+                if (Type == MatchBeatmapMenuItemTypes.Unban)
+                {
+                    return "Unban";
+                }
+                return "Unpick";
+            }
+        }
     }
 }

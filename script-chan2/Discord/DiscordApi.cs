@@ -88,7 +88,37 @@ namespace script_chan2.Discord
             }
             else
             {
-                //TODO!
+                embed = new EmbedBuilder
+                {
+                    Author = new EmbedAuthorBuilder
+                    {
+                        IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400744720772628481/more-info-button.png",
+                        Name = match.Name,
+                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
+                    },
+                    Color = Color.Gold,
+                    Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
+                    Title = "Ban Recap " + (match.RollWinnerPlayer != null ? "(Roll Winner: " + match.RollWinnerPlayer.Name + ")" : ""),
+                };
+                foreach (var player in match.Players)
+                {
+                    var bans = "";
+                    foreach (var ban in match.Bans.Where(x => x.Player == player.Key))
+                    {
+                        var mod = ban.Map.Tag;
+                        if (string.IsNullOrEmpty(mod))
+                            mod = Utils.ConvertGameModsToString(ban.Map.Mods);
+                        bans += $"__{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                    }
+                    if (!string.IsNullOrEmpty(bans))
+                        embed.Fields.Add(new EmbedFieldBuilder { Name = player.Key.Name, Value = bans });
+                }
+
+                embed.Footer = new EmbedFooterBuilder
+                {
+                    Text = "Woah! So cool! :smirk:",
+                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                };
             }
 
             if (embed != null)
@@ -121,6 +151,37 @@ namespace script_chan2.Discord
                     Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
                     Title = "Pick Recap " + (match.RollWinnerTeam != null ? "(Roll Winner: " + match.RollWinnerTeam.Name + ")" : ""),
                 };
+                var picks = "";
+                foreach (var pick in match.Picks)
+                {
+                    var mod = pick.Map.Tag;
+                    if (string.IsNullOrEmpty(mod))
+                        mod = Utils.ConvertGameModsToString(pick.Map.Mods);
+                    picks += $"-{pick.Player.Name}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                }
+                if (!string.IsNullOrEmpty(picks))
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = "Picks", Value = picks });
+
+                embed.Footer = new EmbedFooterBuilder
+                {
+                    Text = "Woah! So cool! :smirk:",
+                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                };
+            }
+            else
+            {
+                embed = new EmbedBuilder
+                {
+                    Author = new EmbedAuthorBuilder
+                    {
+                        IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400744720772628481/more-info-button.png",
+                        Name = match.Name,
+                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
+                    },
+                    Color = Color.Gold,
+                    Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
+                    Title = "Pick Recap " + (match.RollWinnerPlayer != null ? "(Roll Winner: " + match.RollWinnerPlayer.Name + ")" : ""),
+                };
                 var redTeam = "";
                 var blueTeam = "";
                 for (var i = 0; i < match.Picks.Count; i++)
@@ -144,10 +205,6 @@ namespace script_chan2.Discord
                     Text = "Woah! So cool! :smirk:",
                     IconUrl = "https://i.imgur.com/fKL31aD.jpg"
                 };
-            }
-            else
-            {
-                //TODO!
             }
 
             if (embed != null)
@@ -240,7 +297,43 @@ namespace script_chan2.Discord
             }
             else
             {
-                //TODO!
+                embed = new EmbedBuilder
+                {
+                    Author = new EmbedAuthorBuilder
+                    {
+                        IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png",
+                        Name = match.Name,
+                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
+                    },
+                    Color = Color.Green
+                };
+
+                var map = match.Picks.Last();
+
+                var mod = map.Map.Tag;
+                if (string.IsNullOrEmpty(mod))
+                    mod = Utils.ConvertGameModsToString(map.Map.Mods);
+
+                var winner = match.Games.Last().Scores.OrderByDescending(x => x.Points).First();
+                embed.Title = $"{winner.Player.Name.Replace("_", "__").Replace("*", "\\*")} won the __{mod}__ pick with {winner.Points} points";
+                embed.ThumbnailUrl = "https://b.ppy.sh/thumb/" + map.Map.Beatmap.SetId + "l.jpg";
+                embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**";
+
+                string players = "";
+                string points = "";
+                foreach (var score in match.Games.Last().Scores.OrderByDescending(x => x.Points))
+                {
+                    players += score.Player.Name + Environment.NewLine;
+                    points += score.Points + Environment.NewLine;
+                }
+                embed.Fields.Add(new EmbedFieldBuilder { Name = "Player", Value = players, IsInline = true });
+                embed.Fields.Add(new EmbedFieldBuilder { Name = "Points", Value = points, IsInline = true });
+
+                embed.Footer = new EmbedFooterBuilder
+                {
+                    Text = "Woah! So cool! :smirk:",
+                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                };
             }
 
             if (embed != null)

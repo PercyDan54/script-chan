@@ -37,6 +37,22 @@ namespace script_chan2.GUI
             }
         }
 
+        public BindableCollection<MatchPlayerViewModel> PlayersViews
+        {
+            get
+            {
+                var list = new BindableCollection<MatchPlayerViewModel>();
+                if (match.TeamMode == TeamModes.HeadToHead)
+                {
+                    foreach (var player in match.Players.OrderByDescending(x => x.Value))
+                    {
+                        list.Add(new MatchPlayerViewModel(match, player.Key));
+                    }
+                }
+                return list;
+            }
+        }
+
         public BindableCollection<Mappool> Mappools
         {
             get
@@ -61,6 +77,20 @@ namespace script_chan2.GUI
                 {
                     list.Add(match.TeamBlue);
                     list.Add(match.TeamRed);
+                }
+                return list;
+            }
+        }
+
+        public BindableCollection<Player> Players
+        {
+            get
+            {
+                var list = new BindableCollection<Player>();
+                if (match.TeamMode == TeamModes.HeadToHead)
+                {
+                    foreach (var player in match.Players.OrderBy(x => x.Key.Name))
+                        list.Add(player.Key);
                 }
                 return list;
             }
@@ -800,7 +830,10 @@ namespace script_chan2.GUI
         {
             Log.Information("MatchViewModel: match '{match}' update scores", match.Name);
             match.UpdateScores();
-            NotifyOfPropertyChange(() => TeamsViews);
+            if (match.TeamMode == TeamModes.TeamVS)
+                NotifyOfPropertyChange(() => TeamsViews);
+            else
+                NotifyOfPropertyChange(() => PlayersViews);
         }
 
         private void SendRoomSet()

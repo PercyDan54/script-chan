@@ -10,41 +10,14 @@
              d:DesignHeight="50" d:DesignWidth="400" Height="50">
     <Border BorderThickness="0 0 0 2" BorderBrush="LightGray" ToolTip="{Binding ToolTip}" Background="{Binding Background}">
         <Border.ContextMenu>
-            <ContextMenu>
-                <MenuItem Visibility="{Binding CanBanOrPick}" cal:Message.Attach="[Event Click] = [Action BanRed]" Foreground="Red">
-                    <MenuItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <md:PackIcon Kind="Ban" Margin="0 0 10 0" />
-                            <TextBlock Text="{Binding Path=TeamRedName, StringFormat=Banned by {0}, Mode=OneWay}" />
-                        </StackPanel>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem Visibility="{Binding CanBanOrPick}" cal:Message.Attach="[Event Click] = [Action BanBlue]" Foreground="Blue">
-                    <MenuItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <md:PackIcon Kind="Ban" Margin="0 0 10 0" />
-                            <TextBlock Text="{Binding Path=TeamBlueName, StringFormat=Banned by {0}, Mode=OneWay}" />
-                        </StackPanel>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem Header="Unban" Visibility="{Binding CanUnban}" cal:Message.Attach="[Event Click] = [Action RemoveBan]" />
-                <MenuItem Visibility="{Binding CanBanOrPick}" cal:Message.Attach="[Event Click] = [Action PickRed]" Foreground="Red">
-                    <MenuItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <md:PackIcon Kind="Check" Margin="0 0 10 0" />
-                            <TextBlock Text="{Binding Path=TeamRedName, StringFormat=Picked by {0}, Mode=OneWay}" />
-                        </StackPanel>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem Visibility="{Binding CanBanOrPick}" cal:Message.Attach="[Event Click] = [Action PickBlue]" Foreground="Blue">
-                    <MenuItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <md:PackIcon Kind="Check" Margin="0 0 10 0" />
-                            <TextBlock Text="{Binding Path=TeamBlueName, StringFormat=Picked by {0}, Mode=OneWay}" />
-                        </StackPanel>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem Header="Unpick" Visibility="{Binding CanUnpick}" cal:Message.Attach="[Event Click] = [Action RemovePick]" />
+            <ContextMenu x:Name="Menu" ItemsSource="{Binding MenuItems}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="cal:Message.Attach" Value="[Event Click] = [Action MenuItemClick($dataContext)]" />
+                        <Setter Property="cal:Action.TargetWithoutContext" Value="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Border}}" />
+                        <Setter Property="Header" Value="{Binding Name}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
             </ContextMenu>
         </Border.ContextMenu>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
