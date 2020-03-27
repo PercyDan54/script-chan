@@ -10,17 +10,30 @@ namespace script_chan2.DataTypes
 {
     public class Webhook
     {
+        #region Constructor
         public Webhook(int id = 0)
         {
             Id = id;
         }
+        #endregion
 
+        #region Properties
         public int Id { get; private set; }
 
         public string Name { get; set; }
 
         public string URL { get; set; }
 
+        public bool MatchCreated { get; set; }
+
+        public bool BanRecap { get; set; }
+
+        public bool PickRecap { get; set; }
+
+        public bool GameRecap { get; set; }
+        #endregion
+
+        #region Actions
         public void Save()
         {
             Log.Information("Webhook: '{name}' save", Name);
@@ -39,5 +52,6 @@ namespace script_chan2.DataTypes
             }
             Database.Database.DeleteWebhook(this);
         }
+        #endregion
     }
 }

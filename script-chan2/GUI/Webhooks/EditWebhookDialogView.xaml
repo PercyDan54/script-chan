@@ -8,7 +8,7 @@
              xmlns:cal="http://www.caliburnproject.org" xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
-             d:DesignHeight="160" d:DesignWidth="350">
+             d:DesignHeight="250" d:DesignWidth="350">
     <StackPanel Margin="16" Width="300">
         <TextBox md:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
             <TextBox.Text>
@@ -29,6 +29,38 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+            <CheckBox x:Name="MatchCreated" Content="Match created"/>
+            <md:PackIcon Kind="QuestionMark" Margin="5 0 0 0" Background="White">
+                <md:PackIcon.ToolTip>
+                    <Image Source="../../discord_matchcreated.png" />
+                </md:PackIcon.ToolTip>
+            </md:PackIcon>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+            <CheckBox x:Name="BanRecap" Content="Ban recap" />
+            <md:PackIcon Kind="QuestionMark" Margin="5 0 0 0" Background="White">
+                <md:PackIcon.ToolTip>
+                    <Image Source="../../discord_banrecap.png" />
+                </md:PackIcon.ToolTip>
+            </md:PackIcon>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+            <CheckBox x:Name="PickRecap" Content="Pick recap" />
+            <md:PackIcon Kind="QuestionMark" Margin="5 0 0 0" Background="White">
+                <md:PackIcon.ToolTip>
+                    <Image Source="../../discord_pickrecap.png" />
+                </md:PackIcon.ToolTip>
+            </md:PackIcon>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+            <CheckBox x:Name="GameRecap" Content="Game recap" />
+            <md:PackIcon Kind="QuestionMark" Margin="5 0 0 0" Background="White">
+                <md:PackIcon.ToolTip>
+                    <Image Source="../../discord_gamerecap.png" />
+                </md:PackIcon.ToolTip>
+            </md:PackIcon>
+        </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
             <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
                 <Button.CommandParameter>

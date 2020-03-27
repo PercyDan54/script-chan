@@ -54,7 +54,11 @@ namespace script_chan2.GUI
                 var webhook = new Webhook()
                 {
                     Name = model.Name,
-                    URL = model.Url
+                    URL = model.Url,
+                    MatchCreated = model.MatchCreated,
+                    BanRecap = model.BanRecap,
+                    PickRecap = model.PickRecap,
+                    GameRecap = model.GameRecap
                 };
                 webhook.Save();
                 NotifyOfPropertyChange(() => WebhookViews);

@@ -229,7 +229,7 @@ namespace script_chan2.Database
         {
             Log.Information("Database: init webhooks");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, name, url FROM Webhooks", conn))
+            using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap FROM Webhooks", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -237,10 +237,18 @@ namespace script_chan2.Database
                     var id = Convert.ToInt32(reader["id"]);
                     var name = reader["name"].ToString();
                     var url = reader["URL"].ToString();
+                    var matchCreated = Convert.ToBoolean(reader["matchCreated"]);
+                    var banRecap = Convert.ToBoolean(reader["banRecap"]);
+                    var pickRecap = Convert.ToBoolean(reader["pickRecap"]);
+                    var gameRecap = Convert.ToBoolean(reader["gameRecap"]);
                     var webhook = new Webhook(id)
                     {
                         Name = name,
-                        URL = url
+                        URL = url,
+                        MatchCreated = matchCreated,
+                        BanRecap = banRecap,
+                        PickRecap = pickRecap,
+                        GameRecap = gameRecap
                     };
                     Webhooks.Add(webhook);
                 }
@@ -255,10 +263,14 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url) VALUES (@name, @url)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url, matchCreated, banRecap, pickRecap, gameRecap) VALUES (@name, @url, @matchCreated, @banRecap, @pickRecap, @gameRecap)", conn))
                 {
                     command.Parameters.AddWithValue("@name", webhook.Name);
                     command.Parameters.AddWithValue("@url", webhook.URL);
+                    command.Parameters.AddWithValue("@matchCreated", webhook.MatchCreated);
+                    command.Parameters.AddWithValue("@banRecap", webhook.BanRecap);
+                    command.Parameters.AddWithValue("@pickRecap", webhook.PickRecap);
+                    command.Parameters.AddWithValue("@gameRecap", webhook.GameRecap);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -289,12 +301,16 @@ namespace script_chan2.Database
             Log.Information("Database: update webhook '{name}'", webhook.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE Webhooks
-                SET name = @name, url = @url
+                SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap
                 WHERE id = @id", conn))
             {
                 command.Parameters.AddWithValue("@name", webhook.Name);
                 command.Parameters.AddWithValue("@url", webhook.URL);
                 command.Parameters.AddWithValue("@id", webhook.Id);
+                command.Parameters.AddWithValue("@matchCreated", webhook.MatchCreated);
+                command.Parameters.AddWithValue("@banRecap", webhook.BanRecap);
+                command.Parameters.AddWithValue("@pickRecap", webhook.PickRecap);
+                command.Parameters.AddWithValue("@gameRecap", webhook.GameRecap);
                 command.ExecuteNonQuery();
                 conn.Close();
             }

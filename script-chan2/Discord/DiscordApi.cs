@@ -25,10 +25,24 @@ namespace script_chan2.Discord
                 },
                 Color = Color.Blue,
                 Title = "The match has been created!",
-                Description = $"You can join the match on IRC by typing ```/join #mp_{match.RoomId}```"
+                Description = $"You can join the match on IRC by typing ```/join #mp_{match.RoomId}```",
+                Footer = new EmbedFooterBuilder
+                {
+                    Text = "Woah! So cool! :smirk:",
+                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                }
             };
 
-            SendEmbed(match, embed);
+            if (embed != null)
+            {
+                foreach (var webhook in match.Tournament.Webhooks.Where(x => x.MatchCreated))
+                {
+                    using (var client = new DiscordWebhookClient(webhook.URL))
+                    {
+                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
+                    }
+                }
+            }
         }
 
         public static void SendMatchBanRecap(Match match)
@@ -65,6 +79,12 @@ namespace script_chan2.Discord
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = redTeam });
                 if (!string.IsNullOrEmpty(blueTeam))
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = blueTeam });
+
+                embed.Footer = new EmbedFooterBuilder
+                {
+                    Text = "Woah! So cool! :smirk:",
+                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                };
             }
             else
             {
@@ -72,7 +92,15 @@ namespace script_chan2.Discord
             }
 
             if (embed != null)
-                SendEmbed(match, embed);
+            {
+                foreach (var webhook in match.Tournament.Webhooks.Where(x => x.BanRecap))
+                {
+                    using (var client = new DiscordWebhookClient(webhook.URL))
+                    {
+                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
+                    }
+                }
+            }
         }
 
         public static void SendMatchPickRecap(Match match)
@@ -110,6 +138,12 @@ namespace script_chan2.Discord
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = redTeam });
                 if (!string.IsNullOrEmpty(blueTeam))
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = blueTeam });
+
+                embed.Footer = new EmbedFooterBuilder
+                {
+                    Text = "Woah! So cool! :smirk:",
+                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                };
             }
             else
             {
@@ -117,7 +151,15 @@ namespace script_chan2.Discord
             }
 
             if (embed != null)
-                SendEmbed(match, embed);
+            {
+                foreach (var webhook in match.Tournament.Webhooks.Where(x => x.PickRecap))
+                {
+                    using (var client = new DiscordWebhookClient(webhook.URL))
+                    {
+                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
+                    }
+                }
+            }
         }
 
         public static void SendGameRecap(Match match)
@@ -190,6 +232,11 @@ namespace script_chan2.Discord
                 else
                     embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = "Next team to pick: " + (map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) + " :loudspeaker:" });
 
+                embed.Footer = new EmbedFooterBuilder
+                {
+                    Text = "Woah! So cool! :smirk:",
+                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                };
             }
             else
             {
@@ -197,21 +244,13 @@ namespace script_chan2.Discord
             }
 
             if (embed != null)
-                SendEmbed(match, embed);
-        }
-
-        private static void SendEmbed(Match match, EmbedBuilder embed)
-        {
-            embed.Footer = new EmbedFooterBuilder
             {
-                Text = "Woah! So cool! :smirk:",
-                IconUrl = "https://i.imgur.com/fKL31aD.jpg"
-            };
-            foreach (var webhook in match.Tournament.Webhooks)
-            {
-                using (var client = new DiscordWebhookClient(webhook.URL))
+                foreach (var webhook in match.Tournament.Webhooks.Where(x => x.GameRecap))
                 {
-                    client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
+                    using (var client = new DiscordWebhookClient(webhook.URL))
+                    {
+                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
+                    }
                 }
             }
         }

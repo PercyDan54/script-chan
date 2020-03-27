@@ -97,7 +97,11 @@ namespace script_chan2.Database
             using (var command = new SQLiteCommand(@"CREATE TABLE Webhooks
                 (id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL,
-                url TEXT)", conn))
+                url TEXT,
+                matchCreated BOOL,
+                banRecap BOOL,
+                pickRecap BOOL,
+                gameRecap BOOL)", conn))
             {
                 command.ExecuteNonQuery();
             }

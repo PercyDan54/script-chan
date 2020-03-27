@@ -19,11 +19,19 @@ namespace script_chan2.GUI
                 var webhook = Database.Database.Webhooks.First(x => x.Id == id);
                 Name = webhook.Name;
                 Url = webhook.URL;
+                MatchCreated = webhook.MatchCreated;
+                BanRecap = webhook.BanRecap;
+                PickRecap = webhook.PickRecap;
+                GameRecap = webhook.GameRecap;
             }
             else
             {
                 Name = "";
                 Url = "";
+                MatchCreated = true;
+                BanRecap = true;
+                PickRecap = true;
+                GameRecap = true;
             }
         }
         #endregion
@@ -57,6 +65,62 @@ namespace script_chan2.GUI
                     url = value;
                     NotifyOfPropertyChange(() => Url);
                     NotifyOfPropertyChange(() => SaveEnabled);
+                }
+            }
+        }
+
+        private bool matchCreated;
+        public bool MatchCreated
+        {
+            get { return matchCreated; }
+            set
+            {
+                if (value != matchCreated)
+                {
+                    matchCreated = value;
+                    NotifyOfPropertyChange(() => MatchCreated);
+                }
+            }
+        }
+
+        private bool banRecap;
+        public bool BanRecap
+        {
+            get { return banRecap; }
+            set
+            {
+                if (value != banRecap)
+                {
+                    banRecap = value;
+                    NotifyOfPropertyChange(() => BanRecap);
+                }
+            }
+        }
+
+        private bool pickRecap;
+        public bool PickRecap
+        {
+            get { return pickRecap; }
+            set
+            {
+                if (value != pickRecap)
+                {
+                    pickRecap = value;
+                    NotifyOfPropertyChange(() => PickRecap);
+                }
+            }
+        }
+
+        private bool gameRecap;
+        public bool GameRecap
+        {
+            get { return gameRecap; }
+            set
+            {
+                if (value != gameRecap)
+                {
+                    gameRecap = value;
+                    NotifyOfPropertyChange(() => GameRecap);
                 }
             }
         }
