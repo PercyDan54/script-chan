@@ -210,7 +210,7 @@ namespace script_chan2.OsuIrc
 
         public static void JoinChannel(string channel)
         {
-            Log.Information("OsuIrc: join channel '{name}'", channel);
+            localLog.Information("join channel '{name}'", channel);
             if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate))
             {
                 if (privateClient != null)
@@ -225,7 +225,7 @@ namespace script_chan2.OsuIrc
 
         public static void LeaveChannel(string channel)
         {
-            Log.Information("OsuIrc: leave channel '{name}'", channel);
+            localLog.Information("leave channel '{name}'", channel);
             if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate))
             {
                 if (privateClient != null)
