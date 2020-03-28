@@ -11,6 +11,8 @@ namespace script_chan2.GUI
 {
     public class MainViewModel : Conductor<object>
     {
+        private ILogger localLog = Log.ForContext<MainViewModel>();
+
         #region Constructor
         public MainViewModel()
         {
@@ -18,7 +20,7 @@ namespace script_chan2.GUI
                 ShowTournaments();
             else
                 ShowMatches();
-            Log.Information("MainViewModel: main view loaded");
+            localLog.Information("main view loaded");
         }
         #endregion
 
@@ -52,7 +54,7 @@ namespace script_chan2.GUI
         #region Actions
         public void ShowMatches()
         {
-            Log.Information("MainViewModel: show match list");
+            localLog.Information("show match list");
             ActivateItem(new MatchesViewModel());
             Title = "Matches";
             DrawerExpanded = false;
@@ -60,7 +62,7 @@ namespace script_chan2.GUI
 
         public void ShowTournaments()
         {
-            Log.Information("MainViewModel: show tournament list");
+            localLog.Information("show tournament list");
             ActivateItem(new TournamentsViewModel());
             Title = "Tournaments";
             DrawerExpanded = false;
@@ -68,7 +70,7 @@ namespace script_chan2.GUI
 
         public void ShowTeams()
         {
-            Log.Information("MainViewModel: show team list");
+            localLog.Information("show team list");
             ActivateItem(new TeamsViewModel());
             Title = "Teams";
             DrawerExpanded = false;
@@ -76,7 +78,7 @@ namespace script_chan2.GUI
 
         public void ShowMappools()
         {
-            Log.Information("MainViewModel: show mappool list");
+            localLog.Information("show mappool list");
             ActivateItem(new MappoolsViewModel());
             Title = "Mappools";
             DrawerExpanded = false;
@@ -84,7 +86,7 @@ namespace script_chan2.GUI
 
         public void ShowWebhooks()
         {
-            Log.Information("MainViewModel: show webhook list");
+            localLog.Information("show webhook list");
             ActivateItem(new WebhooksViewModel());
             Title = "Webhooks";
             DrawerExpanded = false;
@@ -92,7 +94,7 @@ namespace script_chan2.GUI
 
         public void ShowSettings()
         {
-            Log.Information("MainViewModel: show settings");
+            localLog.Information("show settings");
             ActivateItem(new SettingsViewModel());
             Title = "Settings";
             DrawerExpanded = false;
@@ -100,7 +102,7 @@ namespace script_chan2.GUI
 
         public void ShowColors()
         {
-            Log.Information("MainViewModel: show colors");
+            localLog.Information("show colors");
             ActivateItem(new ColorsViewModel());
             Title = "Colors";
             DrawerExpanded = false;
@@ -108,7 +110,7 @@ namespace script_chan2.GUI
 
         public void ShowChat()
         {
-            Log.Information("MainViewModel: show chat");
+            localLog.Information("show chat");
             ActivateItem(new ChatViewModel());
             Title = "Chat";
             DrawerExpanded = false;

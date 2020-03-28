@@ -15,6 +15,8 @@ namespace script_chan2.GUI
 {
     public class MappoolBeatmapsDialogViewModel : Screen, IHandle<string>
     {
+        private ILogger localLog = Log.ForContext<MappoolBeatmapsDialogViewModel>();
+
         #region Constructor
         public MappoolBeatmapsDialogViewModel(Mappool mappool)
         {
@@ -65,7 +67,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Activate()
         {
-            Log.Information("MappoolListItemViewModel: beatmap list dialog of mappool '{mappool}' open", mappool.Name);
+            localLog.Information("beatmap list dialog of mappool '{mappool}' open", mappool.Name);
             BeatmapId = "";
             Clipboard.SetText("");
             clipboard = new SharpClipboard();
@@ -74,7 +76,7 @@ namespace script_chan2.GUI
 
         public void Deactivate()
         {
-            Log.Information("MappoolListItemViewModel: beatmap list dialog of mappool '{mappool}' close", mappool.Name);
+            localLog.Information("beatmap list dialog of mappool '{mappool}' close", mappool.Name);
             clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
         }
 
@@ -90,7 +92,7 @@ namespace script_chan2.GUI
 
             if (int.TryParse(text, out int id))
             {
-                Log.Information("MappoolListItemViewModel: mappool beatmap list dialog clipboard event, found id {id}", id);
+                localLog.Information("mappool beatmap list dialog clipboard event, found id {id}", id);
                 AddBeatmapInternal(id);
             }
         }
@@ -99,7 +101,7 @@ namespace script_chan2.GUI
         {
             if (string.IsNullOrEmpty(beatmapId))
                 return;
-            Log.Information("MappoolListItemViewModel: mappool beatmap list dialog: add beatmaps '{beatmaps}'", beatmapId);
+            localLog.Information("mappool beatmap list dialog: add beatmaps '{beatmaps}'", beatmapId);
             var beatmapIds = beatmapId.Split(';');
             foreach (var id in beatmapIds)
             {

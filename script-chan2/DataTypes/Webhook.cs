@@ -10,6 +10,8 @@ namespace script_chan2.DataTypes
 {
     public class Webhook
     {
+        private ILogger localLog = Log.ForContext<Webhook>();
+
         #region Constructor
         public Webhook(int id = 0)
         {
@@ -36,7 +38,7 @@ namespace script_chan2.DataTypes
         #region Actions
         public void Save()
         {
-            Log.Information("Webhook: '{name}' save", Name);
+            localLog.Information("'{name}' save", Name);
             if (Id == 0)
                 Id = Database.Database.AddWebhook(this);
             else
@@ -45,7 +47,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
-            Log.Information("Webhook: '{name}' delete", Name);
+            localLog.Information("'{name}' delete", Name);
             foreach (var tournament in Database.Database.Tournaments)
             {
                 tournament.RemoveWebhook(this);

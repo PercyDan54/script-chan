@@ -16,6 +16,8 @@ namespace script_chan2.GUI
 {
     class MatchListItemViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<MatchListItemViewModel>();
+
         #region Constructor
         public MatchListItemViewModel(Match match)
         {
@@ -46,7 +48,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void Edit()
         {
-            Log.Information("MatchListItemViewModel: match '{name}' edit dialog open", match.Name);
+            localLog.Information("match '{name}' edit dialog open", match.Name);
             var model = new EditMatchDialogViewModel(match.Id);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -55,6 +57,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save match '{match}'", match.Name);
                 match.Name = model.Name;
                 match.Mappool = model.Mappool;
                 match.GameMode = model.GameMode;
@@ -78,7 +81,7 @@ namespace script_chan2.GUI
 
         public async void Delete()
         {
-            Log.Information("MatchListItemViewModel: match '{name}' delete dialog open", match.Name);
+            localLog.Information("match '{name}' delete dialog open", match.Name);
             var model = new DeleteMatchDialogViewModel(match);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -87,6 +90,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("delete match '{match}'", match.Name);
                 match.Delete();
                 Events.Aggregator.PublishOnUIThread("DeleteMatch");
             }
@@ -96,7 +100,7 @@ namespace script_chan2.GUI
         {
             if (!MatchList.OpenedMatches.Contains(match))
             {
-                Log.Information("MatchListItemViewModel: open match '{name}'", match.Name);
+                localLog.Information("open match '{name}'", match.Name);
                 var windowManager = new WindowManager();
                 windowManager.ShowWindow(new MatchViewModel(match));
                 MatchList.OpenedMatches.Add(match);

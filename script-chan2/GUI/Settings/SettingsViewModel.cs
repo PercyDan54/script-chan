@@ -12,6 +12,8 @@ namespace script_chan2.GUI
 {
     public class SettingsViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<SettingsViewModel>();
+
         #region Properties
         private bool dirty;
         public bool Dirty
@@ -64,7 +66,7 @@ namespace script_chan2.GUI
 
         public void OpenApiKeyPage()
         {
-            Log.Information("SettingsViewModel: open api key page");
+            localLog.Information("open api key page");
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/api");
         }
 
@@ -92,7 +94,7 @@ namespace script_chan2.GUI
 
         public void CheckApiKey()
         {
-            Log.Information("SettingsViewModel: check api key");
+            localLog.Information("check api key");
             apiStatus = OsuApi.OsuApi.CheckApiKey(apiKey);
             NotifyOfPropertyChange(() => ApiWorks);
             NotifyOfPropertyChange(() => ApiError);
@@ -130,13 +132,13 @@ namespace script_chan2.GUI
 
         public void OpenIrcPage()
         {
-            Log.Information("SettingsViewModel: open irc credentials page");
+            localLog.Information("open irc credentials page");
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/irc");
         }
 
         public void CheckIrc()
         {
-            Log.Information("SettingsViewModel: check irc");
+            localLog.Information("check irc");
             NotifyOfPropertyChange(() => IrcIsConnected);
             NotifyOfPropertyChange(() => IrcIsDisconnected);
         }
@@ -258,7 +260,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Save()
         {
-            Log.Information("SettingsViewModel: settings save changes");
+            localLog.Information("save changes");
             Settings.Lang = lang;
             Settings.ApiKey = apiKey;
             Settings.IrcUsername = ircUsername;
@@ -273,7 +275,7 @@ namespace script_chan2.GUI
 
         public void Discard()
         {
-            Log.Information("SettingsViewModel: settings discard changes");
+            localLog.Information("discard changes");
             SelectedLanguage = Settings.Lang;
             ApiKey = Settings.ApiKey;
             IrcUsername = Settings.IrcUsername;

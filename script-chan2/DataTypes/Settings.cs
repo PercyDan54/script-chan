@@ -14,6 +14,8 @@ namespace script_chan2.DataTypes
 {
     public static class Settings
     {
+        private static ILogger localLog = Log.ForContext(typeof(Settings));
+
         public static string CONFIG_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "script_chan");
 
         private class Config
@@ -33,7 +35,7 @@ namespace script_chan2.DataTypes
 
         public static void SaveConfig()
         {
-            Log.Information("Settings: save config");
+            localLog.Information("save config");
             var config = new Config
             {
                 apiKey = ApiKey,
@@ -51,11 +53,11 @@ namespace script_chan2.DataTypes
 
         internal static void Initialize()
         {
-            Log.Information("Settings: initialize");
+            localLog.Information("initialize");
             Directory.CreateDirectory(CONFIG_PATH);
             if (!File.Exists(CONFIG_PATH + "\\config.json"))
             {
-                Log.Information("Settings: create config file");
+                localLog.Information("create config file");
                 var configNew = new Config
                 {
                     apiKey = "",
@@ -103,6 +105,7 @@ namespace script_chan2.DataTypes
                     UserColors.Add(new UserColor { Key = configColor.key, Color = (Color)ColorConverter.ConvertFromString(configColor.color) });
                 }
             }
+            localLog.Information("initialized");
         }
 
         private static string lang;

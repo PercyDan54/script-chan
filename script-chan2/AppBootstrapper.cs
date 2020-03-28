@@ -16,27 +16,35 @@ namespace script_chan2
 {
     public class AppBootstrapper : BootstrapperBase
     {
+        private ILogger localLog;
+
         public AppBootstrapper()
         {
-            Log.Information("AppBootstrapper: start");
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:u} [{Level}] ({SourceContext:1}) {Message}{NewLine}{Exception}")
                 .CreateLogger();
+
+            localLog = Log.ForContext<AppBootstrapper>();
+            localLog.Information("Logger initialized");
 
             Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
 
+            localLog.Information("Initialize DB");
             if (!DbCreator.DbExists)
                 DbCreator.CreateDb();
             Database.Database.Initialize();
 
+            localLog.Information("Initialize settings");
             Settings.Initialize();
 
+            localLog.Information("Login to irc");
             OsuIrc.OsuIrc.Login();
 
+            localLog.Information("Initialize app");
             Initialize();
 
-            Log.Information("AppBootstrapper: app started");
+            localLog.Information("app started");
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -77,12 +85,13 @@ namespace script_chan2
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
+            localLog.Information("Display root view");
             DisplayRootViewFor<MainViewModel>();
         }
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            Log.Information("AppBootstrapper: shutdown");
+            localLog.Information("app shutdown");
         }
     }
 }

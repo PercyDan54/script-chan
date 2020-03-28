@@ -13,6 +13,8 @@ namespace script_chan2.GUI
 {
     public class WebhookListItemViewModel : PropertyChangedBase
     {
+        private ILogger localLog = Log.ForContext<WebhookListItemViewModel>();
+
         #region Constructor
         public WebhookListItemViewModel(Webhook webhook)
         {
@@ -43,7 +45,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void Edit()
         {
-            Log.Information("WebhookListItemViewModel: webhook '{name}' edit dialog open", webhook.Name);
+            localLog.Information("webhook '{name}' edit dialog open", webhook.Name);
             var model = new EditWebhookDialogViewModel(webhook.Id);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -52,6 +54,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save webhook '{webhook}'", webhook.Name);
                 webhook.Name = model.Name;
                 webhook.URL = model.Url;
                 webhook.MatchCreated = model.MatchCreated;
@@ -65,7 +68,7 @@ namespace script_chan2.GUI
 
         public async void Delete()
         {
-            Log.Information("WebhookListItemViewModel: webhook '{name}' delete dialog open", webhook.Name);
+            localLog.Information("webhook '{name}' delete dialog open", webhook.Name);
             var model = new DeleteWebhookDialogViewModel(webhook);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -74,6 +77,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("delete webhook '{webhook}'", webhook.Name);
                 webhook.Delete();
                 Events.Aggregator.PublishOnUIThread("DeleteWebhook");
             }

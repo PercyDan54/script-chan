@@ -11,6 +11,8 @@ namespace script_chan2.DataTypes
 {
     public class Match
     {
+        private ILogger localLog = Log.ForContext<Match>();
+
         public Match(int id = 0)
         {
             Players = new Dictionary<Player, int>();
@@ -92,7 +94,7 @@ namespace script_chan2.DataTypes
 
         public void Save()
         {
-            Log.Information("Match: '{name}' save", Name);
+            localLog.Information("'{name}' save", Name);
             if (Id == 0)
                 Id = Database.Database.AddMatch(this);
             else
@@ -101,13 +103,13 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
-            Log.Information("Match: '{name}' delete", Name);
+            localLog.Information("'{name}' delete", Name);
             Database.Database.DeleteMatch(this);
         }
 
         public List<string> GetPlayerList()
         {
-            Log.Information("Match: '{name}' get player list", Name);
+            localLog.Information("'{name}' get player list", Name);
             var players = new List<string>();
 
             if (TeamMode == TeamModes.TeamVS)
@@ -128,19 +130,19 @@ namespace script_chan2.DataTypes
 
         public void ReloadMessages()
         {
-            Log.Information("Match: '{name}' reload messages", Name);
+            localLog.Information("'{name}' reload messages", Name);
             ChatMessages = Database.Database.GetIrcMessages(this);
         }
 
         public void ClearMessages()
         {
-            Log.Information("Match: '{name}' clear messages", Name);
+            localLog.Information("'{name}' clear messages", Name);
             ChatMessages.Clear();
         }
 
         public void UpdateScores()
         {
-            Log.Information("Match: '{name}' update scores", Name);
+            localLog.Information("'{name}' update scores", Name);
             OsuApi.OsuApi.UpdateGames(this);
             foreach (var game in Games.Where(x => !x.Counted))
             {

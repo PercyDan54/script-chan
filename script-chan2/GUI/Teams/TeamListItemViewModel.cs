@@ -16,6 +16,8 @@ namespace script_chan2.GUI
 {
     public class TeamListItemViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<TeamListItemViewModel>();
+
         #region Constructor
         public TeamListItemViewModel(Team team)
         {
@@ -46,7 +48,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void Edit()
         {
-            Log.Information("TeamListItemViewModel: team '{name}' edit dialog open", team.Name);
+            localLog.Information("team '{name}' edit dialog open", team.Name);
             var model = new EditTeamDialogViewModel(team.Id);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -55,6 +57,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save team '{team}'", team.Name);
                 team.Name = model.Name;
                 team.Save();
                 NotifyOfPropertyChange(() => Name);
@@ -63,7 +66,7 @@ namespace script_chan2.GUI
 
         public async void EditPlayers()
         {
-            Log.Information("TeamListItemViewModel: player list dialog of team '{team}' open", team.Name);
+            localLog.Information("player list dialog of team '{team}' open", team.Name);
             var model = new TeamPlayersDialogViewModel(team);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -75,7 +78,7 @@ namespace script_chan2.GUI
 
         public async void Delete()
         {
-            Log.Information("TeamListItemViewModel: team '{name}' delete dialog open", team.Name);
+            localLog.Information("team '{name}' delete dialog open", team.Name);
             var model = new DeleteTeamDialogViewModel(team);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -84,6 +87,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("delete team '{team}'", team.Name);
                 team.Delete();
                 Events.Aggregator.PublishOnUIThread("DeleteTeam");
             }

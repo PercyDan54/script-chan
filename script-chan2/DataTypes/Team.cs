@@ -10,6 +10,8 @@ namespace script_chan2.DataTypes
 {
     public class Team
     {
+        private ILogger localLog = Log.ForContext<Team>();
+
         public Team(int id = 0)
         {
             Players = new List<Player>();
@@ -25,7 +27,7 @@ namespace script_chan2.DataTypes
 
         public void AddPlayer(Player player)
         {
-            Log.Information("Team: '{name}' add player '{player}'", Name, player.Name);
+            localLog.Information("'{name}' add player '{player}'", Name, player.Name);
             if (!Players.Contains(player))
             {
                 Players.Add(player);
@@ -35,7 +37,7 @@ namespace script_chan2.DataTypes
 
         public void RemovePlayer(Player player)
         {
-            Log.Information("Team: '{name}' remove player '{player}'", Name, player.Name);
+            localLog.Information("'{name}' remove player '{player}'", Name, player.Name);
             if (Players.Remove(player))
             {
                 Database.Database.RemovePlayerFromTeam(player, this);
@@ -44,7 +46,7 @@ namespace script_chan2.DataTypes
 
         public void Save()
         {
-            Log.Information("Team: '{name}' save", Name);
+            localLog.Information("'{name}' save", Name);
             if (Id == 0)
                 Id = Database.Database.AddTeam(this);
             else
@@ -53,7 +55,7 @@ namespace script_chan2.DataTypes
 
         public void Delete()
         {
-            Log.Information("Team: '{name}' delete", Name);
+            localLog.Information("'{name}' delete", Name);
             Database.Database.DeleteTeam(this);
         }
     }

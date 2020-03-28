@@ -12,6 +12,8 @@ namespace script_chan2.GUI
 {
     public class TeamPlayerListItemViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<TeamPlayerListItemViewModel>();
+
         #region Constructor
         public TeamPlayerListItemViewModel(Team team, Player player)
         {
@@ -45,7 +47,7 @@ namespace script_chan2.GUI
         #region Actions
         public void Delete()
         {
-            Log.Information("TeamPlayerListItemViewModel: edit team '{team}' remove player '{player}'", team.Name, player.Name);
+            localLog.Information("edit team '{team}' remove player '{player}'", team.Name, player.Name);
             team.RemovePlayer(player);
             Events.Aggregator.PublishOnUIThread("RemovePlayerFromTeam");
         }

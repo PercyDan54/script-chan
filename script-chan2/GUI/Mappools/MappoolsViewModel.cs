@@ -12,6 +12,8 @@ namespace script_chan2.GUI
 {
     public class MappoolsViewModel : Screen, IHandle<string>
     {
+        private ILogger localLog = Log.ForContext<MappoolsViewModel>();
+
         #region Mappool list
         public BindableCollection<MappoolListItemViewModel> MappoolViews
         {
@@ -65,7 +67,7 @@ namespace script_chan2.GUI
             {
                 if (value != Settings.DefaultTournament)
                 {
-                    Log.Information("MappoolsViewModel: mappool list set filter");
+                    localLog.Information("set tournament filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     NotifyOfPropertyChange(() => MappoolViews);
@@ -77,7 +79,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void OpenNewMappoolDialog()
         {
-            Log.Information("MappoolsViewModel: new mappool dialog open");
+            localLog.Information("new mappool dialog open");
             var model = new EditMappoolDialogViewModel();
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -86,6 +88,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save new mappool '{mappool}'", model.Name);
                 var mappool = new Mappool()
                 {
                     Name = model.Name,

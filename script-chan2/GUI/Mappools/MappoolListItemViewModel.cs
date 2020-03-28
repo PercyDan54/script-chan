@@ -16,6 +16,8 @@ namespace script_chan2.GUI
 {
     public class MappoolListItemViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<MappoolListItemViewModel>();
+
         #region Constructor
         public MappoolListItemViewModel(Mappool mappool)
         {
@@ -47,7 +49,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void Edit()
         {
-            Log.Information("MappoolListItemViewModel: edit dialog of mappool '{mappool}' open", mappool.Name);
+            localLog.Information("edit dialog of mappool '{mappool}' open", mappool.Name);
             var model = new EditMappoolDialogViewModel(mappool.Id);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -56,6 +58,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save mappool '{mappool}'", mappool.Name);
                 mappool.Name = model.Name;
                 mappool.Save();
                 NotifyOfPropertyChange(() => Name);
@@ -64,7 +67,7 @@ namespace script_chan2.GUI
 
         public async void EditMaps()
         {
-            Log.Information("TeamListItemViewModel: beatmap list dialog of mappool '{mappool}' open", mappool.Name);
+            localLog.Information("beatmap list dialog of mappool '{mappool}' open", mappool.Name);
             var model = new MappoolBeatmapsDialogViewModel(mappool);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -76,7 +79,7 @@ namespace script_chan2.GUI
 
         public async void Delete()
         {
-            Log.Information("MappoolListItemViewModel: delete mappool '{mappool}'", mappool.Name);
+            localLog.Information("delete dialog of mappool '{mappool}' open", mappool.Name);
             var model = new DeleteMappoolDialogViewModel(mappool);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -85,6 +88,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("delete mappool '{mappool}'", mappool.Name);
                 mappool.Delete();
                 Events.Aggregator.PublishOnUIThread("DeleteMappool");
             }

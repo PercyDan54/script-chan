@@ -15,10 +15,12 @@ namespace script_chan2.OsuApi
 {
     public static class OsuApi
     {
+        private static ILogger localLog = Log.ForContext(typeof(OsuApi));
+
         #region API calls
         public static bool CheckApiKey(string key)
         {
-            Log.Information("OsuApi: check api key");
+            localLog.Information("check api key");
             var request = (HttpWebRequest)WebRequest.Create("https://osu.ppy.sh/api/get_user?u=2&k=" + key);
             try
             {
@@ -33,7 +35,7 @@ namespace script_chan2.OsuApi
 
         public static Beatmap GetBeatmap(int beatmapId)
         {
-            Log.Information("OsuApi: get beatmap {id}", beatmapId);
+            localLog.Information("get beatmap {id}", beatmapId);
             var response = SendRequest("get_beatmaps", "b=" + beatmapId);
             var data = JsonConvert.DeserializeObject<List<ApiBeatmap>>(response);
             if (data.Count == 0)
@@ -58,7 +60,7 @@ namespace script_chan2.OsuApi
 
         public static Player GetPlayer(string playerId)
         {
-            Log.Information("OsuApi: get player {id}", playerId);
+            localLog.Information("get player {id}", playerId);
             var response = SendRequest("get_user", "u=" + playerId);
             var data = JsonConvert.DeserializeObject<List<ApiPlayer>>(response);
             if (data.Count == 0)
@@ -77,7 +79,7 @@ namespace script_chan2.OsuApi
 
         public static void UpdateGames(Match match)
         {
-            Log.Information("OsuApi: refresh match {id}", match.RoomId);
+            localLog.Information("refresh match {id}", match.RoomId);
             var response = SendRequest("get_match", "mp=" + match.RoomId);
             var data = JsonConvert.DeserializeObject<ApiMatch>(response);
             foreach (var gameData in data.games)
@@ -126,7 +128,7 @@ namespace script_chan2.OsuApi
         {
             using (var webClient = new WebClient())
             {
-                Log.Information("OsuApi: send request 'https://osu.ppy.sh/api/" + method + "?" + parameters + "'");
+                localLog.Information("send request 'https://osu.ppy.sh/api/" + method + "?" + parameters + "'");
                 return webClient.DownloadString("https://osu.ppy.sh/api/" + method + "?k=" + Settings.ApiKey + "&" + parameters);
             }
         }

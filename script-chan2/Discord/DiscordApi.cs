@@ -12,9 +12,11 @@ namespace script_chan2.Discord
 {
     public static class DiscordApi
     {
+        private static ILogger localLog = Log.ForContext(typeof(DiscordApi));
+
         public static void SendMatchCreated(Match match)
         {
-            Log.Information("Discord: match '{match}' send room created", match.Name);
+            localLog.Information("match '{match}' send room created", match.Name);
             var embed = new EmbedBuilder
             {
                 Author = new EmbedAuthorBuilder
@@ -47,7 +49,7 @@ namespace script_chan2.Discord
 
         public static void SendMatchBanRecap(Match match)
         {
-            Log.Information("Discord: match '{match}' send ban recap", match.Name);
+            localLog.Information("match '{match}' send ban recap", match.Name);
             EmbedBuilder embed = null;
             if (match.TeamMode == Enums.TeamModes.TeamVS)
             {
@@ -135,7 +137,7 @@ namespace script_chan2.Discord
 
         public static void SendMatchPickRecap(Match match)
         {
-            Log.Information("Discord: match '{match}' send pick recap", match.Name);
+            localLog.Information("match '{match}' send pick recap", match.Name);
             EmbedBuilder embed = null;
             if (match.TeamMode == Enums.TeamModes.TeamVS)
             {
@@ -221,7 +223,7 @@ namespace script_chan2.Discord
 
         public static void SendGameRecap(Match match)
         {
-            Log.Information("Discord: match '{match}' send game recap", match.Name);
+            localLog.Information("match '{match}' send game recap", match.Name);
             EmbedBuilder embed = null;
             if (match.TeamMode == Enums.TeamModes.TeamVS)
             {

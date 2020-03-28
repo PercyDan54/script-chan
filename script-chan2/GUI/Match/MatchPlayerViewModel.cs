@@ -11,6 +11,8 @@ namespace script_chan2.GUI
 {
     public class MatchPlayerViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<MatchPlayerViewModel>();
+
         #region Constructor
         public MatchPlayerViewModel(Match match, Player player)
         {
@@ -38,7 +40,7 @@ namespace script_chan2.GUI
         #region Actions
         public void DecreasePoints()
         {
-            Log.Information("MatchPlayerViewModel: match '{match}' decrease points for player '{player}'", match.Name, Name);
+            localLog.Information("match '{match}' decrease points for player '{player}'", match.Name, Name);
             match.Players[player]--;
             match.Save();
             NotifyOfPropertyChange(() => Points);
@@ -46,7 +48,7 @@ namespace script_chan2.GUI
 
         public void IncreasePoints()
         {
-            Log.Information("MatchPlayerViewModel: match '{match}' increase points for player '{player}'", match.Name, Name);
+            localLog.Information("match '{match}' increase points for player '{player}'", match.Name, Name);
             match.Players[player]++;
             match.Save();
             NotifyOfPropertyChange(() => Points);

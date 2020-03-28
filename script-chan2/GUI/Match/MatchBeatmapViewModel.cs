@@ -13,6 +13,8 @@ namespace script_chan2.GUI
 {
     public class MatchBeatmapViewModel : Screen, IHandle<string>
     {
+        private ILogger localLog = Log.ForContext<MatchBeatmapViewModel>();
+
         #region Constructor
         public MatchBeatmapViewModel(Match match, MappoolMap beatmap)
         {
@@ -248,6 +250,7 @@ namespace script_chan2.GUI
         #region Actions
         public void MenuItemClick(MatchBeatmapMenuItem context)
         {
+            localLog.Information("beatmap '{beatmap}' click context menu item '{item}'", beatmap.Beatmap.Title, context.Name);
             if (context.Type == MatchBeatmapMenuItemTypes.Unban)
                 RemoveBan();
             else if (context.Type == MatchBeatmapMenuItemTypes.Unpick)
@@ -285,7 +288,7 @@ namespace script_chan2.GUI
 
         public void BanRed()
         {
-            Log.Information("MatchBeatmapViewModel: match '{match}' ban map by red", match.Name);
+            localLog.Information("match '{match}' ban beatmap '{beatmap}' by red", match.Name, beatmap.Beatmap.Title);
             match.Bans.Add(new MatchPick()
             {
                 Match = match,
@@ -301,7 +304,7 @@ namespace script_chan2.GUI
 
         public void BanBlue()
         {
-            Log.Information("MatchBeatmapViewModel: match '{match}' ban map by blue", match.Name);
+            localLog.Information("match '{match}' ban beatmap '{beatmap}' by blue", match.Name, beatmap.Beatmap.Title);
             match.Bans.Add(new MatchPick()
             {
                 Match = match,
@@ -317,7 +320,7 @@ namespace script_chan2.GUI
 
         public void BanPlayer(Player player)
         {
-            Log.Information("MatchBeatmapViewModel: match '{match}' ban map by player '{player}'", match.Name, player.Name);
+            localLog.Information("match '{match}' ban beatmap '{beatmap}' by player '{player}'", match.Name, beatmap.Beatmap.Title, player.Name);
             match.Bans.Add(new MatchPick()
             {
                 Match = match,
@@ -333,7 +336,7 @@ namespace script_chan2.GUI
 
         public void RemoveBan()
         {
-            Log.Information("MatchBeatmapViewModel: match '{match}' remove ban", match.Name);
+            localLog.Information("match '{match}' unban beatmap '{beatmap}'", match.Name, beatmap.Beatmap.Title);
             match.Bans.RemoveAll(x => x.Map == beatmap);
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
@@ -344,7 +347,7 @@ namespace script_chan2.GUI
 
         public void PickRed()
         {
-            Log.Information("MatchBeatmapViewModel: match '{match}' pick map by red", match.Name);
+            localLog.Information("match '{match}' pick beatmap '{beatmap}' by red", match.Name, beatmap.Beatmap.Title);
             match.Picks.Add(new MatchPick()
             {
                 Match = match,
@@ -361,7 +364,7 @@ namespace script_chan2.GUI
 
         public void PickBlue()
         {
-            Log.Information("MatchBeatmapViewModel: match '{match}' pick map by blue", match.Name);
+            localLog.Information("match '{match}' pick beatmap '{beatmap}' by blue", match.Name, beatmap.Beatmap.Title);
             match.Picks.Add(new MatchPick()
             {
                 Match = match,
@@ -378,7 +381,7 @@ namespace script_chan2.GUI
 
         public void PickPlayer(Player player)
         {
-            Log.Information("MatchBeatmapViewModel: match '{match}' pick map by player '{player}'", match.Name, player.Name);
+            localLog.Information("match '{match}' pick beatmap '{beatmap}' by player '{player}'", match.Name, beatmap.Beatmap.Title, player.Name);
             match.Picks.Add(new MatchPick()
             {
                 Match = match,
@@ -396,7 +399,7 @@ namespace script_chan2.GUI
 
         public void RemovePick()
         {
-            Log.Information("MatchBeatmapViewModel: match '{match}' remove pick", match.Name);
+            localLog.Information("match '{match}' unpick beatmap '{beatmap}'", match.Name, beatmap.Beatmap.Title);
             match.Picks.RemoveAll(x => x.Map == beatmap);
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
@@ -406,6 +409,7 @@ namespace script_chan2.GUI
 
         private void SendPickMessage()
         {
+            localLog.Information("match '{match}' send pick message for '{beatmap}'", match.Name, beatmap.Beatmap.Title);
             var mods = Utils.ConvertGameModsToString(beatmap.Mods);
             if (match.AllPicksFreemod && !mods.Contains("Freemod"))
                 mods += " Freemod";

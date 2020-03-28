@@ -49,26 +49,18 @@ namespace Test
         }
 
         [TestMethod]
-        public void GetMatch()
-        {
-            var room = OsuApi.GetMatch(48149847);
-            Assert.AreEqual("OWC2018: (United Kingdom) vs (United States)", room.Name, "Unexpected room name");
-            Assert.AreEqual("With a Dance Number", room.Games[0].Beatmap.Title, "Unexpected first map");
-            Assert.AreEqual(60224, room.Games[0].Scores.Find(x => x.Player.Name == "Vaxei").Points, "Unexpected score from Vaxei");
-            Assert.AreEqual(12, room.Games.Count, "Unexpected game count");
-            CollectionAssert.AreEqual(new List<GameMods> { GameMods.Hidden }, room.Games[0].Scores.Find(x => x.Player.Name == "Karthy").Mods, "Unexpected mods from Karthy");
-        }
-
-        [TestMethod]
         public void UpdateMatch()
         {
-            var room = new Room(48149847);
-            room.Refresh();
-            Assert.AreEqual("OWC2018: (United Kingdom) vs (United States)", room.Name, "Unexpected room name");
-            Assert.AreEqual("With a Dance Number", room.Games[0].Beatmap.Title, "Unexpected first map");
-            Assert.AreEqual(60224, room.Games[0].Scores.Find(x => x.Player.Name == "Vaxei").Points, "Unexpected score from Vaxei");
-            Assert.AreEqual(12, room.Games.Count, "Unexpected game count");
-            CollectionAssert.AreEqual(new List<GameMods> { GameMods.Hidden }, room.Games[0].Scores.Find(x => x.Player.Name == "Karthy").Mods, "Unexpected mods from Karthy");
+            var match = new Match()
+            {
+                Name = "TestMatch",
+                RoomId = 48149847
+            };
+            OsuApi.UpdateGames(match);
+            Assert.AreEqual("With a Dance Number", match.Games[0].Beatmap.Title, "Unexpected first map");
+            Assert.AreEqual(60224, match.Games[0].Scores.Find(x => x.Player.Name == "Vaxei").Points, "Unexpected score from Vaxei");
+            Assert.AreEqual(12, match.Games.Count, "Unexpected game count");
+            CollectionAssert.AreEqual(new List<GameMods> { GameMods.Hidden }, match.Games[0].Scores.Find(x => x.Player.Name == "Karthy").Mods, "Unexpected mods from Karthy");
         }
     }
 }

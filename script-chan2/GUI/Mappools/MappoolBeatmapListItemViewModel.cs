@@ -11,6 +11,8 @@ namespace script_chan2.GUI
 {
     public class MappoolBeatmapListItemViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<MappoolBeatmapListItemViewModel>();
+
         #region Constructor
         public MappoolBeatmapListItemViewModel(MappoolMap beatmap)
         {
@@ -138,21 +140,21 @@ namespace script_chan2.GUI
         #region Actions
         public void MoveUp()
         {
-            Log.Information("MappoolBeatmapListItemViewModel: mappool '{mappool}' move beatmap '{beatmap}' up", beatmap.Mappool.Name, beatmap.Beatmap.Id);
+            localLog.Information("mappool '{mappool}' move beatmap '{beatmap}' up", beatmap.Mappool.Name, beatmap.Beatmap.Id);
             beatmap.MoveUp();
             Events.Aggregator.PublishOnUIThread("MoveMappoolMap");
         }
 
         public void MoveDown()
         {
-            Log.Information("MappoolBeatmapListItemViewModel: mappool '{mappool}' move beatmap '{beatmap}' down", beatmap.Mappool.Name, beatmap.Beatmap.Id);
+            localLog.Information("mappool '{mappool}' move beatmap '{beatmap}' down", beatmap.Mappool.Name, beatmap.Beatmap.Id);
             beatmap.MoveDown();
             Events.Aggregator.PublishOnUIThread("MoveMappoolMap");
         }
 
         public void Delete()
         {
-            Log.Information("MappoolBeatmapListItemViewModel: mappool '{mappool}' delete beatmap '{beatmap}'", beatmap.Mappool.Name, beatmap.Beatmap.Id);
+            localLog.Information("mappool '{mappool}' delete beatmap '{beatmap}'", beatmap.Mappool.Name, beatmap.Beatmap.Id);
             beatmap.Delete();
             Events.Aggregator.PublishOnUIThread("DeleteMappoolMap");
         }

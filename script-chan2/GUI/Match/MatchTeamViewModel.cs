@@ -13,6 +13,8 @@ namespace script_chan2.GUI
 {
     public class MatchTeamViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<MatchTeamViewModel>();
+
         #region Constructor
         public MatchTeamViewModel(Match match, TeamColors teamColor)
         {
@@ -60,7 +62,7 @@ namespace script_chan2.GUI
         #region Actions
         public void DecreasePoints()
         {
-            Log.Information("MatchTeamViewModel: match '{match}' decrease points for team '{team}'", match.Name, Name);
+            localLog.Information("match '{match}' decrease points for team '{team}'", match.Name, Name);
             if (teamColor == TeamColors.Blue)
                 match.TeamBluePoints--;
             else
@@ -71,7 +73,7 @@ namespace script_chan2.GUI
 
         public void IncreasePoints()
         {
-            Log.Information("MatchTeamViewModel: match '{match}' increase points for team '{team}'", match.Name, Name);
+            localLog.Information("match '{match}' increase points for team '{team}'", match.Name, Name);
             if (teamColor == TeamColors.Blue)
                 match.TeamBluePoints++;
             else

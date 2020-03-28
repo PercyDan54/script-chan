@@ -14,6 +14,8 @@ namespace script_chan2.Database
 {
     public static class Database
     {
+        private static ILogger localLog = Log.ForContext(typeof(Database));
+
         public static List<Tournament> Tournaments = new List<Tournament>();
         public static List<Webhook> Webhooks = new List<Webhook>();
         public static List<Mappool> Mappools = new List<Mappool>();
@@ -24,7 +26,7 @@ namespace script_chan2.Database
 
         public static void Initialize()
         {
-            Log.Information("Database: init started");
+            localLog.Information("init started");
             InitTournaments();
             InitTournamentHeadToHeadPoints();
             InitTeams();
@@ -37,7 +39,7 @@ namespace script_chan2.Database
             InitMatchPlayers();
             InitMatchPicks();
             InitMatchGames();
-            Log.Information("Database: init finished");
+            localLog.Information("init finished");
         }
 
         private static SQLiteConnection GetConnection()
@@ -54,7 +56,7 @@ namespace script_chan2.Database
         #region Settings
         public static Dictionary<string, string> GetSettings()
         {
-            Log.Information("Database: getting settings");
+            localLog.Information("getting settings");
             var returnValue = new Dictionary<string, string>();
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT name, value FROM UserSettings", conn))
@@ -72,7 +74,7 @@ namespace script_chan2.Database
 
         public static void UpdateSettings(string name, string value)
         {
-            Log.Information("Database: updating settings");
+            localLog.Information("updating settings");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("UPDATE UserSettings SET value = @value WHERE name = @name", conn))
             {
@@ -87,7 +89,7 @@ namespace script_chan2.Database
         #region Tournaments
         private static void InitTournaments()
         {
-            Log.Information("Database: init tournaments");
+            localLog.Information("init tournaments");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, welcomeString FROM Tournaments", conn))
             using (var reader = command.ExecuteReader())
@@ -152,6 +154,7 @@ namespace script_chan2.Database
 
         public static void InitTournamentHeadToHeadPoints()
         {
+            localLog.Information("init head to head points");
             using (var conn = GetConnection())
             {
                 foreach (var tournament in Tournaments.Where(x => x.TeamMode == TeamModes.HeadToHead))
@@ -177,7 +180,7 @@ namespace script_chan2.Database
 
         public static int AddTournament(Tournament tournament)
         {
-            Log.Information("Database: add new tournament '{name}'", tournament.Name);
+            localLog.Information("add new tournament '{name}'", tournament.Name);
             int resultValue;
             using (var conn = GetConnection())
             {
@@ -225,7 +228,7 @@ namespace script_chan2.Database
 
         public static void DeleteTournament(Tournament tournament)
         {
-            Log.Information("Database: delete tournament '{name}'", tournament.Name);
+            localLog.Information("delete tournament '{name}'", tournament.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM Tournaments WHERE id = @id", conn))
             {
@@ -238,7 +241,7 @@ namespace script_chan2.Database
 
         public static void UpdateTournament(Tournament tournament)
         {
-            Log.Information("Database: update tournament '{name}'", tournament.Name);
+            localLog.Information("update tournament '{name}'", tournament.Name);
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand(@"UPDATE Tournaments
@@ -288,7 +291,7 @@ namespace script_chan2.Database
         #region Webhooks
         public static void InitWebhooks()
         {
-            Log.Information("Database: init webhooks");
+            localLog.Information("init webhooks");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap FROM Webhooks", conn))
             using (var reader = command.ExecuteReader())
@@ -320,7 +323,7 @@ namespace script_chan2.Database
 
         public static int AddWebhook(Webhook webhook)
         {
-            Log.Information("Database: add new webhook '{name}'", webhook.Name);
+            localLog.Information("add new webhook '{name}'", webhook.Name);
             int resultValue;
             using (var conn = GetConnection())
             {
@@ -346,7 +349,7 @@ namespace script_chan2.Database
 
         public static void DeleteWebhook(Webhook webhook)
         {
-            Log.Information("Database: delete webhook '{name}'", webhook.Name);
+            localLog.Information("delete webhook '{name}'", webhook.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM Webhooks WHERE id = @id", conn))
             {
@@ -359,7 +362,7 @@ namespace script_chan2.Database
 
         public static void UpdateWebhook(Webhook webhook)
         {
-            Log.Information("Database: update webhook '{name}'", webhook.Name);
+            localLog.Information("update webhook '{name}'", webhook.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE Webhooks
                 SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap
@@ -379,7 +382,7 @@ namespace script_chan2.Database
 
         private static void InitTournamentWebhooks()
         {
-            Log.Information("Database: init tournament webhooks");
+            localLog.Information("init tournament webhooks");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT tournament, webhook FROM WebhookLinks", conn))
             using (var reader = command.ExecuteReader())
@@ -399,7 +402,7 @@ namespace script_chan2.Database
 
         public static void AddWebhookToTournament(Webhook webhook, Tournament tournament)
         {
-            Log.Information("Database: add webhook '{webhook}' to tournament '{tournament}'", webhook.Name, tournament.Name);
+            localLog.Information("add webhook '{webhook}' to tournament '{tournament}'", webhook.Name, tournament.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"INSERT INTO WebhookLinks (tournament, webhook)
                 SELECT @tournament, @webhook
@@ -416,7 +419,7 @@ namespace script_chan2.Database
 
         public static void RemoveWebhookFromTournament(Webhook webhook, Tournament tournament)
         {
-            Log.Information("Database: remove webhook '{webhook}' from tournament '{tournament}'", webhook.Name, tournament.Name);
+            localLog.Information("remove webhook '{webhook}' from tournament '{tournament}'", webhook.Name, tournament.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM WebhookLinks WHERE webhook = @webhook AND tournament = @tournament", conn))
             {
@@ -431,7 +434,7 @@ namespace script_chan2.Database
         #region Mappools
         public static void InitMappools()
         {
-            Log.Information("Database: init mappools");
+            localLog.Information("init mappools");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, name, tournament FROM Mappools", conn))
             using (var reader = command.ExecuteReader())
@@ -455,7 +458,7 @@ namespace script_chan2.Database
 
         public static int AddMappool(Mappool mappool)
         {
-            Log.Information("Database: add new mappool '{name}'", mappool.Name);
+            localLog.Information("add new mappool '{name}'", mappool.Name);
             int resultValue;
             using (var conn = GetConnection())
             {
@@ -477,7 +480,7 @@ namespace script_chan2.Database
 
         public static void DeleteMappool(Mappool mappool)
         {
-            Log.Information("Database: delete mappool '{name}'", mappool.Name);
+            localLog.Information("delete mappool '{name}'", mappool.Name);
             using (var conn = GetConnection())
             using (var transaction = conn.BeginTransaction())
             {
@@ -499,7 +502,7 @@ namespace script_chan2.Database
 
         public static void UpdateMappool(Mappool mappool)
         {
-            Log.Information("Database: update mappool '{name}'", mappool.Name);
+            localLog.Information("update mappool '{name}'", mappool.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE Mappools
                 SET name = @name, tournament = @tournament
@@ -515,7 +518,7 @@ namespace script_chan2.Database
 
         public static void AddBeatmap(Beatmap beatmap)
         {
-            Log.Information("Database: add new beatmap '{id}'", beatmap.Id);
+            localLog.Information("add new beatmap '{id}'", beatmap.Id);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"INSERT INTO Beatmaps (id, beatmapsetId, artist, title, version, creator, bpm, ar, cs)
                 VALUES (@id, @beatmapsetId, @artist, @title, @version, @creator, @bpm, @ar, @cs)", conn))
@@ -536,7 +539,7 @@ namespace script_chan2.Database
 
         public static Beatmap GetBeatmap(int id)
         {
-            Log.Information("Database: get beatmap '{id}'", id);
+            localLog.Information("get beatmap '{id}'", id);
             Beatmap returnValue = Beatmaps.FirstOrDefault(x => x.Id == id);
             if (returnValue != null)
                 return returnValue;
@@ -587,7 +590,7 @@ namespace script_chan2.Database
 
         public static void InitMappoolMaps()
         {
-            Log.Information("Database: init mappool maps");
+            localLog.Information("init mappool maps");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, mappool, beatmap, listIndex, mods, tag FROM MappoolMaps ORDER BY listIndex ASC", conn))
             using (var reader = command.ExecuteReader())
@@ -622,7 +625,7 @@ namespace script_chan2.Database
 
         public static int AddMappoolMap(MappoolMap map)
         {
-            Log.Information("Database: add map '{map}' to mappool '{mappool}'", map.Beatmap.Id, map.Mappool.Name);
+            localLog.Information("add map '{map}' to mappool '{mappool}'", map.Beatmap.Id, map.Mappool.Name);
             int resultValue;
             using (var conn = GetConnection())
             {
@@ -646,7 +649,7 @@ namespace script_chan2.Database
 
         public static void DeleteMappoolMap(MappoolMap map)
         {
-            Log.Information("Database: remove mappool map '{map}' from mappool '{mappool}'", map.Beatmap.Id, map.Mappool.Name);
+            localLog.Information("remove mappool map '{map}' from mappool '{mappool}'", map.Beatmap.Id, map.Mappool.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM MappoolMaps WHERE id = @id", conn))
             {
@@ -658,7 +661,7 @@ namespace script_chan2.Database
 
         public static void UpdateMappoolMap(MappoolMap map)
         {
-            Log.Information("Database: update map '{map}' in mappool '{mappool}'", map.Beatmap.Id, map.Mappool.Name);
+            localLog.Information("update map '{map}' in mappool '{mappool}'", map.Beatmap.Id, map.Mappool.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE MappoolMaps
                 SET beatmap = @beatmap, listIndex = @listIndex, mods = @mods, tag = @tag
@@ -678,7 +681,7 @@ namespace script_chan2.Database
         #region Players
         public static void AddPlayer(Player player)
         {
-            Log.Information("Database: add new player '{name}'", player.Name);
+            localLog.Information("add new player '{name}'", player.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("INSERT OR REPLACE INTO Players (id, name, country) VALUES (@id, @name, @country)", conn))
             {
@@ -692,7 +695,7 @@ namespace script_chan2.Database
 
         public static Player GetPlayer(string idOrName)
         {
-            Log.Information("Database: get player '{name}'", idOrName);
+            localLog.Information("get player '{name}'", idOrName);
             Player returnValue = Players.FirstOrDefault(x => x.Id.ToString() == idOrName || x.Name == idOrName);
             if (returnValue != null)
                 return returnValue;
@@ -733,7 +736,7 @@ namespace script_chan2.Database
 
         public static void AddPlayerToTeam(Player player, Team team)
         {
-            Log.Information("Database: add player '{player}' to team '{team}'", player.Name, team.Name);
+            localLog.Information("add player '{player}' to team '{team}'", player.Name, team.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("INSERT INTO TeamPlayers (player, team) VALUES (@player, @team)", conn))
             {
@@ -746,7 +749,7 @@ namespace script_chan2.Database
 
         public static void RemovePlayerFromTeam(Player player, Team team)
         {
-            Log.Information("Database: remove player '{player}' from team '{team}'", player.Name, team.Name);
+            localLog.Information("remove player '{player}' from team '{team}'", player.Name, team.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM TeamPlayers WHERE player = @player AND team = @team", conn))
             {
@@ -761,7 +764,7 @@ namespace script_chan2.Database
         #region Teams
         public static void InitTeams()
         {
-            Log.Information("Database: init teams");
+            localLog.Information("init teams");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, name, tournament FROM Teams", conn))
             using (var reader = command.ExecuteReader())
@@ -785,7 +788,7 @@ namespace script_chan2.Database
 
         public static int AddTeam(Team team)
         {
-            Log.Information("Database: add team '{name}'", team.Name);
+            localLog.Information("add team '{name}'", team.Name);
             int resultValue;
             using (var conn = GetConnection())
             {
@@ -807,7 +810,7 @@ namespace script_chan2.Database
 
         public static void UpdateTeam(Team team)
         {
-            Log.Information("Database: update team '{name}'", team.Name);
+            localLog.Information("update team '{name}'", team.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("UPDATE Teams SET name = @name WHERE id = @id", conn))
             {
@@ -820,7 +823,7 @@ namespace script_chan2.Database
 
         public static void DeleteTeam(Team team)
         {
-            Log.Information("Database: delete team '{name}'", team.Name);
+            localLog.Information("delete team '{name}'", team.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM Teams WHERE id = @id", conn))
             {
@@ -833,7 +836,7 @@ namespace script_chan2.Database
 
         public static void InitTeamPlayers()
         {
-            Log.Information("Database: init team players");
+            localLog.Information("init team players");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT player, team FROM TeamPlayers", conn))
             using (var reader = command.ExecuteReader())
@@ -853,7 +856,7 @@ namespace script_chan2.Database
         #region Matches
         public static void InitMatches()
         {
-            Log.Information("Database: init matches");
+            localLog.Information("init matches");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
                 rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode FROM Matches", conn))
@@ -971,7 +974,7 @@ namespace script_chan2.Database
 
         public static int AddMatch(Match match)
         {
-            Log.Information("Database: add new match '{name}'", match.Name);
+            localLog.Information("add new match '{name}'", match.Name);
             int resultValue;
             using (var conn = GetConnection())
             using (var transaction = conn.BeginTransaction())
@@ -1111,7 +1114,7 @@ namespace script_chan2.Database
 
         public static void UpdateMatch(Match match)
         {
-            Log.Information("Database: update match '{name}'", match.Name);
+            localLog.Information("update match '{name}'", match.Name);
             using (var conn = GetConnection())
             using (var transaction = conn.BeginTransaction())
             {
@@ -1266,7 +1269,7 @@ namespace script_chan2.Database
 
         public static void DeleteMatch(Match match)
         {
-            Log.Information("Database: delete match '{name}'", match.Name);
+            localLog.Information("delete match '{name}'", match.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("DELETE FROM Matches WHERE id = @id", conn))
             {
@@ -1279,7 +1282,7 @@ namespace script_chan2.Database
 
         public static void InitMatchPlayers()
         {
-            Log.Information("Database: init match teams and players");
+            localLog.Information("init match teams and players");
             using (var conn = GetConnection())
             {
                 foreach (var match in Matches)
@@ -1306,7 +1309,7 @@ namespace script_chan2.Database
 
         public static void InitMatchPicks()
         {
-            Log.Information("Database: init match picks");
+            localLog.Information("init match picks");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT match, beatmap, picker, ban FROM MatchPicks", conn))
             using (var reader = command.ExecuteReader())
@@ -1340,7 +1343,7 @@ namespace script_chan2.Database
 
         public static void InitMatchGames()
         {
-            Log.Information("Database: init match games");
+            localLog.Information("init match games");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT id, match, beatmap, mods, counted FROM Games", conn))
             using (var reader = command.ExecuteReader())
@@ -1374,7 +1377,7 @@ namespace script_chan2.Database
 
         public static void AddIrcMessages(List<IrcMessage> messages)
         {
-            Log.Information("Database: add irc messages");
+            localLog.Information("add irc messages");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("INSERT INTO IrcMessages (match, timestamp, channel, user, message) VALUES (@match, @timestamp, @channel, @user, @message)", conn))
             using (var transaction = conn.BeginTransaction())
@@ -1398,7 +1401,7 @@ namespace script_chan2.Database
 
         public static List<IrcMessage> GetIrcMessages(Match match)
         {
-            Log.Information("Database: get irc messages for match '{match}'", match.Name);
+            localLog.Information("get irc messages for match '{match}'", match.Name);
             var messages = new List<IrcMessage>();
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT timestamp, channel, user, message FROM IrcMessages WHERE match = @match", conn))
@@ -1427,7 +1430,7 @@ namespace script_chan2.Database
 
         public static List<IrcMessage> GetIrcMessages(string channel)
         {
-            Log.Information("Database: get irc messages for channel '{channel}'", channel);
+            localLog.Information("get irc messages for channel '{channel}'", channel);
             var messages = new List<IrcMessage>();
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT timestamp, user, message FROM IrcMessages WHERE match IS NULL AND channel = @channel", conn))

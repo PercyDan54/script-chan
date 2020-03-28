@@ -17,6 +17,8 @@ namespace script_chan2.GUI
 {
     public class ChatViewModel : Screen, IHandle<object>
     {
+        private ILogger localLog = Log.ForContext<ChatViewModel>();
+
         #region Lists
         public BindableCollection<ChatUserViewModel> UserViews
         {
@@ -55,7 +57,7 @@ namespace script_chan2.GUI
             if (message is PrivateMessageData)
             {
                 var data = (PrivateMessageData)message;
-                Log.Information("ChatViewModel: irc message received '{message}' from user '{user}'", data.Message, data.User);
+                localLog.Information("irc message received '{message}' from user '{user}'", data.Message, data.User);
 
                 var ircMessage = new IrcMessage() { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
                 if (ircMessage.Channel != "Server")
@@ -119,6 +121,7 @@ namespace script_chan2.GUI
         #region Actions
         private void AddMessageToChat(IrcMessage message)
         {
+            localLog.Information("add message '{message}' to chat", message.Message);
             var paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202 };
             Chat.Blocks.Add(paragraph);
             NotifyOfPropertyChange(() => Chat);
@@ -159,6 +162,7 @@ namespace script_chan2.GUI
 
         private void ReloadChat()
         {
+            localLog.Information("reload chat");
             Execute.OnUIThread(() =>
             {
                 Chat = new FlowDocument
@@ -176,6 +180,7 @@ namespace script_chan2.GUI
 
         public void OpenChat(ChatUserViewModel dataContext)
         {
+            localLog.Information("open chat of user '{user}'", dataContext.UserChat.User);
             if (ChatList.GetActiveChat() == dataContext.UserChat)
                 return;
 
@@ -187,6 +192,7 @@ namespace script_chan2.GUI
 
         public void CloseChat(ChatUserViewModel dataContext)
         {
+            localLog.Information("close chat of user '{user}'", dataContext.UserChat.User);
             ChatList.RemoveChat(dataContext.UserChat);
             NotifyOfPropertyChange(() => UserViews);
 
@@ -200,6 +206,7 @@ namespace script_chan2.GUI
 
         public async void OpenNewChatDialog()
         {
+            localLog.Information("open new chat dialog");
             var model = new NewChatDialogViewModel();
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -208,6 +215,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("open new chat for user '{user}'", model.NewChatChannel);
                 if (!ChatList.UserChats.Any(x => x.User == model.NewChatChannel))
                 {
                     var newUserChat = new UserChat() { User = model.NewChatChannel };
@@ -226,7 +234,7 @@ namespace script_chan2.GUI
         {
             if (string.IsNullOrEmpty(ChatMessage))
                 return;
-            Log.Information("ChatViewModel: user '{user}' send irc message '{message}'", ChatList.GetActiveChat().User, ChatMessage);
+            localLog.Information("user '{user}' send irc message '{message}'", ChatList.GetActiveChat().User, ChatMessage);
             var message = ChatMessage;
             ChatMessage = "";
             OsuIrc.OsuIrc.SendMessage(ChatList.GetActiveChat().User, message);

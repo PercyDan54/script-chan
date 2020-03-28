@@ -354,9 +354,10 @@ namespace Test
             };
             team.Save();
 
-            Assert.AreEqual(team.Tournament, tournament, "Unexpected tournament");
-            Assert.AreEqual(team.Name, "TestTeam", "Unexpected name");
+            Assert.AreEqual(tournament, team.Tournament, "Unexpected tournament");
+            Assert.AreEqual("TestTeam", team.Name, "Unexpected name");
             Assert.IsTrue(tournament.Teams.Contains(team), "Tournament should contain team");
+            Assert.AreEqual(1, Database.Teams.Count, "Team should be created");
         }
 
         [TestMethod]
@@ -377,6 +378,28 @@ namespace Test
             team.Delete();
 
             Assert.IsFalse(tournament.Teams.Contains(team), "Tournament should not contain team");
+            Assert.AreEqual(0, Database.Teams.Count, "Team should be deleted");
+        }
+
+        public void UpdateTeam()
+        {
+            var tournament = new Tournament()
+            {
+                Name = "TestTournament"
+            };
+            tournament.Save();
+
+            var team = new Team()
+            {
+                Tournament = tournament,
+                Name = "TestTeam"
+            };
+            team.Save();
+
+            team.Name = "TestTeam2";
+            team.Save();
+
+            Assert.AreEqual("TestTeam2", Database.Teams[0].Name, "Team should be updated");
         }
 
         [TestMethod]
@@ -399,6 +422,7 @@ namespace Test
             team.AddPlayer(player);
 
             Assert.IsTrue(team.Players.Contains(player), "Team should contain player");
+            Assert.AreEqual(1, team.Players.Count, "Team should contain only 1 player");
         }
 
         [TestMethod]
@@ -422,6 +446,7 @@ namespace Test
             team.RemovePlayer(player);
 
             Assert.IsFalse(team.Players.Contains(player), "Team should not contain player");
+            Assert.AreEqual(0, team.Players.Count, "Team should contain no players");
         }
 
         [TestMethod]
@@ -434,6 +459,7 @@ namespace Test
             Assert.AreEqual(427166, beatmap.SetId, "Unexpected set id");
             Assert.AreEqual("The Azure Arbitrator", beatmap.Title, "Unexpected title");
             Assert.AreEqual("Chrono Collapse", beatmap.Version, "Unexpected version");
+            Assert.AreEqual(1, Database.Beatmaps.Count, "Database cache should contain 1 beatmap");
         }
 
         [TestMethod]
@@ -443,6 +469,7 @@ namespace Test
             Assert.AreEqual(3312177, player.Id, "Unexpected id");
             Assert.AreEqual("Borengar", player.Name, "Unexpected name");
             Assert.AreEqual("DE", player.Country, "Unexpected country");
+            Assert.AreEqual(1, Database.Players.Count, "Database cache should contain 1 player");
         }
 
         [TestMethod]
@@ -471,9 +498,9 @@ namespace Test
             list.Add(new IrcMessage() { Match = null, User = "User 9", Timestamp = DateTime.Now, Message = "Message 9" });
             list.Add(new IrcMessage() { Match = null, User = "User 10", Timestamp = DateTime.Now, Message = "Message 10" });
             Database.AddIrcMessages(list);
-            Assert.AreEqual(Database.GetIrcMessages(match).Count, 5, "Unexpected message count");
-            Assert.AreEqual(Database.GetIrcMessages("User 7").Count, 1, "Unexpected message count");
-            Assert.AreEqual(Database.GetIrcMessages("User 2").Count, 0, "Unexpected message count");
+            Assert.AreEqual(5, Database.GetIrcMessages(match).Count, "Unexpected message count");
+            Assert.AreEqual(1, Database.GetIrcMessages("User 7").Count, "Unexpected message count");
+            Assert.AreEqual(0, Database.GetIrcMessages("User 2").Count, "Unexpected message count");
         }
     }
 }

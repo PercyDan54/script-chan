@@ -15,6 +15,8 @@ namespace script_chan2.GUI
 {
     public class TeamPlayersDialogViewModel : Screen, IHandle<string>
     {
+        private ILogger localLog = Log.ForContext<TeamPlayersDialogViewModel>();
+
         #region Constructor
         public TeamPlayersDialogViewModel(Team team)
         {
@@ -49,7 +51,7 @@ namespace script_chan2.GUI
 
         public void Activate()
         {
-            Log.Information("TeamListItemViewModel: player list dialog of team '{team}' open", team.Name);
+            localLog.Information("player list dialog of team '{team}' open", team.Name);
             AddPlayerNameOrId = "";
             Clipboard.SetText("");
             clipboard = new SharpClipboard();
@@ -58,7 +60,7 @@ namespace script_chan2.GUI
 
         public void Deactivate()
         {
-            Log.Information("TeamListItemViewModel: player list dialog of team '{team}' close", team.Name);
+            localLog.Information("player list dialog of team '{team}' close", team.Name);
             clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
         }
 
@@ -74,7 +76,7 @@ namespace script_chan2.GUI
 
             if (int.TryParse(text, out int id))
             {
-                Log.Information("TeamListItemViewModel: team player list dialog clipboard event, found id {id}", id);
+                localLog.Information("team player list dialog clipboard event, found id {id}", id);
                 AddPlayerInternal(id.ToString());
             }
         }
@@ -99,6 +101,7 @@ namespace script_chan2.GUI
         {
             if (string.IsNullOrEmpty(AddPlayerNameOrId))
                 return;
+            localLog.Information("add players '{players}'", AddPlayerNameOrId);
             var playerList = AddPlayerNameOrId.Split(';');
             foreach (var playerId in playerList)
             {

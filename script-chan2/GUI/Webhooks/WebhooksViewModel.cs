@@ -12,6 +12,8 @@ namespace script_chan2.GUI
 {
     public class WebhooksViewModel : Screen, IHandle<string>
     {
+        private ILogger localLog = Log.ForContext<WebhooksViewModel>();
+
         #region Webhooks list
         public BindableCollection<WebhookListItemViewModel> WebhookViews
         {
@@ -43,6 +45,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void OpenNewWebhookDialog()
         {
+            localLog.Information("open new webhook dialog");
             var model = new EditWebhookDialogViewModel();
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -51,6 +54,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save new webhook '{webhook}'", model.Name);
                 var webhook = new Webhook()
                 {
                     Name = model.Name,

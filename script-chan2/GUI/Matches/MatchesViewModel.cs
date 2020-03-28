@@ -15,6 +15,8 @@ namespace script_chan2.GUI
 {
     class MatchesViewModel : Screen, IHandle<string>
     {
+        private ILogger localLog = Log.ForContext<MatchesViewModel>();
+
         #region Constructor
         protected override void OnActivate()
         {
@@ -70,7 +72,7 @@ namespace script_chan2.GUI
             {
                 if (value != Settings.DefaultTournament)
                 {
-                    Log.Information("MatchesViewModel: match list set tournament filter");
+                    localLog.Information("set tournament filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     NotifyOfPropertyChange(() => MatchViews);
@@ -91,7 +93,7 @@ namespace script_chan2.GUI
             {
                 if (value != filterStatus)
                 {
-                    Log.Information("MatchesViewModel: match list set status filter");
+                    localLog.Information("set status filter");
                     filterStatus = value;
                     NotifyOfPropertyChange(() => FilterStatus);
                     NotifyOfPropertyChange(() => MatchViews);
@@ -103,7 +105,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void OpenNewMatchDialog()
         {
-            Log.Information("MatchesViewModel: new match dialog open");
+            localLog.Information("new match dialog open");
             var model = new EditMatchDialogViewModel();
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -112,6 +114,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save new match '{match}'", model.Name);
                 var match = new Match()
                 {
                     Name = model.Name,

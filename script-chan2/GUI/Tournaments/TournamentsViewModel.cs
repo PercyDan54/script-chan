@@ -13,6 +13,8 @@ namespace script_chan2.GUI
 {
     public class TournamentsViewModel : Screen, IHandle<string>
     {
+        private ILogger localLog = Log.ForContext<TournamentsViewModel>();
+
         #region Tournaments list
         public BindableCollection<TournamentListItemViewModel> TournamentsViews
         {
@@ -44,6 +46,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void OpenNewTournamentDialog()
         {
+            localLog.Information("new tournament dialog open");
             var model = new EditTournamentDialogViewModel();
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -52,6 +55,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save new tournament '{tournament}'", model.Name);
                 var tournament = new Tournament()
                 {
                     Name = model.Name,

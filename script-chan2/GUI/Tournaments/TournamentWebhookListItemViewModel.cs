@@ -11,6 +11,8 @@ namespace script_chan2.GUI
 {
     public class TournamentWebhookListItemViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<TournamentWebhookListItemViewModel>();
+
         #region Constructor
         public TournamentWebhookListItemViewModel(Tournament tournament, Webhook webhook)
         {
@@ -36,12 +38,12 @@ namespace script_chan2.GUI
             {
                 if (value)
                 {
-                    Log.Information("TournamentWebhookListItemViewModel: add webhook '{webhook}' to tournament '{tournament}'", webhook.Name, tournament.Name);
+                    localLog.Information("add webhook '{webhook}' to tournament '{tournament}'", webhook.Name, tournament.Name);
                     tournament.AddWebhook(webhook);
                 }
                 else
                 {
-                    Log.Information("TournamentWebhookListItemViewModel: remove webhook '{webhook}' from tournament '{tournament}'", webhook.Name, tournament.Name);
+                    localLog.Information("remove webhook '{webhook}' from tournament '{tournament}'", webhook.Name, tournament.Name);
                     tournament.RemoveWebhook(webhook);
                 }
                 NotifyOfPropertyChange(() => Active);

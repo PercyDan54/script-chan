@@ -14,6 +14,8 @@ namespace script_chan2.GUI
 {
     public class TournamentListItemViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<TournamentListItemViewModel>();
+
         #region Constructor
         public TournamentListItemViewModel(Tournament tournament)
         {
@@ -45,7 +47,7 @@ namespace script_chan2.GUI
 
         public async void Edit()
         {
-            Log.Information("TournamentListItemViewModel: tournament '{name}' edit dialog open", tournament.Name);
+            localLog.Information("tournament '{name}' edit dialog open", tournament.Name);
             var model = new EditTournamentDialogViewModel(tournament.Id);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -54,6 +56,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save tournament '{name}'", tournament.Name);
                 tournament.Name = model.Name;
                 tournament.GameMode = model.GameMode;
                 tournament.TeamMode = model.TeamMode;
@@ -77,7 +80,7 @@ namespace script_chan2.GUI
 
         public async void EditWebhooks()
         {
-            Log.Information("TournamentListItemViewModel: tournament '{name}' edit webhooks dialog open", tournament.Name);
+            localLog.Information("tournament '{name}' edit webhooks dialog open", tournament.Name);
             var model = new TournamentWebhooksDialogViewModel(tournament);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -87,7 +90,7 @@ namespace script_chan2.GUI
 
         public async void Delete()
         {
-            Log.Information("TournamentListItemViewModel: tournament '{name}' delete dialog open", tournament.Name);
+            localLog.Information("tournament '{name}' delete dialog open", tournament.Name);
             var model = new DeleteTournamentDialogViewModel(tournament);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -96,6 +99,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("delete tournament '{tournament}'", tournament.Name);
                 tournament.Delete();
                 Events.Aggregator.PublishOnUIThread("DeleteTournament");
             }

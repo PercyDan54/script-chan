@@ -15,6 +15,7 @@ namespace script_chan2.OsuIrc
 {
     public static class OsuIrc
     {
+        private static ILogger localLog = Log.ForContext(typeof(OsuIrc));
         private static ILogger log = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.File("logs\\irc.txt", rollingInterval: RollingInterval.Day)
@@ -34,7 +35,7 @@ namespace script_chan2.OsuIrc
 
         public static void Login()
         {
-            Log.Information("OsuIrc: login");
+            localLog.Information("login");
             IsConnected = false;
             if (Settings.IrcUsername == null || Settings.IrcPassword == null)
                 return;
@@ -81,7 +82,7 @@ namespace script_chan2.OsuIrc
             }
             catch (Exception ex)
             {
-                Log.Information("OsuIrc: " + ex.Message);
+                localLog.Error(ex, "Irc exception caught");
             }
         }
 
@@ -136,14 +137,14 @@ namespace script_chan2.OsuIrc
 
         private static void Client_ExceptionThrown(object sender, ExceptionEventArgs e)
         {
-            Log.Error("OsuIrc: " + e.Exception.Message);
+            localLog.Error(e.Exception, "Irc exception caught");
             client.Disconnect();
             IsConnected = false;
         }
 
         private static void Client_OnConnect(object sender, EventArgs e)
         {
-            Log.Information("OsuIrc: connected");
+            localLog.Information("connected");
             IsConnected = true;
         }
 

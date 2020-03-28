@@ -13,6 +13,8 @@ namespace script_chan2.GUI
 {
     public class ColorListItemViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<ColorListItemViewModel>();
+
         #region Constructor
         public ColorListItemViewModel(UserColor userColor)
         {
@@ -37,7 +39,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void Edit()
         {
-            Log.Information("ColorListItemViewModel: edit color '{name}'", userColor.Key);
+            localLog.Information("open editor for color '{name}'", userColor.Key);
             var model = new EditColorDialogViewModel(userColor.Color);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -46,6 +48,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save color '{name}'", userColor.Key);
                 userColor.Color = model.Color;
                 NotifyOfPropertyChange(() => Color);
                 Settings.SaveConfig();

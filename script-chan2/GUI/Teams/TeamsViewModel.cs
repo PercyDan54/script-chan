@@ -12,6 +12,8 @@ namespace script_chan2.GUI
 {
     public class TeamsViewModel : Screen, IHandle<string>
     {
+        private ILogger localLog = Log.ForContext<TeamsViewModel>();
+
         #region Teams list
         public BindableCollection<TeamListItemViewModel> TeamViews
         {
@@ -65,7 +67,7 @@ namespace script_chan2.GUI
             {
                 if (value != Settings.DefaultTournament)
                 {
-                    Log.Information("TeamsViewModel: team list set tournament filter");
+                    localLog.Information("set tournament filter");
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     NotifyOfPropertyChange(() => TeamViews);
@@ -77,6 +79,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void OpenNewTeamDialog()
         {
+            localLog.Information("open new team dialog");
             var model = new EditTeamDialogViewModel();
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
@@ -85,6 +88,7 @@ namespace script_chan2.GUI
 
             if (result)
             {
+                localLog.Information("save new team '{team}'", model.Name);
                 var team = new Team()
                 {
                     Name = model.Name,

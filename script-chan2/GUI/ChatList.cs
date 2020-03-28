@@ -1,4 +1,5 @@
 ﻿using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace script_chan2.GUI
 {
     public static class ChatList
     {
+        private static ILogger localLog = Log.ForContext(typeof(ChatList));
+
         static ChatList()
         {
             UserChats.Add(new UserChat { User = "Server", Active = true });
@@ -23,6 +26,7 @@ namespace script_chan2.GUI
 
         public static void ActivateChat(UserChat userChat)
         {
+            localLog.Information("activate chat '{chat}'", userChat.User);
             foreach (var chat in UserChats)
                 chat.Active = false;
             userChat.Activate();
@@ -30,6 +34,7 @@ namespace script_chan2.GUI
 
         public static void RemoveChat(UserChat userChat)
         {
+            localLog.Information("remove chat '{chat}'", userChat.User);
             if (GetActiveChat() == userChat)
             {
                 foreach (var chat in UserChats)
