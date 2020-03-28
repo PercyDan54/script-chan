@@ -480,6 +480,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Teams\TeamWikiImportDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Tournaments\DeleteTournamentDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -532,6 +536,7 @@
     <Compile Include="GUI\Teams\TeamPlayerListItemViewModel.cs" />
     <Compile Include="GUI\Teams\TeamPlayersDialogViewModel.cs" />
     <Compile Include="GUI\Teams\TeamsViewModel.cs" />
+    <Compile Include="GUI\Teams\TeamWikiImportDialogViewModel.cs" />
     <Compile Include="GUI\Tournaments\DeleteTournamentDialogViewModel.cs" />
     <Compile Include="GUI\Tournaments\EditTournamentDialogViewModel.cs" />
     <Compile Include="GUI\Tournaments\TournamentListItemViewModel.cs" />

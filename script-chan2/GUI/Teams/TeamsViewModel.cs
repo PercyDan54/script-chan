@@ -45,6 +45,8 @@ namespace script_chan2.GUI
                 NotifyOfPropertyChange(() => TeamViews);
             else if (message == "UpdateDefaultTournament")
                 NotifyOfPropertyChange(() => FilterTournament);
+            else if (message == "AddTeam")
+                NotifyOfPropertyChange(() => TeamViews);
         }
         #endregion
 
@@ -98,6 +100,16 @@ namespace script_chan2.GUI
                 Settings.DefaultTournament = model.Tournament;
                 NotifyOfPropertyChange(() => TeamViews);
             }
+        }
+
+        public async void OpenWikiImportDialog()
+        {
+            localLog.Information("open wiki import dialog");
+            var model = new TeamWikiImportDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            await DialogHost.Show(view);
         }
         #endregion
     }

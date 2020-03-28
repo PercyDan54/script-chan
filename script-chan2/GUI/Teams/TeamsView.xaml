@@ -13,7 +13,10 @@
             <RowDefinition Height="40" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button x:Name="OpenNewTeamDialog" Content="New" HorizontalAlignment="Left" />
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button x:Name="OpenNewTeamDialog" Content="New" />
+            <Button x:Name="OpenWikiImportDialog" Content="Import from wiki" Margin="10 0 0 0" />
+        </StackPanel>
         <ComboBox HorizontalAlignment="Right" md:HintAssist.Hint="Tournament" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
