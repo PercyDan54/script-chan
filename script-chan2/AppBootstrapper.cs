@@ -24,6 +24,8 @@ namespace script_chan2
                 .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
+            Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
+
             if (!DbCreator.DbExists)
                 DbCreator.CreateDb();
             Database.Database.Initialize();
@@ -35,6 +37,12 @@ namespace script_chan2
             Initialize();
 
             Log.Information("AppBootstrapper: app started");
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            Log.Error(e.Exception, "Unhandled exception");
+            MessageBox.Show("Unhandled exception caught. See logs for more details.");
         }
 
         protected override void Configure()
