@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace script_chan2.GUI
 {
@@ -50,6 +51,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => HasModFreemod);
             NotifyOfPropertyChange(() => HasModTiebreaker);
             NotifyOfPropertyChange(() => HasModNF);
+            NotifyOfPropertyChange(() => Background);
         }
 
         public bool HasModHD
@@ -133,6 +135,30 @@ namespace script_chan2.GUI
                     beatmap.RemoveMod(Enums.GameMods.NoFail);
                 beatmap.Save();
                 UpdateMods();
+            }
+        }
+
+        public Brush Background
+        {
+            get
+            {
+                var brush = new LinearGradientBrush();
+                for (var i = 0; i < beatmap.Mods.Count; i++)
+                {
+                    Brush brushToAdd = Brushes.White;
+                    switch (beatmap.Mods[i])
+                    {
+                        case Enums.GameMods.Hidden: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "HD").Color); break;
+                        case Enums.GameMods.HardRock: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "HR").Color); break;
+                        case Enums.GameMods.DoubleTime: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "DT").Color); break;
+                        case Enums.GameMods.Flashlight: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "FL").Color); break;
+                        case Enums.GameMods.Freemod: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "Freemod").Color); break;
+                        case Enums.GameMods.TieBreaker: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "Tiebreaker").Color); break;
+                        case Enums.GameMods.NoFail: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "NoFail").Color); break;
+                    }
+                    brush.GradientStops.Add(new GradientStop(((SolidColorBrush)brushToAdd).Color, 1f / (beatmap.Mods.Count - 1) * i));
+                }
+                return brush;
             }
         }
         #endregion
