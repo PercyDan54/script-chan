@@ -1,7 +1,10 @@
 ﻿using Caliburn.Micro;
+using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +19,11 @@ namespace script_chan2.GUI
             ExportItems = new BindableCollection<ExportItem>();
             foreach (var tournament in Database.Database.Tournaments)
             {
-                var tournamentItem = new ExportItem { Type = ExportItemTypes.Tournament, Id = tournament.Id, Name = tournament.Name };
+                var tournamentItem = new ExportItem { Id = tournament.Id, Name = tournament.Name };
                 var teamsCategory = new ExportCategory { Name = "Teams", Parent = tournamentItem };
                 foreach (var team in tournament.Teams)
                 {
-                    var teamItem = new ExportItem { Type = ExportItemTypes.Team, Id = team.Id, Name = team.Name, Parent = teamsCategory };
+                    var teamItem = new ExportItem { Id = team.Id, Name = team.Name, Parent = teamsCategory };
                     teamsCategory.ExportItems.Add(teamItem);
                 }
                 tournamentItem.ExportCategories.Add(teamsCategory);
@@ -28,7 +31,7 @@ namespace script_chan2.GUI
                 var webhooksCategory = new ExportCategory { Name = "Webhooks", Parent = tournamentItem };
                 foreach (var webhook in tournament.Webhooks)
                 {
-                    var webhookItem = new ExportItem { Type = ExportItemTypes.Webhook, Id = webhook.Id, Name = webhook.Name, Parent = webhooksCategory };
+                    var webhookItem = new ExportItem { Id = webhook.Id, Name = webhook.Name, Parent = webhooksCategory };
                     webhooksCategory.ExportItems.Add(webhookItem);
                 }
                 tournamentItem.ExportCategories.Add(webhooksCategory);
@@ -36,7 +39,7 @@ namespace script_chan2.GUI
                 var mappoolsCategory = new ExportCategory { Name = "Mappools", Parent = tournamentItem };
                 foreach (var mappool in tournament.Mappools)
                 {
-                    var mappoolItem = new ExportItem { Type = ExportItemTypes.Mappool, Id = mappool.Id, Name = mappool.Name, Parent = mappoolsCategory };
+                    var mappoolItem = new ExportItem { Id = mappool.Id, Name = mappool.Name, Parent = mappoolsCategory };
                     mappoolsCategory.ExportItems.Add(mappoolItem);
                 }
                 tournamentItem.ExportCategories.Add(mappoolsCategory);
@@ -44,7 +47,7 @@ namespace script_chan2.GUI
                 var matchesCategory = new ExportCategory { Name = "Matches", Parent = tournamentItem };
                 foreach (var match in Database.Database.Matches.Where(x => x.Tournament == tournament))
                 {
-                    var matchItem = new ExportItem { Type = ExportItemTypes.Match, Id = match.Id, Name = match.Name, Parent = matchesCategory };
+                    var matchItem = new ExportItem { Id = match.Id, Name = match.Name, Parent = matchesCategory };
                     matchesCategory.ExportItems.Add(matchItem);
                 }
                 tournamentItem.ExportCategories.Add(matchesCategory);
@@ -56,14 +59,181 @@ namespace script_chan2.GUI
         #endregion
 
         #region Properties
-        public bool ExportEnabled
-        {
-            get { return true; }
-        }
+        public BindableCollection<ExportItem> ExportItems { get; set; }
         #endregion
 
-        #region Tree items
-        public BindableCollection<ExportItem> ExportItems { get; set; }
+        #region Actions
+        public void Export()
+        {
+            var anythingToSave = false;
+            foreach (var tournament in ExportItems)
+            {
+                if (tournament.Export)
+                {
+                    anythingToSave = true;
+                    break;
+                }
+            }
+            if (!anythingToSave)
+                return;
+
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "json file (*.json)|*.json";
+            if (saveFileDialog.ShowDialog() != true)
+                return;
+            var filePath = saveFileDialog.FileName;
+
+            var tournaments = new List<object>();
+            foreach (var tournamentItem in ExportItems.Where(x => x.Export))
+            {
+                var tournamentData = Database.Database.Tournaments.First(x => x.Id == tournamentItem.Id);
+                var tournamentObject = new
+                {
+                    Name = tournamentData.Name,
+                    GameMode = tournamentData.GameMode.ToString(),
+                    TeamMode = tournamentData.TeamMode.ToString(),
+                    WinCondition = tournamentData.WinCondition.ToString(),
+                    Acronym = tournamentData.Acronym,
+                    TeamSize = tournamentData.TeamSize,
+                    RoomSize = tournamentData.RoomSize,
+                    PointsForSecondBan = tournamentData.PointsForSecondBan,
+                    AllPicksFreemod = tournamentData.AllPicksFreemod,
+                    MpTimerCommand = tournamentData.MpTimerCommand,
+                    MpTimerAfterGame = tournamentData.MpTimerAfterGame,
+                    MpTimerAfterPick = tournamentData.MpTimerAfterPick,
+                    WelcomeString = tournamentData.WelcomeString,
+                    Teams = new List<object>(),
+                    Webhooks = new List<object>(),
+                    Mappools = new List<object>(),
+                    Matches = new List<object>()
+                };
+
+                foreach (var teamItem in tournamentItem.ExportCategories.First(x => x.Name == "Teams").ExportItems.Where(x => x.Export))
+                {
+                    var teamData = tournamentData.Teams.First(x => x.Id == teamItem.Id);
+                    var teamObject = new
+                    {
+                        Name = teamData.Name,
+                        Players = new List<object>()
+                    };
+
+                    foreach (var player in teamData.Players)
+                    {
+                        var playerObject = new
+                        {
+                            Id = player.Id,
+                            Name = player.Name,
+                            Country = player.Country
+                        };
+
+                        teamObject.Players.Add(playerObject);
+                    }
+
+                    tournamentObject.Teams.Add(teamObject);
+                }
+
+                foreach (var webhookItem in tournamentItem.ExportCategories.First(x => x.Name == "Webhooks").ExportItems.Where(x => x.Export))
+                {
+                    var webhookData = tournamentData.Webhooks.First(x => x.Id == webhookItem.Id);
+                    var webhookObject = new
+                    {
+                        Name = webhookData.Name,
+                        URL = webhookData.URL,
+                        MatchCreated = webhookData.MatchCreated,
+                        BanRecap = webhookData.BanRecap,
+                        PickRecap = webhookData.PickRecap,
+                        GameRecap = webhookData.GameRecap
+                    };
+
+                    tournamentObject.Webhooks.Add(webhookObject);
+                }
+
+                foreach (var mappoolItem in tournamentItem.ExportCategories.First(x => x.Name == "Mappools").ExportItems.Where(x => x.Export))
+                {
+                    var mappoolData = tournamentData.Mappools.First(x => x.Id == mappoolItem.Id);
+                    var mappoolObject = new
+                    {
+                        Name = mappoolData.Name,
+                        Maps = new List<object>()
+                    };
+
+                    foreach (var mappoolMap in mappoolData.Beatmaps)
+                    {
+                        var mappoolMapObject = new
+                        {
+                            Beatmap = new
+                            {
+                                Id = mappoolMap.Beatmap.Id,
+                                SetId = mappoolMap.Beatmap.SetId,
+                                Artist = mappoolMap.Beatmap.Artist,
+                                Title = mappoolMap.Beatmap.Title,
+                                Version = mappoolMap.Beatmap.Version,
+                                Creator = mappoolMap.Beatmap.Creator,
+                                BPM = mappoolMap.Beatmap.BPM,
+                                AR = mappoolMap.Beatmap.AR,
+                                CS = mappoolMap.Beatmap.CS
+                            },
+                            Tag = mappoolMap.Tag,
+                            ListIndex = mappoolMap.ListIndex,
+                            Mods = Utils.ConvertGameModsToString(mappoolMap.Mods)
+                        };
+
+                        mappoolObject.Maps.Add(mappoolMapObject);
+                    }
+
+                    tournamentObject.Mappools.Add(mappoolObject);
+                }
+
+                foreach (var matchItem in tournamentItem.ExportCategories.First(x => x.Name == "Matches").ExportItems.Where(x => x.Export))
+                {
+                    var matchData = Database.Database.Matches.First(x => x.Id == matchItem.Id);
+                    var matchObject = new
+                    {
+                        Name = matchData.Name,
+                        Mappool = matchData.Mappool != null ? matchData.Mappool.Name : "",
+                        GameMode = matchData.GameMode.ToString(),
+                        TeamMode = matchData.TeamMode.ToString(),
+                        WinCondition = matchData.WinCondition.ToString(),
+                        TeamBlue = matchData.TeamBlue != null ? matchData.TeamBlue.Name : "",
+                        TeamRed = matchData.TeamRed != null ? matchData.TeamRed.Name : "",
+                        TeamSize = matchData.TeamSize,
+                        RoomSize = matchData.RoomSize,
+                        RollWinnerTeam = matchData.RollWinnerTeam != null ? matchData.RollWinnerTeam.Name : "",
+                        RollWinnerPlayer = matchData.RollWinnerPlayer != null ? matchData.RollWinnerPlayer.Name : "",
+                        FirstPickerTeam = matchData.FirstPickerTeam != null ? matchData.FirstPickerTeam.Name : "",
+                        FirstPickerPlayer = matchData.FirstPickerPlayer != null ? matchData.FirstPickerPlayer.Name : "",
+                        BO = matchData.BO,
+                        EnableWebhooks = matchData.EnableWebhooks,
+                        MpTimerCommand = matchData.MpTimerCommand,
+                        MpTimerAfterGame = matchData.MpTimerAfterGame,
+                        MpTimerAfterPick = matchData.MpTimerAfterPick,
+                        PointsForSecondBan = matchData.PointsForSecondBan,
+                        AllPicksFreemod = matchData.AllPicksFreemod,
+                        WarmupMode = matchData.WarmupMode,
+                        Players = new List<object>()
+                    };
+
+                    foreach (var player in matchData.Players)
+                    {
+                        var playerObject = new
+                        {
+                            Id = player.Key.Id,
+                            Name = player.Key.Name,
+                            Country = player.Key.Country
+                        };
+
+                        matchObject.Players.Add(playerObject);
+                    }
+
+                    tournamentObject.Matches.Add(matchObject);
+                }
+
+                tournaments.Add(tournamentObject);
+            }
+
+            var jObject = JArray.FromObject(tournaments);
+            File.WriteAllText(filePath, jObject.ToString());
+        }
         #endregion
     }
 
@@ -75,7 +245,6 @@ namespace script_chan2.GUI
             Export = false;
         }
 
-        public ExportItemTypes Type { get; set; }
         private bool export;
         public bool Export
         {
@@ -142,14 +311,5 @@ namespace script_chan2.GUI
         public string Name { get; set; }
         public BindableCollection<ExportItem> ExportItems { get; set; }
         public ExportItem Parent { get; set; }
-    }
-
-    public enum ExportItemTypes
-    {
-        Tournament,
-        Webhook,
-        Team,
-        Mappool,
-        Match
     }
 }
