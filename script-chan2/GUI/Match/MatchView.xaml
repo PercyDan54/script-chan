@@ -51,7 +51,7 @@
                 <md:PackIcon Kind="Close" />
             </Button>
         </Grid>
-        <md:DialogHost Grid.Row="1" Identifier="MatchDialogHost">
+        <md:DialogHost Grid.Row="1" Identifier="{Binding DialogIdentifier}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

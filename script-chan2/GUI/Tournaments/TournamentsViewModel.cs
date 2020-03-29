@@ -51,7 +51,7 @@ namespace script_chan2.GUI
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
 
-            var result = Convert.ToBoolean(await DialogHost.Show(view));
+            var result = Convert.ToBoolean(await DialogHost.Show(view, "MainDialogHost"));
 
             if (result)
             {

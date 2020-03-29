@@ -15,7 +15,7 @@
         FontFamily="{md:MaterialDesignFont}"
         mc:Ignorable="d"
         Title="Script-chan" Height="700" Width="1000">
-    <md:DialogHost>
+    <md:DialogHost Identifier="MainDialogHost">
         <md:DrawerHost IsLeftDrawerOpen="{Binding DrawerExpanded}">
             <md:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="212">

@@ -300,6 +300,11 @@ namespace script_chan2.GUI
             get { return match.Name; }
         }
 
+        public string DialogIdentifier
+        {
+            get { return "MatchDialogHost" + match.Id; }
+        }
+
         public Visibility TeamVsVisible
         {
             get
@@ -659,7 +664,7 @@ namespace script_chan2.GUI
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
 
-            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+            var result = Convert.ToBoolean(await DialogHost.Show(view, DialogIdentifier));
 
             if (result)
             {
@@ -681,7 +686,7 @@ namespace script_chan2.GUI
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
 
-            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+            var result = Convert.ToBoolean(await DialogHost.Show(view, DialogIdentifier));
 
             if (result)
             {
@@ -754,7 +759,7 @@ namespace script_chan2.GUI
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
 
-            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+            var result = Convert.ToBoolean(await DialogHost.Show(view, DialogIdentifier));
 
             if (result)
             {
@@ -770,7 +775,7 @@ namespace script_chan2.GUI
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
 
-            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+            var result = Convert.ToBoolean(await DialogHost.Show(view, DialogIdentifier));
 
             if (result)
             {
@@ -887,7 +892,7 @@ namespace script_chan2.GUI
             model.TeamSize = match.TeamSize;
             model.RoomSize = match.RoomSize;
 
-            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+            var result = Convert.ToBoolean(await DialogHost.Show(view, DialogIdentifier));
 
             if (result)
             {
