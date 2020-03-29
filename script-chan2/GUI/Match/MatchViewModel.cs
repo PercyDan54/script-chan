@@ -257,7 +257,7 @@ namespace script_chan2.GUI
                     if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
                     {
                         UpdateScore();
-                        if (!match.WarmupMode)
+                        if (!match.WarmupMode && match.EnableWebhooks)
                         {
                             DiscordApi.SendGameRecap(match);
                         }
