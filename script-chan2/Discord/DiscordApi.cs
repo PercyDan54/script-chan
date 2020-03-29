@@ -30,8 +30,8 @@ namespace script_chan2.Discord
                 Description = $"You can join the match on IRC by typing ```/join #mp_{match.RoomId}```",
                 Footer = new EmbedFooterBuilder
                 {
-                    Text = "Woah! So cool! :smirk:",
-                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                    Text = "Woah! So cool!",
+                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
                 }
             };
 
@@ -84,8 +84,8 @@ namespace script_chan2.Discord
 
                 embed.Footer = new EmbedFooterBuilder
                 {
-                    Text = "Woah! So cool! :smirk:",
-                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                    Text = "Woah! So cool!",
+                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
                 };
             }
             else
@@ -118,8 +118,8 @@ namespace script_chan2.Discord
 
                 embed.Footer = new EmbedFooterBuilder
                 {
-                    Text = "Woah! So cool! :smirk:",
-                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                    Text = "Woah! So cool!",
+                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
                 };
             }
 
@@ -173,8 +173,8 @@ namespace script_chan2.Discord
 
                 embed.Footer = new EmbedFooterBuilder
                 {
-                    Text = "Woah! So cool! :smirk:",
-                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                    Text = "Woah! So cool!",
+                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
                 };
             }
             else
@@ -204,8 +204,8 @@ namespace script_chan2.Discord
 
                 embed.Footer = new EmbedFooterBuilder
                 {
-                    Text = "Woah! So cool! :smirk:",
-                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                    Text = "Woah! So cool!",
+                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
                 };
             }
 
@@ -293,8 +293,8 @@ namespace script_chan2.Discord
 
                 embed.Footer = new EmbedFooterBuilder
                 {
-                    Text = "Woah! So cool! :smirk:",
-                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                    Text = "Woah! So cool!",
+                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
                 };
             }
             else
@@ -333,8 +333,8 @@ namespace script_chan2.Discord
 
                 embed.Footer = new EmbedFooterBuilder
                 {
-                    Text = "Woah! So cool! :smirk:",
-                    IconUrl = "https://i.imgur.com/fKL31aD.jpg"
+                    Text = "Woah! So cool!",
+                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
                 };
             }
 
