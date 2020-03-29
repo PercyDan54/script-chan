@@ -521,7 +521,8 @@ namespace script_chan2.Database
             localLog.Information("add new beatmap '{id}'", beatmap.Id);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"INSERT INTO Beatmaps (id, beatmapsetId, artist, title, version, creator, bpm, ar, cs)
-                VALUES (@id, @beatmapsetId, @artist, @title, @version, @creator, @bpm, @ar, @cs)", conn))
+                SELECT @id, @beatmapsetId, @artist, @title, @version, @creator, @bpm, @ar, @cs
+                WHERE NOT EXISTS (SELECT 1 FROM Beatmaps WHERE id = @id2)", conn))
             {
                 command.Parameters.AddWithValue("@id", beatmap.Id);
                 command.Parameters.AddWithValue("@beatmapsetId", beatmap.SetId);
@@ -532,6 +533,7 @@ namespace script_chan2.Database
                 command.Parameters.AddWithValue("@bpm", beatmap.BPM);
                 command.Parameters.AddWithValue("@ar", beatmap.AR);
                 command.Parameters.AddWithValue("@cs", beatmap.CS);
+                command.Parameters.AddWithValue("@id2", beatmap.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }
@@ -683,11 +685,14 @@ namespace script_chan2.Database
         {
             localLog.Information("add new player '{name}'", player.Name);
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("INSERT OR REPLACE INTO Players (id, name, country) VALUES (@id, @name, @country)", conn))
+            using (var command = new SQLiteCommand(@"INSERT INTO Players (id, name, country)
+                SELECT @id, @name, @country
+                WHERE NOT EXISTS (SELECT 1 FROM Players WHERE id = @id2)", conn))
             {
                 command.Parameters.AddWithValue("@id", player.Id);
                 command.Parameters.AddWithValue("@name", player.Name);
                 command.Parameters.AddWithValue("@country", player.Country);
+                command.Parameters.AddWithValue("@id2", player.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }

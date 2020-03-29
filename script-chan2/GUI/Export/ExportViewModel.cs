@@ -175,8 +175,13 @@ namespace script_chan2.GUI
                             },
                             Tag = mappoolMap.Tag,
                             ListIndex = mappoolMap.ListIndex,
-                            Mods = Utils.ConvertGameModsToString(mappoolMap.Mods)
+                            Mods = new List<string>()
                         };
+
+                        foreach (var mod in mappoolMap.Mods)
+                        {
+                            mappoolMapObject.Mods.Add(mod.ToString());
+                        }
 
                         mappoolObject.Maps.Add(mappoolMapObject);
                     }
@@ -233,6 +238,190 @@ namespace script_chan2.GUI
 
             var jObject = JArray.FromObject(tournaments);
             File.WriteAllText(filePath, jObject.ToString());
+        }
+
+        public void Import()
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "json file (*.json)|*.json";
+            if (openFileDialog.ShowDialog() != true)
+                return;
+            var filePath = openFileDialog.FileName;
+
+            dynamic importOject = JArray.Parse(File.ReadAllText(filePath));
+
+            foreach (var tournamentItem in importOject)
+            {
+                Tournament tournament = Database.Database.Tournaments.FirstOrDefault(x => x.Name == tournamentItem.Name.Value);
+                if (tournament == null)
+                    tournament = new Tournament();
+
+                tournament.Name = tournamentItem.Name.Value;
+                if (Enum.TryParse(tournamentItem.GameMode.Value, out Enums.GameModes gameMode))
+                    tournament.GameMode = gameMode;
+                else
+                    tournament.GameMode = Enums.GameModes.Standard;
+                if (Enum.TryParse(tournamentItem.TeamMode.Value, out Enums.TeamModes teamMode))
+                    tournament.TeamMode = teamMode;
+                else
+                    tournament.TeamMode = Enums.TeamModes.TeamVS;
+                if (Enum.TryParse(tournamentItem.WinCondition.Value, out Enums.WinConditions winCondition))
+                    tournament.WinCondition = winCondition;
+                else
+                    tournament.WinCondition = Enums.WinConditions.ScoreV2;
+                tournament.Acronym = tournamentItem.Acronym.Value;
+                tournament.TeamSize = Convert.ToInt32(tournamentItem.TeamSize.Value);
+                tournament.RoomSize = Convert.ToInt32(tournamentItem.RoomSize.Value);
+                tournament.PointsForSecondBan = Convert.ToInt32(tournamentItem.PointsForSecondBan.Value);
+                tournament.AllPicksFreemod = tournamentItem.AllPicksFreemod.Value;
+                tournament.MpTimerCommand = Convert.ToInt32(tournamentItem.MpTimerCommand.Value);
+                tournament.MpTimerAfterGame = Convert.ToInt32(tournamentItem.MpTimerAfterGame.Value);
+                tournament.MpTimerAfterPick = Convert.ToInt32(tournamentItem.MpTimerAfterPick.Value);
+                tournament.WelcomeString = tournamentItem.WelcomeString.Value;
+                tournament.Save();
+
+                foreach (var teamItem in tournamentItem.Teams)
+                {
+                    Team team = tournament.Teams.FirstOrDefault(x => x.Name == teamItem.Name.Value);
+                    if (team == null)
+                        team = new Team() { Tournament = tournament };
+
+                    team.Name = teamItem.Name.Value;
+                    team.Save();
+
+                    foreach (var playerItem in teamItem.Players)
+                    {
+                        Player player = new Player()
+                        {
+                            Id = Convert.ToInt32(playerItem.Id.Value),
+                            Name = playerItem.Name.Value,
+                            Country = playerItem.Country.Value
+                        };
+                        Database.Database.AddPlayer(player);
+
+                        player = Database.Database.GetPlayer(playerItem.Name.Value);
+                        team.AddPlayer(player);
+                    }
+                }
+
+                foreach (var webhookItem in tournamentItem.Webhooks)
+                {
+                    Webhook webhook = Database.Database.Webhooks.FirstOrDefault(x => x.Name == webhookItem.Name.Value);
+                    if (webhook == null)
+                        webhook = new Webhook();
+
+                    webhook.Name = webhookItem.Name.Value;
+                    webhook.URL = webhookItem.URL.Value;
+                    webhook.MatchCreated = webhookItem.MatchCreated.Value;
+                    webhook.BanRecap = webhookItem.BanRecap.Value;
+                    webhook.PickRecap = webhookItem.PickRecap.Value;
+                    webhook.GameRecap = webhookItem.GameRecap.Value;
+                    webhook.Save();
+
+                    tournament.AddWebhook(webhook);
+                }
+
+                foreach (var mappoolItem in tournamentItem.Mappools)
+                {
+                    Mappool mappool = tournament.Mappools.FirstOrDefault(x => x.Name == mappoolItem.Name.Value);
+                    if (mappool == null)
+                    {
+                        mappool = new Mappool() { Tournament = tournament };
+
+                        mappool.Name = mappoolItem.Name.Value;
+                        mappool.Save();
+
+                        foreach (var mappoolMapItem in mappoolItem.Maps)
+                        {
+                            Beatmap beatmap = new Beatmap()
+                            {
+                                Id = Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value),
+                                SetId = Convert.ToInt32(mappoolMapItem.Beatmap.SetId.Value),
+                                Artist = mappoolMapItem.Beatmap.Artist.Value,
+                                Title = mappoolMapItem.Beatmap.Title.Value,
+                                Version = mappoolMapItem.Beatmap.Version.Value,
+                                Creator = mappoolMapItem.Beatmap.Creator.Value,
+                                BPM = Convert.ToDecimal(mappoolMapItem.Beatmap.BPM.Value),
+                                AR = Convert.ToDecimal(mappoolMapItem.Beatmap.AR.Value),
+                                CS = Convert.ToDecimal(mappoolMapItem.Beatmap.CS.Value)
+                            };
+                            Database.Database.AddBeatmap(beatmap);
+
+                            beatmap = Database.Database.GetBeatmap(Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value));
+
+                            MappoolMap mappoolMap = new MappoolMap()
+                            {
+                                Mappool = mappool,
+                                Beatmap = beatmap,
+                                Tag = mappoolMapItem.Tag.Value,
+                                ListIndex = Convert.ToInt32(mappoolMapItem.ListIndex.Value)
+                            };
+
+                            foreach (var modItem in mappoolMapItem.Mods)
+                            {
+                                if (Enum.TryParse(modItem.Value, out Enums.GameMods gameMod))
+                                    mappoolMap.Mods.Add(gameMod);
+                            }
+
+                            mappool.Beatmaps.Add(mappoolMap);
+                            mappoolMap.Save();
+                        }
+                    }
+                }
+
+                foreach (var matchItem in tournamentItem.Matches)
+                {
+                    Match match = new Match();
+
+                    match.Name = matchItem.Name.Value;
+                    match.Tournament = tournament;
+                    match.Mappool = tournament.Mappools.FirstOrDefault(x => x.Name == matchItem.Mappool.Value);
+                    if (Enum.TryParse(matchItem.GameMode.Value, out Enums.GameModes matchGameMode))
+                        match.GameMode = matchGameMode;
+                    else
+                        match.GameMode = Enums.GameModes.Standard;
+                    if (Enum.TryParse(matchItem.TeamMode.Value, out Enums.TeamModes matchTeamMode))
+                        match.TeamMode = matchTeamMode;
+                    else
+                        match.TeamMode = Enums.TeamModes.TeamVS;
+                    if (Enum.TryParse(matchItem.WinCondition.Value, out Enums.WinConditions matchWinCondition))
+                        match.WinCondition = matchWinCondition;
+                    else
+                        match.WinCondition = Enums.WinConditions.ScoreV2;
+                    match.TeamBlue = tournament.Teams.FirstOrDefault(x => x.Name == matchItem.TeamBlue.Value);
+                    match.TeamRed = tournament.Teams.FirstOrDefault(x => x.Name == matchItem.TeamRed.Value);
+                    match.TeamSize = Convert.ToInt32(matchItem.TeamSize.Value);
+                    match.RoomSize = Convert.ToInt32(matchItem.RoomSize.Value);
+                    match.RollWinnerTeam = tournament.Teams.FirstOrDefault(x => x.Name == matchItem.RollWinnerTeam.Value);
+                    match.FirstPickerTeam = tournament.Teams.FirstOrDefault(x => x.Name == matchItem.FirstPickerTeam.Value);
+                    match.BO = Convert.ToInt32(matchItem.BO.Value);
+                    match.EnableWebhooks = matchItem.EnableWebhooks.Value;
+                    match.MpTimerCommand = Convert.ToInt32(matchItem.MpTimerCommand.Value);
+                    match.MpTimerAfterGame = Convert.ToInt32(matchItem.MpTimerAfterGame.Value);
+                    match.MpTimerAfterPick = Convert.ToInt32(matchItem.MpTimerAfterPick.Value);
+                    match.PointsForSecondBan = Convert.ToInt32(matchItem.PointsForSecondBan.Value);
+                    match.AllPicksFreemod = matchItem.AllPicksFreemod.Value;
+                    match.WarmupMode = matchItem.WarmupMode.Value;
+
+                    foreach (var playerItem in matchItem.Players)
+                    {
+                        Player player = new Player()
+                        {
+                            Id = Convert.ToInt32(playerItem.Id.Value),
+                            Name = playerItem.Name.Value,
+                            Country = playerItem.Country.Value
+                        };
+                        Database.Database.AddPlayer(player);
+
+                        player = Database.Database.GetPlayer(playerItem.Name.Value);
+                        match.Players.Add(player, Convert.ToInt32(playerItem.Points.Value));
+                    }
+
+                    match.RollWinnerPlayer = match.Players.Keys.FirstOrDefault(x => x.Name == matchItem.RollWinnerPlayer.Value);
+                    match.FirstPickerPlayer = match.Players.Keys.FirstOrDefault(x => x.Name == matchItem.FirstPickerPlayer.Value);
+                    match.Save();
+                }
+            }
         }
         #endregion
     }
