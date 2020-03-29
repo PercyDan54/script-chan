@@ -115,6 +115,14 @@ namespace script_chan2.GUI
             Title = "Chat";
             DrawerExpanded = false;
         }
+
+        public void ShowExport()
+        {
+            localLog.Information("show export");
+            ActivateItem(new ExportViewModel());
+            Title = "Export";
+            DrawerExpanded = false;
+        }
         #endregion
     }
 }

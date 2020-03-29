@@ -32,6 +32,7 @@
                         <ListBoxItem Content="Settings" cal:Message.Attach="[Event MouseUp] = [Action ShowSettings]" />
                         <ListBoxItem Content="Colors" cal:Message.Attach="[Event MouseUp] = [Action ShowColors]" />
                         <ListBoxItem Content="Chat" cal:Message.Attach="[Event MouseUp] = [Action ShowChat]" />
+                        <ListBoxItem Content="Export" cal:Message.Attach="[Event MouseUp] = [Action ShowExport]" />
                     </ListBox>
                 </DockPanel>
             </md:DrawerHost.LeftDrawerContent>
