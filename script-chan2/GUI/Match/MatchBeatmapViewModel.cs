@@ -354,10 +354,12 @@ namespace script_chan2.GUI
                 Map = beatmap,
                 Team = match.TeamRed
             });
+            match.WarmupMode = false;
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnpick);
             NotifyOfPropertyChange(() => FontColor);
+            Events.Aggregator.PublishOnUIThread("MapPicked");
             if (match.RoomId > 0)
                 SendPickMessage();
         }
@@ -371,10 +373,12 @@ namespace script_chan2.GUI
                 Map = beatmap,
                 Team = match.TeamBlue
             });
+            match.WarmupMode = false;
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnpick);
             NotifyOfPropertyChange(() => FontColor);
+            Events.Aggregator.PublishOnUIThread("MapPicked");
             if (match.RoomId > 0)
                 SendPickMessage();
         }
@@ -388,11 +392,13 @@ namespace script_chan2.GUI
                 Map = beatmap,
                 Player = player
             });
+            match.WarmupMode = false;
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
+            Events.Aggregator.PublishOnUIThread("MapPicked");
             if (match.RoomId > 0)
                 SendPickMessage();
         }

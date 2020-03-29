@@ -285,6 +285,10 @@ namespace script_chan2.GUI
                     }
                 });
             }
+            else if (message == "MapPicked")
+            {
+                NotifyOfPropertyChange(() => WarmupMode);
+            }
         }
         #endregion
 
