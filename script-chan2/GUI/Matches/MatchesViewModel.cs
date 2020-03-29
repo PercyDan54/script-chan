@@ -132,7 +132,8 @@ namespace script_chan2.GUI
                     MpTimerAfterGame = model.Tournament.MpTimerAfterGame,
                     MpTimerAfterPick = model.Tournament.MpTimerAfterPick,
                     PointsForSecondBan = model.Tournament.PointsForSecondBan,
-                    AllPicksFreemod = model.Tournament.AllPicksFreemod
+                    AllPicksFreemod = model.Tournament.AllPicksFreemod,
+                    WarmupMode = true
                 };
                 foreach (var player in model.Players)
                     match.Players.Add(player, 0);
