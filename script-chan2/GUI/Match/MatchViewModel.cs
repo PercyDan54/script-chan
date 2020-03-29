@@ -652,6 +652,28 @@ namespace script_chan2.GUI
             OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
         }
 
+        public async void JoinRoom()
+        {
+            localLog.Information("match '{match}' open join room dialog", match.Name);
+            var model = new MatchJoinRoomDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view, "MatchDialogHost"));
+
+            if (result)
+            {
+                localLog.Information("match '{match}' join room '{room}'", match.Name, model.RoomId);
+                match.RoomId = model.RoomId;
+                match.Status = MatchStatus.InProgress;
+                match.Save();
+                NotifyOfPropertyChange(() => RoomLinkName);
+                NotifyOfPropertyChange(() => RoomClosedVisible);
+                NotifyOfPropertyChange(() => RoomOpenVisible);
+                OsuIrc.OsuIrc.JoinChannel("#mp_" + model.RoomId);
+            }
+        }
+
         public async void CloseRoom()
         {
             localLog.Information("match '{match}' open close room dialog", match.Name);

@@ -358,6 +358,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Match\MatchJoinRoomDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Match\MatchPasswordDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -449,6 +453,7 @@
     <Compile Include="GUI\Match\MatchBanchoEventViewModel.cs" />
     <Compile Include="GUI\Match\MatchBeatmapViewModel.cs" />
     <Compile Include="GUI\Match\MatchCloseRoomDialogViewModel.cs" />
+    <Compile Include="GUI\Match\MatchJoinRoomDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchPasswordDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchPlayerViewModel.cs" />
     <Compile Include="GUI\Match\MatchRoomOptionsDialogViewModel.cs" />
