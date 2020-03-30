@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
@@ -63,7 +64,7 @@ namespace script_chan2.GUI
         #endregion
 
         #region Actions
-        public void Export()
+        public async void Export()
         {
             var anythingToSave = false;
             foreach (var tournament in ExportItems)
@@ -238,9 +239,14 @@ namespace script_chan2.GUI
 
             var jObject = JArray.FromObject(tournaments);
             File.WriteAllText(filePath, jObject.ToString());
+
+            var model = new ExportSuccessDialogViewModel("Export successfull");
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+            await DialogHost.Show(view, "MainDialogHost");
         }
 
-        public void Import()
+        public async void Import()
         {
             var openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "json file (*.json)|*.json";
@@ -426,6 +432,11 @@ namespace script_chan2.GUI
                     match.Save();
                 }
             }
+
+            var model = new ExportSuccessDialogViewModel("Import successfull");
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+            await DialogHost.Show(view, "MainDialogHost");
         }
         #endregion
     }

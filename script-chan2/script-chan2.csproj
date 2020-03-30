@@ -298,6 +298,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Export\ExportSuccessDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Export\ExportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -441,6 +445,7 @@
     <Compile Include="GUI\Colors\ColorsViewModel.cs" />
     <Compile Include="GUI\Colors\EditColorDialogViewModel.cs" />
     <Compile Include="GUI\Events.cs" />
+    <Compile Include="GUI\Export\ExportSuccessDialogViewModel.cs" />
     <Compile Include="GUI\Export\ExportViewModel.cs" />
     <Compile Include="GUI\Mappools\DeleteMappoolDialogViewModel.cs" />
     <Compile Include="GUI\Mappools\EditMappoolDialogViewModel.cs" />
