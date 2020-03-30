@@ -3,6 +3,7 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,9 +15,12 @@ namespace script_chan2.GUI
 {
     public class ExportViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<ExportViewModel>();
+
         #region Constructor
         protected override void OnActivate()
         {
+            localLog.Information("init tree view");
             ExportItems = new BindableCollection<ExportItem>();
             foreach (var tournament in Database.Database.Tournaments)
             {
@@ -56,6 +60,7 @@ namespace script_chan2.GUI
                 ExportItems.Add(tournamentItem);
             }
             NotifyOfPropertyChange(() => ExportItems);
+            localLog.Information("tree view initialized");
         }
         #endregion
 
@@ -66,6 +71,7 @@ namespace script_chan2.GUI
         #region Actions
         public async void Export()
         {
+            localLog.Information("start export");
             var anythingToSave = false;
             foreach (var tournament in ExportItems)
             {
@@ -83,6 +89,7 @@ namespace script_chan2.GUI
             if (saveFileDialog.ShowDialog() != true)
                 return;
             var filePath = saveFileDialog.FileName;
+            localLog.Information("export to '{file}'", filePath);
 
             var tournaments = new List<object>();
             foreach (var tournamentItem in ExportItems.Where(x => x.Export))
@@ -239,6 +246,7 @@ namespace script_chan2.GUI
 
             var jObject = JArray.FromObject(tournaments);
             File.WriteAllText(filePath, jObject.ToString());
+            localLog.Information("export finished");
 
             var model = new ExportSuccessDialogViewModel("Export successfull");
             var view = ViewLocator.LocateForModel(model, null, null);
@@ -248,11 +256,13 @@ namespace script_chan2.GUI
 
         public async void Import()
         {
+            localLog.Information("start import");
             var openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "json file (*.json)|*.json";
             if (openFileDialog.ShowDialog() != true)
                 return;
             var filePath = openFileDialog.FileName;
+            localLog.Information("import from '{file}'", filePath);
 
             dynamic importOject = JArray.Parse(File.ReadAllText(filePath));
 
@@ -260,7 +270,14 @@ namespace script_chan2.GUI
             {
                 Tournament tournament = Database.Database.Tournaments.FirstOrDefault(x => x.Name == tournamentItem.Name.Value);
                 if (tournament == null)
+                {
                     tournament = new Tournament();
+                    localLog.Information("import new tournament '{tournament}'", tournamentItem.Name.Value);
+                }
+                else
+                {
+                    localLog.Information("update existing tournament '{tournament}'", tournamentItem.Name.Value);
+                }
 
                 tournament.Name = tournamentItem.Name.Value;
                 if (Enum.TryParse(tournamentItem.GameMode.Value, out Enums.GameModes gameMode))
@@ -290,7 +307,14 @@ namespace script_chan2.GUI
                 {
                     Team team = tournament.Teams.FirstOrDefault(x => x.Name == teamItem.Name.Value);
                     if (team == null)
+                    {
                         team = new Team() { Tournament = tournament };
+                        localLog.Information("import new team '{team}' in tournament '{tournament}'", teamItem.Name.Value, tournament.Name);
+                    }
+                    else
+                    {
+                        localLog.Information("update existing team '{team}' in tournament '{tournament}'", teamItem.Name.Value, tournament.Name);
+                    }
 
                     team.Name = teamItem.Name.Value;
                     team.Save();
@@ -314,7 +338,14 @@ namespace script_chan2.GUI
                 {
                     Webhook webhook = Database.Database.Webhooks.FirstOrDefault(x => x.Name == webhookItem.Name.Value);
                     if (webhook == null)
+                    {
                         webhook = new Webhook();
+                        localLog.Information("import new webhook '{webhook}' in tournament '{tournament}'", webhookItem.Name.Value, tournament.Name);
+                    }
+                    else
+                    {
+                        localLog.Information("update existing webhook '{webhook}' in tournament '{tournament}'", webhookItem.Name.Value, tournament.Name);
+                    }
 
                     webhook.Name = webhookItem.Name.Value;
                     webhook.URL = webhookItem.URL.Value;
@@ -329,6 +360,7 @@ namespace script_chan2.GUI
 
                 foreach (var mappoolItem in tournamentItem.Mappools)
                 {
+                    localLog.Information("import mappool '{mappool}' in tournament '{tournament}'", mappoolItem.Name.Value, tournament.Name);
                     string mappoolName = mappoolItem.Name.Value;
                     if (tournament.Mappools.Any(x => x.Name == mappoolName))
                     {
@@ -336,6 +368,7 @@ namespace script_chan2.GUI
                         while (tournament.Mappools.Any(x => x.Name == mappoolName + " (" + i + ")"))
                             i++;
                         mappoolName = mappoolName + " (" + i + ")";
+                        localLog.Information("rename mappool '{oldName}' to '{newName}' because of name collision", mappoolItem.Name.Value, mappoolName);
                     }
 
                     Mappool mappool = new Mappool() { Tournament = tournament };
@@ -344,6 +377,7 @@ namespace script_chan2.GUI
 
                     foreach (var mappoolMapItem in mappoolItem.Maps)
                     {
+                        localLog.Information("add beatmap '{beatmap}' to mappool '{newName}' ", mappoolMapItem.Beatmap.Id.Value, mappoolName);
                         Beatmap beatmap = new Beatmap()
                         {
                             Id = Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value),
@@ -381,6 +415,7 @@ namespace script_chan2.GUI
 
                 foreach (var matchItem in tournamentItem.Matches)
                 {
+                    localLog.Information("import new match '{match}' in tournament '{tournament}'", matchItem.Name.Value, tournament.Name);
                     Match match = new Match();
 
                     match.Name = matchItem.Name.Value;
@@ -433,6 +468,7 @@ namespace script_chan2.GUI
                 }
             }
 
+            localLog.Information("import finished");
             var model = new ExportSuccessDialogViewModel("Import successfull");
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
