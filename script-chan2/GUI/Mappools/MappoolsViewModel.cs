@@ -45,6 +45,8 @@ namespace script_chan2.GUI
                 NotifyOfPropertyChange(() => MappoolViews);
             else if (message == "UpdateDefaultTournament")
                 NotifyOfPropertyChange(() => FilterTournament);
+            else if (message == "AddMappool")
+                NotifyOfPropertyChange(() => MappoolViews);
         }
         #endregion
 
@@ -71,8 +73,16 @@ namespace script_chan2.GUI
                     Settings.DefaultTournament = value;
                     NotifyOfPropertyChange(() => FilterTournament);
                     NotifyOfPropertyChange(() => MappoolViews);
+                    NotifyOfPropertyChange(() => ImportEnabled);
                 }
             }
+        }
+        #endregion
+
+        #region Properties
+        public bool ImportEnabled
+        {
+            get { return FilterTournament != null; }
         }
         #endregion
 
@@ -98,6 +108,16 @@ namespace script_chan2.GUI
                 Settings.DefaultTournament = model.Tournament;
                 NotifyOfPropertyChange(() => MappoolViews);
             }
+        }
+
+        public async void OpenWikiImportDialog()
+        {
+            localLog.Information("wiki import dialog open");
+            var model = new MappoolWikiImportDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            await DialogHost.Show(view, "MainDialogHost");
         }
         #endregion
     }
