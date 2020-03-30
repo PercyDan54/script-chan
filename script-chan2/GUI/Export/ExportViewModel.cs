@@ -323,49 +323,53 @@ namespace script_chan2.GUI
 
                 foreach (var mappoolItem in tournamentItem.Mappools)
                 {
-                    Mappool mappool = tournament.Mappools.FirstOrDefault(x => x.Name == mappoolItem.Name.Value);
-                    if (mappool == null)
+                    string mappoolName = mappoolItem.Name.Value;
+                    if (tournament.Mappools.Any(x => x.Name == mappoolName))
                     {
-                        mappool = new Mappool() { Tournament = tournament };
+                        var i = 1;
+                        while (tournament.Mappools.Any(x => x.Name == mappoolName + " (" + i + ")"))
+                            i++;
+                        mappoolName = mappoolName + " (" + i + ")";
+                    }
 
-                        mappool.Name = mappoolItem.Name.Value;
-                        mappool.Save();
+                    Mappool mappool = new Mappool() { Tournament = tournament };
+                    mappool.Name = mappoolName;
+                    mappool.Save();
 
-                        foreach (var mappoolMapItem in mappoolItem.Maps)
+                    foreach (var mappoolMapItem in mappoolItem.Maps)
+                    {
+                        Beatmap beatmap = new Beatmap()
                         {
-                            Beatmap beatmap = new Beatmap()
-                            {
-                                Id = Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value),
-                                SetId = Convert.ToInt32(mappoolMapItem.Beatmap.SetId.Value),
-                                Artist = mappoolMapItem.Beatmap.Artist.Value,
-                                Title = mappoolMapItem.Beatmap.Title.Value,
-                                Version = mappoolMapItem.Beatmap.Version.Value,
-                                Creator = mappoolMapItem.Beatmap.Creator.Value,
-                                BPM = Convert.ToDecimal(mappoolMapItem.Beatmap.BPM.Value),
-                                AR = Convert.ToDecimal(mappoolMapItem.Beatmap.AR.Value),
-                                CS = Convert.ToDecimal(mappoolMapItem.Beatmap.CS.Value)
-                            };
-                            Database.Database.AddBeatmap(beatmap);
+                            Id = Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value),
+                            SetId = Convert.ToInt32(mappoolMapItem.Beatmap.SetId.Value),
+                            Artist = mappoolMapItem.Beatmap.Artist.Value,
+                            Title = mappoolMapItem.Beatmap.Title.Value,
+                            Version = mappoolMapItem.Beatmap.Version.Value,
+                            Creator = mappoolMapItem.Beatmap.Creator.Value,
+                            BPM = Convert.ToDecimal(mappoolMapItem.Beatmap.BPM.Value),
+                            AR = Convert.ToDecimal(mappoolMapItem.Beatmap.AR.Value),
+                            CS = Convert.ToDecimal(mappoolMapItem.Beatmap.CS.Value)
+                        };
+                        Database.Database.AddBeatmap(beatmap);
 
-                            beatmap = Database.Database.GetBeatmap(Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value));
+                        beatmap = Database.Database.GetBeatmap(Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value));
 
-                            MappoolMap mappoolMap = new MappoolMap()
-                            {
-                                Mappool = mappool,
-                                Beatmap = beatmap,
-                                Tag = mappoolMapItem.Tag.Value,
-                                ListIndex = Convert.ToInt32(mappoolMapItem.ListIndex.Value)
-                            };
+                        MappoolMap mappoolMap = new MappoolMap()
+                        {
+                            Mappool = mappool,
+                            Beatmap = beatmap,
+                            Tag = mappoolMapItem.Tag.Value,
+                            ListIndex = Convert.ToInt32(mappoolMapItem.ListIndex.Value)
+                        };
 
-                            foreach (var modItem in mappoolMapItem.Mods)
-                            {
-                                if (Enum.TryParse(modItem.Value, out Enums.GameMods gameMod))
-                                    mappoolMap.Mods.Add(gameMod);
-                            }
-
-                            mappool.Beatmaps.Add(mappoolMap);
-                            mappoolMap.Save();
+                        foreach (var modItem in mappoolMapItem.Mods)
+                        {
+                            if (Enum.TryParse(modItem.Value, out Enums.GameMods gameMod))
+                                mappoolMap.Mods.Add(gameMod);
                         }
+
+                        mappool.Beatmaps.Add(mappoolMap);
+                        mappoolMap.Save();
                     }
                 }
 
