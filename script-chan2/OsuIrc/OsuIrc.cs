@@ -33,6 +33,8 @@ namespace script_chan2.OsuIrc
         private static Timer sendMessageTimer;
         private static Queue<IrcMessage> messageQueue;
 
+        private static List<IrcMessage> messagesToSave = new List<IrcMessage>();
+
         public static void Login()
         {
             localLog.Information("login");
@@ -86,6 +88,11 @@ namespace script_chan2.OsuIrc
             }
         }
 
+        public static void Shutdown()
+        {
+            Database.Database.AddIrcMessages(messagesToSave);
+        }
+
         private static void SendNextMessage(object sender, ElapsedEventArgs e)
         {
             if (messageQueue.Count == 0)
@@ -100,7 +107,8 @@ namespace script_chan2.OsuIrc
                     ircMessage = new IrcMessage()
                     {
                         Channel = split[1],
-                        Message = string.Join(" ", split.Skip(2))
+                        Message = string.Join(" ", split.Skip(2)),
+                        User = Settings.IrcUsername
                     };
                 }
             }
@@ -131,7 +139,24 @@ namespace script_chan2.OsuIrc
                     User = Settings.IrcUsername,
                     Message = ircMessage.Message
                 };
+
+                if (!ChatList.UserChats.Any(x => x.User == ircMessage.Channel))
+                {
+                    var newUserChat = new UserChat() { User = ircMessage.Channel };
+                    newUserChat.LoadMessages();
+                    ChatList.UserChats.Add(newUserChat);
+                }
+                var userChat = ChatList.UserChats.First(x => x.User == ircMessage.Channel);
+                userChat.AddMessage(ircMessage);
+
                 Events.Aggregator.PublishOnUIThread(data);
+            }
+
+            messagesToSave.Add(ircMessage);
+            if (messagesToSave.Count >= 5)
+            {
+                Database.Database.AddIrcMessages(messagesToSave);
+                messagesToSave.Clear();
             }
         }
 
@@ -185,6 +210,24 @@ namespace script_chan2.OsuIrc
                 User = e.From,
                 Message = e.Message
             };
+
+            var ircMessage = new IrcMessage() { Channel = data2.Channel, User = data2.User, Timestamp = DateTime.Now, Message = data2.Message };
+            if (!ChatList.UserChats.Any(x => x.User == data2.Channel))
+            {
+                var newUserChat = new UserChat() { User = data2.Channel };
+                newUserChat.LoadMessages();
+                ChatList.UserChats.Add(newUserChat);
+            }
+            var userChat = ChatList.UserChats.First(x => x.User == ircMessage.Channel);
+            userChat.AddMessage(ircMessage);
+
+            messagesToSave.Add(ircMessage);
+            if (messagesToSave.Count >= 5)
+            {
+                Database.Database.AddIrcMessages(messagesToSave);
+                messagesToSave.Clear();
+            }
+
             Events.Aggregator.PublishOnUIThread(data2);
         }
 
@@ -198,6 +241,11 @@ namespace script_chan2.OsuIrc
                 User = "Server",
                 Message = e.Result
             };
+
+            var ircMessage = new IrcMessage() { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
+            var userChat = ChatList.UserChats.First(x => x.User == ircMessage.Channel);
+            userChat.AddMessage(ircMessage);
+
             Events.Aggregator.PublishOnUIThread(data);
         }
 
@@ -205,7 +253,7 @@ namespace script_chan2.OsuIrc
 
         public static void SendMessage(string channel, string message)
         {
-            messageQueue.Enqueue(new IrcMessage { Channel = channel, Message = message });
+            messageQueue.Enqueue(new IrcMessage { Channel = channel, Message = message, User = Settings.IrcUsername });
         }
 
         public static void JoinChannel(string channel)

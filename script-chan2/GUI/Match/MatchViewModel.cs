@@ -157,8 +157,6 @@ namespace script_chan2.GUI
         {
             get { return Enum.GetValues(typeof(WinConditions)).Cast<WinConditions>().ToList(); }
         }
-
-        private List<IrcMessage> messagesToSave = new List<IrcMessage>();
         #endregion
 
         #region Constructor
@@ -203,7 +201,6 @@ namespace script_chan2.GUI
         {
             localLog.Information("close window of match '{name}'", match.Name);
             MatchList.OpenedMatches.Remove(match);
-            Database.Database.AddIrcMessages(messagesToSave);
         }
 
         public void Handle(object message)
@@ -242,12 +239,6 @@ namespace script_chan2.GUI
                 if (data.Channel == "#mp_" + match.RoomId)
                 {
                     var ircMessage = new IrcMessage() { Channel = "#mp_" + match.RoomId, User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
-                    messagesToSave.Add(ircMessage);
-                    if (messagesToSave.Count >= 5)
-                    {
-                        Database.Database.AddIrcMessages(messagesToSave);
-                        messagesToSave.Clear();
-                    }
                     AddMessageToChat(ircMessage, false);
 
                     if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))

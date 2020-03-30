@@ -32,7 +32,8 @@ namespace script_chan2.DataTypes
         public void LoadMessages()
         {
             localLog.Information("'{channel}' load messages", User);
-            Messages = Database.Database.GetIrcMessages(User);
+            if (Messages == null || Messages.Count == 0)
+                Messages = Database.Database.GetIrcMessages(User);
         }
 
         public void AddMessage(IrcMessage message)

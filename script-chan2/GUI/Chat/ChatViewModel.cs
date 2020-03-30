@@ -32,22 +32,13 @@ namespace script_chan2.GUI
                 return list;
             }
         }
-
-        private List<IrcMessage> messagesToSave;
         #endregion
 
         #region Constructor
         protected override void OnActivate()
         {
-            messagesToSave = new List<IrcMessage>();
             ReloadChat();
             Events.Aggregator.Subscribe(this);
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            Database.Database.AddIrcMessages(messagesToSave);
-            messagesToSave.Clear();
         }
         #endregion
 
@@ -60,25 +51,6 @@ namespace script_chan2.GUI
                 localLog.Information("irc message received '{message}' from user '{user}'", data.Message, data.User);
 
                 var ircMessage = new IrcMessage() { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
-                if (ircMessage.Channel != "Server")
-                {
-                    messagesToSave.Add(ircMessage);
-                    if (messagesToSave.Count >= 5)
-                    {
-                        Database.Database.AddIrcMessages(messagesToSave);
-                        messagesToSave.Clear();
-                    }
-                }
-
-                if (!ChatList.UserChats.Any(x => x.User == data.Channel))
-                {
-                    var newUserChat = new UserChat() { User = data.Channel };
-                    newUserChat.LoadMessages();
-                    ChatList.UserChats.Add(newUserChat);
-                }
-
-                var userChat = ChatList.UserChats.First(x => x.User == data.Channel);
-                userChat.AddMessage(ircMessage);
 
                 NotifyOfPropertyChange(() => UserViews);
 

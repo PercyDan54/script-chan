@@ -91,6 +91,7 @@ namespace script_chan2
 
         protected override void OnExit(object sender, EventArgs e)
         {
+            OsuIrc.OsuIrc.Shutdown();
             localLog.Information("app shutdown");
         }
     }
