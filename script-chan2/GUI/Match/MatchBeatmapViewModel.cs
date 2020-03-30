@@ -421,6 +421,8 @@ namespace script_chan2.GUI
                 mods += " Freemod";
             OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp mods " + mods);
             OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp map {beatmap.Beatmap.Id} {(int)match.GameMode}");
+            if (match.MpTimerAfterPick > 0)
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp timer " + match.MpTimerAfterPick);
         }
         #endregion
     }

@@ -107,6 +107,7 @@
                     </Grid>
                     <WrapPanel x:Name="Control1" Grid.Row="1" Margin="2">
                         <Button x:Name="SendSettings" Content="Settings" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="StartTimer" Content="Timer" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="StartGame" Content="Start game (5s)" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="AbortMatch" Content="Abort map" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                     </WrapPanel>

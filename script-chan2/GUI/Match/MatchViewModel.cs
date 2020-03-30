@@ -261,6 +261,10 @@ namespace script_chan2.GUI
                         {
                             DiscordApi.SendGameRecap(match);
                         }
+                        if (!match.WarmupMode && match.MpTimerAfterGame > 0)
+                        {
+                            SendRoomMessage("!mp timer " + match.MpTimerAfterGame);
+                        }
                     }
                 }
             }
@@ -744,6 +748,13 @@ namespace script_chan2.GUI
         {
             localLog.Information("match '{match}' send settings", match.Name);
             SendRoomMessage("!mp settings");
+        }
+
+        public void StartTimer()
+        {
+            localLog.Information("match '{match}' start timer", match.Name);
+            if (match.MpTimerCommand > 0)
+                SendRoomMessage("!mp timer " + match.MpTimerCommand);
         }
 
         public void StartGame()
