@@ -184,6 +184,17 @@ namespace script_chan2.OsuIrc
                 Message = e.Message
             };
             Events.Aggregator.PublishOnUIThread(data);
+
+            var ircMessage = new IrcMessage() { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
+            var match = Database.Database.Matches.FirstOrDefault(x => "#mp_" + x.RoomId == data.Channel);
+            if (match != null)
+                ircMessage.Match = match;
+            messagesToSave.Add(ircMessage);
+            if (messagesToSave.Count >= 5)
+            {
+                Database.Database.AddIrcMessages(messagesToSave);
+                messagesToSave.Clear();
+            }
         }
 
         private static void Client_PrivateMessage(object sender, PrivateMessageEventArgs e)
@@ -253,7 +264,11 @@ namespace script_chan2.OsuIrc
 
         public static void SendMessage(string channel, string message)
         {
-            messageQueue.Enqueue(new IrcMessage { Channel = channel, Message = message, User = Settings.IrcUsername });
+            var ircMessage = new IrcMessage { Channel = channel, Message = message, User = Settings.IrcUsername };
+            var match = Database.Database.Matches.FirstOrDefault(x => "#mp_" + x.RoomId == channel);
+            if (match != null)
+                ircMessage.Match = match;
+            messageQueue.Enqueue(ircMessage);
         }
 
         public static void JoinChannel(string channel)
