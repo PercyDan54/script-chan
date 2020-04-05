@@ -186,6 +186,7 @@ namespace script_chan2.DataTypes
                     }
                 }
                 game.Counted = true;
+                game.Warmup = WarmupMode;
             }
             Save();
         }

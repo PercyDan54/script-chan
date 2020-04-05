@@ -33,6 +33,7 @@ namespace script_chan2
             localLog.Information("Initialize DB");
             if (!DbCreator.DbExists)
                 DbCreator.CreateDb();
+            DbUpgrader.Upgrade();
             Database.Database.Initialize();
 
             localLog.Information("Initialize settings");

@@ -1087,13 +1087,14 @@ namespace script_chan2.Database
                 }
                 foreach (var game in match.Games)
                 {
-                    using (var command = new SQLiteCommand("INSERT INTO Games (id, match, beatmap, mods, counted) VALUES (@id, @match, @beatmap, @mods, @counted)", conn))
+                    using (var command = new SQLiteCommand("INSERT INTO Games (id, match, beatmap, mods, counted, warmup) VALUES (@id, @match, @beatmap, @mods, @counted, @warmup)", conn))
                     {
                         command.Parameters.AddWithValue("@id", game.Id);
                         command.Parameters.AddWithValue("@match", match.Id);
                         command.Parameters.AddWithValue("@beatmap", game.Beatmap.Id);
                         command.Parameters.AddWithValue("@mods", string.Join(",", game.Mods));
                         command.Parameters.AddWithValue("@counted", game.Counted);
+                        command.Parameters.AddWithValue("@warmup", game.Warmup);
                         command.ExecuteNonQuery();
                     }
                     foreach (var score in game.Scores)
@@ -1244,13 +1245,14 @@ namespace script_chan2.Database
                 }
                 foreach (var game in match.Games)
                 {
-                    using (var command = new SQLiteCommand("INSERT INTO Games (id, match, beatmap, mods, counted) VALUES (@id, @match, @beatmap, @mods, @counted)", conn))
+                    using (var command = new SQLiteCommand("INSERT INTO Games (id, match, beatmap, mods, counted, warmup) VALUES (@id, @match, @beatmap, @mods, @counted, @warmup)", conn))
                     {
                         command.Parameters.AddWithValue("@id", game.Id);
                         command.Parameters.AddWithValue("@match", match.Id);
                         command.Parameters.AddWithValue("@beatmap", game.Beatmap.Id);
                         command.Parameters.AddWithValue("@mods", string.Join(",", game.Mods));
                         command.Parameters.AddWithValue("@counted", game.Counted);
+                        command.Parameters.AddWithValue("@warmup", game.Warmup);
                         command.ExecuteNonQuery();
                     }
                     foreach (var score in game.Scores)
@@ -1350,7 +1352,7 @@ namespace script_chan2.Database
         {
             localLog.Information("init match games");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, match, beatmap, mods, counted FROM Games", conn))
+            using (var command = new SQLiteCommand("SELECT id, match, beatmap, mods, counted, warmup FROM Games", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -1358,14 +1360,15 @@ namespace script_chan2.Database
                     var id = Convert.ToInt32(reader["id"]);
                     var match = Matches.First(x => x.Id == Convert.ToInt32(reader["match"]));
                     var beatmap = GetBeatmap(Convert.ToInt32(reader["beatmap"]));
-
                     var counted = Convert.ToBoolean(reader["counted"]);
+                    var warmup = Convert.ToBoolean(reader["warmup"]);
                     var game = new Game()
                     {
                         Id = id,
                         Match = match,
                         Beatmap = beatmap,
-                        Counted = counted
+                        Counted = counted,
+                        Warmup = warmup
                     };
                     foreach (string mod in reader["mods"].ToString().Split(','))
                     {

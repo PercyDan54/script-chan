@@ -254,7 +254,7 @@ namespace script_chan2.GUI
                         }
                         if (!match.WarmupMode && match.MpTimerAfterGame > 0)
                         {
-                            SendRoomMessage("!mp timer " + match.MpTimerAfterGame);
+                            SendRoomStatus();
                         }
                     }
                 }
@@ -856,6 +856,24 @@ namespace script_chan2.GUI
             }
 
             return border.Child as ScrollViewer;
+        }
+
+        private void SendRoomStatus()
+        {
+            var finished = false;
+            if (match.TeamMode == TeamModes.TeamVS)
+            {
+                if (match.TeamRedPoints * 2 > match.BO || match.TeamBluePoints * 2 > match.BO)
+                    finished = true;
+            }
+
+            if (match.TeamMode == TeamModes.TeamVS && match.PointsForSecondBan > 0)
+            {
+                
+            }
+
+            if (!finished)
+                SendRoomMessage("!mp timer " + match.MpTimerAfterGame);
         }
 
         private void PlayNotificationSound()

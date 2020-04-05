@@ -290,6 +290,7 @@ namespace script_chan2.Database
                 beatmap INTEGER,
                 mods TEXT,
                 counted BOOL,
+                warmup BOOL,
                 FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,
                 FOREIGN KEY(beatmap) REFERENCES Beatmaps(id))", conn))
             {

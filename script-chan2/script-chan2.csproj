@@ -417,6 +417,7 @@
     <Compile Include="Caliburn\MultiKeyGestureConverter.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\DbCreator.cs" />
+    <Compile Include="Database\DbUpgrader.cs" />
     <Compile Include="DataTypes\Beatmap.cs" />
     <Compile Include="DataTypes\ChannelMessageData.cs" />
     <Compile Include="DataTypes\Game.cs" />

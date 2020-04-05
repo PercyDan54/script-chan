@@ -26,5 +26,7 @@ namespace script_chan2.DataTypes
         public List<Score> Scores;
 
         public bool Counted { get; set; }
+
+        public bool Warmup { get; set; }
     }
 }
