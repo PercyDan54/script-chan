@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace script_chan2.Database
 {
     public static class DbUpgrader
     {
+        private static ILogger localLog = Log.ForContext(typeof(DbUpgrader));
+
         private static SQLiteConnection GetConnection()
         {
             var conn = new SQLiteConnection("Data Source=Database.sqlite;Version=3");
@@ -22,6 +25,7 @@ namespace script_chan2.Database
 
         public static void Upgrade()
         {
+            localLog.Information("database upgrade started");
             var dbVersion = 1;
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand("SELECT value FROM UserSettings WHERE name = 'dbVersion'", conn))
@@ -35,10 +39,13 @@ namespace script_chan2.Database
 
             if (dbVersion == 1)
                 UpgradeV1();
+
+            localLog.Information("database upgrade finished");
         }
 
         private static void UpgradeV1()
         {
+            localLog.Information("upgrade database to v2");
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand("ALTER TABLE Games ADD COLUMN warmup BOOL", conn))
