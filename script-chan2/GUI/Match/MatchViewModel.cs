@@ -909,9 +909,7 @@ namespace script_chan2.GUI
         private void PlayNotificationSound()
         {
             localLog.Information("match '{match}' play notification sound", match.Name);
-            var player = new MediaPlayer();
-            player.Open(new Uri(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "Resources/notification.mp3")));
-            player.Play();
+            NotificationPlayer.PlayNotification();
         }
 
         public void UpdateScore()

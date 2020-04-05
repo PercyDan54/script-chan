@@ -479,6 +479,7 @@
     <Compile Include="GUI\Match\MatchRoomOptionsDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchTeamViewModel.cs" />
     <Compile Include="GUI\Match\MatchViewModel.cs" />
+    <Compile Include="GUI\NotificationPlayer.cs" />
     <Compile Include="GUI\Settings\SettingsViewModel.cs" />
     <Compile Include="GUI\MainViewModel.cs" />
     <Page Include="GUI\Teams\DeleteTeamDialogView.xaml">
