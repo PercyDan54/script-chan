@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -1375,6 +1376,38 @@ namespace script_chan2.Database
                         if (Enum.TryParse(mod, out GameMods gameMod))
                         {
                             game.Mods.Add(gameMod);
+                        }
+                    }
+                    using (var command2 = new SQLiteCommand("SELECT player, mods, score, team, passed FROM Scores WHERE game = @game", conn))
+                    {
+                        command2.Parameters.AddWithValue("@game", game.Id);
+                        using (var reader2 = command2.ExecuteReader())
+                        {
+                            while (reader2.Read())
+                            {
+                                var player = GetPlayer(reader2["player"].ToString());
+                                var points = Convert.ToInt32(reader2["score"]);
+                                var passed = Convert.ToBoolean(reader2["passed"]);
+                                var score = new Score()
+                                {
+                                    Game = game,
+                                    Player = player,
+                                    Points = points,
+                                    Passed = passed
+                                };
+                                foreach (string mod in reader2["mods"].ToString().Split(','))
+                                {
+                                    if (Enum.TryParse(mod, out GameMods gameMod))
+                                    {
+                                        score.Mods.Add(gameMod);
+                                    }
+                                }
+                                if (Enum.TryParse(reader2["team"].ToString(), out LobbyTeams team))
+                                {
+                                    score.Team = team;
+                                }
+                                game.Scores.Add(score);
+                            }
                         }
                     }
                     match.Games.Add(game);
