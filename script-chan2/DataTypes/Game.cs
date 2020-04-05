@@ -28,5 +28,21 @@ namespace script_chan2.DataTypes
         public bool Counted { get; set; }
 
         public bool Warmup { get; set; }
+
+        public bool TeamRedWon
+        {
+            get
+            {
+                return Scores.Where(x => x.Team == LobbyTeams.Red && x.Passed).Sum(x => x.Points) > Scores.Where(x => x.Team == LobbyTeams.Blue && x.Passed).Sum(x => x.Points);
+            }
+        }
+
+        public bool TeamBlueWon
+        {
+            get
+            {
+                return Scores.Where(x => x.Team == LobbyTeams.Red && x.Passed).Sum(x => x.Points) < Scores.Where(x => x.Team == LobbyTeams.Blue && x.Passed).Sum(x => x.Points);
+            }
+        }
     }
 }

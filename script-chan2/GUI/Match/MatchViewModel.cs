@@ -248,13 +248,10 @@ namespace script_chan2.GUI
                     if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
                     {
                         UpdateScore();
+                        SendRoomStatus();
                         if (!match.WarmupMode && match.EnableWebhooks)
                         {
                             DiscordApi.SendGameRecap(match);
-                        }
-                        if (!match.WarmupMode && match.MpTimerAfterGame > 0)
-                        {
-                            SendRoomStatus();
                         }
                     }
                 }
@@ -860,20 +857,52 @@ namespace script_chan2.GUI
 
         private void SendRoomStatus()
         {
-            var finished = false;
             if (match.TeamMode == TeamModes.TeamVS)
             {
-                if (match.TeamRedPoints * 2 > match.BO || match.TeamBluePoints * 2 > match.BO)
-                    finished = true;
-            }
+                SendRoomMessage($"{match.TeamRed.Name} : {match.TeamRedPoints} | {match.TeamBluePoints} : {match.TeamBlue.Name}");
 
-            if (match.TeamMode == TeamModes.TeamVS && match.PointsForSecondBan > 0)
-            {
-                
-            }
+                if (match.TeamRedPoints * 2 > match.BO)
+                {
+                    SendRoomMessage("**" + match.TeamRed.Name + " wins the match**");
+                }
+                else if (match.TeamBluePoints * 2 > match.BO)
+                {
+                    SendRoomMessage("**" + match.TeamBlue.Name + " wins the match**");
+                }
+                else
+                {
+                    if (match.PointsForSecondBan > 0)
+                    {
+                        if (match.Games.Last().TeamRedWon && match.TeamRedPoints == match.PointsForSecondBan)
+                        {
+                            SendRoomMessage(match.TeamBlue.Name + " can ban another map");
+                        }
+                        else if (match.Games.Last().TeamBlueWon && match.TeamBluePoints == match.PointsForSecondBan)
+                        {
+                            SendRoomMessage(match.TeamRed.Name + " can ban another map");
+                        }
+                    }
 
-            if (!finished)
-                SendRoomMessage("!mp timer " + match.MpTimerAfterGame);
+                    if (match.TeamRedPoints * 2 == match.BO - 1 && match.TeamBluePoints * 2 == match.BO - 1)
+                    {
+                        SendRoomMessage("The result is a tie. We have to play the tiebreaker");
+                    }
+
+                    if (match.Picks.Last().Team == match.TeamRed)
+                    {
+                        SendRoomMessage("Next team to pick: " + match.TeamBlue.Name);
+                    }
+                    else
+                    {
+                        SendRoomMessage("Next team to pick: " + match.TeamRed.Name);
+                    }
+
+                    if (match.MpTimerAfterGame > 0)
+                    {
+                        SendRoomMessage("!mp timer " + match.MpTimerAfterGame);
+                    }
+                }
+            }
         }
 
         private void PlayNotificationSound()
