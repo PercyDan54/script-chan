@@ -857,6 +857,7 @@ namespace script_chan2.GUI
 
         private void SendRoomStatus()
         {
+            localLog.Information("match '{match}' send room status", match.Name);
             if (match.TeamMode == TeamModes.TeamVS)
             {
                 SendRoomMessage($"{match.TeamRed.Name} : {match.TeamRedPoints} | {match.TeamBluePoints} : {match.TeamBlue.Name}");
