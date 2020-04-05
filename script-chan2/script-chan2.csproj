@@ -607,19 +607,19 @@
     <Resource Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="discord_banrecap.png">
+    <Content Include="Resources\discord_banrecap.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="discord_gamerecap.png">
+    <Content Include="Resources\discord_gamerecap.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="discord_matchcreated.png">
+    <Content Include="Resources\discord_matchcreated.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="discord_pickrecap.png">
+    <Content Include="Resources\discord_pickrecap.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="notification.mp3">
+    <Content Include="Resources\notification.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
