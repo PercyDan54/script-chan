@@ -90,7 +90,7 @@ namespace script_chan2.OsuIrc
 
         public static void Shutdown()
         {
-            Database.Database.AddIrcMessages(messagesToSave);
+            Database.Database.AddIrcMessages(messagesToSave.ToList());
         }
 
         private static void SendNextMessage(object sender, ElapsedEventArgs e)
@@ -155,7 +155,7 @@ namespace script_chan2.OsuIrc
             messagesToSave.Add(ircMessage);
             if (messagesToSave.Count >= 5)
             {
-                Database.Database.AddIrcMessages(messagesToSave);
+                Database.Database.AddIrcMessages(messagesToSave.ToList());
                 messagesToSave.Clear();
             }
         }
@@ -192,7 +192,7 @@ namespace script_chan2.OsuIrc
             messagesToSave.Add(ircMessage);
             if (messagesToSave.Count >= 5)
             {
-                Database.Database.AddIrcMessages(messagesToSave);
+                Database.Database.AddIrcMessages(messagesToSave.ToList());
                 messagesToSave.Clear();
             }
         }
@@ -235,7 +235,7 @@ namespace script_chan2.OsuIrc
             messagesToSave.Add(ircMessage);
             if (messagesToSave.Count >= 5)
             {
-                Database.Database.AddIrcMessages(messagesToSave);
+                Database.Database.AddIrcMessages(messagesToSave.ToList());
                 messagesToSave.Clear();
             }
 
