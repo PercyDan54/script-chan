@@ -23,6 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -47,7 +48,10 @@
         <TextBox x:Name="DefaultTimerCommand" Grid.Row="4" Grid.Column="0" md:HintAssist.Hint="Timer Command Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <TextBox x:Name="DefaultTimerAfterGame" Grid.Row="4" Grid.Column="1" md:HintAssist.Hint="Timer After Game Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <TextBox x:Name="DefaultTimerAfterPick" Grid.Row="4" Grid.Column="2" md:HintAssist.Hint="Timer After Pick Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
-        <StackPanel Grid.Row="6" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Dirty, Converter={StaticResource BooleanToVisibilityConverter}}" >
+        <CheckBox x:Name="EnableNotifications" Content="Enable notifications" Grid.Row="5" Grid.Column="0" Margin="5" />
+        <TextBox x:Name="NotificationSoundFile" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" md:HintAssist.Hint="Notification sound file" ToolTip="Leave empty for default" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <Button x:Name="SelectNotificationSoundFile" Content="..." Grid.Row="5" Grid.Column="3" Margin="5" Width="50" HorizontalAlignment="Left" />
+        <StackPanel Grid.Row="7" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Dirty, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <Button x:Name="Discard" Content="Discard" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignFlatButton}" />
             <Button x:Name="Save" Content="Save" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignRaisedButton}" />
         </StackPanel>

@@ -25,6 +25,8 @@ namespace script_chan2.DataTypes
             public string ircPassword { get; set; }
             public string ircIpPrivate { get; set; }
             public List<ConfigColor> colors { get; set; }
+            public string notificationSoundFile { get; set; }
+            public bool enableNotifications { get; set; }
         }
 
         private class ConfigColor
@@ -42,7 +44,9 @@ namespace script_chan2.DataTypes
                 ircUsername = IrcUsername,
                 ircPassword = IrcPassword,
                 ircIpPrivate = IrcIpPrivate,
-                colors = new List<ConfigColor>()
+                colors = new List<ConfigColor>(),
+                notificationSoundFile = NotificationSoundFile,
+                enableNotifications = EnableNotifications
             };
             foreach (var colorData in UserColors)
             {
@@ -75,7 +79,9 @@ namespace script_chan2.DataTypes
                         new ConfigColor { key = "Freemod", color = "#d9d2e9" },
                         new ConfigColor { key = "Tiebreaker", color = "#d9ead3" },
                         new ConfigColor { key = "NoFail", color = "#f97ae4" }
-                    }
+                    },
+                    notificationSoundFile = "",
+                    enableNotifications = true
                 };
                 File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(configNew, Formatting.Indented));
             }
@@ -87,6 +93,10 @@ namespace script_chan2.DataTypes
             ircUsername = config.ircUsername;
             ircPassword = config.ircPassword;
             ircIpPrivate = config.ircIpPrivate;
+            if (config.notificationSoundFile == null)
+                config.notificationSoundFile = "";
+            notificationSoundFile = config.notificationSoundFile;
+            enableNotifications = config.enableNotifications;
             ircTimeout = Convert.ToInt32(settings["ircTimeout"]);
             enablePrivateIrc = Convert.ToBoolean(settings["enablePrivateIrc"]);
             defaultBO = Convert.ToInt32(settings["defaultBO"]);
@@ -276,5 +286,34 @@ namespace script_chan2.DataTypes
         }
 
         public static List<UserColor> UserColors;
+
+        private static string notificationSoundFile;
+        public static string NotificationSoundFile
+        {
+            get { return notificationSoundFile; }
+            set
+            {
+                if (value != notificationSoundFile)
+                {
+                    notificationSoundFile = value;
+                    SaveConfig();
+                    NotificationPlayer.Refresh();
+                }
+            }
+        }
+
+        private static bool enableNotifications;
+        public static bool EnableNotifications
+        {
+            get { return enableNotifications; }
+            set
+            {
+                if (value != enableNotifications)
+                {
+                    enableNotifications = value;
+                    SaveConfig();
+                }
+            }
+        }
     }
 }

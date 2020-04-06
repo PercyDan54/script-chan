@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Microsoft.Win32;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
@@ -247,6 +248,36 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        private string notificationSoundFile;
+        public string NotificationSoundFile
+        {
+            get { return notificationSoundFile; }
+            set
+            {
+                if (value != notificationSoundFile)
+                {
+                    notificationSoundFile = value;
+                    NotifyOfPropertyChange(() => NotificationSoundFile);
+                    Dirty = true;
+                }
+            }
+        }
+
+        private bool enableNotifications;
+        public bool EnableNotifications
+        {
+            get { return enableNotifications; }
+            set
+            {
+                if (value != enableNotifications)
+                {
+                    enableNotifications = value;
+                    NotifyOfPropertyChange(() => EnableNotifications);
+                    Dirty = true;
+                }
+            }
+        }
         #endregion
 
         #region Constructor
@@ -270,6 +301,8 @@ namespace script_chan2.GUI
             Settings.DefaultTimerCommand = defaultTimerCommand;
             Settings.DefaultTimerAfterGame = defaultTimerAfterGame;
             Settings.DefaultTimerAfterPick = defaultTimerAfterPick;
+            Settings.NotificationSoundFile = notificationSoundFile;
+            Settings.EnableNotifications = enableNotifications;
             Dirty = false;
         }
 
@@ -285,7 +318,20 @@ namespace script_chan2.GUI
             DefaultTimerCommand = Settings.DefaultTimerCommand;
             DefaultTimerAfterGame = Settings.DefaultTimerAfterGame;
             DefaultTimerAfterPick = Settings.DefaultTimerAfterPick;
+            NotificationSoundFile = Settings.NotificationSoundFile;
+            EnableNotifications = Settings.EnableNotifications;
             Dirty = false;
+        }
+
+        public void SelectNotificationSoundFile()
+        {
+            localLog.Information("open notification sound file selection");
+            var openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() != true)
+                return;
+
+            localLog.Information("set notification sound file");
+            NotificationSoundFile = openFileDialog.FileName;
         }
         #endregion
     }

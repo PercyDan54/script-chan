@@ -909,7 +909,8 @@ namespace script_chan2.GUI
         private void PlayNotificationSound()
         {
             localLog.Information("match '{match}' play notification sound", match.Name);
-            NotificationPlayer.PlayNotification();
+            if (Settings.EnableNotifications)
+                NotificationPlayer.PlayNotification();
         }
 
         public void UpdateScore()
