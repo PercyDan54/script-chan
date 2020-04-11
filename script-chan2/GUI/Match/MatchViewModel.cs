@@ -172,6 +172,7 @@ namespace script_chan2.GUI
         protected override void OnActivate()
         {
             localLog.Information("open window of match '{match}'", match.Name);
+            
             Events.Aggregator.Subscribe(this);
             match.ReloadMessages();
             Execute.OnUIThread(() =>
@@ -191,16 +192,32 @@ namespace script_chan2.GUI
 
         protected override void OnViewLoaded(object view)
         {
-            var chatWindow = ((MatchView)GetView()).ChatWindow;
-            var scrollViewer = FindScroll(chatWindow);
+            var actualView = (MatchView)view;
+            var scrollViewer = FindScroll(actualView.ChatWindow);
             if (scrollViewer != null)
                 scrollViewer.ScrollToEnd();
+
+            WindowHeight = Settings.WindowHeight;
+            WindowWidth = Settings.WindowWidth;
+            if (!double.IsNaN(Settings.Overview2Height))
+                actualView.Overview2Row.Height = new GridLength(Settings.Overview2Height);
+            if (!double.IsNaN(Settings.Column1Width))
+                actualView.Column1.Width = new GridLength(Settings.Column1Width);
+            if (!double.IsNaN(Settings.Column2Width))
+                actualView.Column2.Width = new GridLength(Settings.Column2Width);
         }
 
         protected override void OnDeactivate(bool close)
         {
             localLog.Information("close window of match '{name}'", match.Name);
             MatchList.OpenedMatches.Remove(match);
+
+            var view = (MatchView)GetView();
+            Settings.WindowHeight = WindowHeight;
+            Settings.WindowWidth = WindowWidth;
+            Settings.Overview2Height = view.Overview2Row.ActualHeight;
+            Settings.Column1Width = view.Column1.ActualWidth;
+            Settings.Column2Width = view.Column2.ActualWidth;
         }
 
         public void Handle(object message)
@@ -290,6 +307,34 @@ namespace script_chan2.GUI
         public string WindowTitle
         {
             get { return match.Name; }
+        }
+
+        private double windowHeight;
+        public double WindowHeight
+        {
+            get { return windowHeight; }
+            set
+            {
+                if (value != windowHeight)
+                {
+                    windowHeight = value;
+                    NotifyOfPropertyChange(() => WindowHeight);
+                }
+            }
+        }
+
+        private double windowWidth;
+        public double WindowWidth
+        {
+            get { return windowWidth; }
+            set
+            {
+                if (value != windowWidth)
+                {
+                    windowWidth = value;
+                    NotifyOfPropertyChange(() => WindowWidth);
+                }
+            }
         }
 
         public string DialogIdentifier

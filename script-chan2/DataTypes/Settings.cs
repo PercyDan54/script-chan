@@ -27,12 +27,19 @@ namespace script_chan2.DataTypes
             public List<ConfigColor> colors { get; set; }
             public string notificationSoundFile { get; set; }
             public bool enableNotifications { get; set; }
+            public List<ConfigSize> matchSizes { get; set; }
         }
 
         private class ConfigColor
         {
             public string key { get; set; }
             public string color { get; set; }
+        }
+
+        private class ConfigSize
+        {
+            public string key { get; set; }
+            public double size { get; set; }
         }
 
         public static void SaveConfig()
@@ -46,7 +53,15 @@ namespace script_chan2.DataTypes
                 ircIpPrivate = IrcIpPrivate,
                 colors = new List<ConfigColor>(),
                 notificationSoundFile = NotificationSoundFile,
-                enableNotifications = EnableNotifications
+                enableNotifications = EnableNotifications,
+                matchSizes = new List<ConfigSize>
+                {
+                    new ConfigSize { key = "height", size = WindowHeight },
+                    new ConfigSize { key = "width", size = WindowWidth },
+                    new ConfigSize { key = "overview2", size = Overview2Height },
+                    new ConfigSize { key = "column1", size = Column1Width },
+                    new ConfigSize { key = "column2", size = Column2Width }
+                }
             };
             foreach (var colorData in UserColors)
             {
@@ -114,6 +129,37 @@ namespace script_chan2.DataTypes
                 {
                     UserColors.Add(new UserColor { Key = configColor.key, Color = (Color)ColorConverter.ConvertFromString(configColor.color) });
                 }
+            }
+            if (config.matchSizes != null)
+            {
+                if (config.matchSizes.Any(x => x.key == "overview2"))
+                    Overview2Height = config.matchSizes.First(x => x.key == "overview2").size;
+                else
+                    Overview2Height = double.NaN;
+                if (config.matchSizes.Any(x => x.key == "column1"))
+                    Column1Width = config.matchSizes.First(x => x.key == "column1").size;
+                else
+                    Column1Width = double.NaN;
+                if (config.matchSizes.Any(x => x.key == "column2"))
+                    Column2Width = config.matchSizes.First(x => x.key == "column2").size;
+                else
+                    Column2Width = double.NaN;
+                if (config.matchSizes.Any(x => x.key == "height"))
+                    WindowHeight = config.matchSizes.First(x => x.key == "height").size;
+                else
+                    WindowHeight = 700;
+                if (config.matchSizes.Any(x => x.key == "width"))
+                    WindowWidth = config.matchSizes.First(x => x.key == "width").size;
+                else
+                    WindowWidth = 1000;
+            }
+            else
+            {
+                Overview2Height = double.NaN;
+                Column1Width = double.NaN;
+                Column2Width = double.NaN;
+                WindowHeight = 700;
+                WindowWidth = 1000;
             }
             localLog.Information("initialized");
         }
@@ -312,6 +358,71 @@ namespace script_chan2.DataTypes
                 {
                     enableNotifications = value;
                     SaveConfig();
+                }
+            }
+        }
+
+        private static double windowHeight;
+        public static double WindowHeight
+        {
+            get { return windowHeight; }
+            set
+            {
+                if (value != windowHeight)
+                {
+                    windowHeight = value;
+                }
+            }
+        }
+
+        private static double windowWidth;
+        public static double WindowWidth
+        {
+            get { return windowWidth; }
+            set
+            {
+                if (value != windowWidth)
+                {
+                    windowWidth = value;
+                }
+            }
+        }
+
+        private static double overview2Height;
+        public static double Overview2Height
+        {
+            get { return overview2Height; }
+            set
+            {
+                if (value != overview2Height)
+                {
+                    overview2Height = value;
+                }
+            }
+        }
+
+        private static double column1Width;
+        public static double Column1Width
+        {
+            get { return column1Width; }
+            set
+            {
+                if (value != column1Width)
+                {
+                    column1Width = value;
+                }
+            }
+        }
+
+        private static double column2Width;
+        public static double Column2Width
+        {
+            get { return column2Width; }
+            set
+            {
+                if (value != column2Width)
+                {
+                    column2Width = value;
                 }
             }
         }
