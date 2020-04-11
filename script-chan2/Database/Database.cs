@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace script_chan2.Database
 {
@@ -24,6 +25,7 @@ namespace script_chan2.Database
         public static List<Team> Teams = new List<Team>();
         public static List<Match> Matches = new List<Match>();
         public static List<Beatmap> Beatmaps = new List<Beatmap>();
+        public static List<CustomCommand> CustomCommands = new List<CustomCommand>();
 
         public static void Initialize()
         {
@@ -40,6 +42,7 @@ namespace script_chan2.Database
             InitMatchPlayers();
             InitMatchPicks();
             InitMatchGames();
+            InitCustomCommands();
             localLog.Information("init finished");
         }
 
@@ -1496,6 +1499,93 @@ namespace script_chan2.Database
                 conn.Close();
             }
             return messages;
+        }
+        #endregion
+
+        #region Custom Commands
+        public static void InitCustomCommands()
+        {
+            localLog.Information("init custom commands");
+            using (var conn = GetConnection())
+            using (var command = new SQLiteCommand("SELECT id, name, command, tournament FROM CustomCommands", conn))
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var id = Convert.ToInt32(reader["id"]);
+                    Tournament tournament = null;
+                    if (reader["tournament"] != DBNull.Value)
+                        tournament = Tournaments.First(x => x.Id == Convert.ToInt32(reader["tournament"]));
+                    var name = reader["name"].ToString();
+                    var commandText = reader["command"].ToString();
+                    var customCommand = new CustomCommand(id)
+                    {
+                        Tournament = tournament,
+                        Name = name,
+                        Command = commandText
+                    };
+                    CustomCommands.Add(customCommand);
+                }
+                reader.Close();
+                conn.Close();
+            }
+        }
+
+        public static int AddCustomCommand(CustomCommand customCommand)
+        {
+            localLog.Information("add custom command '{name}'", customCommand.Name);
+            int resultValue;
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand("INSERT INTO CustomCommands (tournament, name, command) VALUES (@tournament, @name, @command)", conn))
+                {
+                    if (customCommand.Tournament == null)
+                        command.Parameters.AddWithValue("@tournament", DBNull.Value);
+                    else
+                        command.Parameters.AddWithValue("@tournament", customCommand.Tournament.Id);
+                    command.Parameters.AddWithValue("@name", customCommand.Name);
+                    command.Parameters.AddWithValue("@command", customCommand.Command);
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
+                {
+                    resultValue = Convert.ToInt32(command.ExecuteScalar());
+                }
+                conn.Close();
+            }
+            CustomCommands.Add(customCommand);
+            return resultValue;
+        }
+
+        public static void UpdateCustomCommand(CustomCommand customCommand)
+        {
+            localLog.Information("update custom command '{name}'", customCommand.Name);
+            using (var conn = GetConnection())
+            using (var command = new SQLiteCommand("UPDATE CustomCommands SET name = @name, command = @command, tournament = @tournament WHERE id = @id", conn))
+            {
+                command.Parameters.AddWithValue("@name", customCommand.Name);
+                command.Parameters.AddWithValue("@command", customCommand.Command);
+                if (customCommand.Tournament == null)
+                    command.Parameters.AddWithValue("@tournament", DBNull.Value);
+                else
+                    command.Parameters.AddWithValue("@tournament", customCommand.Tournament.Id);
+                command.Parameters.AddWithValue("@id", customCommand.Id);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
+        public static void DeleteCustomCommand(CustomCommand customCommand)
+        {
+            localLog.Information("delete custom command '{name}'", customCommand.Name);
+            using (var conn = GetConnection())
+            using (var command = new SQLiteCommand("DELETE FROM CustomCommands WHERE id = @id", conn))
+            {
+                command.Parameters.AddWithValue("@id", customCommand.Id);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            CustomCommands.Remove(customCommand);
         }
         #endregion
     }

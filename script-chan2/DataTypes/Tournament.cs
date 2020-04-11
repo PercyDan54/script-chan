@@ -89,9 +89,18 @@ namespace script_chan2.DataTypes
             get { return Database.Database.Teams.Where(x => x.Tournament == this).ToList(); }
         }
 
+        public List<CustomCommand> CustomCommands
+        {
+            get { return Database.Database.CustomCommands.Where(x => x.Tournament == this).ToList(); }
+        }
+
         public void Delete()
         {
             localLog.Information("'{name}' delete", Name);
+            foreach (var match in Database.Database.Matches.Where(x => x.Tournament == this).ToList())
+            {
+                match.Delete();
+            }
             foreach (var webhook in Webhooks.ToList())
             {
                 RemoveWebhook(webhook);
@@ -103,6 +112,10 @@ namespace script_chan2.DataTypes
             foreach (var team in Teams.ToList())
             {
                 team.Delete();
+            }
+            foreach (var customCommand in CustomCommands.ToList())
+            {
+                customCommand.Delete();
             }
             if (Settings.DefaultTournament == this)
             {

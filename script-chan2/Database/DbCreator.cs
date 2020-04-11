@@ -38,6 +38,7 @@ namespace script_chan2.Database
             CreateScoresTable();
             CreateIrcMessagesTable();
             CreateHeadToHeadPointsTable();
+            CreateCustomCommandsTable();
             conn.Close();
             localLog.Information("database creation finished");
         }
@@ -338,6 +339,20 @@ namespace script_chan2.Database
                 (tournament INTEGER NOT NULL,
                 place INTEGER,
                 points INTEGER,
+                FOREIGN KEY (tournament) REFERENCES Tournaments(id) ON DELETE CASCADE)", conn))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private static void CreateCustomCommandsTable()
+        {
+            localLog.Information("create table CustomCommands");
+            using (var command = new SQLiteCommand(@"CREATE TABLE CustomCommands
+                (id INTEGER NOT NULL PRIMARY KEY,
+                tournament INTEGER,
+                name TEXT,
+                command TEXT,
                 FOREIGN KEY (tournament) REFERENCES Tournaments(id) ON DELETE CASCADE)", conn))
             {
                 command.ExecuteNonQuery();

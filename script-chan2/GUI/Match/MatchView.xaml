@@ -190,6 +190,13 @@
                         <Button x:Name="SendWelcomeString" Content="Welcome string" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="SetPassword" Content="Set password" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="EditRoomOptions" Content="Set room options" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <ItemsControl x:Name="CustomCommandViews" Visibility="{Binding RoomOpenVisible}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
                         <Button x:Name="CloseRoom" Content="Close the room" Margin="5" Background="Red" Visibility="{Binding RoomOpenVisible}"/>
                         <Button x:Name="CreateRoom" Content="Create room" Margin="5" Background="Green" Visibility="{Binding RoomClosedVisible}" />
                         <Button x:Name="JoinRoom" Content="Join existing room" Margin="5" Background="Green" Visibility="{Binding RoomClosedVisible}" />

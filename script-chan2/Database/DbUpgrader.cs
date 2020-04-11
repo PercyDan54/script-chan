@@ -38,7 +38,15 @@ namespace script_chan2.Database
             }
 
             if (dbVersion == 1)
+            {
                 UpgradeV1();
+                dbVersion = 2;
+            }
+            if (dbVersion == 2)
+            {
+                UpgradeV2();
+                dbVersion = 3;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -53,6 +61,28 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 2 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV2()
+        {
+            localLog.Information("upgrade database to v3");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"CREATE TABLE CustomCommands
+                    (id INTEGER NOT NULL PRIMARY KEY,
+                    tournament INTEGER,
+                    name TEXT,
+                    command TEXT,
+                    FOREIGN KEY (tournament) REFERENCES Tournaments(id) ON DELETE CASCADE)", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 3 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

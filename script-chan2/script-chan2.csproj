@@ -302,6 +302,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\CustomCommands\CustomCommandListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\CustomCommands\CustomCommandsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\CustomCommands\DeleteCustomCommandDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\CustomCommands\EditCustomCommandDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Export\ExportSuccessDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -374,6 +390,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Match\MatchCustomCommandView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Match\MatchJoinRoomDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -420,6 +440,7 @@
     <Compile Include="Database\DbUpgrader.cs" />
     <Compile Include="DataTypes\Beatmap.cs" />
     <Compile Include="DataTypes\ChannelMessageData.cs" />
+    <Compile Include="DataTypes\CustomCommand.cs" />
     <Compile Include="DataTypes\Game.cs" />
     <Compile Include="DataTypes\IrcMessage.cs" />
     <Compile Include="DataTypes\Mappool.cs" />
@@ -453,6 +474,10 @@
     <Compile Include="GUI\Colors\ColorListItemViewModel.cs" />
     <Compile Include="GUI\Colors\ColorsViewModel.cs" />
     <Compile Include="GUI\Colors\EditColorDialogViewModel.cs" />
+    <Compile Include="GUI\CustomCommands\CustomCommandListItemViewModel.cs" />
+    <Compile Include="GUI\CustomCommands\CustomCommandsViewModel.cs" />
+    <Compile Include="GUI\CustomCommands\DeleteCustomCommandDialogViewModel.cs" />
+    <Compile Include="GUI\CustomCommands\EditCustomCommandDialogViewModel.cs" />
     <Compile Include="GUI\Events.cs" />
     <Compile Include="GUI\Export\ExportSuccessDialogViewModel.cs" />
     <Compile Include="GUI\Export\ExportViewModel.cs" />
@@ -473,6 +498,7 @@
     <Compile Include="GUI\Match\MatchBanchoEventViewModel.cs" />
     <Compile Include="GUI\Match\MatchBeatmapViewModel.cs" />
     <Compile Include="GUI\Match\MatchCloseRoomDialogViewModel.cs" />
+    <Compile Include="GUI\Match\MatchCustomCommandViewModel.cs" />
     <Compile Include="GUI\Match\MatchJoinRoomDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchPasswordDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchPlayerViewModel.cs" />

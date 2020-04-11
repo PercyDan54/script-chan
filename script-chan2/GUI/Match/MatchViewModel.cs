@@ -157,6 +157,21 @@ namespace script_chan2.GUI
         {
             get { return Enum.GetValues(typeof(WinConditions)).Cast<WinConditions>().ToList(); }
         }
+
+        public BindableCollection<MatchCustomCommandViewModel> CustomCommandViews
+        {
+            get
+            {
+                var list = new BindableCollection<MatchCustomCommandViewModel>();
+                foreach (var customCommand in Database.Database.CustomCommands)
+                {
+                    if (customCommand.Tournament != null && customCommand.Tournament != match.Tournament)
+                        continue;
+                    list.Add(new MatchCustomCommandViewModel(match, customCommand));
+                }
+                return list;
+            }
+        }
         #endregion
 
         #region Constructor

@@ -31,6 +31,7 @@
                         <ListBoxItem Content="Webhooks" cal:Message.Attach="[Event MouseUp] = [Action ShowWebhooks]" />
                         <ListBoxItem Content="Settings" cal:Message.Attach="[Event MouseUp] = [Action ShowSettings]" />
                         <ListBoxItem Content="Colors" cal:Message.Attach="[Event MouseUp] = [Action ShowColors]" />
+                        <ListBoxItem Content="Commands" cal:Message.Attach="[Event MouseUp] = [Action ShowCommands]" />
                         <ListBoxItem Content="Chat" cal:Message.Attach="[Event MouseUp] = [Action ShowChat]" />
                         <ListBoxItem Content="Export" cal:Message.Attach="[Event MouseUp] = [Action ShowExport]" />
                     </ListBox>

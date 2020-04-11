@@ -108,6 +108,14 @@ namespace script_chan2.GUI
             DrawerExpanded = false;
         }
 
+        public void ShowCommands()
+        {
+            localLog.Information("show commands");
+            ActivateItem(new CustomCommandsViewModel());
+            Title = "Commands";
+            DrawerExpanded = false;
+        }
+
         public void ShowChat()
         {
             localLog.Information("show chat");
