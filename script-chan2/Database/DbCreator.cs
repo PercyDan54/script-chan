@@ -66,7 +66,7 @@ namespace script_chan2.Database
                 ('defaultTimerCommand', '120'),
                 ('defaultTimerAfterGame', '120'),
                 ('defaultTimerAfterPick', '120'),
-                ('dbVersion', '2')", conn))
+                ('dbVersion', '3')", conn))
             {
                 command.ExecuteNonQuery();
             }
