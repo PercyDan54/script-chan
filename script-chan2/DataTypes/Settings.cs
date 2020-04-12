@@ -96,7 +96,15 @@ namespace script_chan2.DataTypes
                         new ConfigColor { key = "NoFail", color = "#f97ae4" }
                     },
                     notificationSoundFile = "",
-                    enableNotifications = true
+                    enableNotifications = true,
+                    matchSizes = new List<ConfigSize>
+                    {
+                        new ConfigSize { key = "height", size = 700 },
+                        new ConfigSize { key = "width", size = 1000 },
+                        new ConfigSize { key = "overview2", size = double.NaN },
+                        new ConfigSize { key = "column1", size = double.NaN },
+                        new ConfigSize { key = "column2", size = double.NaN }
+                    }
                 };
                 File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(configNew, Formatting.Indented));
             }
