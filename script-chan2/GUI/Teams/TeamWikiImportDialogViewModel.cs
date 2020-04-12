@@ -13,7 +13,7 @@ namespace script_chan2.GUI
 {
     public class TeamWikiImportDialogViewModel : Screen
     {
-        private ILogger localLog = Log.ForContext<TeamsViewModel>();
+        private ILogger localLog = Log.ForContext<TeamWikiImportDialogViewModel>();
 
         #region Constructor
         public TeamWikiImportDialogViewModel()
