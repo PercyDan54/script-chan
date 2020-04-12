@@ -64,7 +64,7 @@ namespace script_chan2.GUI
             clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
         }
 
-        private void Clipboard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
+        private async void Clipboard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
             if (e.ContentType != SharpClipboard.ContentTypes.Text)
                 return;
@@ -77,7 +77,7 @@ namespace script_chan2.GUI
             if (int.TryParse(text, out int id))
             {
                 localLog.Information("team player list dialog clipboard event, found id {id}", id);
-                AddPlayerInternal(id.ToString());
+                await AddPlayerInternal(id.ToString());
             }
         }
 
@@ -94,25 +94,69 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        private bool isAddingPlayer;
+        public bool IsAddingPlayer
+        {
+            get { return isAddingPlayer; }
+            set
+            {
+                if (value != isAddingPlayer)
+                {
+                    isAddingPlayer = value;
+                    NotifyOfPropertyChange(() => AddButtonVisible);
+                    NotifyOfPropertyChange(() => AddProgressVisible);
+                    NotifyOfPropertyChange(() => CloseButtonEnabled);
+                }
+            }
+        }
+
+        public Visibility AddButtonVisible
+        {
+            get
+            {
+                if (IsAddingPlayer)
+                    return Visibility.Collapsed;
+                return Visibility.Visible;
+            }
+        }
+
+        public Visibility AddProgressVisible
+        {
+            get
+            {
+                if (IsAddingPlayer)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public bool CloseButtonEnabled
+        {
+            get { return !IsAddingPlayer; }
+        }
         #endregion
 
         #region Actions
-        public void AddPlayer()
+        public async Task AddPlayer()
         {
             if (string.IsNullOrEmpty(AddPlayerNameOrId))
                 return;
+
             localLog.Information("add players '{players}'", AddPlayerNameOrId);
+            IsAddingPlayer = true;
             var playerList = AddPlayerNameOrId.Split(';');
             foreach (var playerId in playerList)
             {
-                AddPlayerInternal(playerId);
+                await AddPlayerInternal(playerId);
             }
             AddPlayerNameOrId = "";
+            IsAddingPlayer = false;
         }
 
-        private void AddPlayerInternal(string idOrName)
+        private async Task AddPlayerInternal(string idOrName)
         {
-            var player = Database.Database.GetPlayer(idOrName);
+            var player = await Database.Database.GetPlayer(idOrName);
             if (player != null)
             {
                 team.AddPlayer(player);
@@ -122,7 +166,8 @@ namespace script_chan2.GUI
 
         public void DialogEscape()
         {
-            DialogHost.CloseDialogCommand.Execute(false, null);
+            if (!IsAddingPlayer)
+                DialogHost.CloseDialogCommand.Execute(false, null);
         }
         #endregion
     }

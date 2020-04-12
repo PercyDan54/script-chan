@@ -36,7 +36,7 @@ namespace script_chan2.GUI
         #endregion
 
         #region Actions
-        public void LoadWiki()
+        public async Task LoadWiki()
         {
             localLog.Information("start import from wiki '{url}'", WikiUrl);
             var webClient = new WebClient();
@@ -128,7 +128,7 @@ namespace script_chan2.GUI
                             if (beatmapId > 0)
                             {
                                 localLog.Information("beatmap '{beatmap}' found", beatmapId);
-                                var beatmap = Database.Database.GetBeatmap(beatmapId);
+                                var beatmap = await Database.Database.GetBeatmap(beatmapId);
                                 if (beatmap != null)
                                 {
                                     var mappoolMap = new MappoolMap()

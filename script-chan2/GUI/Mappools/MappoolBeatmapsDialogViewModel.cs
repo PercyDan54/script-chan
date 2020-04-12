@@ -62,6 +62,47 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        private bool isAddingBeatmap;
+        public bool IsAddingBeatmap
+        {
+            get { return isAddingBeatmap; }
+            set
+            {
+                if (value != isAddingBeatmap)
+                {
+                    isAddingBeatmap = value;
+                    NotifyOfPropertyChange(() => AddButtonVisible);
+                    NotifyOfPropertyChange(() => AddProgressVisible);
+                    NotifyOfPropertyChange(() => CloseButtonEnabled);
+                }
+            }
+        }
+
+        public Visibility AddButtonVisible
+        {
+            get
+            {
+                if (IsAddingBeatmap)
+                    return Visibility.Collapsed;
+                return Visibility.Visible;
+            }
+        }
+
+        public Visibility AddProgressVisible
+        {
+            get
+            {
+                if (IsAddingBeatmap)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public bool CloseButtonEnabled
+        {
+            get { return !IsAddingBeatmap; }
+        }
         #endregion
 
         #region Actions
@@ -80,7 +121,7 @@ namespace script_chan2.GUI
             clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
         }
 
-        private void Clipboard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
+        private async void Clipboard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
             if (e.ContentType != SharpClipboard.ContentTypes.Text)
                 return;
@@ -93,29 +134,32 @@ namespace script_chan2.GUI
             if (int.TryParse(text, out int id))
             {
                 localLog.Information("mappool beatmap list dialog clipboard event, found id {id}", id);
-                AddBeatmapInternal(id);
+                await AddBeatmapInternal(id);
             }
         }
 
-        public void AddBeatmap()
+        public async Task AddBeatmap()
         {
             if (string.IsNullOrEmpty(beatmapId))
                 return;
+
             localLog.Information("mappool beatmap list dialog: add beatmaps '{beatmaps}'", beatmapId);
+            IsAddingBeatmap = true;
             var beatmapIds = beatmapId.Split(';');
             foreach (var id in beatmapIds)
             {
                 if (int.TryParse(id, out int actualId))
                 {
-                    AddBeatmapInternal(actualId);
+                    await AddBeatmapInternal(actualId);
                 }
             }
             BeatmapId = "";
+            IsAddingBeatmap = false;
         }
 
-        private void AddBeatmapInternal(int id)
+        private async Task AddBeatmapInternal(int id)
         {
-            var beatmap = Database.Database.GetBeatmap(id);
+            var beatmap = await Database.Database.GetBeatmap(id);
             if (beatmap != null)
             {
                 var mappoolMap = new MappoolMap()
@@ -131,7 +175,8 @@ namespace script_chan2.GUI
 
         public void DialogEscape()
         {
-            DialogHost.CloseDialogCommand.Execute(false, null);
+            if (!IsAddingBeatmap)
+                DialogHost.CloseDialogCommand.Execute(false, null);
         }
         #endregion
     }

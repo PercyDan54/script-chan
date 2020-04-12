@@ -75,7 +75,7 @@ namespace script_chan2.GUI
         #endregion
 
         #region Actions
-        public void StartImport()
+        public async Task StartImport()
         {
             var rootSplit = ImportText.Split('\n');
             foreach (var line in rootSplit)
@@ -99,7 +99,7 @@ namespace script_chan2.GUI
 
                     foreach (var playerName in players)
                     {
-                        var player = Database.Database.GetPlayer(playerName);
+                        var player = await Database.Database.GetPlayer(playerName);
                         if (player != null)
                         {
                             team.AddPlayer(player);

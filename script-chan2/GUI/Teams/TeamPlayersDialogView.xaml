@@ -20,9 +20,10 @@
             <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
         <TextBox md:HintAssist.Hint="Player name or ID" Text="{Binding AddPlayerNameOrId, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action AddPlayer]" />
-        <Button x:Name="AddPlayer" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Add" Grid.Column="1">
+        <Button x:Name="AddPlayer" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Add" Grid.Column="1" Visibility="{Binding AddButtonVisible}">
             <md:PackIcon Kind="Add" />
         </Button>
+        <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Column="1" Visibility="{Binding AddProgressVisible}" />
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
             <ItemsControl ItemsSource="{Binding PlayerViews}">
                 <ItemsControl.ItemsPanel>
@@ -37,6 +38,6 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" HorizontalAlignment="Right" />
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" HorizontalAlignment="Right" IsEnabled="{Binding CloseButtonEnabled}" />
     </Grid>
 </UserControl>

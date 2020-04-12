@@ -33,15 +33,15 @@ namespace script_chan2.Database
             InitTournaments();
             InitTournamentHeadToHeadPoints();
             InitTeams();
-            InitTeamPlayers();
+            InitTeamPlayers().Wait();
             InitWebhooks();
             InitMappools();
-            InitMappoolMaps();
+            InitMappoolMaps().Wait();
             InitTournamentWebhooks();
-            InitMatches();
-            InitMatchPlayers();
-            InitMatchPicks();
-            InitMatchGames();
+            InitMatches().Wait();
+            InitMatchPlayers().Wait();
+            InitMatchPicks().Wait();
+            InitMatchGames().Wait();
             InitCustomCommands();
             localLog.Information("init finished");
         }
@@ -543,7 +543,7 @@ namespace script_chan2.Database
             }
         }
 
-        public static Beatmap GetBeatmap(int id)
+        public static async Task<Beatmap> GetBeatmap(int id)
         {
             localLog.Information("get beatmap '{id}'", id);
             Beatmap returnValue = Beatmaps.FirstOrDefault(x => x.Id == id);
@@ -581,7 +581,7 @@ namespace script_chan2.Database
                     }
                     else
                     {
-                        returnValue = OsuApi.OsuApi.GetBeatmap(id);
+                        returnValue = await OsuApi.OsuApi.GetBeatmap(id);
                         if (returnValue != null)
                             AddBeatmap(returnValue);
                     }
@@ -594,7 +594,7 @@ namespace script_chan2.Database
             return returnValue;
         }
 
-        public static void InitMappoolMaps()
+        public static async Task InitMappoolMaps()
         {
             localLog.Information("init mappool maps");
             using (var conn = GetConnection())
@@ -605,7 +605,7 @@ namespace script_chan2.Database
                 {
                     var id = Convert.ToInt32(reader["id"]);
                     var mappool = Mappools.First(x => x.Id == Convert.ToInt32(reader["mappool"]));
-                    var beatmap = GetBeatmap(Convert.ToInt32(reader["beatmap"]));
+                    var beatmap = await GetBeatmap(Convert.ToInt32(reader["beatmap"]));
                     var listIndex = Convert.ToInt32(reader["listIndex"]);
                     var tag = reader["tag"].ToString();
                     var mappoolMap = new MappoolMap(id)
@@ -702,7 +702,7 @@ namespace script_chan2.Database
             }
         }
 
-        public static Player GetPlayer(string idOrName)
+        public static async Task<Player> GetPlayer(string idOrName)
         {
             localLog.Information("get player '{name}'", idOrName);
             Player returnValue = Players.FirstOrDefault(x => x.Id.ToString() == idOrName || x.Name == idOrName);
@@ -730,7 +730,7 @@ namespace script_chan2.Database
                     }
                     else
                     {
-                        returnValue = OsuApi.OsuApi.GetPlayer(idOrName);
+                        returnValue = await OsuApi.OsuApi.GetPlayer(idOrName);
                         if (returnValue != null)
                             AddPlayer(returnValue);
                     }
@@ -843,7 +843,7 @@ namespace script_chan2.Database
             Teams.Remove(team);
         }
 
-        public static void InitTeamPlayers()
+        public static async Task InitTeamPlayers()
         {
             localLog.Information("init team players");
             using (var conn = GetConnection())
@@ -854,7 +854,7 @@ namespace script_chan2.Database
                 {
                     var playerId = Convert.ToInt32(reader["player"]);
                     var teamId = Convert.ToInt32(reader["team"]);
-                    Teams.First(x => x.Id == teamId).Players.Add(GetPlayer(playerId.ToString()));
+                    Teams.First(x => x.Id == teamId).Players.Add(await GetPlayer(playerId.ToString()));
                 }
                 reader.Close();
                 conn.Close();
@@ -863,7 +863,7 @@ namespace script_chan2.Database
         #endregion
 
         #region Matches
-        public static void InitMatches()
+        public static async Task InitMatches()
         {
             localLog.Information("init matches");
             using (var conn = GetConnection())
@@ -922,9 +922,9 @@ namespace script_chan2.Database
                     else
                     {
                         if (reader["rollWinner"] != DBNull.Value)
-                            rollWinnerPlayer = GetPlayer(reader["rollWinner"].ToString());
+                            rollWinnerPlayer = await GetPlayer(reader["rollWinner"].ToString());
                         if (reader["firstPicker"] != DBNull.Value)
-                            firstPickerPlayer = GetPlayer(reader["firstPicker"].ToString());
+                            firstPickerPlayer = await GetPlayer(reader["firstPicker"].ToString());
                     }
                     var teamRedPoints = Convert.ToInt32(reader["teamRedPoints"]);
                     var teamBluePoints = Convert.ToInt32(reader["teamBluePoints"]);
@@ -1291,7 +1291,7 @@ namespace script_chan2.Database
             Matches.Remove(match);
         }
 
-        public static void InitMatchPlayers()
+        public static async Task InitMatchPlayers()
         {
             localLog.Information("init match teams and players");
             using (var conn = GetConnection())
@@ -1307,7 +1307,7 @@ namespace script_chan2.Database
                             {
                                 while (reader.Read())
                                 {
-                                    match.Players.Add(GetPlayer(reader["player"].ToString()), Convert.ToInt32(reader["points"]));
+                                    match.Players.Add(await GetPlayer(reader["player"].ToString()), Convert.ToInt32(reader["points"]));
                                 }
                                 reader.Close();
                             }
@@ -1318,7 +1318,7 @@ namespace script_chan2.Database
             }
         }
 
-        public static void InitMatchPicks()
+        public static async Task InitMatchPicks()
         {
             localLog.Information("init match picks");
             using (var conn = GetConnection())
@@ -1334,7 +1334,7 @@ namespace script_chan2.Database
                     if (match.TeamMode == TeamModes.TeamVS)
                         team = Teams.First(x => x.Id == Convert.ToInt32(reader["picker"]));
                     else if (match.TeamMode == TeamModes.HeadToHead)
-                        player = GetPlayer(reader["picker"].ToString());
+                        player = await GetPlayer(reader["picker"].ToString());
                     var ban = Convert.ToBoolean(reader["ban"]);
                     var pick = new MatchPick()
                     {
@@ -1352,7 +1352,7 @@ namespace script_chan2.Database
             }
         }
 
-        public static void InitMatchGames()
+        public static async Task InitMatchGames()
         {
             localLog.Information("init match games");
             using (var conn = GetConnection())
@@ -1363,7 +1363,7 @@ namespace script_chan2.Database
                 {
                     var id = Convert.ToInt32(reader["id"]);
                     var match = Matches.First(x => x.Id == Convert.ToInt32(reader["match"]));
-                    var beatmap = GetBeatmap(Convert.ToInt32(reader["beatmap"]));
+                    var beatmap = await GetBeatmap(Convert.ToInt32(reader["beatmap"]));
                     var counted = Convert.ToBoolean(reader["counted"]);
                     var warmup = Convert.ToBoolean(reader["warmup"]);
                     var game = new Game()
@@ -1388,7 +1388,7 @@ namespace script_chan2.Database
                         {
                             while (reader2.Read())
                             {
-                                var player = GetPlayer(reader2["player"].ToString());
+                                var player = await GetPlayer(reader2["player"].ToString());
                                 var points = Convert.ToInt32(reader2["score"]);
                                 var passed = Convert.ToBoolean(reader2["passed"]);
                                 var score = new Score()

@@ -75,7 +75,7 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (apiStatus)
+                if (apiStatus == true)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }
@@ -85,20 +85,66 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (!apiStatus)
+                if (apiStatus == false)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }
         }
 
-        private bool apiStatus;
+        private bool? apiStatus;
+        public bool? ApiStatus
+        {
+            get { return apiStatus; }
+            set
+            {
+                if (value != apiStatus)
+                {
+                    apiStatus = value;
+                    NotifyOfPropertyChange(() => ApiStatus);
+                    NotifyOfPropertyChange(() => ApiWorks);
+                    NotifyOfPropertyChange(() => ApiError);
+                }
+            }
+        }
 
-        public void CheckApiKey()
+        private bool isCheckingApi;
+        public bool IsCheckingApi
+        {
+            get { return isCheckingApi; }
+            set
+            {
+                if (value != isCheckingApi)
+                {
+                    isCheckingApi = value;
+                    NotifyOfPropertyChange(() => IsCheckingApi);
+                    NotifyOfPropertyChange(() => ApiProgress);
+                    NotifyOfPropertyChange(() => ApiTestEnabled);
+                }
+            }
+        }
+
+        public Visibility ApiProgress
+        {
+            get
+            {
+                if (IsCheckingApi)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public bool ApiTestEnabled
+        {
+            get { return !IsCheckingApi; }
+        }
+
+        public async void CheckApiKey()
         {
             localLog.Information("check api key");
-            apiStatus = OsuApi.OsuApi.CheckApiKey(apiKey);
-            NotifyOfPropertyChange(() => ApiWorks);
-            NotifyOfPropertyChange(() => ApiError);
+            IsCheckingApi = true;
+            ApiStatus = null;
+            ApiStatus = await OsuApi.OsuApi.CheckApiKey(apiKey);
+            IsCheckingApi = false;
         }
 
         private string ircUsername;

@@ -18,13 +18,13 @@ namespace script_chan2.OsuApi
         private static ILogger localLog = Log.ForContext(typeof(OsuApi));
 
         #region API calls
-        public static bool CheckApiKey(string key)
+        public static async Task<bool> CheckApiKey(string key)
         {
             localLog.Information("check api key");
             var request = (HttpWebRequest)WebRequest.Create("https://osu.ppy.sh/api/get_user?u=2&k=" + key);
             try
             {
-                _ = request.GetResponse();
+                _ = await request.GetResponseAsync();
             }
             catch (Exception)
             {
@@ -33,10 +33,10 @@ namespace script_chan2.OsuApi
             return true;
         }
 
-        public static Beatmap GetBeatmap(int beatmapId)
+        public static async Task<Beatmap> GetBeatmap(int beatmapId)
         {
             localLog.Information("get beatmap {id}", beatmapId);
-            var response = SendRequest("get_beatmaps", "b=" + beatmapId);
+            var response = await SendRequest("get_beatmaps", "b=" + beatmapId);
             var data = JsonConvert.DeserializeObject<List<ApiBeatmap>>(response);
             if (data.Count == 0)
             {
@@ -58,10 +58,10 @@ namespace script_chan2.OsuApi
             };
         }
 
-        public static Player GetPlayer(string playerId)
+        public static async Task<Player> GetPlayer(string playerId)
         {
             localLog.Information("get player {id}", playerId);
-            var response = SendRequest("get_user", "u=" + playerId);
+            var response = await SendRequest("get_user", "u=" + playerId);
             var data = JsonConvert.DeserializeObject<List<ApiPlayer>>(response);
             if (data.Count == 0)
             {
@@ -77,10 +77,10 @@ namespace script_chan2.OsuApi
             };
         }
 
-        public static void UpdateGames(Match match)
+        public static async Task UpdateGames(Match match)
         {
             localLog.Information("refresh match {id}", match.RoomId);
-            var response = SendRequest("get_match", "mp=" + match.RoomId);
+            var response = await SendRequest("get_match", "mp=" + match.RoomId);
             var data = JsonConvert.DeserializeObject<ApiMatch>(response);
             foreach (var gameData in data.games)
             {
@@ -93,7 +93,7 @@ namespace script_chan2.OsuApi
                 if (gameData.scores.Count == 0)
                     continue;
 
-                var beatmap = Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
+                var beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
                 var game = new Game()
                 {
                     Match = match,
@@ -104,7 +104,7 @@ namespace script_chan2.OsuApi
 
                 foreach (var scoreData in gameData.scores)
                 {
-                    var player = Database.Database.GetPlayer(scoreData.user_id);
+                    var player = await Database.Database.GetPlayer(scoreData.user_id);
                     var score = new Score()
                     {
                         Game = game,
@@ -124,12 +124,12 @@ namespace script_chan2.OsuApi
         #endregion
 
         #region Helper methods
-        private static string SendRequest(string method, string parameters)
+        private static async Task<string> SendRequest(string method, string parameters)
         {
             using (var webClient = new WebClient())
             {
                 localLog.Information("send request 'https://osu.ppy.sh/api/" + method + "?" + parameters + "'");
-                return webClient.DownloadString("https://osu.ppy.sh/api/" + method + "?k=" + Settings.ApiKey + "&" + parameters);
+                return await webClient.DownloadStringTaskAsync("https://osu.ppy.sh/api/" + method + "?k=" + Settings.ApiKey + "&" + parameters);
             }
         }
 

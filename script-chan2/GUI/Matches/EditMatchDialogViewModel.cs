@@ -344,16 +344,16 @@ namespace script_chan2.GUI
             }
         }
 
-        public void AddPlayer()
+        public async Task AddPlayer()
         {
             if (string.IsNullOrEmpty(PlayerNameOrId))
                 return;
-            var player = Database.Database.GetPlayer(PlayerNameOrId);
+            var player = await Database.Database.GetPlayer(PlayerNameOrId);
             if (player == null)
                 return;
             if (Players.Contains(player))
                 return;
-            localLog.Information("new match add player {name}", player.Name);
+            localLog.Information("add player {name}", player.Name);
             Players.Add(player);
             PlayerNameOrId = "";
             NotifyOfPropertyChange(() => PlayerViews);
@@ -361,7 +361,7 @@ namespace script_chan2.GUI
 
         public void RemovePlayer(MatchPlayerListItemViewModel model)
         {
-            localLog.Information("new match remove player {name}", model.Player.Name);
+            localLog.Information("remove player {name}", model.Player.Name);
             Players.Remove(model.Player);
             NotifyOfPropertyChange(() => PlayerViews);
         }
@@ -370,7 +370,7 @@ namespace script_chan2.GUI
         {
             if (string.IsNullOrEmpty(Name) && TeamMode == TeamModes.TeamVS && Tournament != null && TeamBlue != null && TeamRed != null)
             {
-                localLog.Information("new match generate name");
+                localLog.Information("generate match name");
                 Name = $"{Tournament.Acronym}: ({TeamRed.Name}) VS ({TeamBlue.Name})";
             }
         }
