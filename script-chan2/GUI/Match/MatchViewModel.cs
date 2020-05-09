@@ -203,6 +203,8 @@ namespace script_chan2.GUI
                     AddMessageToChat(message, true);
                 }
             });
+
+            base.OnActivate();
         }
 
         protected override void OnViewLoaded(object view)
@@ -220,12 +222,15 @@ namespace script_chan2.GUI
                 actualView.Column1.Width = new GridLength(Settings.Column1Width);
             if (!double.IsNaN(Settings.Column2Width))
                 actualView.Column2.Width = new GridLength(Settings.Column2Width);
+
+            base.OnViewLoaded(view);
         }
 
         protected override void OnDeactivate(bool close)
         {
             localLog.Information("close window of match '{name}'", match.Name);
             MatchList.OpenedMatches.Remove(match);
+            Events.Aggregator.Unsubscribe(this);
 
             var view = (MatchView)GetView();
             Settings.WindowHeight = WindowHeight;
@@ -233,6 +238,8 @@ namespace script_chan2.GUI
             Settings.Overview2Height = view.Overview2Row.ActualHeight;
             Settings.Column1Width = view.Column1.ActualWidth;
             Settings.Column2Width = view.Column2.ActualWidth;
+
+            base.OnDeactivate(close);
         }
 
         public void Handle(object message)
