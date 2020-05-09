@@ -25,6 +25,7 @@ namespace script_chan2.GUI
                 GameRecap = webhook.GameRecap;
                 FooterText = webhook.FooterText;
                 FooterIcon = webhook.FooterIcon;
+                WinImage = webhook.WinImage;
             }
             else
             {
@@ -34,8 +35,9 @@ namespace script_chan2.GUI
                 BanRecap = true;
                 PickRecap = true;
                 GameRecap = true;
-                footerText = "Woah! So cool!";
-                footerIcon = "https://cdn.frankerfacez.com/emoticon/243789/4";
+                FooterText = "Woah! So cool!";
+                FooterIcon = "https://cdn.frankerfacez.com/emoticon/243789/4";
+                WinImage = "https://78.media.tumblr.com/b94193615145d12bfb64aa77b677269e/tumblr_njzqukOpBP1ti1gm1o1_500.gif";
             }
         }
         #endregion
@@ -153,6 +155,20 @@ namespace script_chan2.GUI
                 {
                     footerIcon = value;
                     NotifyOfPropertyChange(() => FooterIcon);
+                }
+            }
+        }
+
+        private string winImage;
+        public string WinImage
+        {
+            get { return winImage; }
+            set
+            {
+                if (value != winImage)
+                {
+                    winImage = value;
+                    NotifyOfPropertyChange(() => WinImage);
                 }
             }
         }

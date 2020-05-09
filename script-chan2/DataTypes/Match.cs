@@ -140,10 +140,10 @@ namespace script_chan2.DataTypes
             ChatMessages.Clear();
         }
 
-        public void UpdateScores()
+        public async Task UpdateScores()
         {
             localLog.Information("'{name}' update scores", Name);
-            OsuApi.OsuApi.UpdateGames(this);
+            await OsuApi.OsuApi.UpdateGames(this);
             foreach (var game in Games.Where(x => !x.Counted))
             {
                 if (!WarmupMode)

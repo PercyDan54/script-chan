@@ -66,7 +66,7 @@ namespace script_chan2.Database
                 ('defaultTimerCommand', '120'),
                 ('defaultTimerAfterGame', '120'),
                 ('defaultTimerAfterPick', '120'),
-                ('dbVersion', '3')", conn))
+                ('dbVersion', '5')", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -107,7 +107,8 @@ namespace script_chan2.Database
                 pickRecap BOOL,
                 gameRecap BOOL,
                 footerText TEXT,
-                footerIcon TEXT)", conn))
+                footerIcon TEXT,
+                winImage TEXT)", conn))
             {
                 command.ExecuteNonQuery();
             }

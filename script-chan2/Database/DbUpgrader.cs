@@ -52,6 +52,11 @@ namespace script_chan2.Database
                 UpgradeV3();
                 dbVersion = 4;
             }
+            if (dbVersion == 4)
+            {
+                UpgradeV4();
+                dbVersion = 5;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -113,6 +118,27 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 4 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV4()
+        {
+            localLog.Information("upgrade database to v5");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE Webhooks ADD COLUMN winImage TEXT", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE Webhooks SET winImage = 'https://78.media.tumblr.com/b94193615145d12bfb64aa77b677269e/tumblr_njzqukOpBP1ti1gm1o1_500.gif'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 5 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

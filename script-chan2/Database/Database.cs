@@ -297,7 +297,7 @@ namespace script_chan2.Database
         {
             localLog.Information("init webhooks");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon FROM Webhooks", conn))
+            using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage FROM Webhooks", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -311,6 +311,7 @@ namespace script_chan2.Database
                     var gameRecap = Convert.ToBoolean(reader["gameRecap"]);
                     var footerText = reader["footerText"].ToString();
                     var footerIcon = reader["footerIcon"].ToString();
+                    var winImage = reader["winImage"].ToString();
                     var webhook = new Webhook(id)
                     {
                         Name = name,
@@ -320,7 +321,8 @@ namespace script_chan2.Database
                         PickRecap = pickRecap,
                         GameRecap = gameRecap,
                         FooterText = footerText,
-                        FooterIcon = footerIcon
+                        FooterIcon = footerIcon,
+                        WinImage = winImage
                     };
                     Webhooks.Add(webhook);
                 }
@@ -335,7 +337,8 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon) VALUES (@name, @url, @matchCreated, @banRecap, @pickRecap, @gameRecap, @footerText, @footerIcon)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage)" +
+                    "VALUES (@name, @url, @matchCreated, @banRecap, @pickRecap, @gameRecap, @footerText, @footerIcon, @winImage)", conn))
                 {
                     command.Parameters.AddWithValue("@name", webhook.Name);
                     command.Parameters.AddWithValue("@url", webhook.URL);
@@ -345,6 +348,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@gameRecap", webhook.GameRecap);
                     command.Parameters.AddWithValue("@footerText", webhook.FooterText);
                     command.Parameters.AddWithValue("@footerIcon", webhook.FooterIcon);
+                    command.Parameters.AddWithValue("@winImage", webhook.WinImage);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -375,7 +379,7 @@ namespace script_chan2.Database
             localLog.Information("update webhook '{name}'", webhook.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE Webhooks
-                SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap, footerText = @footerText, footerIcon = @footerIcon
+                SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap, footerText = @footerText, footerIcon = @footerIcon, winImage = @winImage
                 WHERE id = @id", conn))
             {
                 command.Parameters.AddWithValue("@name", webhook.Name);
@@ -387,6 +391,7 @@ namespace script_chan2.Database
                 command.Parameters.AddWithValue("@gameRecap", webhook.GameRecap);
                 command.Parameters.AddWithValue("@footerText", webhook.FooterText);
                 command.Parameters.AddWithValue("@footerIcon", webhook.FooterIcon);
+                command.Parameters.AddWithValue("@winImage", webhook.WinImage);
                 command.ExecuteNonQuery();
                 conn.Close();
             }

@@ -64,7 +64,8 @@ namespace script_chan2.GUI
                     PickRecap = model.PickRecap,
                     GameRecap = model.GameRecap,
                     FooterText = model.FooterText,
-                    FooterIcon = model.FooterIcon
+                    FooterIcon = model.FooterIcon,
+                    WinImage = model.WinImage
                 };
                 webhook.Save();
                 NotifyOfPropertyChange(() => WebhookViews);

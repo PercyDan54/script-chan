@@ -242,7 +242,7 @@ namespace script_chan2.GUI
             base.OnDeactivate(close);
         }
 
-        public void Handle(object message)
+        public async void Handle(object message)
         {
             if (message is RoomCreatedData)
             {
@@ -286,7 +286,7 @@ namespace script_chan2.GUI
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
                     {
-                        UpdateScore();
+                        await UpdateScore();
                         SendRoomStatus();
                         if (!match.WarmupMode && match.EnableWebhooks)
                         {
@@ -980,10 +980,10 @@ namespace script_chan2.GUI
                 NotificationPlayer.PlayNotification();
         }
 
-        public void UpdateScore()
+        public async Task UpdateScore()
         {
             localLog.Information("match '{match}' update scores", match.Name);
-            match.UpdateScores();
+            await match.UpdateScores();
             if (match.TeamMode == TeamModes.TeamVS)
                 NotifyOfPropertyChange(() => TeamsViews);
             else
