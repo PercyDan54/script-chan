@@ -24,13 +24,17 @@ namespace script_chan2.Discord
                     Author = new EmbedAuthorBuilder
                     {
                         IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400731693192839179/plus.png",
-                        Name = match.Name,
                         Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     },
                     Color = Color.Blue,
                     Title = "The match has been created!",
                     Description = $"You can join the match on IRC by typing ```/join #mp_{match.RoomId}```"
                 };
+
+                if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    embed.Author.Name = $"{match.TeamRed.Name} VS {match.TeamBlue.Name}";
+                else
+                    embed.Author.Name = match.Name;
 
                 if (embed != null)
                 {
@@ -61,7 +65,7 @@ namespace script_chan2.Discord
                         Author = new EmbedAuthorBuilder
                         {
                             IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400744720772628481/more-info-button.png",
-                            Name = match.Name,
+                            Name = $"{match.TeamRed.Name} VS {match.TeamBlue.Name}",
                             Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                         },
                         Color = Color.Gold,
@@ -143,7 +147,7 @@ namespace script_chan2.Discord
                         Author = new EmbedAuthorBuilder
                         {
                             IconUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400744720772628481/more-info-button.png",
-                            Name = match.Name,
+                            Name = $"{match.TeamRed.Name} VS {match.TeamBlue.Name}",
                             Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                         },
                         Color = Color.Gold,
@@ -223,7 +227,7 @@ namespace script_chan2.Discord
                         Author = new EmbedAuthorBuilder
                         {
                             IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png",
-                            Name = match.Name,
+                            Name = $"{match.TeamRed.Name} VS {match.TeamBlue.Name}",
                             Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                         }
                     };
