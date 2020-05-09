@@ -27,7 +27,7 @@ namespace script_chan2.GUI
         #region Events
         public void Handle(string message)
         {
-            if (message == "DeleteMatch" || message == "EditMatch")
+            if (message == "DeleteMatch" || message == "EditMatch" || message == "AddMatch")
                 NotifyOfPropertyChange(() => MatchViews);
             else if (message == "UpdateDefaultTournament")
                 NotifyOfPropertyChange(() => FilterTournament);
@@ -45,6 +45,8 @@ namespace script_chan2.GUI
                     if (Settings.DefaultTournament != null && match.Tournament != Settings.DefaultTournament)
                         continue;
                     if (FilterStatus != null && match.Status != FilterStatus)
+                        continue;
+                    if (!string.IsNullOrEmpty(Search) && !match.Name.ToLower().Contains(Search.ToLower()))
                         continue;
                     list.Add(new MatchListItemViewModel(match));
                 }
@@ -100,6 +102,21 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        private string search = "";
+        public string Search
+        {
+            get { return search; }
+            set
+            {
+                if (value != search)
+                {
+                    search = value;
+                    NotifyOfPropertyChange(() => Search);
+                    NotifyOfPropertyChange(() => MatchViews);
+                }
+            }
+        }
         #endregion
 
         #region Actions
@@ -142,6 +159,16 @@ namespace script_chan2.GUI
                 Settings.DefaultTournament = model.Tournament;
                 NotifyOfPropertyChange(() => MatchViews);
             }
+        }
+
+        public async void OpenWikiImportDialog()
+        {
+            localLog.Information("open wiki import dialog");
+            var model = new MatchesWikiImportDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            await DialogHost.Show(view, "MainDialogHost");
         }
         #endregion
     }

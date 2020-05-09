@@ -13,9 +13,13 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button x:Name="OpenNewMatchDialog" Content="New" HorizontalAlignment="Left" />
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button x:Name="OpenNewMatchDialog" Content="New" HorizontalAlignment="Left" />
+            <Button x:Name="OpenWikiImportDialog" Content="Import from wiki" Margin="10 0 0 0" />
+        </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <ComboBox md:HintAssist.Hint="Tournament" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200">
+            <TextBox x:Name="Search" Width="200" md:HintAssist.Hint="Search" />
+            <ComboBox md:HintAssist.Hint="Tournament" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200" Margin="10 0 0 0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
