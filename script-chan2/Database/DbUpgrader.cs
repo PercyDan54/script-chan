@@ -47,6 +47,11 @@ namespace script_chan2.Database
                 UpgradeV2();
                 dbVersion = 3;
             }
+            if (dbVersion == 3)
+            {
+                UpgradeV3();
+                dbVersion = 4;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -83,6 +88,31 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 3 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV3()
+        {
+            localLog.Information("upgrade database to v4");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE Webhooks ADD COLUMN footerText TEXT", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"ALTER TABLE Webhooks ADD COLUMN footerIcon TEXT", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE Webhooks SET footerText = 'Woah! So cool!', footerIcon = 'https://cdn.frankerfacez.com/emoticon/243789/4'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 4 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

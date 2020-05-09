@@ -27,18 +27,19 @@ namespace script_chan2.Discord
                 },
                 Color = Color.Blue,
                 Title = "The match has been created!",
-                Description = $"You can join the match on IRC by typing ```/join #mp_{match.RoomId}```",
-                Footer = new EmbedFooterBuilder
-                {
-                    Text = "Woah! So cool!",
-                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
-                }
+                Description = $"You can join the match on IRC by typing ```/join #mp_{match.RoomId}```"
             };
 
             if (embed != null)
             {
                 foreach (var webhook in match.Tournament.Webhooks.Where(x => x.MatchCreated))
                 {
+                    embed.Footer = new EmbedFooterBuilder
+                    {
+                        Text = webhook.FooterText,
+                        IconUrl = webhook.FooterIcon
+                    };
+
                     using (var client = new DiscordWebhookClient(webhook.URL))
                     {
                         client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
@@ -81,12 +82,6 @@ namespace script_chan2.Discord
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = redTeam });
                 if (!string.IsNullOrEmpty(blueTeam))
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = blueTeam });
-
-                embed.Footer = new EmbedFooterBuilder
-                {
-                    Text = "Woah! So cool!",
-                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
-                };
             }
             else
             {
@@ -115,18 +110,18 @@ namespace script_chan2.Discord
                     if (!string.IsNullOrEmpty(bans))
                         embed.Fields.Add(new EmbedFieldBuilder { Name = player.Key.Name, Value = bans });
                 }
-
-                embed.Footer = new EmbedFooterBuilder
-                {
-                    Text = "Woah! So cool!",
-                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
-                };
             }
 
             if (embed != null)
             {
                 foreach (var webhook in match.Tournament.Webhooks.Where(x => x.BanRecap))
                 {
+                    embed.Footer = new EmbedFooterBuilder
+                    {
+                        Text = webhook.FooterText,
+                        IconUrl = webhook.FooterIcon
+                    };
+
                     using (var client = new DiscordWebhookClient(webhook.URL))
                     {
                         client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
@@ -170,12 +165,6 @@ namespace script_chan2.Discord
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = redTeam });
                 if (!string.IsNullOrEmpty(blueTeam))
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = blueTeam });
-
-                embed.Footer = new EmbedFooterBuilder
-                {
-                    Text = "Woah! So cool!",
-                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
-                };
             }
             else
             {
@@ -201,18 +190,18 @@ namespace script_chan2.Discord
                 }
                 if (!string.IsNullOrEmpty(picks))
                     embed.Fields.Add(new EmbedFieldBuilder { Name = "Picks", Value = picks });
-
-                embed.Footer = new EmbedFooterBuilder
-                {
-                    Text = "Woah! So cool!",
-                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
-                };
             }
 
             if (embed != null)
             {
                 foreach (var webhook in match.Tournament.Webhooks.Where(x => x.PickRecap))
                 {
+                    embed.Footer = new EmbedFooterBuilder
+                    {
+                        Text = webhook.FooterText,
+                        IconUrl = webhook.FooterIcon
+                    };
+
                     using (var client = new DiscordWebhookClient(webhook.URL))
                     {
                         client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
@@ -290,12 +279,6 @@ namespace script_chan2.Discord
                     embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = $"{(match.TeamRedPoints * 2 >= match.BO ? match.TeamRed.Name : match.TeamBlue.Name)} wins the match :clap:" });
                 else
                     embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = "Next team to pick: " + (map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) + " :loudspeaker:" });
-
-                embed.Footer = new EmbedFooterBuilder
-                {
-                    Text = "Woah! So cool!",
-                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
-                };
             }
             else
             {
@@ -330,18 +313,18 @@ namespace script_chan2.Discord
                 }
                 embed.Fields.Add(new EmbedFieldBuilder { Name = "Player", Value = players, IsInline = true });
                 embed.Fields.Add(new EmbedFieldBuilder { Name = "Points", Value = points, IsInline = true });
-
-                embed.Footer = new EmbedFooterBuilder
-                {
-                    Text = "Woah! So cool!",
-                    IconUrl = "https://cdn.frankerfacez.com/emoticon/243789/4"
-                };
             }
 
             if (embed != null)
             {
                 foreach (var webhook in match.Tournament.Webhooks.Where(x => x.GameRecap))
                 {
+                    embed.Footer = new EmbedFooterBuilder
+                    {
+                        Text = webhook.FooterText,
+                        IconUrl = webhook.FooterIcon
+                    };
+
                     using (var client = new DiscordWebhookClient(webhook.URL))
                     {
                         client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();

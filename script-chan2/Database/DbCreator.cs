@@ -105,7 +105,9 @@ namespace script_chan2.Database
                 matchCreated BOOL,
                 banRecap BOOL,
                 pickRecap BOOL,
-                gameRecap BOOL)", conn))
+                gameRecap BOOL,
+                footerText TEXT,
+                footerIcon TEXT)", conn))
             {
                 command.ExecuteNonQuery();
             }

@@ -33,6 +33,10 @@ namespace script_chan2.DataTypes
         public bool PickRecap { get; set; }
 
         public bool GameRecap { get; set; }
+
+        public string FooterText { get; set; }
+
+        public string FooterIcon { get; set; }
         #endregion
 
         #region Actions

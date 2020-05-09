@@ -23,6 +23,8 @@ namespace script_chan2.GUI
                 BanRecap = webhook.BanRecap;
                 PickRecap = webhook.PickRecap;
                 GameRecap = webhook.GameRecap;
+                FooterText = webhook.FooterText;
+                FooterIcon = webhook.FooterIcon;
             }
             else
             {
@@ -32,6 +34,8 @@ namespace script_chan2.GUI
                 BanRecap = true;
                 PickRecap = true;
                 GameRecap = true;
+                footerText = "Woah! So cool!";
+                footerIcon = "https://cdn.frankerfacez.com/emoticon/243789/4";
             }
         }
         #endregion
@@ -121,6 +125,34 @@ namespace script_chan2.GUI
                 {
                     gameRecap = value;
                     NotifyOfPropertyChange(() => GameRecap);
+                }
+            }
+        }
+
+        private string footerText;
+        public string FooterText
+        {
+            get { return footerText; }
+            set
+            {
+                if (value != footerText)
+                {
+                    footerText = value;
+                    NotifyOfPropertyChange(() => FooterText);
+                }
+            }
+        }
+
+        private string footerIcon;
+        public string FooterIcon
+        {
+            get { return footerIcon; }
+            set
+            {
+                if (value != footerIcon)
+                {
+                    footerIcon = value;
+                    NotifyOfPropertyChange(() => FooterIcon);
                 }
             }
         }

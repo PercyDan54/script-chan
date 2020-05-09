@@ -61,6 +61,8 @@ namespace script_chan2.GUI
                 webhook.BanRecap = model.BanRecap;
                 webhook.PickRecap = model.PickRecap;
                 webhook.GameRecap = model.GameRecap;
+                webhook.FooterText = model.FooterText;
+                webhook.FooterIcon = model.FooterIcon;
                 webhook.Save();
                 NotifyOfPropertyChange(() => Name);
             }

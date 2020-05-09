@@ -62,7 +62,9 @@ namespace script_chan2.GUI
                     MatchCreated = model.MatchCreated,
                     BanRecap = model.BanRecap,
                     PickRecap = model.PickRecap,
-                    GameRecap = model.GameRecap
+                    GameRecap = model.GameRecap,
+                    FooterText = model.FooterText,
+                    FooterIcon = model.FooterIcon
                 };
                 webhook.Save();
                 NotifyOfPropertyChange(() => WebhookViews);
