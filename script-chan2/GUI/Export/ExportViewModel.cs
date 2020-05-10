@@ -150,7 +150,10 @@ namespace script_chan2.GUI
                         MatchCreated = webhookData.MatchCreated,
                         BanRecap = webhookData.BanRecap,
                         PickRecap = webhookData.PickRecap,
-                        GameRecap = webhookData.GameRecap
+                        GameRecap = webhookData.GameRecap,
+                        FooterText = webhookData.FooterText,
+                        FooterIcon = webhookData.FooterIcon,
+                        WinImage = webhookData.WinImage
                     };
 
                     tournamentObject.Webhooks.Add(webhookObject);
@@ -329,7 +332,7 @@ namespace script_chan2.GUI
                         };
                         Database.Database.AddPlayer(player);
 
-                        player = Database.Database.GetPlayer(playerItem.Name.Value);
+                        player = await Database.Database.GetPlayer(playerItem.Name.Value);
                         team.AddPlayer(player);
                     }
                 }
@@ -353,6 +356,9 @@ namespace script_chan2.GUI
                     webhook.BanRecap = webhookItem.BanRecap.Value;
                     webhook.PickRecap = webhookItem.PickRecap.Value;
                     webhook.GameRecap = webhookItem.GameRecap.Value;
+                    webhook.FooterText = webhookItem.FooterText.Value;
+                    webhook.FooterIcon = webhookItem.FooterIcon.Value;
+                    webhook.WinImage = webhookItem.WinImage.Value;
                     webhook.Save();
 
                     tournament.AddWebhook(webhook);
@@ -392,7 +398,7 @@ namespace script_chan2.GUI
                         };
                         Database.Database.AddBeatmap(beatmap);
 
-                        beatmap = Database.Database.GetBeatmap(Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value));
+                        beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value));
 
                         MappoolMap mappoolMap = new MappoolMap()
                         {
@@ -458,7 +464,7 @@ namespace script_chan2.GUI
                         };
                         Database.Database.AddPlayer(player);
 
-                        player = Database.Database.GetPlayer(playerItem.Name.Value);
+                        player = await Database.Database.GetPlayer(playerItem.Name.Value);
                         match.Players.Add(player, Convert.ToInt32(playerItem.Points.Value));
                     }
 
