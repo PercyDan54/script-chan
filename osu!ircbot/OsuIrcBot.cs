@@ -715,7 +715,8 @@ namespace Osu.Ircbot
                 if(createCommand.Success)
                 {
                     await Task.Delay(3000);
-                    RoomCreatedCatched(this, new MatchCatchedArgs() { Id = createCommand.Groups[1].Value, BlueTeam = createCommand.Groups[3].Value, RedTeam = createCommand.Groups[2].Value });
+                    if (RoomCreatedCatched != null)
+                        RoomCreatedCatched(this, new MatchCatchedArgs() { Id = createCommand.Groups[1].Value, BlueTeam = createCommand.Groups[3].Value, RedTeam = createCommand.Groups[2].Value });
                 }
             }
         }
