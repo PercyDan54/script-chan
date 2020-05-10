@@ -247,6 +247,8 @@ namespace script_chan2.GUI
             if (message is RoomCreatedData)
             {
                 var data = (RoomCreatedData)message;
+                if (match.RoomId == data.Id)
+                    return;
                 if (data.Name == match.Name)
                 {
                     localLog.Information("match '{match}' room creation data received", match.Name);
