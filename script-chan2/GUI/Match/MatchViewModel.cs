@@ -288,7 +288,7 @@ namespace script_chan2.GUI
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
                     {
-                        await UpdateScore();
+                        await UpdateScore(true);
                         if (!match.WarmupMode)
                         {
                             SendRoomStatus();
@@ -988,10 +988,10 @@ namespace script_chan2.GUI
                 NotificationPlayer.PlayNotification();
         }
 
-        public async Task UpdateScore()
+        public async Task UpdateScore(bool newGameExpected = false)
         {
             localLog.Information("match '{match}' update scores", match.Name);
-            await match.UpdateScores();
+            await match.UpdateScores(newGameExpected);
             if (match.TeamMode == TeamModes.TeamVS)
                 NotifyOfPropertyChange(() => TeamsViews);
             else

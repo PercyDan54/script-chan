@@ -140,10 +140,19 @@ namespace script_chan2.DataTypes
             ChatMessages.Clear();
         }
 
-        public async Task UpdateScores()
+        public async Task UpdateScores(bool newGameExpected = false)
         {
             localLog.Information("'{name}' update scores", Name);
-            await OsuApi.OsuApi.UpdateGames(this);
+            var oldGameCount = Games.Count;
+            var keepUpdating = true;
+            while (keepUpdating)
+            {
+                await OsuApi.OsuApi.UpdateGames(this);
+                if (newGameExpected && Games.Count == oldGameCount)
+                    await Task.Delay(5000);
+                else
+                    keepUpdating = false;
+            }
             foreach (var game in Games.Where(x => !x.Counted))
             {
                 if (!WarmupMode)
