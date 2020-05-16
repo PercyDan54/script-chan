@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -172,14 +173,29 @@ namespace script_chan2.GUI
                 return list;
             }
         }
+
+        private List<RoomSlot> roomSlots;
+        public BindableCollection<MatchRoomSlotViewModel> RoomSlotsViews
+        {
+            get
+            {
+                var list = new BindableCollection<MatchRoomSlotViewModel>();
+                foreach (var slot in roomSlots.OrderBy(x => x.Slot))
+                {
+                    list.Add(new MatchRoomSlotViewModel(slot));
+                }
+                return list;
+            }
+        }
         #endregion
 
         #region Constructor
-        public MatchViewModel(Match match)
+        public MatchViewModel(DataTypes.Match match)
         {
             this.match = match;
             if (match.RoomId > 0)
                 OsuIrc.OsuIrc.JoinChannel("#mp_" + match.RoomId);
+            roomSlots = new List<RoomSlot>();
         }
         #endregion
 
@@ -285,6 +301,11 @@ namespace script_chan2.GUI
                     if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
                     {
                         PlayNotificationSound();
+                        foreach (var slot in roomSlots)
+                        {
+                            slot.State = RoomSlotStates.Ready;
+                        }
+                        NotifyOfPropertyChange(() => RoomSlotsViews);
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
                     {
@@ -296,6 +317,135 @@ namespace script_chan2.GUI
                             {
                                 DiscordApi.SendGameRecap(match);
                             }
+                        }
+                    }
+                    if (data.User == "BanchoBot" && data.Message.StartsWith("Room name:"))
+                    {
+                        roomSlots.Clear();
+                    }
+                    if (data.User == "BanchoBot" && data.Message.StartsWith("Slot "))
+                    {
+                        var slotString = data.Message.Substring(5, 2).Trim();
+                        var slotNumber = Convert.ToInt32(slotString);
+
+                        var readyString = data.Message.Substring(8, 9);
+                        var ready = readyString.StartsWith("Ready");
+                        var noMap = readyString.StartsWith("No Map");
+
+                        var profileString = data.Message.Substring(18, 28);
+                        var profileStringSplit = profileString.Split('/');
+                        var profileId = profileStringSplit.Last();
+                        var player = await Database.Database.GetPlayer(profileId);
+
+                        var detailsString = "";
+                        if (data.Message.Length >= 64)
+                            detailsString = data.Message.Substring(64);
+
+                        TeamColors? team = null;
+                        if (detailsString.Contains("Team Blue"))
+                            team = TeamColors.Blue;
+                        if (detailsString.Contains("Team Red"))
+                            team = TeamColors.Red;
+
+                        var slot = new RoomSlot
+                        {
+                            Slot = slotNumber,
+                            Player = player,
+                            Team = team,
+                            Mods = new List<GameMods>()
+                        };
+                        if (noMap)
+                            slot.State = RoomSlotStates.NoMap;
+                        else if (ready)
+                            slot.State = RoomSlotStates.Ready;
+                        else
+                            slot.State = RoomSlotStates.NotReady;
+                        if (detailsString.Contains("Hidden"))
+                            slot.Mods.Add(GameMods.Hidden);
+                        if (detailsString.Contains("HardRock"))
+                            slot.Mods.Add(GameMods.HardRock);
+                        if (detailsString.Contains("NoFail"))
+                            slot.Mods.Add(GameMods.NoFail);
+                        if (detailsString.Contains("Easy"))
+                            slot.Mods.Add(GameMods.Easy);
+                        if (detailsString.Contains("Flashlight"))
+                            slot.Mods.Add(GameMods.Flashlight);
+
+                        roomSlots.Add(slot);
+                        NotifyOfPropertyChange(() => RoomSlotsViews);
+                    }
+                    if (data.User == "BanchoBot" && data.Message.Contains("joined in slot"))
+                    {
+                        var regex = new Regex(@"^(.+) joined in slot (\d+) for team (\w+)\.$");
+                        var regexResult = regex.Match(data.Message);
+                        if (regexResult.Success)
+                        {
+                            var player = await Database.Database.GetPlayer(regexResult.Groups[1].Value);
+                            var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
+                            TeamColors? team = null;
+                            switch (regexResult.Groups[3].Value)
+                            {
+                                case "blue": team = TeamColors.Blue; break;
+                                case "red": team = TeamColors.Red; break;
+                            }
+                            if (!roomSlots.Any(x => x.Player.Id == player.Id))
+                            {
+                                var slot = new RoomSlot
+                                {
+                                    Slot = slotNumber,
+                                    Player = player,
+                                    Team = team,
+                                    Mods = new List<GameMods>()
+                                };
+                                roomSlots.Add(slot);
+                                NotifyOfPropertyChange(() => RoomSlotsViews);
+                            }
+                        }
+                    }
+                    if (data.User == "BanchoBot" && data.Message.Contains("changed to"))
+                    {
+                        var regex = new Regex(@"^(.+) changed to (\w+)$");
+                        var regexResult = regex.Match(data.Message);
+                        if (regexResult.Success)
+                        {
+                            var player = regexResult.Groups[1].Value;
+                            TeamColors? team = null;
+                            switch (regexResult.Groups[2].Value)
+                            {
+                                case "Blue": team = TeamColors.Blue; break;
+                                case "Red": team = TeamColors.Red; break;
+                            }
+                            if (roomSlots.Any(x => x.Player.Name == player) && team != null)
+                            {
+                                roomSlots.First(x => x.Player.Name == player).Team = team;
+                                NotifyOfPropertyChange(() => RoomSlotsViews);
+                            }
+                        }
+                    }
+                    if (data.User == "BanchoBot" && data.Message.Contains("moved to slot"))
+                    {
+                        var regex = new Regex(@"^(.+) moved to slot (\d+)$");
+                        var regexResult = regex.Match(data.Message);
+                        if (regexResult.Success)
+                        {
+                            var player = regexResult.Groups[1].Value;
+                            var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
+                            if (roomSlots.Any(x => x.Player.Name == player))
+                            {
+                                roomSlots.First(x => x.Player.Name == player).Slot = slotNumber;
+                                NotifyOfPropertyChange(() => RoomSlotsViews);
+                            }
+                        }
+                    }
+                    if (data.User == "BanchoBot" && data.Message.Contains("left the game."))
+                    {
+                        var regex = new Regex(@"^(.+) left the game\.$");
+                        var regexResult = regex.Match(data.Message);
+                        if (regexResult.Success)
+                        {
+                            var player = regexResult.Groups[1].Value;
+                            roomSlots.RemoveAll(x => x.Player.Name == player);
+                            NotifyOfPropertyChange(() => RoomSlotsViews);
                         }
                     }
                 }
@@ -329,7 +479,7 @@ namespace script_chan2.GUI
         #endregion
 
         #region Properties
-        private Match match;
+        private DataTypes.Match match;
 
         public string WindowTitle
         {

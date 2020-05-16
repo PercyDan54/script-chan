@@ -64,6 +64,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition x:Name="Overview2Row" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
@@ -111,7 +112,21 @@
                         <Button x:Name="StartTimer" Content="Timer" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="AbortMatch" Content="Abort map" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                     </WrapPanel>
-                    <Grid x:Name="Overview2" Grid.Row="2" Margin="2">
+                    <Grid x:Name="SettingsGrid" Grid.Row="2" Margin="2">
+                        <ItemsControl ItemsSource="{Binding RoomSlotsViews}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentControl cal:View.Model="{Binding}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                    <Grid x:Name="Overview2" Grid.Row="3" Margin="2">
                         <ScrollViewer x:Name="BanchoEventsScrollViewer">
                             <ItemsControl ItemsSource="{Binding BanchoEventsViews}">
                                 <ItemsControl.ItemsPanel>
@@ -127,8 +142,8 @@
                             </ItemsControl>
                         </ScrollViewer>
                     </Grid>
-                    <GridSplitter Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="Black" Height="3" />
-                    <Grid x:Name="ChatGrid" Grid.Row="4" Margin="2">
+                    <GridSplitter Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="Black" Height="3" />
+                    <Grid x:Name="ChatGrid" Grid.Row="5" Margin="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />

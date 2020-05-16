@@ -420,6 +420,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Match\MatchRoomSlotModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Match\MatchRoomSlotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Match\MatchTeamView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -460,6 +468,7 @@
     <Compile Include="DataTypes\Player.cs" />
     <Compile Include="DataTypes\PrivateMessageData.cs" />
     <Compile Include="DataTypes\RoomCreatedData.cs" />
+    <Compile Include="DataTypes\RoomSlot.cs" />
     <Compile Include="DataTypes\Score.cs" />
     <Compile Include="DataTypes\Settings.cs" />
     <Compile Include="DataTypes\Team.cs" />
@@ -474,6 +483,7 @@
     <Compile Include="Enums\LobbyTeams.cs" />
     <Compile Include="Enums\MatchBanchoEvents.cs" />
     <Compile Include="Enums\MatchStatus.cs" />
+    <Compile Include="Enums\RoomSlotStates.cs" />
     <Compile Include="Enums\TeamColors.cs" />
     <Compile Include="Enums\TeamModes.cs" />
     <Compile Include="Enums\WinConditions.cs" />
@@ -514,6 +524,8 @@
     <Compile Include="GUI\Match\MatchPasswordDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchPlayerViewModel.cs" />
     <Compile Include="GUI\Match\MatchRoomOptionsDialogViewModel.cs" />
+    <Compile Include="GUI\Match\MatchRoomSlotModViewModel.cs" />
+    <Compile Include="GUI\Match\MatchRoomSlotViewModel.cs" />
     <Compile Include="GUI\Match\MatchTeamViewModel.cs" />
     <Compile Include="GUI\Match\MatchViewModel.cs" />
     <Compile Include="GUI\NotificationPlayer.cs" />
