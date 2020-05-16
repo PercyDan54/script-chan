@@ -961,13 +961,16 @@ namespace script_chan2.GUI
                         SendRoomMessage("The result is a tie. We have to play the tiebreaker");
                     }
 
-                    if (match.Picks.Last().Team == match.TeamRed)
+                    if (match.Picks.Count > 0)
                     {
-                        SendRoomMessage("Next team to pick: " + match.TeamBlue.Name);
-                    }
-                    else
-                    {
-                        SendRoomMessage("Next team to pick: " + match.TeamRed.Name);
+                        if (match.Picks.Last().Team == match.TeamRed)
+                        {
+                            SendRoomMessage("Next team to pick: " + match.TeamBlue.Name);
+                        }
+                        else
+                        {
+                            SendRoomMessage("Next team to pick: " + match.TeamRed.Name);
+                        }
                     }
 
                     if (match.MpTimerAfterGame > 0)
