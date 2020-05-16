@@ -452,6 +452,34 @@ namespace script_chan2.GUI
             }
         }
 
+        public Team FirstPickerTeam
+        {
+            get { return match.FirstPickerTeam; }
+            set
+            {
+                if (value != match.FirstPickerTeam)
+                {
+                    match.FirstPickerTeam = value;
+                    match.Save();
+                    NotifyOfPropertyChange(() => FirstPickerTeam);
+                }
+            }
+        }
+
+        public Player FirstPickerPlayer
+        {
+            get { return match.FirstPickerPlayer; }
+            set
+            {
+                if (value != match.FirstPickerPlayer)
+                {
+                    match.FirstPickerPlayer = value;
+                    match.Save();
+                    NotifyOfPropertyChange(() => FirstPickerPlayer);
+                }
+            }
+        }
+
         public GameModes GameMode
         {
             get { return match.GameMode; }
