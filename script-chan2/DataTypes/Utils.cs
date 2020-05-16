@@ -14,7 +14,7 @@ namespace script_chan2.DataTypes
             if (mods.Count == 0)
                 return "None";
             var modString = "";
-            for (var i = 0; i < mods.Count - 1; i++)
+            for (var i = 0; i < mods.Count; i++)
             {
                 if (i > 0)
                     modString += " ";
