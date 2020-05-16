@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MaterialDesignColors.ColorManipulation;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
@@ -65,20 +66,34 @@ namespace script_chan2.GUI
             get
             {
                 var brush = new LinearGradientBrush();
-                for (var i = 0; i < beatmap.Mods.Count; i++)
+                if (beatmap.Mods.Count > 0)
                 {
-                    Brush brushToAdd = Brushes.White;
-                    switch (beatmap.Mods[i])
+                    for (var i = 0; i < beatmap.Mods.Count; i++)
                     {
-                        case Enums.GameMods.Hidden: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "HD").Color); break;
-                        case Enums.GameMods.HardRock: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "HR").Color); break;
-                        case Enums.GameMods.DoubleTime: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "DT").Color); break;
-                        case Enums.GameMods.Flashlight: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "FL").Color); break;
-                        case Enums.GameMods.Freemod: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "Freemod").Color); break;
-                        case Enums.GameMods.TieBreaker: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "Tiebreaker").Color); break;
-                        case Enums.GameMods.NoFail: brushToAdd = new SolidColorBrush(Settings.UserColors.First(x => x.Key == "NoFail").Color); break;
+                        Color colorToAdd = Colors.White;
+                        switch (beatmap.Mods[i])
+                        {
+                            case Enums.GameMods.Hidden: colorToAdd = Settings.UserColors.First(x => x.Key == "HD").Color; break;
+                            case Enums.GameMods.HardRock: colorToAdd = Settings.UserColors.First(x => x.Key == "HR").Color; break;
+                            case Enums.GameMods.DoubleTime: colorToAdd = Settings.UserColors.First(x => x.Key == "DT").Color; break;
+                            case Enums.GameMods.Flashlight: colorToAdd = Settings.UserColors.First(x => x.Key == "FL").Color; break;
+                            case Enums.GameMods.Freemod: colorToAdd = Settings.UserColors.First(x => x.Key == "Freemod").Color; break;
+                            case Enums.GameMods.TieBreaker: colorToAdd = Settings.UserColors.First(x => x.Key == "Tiebreaker").Color; break;
+                            case Enums.GameMods.NoFail: colorToAdd = Settings.UserColors.First(x => x.Key == "NoFail").Color; break;
+                        }
+                        if (!canBanOrPick)
+                        {
+                            colorToAdd = colorToAdd.Darken(2);
+                        }
+                        brush.GradientStops.Add(new GradientStop(colorToAdd, 1f / (beatmap.Mods.Count - 1) * i));
                     }
-                    brush.GradientStops.Add(new GradientStop(((SolidColorBrush)brushToAdd).Color, 1f / (beatmap.Mods.Count - 1) * i));
+                }
+                else
+                {
+                    if (!canBanOrPick)
+                    {
+                        brush.GradientStops.Add(new GradientStop(Colors.Gray, 0));
+                    }
                 }
                 return brush;
             }
@@ -300,6 +315,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
         }
 
         public void BanBlue()
@@ -316,6 +332,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
         }
 
         public void BanPlayer(Player player)
@@ -332,6 +349,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
         }
 
         public void RemoveBan()
@@ -343,6 +361,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
         }
 
         public void PickRed()
@@ -359,6 +378,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnpick);
             NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapPicked");
             if (match.RoomId > 0)
                 SendPickMessage();
@@ -378,6 +398,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnpick);
             NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapPicked");
             if (match.RoomId > 0)
                 SendPickMessage();
@@ -398,6 +419,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapPicked");
             if (match.RoomId > 0)
                 SendPickMessage();
@@ -411,6 +433,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnpick);
             NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
         }
 
         private void SendPickMessage()
