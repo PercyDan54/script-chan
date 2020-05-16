@@ -289,10 +289,13 @@ namespace script_chan2.GUI
                     if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
                     {
                         await UpdateScore();
-                        SendRoomStatus();
-                        if (!match.WarmupMode && match.EnableWebhooks)
+                        if (!match.WarmupMode)
                         {
-                            DiscordApi.SendGameRecap(match);
+                            SendRoomStatus();
+                            if (match.EnableWebhooks)
+                            {
+                                DiscordApi.SendGameRecap(match);
+                            }
                         }
                     }
                 }
