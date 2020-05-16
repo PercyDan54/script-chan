@@ -7,7 +7,7 @@
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:script_chan2.GUI"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="400" Height="50">
+             d:DesignHeight="50" d:DesignWidth="400" Height="50" cal:Message.Attach="[Event MouseDoubleClick] = [Action RootDoubleClick]">
     <Border BorderThickness="0 0 0 2" BorderBrush="LightGray" ToolTip="{Binding ToolTip}" Background="{Binding Background}">
         <Border.ContextMenu>
             <ContextMenu x:Name="Menu" ItemsSource="{Binding MenuItems}">

@@ -424,6 +424,30 @@ namespace script_chan2.GUI
             if (match.MpTimerAfterPick > 0)
                 OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp timer " + match.MpTimerAfterPick);
         }
+
+        public void RootDoubleClick()
+        {
+            if (canBanOrPick && match.TeamMode == Enums.TeamModes.TeamVS)
+            {
+                if (match.Picks.Count > 0)
+                {
+                    if (match.Picks.Last().Team.Id == match.TeamRed.Id)
+                        PickBlue();
+                    else
+                        PickRed();
+                }
+                else
+                {
+                    if (match.FirstPickerTeam != null)
+                    {
+                        if (match.FirstPickerTeam.Id == match.TeamRed.Id)
+                            PickRed();
+                        else
+                            PickBlue();
+                    }
+                }
+            }
+        }
         #endregion
     }
 
