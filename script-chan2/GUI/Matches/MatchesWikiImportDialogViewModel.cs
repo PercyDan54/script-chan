@@ -1,10 +1,15 @@
 ﻿using Caliburn.Micro;
+using Markdig;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 using MaterialDesignThemes.Wpf;
+using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,7 +24,7 @@ namespace script_chan2.GUI
         public MatchesWikiImportDialogViewModel()
         {
             Tournament = Settings.DefaultTournament;
-            ImportText = "";
+            WikiUrl = "";
         }
         #endregion
 
@@ -75,16 +80,16 @@ namespace script_chan2.GUI
             }
         }
 
-        private string importText;
-        public string ImportText
+        private string wikiUrl;
+        public string WikiUrl
         {
-            get { return importText; }
+            get { return wikiUrl; }
             set
             {
-                if (value != importText)
+                if (value != wikiUrl)
                 {
-                    importText = value;
-                    NotifyOfPropertyChange(() => ImportText);
+                    wikiUrl = value;
+                    NotifyOfPropertyChange(() => WikiUrl);
                     NotifyOfPropertyChange(() => ImportEnabled);
                 }
             }
@@ -94,7 +99,7 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (string.IsNullOrEmpty(ImportText))
+                if (string.IsNullOrEmpty(WikiUrl))
                     return false;
                 if (Tournament == null)
                     return false;
@@ -116,7 +121,7 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => ImportEnabled);
                     NotifyOfPropertyChange(() => CloseEnabled);
                     NotifyOfPropertyChange(() => ProgressVisible);
-                    NotifyOfPropertyChange(() => ImportTextVisible);
+                    NotifyOfPropertyChange(() => WikiUrlEnabled);
                 }
             }
         }
@@ -164,14 +169,9 @@ namespace script_chan2.GUI
             }
         }
 
-        public Visibility ImportTextVisible
+        public bool WikiUrlEnabled
         {
-            get
-            {
-                if (!IsImporting)
-                    return Visibility.Visible;
-                return Visibility.Collapsed;
-            }
+            get { return !IsImporting; }
         }
 
         private string importStatus;
@@ -190,25 +190,67 @@ namespace script_chan2.GUI
         #endregion
 
         #region Actions
-        public void StartImport()
+        public async Task StartImport()
         {
             localLog.Information("start import");
             IsImporting = true;
-            ImportStatus = "Parsing text";
+            ImportStatus = "Getting wiki page";
 
             var importMatches = new List<ImportMatch>();
 
-            var rootSplit = ImportText.Split('\n');
-            foreach (var line in rootSplit)
+            var webClient = new WebClient();
+            webClient.Headers.Set(HttpRequestHeader.Accept, "application/json");
+            dynamic response = JObject.Parse(await webClient.DownloadStringTaskAsync(WikiUrl));
+            MarkdownDocument markdown = Markdown.Parse(response.markdown.Value);
+
+            localLog.Information("search for match schedule header");
+            int matchesHeadingIndex = -1;
+            for (var i = 0; i < markdown.Count; i++)
             {
-                var trimmedText = line.Trim();
-                var lineSplit = trimmedText.Split('\t');
+                var block = markdown[i];
+                if (block is HeadingBlock)
+                {
+                    var headingBlock = (HeadingBlock)block;
+                    if (headingBlock.Inline.FirstChild.ToString().StartsWith("Match schedule"))
+                    {
+                        localLog.Information("match schedule header found");
+                        matchesHeadingIndex = i;
+                        break;
+                    }
+                }
+            }
+            if (matchesHeadingIndex == -1)
+                return;
 
-                var match = new ImportMatch();
-                match.TeamRed = Tournament.Teams.First(x => x.Name == lineSplit[0].Trim());
-                match.TeamBlue = Tournament.Teams.First(x => x.Name == lineSplit[3].Trim());
-
-                importMatches.Add(match);
+            ImportMatch importMatch = null;
+            for (var i = matchesHeadingIndex + 1; i < markdown.Count; i++)
+            {
+                var block = markdown[i];
+                if (block is HeadingBlock)
+                {
+                    var headingBlock = (HeadingBlock)block;
+                    // End of matches reached
+                    if (headingBlock.Level == 2)
+                        break;
+                }
+                if (block is ParagraphBlock)
+                {
+                    var paragraphBlock = (ParagraphBlock)block;
+                    foreach (var subBlock in paragraphBlock.Inline)
+                    {
+                        if (subBlock is LinkInline)
+                        {
+                            if (importMatch == null)
+                                importMatch = new ImportMatch() { TeamRed = ((LinkInline)subBlock).Title };
+                            else
+                            {
+                                importMatch.TeamBlue = ((LinkInline)subBlock).Title;
+                                importMatches.Add(importMatch);
+                                importMatch = null;
+                            }
+                        }
+                    }
+                }
             }
 
             MatchCount = importMatches.Count;
@@ -216,30 +258,33 @@ namespace script_chan2.GUI
             for (var i = 0; i < importMatches.Count; i++)
             {
                 ImportProgress = i;
-                var importMatch = importMatches[i];
-                ImportStatus = $"{importMatch.TeamRed.Name} vs {importMatch.TeamBlue.Name} ({i + 1}/{MatchCount})";
+                importMatch = importMatches[i];
+                ImportStatus = $"{importMatch.TeamRed} vs {importMatch.TeamBlue} ({i + 1}/{MatchCount})";
 
-                var match = new Match()
+                if (Tournament.Teams.Any(x => x.Name == importMatch.TeamRed) && Tournament.Teams.Any(x => x.Name == importMatch.TeamBlue))
                 {
-                    Name = $"{Tournament.Acronym}: ({importMatch.TeamRed.Name}) VS ({importMatch.TeamBlue.Name})",
-                    Tournament = Tournament,
-                    Mappool = Mappool,
-                    TeamRed = importMatch.TeamRed,
-                    TeamBlue = importMatch.TeamBlue,
-                    BO = Settings.DefaultBO,
-                    GameMode = Tournament.GameMode,
-                    TeamMode = Tournament.TeamMode,
-                    WinCondition = Tournament.WinCondition,
-                    RoomSize = Tournament.RoomSize,
-                    TeamSize = Tournament.TeamSize,
-                    MpTimerCommand = Tournament.MpTimerCommand,
-                    MpTimerAfterGame = Tournament.MpTimerAfterGame,
-                    MpTimerAfterPick = Tournament.MpTimerAfterPick,
-                    PointsForSecondBan = Tournament.PointsForSecondBan,
-                    AllPicksFreemod = Tournament.AllPicksFreemod,
-                    WarmupMode = true
-                };
-                match.Save();
+                    var match = new Match()
+                    {
+                        Name = $"{Tournament.Acronym}: ({importMatch.TeamRed}) VS ({importMatch.TeamBlue})",
+                        Tournament = Tournament,
+                        Mappool = Mappool,
+                        TeamRed = Tournament.Teams.First(x => x.Name == importMatch.TeamRed),
+                        TeamBlue = Tournament.Teams.First(x => x.Name == importMatch.TeamBlue),
+                        BO = Settings.DefaultBO,
+                        GameMode = Tournament.GameMode,
+                        TeamMode = Tournament.TeamMode,
+                        WinCondition = Tournament.WinCondition,
+                        RoomSize = Tournament.RoomSize,
+                        TeamSize = Tournament.TeamSize,
+                        MpTimerCommand = Tournament.MpTimerCommand,
+                        MpTimerAfterGame = Tournament.MpTimerAfterGame,
+                        MpTimerAfterPick = Tournament.MpTimerAfterPick,
+                        PointsForSecondBan = Tournament.PointsForSecondBan,
+                        AllPicksFreemod = Tournament.AllPicksFreemod,
+                        WarmupMode = true
+                    };
+                    match.Save();
+                }
             }
 
             Events.Aggregator.PublishOnUIThread("AddMatch");
@@ -257,8 +302,8 @@ namespace script_chan2.GUI
 
         private class ImportMatch
         {
-            public Team TeamBlue;
-            public Team TeamRed;
+            public string TeamBlue;
+            public string TeamRed;
         }
     }
 }
