@@ -1,10 +1,15 @@
 ﻿using Caliburn.Micro;
+using Markdig;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 using MaterialDesignThemes.Wpf;
+using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,7 +24,7 @@ namespace script_chan2.GUI
         public TeamWikiImportDialogViewModel()
         {
             Tournament = Settings.DefaultTournament;
-            ImportText = "";
+            WikiUrl = "";
         }
         #endregion
 
@@ -50,16 +55,16 @@ namespace script_chan2.GUI
             }
         }
 
-        private string importText;
-        public string ImportText
+        private string wikiUrl;
+        public string WikiUrl
         {
-            get { return importText; }
+            get { return wikiUrl; }
             set
             {
-                if (value != importText)
+                if (value != wikiUrl)
                 {
-                    importText = value;
-                    NotifyOfPropertyChange(() => ImportText);
+                    wikiUrl = value;
+                    NotifyOfPropertyChange(() => WikiUrl);
                     NotifyOfPropertyChange(() => ImportEnabled);
                 }
             }
@@ -69,7 +74,7 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (string.IsNullOrEmpty(ImportText))
+                if (string.IsNullOrEmpty(WikiUrl))
                     return false;
                 if (Tournament == null)
                     return false;
@@ -91,7 +96,7 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => ImportEnabled);
                     NotifyOfPropertyChange(() => CloseEnabled);
                     NotifyOfPropertyChange(() => ProgressVisible);
-                    NotifyOfPropertyChange(() => ImportTextVisible);
+                    NotifyOfPropertyChange(() => WikiUrlEnabled);
                 }
             }
         }
@@ -139,14 +144,9 @@ namespace script_chan2.GUI
             }
         }
 
-        public Visibility ImportTextVisible
+        public bool WikiUrlEnabled
         {
-            get
-            {
-                if (!IsImporting)
-                    return Visibility.Visible;
-                return Visibility.Collapsed;
-            }
+            get { return !IsImporting; }
         }
 
         private string importStatus;
@@ -169,23 +169,93 @@ namespace script_chan2.GUI
         {
             localLog.Information("start import");
             IsImporting = true;
-            ImportStatus = "Parsing text";
+            ImportStatus = "Getting wiki page";
 
             var importTeams = new List<ImportTeam>();
 
-            var rootSplit = ImportText.Split('\n');
-            foreach (var line in rootSplit)
+            var webClient = new WebClient();
+            webClient.Headers.Set(HttpRequestHeader.Accept, "application/json");
+            dynamic response = JObject.Parse(await webClient.DownloadStringTaskAsync(WikiUrl));
+            MarkdownDocument markdown = Markdown.Parse(response.markdown.Value);
+
+            localLog.Information("search for participants header");
+            int participantsHeadingIndex = -1;
+            for (var i = 0; i < markdown.Count; i++)
             {
-                var trimmedText = line.Trim();
-
-                var team = new ImportTeam { Name = trimmedText.Split('\t')[0].Trim() };
-
-                foreach (var player in trimmedText.Split('\t')[1].Split(','))
+                var block = markdown[i];
+                if (block is HeadingBlock)
                 {
-                    team.Players.Add(player.Trim());
+                    var headingBlock = (HeadingBlock)block;
+                    if (headingBlock.Inline.FirstChild.ToString() == "Participants")
+                    {
+                        localLog.Information("participants header found");
+                        participantsHeadingIndex = i;
+                        break;
+                    }
                 }
+            }
+            if (participantsHeadingIndex == -1)
+                return;
 
-                importTeams.Add(team);
+            ImportTeam importTeam = null;
+            var wrapperBlock = (ParagraphBlock)markdown[participantsHeadingIndex + 1];
+            var wrapperInline = wrapperBlock.Inline;
+            foreach (var block in wrapperBlock.Inline)
+            {
+                if (block is LinkInline)
+                {
+                    var linkBlock = (LinkInline)block;
+                    if (linkBlock.Label != null && linkBlock.Label.StartsWith("flag_"))
+                    {
+                        importTeam = new ImportTeam { Name = linkBlock.Title, Country = linkBlock.Label.Replace("flag_", "") };
+                        importTeams.Add(importTeam);
+                    }
+                    else
+                    {
+                        var profileUrl = linkBlock.Url;
+                        var userId = Convert.ToInt32(profileUrl.Split('/').Last());
+                        var username = "";
+                        foreach (LiteralInline usernamePart in linkBlock)
+                        {
+                            username += usernamePart.ToString();
+                        }
+                        if (importTeam != null)
+                        {
+                            var importPlayer = new ImportPlayer()
+                            {
+                                Id = userId,
+                                Name = username,
+                                Country = importTeam.Country
+                            };
+                            importTeam.Players.Add(importPlayer);
+                        }
+                    }
+                }
+                if (block is EmphasisInline)
+                {
+                    var emphasisInline = (EmphasisInline)block;
+                    if (emphasisInline.FirstChild is LinkInline)
+                    {
+                        var linkBlock = (LinkInline)emphasisInline.FirstChild;
+                        var profileUrl = linkBlock.Url;
+                        var userId = Convert.ToInt32(profileUrl.Split('/').Last());
+                        var username = "";
+                        foreach (LiteralInline usernamePart in linkBlock)
+                        {
+                            username += usernamePart.ToString();
+                        }
+                        if (importTeam != null)
+                        {
+                            var importPlayer = new ImportPlayer()
+                            {
+                                Id = userId,
+                                Name = username,
+                                Country = importTeam.Country
+                            };
+                            importTeam.Players.Add(importPlayer);
+                        }
+                    }
+                }
             }
 
             TeamCount = importTeams.Count;
@@ -193,7 +263,7 @@ namespace script_chan2.GUI
             for (var i = 0; i < importTeams.Count; i++)
             {
                 ImportProgress = i;
-                var importTeam = importTeams[i];
+                importTeam = importTeams[i];
                 ImportStatus = $"{importTeam.Name} ({i + 1}/{TeamCount})";
 
                 if (!Tournament.Teams.Any(x => x.Name == importTeam.Name))
@@ -205,9 +275,17 @@ namespace script_chan2.GUI
                     };
                     team.Save();
 
-                    foreach (var playerName in importTeam.Players)
+                    foreach (var playerObject in importTeam.Players)
                     {
-                        var player = await Database.Database.GetPlayer(playerName);
+                        Player player = new Player()
+                        {
+                            Id = playerObject.Id,
+                            Name = playerObject.Name,
+                            Country = playerObject.Country
+                        };
+
+                        Database.Database.AddPlayer(player);
+                        player = await Database.Database.GetPlayer(playerObject.Name);
                         if (player != null)
                         {
                             team.AddPlayer(player);
@@ -216,6 +294,7 @@ namespace script_chan2.GUI
                 }
             }
 
+            localLog.Information("import finished");
             Events.Aggregator.PublishOnUIThread("AddTeam");
             IsImporting = false;
 
@@ -232,7 +311,15 @@ namespace script_chan2.GUI
         private class ImportTeam
         {
             public string Name;
-            public List<string> Players = new List<string>();
+            public string Country;
+            public List<ImportPlayer> Players = new List<ImportPlayer>();
+        }
+
+        private class ImportPlayer
+        {
+            public int Id;
+            public string Name;
+            public string Country;
         }
     }
 }

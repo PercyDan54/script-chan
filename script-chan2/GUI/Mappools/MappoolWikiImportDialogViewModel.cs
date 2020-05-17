@@ -134,7 +134,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("start import from wiki '{url}'", WikiUrl);
             IsImporting = true;
-            ImportStatus = "Parsing text";
+            ImportStatus = "Getting wiki page";
 
             var importMappools = new List<ImportMappool>();
 
