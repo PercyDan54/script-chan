@@ -8,6 +8,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400">
     <Grid Margin="2" Background="{Binding Background}" AllowDrop="True" cal:Message.Attach="[Event Drop] = [Action ChangeSlot($eventArgs)]; [Event MouseMove] = [Action Drag($eventArgs)]">
+        <Grid.ContextMenu>
+            <ContextMenu x:Name="Menu" ItemsSource="{Binding MenuItems}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="cal:Message.Attach" Value="[Event Click] = [Action MenuItemClick($source)]" />
+                        <Setter Property="cal:Action.TargetWithoutContext" Value="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Grid}}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+        </Grid.ContextMenu>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="40" />

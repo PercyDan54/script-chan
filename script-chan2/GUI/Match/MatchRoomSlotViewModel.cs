@@ -1,12 +1,14 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -15,6 +17,8 @@ namespace script_chan2.GUI
 {
     public class MatchRoomSlotViewModel : Screen
     {
+        private ILogger localLog = Log.ForContext<MatchRoomSlotViewModel>();
+
         #region Constructor
         public MatchRoomSlotViewModel(Match match, int slotNumber)
         {
@@ -54,6 +58,7 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => PlayerName);
                     NotifyOfPropertyChange(() => Flag);
                     NotifyOfPropertyChange(() => Background);
+                    NotifyOfPropertyChange(() => MenuItems);
                 }
             }
         }
@@ -163,6 +168,20 @@ namespace script_chan2.GUI
                 return Brushes.White;
             }
         }
+
+        public BindableCollection<MenuItem> MenuItems
+        {
+            get
+            {
+                var list = new BindableCollection<MenuItem>();
+                if (Player != null)
+                {
+                    list.Add(new MenuItem() { Header = "Set host" });
+                    list.Add(new MenuItem() { Header = "Kick" });
+                }
+                return list;
+            }
+        }
         #endregion
 
         #region Actions
@@ -193,6 +212,19 @@ namespace script_chan2.GUI
             {
                 MatchRoomSlotViewModel oldSlot = e.Data.GetData(typeof(MatchRoomSlotViewModel)) as MatchRoomSlotViewModel;
                 OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp move {oldSlot.Player.Name} {SlotNumber}");
+            }
+        }
+
+        public void MenuItemClick(MenuItem context)
+        {
+            localLog.Information("room slot '{slot}' click context menu item '{item}'", SlotNumber, context.Header);
+            if (context.Header.ToString() == "Set host")
+            {
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp host {Player.Name}");
+            }
+            if (context.Header.ToString() == "Kick")
+            {
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp kick {Player.Name}");
             }
         }
         #endregion
