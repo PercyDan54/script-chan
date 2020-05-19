@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -14,25 +16,55 @@ namespace script_chan2.GUI
     public class MatchRoomSlotViewModel : Screen
     {
         #region Constructor
-        public MatchRoomSlotViewModel(RoomSlot slot)
+        public MatchRoomSlotViewModel(Match match, int slotNumber)
         {
-            this.slot = slot;
+            this.match = match;
+            SlotNumber = slotNumber;
+            Mods = new List<GameMods>();
         }
         #endregion
 
         #region Properties
-        private RoomSlot slot;
+        private Match match;
 
+        private int slotNumber;
         public int SlotNumber
         {
-            get { return slot.Slot; }
+            get { return slotNumber; }
+            set
+            {
+                if (value != slotNumber)
+                {
+                    slotNumber = value;
+                    NotifyOfPropertyChange(() => SlotNumber);
+                }
+            }
+        }
+
+        private Player player;
+        public Player Player
+        {
+            get { return player; }
+            set
+            {
+                if (value != player)
+                {
+                    player = value;
+                    NotifyOfPropertyChange(() => Player);
+                    NotifyOfPropertyChange(() => PlayerName);
+                    NotifyOfPropertyChange(() => Flag);
+                    NotifyOfPropertyChange(() => Background);
+                }
+            }
         }
 
         public string PlayerName
         {
             get
             {
-                return slot.Player.Name;
+                if (Player != null)
+                    return Player.Name;
+                return "";
             }
         }
 
@@ -40,7 +72,24 @@ namespace script_chan2.GUI
         {
             get
             {
-                return new BitmapImage(new Uri($"https://osu.ppy.sh/images/flags/{slot.Player.Country}.png"));
+                if (Player != null)
+                    return new BitmapImage(new Uri($"https://osu.ppy.sh/images/flags/{Player.Country}.png"));
+                return null;
+            }
+        }
+
+        private TeamColors? team;
+        public TeamColors? Team
+        {
+            get { return team; }
+            set
+            {
+                if (value != team)
+                {
+                    team = value;
+                    NotifyOfPropertyChange(() => Team);
+                    NotifyOfPropertyChange(() => TeamColor);
+                }
             }
         }
 
@@ -48,11 +97,26 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (slot.Team == TeamColors.Red)
+                if (Team == TeamColors.Red)
                     return Brushes.Red;
-                if (slot.Team == TeamColors.Blue)
+                if (Team == TeamColors.Blue)
                     return Brushes.Blue;
                 return Brushes.White;
+            }
+        }
+
+        private List<GameMods> mods;
+        public List<GameMods> Mods
+        {
+            get { return mods; }
+            set
+            {
+                if (value != mods)
+                {
+                    mods = value;
+                    NotifyOfPropertyChange(() => Mods);
+                    NotifyOfPropertyChange(() => ModViews);
+                }
             }
         }
 
@@ -61,7 +125,7 @@ namespace script_chan2.GUI
             get
             {
                 var list = new BindableCollection<MatchRoomSlotModViewModel>();
-                foreach (var mod in slot.Mods)
+                foreach (var mod in Mods)
                 {
                     list.Add(new MatchRoomSlotModViewModel(mod));
                 }
@@ -69,17 +133,66 @@ namespace script_chan2.GUI
             }
         }
 
+        private RoomSlotStates state;
+        public RoomSlotStates State
+        {
+            get { return state; }
+            set
+            {
+                if (value != state)
+                {
+                    state = value;
+                    NotifyOfPropertyChange(() => State);
+                    NotifyOfPropertyChange(() => Background);
+                }
+            }
+        }
+
         public SolidColorBrush Background
         {
             get
             {
-                switch (slot.State)
+                if (Player == null)
+                    return Brushes.Gray;
+                switch (State)
                 {
                     case RoomSlotStates.NoMap: return Brushes.LightCoral;
                     case RoomSlotStates.NotReady: return Brushes.LightGreen;
                     case RoomSlotStates.Ready: return Brushes.Green;
                 }
                 return Brushes.White;
+            }
+        }
+        #endregion
+
+        #region Actions
+        public void ChangeTeam()
+        {
+            if (match.TeamMode == TeamModes.TeamVS && Player != null)
+            {
+                var color = "";
+                if (Team == TeamColors.Red)
+                    color = "blue";
+                else
+                    color = "red";
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp team {Player.Name} {color}");
+            }
+        }
+
+        public void Drag(MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed && Player != null)
+            {
+                DragDrop.DoDragDrop((MatchRoomSlotView)GetView(), this, DragDropEffects.Move);
+            }
+        }
+
+        public void ChangeSlot(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(MatchRoomSlotViewModel)) && Player == null)
+            {
+                MatchRoomSlotViewModel oldSlot = e.Data.GetData(typeof(MatchRoomSlotViewModel)) as MatchRoomSlotViewModel;
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp move {oldSlot.Player.Name} {SlotNumber}");
             }
         }
         #endregion

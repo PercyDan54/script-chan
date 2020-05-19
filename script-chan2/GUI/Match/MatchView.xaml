@@ -112,7 +112,7 @@
                         <Button x:Name="StartTimer" Content="Timer" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="AbortMatch" Content="Abort map" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                     </WrapPanel>
-                    <Grid x:Name="SettingsGrid" Grid.Row="2" Margin="2">
+                    <Grid x:Name="SlotsGrid" Grid.Row="2" Margin="2">
                         <ItemsControl ItemsSource="{Binding RoomSlotsViews}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

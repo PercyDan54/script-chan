@@ -174,17 +174,17 @@ namespace script_chan2.GUI
             }
         }
 
-        private List<RoomSlot> roomSlots;
+        private BindableCollection<MatchRoomSlotViewModel> roomSlotsViews;
         public BindableCollection<MatchRoomSlotViewModel> RoomSlotsViews
         {
-            get
+            get { return roomSlotsViews; }
+            set
             {
-                var list = new BindableCollection<MatchRoomSlotViewModel>();
-                foreach (var slot in roomSlots.OrderBy(x => x.Slot))
+                if (value != roomSlotsViews)
                 {
-                    list.Add(new MatchRoomSlotViewModel(slot));
+                    roomSlotsViews = value;
+                    NotifyOfPropertyChange(() => RoomSlotsViews);
                 }
-                return list;
             }
         }
         #endregion
@@ -195,7 +195,10 @@ namespace script_chan2.GUI
             this.match = match;
             if (match.RoomId > 0)
                 OsuIrc.OsuIrc.JoinChannel("#mp_" + match.RoomId);
-            roomSlots = new List<RoomSlot>();
+            RoomSlotsViews = new BindableCollection<MatchRoomSlotViewModel>();
+            for (var i = 0; i < match.RoomSize; i++)
+                RoomSlotsViews.Add(new MatchRoomSlotViewModel(match, i + 1));
+            NotifyOfPropertyChange(() => RoomSlotsViews);
         }
         #endregion
 
@@ -301,7 +304,7 @@ namespace script_chan2.GUI
                     if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
                     {
                         PlayNotificationSound();
-                        foreach (var slot in roomSlots)
+                        foreach (var slot in RoomSlotsViews)
                         {
                             slot.State = RoomSlotStates.Ready;
                         }
@@ -321,7 +324,12 @@ namespace script_chan2.GUI
                     }
                     if (data.User == "BanchoBot" && data.Message.StartsWith("Room name:"))
                     {
-                        roomSlots.Clear();
+                        foreach (var slot in RoomSlotsViews)
+                        {
+                            slot.Player = null;
+                            slot.Team = null;
+                            slot.Mods = new List<GameMods>();
+                        }
                     }
                     if (data.User == "BanchoBot" && data.Message.StartsWith("Slot "))
                     {
@@ -347,32 +355,30 @@ namespace script_chan2.GUI
                         if (detailsString.Contains("Team Red"))
                             team = TeamColors.Red;
 
-                        var slot = new RoomSlot
+                        var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
+                        if (slot != null)
                         {
-                            Slot = slotNumber,
-                            Player = player,
-                            Team = team,
-                            Mods = new List<GameMods>()
-                        };
-                        if (noMap)
-                            slot.State = RoomSlotStates.NoMap;
-                        else if (ready)
-                            slot.State = RoomSlotStates.Ready;
-                        else
-                            slot.State = RoomSlotStates.NotReady;
-                        if (detailsString.Contains("Hidden"))
-                            slot.Mods.Add(GameMods.Hidden);
-                        if (detailsString.Contains("HardRock"))
-                            slot.Mods.Add(GameMods.HardRock);
-                        if (detailsString.Contains("NoFail"))
-                            slot.Mods.Add(GameMods.NoFail);
-                        if (detailsString.Contains("Easy"))
-                            slot.Mods.Add(GameMods.Easy);
-                        if (detailsString.Contains("Flashlight"))
-                            slot.Mods.Add(GameMods.Flashlight);
-
-                        roomSlots.Add(slot);
-                        NotifyOfPropertyChange(() => RoomSlotsViews);
+                            slot.Player = player;
+                            slot.Team = team;
+                            var mods = new List<GameMods>();
+                            if (noMap)
+                                slot.State = RoomSlotStates.NoMap;
+                            else if (ready)
+                                slot.State = RoomSlotStates.Ready;
+                            else
+                                slot.State = RoomSlotStates.NotReady;
+                            if (detailsString.Contains("Hidden"))
+                                mods.Add(GameMods.Hidden);
+                            if (detailsString.Contains("HardRock"))
+                                mods.Add(GameMods.HardRock);
+                            if (detailsString.Contains("NoFail"))
+                                mods.Add(GameMods.NoFail);
+                            if (detailsString.Contains("Easy"))
+                                mods.Add(GameMods.Easy);
+                            if (detailsString.Contains("Flashlight"))
+                                mods.Add(GameMods.Flashlight);
+                            slot.Mods = mods;
+                        }
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("joined in slot"))
                     {
@@ -388,17 +394,13 @@ namespace script_chan2.GUI
                                 case "blue": team = TeamColors.Blue; break;
                                 case "red": team = TeamColors.Red; break;
                             }
-                            if (!roomSlots.Any(x => x.Player.Id == player.Id))
+                            var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
+                            if (slot != null)
                             {
-                                var slot = new RoomSlot
-                                {
-                                    Slot = slotNumber,
-                                    Player = player,
-                                    Team = team,
-                                    Mods = new List<GameMods>()
-                                };
-                                roomSlots.Add(slot);
-                                NotifyOfPropertyChange(() => RoomSlotsViews);
+                                slot.Player = player;
+                                slot.Team = team;
+                                slot.Mods = new List<GameMods>();
+                                slot.State = RoomSlotStates.NotReady;
                             }
                         }
                     }
@@ -415,10 +417,10 @@ namespace script_chan2.GUI
                                 case "Blue": team = TeamColors.Blue; break;
                                 case "Red": team = TeamColors.Red; break;
                             }
-                            if (roomSlots.Any(x => x.Player.Name == player) && team != null)
+                            var slot = RoomSlotsViews.FirstOrDefault(x => x.PlayerName == player);
+                            if (slot != null)
                             {
-                                roomSlots.First(x => x.Player.Name == player).Team = team;
-                                NotifyOfPropertyChange(() => RoomSlotsViews);
+                                slot.Team = team;
                             }
                         }
                     }
@@ -430,10 +432,17 @@ namespace script_chan2.GUI
                         {
                             var player = regexResult.Groups[1].Value;
                             var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
-                            if (roomSlots.Any(x => x.Player.Name == player))
+                            var oldSlot = RoomSlotsViews.FirstOrDefault(x => x.PlayerName == player);
+                            var newSlot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
+                            if (oldSlot != null && newSlot != null)
                             {
-                                roomSlots.First(x => x.Player.Name == player).Slot = slotNumber;
-                                NotifyOfPropertyChange(() => RoomSlotsViews);
+                                newSlot.Player = oldSlot.Player;
+                                newSlot.Team = oldSlot.Team;
+                                newSlot.Mods = oldSlot.Mods;
+                                newSlot.State = oldSlot.State;
+                                oldSlot.Player = null;
+                                oldSlot.Team = null;
+                                oldSlot.Mods = new List<GameMods>();
                             }
                         }
                     }
@@ -444,8 +453,13 @@ namespace script_chan2.GUI
                         if (regexResult.Success)
                         {
                             var player = regexResult.Groups[1].Value;
-                            roomSlots.RemoveAll(x => x.Player.Name == player);
-                            NotifyOfPropertyChange(() => RoomSlotsViews);
+                            var slot = RoomSlotsViews.FirstOrDefault(x => x.PlayerName == player);
+                            if (slot != null)
+                            {
+                                slot.Player = null;
+                                slot.Team = null;
+                                slot.Mods = new List<GameMods>();
+                            }
                         }
                     }
                 }

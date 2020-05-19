@@ -468,7 +468,6 @@
     <Compile Include="DataTypes\Player.cs" />
     <Compile Include="DataTypes\PrivateMessageData.cs" />
     <Compile Include="DataTypes\RoomCreatedData.cs" />
-    <Compile Include="DataTypes\RoomSlot.cs" />
     <Compile Include="DataTypes\Score.cs" />
     <Compile Include="DataTypes\Settings.cs" />
     <Compile Include="DataTypes\Team.cs" />
