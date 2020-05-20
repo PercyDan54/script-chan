@@ -16,6 +16,7 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button x:Name="OpenNewMatchDialog" Content="New" HorizontalAlignment="Left" />
             <Button x:Name="OpenWikiImportDialog" Content="Import from wiki" Margin="10 0 0 0" />
+            <Button x:Name="OpenDeleteAllMatchesDialog" Content="Delete all" Margin="10 0 0 0" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBox x:Name="Search" Width="200" md:HintAssist.Hint="Search" />

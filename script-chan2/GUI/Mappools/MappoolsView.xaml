@@ -16,6 +16,7 @@
         <StackPanel Orientation="Horizontal">
             <Button x:Name="OpenNewMappoolDialog" Content="New" />
             <Button x:Name="OpenWikiImportDialog" Content="Import from wiki" Margin="10 0 0 0" IsEnabled="{Binding ImportEnabled}" />
+            <Button x:Name="OpenDeleteAllMappoolsDialog" Content="Delete all" Margin="10 0 0 0" />
         </StackPanel>
         <ComboBox HorizontalAlignment="Right" md:HintAssist.Hint="Tournament" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200">
             <ComboBox.ItemTemplate>

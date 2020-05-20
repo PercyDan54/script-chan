@@ -101,6 +101,16 @@ namespace script_chan2.DataTypes
         public void Delete()
         {
             localLog.Information("'{name}' delete", Name);
+            foreach (var match in Database.Database.Matches)
+            {
+                if (match.Mappool == this)
+                {
+                    match.Mappool = null;
+                    match.Picks.Clear();
+                    match.Bans.Clear();
+                    match.Save();
+                }
+            }
             Database.Database.DeleteMappool(this);
         }
     }

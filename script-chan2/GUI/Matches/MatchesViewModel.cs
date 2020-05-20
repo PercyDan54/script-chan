@@ -6,6 +6,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -169,6 +170,34 @@ namespace script_chan2.GUI
             ViewModelBinder.Bind(model, view, null);
 
             await DialogHost.Show(view, "MainDialogHost");
+        }
+
+        public async void OpenDeleteAllMatchesDialog()
+        {
+            localLog.Information("open delete all matches dialog");
+            var model = new DeleteAllMatchesDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view, "MainDialogHost"));
+
+            if (result)
+            {
+                localLog.Information("delete all matches");
+                var matches = new List<Match>();
+                foreach (var match in Database.Database.Matches)
+                {
+                    if (FilterTournament == null)
+                        matches.Add(match);
+                    else if (FilterTournament != null && FilterTournament == match.Tournament)
+                        matches.Add(match);
+                }
+                foreach (var match in matches)
+                {
+                    match.Delete();
+                }
+                NotifyOfPropertyChange(() => MatchViews);
+            }
         }
         #endregion
     }

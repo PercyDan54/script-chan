@@ -332,6 +332,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Mappools\DeleteAllMappoolsDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Mappools\DeleteMappoolDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -357,6 +361,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\Mappools\MappoolWikiImportDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Matches\DeleteAllMatchesDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -500,6 +508,7 @@
     <Compile Include="GUI\Events.cs" />
     <Compile Include="GUI\Export\ExportSuccessDialogViewModel.cs" />
     <Compile Include="GUI\Export\ExportViewModel.cs" />
+    <Compile Include="GUI\Mappools\DeleteAllMappoolsDialogViewModel.cs" />
     <Compile Include="GUI\Mappools\DeleteMappoolDialogViewModel.cs" />
     <Compile Include="GUI\Mappools\EditMappoolDialogViewModel.cs" />
     <Compile Include="GUI\Mappools\MappoolBeatmapListItemViewModel.cs" />
@@ -507,6 +516,7 @@
     <Compile Include="GUI\Mappools\MappoolListItemViewModel.cs" />
     <Compile Include="GUI\Mappools\MappoolsViewModel.cs" />
     <Compile Include="GUI\Mappools\MappoolWikiImportDialogViewModel.cs" />
+    <Compile Include="GUI\Matches\DeleteAllMatchesDialogViewModel.cs" />
     <Compile Include="GUI\Matches\DeleteMatchDialogViewModel.cs" />
     <Compile Include="GUI\Matches\EditMatchDialogViewModel.cs" />
     <Compile Include="GUI\Matches\MatchesViewModel.cs" />

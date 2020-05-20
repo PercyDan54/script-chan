@@ -189,6 +189,7 @@ namespace script_chan2.GUI
         {
             if (match.TeamMode == TeamModes.TeamVS && Player != null)
             {
+                localLog.Information("change team of player '{player}'", Player.Name);
                 var color = "";
                 if (Team == TeamColors.Red)
                     color = "blue";
@@ -211,6 +212,7 @@ namespace script_chan2.GUI
             if (e.Data.GetDataPresent(typeof(MatchRoomSlotViewModel)) && Player == null)
             {
                 MatchRoomSlotViewModel oldSlot = e.Data.GetData(typeof(MatchRoomSlotViewModel)) as MatchRoomSlotViewModel;
+                localLog.Information("drag player '{player}' to slot '{slot}'", oldSlot.Player.Name, SlotNumber);
                 OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp move {oldSlot.Player.Name} {SlotNumber}");
             }
         }

@@ -119,6 +119,34 @@ namespace script_chan2.GUI
 
             await DialogHost.Show(view, "MainDialogHost");
         }
+
+        public async void OpenDeleteAllMappoolsDialog()
+        {
+            localLog.Information("open delete all mappools dialog");
+            var model = new DeleteAllMappoolsDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            var result = Convert.ToBoolean(await DialogHost.Show(view, "MainDialogHost"));
+
+            if (result)
+            {
+                localLog.Information("delete all mappools");
+                var mappools = new List<Mappool>();
+                foreach (var mappool in Database.Database.Mappools)
+                {
+                    if (FilterTournament == null)
+                        mappools.Add(mappool);
+                    else if (FilterTournament != null && FilterTournament == mappool.Tournament)
+                        mappools.Add(mappool);
+                }
+                foreach (var mappool in mappools)
+                {
+                    mappool.Delete();
+                }
+                NotifyOfPropertyChange(() => MappoolViews);
+            }
+        }
         #endregion
     }
 }
