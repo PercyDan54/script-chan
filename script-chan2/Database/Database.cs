@@ -881,7 +881,7 @@ namespace script_chan2.Database
             localLog.Information("init matches");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
-                rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode FROM Matches", conn))
+                rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode FROM Matches", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -944,7 +944,7 @@ namespace script_chan2.Database
                     var teamSize = Convert.ToInt32(reader["teamSize"]);
                     var roomSize = Convert.ToInt32(reader["roomSize"]);
                     var bo = Convert.ToInt32(reader["BO"]);
-                    var enableWebhooks = Convert.ToBoolean(reader["enableWebhooks"]);
+                    var viewerMode = Convert.ToBoolean(reader["viewerMode"]);
                     var mpTimerCommand = Convert.ToInt32(reader["mpTimerCommand"]);
                     var mpTimerAfterGame = Convert.ToInt32(reader["mpTimerAfterGame"]);
                     var mpTimerAfterPick = Convert.ToInt32(reader["mpTimerAfterPick"]);
@@ -978,7 +978,7 @@ namespace script_chan2.Database
                         FirstPickerTeam = firstPickerTeam,
                         FirstPickerPlayer = firstPickerPlayer,
                         BO = bo,
-                        EnableWebhooks = enableWebhooks,
+                        ViewerMode = viewerMode,
                         MpTimerCommand = mpTimerCommand,
                         MpTimerAfterGame = mpTimerAfterGame,
                         MpTimerAfterPick = mpTimerAfterPick,
@@ -1001,8 +1001,8 @@ namespace script_chan2.Database
             using (var conn = GetConnection())
             using (var transaction = conn.BeginTransaction())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, enableWebhooks, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode)" +
-                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @enableWebhooks, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status, @warmupMode)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode)" +
+                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @viewerMode, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status, @warmupMode)", conn))
                 {
                     command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
                     if (match.Mappool == null)
@@ -1049,7 +1049,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@teamSize", match.TeamSize);
                     command.Parameters.AddWithValue("@roomSize", match.RoomSize);
                     command.Parameters.AddWithValue("@BO", match.BO);
-                    command.Parameters.AddWithValue("@enableWebhooks", match.EnableWebhooks);
+                    command.Parameters.AddWithValue("@viewerMode", match.ViewerMode);
                     command.Parameters.AddWithValue("@mpTimerCommand", match.MpTimerCommand);
                     command.Parameters.AddWithValue("@mpTimerAfterGame", match.MpTimerAfterGame);
                     command.Parameters.AddWithValue("@mpTimerAfterPick", match.MpTimerAfterPick);
@@ -1144,7 +1144,7 @@ namespace script_chan2.Database
                 using (var command = new SQLiteCommand(@"UPDATE Matches
                 SET tournament = @tournament, mappool = @mappool, name = @name, roomId = @roomId, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
                 teamRed = @teamRed, teamRedPoints = @teamRedPoints, teamSize = @teamSize, roomSize = @roomSize, rollWinner = @rollWinner, firstPicker = @firstPicker, BO = @BO,
-                enableWebhooks = @enableWebhooks, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, pointsForSecondBan = @pointsForSecondBan,
+                viewerMode = @viewerMode, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, pointsForSecondBan = @pointsForSecondBan,
                 allPicksFreemod = @allPicksFreemod, status = @status, warmupMode = @warmupMode
                 WHERE id = @id", conn))
                 {
@@ -1195,7 +1195,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@teamSize", match.TeamSize);
                     command.Parameters.AddWithValue("@roomSize", match.RoomSize);
                     command.Parameters.AddWithValue("@BO", match.BO);
-                    command.Parameters.AddWithValue("@enableWebhooks", match.EnableWebhooks);
+                    command.Parameters.AddWithValue("@viewerMode", match.ViewerMode);
                     command.Parameters.AddWithValue("@mpTimerCommand", match.MpTimerCommand);
                     command.Parameters.AddWithValue("@mpTimerAfterGame", match.MpTimerAfterGame);
                     command.Parameters.AddWithValue("@mpTimerAfterPick", match.MpTimerAfterPick);

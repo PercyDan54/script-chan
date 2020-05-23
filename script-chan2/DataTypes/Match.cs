@@ -24,7 +24,7 @@ namespace script_chan2.DataTypes
             RoomId = 0;
             TeamBluePoints = 0;
             TeamRedPoints = 0;
-            EnableWebhooks = true;
+            ViewerMode = false;
             Status = MatchStatus.New;
         }
 
@@ -66,7 +66,7 @@ namespace script_chan2.DataTypes
 
         public int BO { get; set; }
 
-        public bool EnableWebhooks { get; set; }
+        public bool ViewerMode { get; set; }
 
         public int MpTimerCommand { get; set; }
 

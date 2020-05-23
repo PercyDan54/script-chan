@@ -57,6 +57,11 @@ namespace script_chan2.Database
                 UpgradeV4();
                 dbVersion = 5;
             }
+            if (dbVersion == 5)
+            {
+                UpgradeV5();
+                dbVersion = 6;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -139,6 +144,31 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 5 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV5()
+        {
+            localLog.Information("upgrade database to v5");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE Matches ADD COLUMN viewerMode BOOL", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE Matches SET viewerMode = ((enableWebhooks | 1) - (enableWebhooks & 1))", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE Matches SET viewerMode = ((enableWebhooks | 1) - (enableWebhooks & 1))", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 6 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

@@ -262,7 +262,7 @@
                                 <TextBox x:Name="TimerAfterPick" md:HintAssist.Hint="Timer after pick" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
                                 <TextBox x:Name="PointsForSecondBan" md:HintAssist.Hint="Points for second ban" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
                                 <CheckBox x:Name="AllPicksFreemod" Content="All picks as freemod" Margin="0 10 0 0" />
-                                <CheckBox x:Name="EnableWebhooks" Content="Enable Webhooks" Margin="0 10 0 0" />
+                                <CheckBox x:Name="ViewerMode" Content="Viewer Mode" ToolTip="Disable webhooks and automated irc messages" Margin="0 10 0 0" />
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>

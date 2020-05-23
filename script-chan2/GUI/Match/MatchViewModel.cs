@@ -289,7 +289,7 @@ namespace script_chan2.GUI
                     SendRoomMessage("!mp unlock");
                     SendRoomMessage("!mp settings");
 
-                    if (match.EnableWebhooks)
+                    if (!match.ViewerMode)
                     {
                         DiscordApi.SendMatchCreated(match);
                     }
@@ -318,9 +318,9 @@ namespace script_chan2.GUI
                         await UpdateScore(true);
                         if (!match.WarmupMode)
                         {
-                            SendRoomStatus();
-                            if (match.EnableWebhooks)
+                            if (!match.ViewerMode)
                             {
+                                SendRoomStatus();
                                 DiscordApi.SendGameRecap(match);
                             }
                         }
@@ -762,16 +762,16 @@ namespace script_chan2.GUI
             }
         }
 
-        public bool EnableWebhooks
+        public bool ViewerMode
         {
-            get { return match.EnableWebhooks; }
+            get { return match.ViewerMode; }
             set
             {
-                if (value != match.EnableWebhooks)
+                if (value != match.ViewerMode)
                 {
-                    match.EnableWebhooks = value;
+                    match.ViewerMode = value;
                     match.Save();
-                    NotifyOfPropertyChange(() => EnableWebhooks);
+                    NotifyOfPropertyChange(() => ViewerMode);
                 }
             }
         }
@@ -1241,7 +1241,7 @@ namespace script_chan2.GUI
         public void SendBanRecap()
         {
             localLog.Information("match '{match}' send ban recap", match.Name);
-            if (match.EnableWebhooks)
+            if (!match.ViewerMode)
             {
                 DiscordApi.SendMatchBanRecap(match);
             }
@@ -1250,7 +1250,7 @@ namespace script_chan2.GUI
         public void SendPickRecap()
         {
             localLog.Information("match '{match}' send pick recap", match.Name);
-            if (match.EnableWebhooks)
+            if (!match.ViewerMode)
             {
                 DiscordApi.SendMatchPickRecap(match);
             }

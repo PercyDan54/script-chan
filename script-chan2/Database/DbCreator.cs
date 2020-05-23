@@ -66,7 +66,7 @@ namespace script_chan2.Database
                 ('defaultTimerCommand', '120'),
                 ('defaultTimerAfterGame', '120'),
                 ('defaultTimerAfterPick', '120'),
-                ('dbVersion', '5')", conn))
+                ('dbVersion', '6')", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -237,7 +237,7 @@ namespace script_chan2.Database
                 rollWinner INTEGER,
                 firstPicker INTEGER,
                 BO INTEGER,
-                enableWebhooks BOOL,
+                viewerMode BOOL,
                 mpTimerCommand INTEGER,
                 mpTimerAfterGame INTEGER,
                 mpTimerAfterPick INTEGER,

@@ -219,7 +219,7 @@ namespace script_chan2.GUI
                         FirstPickerTeam = matchData.FirstPickerTeam != null ? matchData.FirstPickerTeam.Name : "",
                         FirstPickerPlayer = matchData.FirstPickerPlayer != null ? matchData.FirstPickerPlayer.Name : "",
                         BO = matchData.BO,
-                        EnableWebhooks = matchData.EnableWebhooks,
+                        ViewerMode = matchData.ViewerMode,
                         MpTimerCommand = matchData.MpTimerCommand,
                         MpTimerAfterGame = matchData.MpTimerAfterGame,
                         MpTimerAfterPick = matchData.MpTimerAfterPick,
@@ -446,7 +446,7 @@ namespace script_chan2.GUI
                     match.RollWinnerTeam = tournament.Teams.FirstOrDefault(x => x.Name == matchItem.RollWinnerTeam.Value);
                     match.FirstPickerTeam = tournament.Teams.FirstOrDefault(x => x.Name == matchItem.FirstPickerTeam.Value);
                     match.BO = Convert.ToInt32(matchItem.BO.Value);
-                    match.EnableWebhooks = matchItem.EnableWebhooks.Value;
+                    match.ViewerMode = matchItem.ViewerMode.Value;
                     match.MpTimerCommand = Convert.ToInt32(matchItem.MpTimerCommand.Value);
                     match.MpTimerAfterGame = Convert.ToInt32(matchItem.MpTimerAfterGame.Value);
                     match.MpTimerAfterPick = Convert.ToInt32(matchItem.MpTimerAfterPick.Value);
