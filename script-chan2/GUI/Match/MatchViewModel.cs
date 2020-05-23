@@ -289,7 +289,10 @@ namespace script_chan2.GUI
                     SendRoomMessage("!mp unlock");
                     SendRoomMessage("!mp settings");
 
-                    DiscordApi.SendMatchCreated(match);
+                    if (match.EnableWebhooks)
+                    {
+                        DiscordApi.SendMatchCreated(match);
+                    }
                 }
             }
             else if (message is ChannelMessageData)
@@ -320,6 +323,10 @@ namespace script_chan2.GUI
                             {
                                 DiscordApi.SendGameRecap(match);
                             }
+                        }
+                        foreach (var slot in RoomSlotsViews)
+                        {
+                            slot.State = RoomSlotStates.NotReady;
                         }
                     }
                     if (data.User == "BanchoBot" && data.Message.StartsWith("Room name:"))
@@ -1234,13 +1241,19 @@ namespace script_chan2.GUI
         public void SendBanRecap()
         {
             localLog.Information("match '{match}' send ban recap", match.Name);
-            DiscordApi.SendMatchBanRecap(match);
+            if (match.EnableWebhooks)
+            {
+                DiscordApi.SendMatchBanRecap(match);
+            }
         }
 
         public void SendPickRecap()
         {
             localLog.Information("match '{match}' send pick recap", match.Name);
-            DiscordApi.SendMatchPickRecap(match);
+            if (match.EnableWebhooks)
+            {
+                DiscordApi.SendMatchPickRecap(match);
+            }
         }
         #endregion
     }
