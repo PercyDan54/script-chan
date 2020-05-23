@@ -25,6 +25,7 @@ namespace script_chan2.GUI
         {
             Tournament = Settings.DefaultTournament;
             WikiUrl = "";
+            BO = Settings.DefaultBO;
         }
         #endregion
 
@@ -95,6 +96,21 @@ namespace script_chan2.GUI
             }
         }
 
+        private int bo;
+        public int BO
+        {
+            get { return bo; }
+            set
+            {
+                if (value != bo)
+                {
+                    bo = value;
+                    NotifyOfPropertyChange(() => BO);
+                    NotifyOfPropertyChange(() => ImportEnabled);
+                }
+            }
+        }
+
         public bool ImportEnabled
         {
             get
@@ -104,6 +120,8 @@ namespace script_chan2.GUI
                 if (Tournament == null)
                     return false;
                 if (IsImporting)
+                    return false;
+                if (BO <= 0)
                     return false;
                 return true;
             }
@@ -270,7 +288,7 @@ namespace script_chan2.GUI
                         Mappool = Mappool,
                         TeamRed = Tournament.Teams.First(x => x.Name == importMatch.TeamRed),
                         TeamBlue = Tournament.Teams.First(x => x.Name == importMatch.TeamBlue),
-                        BO = Settings.DefaultBO,
+                        BO = BO,
                         GameMode = Tournament.GameMode,
                         TeamMode = Tournament.TeamMode,
                         WinCondition = Tournament.WinCondition,

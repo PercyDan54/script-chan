@@ -19,27 +19,29 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ComboBox md:HintAssist.Hint="Tournament" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding Tournament}" Margin="0 0 50 10">
+        <ComboBox md:HintAssist.Hint="Tournament" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding Tournament}" IsEnabled="{Binding WikiUrlEnabled}" Margin="0 0 0 1">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox md:HintAssist.Hint="Mappool" Grid.Column="1" ItemsSource="{Binding Mappools}" SelectedItem="{Binding Mappool}" Margin="5 0 0 10">
+        <ComboBox md:HintAssist.Hint="Mappool" Grid.Column="1" ItemsSource="{Binding Mappools}" SelectedItem="{Binding Mappool}" IsEnabled="{Binding WikiUrlEnabled}" Margin="5 0 0 1">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBox x:Name="WikiUrl" Grid.Row="1" Grid.ColumnSpan="2" md:HintAssist.Hint="Wiki URL" Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsEnabled="{Binding WikiUrlEnabled}" />
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Visibility="{Binding ProgressVisible}" VerticalAlignment="Center">
+        <TextBox x:Name="BO" Grid.Column="2" md:HintAssist.Hint="BO" Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsEnabled="{Binding WikiUrlEnabled}" Margin="5 0 0 10" />
+        <TextBox x:Name="WikiUrl" Grid.Row="1" Grid.ColumnSpan="3" md:HintAssist.Hint="Wiki URL" Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsEnabled="{Binding WikiUrlEnabled}" />
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Visibility="{Binding ProgressVisible}" VerticalAlignment="Center">
             <ProgressBar Minimum="0" Maximum="{Binding MatchCount}" Value="{Binding ImportProgress}" Grid.Row="1" />
             <TextBlock Text="{Binding ImportStatus}" HorizontalAlignment="Center" Margin="0 10 0 0" />
         </StackPanel>
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
             <Button Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding CloseEnabled}" />
             <Button x:Name="StartImport" Content="Import" Style="{StaticResource MaterialDesignFlatButton}" IsEnabled="{Binding ImportEnabled}" />
         </StackPanel>
