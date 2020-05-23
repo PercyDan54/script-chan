@@ -161,17 +161,17 @@ namespace script_chan2.GUI
                 {
                     if (match.Bans.First(x => x.Map == beatmap).Team == match.TeamRed)
                         return Brushes.Red;
-                    return Brushes.Blue;
+                    return Brushes.DeepSkyBlue;
                 }
                 if (match.TeamMode == Enums.TeamModes.TeamVS && match.Picks.Any(x => x.Map == beatmap))
                 {
                     if (match.Picks.First(x => x.Map == beatmap).Team == match.TeamRed)
                         return Brushes.Red;
-                    return Brushes.Blue;
+                    return Brushes.DeepSkyBlue;
                 }
                 if (match.TeamMode == Enums.TeamModes.HeadToHead && match.Picks.Any(x => x.Map == beatmap))
                     return Brushes.Green;
-                return Brushes.Black;
+                return Brushes.White;
             }
         }
 

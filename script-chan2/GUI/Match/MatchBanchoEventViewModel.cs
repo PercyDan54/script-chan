@@ -55,8 +55,8 @@ namespace script_chan2.GUI
                 if (team == TeamColors.Red)
                     return Brushes.Red;
                 if (team == TeamColors.Blue)
-                    return Brushes.Blue;
-                return Brushes.Black;
+                    return Brushes.DeepSkyBlue;
+                return Brushes.White;
             }
         }
         #endregion

@@ -53,7 +53,7 @@ namespace script_chan2.GUI
             get
             {
                 if (teamColor == TeamColors.Blue)
-                    return Brushes.Blue;
+                    return Brushes.DeepSkyBlue;
                 return Brushes.Red;
             }
         }

@@ -23,7 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Height="30" Background="LightGray" cal:Message.Attach="[Event MouseDown] = [Action Drag($eventArgs)]">
+        <Grid Grid.Row="0" Height="30" Background="Black" cal:Message.Attach="[Event MouseDown] = [Action Drag($eventArgs)]">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -34,7 +34,7 @@
             <StackPanel Visibility="{Binding TeamVsVisible}" Orientation="Horizontal" VerticalAlignment="Center" Margin="5 0 0 0">
                 <TextBlock Foreground="Red" Text="{Binding TeamRedName}" FontSize="20" />
                 <TextBlock Text=" VS " FontSize="20" />
-                <TextBlock Foreground="Blue" Text="{Binding TeamBlueName}" FontSize="20" />
+                <TextBlock Foreground="DeepSkyBlue" Text="{Binding TeamBlueName}" FontSize="20" />
             </StackPanel>
             <TextBlock Text="{Binding WindowTitle}" Visibility="{Binding HeadToHeadVisible}" FontSize="20" VerticalAlignment="Center" Margin="5 0 0 0" />
             <Button x:Name="OpenMpLink" Content="{Binding RoomLinkName}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="Black" HorizontalAlignment="Left" Grid.Column="1" FontSize="20" Margin="5 0 0 0" Visibility="{Binding RoomOpenVisible}" />
@@ -51,7 +51,7 @@
                 <md:PackIcon Kind="Close" />
             </Button>
         </Grid>
-        <md:DialogHost Grid.Row="1" Identifier="{Binding DialogIdentifier}">
+        <md:DialogHost Grid.Row="1" Identifier="{Binding DialogIdentifier}" DialogTheme="Dark">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="Column1" />
@@ -213,10 +213,10 @@
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
                         <Button x:Name="CloseRoom" Content="Close the room" Margin="5" Background="Red" Visibility="{Binding RoomOpenVisible}"/>
-                        <Button x:Name="CreateRoom" Content="Create room" Margin="5" Background="Green" Visibility="{Binding RoomClosedVisible}" />
-                        <Button x:Name="JoinRoom" Content="Join existing room" Margin="5" Background="Green" Visibility="{Binding RoomClosedVisible}" />
+                        <Button x:Name="CreateRoom" Content="Create room" Margin="5" Visibility="{Binding RoomClosedVisible}" />
+                        <Button x:Name="JoinRoom" Content="Join existing room" Margin="5" Visibility="{Binding RoomClosedVisible}" />
                     </WrapPanel>
-                    <Border x:Name="Control3" Grid.Row="1" Margin="2" BorderBrush="LightGray" BorderThickness="0 3 0 3">
+                    <Border x:Name="Control3" Grid.Row="1" Margin="2" BorderBrush="Black" BorderThickness="0 3 0 3">
                         <WrapPanel>
                             <Button x:Name="SendBanRecap" Content="Ban recap" Margin="5" />
                             <Button x:Name="SendPickRecap" Content="Pick recap" Margin="5" />

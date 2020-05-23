@@ -158,7 +158,7 @@ namespace script_chan2.GUI
             get
             {
                 if (Player == null)
-                    return Brushes.Gray;
+                    return Brushes.Black;
                 switch (State)
                 {
                     case RoomSlotStates.NoMap: return Brushes.LightCoral;
