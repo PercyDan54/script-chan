@@ -1,9 +1,4 @@
 ﻿using Caliburn.Micro;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace script_chan2.GUI
@@ -23,7 +18,7 @@ namespace script_chan2.GUI
 
         public int Points;
 
-        public string Name
+        public string ContentText
         {
             get { return $"{Place}. {Points}"; }
         }

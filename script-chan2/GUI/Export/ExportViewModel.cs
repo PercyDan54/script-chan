@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace script_chan2.GUI
 {
@@ -28,7 +26,7 @@ namespace script_chan2.GUI
                 var teamsCategory = new ExportCategory { Name = "Teams", Parent = tournamentItem };
                 foreach (var team in tournament.Teams)
                 {
-                    var teamItem = new ExportItem { Id = team.Id, Name = team.Name, Parent = teamsCategory };
+                    var teamItem = new ExportItem { Id = team.Id, Name = team.Name, ParentItem = teamsCategory };
                     teamsCategory.ExportItems.Add(teamItem);
                 }
                 tournamentItem.ExportCategories.Add(teamsCategory);
@@ -36,7 +34,7 @@ namespace script_chan2.GUI
                 var webhooksCategory = new ExportCategory { Name = "Webhooks", Parent = tournamentItem };
                 foreach (var webhook in tournament.Webhooks)
                 {
-                    var webhookItem = new ExportItem { Id = webhook.Id, Name = webhook.Name, Parent = webhooksCategory };
+                    var webhookItem = new ExportItem { Id = webhook.Id, Name = webhook.Name, ParentItem = webhooksCategory };
                     webhooksCategory.ExportItems.Add(webhookItem);
                 }
                 tournamentItem.ExportCategories.Add(webhooksCategory);
@@ -44,7 +42,7 @@ namespace script_chan2.GUI
                 var mappoolsCategory = new ExportCategory { Name = "Mappools", Parent = tournamentItem };
                 foreach (var mappool in tournament.Mappools)
                 {
-                    var mappoolItem = new ExportItem { Id = mappool.Id, Name = mappool.Name, Parent = mappoolsCategory };
+                    var mappoolItem = new ExportItem { Id = mappool.Id, Name = mappool.Name, ParentItem = mappoolsCategory };
                     mappoolsCategory.ExportItems.Add(mappoolItem);
                 }
                 tournamentItem.ExportCategories.Add(mappoolsCategory);
@@ -52,11 +50,11 @@ namespace script_chan2.GUI
                 var matchesCategory = new ExportCategory { Name = "Matches", Parent = tournamentItem };
                 foreach (var match in Database.Database.Matches.Where(x => x.Tournament == tournament))
                 {
-                    var matchItem = new ExportItem { Id = match.Id, Name = match.Name, Parent = matchesCategory };
+                    var matchItem = new ExportItem { Id = match.Id, Name = match.Name, ParentItem = matchesCategory };
                     matchesCategory.ExportItems.Add(matchItem);
                 }
                 tournamentItem.ExportCategories.Add(matchesCategory);
-                
+
                 ExportItems.Add(tournamentItem);
             }
             NotifyOfPropertyChange(() => ExportItems);
@@ -502,9 +500,9 @@ namespace script_chan2.GUI
                     export = value;
                     if (value)
                     {
-                        if (Parent != null && Parent.Parent != null)
+                        if (ParentItem != null && ParentItem.Parent != null)
                         {
-                            Parent.Parent.SetExportFromChild(value);
+                            ParentItem.Parent.SetExportFromChild(value);
                         }
                     }
                     foreach (var category in ExportCategories)
@@ -521,15 +519,15 @@ namespace script_chan2.GUI
         public int Id { get; set; }
         public string Name { get; set; }
         public BindableCollection<ExportCategory> ExportCategories { get; set; }
-        public ExportCategory Parent { get; set; }
+        public ExportCategory ParentItem { get; set; }
 
         public void SetExportFromChild(bool export)
         {
             this.export = export;
             NotifyOfPropertyChange(() => Export);
-            if (Parent != null && Parent.Parent != null)
+            if (ParentItem != null && ParentItem.Parent != null)
             {
-                Parent.Parent.SetExportFromChild(export);
+                ParentItem.Parent.SetExportFromChild(export);
             }
         }
 

@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -214,7 +213,7 @@ namespace script_chan2.GUI
                                 var beatmapUrl = ((LinkInline)inline).Url;
                                 beatmapId = Convert.ToInt32(beatmapUrl.Split('/').Last());
                             }
-                            
+
                             if (beatmapId > 0)
                             {
                                 localLog.Information("beatmap '{beatmap}' found", beatmapId);

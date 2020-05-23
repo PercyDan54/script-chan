@@ -1,11 +1,5 @@
 ﻿using Caliburn.Micro;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace script_chan2.GUI
 {
@@ -36,16 +30,16 @@ namespace script_chan2.GUI
             }
         }
 
-        private string title;
-        public string Title
+        private string mainTitle;
+        public string MainTitle
         {
-            get { return title; }
+            get { return mainTitle; }
             set
             {
-                if (value != title)
+                if (value != mainTitle)
                 {
-                    title = value;
-                    NotifyOfPropertyChange(() => Title);
+                    mainTitle = value;
+                    NotifyOfPropertyChange(() => MainTitle);
                 }
             }
         }
@@ -56,7 +50,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show match list");
             ActivateItem(new MatchesViewModel());
-            Title = "Matches";
+            MainTitle = "Matches";
             DrawerExpanded = false;
         }
 
@@ -64,7 +58,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show tournament list");
             ActivateItem(new TournamentsViewModel());
-            Title = "Tournaments";
+            MainTitle = "Tournaments";
             DrawerExpanded = false;
         }
 
@@ -72,7 +66,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show team list");
             ActivateItem(new TeamsViewModel());
-            Title = "Teams";
+            MainTitle = "Teams";
             DrawerExpanded = false;
         }
 
@@ -80,7 +74,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show mappool list");
             ActivateItem(new MappoolsViewModel());
-            Title = "Mappools";
+            MainTitle = "Mappools";
             DrawerExpanded = false;
         }
 
@@ -88,7 +82,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show webhook list");
             ActivateItem(new WebhooksViewModel());
-            Title = "Webhooks";
+            MainTitle = "Webhooks";
             DrawerExpanded = false;
         }
 
@@ -96,7 +90,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show settings");
             ActivateItem(new SettingsViewModel());
-            Title = "Settings";
+            MainTitle = "Settings";
             DrawerExpanded = false;
         }
 
@@ -104,7 +98,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show colors");
             ActivateItem(new ColorsViewModel());
-            Title = "Colors";
+            MainTitle = "Colors";
             DrawerExpanded = false;
         }
 
@@ -112,7 +106,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show commands");
             ActivateItem(new CustomCommandsViewModel());
-            Title = "Commands";
+            MainTitle = "Commands";
             DrawerExpanded = false;
         }
 
@@ -120,7 +114,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show chat");
             ActivateItem(new ChatViewModel());
-            Title = "Chat";
+            MainTitle = "Chat";
             DrawerExpanded = false;
         }
 
@@ -128,7 +122,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show export");
             ActivateItem(new ExportViewModel());
-            Title = "Export";
+            MainTitle = "Export";
             DrawerExpanded = false;
         }
         #endregion

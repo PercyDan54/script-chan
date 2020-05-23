@@ -1,11 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace script_chan2.GUI
@@ -27,7 +22,7 @@ namespace script_chan2.GUI
 
         private Player player;
 
-        public string Name
+        public string Username
         {
             get { return player.Name; }
         }

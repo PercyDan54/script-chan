@@ -1,11 +1,7 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using Serilog;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace script_chan2.GUI
@@ -24,12 +20,12 @@ namespace script_chan2.GUI
         #region Properties
         private MappoolMap beatmap;
 
-        public string Name
+        public string BeatmapName
         {
             get { return $"{beatmap.Beatmap.Artist} - {beatmap.Beatmap.Title} [{beatmap.Beatmap.Version}]"; }
         }
 
-        public string Tag
+        public string ModTag
         {
             get { return beatmap.Tag; }
             set
@@ -38,7 +34,7 @@ namespace script_chan2.GUI
                 {
                     beatmap.Tag = value;
                     beatmap.Save();
-                    NotifyOfPropertyChange(() => Tag);
+                    NotifyOfPropertyChange(() => ModTag);
                 }
             }
         }

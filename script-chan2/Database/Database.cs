@@ -1,16 +1,11 @@
 ﻿using script_chan2.DataTypes;
 using script_chan2.Enums;
-using script_chan2.OsuIrc;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace script_chan2.Database
 {

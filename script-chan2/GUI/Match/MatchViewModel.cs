@@ -3,14 +3,10 @@ using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using script_chan2.Discord;
 using script_chan2.Enums;
-using script_chan2.OsuIrc;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Media;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -206,7 +202,7 @@ namespace script_chan2.GUI
         protected override void OnActivate()
         {
             localLog.Information("open window of match '{match}'", match.Name);
-            
+
             Events.Aggregator.Subscribe(this);
             match.ReloadMessages();
             Execute.OnUIThread(() =>

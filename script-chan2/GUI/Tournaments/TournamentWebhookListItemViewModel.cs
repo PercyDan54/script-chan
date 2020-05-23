@@ -1,11 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace script_chan2.GUI
 {
@@ -26,7 +21,7 @@ namespace script_chan2.GUI
 
         private Webhook webhook;
 
-        public string Name
+        public string WebhookName
         {
             get { return webhook.Name; }
         }

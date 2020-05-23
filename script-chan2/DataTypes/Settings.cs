@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace script_chan2.DataTypes
@@ -133,8 +131,8 @@ namespace script_chan2.DataTypes
             if (!config.colors.Any(x => x.key == "Default"))
                 config.colors.Add(new ConfigColor { key = "Default", color = Colors.Black.ToString() });
             UserColors = new List<UserColor>();
-            
-            if(config.colors != null)
+
+            if (config.colors != null)
             {
                 foreach (var configColor in config.colors)
                 {

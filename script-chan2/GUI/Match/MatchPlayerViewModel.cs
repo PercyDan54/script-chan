@@ -1,11 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace script_chan2.GUI
 {
@@ -26,7 +21,7 @@ namespace script_chan2.GUI
 
         private Player player;
 
-        public string Name
+        public string Username
         {
             get { return player.Name; }
         }
@@ -40,7 +35,7 @@ namespace script_chan2.GUI
         #region Actions
         public void DecreasePoints()
         {
-            localLog.Information("match '{match}' decrease points for player '{player}'", match.Name, Name);
+            localLog.Information("match '{match}' decrease points for player '{player}'", match.Name, Username);
             match.Players[player]--;
             match.Save();
             NotifyOfPropertyChange(() => Points);
@@ -48,7 +43,7 @@ namespace script_chan2.GUI
 
         public void IncreasePoints()
         {
-            localLog.Information("match '{match}' increase points for player '{player}'", match.Name, Name);
+            localLog.Information("match '{match}' increase points for player '{player}'", match.Name, Username);
             match.Players[player]++;
             match.Save();
             NotifyOfPropertyChange(() => Points);

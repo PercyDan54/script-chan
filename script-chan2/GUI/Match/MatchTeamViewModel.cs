@@ -2,11 +2,6 @@
 using script_chan2.DataTypes;
 using script_chan2.Enums;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace script_chan2.GUI
@@ -28,7 +23,7 @@ namespace script_chan2.GUI
 
         private TeamColors teamColor;
 
-        public string Name
+        public string Teamname
         {
             get
             {
@@ -62,7 +57,7 @@ namespace script_chan2.GUI
         #region Actions
         public void DecreasePoints()
         {
-            localLog.Information("match '{match}' decrease points for team '{team}'", match.Name, Name);
+            localLog.Information("match '{match}' decrease points for team '{team}'", match.Name, Teamname);
             if (teamColor == TeamColors.Blue)
                 match.TeamBluePoints--;
             else
@@ -73,7 +68,7 @@ namespace script_chan2.GUI
 
         public void IncreasePoints()
         {
-            localLog.Information("match '{match}' increase points for team '{team}'", match.Name, Name);
+            localLog.Information("match '{match}' increase points for team '{team}'", match.Name, Teamname);
             if (teamColor == TeamColors.Blue)
                 match.TeamBluePoints++;
             else

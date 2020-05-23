@@ -6,11 +6,9 @@ using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 

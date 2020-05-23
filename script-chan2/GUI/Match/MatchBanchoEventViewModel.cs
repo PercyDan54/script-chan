@@ -1,10 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace script_chan2.GUI
@@ -33,18 +29,18 @@ namespace script_chan2.GUI
 
         private string data;
 
-        public string Name
+        public string EventText
         {
             get
             {
-                var name = $"[{eventTime.ToString("HH:mm")}]";
+                var text = $"[{eventTime.ToString("HH:mm")}]";
                 if (type == MatchBanchoEvents.AllPlayersFinished)
-                    name += " All players finished";
+                    text += " All players finished";
                 if (type == MatchBanchoEvents.AllPlayersReady)
-                    name += " All players ready";
+                    text += " All players ready";
                 if (type == MatchBanchoEvents.PlayerRoll)
-                    name += $" {user} rolled {data}";
-                return name;
+                    text += $" {user} rolled {data}";
+                return text;
             }
         }
 

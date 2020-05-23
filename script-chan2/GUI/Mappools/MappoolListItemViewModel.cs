@@ -3,14 +3,7 @@ using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows.Media;
-using WK.Libraries.SharpClipboardNS;
 
 namespace script_chan2.GUI
 {

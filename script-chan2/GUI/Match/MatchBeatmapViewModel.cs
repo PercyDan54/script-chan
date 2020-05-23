@@ -3,10 +3,7 @@ using MaterialDesignColors.ColorManipulation;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
@@ -40,12 +37,12 @@ namespace script_chan2.GUI
 
         private MappoolMap beatmap;
 
-        public string Tag
+        public string ModTag
         {
             get { return beatmap.Tag; }
         }
 
-        public string Name
+        public string BeatmapName
         {
             get { return $"{beatmap.Beatmap.Artist} - {beatmap.Beatmap.Title} [{beatmap.Beatmap.Version}] ({beatmap.Beatmap.Creator})  BPM{beatmap.Beatmap.BPM} AR{beatmap.Beatmap.AR} CS{beatmap.Beatmap.CS}"; }
         }
