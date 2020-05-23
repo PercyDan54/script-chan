@@ -1071,11 +1071,13 @@ namespace script_chan2.GUI
             if (eventsScrollViewer.VerticalOffset == eventsScrollViewer.ScrollableHeight)
                 scrollEventsToEnd = true;
 
-                var brush = new SolidColorBrush();
+            var brush = new SolidColorBrush();
             if (message.User == Settings.IrcUsername)
                 brush.Color = Settings.UserColors.First(x => x.Key == "Self").Color;
             else if (message.User == "BanchoBot")
                 brush.Color = Settings.UserColors.First(x => x.Key == "BanchoBot").Color;
+            else
+                brush.Color = Settings.UserColors.First(x => x.Key == "Default").Color;
             var paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush };
             MultiplayerChat.Blocks.Add(paragraph);
             NotifyOfPropertyChange(() => MultiplayerChat);

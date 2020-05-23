@@ -87,6 +87,7 @@ namespace script_chan2.DataTypes
                     {
                         new ConfigColor { key = "BanchoBot", color = Colors.Pink.ToString() },
                         new ConfigColor { key = "Self", color = Colors.Green.ToString() },
+                        new ConfigColor { key = "Default", color = Colors.Black.ToString() },
                         new ConfigColor { key = "HD", color = "#FFF2CC" },
                         new ConfigColor { key = "HR", color = "#f4cccc" },
                         new ConfigColor { key = "DT", color = "#cfe2f3" },
@@ -129,6 +130,8 @@ namespace script_chan2.DataTypes
             defaultTimerCommand = Convert.ToInt32(settings["defaultTimerCommand"]);
             defaultTimerAfterGame = Convert.ToInt32(settings["defaultTimerAfterGame"]);
             defaultTimerAfterPick = Convert.ToInt32(settings["defaultTimerAfterPick"]);
+            if (!config.colors.Any(x => x.key == "Default"))
+                config.colors.Add(new ConfigColor { key = "Default", color = Colors.Black.ToString() });
             UserColors = new List<UserColor>();
             
             if(config.colors != null)
