@@ -333,51 +333,54 @@ namespace script_chan2.GUI
                     }
                     if (data.User == "BanchoBot" && data.Message.StartsWith("Slot "))
                     {
-                        var slotString = data.Message.Substring(5, 2).Trim();
-                        var slotNumber = Convert.ToInt32(slotString);
-
-                        var readyString = data.Message.Substring(8, 9);
-                        var ready = readyString.StartsWith("Ready");
-                        var noMap = readyString.StartsWith("No Map");
-
-                        var profileString = data.Message.Substring(18, 28);
-                        var profileStringSplit = profileString.Split('/');
-                        var profileId = profileStringSplit.Last();
-                        var player = await Database.Database.GetPlayer(profileId);
-
-                        var detailsString = "";
-                        if (data.Message.Length >= 64)
-                            detailsString = data.Message.Substring(64);
-
-                        TeamColors? team = null;
-                        if (detailsString.Contains("Team Blue"))
-                            team = TeamColors.Blue;
-                        if (detailsString.Contains("Team Red"))
-                            team = TeamColors.Red;
-
-                        var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
-                        if (slot != null)
+                        var regex = new Regex(@"^Slot (\d+) ([\w ]+) https://osu.ppy.sh/u/(\d+) (.+) (\[.+\])?$");
+                        var regexResult = regex.Match(data.Message);
+                        if (regexResult.Success)
                         {
-                            slot.Player = player;
-                            slot.Team = team;
-                            var mods = new List<GameMods>();
-                            if (noMap)
-                                slot.State = RoomSlotStates.NoMap;
-                            else if (ready)
-                                slot.State = RoomSlotStates.Ready;
-                            else
-                                slot.State = RoomSlotStates.NotReady;
-                            if (detailsString.Contains("Hidden"))
-                                mods.Add(GameMods.Hidden);
-                            if (detailsString.Contains("HardRock"))
-                                mods.Add(GameMods.HardRock);
-                            if (detailsString.Contains("NoFail"))
-                                mods.Add(GameMods.NoFail);
-                            if (detailsString.Contains("Easy"))
-                                mods.Add(GameMods.Easy);
-                            if (detailsString.Contains("Flashlight"))
-                                mods.Add(GameMods.Flashlight);
-                            slot.Mods = mods;
+                            var slotNumber = Convert.ToInt32(regexResult.Groups[1].Value.Trim());
+
+                            var readyString = regexResult.Groups[2].Value.Trim();
+                            var ready = readyString.StartsWith("Ready");
+                            var noMap = readyString.StartsWith("No Map");
+
+                            var profileId = regexResult.Groups[3].Value;
+                            var player = await Database.Database.GetPlayer(profileId);
+
+                            var detailsString = regexResult.Groups[5].Value.Trim();
+                            if (data.Message.Length >= 64)
+                                detailsString = data.Message.Substring(64);
+
+                            TeamColors? team = null;
+                            if (detailsString.Contains("Team Blue"))
+                                team = TeamColors.Blue;
+                            if (detailsString.Contains("Team Red"))
+                                team = TeamColors.Red;
+
+                            var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
+                            if (slot != null)
+                            {
+                                slot.Player = player;
+                                slot.Team = team;
+                                var mods = new List<GameMods>();
+                                if (noMap)
+                                    slot.State = RoomSlotStates.NoMap;
+                                else if (ready)
+                                    slot.State = RoomSlotStates.Ready;
+                                else
+                                    slot.State = RoomSlotStates.NotReady;
+                                if (detailsString.Contains("Hidden"))
+                                    mods.Add(GameMods.Hidden);
+                                if (detailsString.Contains("HardRock"))
+                                    mods.Add(GameMods.HardRock);
+                                if (detailsString.Contains("NoFail"))
+                                    mods.Add(GameMods.NoFail);
+                                if (detailsString.Contains("Easy"))
+                                    mods.Add(GameMods.Easy);
+                                if (detailsString.Contains("Flashlight"))
+                                    mods.Add(GameMods.Flashlight);
+                                slot.Mods = mods;
+                            }
+
                         }
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("joined in slot"))
