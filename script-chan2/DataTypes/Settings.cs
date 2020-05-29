@@ -108,8 +108,13 @@ namespace script_chan2.DataTypes
                 File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(configNew, Formatting.Indented));
             }
 
+            localLog.Information("load settings from database");
             var settings = Database.Database.GetSettings();
+
+            localLog.Information("load config file");
             var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(CONFIG_PATH + "\\config.json"));
+
+            localLog.Information("initialize misc settings");
             lang = settings["lang"];
             apiKey = config.apiKey;
             ircUsername = config.ircUsername;
@@ -128,17 +133,37 @@ namespace script_chan2.DataTypes
             defaultTimerCommand = Convert.ToInt32(settings["defaultTimerCommand"]);
             defaultTimerAfterGame = Convert.ToInt32(settings["defaultTimerAfterGame"]);
             defaultTimerAfterPick = Convert.ToInt32(settings["defaultTimerAfterPick"]);
-            if (!config.colors.Any(x => x.key == "Default"))
-                config.colors.Add(new ConfigColor { key = "Default", color = Colors.Black.ToString() });
-            UserColors = new List<UserColor>();
 
+            localLog.Information("initialize user colors");
             if (config.colors != null)
             {
-                foreach (var configColor in config.colors)
-                {
-                    UserColors.Add(new UserColor { Key = configColor.key, Color = (Color)ColorConverter.ConvertFromString(configColor.color) });
-                }
+                if (!config.colors.Any(x => x.key == "Default"))
+                    config.colors.Add(new ConfigColor { key = "Default", color = Colors.Black.ToString() });
             }
+            else
+            {
+                config.colors = new List<ConfigColor>
+                {
+                    new ConfigColor { key = "BanchoBot", color = Colors.Pink.ToString() },
+                    new ConfigColor { key = "Self", color = Colors.Green.ToString() },
+                    new ConfigColor { key = "Default", color = Colors.Black.ToString() },
+                    new ConfigColor { key = "HD", color = "#FFF2CC" },
+                    new ConfigColor { key = "HR", color = "#f4cccc" },
+                    new ConfigColor { key = "DT", color = "#cfe2f3" },
+                    new ConfigColor { key = "FL", color = "#bdbdbd" },
+                    new ConfigColor { key = "Freemod", color = "#d9d2e9" },
+                    new ConfigColor { key = "Tiebreaker", color = "#d9ead3" },
+                    new ConfigColor { key = "NoFail", color = "#f97ae4" }
+                };
+            }
+
+            UserColors = new List<UserColor>();
+            foreach (var configColor in config.colors)
+            {
+                UserColors.Add(new UserColor { Key = configColor.key, Color = (Color)ColorConverter.ConvertFromString(configColor.color) });
+            }
+
+            localLog.Information("initialize window sizes");
             if (config.matchSizes != null)
             {
                 if (config.matchSizes.Any(x => x.key == "overview2"))
@@ -170,6 +195,7 @@ namespace script_chan2.DataTypes
                 WindowHeight = 700;
                 WindowWidth = 1000;
             }
+
             localLog.Information("initialized");
         }
 
