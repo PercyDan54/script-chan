@@ -15,32 +15,40 @@ namespace script_chan2
 
         public AppBootstrapper()
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:u} [{Level}] ({SourceContext:1}) {Message}{NewLine}{Exception}")
-                .CreateLogger();
+            try
+            {
+                Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Debug()
+                    .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:u} [{Level}] ({SourceContext:1}) {Message}{NewLine}{Exception}")
+                    .CreateLogger();
 
-            localLog = Log.ForContext<AppBootstrapper>();
-            localLog.Information("Logger initialized");
+                localLog = Log.ForContext<AppBootstrapper>();
+                localLog.Information("Logger initialized");
 
-            Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
+                Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
 
-            localLog.Information("Initialize DB");
-            if (!DbCreator.DbExists)
-                DbCreator.CreateDb();
-            DbUpgrader.Upgrade();
-            Database.Database.Initialize();
+                localLog.Information("Initialize DB");
+                if (!DbCreator.DbExists)
+                    DbCreator.CreateDb();
+                DbUpgrader.Upgrade();
+                Database.Database.Initialize();
 
-            localLog.Information("Initialize settings");
-            Settings.Initialize();
+                localLog.Information("Initialize settings");
+                Settings.Initialize();
 
-            localLog.Information("Login to irc");
-            OsuIrc.OsuIrc.Login();
+                localLog.Information("Login to irc");
+                OsuIrc.OsuIrc.Login();
 
-            localLog.Information("Initialize app");
-            Initialize();
+                localLog.Information("Initialize app");
+                Initialize();
 
-            localLog.Information("app started");
+                localLog.Information("app started");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Bootstrapper exception");
+                MessageBox.Show("Bootstrapper exception caught. See logs for more details.");
+            }
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
