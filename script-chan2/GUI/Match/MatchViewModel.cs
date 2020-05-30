@@ -350,8 +350,6 @@ namespace script_chan2.GUI
                             var player = await Database.Database.GetPlayer(profileId);
 
                             var detailsString = regexResult.Groups[5].Value.Trim();
-                            if (data.Message.Length >= 64)
-                                detailsString = data.Message.Substring(64);
 
                             TeamColors? team = null;
                             if (detailsString.Contains("Team Blue"))
