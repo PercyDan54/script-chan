@@ -59,6 +59,7 @@ namespace script_chan2.GUI
                 webhook.GameRecap = model.GameRecap;
                 webhook.FooterText = model.FooterText;
                 webhook.FooterIcon = model.FooterIcon;
+                webhook.WinImage = model.WinImage;
                 webhook.Save();
                 NotifyOfPropertyChange(() => Name);
             }
