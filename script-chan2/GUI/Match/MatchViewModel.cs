@@ -386,25 +386,45 @@ namespace script_chan2.GUI
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("joined in slot"))
                     {
-                        var regex = new Regex(@"^(.+) joined in slot (\d+) for team (\w+)\.$");
-                        var regexResult = regex.Match(data.Message);
-                        if (regexResult.Success)
+                        if (match.TeamMode == TeamModes.TeamVS)
                         {
-                            var player = await Database.Database.GetPlayer(regexResult.Groups[1].Value);
-                            var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
-                            TeamColors? team = null;
-                            switch (regexResult.Groups[3].Value)
+                            var regex = new Regex(@"^(.+) joined in slot (\d+) for team (\w+)\.$");
+                            var regexResult = regex.Match(data.Message);
+                            if (regexResult.Success)
                             {
-                                case "blue": team = TeamColors.Blue; break;
-                                case "red": team = TeamColors.Red; break;
+                                var player = await Database.Database.GetPlayer(regexResult.Groups[1].Value);
+                                var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
+                                TeamColors? team = null;
+                                switch (regexResult.Groups[3].Value)
+                                {
+                                    case "blue": team = TeamColors.Blue; break;
+                                    case "red": team = TeamColors.Red; break;
+                                }
+                                var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
+                                if (slot != null)
+                                {
+                                    slot.Player = player;
+                                    slot.Team = team;
+                                    slot.Mods = new List<GameMods>();
+                                    slot.State = RoomSlotStates.NotReady;
+                                }
                             }
-                            var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
-                            if (slot != null)
+                        }
+                        else if (match.TeamMode == TeamModes.HeadToHead)
+                        {
+                            var regex = new Regex(@"^(.+) joined in slot (\d+).$");
+                            var regexResult = regex.Match(data.Message);
+                            if (regexResult.Success)
                             {
-                                slot.Player = player;
-                                slot.Team = team;
-                                slot.Mods = new List<GameMods>();
-                                slot.State = RoomSlotStates.NotReady;
+                                var player = await Database.Database.GetPlayer(regexResult.Groups[1].Value);
+                                var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
+                                var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
+                                if (slot != null)
+                                {
+                                    slot.Player = player;
+                                    slot.Mods = new List<GameMods>();
+                                    slot.State = RoomSlotStates.NotReady;
+                                }
                             }
                         }
                     }
