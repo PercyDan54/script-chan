@@ -90,7 +90,7 @@ namespace script_chan2.Database
         {
             localLog.Information("init tournaments");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, welcomeString FROM Tournaments", conn))
+            using (var command = new SQLiteCommand("SELECT id, name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, welcomeString, brInitialLivesAmount FROM Tournaments", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -110,6 +110,7 @@ namespace script_chan2.Database
                     {
                         case "HeadToHead": teamMode = TeamModes.HeadToHead; break;
                         case "TeamVS": teamMode = TeamModes.TeamVS; break;
+                        case "BattleRoyale": teamMode = TeamModes.BattleRoyale; break;
                     }
                     var winCondition = WinConditions.ScoreV2;
                     switch (reader["winCondition"].ToString())
@@ -128,6 +129,7 @@ namespace script_chan2.Database
                     var mpTimerAfterGame = Convert.ToInt32(reader["mpTimerAfterGame"]);
                     var mpTimerAfterPick = Convert.ToInt32(reader["mpTimerAfterPick"]);
                     var welcomeString = reader["welcomeString"].ToString();
+                    var brInitialLivesAmount = Convert.ToInt32(reader["brInitialLivesAmount"]);
                     var tournament = new Tournament(id)
                     {
                         Name = name,
@@ -142,7 +144,8 @@ namespace script_chan2.Database
                         MpTimerCommand = mpTimerCommand,
                         MpTimerAfterGame = mpTimerAfterGame,
                         MpTimerAfterPick = mpTimerAfterPick,
-                        WelcomeString = welcomeString
+                        WelcomeString = welcomeString,
+                        BRInitialLivesAmount = brInitialLivesAmount
                     };
                     Tournaments.Add(tournament);
                 }
@@ -183,8 +186,8 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand(@"INSERT INTO Tournaments (name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, welcomeString)
-                VALUES (@name, @gameMode, @teamMode, @winCondition, @acronym, @teamSize, @roomSize, @pointsForSecondBan, @allPicksFreemod, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @welcomeString)", conn))
+                using (var command = new SQLiteCommand(@"INSERT INTO Tournaments (name, gameMode, teamMode, winCondition, acronym, teamSize, roomSize, pointsForSecondBan, allPicksFreemod, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, welcomeString, brInitialLivesAmount)
+                VALUES (@name, @gameMode, @teamMode, @winCondition, @acronym, @teamSize, @roomSize, @pointsForSecondBan, @allPicksFreemod, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @welcomeString, @brInitialLivesAmount)", conn))
                 {
                     command.Parameters.AddWithValue("@name", tournament.Name);
                     command.Parameters.AddWithValue("@gameMode", tournament.GameMode.ToString());
@@ -199,6 +202,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@mpTimerAfterGame", tournament.MpTimerAfterGame);
                     command.Parameters.AddWithValue("@mpTimerAfterPick", tournament.MpTimerAfterPick);
                     command.Parameters.AddWithValue("@welcomeString", tournament.WelcomeString);
+                    command.Parameters.AddWithValue("@brInitialLivesAmount", tournament.BRInitialLivesAmount);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -244,7 +248,7 @@ namespace script_chan2.Database
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand(@"UPDATE Tournaments
-                SET name = @name, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, acronym = @acronym, teamSize = @teamSize, roomSize = @roomSize, pointsForSecondBan = @pointsForSecondBan, allPicksFreemod = @allPicksFreemod, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, welcomeString = @welcomeString
+                SET name = @name, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, acronym = @acronym, teamSize = @teamSize, roomSize = @roomSize, pointsForSecondBan = @pointsForSecondBan, allPicksFreemod = @allPicksFreemod, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, welcomeString = @welcomeString, brInitialLivesAmount = @brInitialLivesAmount
                 WHERE id = @id", conn))
                 {
                     command.Parameters.AddWithValue("@name", tournament.Name);
@@ -260,6 +264,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@mpTimerAfterGame", tournament.MpTimerAfterGame);
                     command.Parameters.AddWithValue("@mpTimerAfterPick", tournament.MpTimerAfterPick);
                     command.Parameters.AddWithValue("@welcomeString", tournament.WelcomeString);
+                    command.Parameters.AddWithValue("@brInitialLivesAmount", tournament.BRInitialLivesAmount);
                     command.Parameters.AddWithValue("@id", tournament.Id);
                     command.ExecuteNonQuery();
                 }
@@ -901,6 +906,7 @@ namespace script_chan2.Database
                     {
                         case "HeadToHead": teamMode = TeamModes.HeadToHead; break;
                         case "TeamVS": teamMode = TeamModes.TeamVS; break;
+                        case "BattleRoyale": teamMode = TeamModes.BattleRoyale; break;
                     }
                     var winCondition = WinConditions.ScoreV2;
                     switch (reader["winCondition"].ToString())
@@ -1071,6 +1077,19 @@ namespace script_chan2.Database
                         }
                     }
                 }
+                if (match.TeamMode == TeamModes.BattleRoyale)
+                {
+                    foreach (var team in match.TeamsBR)
+                    {
+                        using (var command = new SQLiteCommand("INSERT INTO MatchTeamsBR (match, team, lives) VALUES (@match, @team, @lives)", conn))
+                        {
+                            command.Parameters.AddWithValue("@match", resultValue);
+                            command.Parameters.AddWithValue("@team", team.Key.Id);
+                            command.Parameters.AddWithValue("@lives", team.Value);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
                 foreach (var pick in match.Picks)
                 {
                     using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker, ban) VALUES (@match, @beatmap, @picker, False)", conn))
@@ -1219,6 +1238,24 @@ namespace script_chan2.Database
                         }
                     }
                 }
+                if (match.TeamMode == TeamModes.BattleRoyale)
+                {
+                    using (var command = new SQLiteCommand("DELETE FROM MatchTeamsBR WHERE match = @match", conn))
+                    {
+                        command.Parameters.AddWithValue("@match", match.Id);
+                        command.ExecuteNonQuery();
+                    }
+                    foreach (var team in match.TeamsBR)
+                    {
+                        using (var command = new SQLiteCommand("INSERT INTO MatchTeamsBR (match, team, lives) VALUES (@match, @team, @lives)", conn))
+                        {
+                            command.Parameters.AddWithValue("@match", match.Id);
+                            command.Parameters.AddWithValue("@team", team.Key.Id);
+                            command.Parameters.AddWithValue("@lives", team.Value);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
                 using (var command = new SQLiteCommand("DELETE FROM MatchPicks WHERE match = @match", conn))
                 {
                     command.Parameters.AddWithValue("@match", match.Id);
@@ -1290,10 +1327,24 @@ namespace script_chan2.Database
         {
             localLog.Information("delete match '{name}'", match.Name);
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("DELETE FROM Matches WHERE id = @id", conn))
+            using (var transaction = conn.BeginTransaction())
             {
-                command.Parameters.AddWithValue("@id", match.Id);
-                command.ExecuteNonQuery();
+                using (var command = new SQLiteCommand("DELETE FROM MatchPlayers WHERE match = @match", conn))
+                {
+                    command.Parameters.AddWithValue("@match", match.Id);
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("DELETE FROM MatchTeamsBR WHERE match = @match", conn))
+                {
+                    command.Parameters.AddWithValue("@match", match.Id);
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("DELETE FROM Matches WHERE id = @id", conn))
+                {
+                    command.Parameters.AddWithValue("@id", match.Id);
+                    command.ExecuteNonQuery();
+                }
+                transaction.Commit();
                 conn.Close();
             }
             Matches.Remove(match);
@@ -1301,7 +1352,7 @@ namespace script_chan2.Database
 
         public static async Task InitMatchPlayers()
         {
-            localLog.Information("init match teams and players");
+            localLog.Information("init match players and teams");
             using (var conn = GetConnection())
             {
                 foreach (var match in Matches)
@@ -1316,6 +1367,21 @@ namespace script_chan2.Database
                                 while (reader.Read())
                                 {
                                     match.Players.Add(await GetPlayer(reader["player"].ToString()), Convert.ToInt32(reader["points"]));
+                                }
+                                reader.Close();
+                            }
+                        }
+                    }
+                    if (match.TeamMode == TeamModes.BattleRoyale)
+                    {
+                        using (var command = new SQLiteCommand("SELECT team, lives FROM MatchTeamsBR WHERE match = @match", conn))
+                        {
+                            command.Parameters.AddWithValue("@match", match.Id);
+                            using (var reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    match.TeamsBR.Add(Teams.First(x => x.Id == Convert.ToInt32(reader["team"])), Convert.ToInt32(reader["lives"]));
                                 }
                                 reader.Close();
                             }

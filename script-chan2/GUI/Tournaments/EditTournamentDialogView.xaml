@@ -80,6 +80,7 @@
         <TextBox x:Name="MpTimerCommand" md:HintAssist.Hint="Command Timer" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="0" Margin="0 10 5 0" />
         <TextBox x:Name="MpTimerAfterGame" md:HintAssist.Hint="Timer After Game" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="1" Margin="5 10 5 0" />
         <TextBox x:Name="MpTimerAfterPick" md:HintAssist.Hint="Timer After Pick" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="2" Margin="5 10 5 0" />
+        <TextBox x:Name="BRInitialLivesAmount" md:HintAssist.Hint="BR Initial Lives" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="3" Margin="5 10 5 0" Visibility="{Binding BattleRoyaleVisible}" />
         <TextBox x:Name="WelcomeString" md:HintAssist.Hint="Welcome String" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="5" Grid.ColumnSpan="4" Margin="0 10 0 0" />
         <Grid Grid.Row="6" Grid.ColumnSpan="4" Visibility="{Binding HeadToHeadVisible}" Margin="0 10 0 0" Height="200">
             <Grid.ColumnDefinitions>

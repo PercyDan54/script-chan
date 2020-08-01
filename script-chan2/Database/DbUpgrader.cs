@@ -58,6 +58,11 @@ namespace script_chan2.Database
                 UpgradeV5();
                 dbVersion = 6;
             }
+            if (dbVersion == 6)
+            {
+                UpgradeV6();
+                dbVersion = 7;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -149,7 +154,7 @@ namespace script_chan2.Database
 
         private static void UpgradeV5()
         {
-            localLog.Information("upgrade database to v5");
+            localLog.Information("upgrade database to v6");
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand(@"ALTER TABLE Matches ADD COLUMN viewerMode BOOL", conn))
@@ -165,6 +170,33 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 6 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV6()
+        {
+            localLog.Information("upgrade database to v7");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"CREATE TABLE MatchTeamsBR
+                (match INTEGER NOT NULL,
+                team INTEGER NOT NULL,
+                lives INTEGER,
+                PRIMARY KEY(match, team),
+                FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,
+                FOREIGN KEY(team) REFERENCES Teams(id))", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"ALTER TABLE Tournaments ADD COLUMN brInitialLivesAmount INTEGER", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 7 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

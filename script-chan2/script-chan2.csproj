@@ -388,6 +388,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\Matches\MatchBRTeamListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Matches\MatchesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -531,6 +535,7 @@
     <Compile Include="GUI\Matches\DeleteAllMatchesDialogViewModel.cs" />
     <Compile Include="GUI\Matches\DeleteMatchDialogViewModel.cs" />
     <Compile Include="GUI\Matches\EditMatchDialogViewModel.cs" />
+    <Compile Include="GUI\Matches\MatchBRTeamListItemViewModel.cs" />
     <Compile Include="GUI\Matches\MatchesViewModel.cs" />
     <Compile Include="GUI\Matches\MatchesWikiImportDialogViewModel.cs" />
     <Compile Include="GUI\Matches\MatchListItemViewModel.cs" />

@@ -33,6 +33,9 @@ namespace script_chan2.GUI
                 TeamRed = match.TeamRed;
                 TeamSize = match.TeamSize;
                 RoomSize = match.RoomSize;
+                BRTeams = new List<Team>();
+                foreach (var team in match.TeamsBR)
+                    BRTeams.Add(team.Key);
                 Players = new List<Player>();
                 foreach (var player in match.Players)
                     Players.Add(player.Key);
@@ -48,6 +51,7 @@ namespace script_chan2.GUI
                 RoomSize = 8;
                 Tournament = Settings.DefaultTournament;
                 BO = Settings.DefaultBO;
+                BRTeams = new List<Team>();
                 Players = new List<Player>();
             }
         }
@@ -183,6 +187,7 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => TeamMode);
                     NotifyOfPropertyChange(() => TeamsEditorIsVisible);
                     NotifyOfPropertyChange(() => PlayersEditorIsVisible);
+                    NotifyOfPropertyChange(() => BRTeamsEditorIsVisible);
                     GenerateName();
                 }
             }
@@ -231,6 +236,16 @@ namespace script_chan2.GUI
             }
         }
 
+        public Visibility BRTeamsEditorIsVisible
+        {
+            get
+            {
+                if (TeamMode == TeamModes.BattleRoyale)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
         public BindableCollection<Team> Teams
         {
             get
@@ -239,6 +254,36 @@ namespace script_chan2.GUI
                 foreach (var team in Database.Database.Teams.OrderBy(x => x.Name))
                 {
                     if (team.Tournament != Tournament)
+                        continue;
+                    list.Add(team);
+                }
+                return list;
+            }
+        }
+
+        public List<Team> BRTeams;
+
+        public BindableCollection<MatchBRTeamListItemViewModel> BRTeamViews
+        {
+            get
+            {
+                var list = new BindableCollection<MatchBRTeamListItemViewModel>();
+                foreach (var team in BRTeams)
+                    list.Add(new MatchBRTeamListItemViewModel(team));
+                return list;
+            }
+        }
+
+        public BindableCollection<Team> SelectableBRTeams
+        {
+            get
+            {
+                var list = new BindableCollection<Team>();
+                foreach (var team in Database.Database.Teams.OrderBy(x => x.Name))
+                {
+                    if (team.Tournament != Tournament)
+                        continue;
+                    if (BRTeams.Contains(team))
                         continue;
                     list.Add(team);
                 }
@@ -274,6 +319,20 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => TeamRed);
                     NotifyOfPropertyChange(() => SaveEnabled);
                     GenerateName();
+                }
+            }
+        }
+
+        private Team selectedBRTeam;
+        public Team SelectedBRTeam
+        {
+            get { return selectedBRTeam; }
+            set
+            {
+                if (value != selectedBRTeam)
+                {
+                    selectedBRTeam = value;
+                    NotifyOfPropertyChange(() => SelectedBRTeam);
                 }
             }
         }
@@ -363,6 +422,29 @@ namespace script_chan2.GUI
             localLog.Information("remove player {name}", model.Player.Name);
             Players.Remove(model.Player);
             NotifyOfPropertyChange(() => PlayerViews);
+        }
+
+        public void RemoveBRTeam(MatchBRTeamListItemViewModel model)
+        {
+            localLog.Information("remove team {team}", model.Team.Name);
+            BRTeams.Remove(model.Team);
+            NotifyOfPropertyChange(() => BRTeams);
+            NotifyOfPropertyChange(() => SelectableBRTeams);
+            NotifyOfPropertyChange(() => BRTeamViews);
+        }
+
+        public void AddBRTeam()
+        {
+            if (SelectedBRTeam == null)
+                return;
+            if (BRTeams.Contains(SelectedBRTeam))
+                return;
+            localLog.Information("add team {name}", SelectedBRTeam.Name);
+            BRTeams.Add(SelectedBRTeam);
+            SelectedBRTeam = null;
+            NotifyOfPropertyChange(() => SelectableBRTeams);
+            NotifyOfPropertyChange(() => BRTeams);
+            NotifyOfPropertyChange(() => BRTeamViews);
         }
 
         private void GenerateName()

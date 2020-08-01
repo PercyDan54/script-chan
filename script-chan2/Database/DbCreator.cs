@@ -28,6 +28,7 @@ namespace script_chan2.Database
             CreateTeamPlayersTable();
             CreateMatchesTable();
             CreateMatchPlayersTable();
+            CreateMatchTeamsBRTable();
             CreateMatchPicksTable();
             CreateGamesTable();
             CreateScoresTable();
@@ -61,7 +62,7 @@ namespace script_chan2.Database
                 ('defaultTimerCommand', '120'),
                 ('defaultTimerAfterGame', '120'),
                 ('defaultTimerAfterPick', '120'),
-                ('dbVersion', '6')", conn))
+                ('dbVersion', '7')", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -84,7 +85,8 @@ namespace script_chan2.Database
                 mpTimerCommand INTEGER,
                 mpTimerAfterGame INTEGER,
                 mpTimerAfterPick INTEGER,
-                welcomeString TEXT)", conn))
+                welcomeString TEXT,
+                brInitialLivesAmount INTEGER)", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -259,6 +261,21 @@ namespace script_chan2.Database
                 PRIMARY KEY(match, player),
                 FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,
                 FOREIGN KEY(player) REFERENCES Players(id))", conn))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private static void CreateMatchTeamsBRTable()
+        {
+            localLog.Information("create table MatchTeamsBR");
+            using (var command = new SQLiteCommand(@"CREATE TABLE MatchTeamsBR
+                (match INTEGER NOT NULL,
+                team INTEGER NOT NULL,
+                lives INTEGER,
+                PRIMARY KEY(match, team),
+                FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,
+                FOREIGN KEY(team) REFERENCES Teams(id))", conn))
             {
                 command.ExecuteNonQuery();
             }

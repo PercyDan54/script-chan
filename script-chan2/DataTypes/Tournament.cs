@@ -45,6 +45,8 @@ namespace script_chan2.DataTypes
 
         public Dictionary<int, int> HeadToHeadPoints { get; set; }
 
+        public int BRInitialLivesAmount { get; set; }
+
         public void Save()
         {
             localLog.Information("'{name}' save", Name);

@@ -63,9 +63,10 @@ namespace script_chan2.GUI
                 match.RoomSize = model.RoomSize;
                 match.Players.Clear();
                 foreach (var player in model.Players)
-                {
                     match.Players.Add(player, 0);
-                }
+                match.TeamsBR.Clear();
+                foreach (var team in model.BRTeams)
+                    match.TeamsBR.Add(team, match.Tournament.BRInitialLivesAmount);
                 match.Save();
                 NotifyOfPropertyChange(() => Name);
                 Events.Aggregator.PublishOnUIThread("EditMatch");

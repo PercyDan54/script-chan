@@ -150,6 +150,8 @@ namespace script_chan2.GUI
                 };
                 foreach (var player in model.Players)
                     match.Players.Add(player, 0);
+                foreach (var team in model.BRTeams)
+                    match.TeamsBR.Add(team, model.Tournament.BRInitialLivesAmount);
                 match.Save();
                 Settings.DefaultBO = model.BO;
                 Settings.DefaultTournament = model.Tournament;

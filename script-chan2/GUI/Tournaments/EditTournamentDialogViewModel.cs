@@ -32,6 +32,7 @@ namespace script_chan2.GUI
                 MpTimerAfterGame = tournament.MpTimerAfterGame;
                 MpTimerAfterPick = tournament.MpTimerAfterPick;
                 WelcomeString = tournament.WelcomeString;
+                BRInitialLivesAmount = tournament.BRInitialLivesAmount;
                 HeadToHeadPoints = new Dictionary<int, int>();
                 foreach (var headToHeadPoint in tournament.HeadToHeadPoints)
                     HeadToHeadPoints.Add(headToHeadPoint.Key, headToHeadPoint.Value);
@@ -54,6 +55,7 @@ namespace script_chan2.GUI
                 MpTimerAfterGame = Settings.DefaultTimerAfterGame;
                 MpTimerAfterPick = Settings.DefaultTimerAfterPick;
                 WelcomeString = "";
+                BRInitialLivesAmount = 2;
                 HeadToHeadPoints = new Dictionary<int, int>();
                 HeadToHeadPointPlace = 1;
                 HeadToHeadPointPoints = 0;
@@ -196,6 +198,7 @@ namespace script_chan2.GUI
                     teamMode = value;
                     NotifyOfPropertyChange(() => TeamMode);
                     NotifyOfPropertyChange(() => HeadToHeadVisible);
+                    NotifyOfPropertyChange(() => BattleRoyaleVisible);
                 }
             }
         }
@@ -270,6 +273,20 @@ namespace script_chan2.GUI
             }
         }
 
+        private int brInitialLivesAmount;
+        public int BRInitialLivesAmount
+        {
+            get { return brInitialLivesAmount; }
+            set
+            {
+                if (value != brInitialLivesAmount)
+                {
+                    brInitialLivesAmount = value;
+                    NotifyOfPropertyChange(() => BRInitialLivesAmount);
+                }
+            }
+        }
+
         private string welcomeString;
         public string WelcomeString
         {
@@ -289,6 +306,16 @@ namespace script_chan2.GUI
             get
             {
                 if (TeamMode == TeamModes.HeadToHead)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility BattleRoyaleVisible
+        {
+            get
+            {
+                if (TeamMode == TeamModes.BattleRoyale)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }

@@ -13,6 +13,7 @@ namespace script_chan2.DataTypes
         public Match(int id = 0)
         {
             Players = new Dictionary<Player, int>();
+            TeamsBR = new Dictionary<Team, int>();
             Picks = new List<MatchPick>();
             Bans = new List<MatchPick>();
             ChatMessages = new List<IrcMessage>();
@@ -80,6 +81,8 @@ namespace script_chan2.DataTypes
         public bool WarmupMode { get; set; }
 
         public Dictionary<Player, int> Players { get; set; }
+
+        public Dictionary<Team, int> TeamsBR { get; set; }
 
         public List<MatchPick> Picks { get; set; }
 
@@ -189,6 +192,10 @@ namespace script_chan2.DataTypes
                             if (Tournament.HeadToHeadPoints.ContainsKey(i + 1))
                                 Players[list[i]] += Tournament.HeadToHeadPoints[i + 1];
                         }
+                    }
+                    if (TeamMode == TeamModes.BattleRoyale)
+                    {
+                        //TODO
                     }
                 }
                 game.Counted = true;

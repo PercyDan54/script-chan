@@ -66,7 +66,8 @@ namespace script_chan2.GUI
                     MpTimerCommand = model.MpTimerCommand,
                     MpTimerAfterGame = model.MpTimerAfterGame,
                     MpTimerAfterPick = model.MpTimerAfterPick,
-                    WelcomeString = model.WelcomeString
+                    WelcomeString = model.WelcomeString,
+                    BRInitialLivesAmount = model.BRInitialLivesAmount
                 };
                 foreach (var point in model.HeadToHeadPoints)
                     tournament.HeadToHeadPoints.Add(point.Key, point.Value);

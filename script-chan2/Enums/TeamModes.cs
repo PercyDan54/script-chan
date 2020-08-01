@@ -3,6 +3,7 @@
     public enum TeamModes
     {
         HeadToHead = 0,
-        TeamVS = 2
+        TeamVS = 2,
+        BattleRoyale = 4
     }
 }
