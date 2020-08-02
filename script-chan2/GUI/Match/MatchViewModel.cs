@@ -52,6 +52,22 @@ namespace script_chan2.GUI
             }
         }
 
+        public BindableCollection<MatchBRTeamViewModel> BRTeamsViews
+        {
+            get
+            {
+                var list = new BindableCollection<MatchBRTeamViewModel>();
+                if (match.TeamMode == TeamModes.BattleRoyale)
+                {
+                    foreach (var team in match.TeamsBR.OrderByDescending(x => x.Key.Name))
+                    {
+                        list.Add(new MatchBRTeamViewModel(match, team.Key));
+                    }
+                }
+                return list;
+            }
+        }
+
         public BindableCollection<Mappool> Mappools
         {
             get
@@ -102,7 +118,7 @@ namespace script_chan2.GUI
                 var list = new BindableCollection<MatchBeatmapViewModel>();
                 if (SelectedMappool != null)
                 {
-                    foreach (var beatmap in SelectedMappool.Beatmaps)
+                    foreach (var beatmap in SelectedMappool.Beatmaps.OrderBy(x => x.ListIndex))
                     {
                         list.Add(new MatchBeatmapViewModel(match, beatmap));
                     }
@@ -410,7 +426,7 @@ namespace script_chan2.GUI
                                 }
                             }
                         }
-                        else if (match.TeamMode == TeamModes.HeadToHead)
+                        else if (match.TeamMode == TeamModes.HeadToHead || match.TeamMode == TeamModes.BattleRoyale)
                         {
                             var regex = new Regex(@"^(.+) joined in slot (\d+).$");
                             var regexResult = regex.Match(data.Message);
@@ -1212,14 +1228,16 @@ namespace script_chan2.GUI
             await match.UpdateScores(newGameExpected);
             if (match.TeamMode == TeamModes.TeamVS)
                 NotifyOfPropertyChange(() => TeamsViews);
-            else
+            if (match.TeamMode == TeamModes.HeadToHead)
                 NotifyOfPropertyChange(() => PlayersViews);
+            if (match.TeamMode == TeamModes.BattleRoyale)
+                NotifyOfPropertyChange(() => BRTeamsViews);
         }
 
         private void SendRoomSet()
         {
-            localLog.Information("match '{match}' set room {mode}", match.Name, $"{(int)match.TeamMode} {(int)match.WinCondition} {match.RoomSize}");
-            SendRoomMessage($"!mp set {(int)match.TeamMode} {(int)match.WinCondition} {match.RoomSize}");
+            localLog.Information("match '{match}' set room {mode}", match.Name, $"{Utils.ConvertTeamModeToMpNumber(match.TeamMode)} {(int)match.WinCondition} {match.RoomSize}");
+            SendRoomMessage($"!mp set {Utils.ConvertTeamModeToMpNumber(match.TeamMode)} {(int)match.WinCondition} {match.RoomSize}");
         }
 
         public async void EditRoomOptions()
@@ -1267,6 +1285,60 @@ namespace script_chan2.GUI
             if (!match.ViewerMode)
             {
                 DiscordApi.SendMatchPickRecap(match);
+            }
+        }
+
+        public void KickBRTeam(MatchBRTeamViewModel model)
+        {
+            KickBRTeam(model.Team);
+        }
+
+        public void KickLastBRTeam()
+        {
+            foreach (var team in match.TeamsBR.Where(x => x.Value == 0))
+            {
+                if (RoomSlotsViews.Any(x => team.Key.Players.Contains(x.Player)))
+                {
+                    KickBRTeam(team.Key);
+                }
+            }
+        }
+
+        public void KickBRTeam(Team team)
+        {
+            localLog.Information("match '{match}' kick team '{team}'", match.Name, team.Name);
+            var slots = new List<int>();
+            foreach (var player in team.Players)
+            {
+                var slot = RoomSlotsViews.FirstOrDefault(x => x.Player == player);
+                if (slot != null)
+                {
+                    slots.Add(slot.SlotNumber);
+                    slot.Player = null;
+                    slot.Team = null;
+                    slot.Mods = new List<GameMods>();
+                    OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp kick {player.Name}");
+                }
+            }
+            foreach (var slot in RoomSlotsViews.Where(x => x.Player != null).OrderByDescending(x => x.SlotNumber))
+            {
+                if (slots.Count <= 0)
+                    break;
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp move {slot.Player.Name} {slots[0]}");
+                slots.RemoveAt(0);
+            }
+        }
+
+        public void PickNextMap()
+        {
+            foreach (var map in BeatmapsViews)
+            {
+                if (map.CanBanOrPick)
+                {
+                    map.Pick();
+                    NotifyOfPropertyChange(() => BeatmapsViews);
+                    break;
+                }
             }
         }
         #endregion

@@ -287,7 +287,7 @@ namespace script_chan2.Database
             using (var command = new SQLiteCommand(@"CREATE TABLE MatchPicks
                 (match INTEGER NOT NULL,
                 beatmap INTEGER NOT NULL,
-                picker INTEGER NOT NULL,
+                picker INTEGER,
                 ban BOOL,
                 PRIMARY KEY(match, beatmap),
                 FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,

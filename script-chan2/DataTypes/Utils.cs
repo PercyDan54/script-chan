@@ -27,5 +27,18 @@ namespace script_chan2.DataTypes
             }
             return modString;
         }
+
+        public static int ConvertTeamModeToMpNumber(TeamModes mode)
+        {
+            switch (mode)
+            {
+                case TeamModes.HeadToHead:
+                case TeamModes.BattleRoyale:
+                    return 0;
+                case TeamModes.TeamVS:
+                    return 2;
+            }
+            return 0;
+        }
     }
 }

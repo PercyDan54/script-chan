@@ -1271,6 +1271,8 @@ namespace script_chan2.Database
                             command.Parameters.AddWithValue("@picker", pick.Team.Id);
                         else if (match.TeamMode == TeamModes.HeadToHead)
                             command.Parameters.AddWithValue("@picker", pick.Player.Id);
+                        else if (match.TeamMode == TeamModes.BattleRoyale)
+                            command.Parameters.AddWithValue("@picker", DBNull.Value);
                         command.ExecuteNonQuery();
                     }
                 }

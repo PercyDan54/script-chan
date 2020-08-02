@@ -78,7 +78,7 @@ namespace script_chan2.GUI
                             case Enums.GameMods.TieBreaker: colorToAdd = Settings.UserColors.First(x => x.Key == "Tiebreaker").Color; break;
                             case Enums.GameMods.NoFail: colorToAdd = Settings.UserColors.First(x => x.Key == "NoFail").Color; break;
                         }
-                        if (!canBanOrPick)
+                        if (!CanBanOrPick)
                         {
                             colorToAdd = colorToAdd.Darken(2);
                         }
@@ -87,7 +87,7 @@ namespace script_chan2.GUI
                 }
                 else
                 {
-                    if (!canBanOrPick)
+                    if (!CanBanOrPick)
                     {
                         brush.GradientStops.Add(new GradientStop(Colors.Gray, 0));
                     }
@@ -206,7 +206,7 @@ namespace script_chan2.GUI
             }
         }
 
-        private bool canBanOrPick
+        public bool CanBanOrPick
         {
             get { return !(match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap)); }
         }
@@ -226,7 +226,7 @@ namespace script_chan2.GUI
             get
             {
                 var list = new BindableCollection<MatchBeatmapMenuItem>();
-                if (canBanOrPick)
+                if (CanBanOrPick)
                 {
                     if (match.TeamMode == Enums.TeamModes.TeamVS)
                     {
@@ -235,12 +235,16 @@ namespace script_chan2.GUI
                         list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick, Team = match.TeamRed });
                         list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick, Team = match.TeamBlue });
                     }
-                    else
+                    if (match.TeamMode == Enums.TeamModes.HeadToHead)
                     {
                         foreach (var player in match.Players)
                             list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Player = player.Key });
                         foreach (var player in match.Players)
                             list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick, Player = player.Key });
+                    }
+                    if (match.TeamMode == Enums.TeamModes.BattleRoyale)
+                    {
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick });
                     }
                 }
                 else
@@ -287,12 +291,16 @@ namespace script_chan2.GUI
                 {
                     PickPlayer(context.Player);
                 }
-                else
+                else if (context.Team != null)
                 {
                     if (context.Team == match.TeamRed)
                         PickRed();
                     else
                         PickBlue();
+                }
+                else
+                {
+                    Pick();
                 }
             }
             NotifyOfPropertyChange(() => MenuItems);
@@ -422,6 +430,26 @@ namespace script_chan2.GUI
                 SendPickMessage();
         }
 
+        public void Pick()
+        {
+            localLog.Information("match '{match}' pick beatmap '{beatmap}'", match.Name, beatmap.Beatmap.Title);
+            match.Picks.Add(new MatchPick()
+            {
+                Match = match,
+                Map = beatmap
+            });
+            match.WarmupMode = false;
+            match.Save();
+            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => TextDecoration);
+            NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("MapPicked");
+            if (match.RoomId > 0)
+                SendPickMessage();
+        }
+
         public void RemovePick()
         {
             localLog.Information("match '{match}' unpick beatmap '{beatmap}'", match.Name, beatmap.Beatmap.Title);
@@ -447,7 +475,7 @@ namespace script_chan2.GUI
 
         public void RootDoubleClick()
         {
-            if (canBanOrPick && match.TeamMode == Enums.TeamModes.TeamVS)
+            if (CanBanOrPick && match.TeamMode == Enums.TeamModes.TeamVS)
             {
                 if (match.Picks.Count > 0)
                 {
@@ -497,7 +525,14 @@ namespace script_chan2.GUI
                     {
                         return "Banned by " + Player.Name;
                     }
-                    return "Banned by " + Team.Name;
+                    else if (Team != null)
+                    {
+                        return "Banned by " + Team.Name;
+                    }
+                    else
+                    {
+                        return "Ban";
+                    }
                 }
                 if (Type == MatchBeatmapMenuItemTypes.Pick)
                 {
@@ -505,7 +540,14 @@ namespace script_chan2.GUI
                     {
                         return "Picked by " + Player.Name;
                     }
-                    return "Picked by " + Team.Name;
+                    else if (Team != null)
+                    {
+                        return "Picked by " + Team.Name;
+                    }
+                    else
+                    {
+                        return "Pick";
+                    }
                 }
                 if (Type == MatchBeatmapMenuItemTypes.Unban)
                 {

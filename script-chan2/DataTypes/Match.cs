@@ -119,10 +119,18 @@ namespace script_chan2.DataTypes
                 foreach (var player in TeamRed.Players)
                     players.Add(player.Name);
             }
-            else
+            if (TeamMode == TeamModes.HeadToHead)
             {
                 foreach (var player in Players)
                     players.Add(player.Key.Name);
+            }
+            if (TeamMode == TeamModes.BattleRoyale)
+            {
+                foreach (var team in TeamsBR)
+                {
+                    foreach (var player in team.Key.Players)
+                        players.Add(player.Name);
+                }
             }
 
             return players;
@@ -195,7 +203,22 @@ namespace script_chan2.DataTypes
                     }
                     if (TeamMode == TeamModes.BattleRoyale)
                     {
-                        //TODO
+                        var teams = new Dictionary<Team, int>();
+                        foreach (var team in TeamsBR.Where(x => x.Value > 0))
+                            teams.Add(team.Key, 0);
+                        foreach (var score in game.Scores)
+                        {
+                            foreach (var team in teams)
+                            {
+                                if (team.Key.Players.Contains(score.Player))
+                                {
+                                    teams[team.Key] += score.Points;
+                                }
+                            }
+                        }
+
+                        var lastTeam = teams.OrderByDescending(x => x.Value).Last();
+                        TeamsBR[lastTeam.Key]--;
                     }
                 }
                 game.Counted = true;
