@@ -1,5 +1,7 @@
 ﻿using Caliburn.Micro;
 using Serilog;
+using System.Windows;
+using System.Windows.Input;
 
 namespace script_chan2.GUI
 {
@@ -124,6 +126,64 @@ namespace script_chan2.GUI
             ActivateItem(new ExportViewModel());
             MainTitle = "Export";
             DrawerExpanded = false;
+        }
+        #endregion
+
+        #region Window Events
+        public void Drag(MouseButtonEventArgs e)
+        {
+            localLog.Information("drag main window");
+            if (e.ChangedButton != MouseButton.Left)
+                return;
+            ((MainView)GetView()).DragMove();
+        }
+
+        public void MinimizeWindow()
+        {
+            localLog.Information("minimize main window");
+            ((MainView)GetView()).WindowState = WindowState.Minimized;
+        }
+
+        public Visibility WindowMaximizeVisible
+        {
+            get
+            {
+                if (((MainView)GetView()).WindowState != WindowState.Maximized)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public void MaximizeWindow()
+        {
+            localLog.Information("maximize main window");
+            ((MainView)GetView()).WindowState = WindowState.Maximized;
+            NotifyOfPropertyChange(() => WindowMaximizeVisible);
+            NotifyOfPropertyChange(() => WindowRestoreVisible);
+        }
+
+        public Visibility WindowRestoreVisible
+        {
+            get
+            {
+                if (((MainView)GetView()).WindowState == WindowState.Maximized)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public void RestoreWindow()
+        {
+            localLog.Information("restore main window");
+            ((MainView)GetView()).WindowState = WindowState.Normal;
+            NotifyOfPropertyChange(() => WindowMaximizeVisible);
+            NotifyOfPropertyChange(() => WindowRestoreVisible);
+        }
+
+        public void CloseWindow()
+        {
+            localLog.Information("close main window");
+            TryClose();
         }
         #endregion
     }
