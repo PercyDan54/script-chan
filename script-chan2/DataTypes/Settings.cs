@@ -83,16 +83,16 @@ namespace script_chan2.DataTypes
                     ircIpPrivate = "",
                     colors = new List<ConfigColor>
                     {
-                        new ConfigColor { key = "BanchoBot", color = Colors.Pink.ToString() },
-                        new ConfigColor { key = "Self", color = Colors.Green.ToString() },
-                        new ConfigColor { key = "Default", color = Colors.Black.ToString() },
-                        new ConfigColor { key = "HD", color = "#FFF2CC" },
-                        new ConfigColor { key = "HR", color = "#f4cccc" },
-                        new ConfigColor { key = "DT", color = "#cfe2f3" },
-                        new ConfigColor { key = "FL", color = "#bdbdbd" },
-                        new ConfigColor { key = "Freemod", color = "#d9d2e9" },
-                        new ConfigColor { key = "Tiebreaker", color = "#d9ead3" },
-                        new ConfigColor { key = "NoFail", color = "#f97ae4" }
+                        new ConfigColor { key = "BanchoBot", color = DefaultColors.GetDefaultColor("BanchoBot") },
+                        new ConfigColor { key = "Self", color = DefaultColors.GetDefaultColor("Self") },
+                        new ConfigColor { key = "Default", color = DefaultColors.GetDefaultColor("Default") },
+                        new ConfigColor { key = "HD", color = DefaultColors.GetDefaultColor("HD") },
+                        new ConfigColor { key = "HR", color = DefaultColors.GetDefaultColor("HR") },
+                        new ConfigColor { key = "DT", color = DefaultColors.GetDefaultColor("DT") },
+                        new ConfigColor { key = "FL", color = DefaultColors.GetDefaultColor("FL") },
+                        new ConfigColor { key = "Freemod", color = DefaultColors.GetDefaultColor("Freemod") },
+                        new ConfigColor { key = "Tiebreaker", color = DefaultColors.GetDefaultColor("Tiebreaker") },
+                        new ConfigColor { key = "NoFail", color = DefaultColors.GetDefaultColor("NoFail") }
                     },
                     notificationSoundFile = "",
                     enableNotifications = true,
@@ -144,16 +144,16 @@ namespace script_chan2.DataTypes
             {
                 config.colors = new List<ConfigColor>
                 {
-                    new ConfigColor { key = "BanchoBot", color = Colors.Pink.ToString() },
-                    new ConfigColor { key = "Self", color = Colors.Green.ToString() },
-                    new ConfigColor { key = "Default", color = Colors.Black.ToString() },
-                    new ConfigColor { key = "HD", color = "#FFF2CC" },
-                    new ConfigColor { key = "HR", color = "#f4cccc" },
-                    new ConfigColor { key = "DT", color = "#cfe2f3" },
-                    new ConfigColor { key = "FL", color = "#bdbdbd" },
-                    new ConfigColor { key = "Freemod", color = "#d9d2e9" },
-                    new ConfigColor { key = "Tiebreaker", color = "#d9ead3" },
-                    new ConfigColor { key = "NoFail", color = "#f97ae4" }
+                    new ConfigColor { key = "BanchoBot", color = DefaultColors.GetDefaultColor("BanchoBot") },
+                    new ConfigColor { key = "Self", color = DefaultColors.GetDefaultColor("Self") },
+                    new ConfigColor { key = "Default", color = DefaultColors.GetDefaultColor("Default") },
+                    new ConfigColor { key = "HD", color = DefaultColors.GetDefaultColor("HD") },
+                    new ConfigColor { key = "HR", color = DefaultColors.GetDefaultColor("HR") },
+                    new ConfigColor { key = "DT", color = DefaultColors.GetDefaultColor("DT") },
+                    new ConfigColor { key = "FL", color = DefaultColors.GetDefaultColor("FL") },
+                    new ConfigColor { key = "Freemod", color = DefaultColors.GetDefaultColor("Freemod") },
+                    new ConfigColor { key = "Tiebreaker", color = DefaultColors.GetDefaultColor("Tiebreaker") },
+                    new ConfigColor { key = "NoFail", color = DefaultColors.GetDefaultColor("NoFail") }
                 };
             }
 

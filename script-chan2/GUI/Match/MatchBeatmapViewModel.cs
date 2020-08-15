@@ -87,10 +87,12 @@ namespace script_chan2.GUI
                 }
                 else
                 {
+                    Color colorToAdd = (Color)ColorConverter.ConvertFromString("#1A1A1A");
                     if (!CanBanOrPick)
                     {
-                        brush.GradientStops.Add(new GradientStop(Colors.Gray, 0));
+                        colorToAdd = colorToAdd.Darken(2);
                     }
+                    brush.GradientStops.Add(new GradientStop(colorToAdd, 0));
                 }
                 return brush;
             }
