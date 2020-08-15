@@ -262,7 +262,7 @@ namespace script_chan2.OsuIrc
 
         public static void SendMessage(string channel, string message)
         {
-            var ircMessage = new IrcMessage { Channel = channel, Message = message, User = Settings.IrcUsername };
+            var ircMessage = new IrcMessage { Channel = channel, Message = message, User = Settings.IrcUsername, Timestamp = DateTime.Now };
             var match = Database.Database.Matches.FirstOrDefault(x => "#mp_" + x.RoomId == channel);
             if (match != null)
                 ircMessage.Match = match;
