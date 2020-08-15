@@ -4,8 +4,10 @@ using script_chan2.DataTypes;
 using script_chan2.GUI;
 using Serilog;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace script_chan2
 {
@@ -46,8 +48,11 @@ namespace script_chan2
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Bootstrapper exception");
-                MessageBox.Show("Bootstrapper exception caught. See logs for more details.");
+                if (!(bool)DesignerProperties.IsInDesignModeProperty.GetMetadata(typeof(DependencyObject)).DefaultValue)
+                {
+                    Log.Error(ex, "Bootstrapper exception");
+                    MessageBox.Show("Bootstrapper exception caught. See logs for more details.");
+                }
             }
         }
 
