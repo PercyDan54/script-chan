@@ -25,9 +25,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Rectangle Grid.Column="0" Margin="5" Fill="{Binding TeamColor}" cal:Message.Attach="[Event MouseUp] = [Action ChangeTeam]" />
-        <TextBlock x:Name="SlotNumber" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <TextBlock x:Name="SlotNumber" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding NameColor}" />
         <Image Grid.Column="2" Source="{Binding Flag}" />
-        <TextBlock x:Name="PlayerName" Grid.Column="3" VerticalAlignment="Center" Margin="5" />
+        <TextBlock x:Name="PlayerName" Grid.Column="3" VerticalAlignment="Center" Margin="5" Foreground="{Binding NameColor}" />
         <ItemsControl ItemsSource="{Binding ModViews}" Grid.Column="4">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

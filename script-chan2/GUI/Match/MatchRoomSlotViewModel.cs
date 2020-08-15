@@ -54,6 +54,7 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => Player);
                     NotifyOfPropertyChange(() => PlayerName);
                     NotifyOfPropertyChange(() => Flag);
+                    NotifyOfPropertyChange(() => NameColor);
                     NotifyOfPropertyChange(() => Background);
                     NotifyOfPropertyChange(() => MenuItems);
                 }
@@ -103,6 +104,16 @@ namespace script_chan2.GUI
                     return Brushes.Red;
                 if (Team == TeamColors.Blue)
                     return Brushes.Blue;
+                return Brushes.White;
+            }
+        }
+
+        public SolidColorBrush NameColor
+        {
+            get
+            {
+                if (Player != null)
+                    return Brushes.Black;
                 return Brushes.White;
             }
         }
