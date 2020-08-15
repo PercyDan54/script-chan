@@ -45,6 +45,16 @@ namespace script_chan2.GUI
             {
                 if (UserChat.Active)
                     return Brushes.LightGray;
+                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF303030"));
+            }
+        }
+
+        public SolidColorBrush Foreground
+        {
+            get
+            {
+                if (UserChat.Active)
+                    return Brushes.Black;
                 return Brushes.White;
             }
         }

@@ -36,6 +36,16 @@ namespace script_chan2.GUI
                 return Brushes.Transparent;
             }
         }
+
+        public SolidColorBrush Foreground
+        {
+            get
+            {
+                if (hover)
+                    return Brushes.Black;
+                return Brushes.White;
+            }
+        }
         #endregion
 
         #region Actions
@@ -90,12 +100,14 @@ namespace script_chan2.GUI
         {
             hover = true;
             NotifyOfPropertyChange(() => Background);
+            NotifyOfPropertyChange(() => Foreground);
         }
 
         public void MouseLeave()
         {
             hover = false;
             NotifyOfPropertyChange(() => Background);
+            NotifyOfPropertyChange(() => Foreground);
         }
         #endregion
     }
