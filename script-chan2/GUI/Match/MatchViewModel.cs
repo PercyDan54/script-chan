@@ -521,7 +521,7 @@ namespace script_chan2.GUI
                     };
                     foreach (var chatMessage in match.ChatMessages)
                     {
-                        AddMessageToChat(chatMessage, false);
+                        AddMessageToChat(chatMessage, true);
                     }
                 });
             }
