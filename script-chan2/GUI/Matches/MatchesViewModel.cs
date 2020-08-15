@@ -36,7 +36,7 @@ namespace script_chan2.GUI
             get
             {
                 var list = new BindableCollection<MatchListItemViewModel>();
-                foreach (var match in Database.Database.Matches.OrderBy(x => x.Name))
+                foreach (var match in Database.Database.Matches.OrderBy(x => x.MatchTime))
                 {
                     if (Settings.DefaultTournament != null && match.Tournament != Settings.DefaultTournament)
                         continue;
@@ -146,7 +146,8 @@ namespace script_chan2.GUI
                     MpTimerAfterPick = model.Tournament.MpTimerAfterPick,
                     PointsForSecondBan = model.Tournament.PointsForSecondBan,
                     AllPicksFreemod = model.Tournament.AllPicksFreemod,
-                    WarmupMode = true
+                    WarmupMode = true,
+                    MatchTime = model.MatchTime
                 };
                 foreach (var player in model.Players)
                     match.Players.Add(player, 0);

@@ -33,6 +33,10 @@ namespace script_chan2.GUI
                 TeamRed = match.TeamRed;
                 TeamSize = match.TeamSize;
                 RoomSize = match.RoomSize;
+                if (match.MatchTime != null)
+                    MatchTime = (DateTime)match.MatchTime;
+                else
+                    MatchTime = DateTime.Now;
                 BRTeams = new List<Team>();
                 foreach (var team in match.TeamsBR)
                     BRTeams.Add(team.Key);
@@ -51,6 +55,7 @@ namespace script_chan2.GUI
                 RoomSize = 8;
                 Tournament = Settings.DefaultTournament;
                 BO = Settings.DefaultBO;
+                MatchTime = DateTime.Now;
                 BRTeams = new List<Team>();
                 Players = new List<Player>();
             }
@@ -361,6 +366,20 @@ namespace script_chan2.GUI
                 {
                     roomSize = value;
                     NotifyOfPropertyChange(() => RoomSize);
+                }
+            }
+        }
+
+        private DateTime matchTime;
+        public DateTime MatchTime
+        {
+            get { return matchTime; }
+            set
+            {
+                if (value != matchTime)
+                {
+                    matchTime = value;
+                    NotifyOfPropertyChange(() => MatchTime);
                 }
             }
         }

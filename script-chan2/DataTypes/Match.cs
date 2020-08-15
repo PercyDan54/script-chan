@@ -1,5 +1,6 @@
 ﻿using script_chan2.Enums;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -79,6 +80,8 @@ namespace script_chan2.DataTypes
         public MatchStatus Status { get; set; }
 
         public bool WarmupMode { get; set; }
+
+        public DateTime? MatchTime { get; set; }
 
         public Dictionary<Player, int> Players { get; set; }
 

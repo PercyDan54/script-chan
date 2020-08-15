@@ -63,6 +63,11 @@ namespace script_chan2.Database
                 UpgradeV6();
                 dbVersion = 7;
             }
+            if (dbVersion == 7)
+            {
+                UpgradeV7();
+                dbVersion = 8;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -197,6 +202,23 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 7 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV7()
+        {
+            localLog.Information("upgrade database to v8");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE Matches ADD COLUMN matchTime TEXT", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 8 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

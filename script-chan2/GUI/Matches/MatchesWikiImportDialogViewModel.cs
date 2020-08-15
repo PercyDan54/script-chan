@@ -6,6 +6,7 @@ using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -239,6 +240,7 @@ namespace script_chan2.GUI
                 return;
 
             ImportMatch importMatch = null;
+            string date = "";
             for (var i = matchesHeadingIndex + 1; i < markdown.Count; i++)
             {
                 var block = markdown[i];
@@ -248,6 +250,12 @@ namespace script_chan2.GUI
                     // End of matches reached
                     if (headingBlock.Level == 2)
                         break;
+
+                    // Date header
+                    if (headingBlock.Level == 3)
+                    {
+                        date = headingBlock.Inline.FirstChild.ToString();
+                    }
                 }
                 if (block is ParagraphBlock)
                 {
@@ -259,8 +267,13 @@ namespace script_chan2.GUI
                             if (importMatch == null)
                                 importMatch = new ImportMatch() { TeamRed = ((LinkInline)subBlock).Title };
                             else
-                            {
                                 importMatch.TeamBlue = ((LinkInline)subBlock).Title;
+                        }
+                        if (subBlock is EmphasisInline)
+                        {
+                            if (importMatch != null && !string.IsNullOrEmpty(date))
+                            {
+                                importMatch.MatchTime = DateTime.Parse(date + " " + ((EmphasisInline)subBlock).FirstChild.ToString().Split(' ').First());
                                 importMatches.Add(importMatch);
                                 importMatch = null;
                             }
@@ -297,7 +310,8 @@ namespace script_chan2.GUI
                         MpTimerAfterPick = Tournament.MpTimerAfterPick,
                         PointsForSecondBan = Tournament.PointsForSecondBan,
                         AllPicksFreemod = Tournament.AllPicksFreemod,
-                        WarmupMode = true
+                        WarmupMode = true,
+                        MatchTime = importMatch.MatchTime
                     };
                     match.Save();
                 }
@@ -320,6 +334,7 @@ namespace script_chan2.GUI
         {
             public string TeamBlue;
             public string TeamRed;
+            public DateTime MatchTime;
         }
     }
 }

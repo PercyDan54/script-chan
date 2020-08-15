@@ -881,7 +881,7 @@ namespace script_chan2.Database
             localLog.Information("init matches");
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
-                rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode FROM Matches", conn))
+                rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode, matchTime FROM Matches", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -953,6 +953,9 @@ namespace script_chan2.Database
                     var allPicksFreemod = Convert.ToBoolean(reader["allPicksFreemod"]);
                     var status = MatchStatus.New;
                     var warmupMode = Convert.ToBoolean(reader["warmupMode"]);
+                    DateTime? matchTime = null;
+                    if (reader["matchTime"] != DBNull.Value)
+                        matchTime = DateTime.Parse(reader["matchTime"].ToString());
                     switch (reader["status"].ToString())
                     {
                         case "New": status = MatchStatus.New; break;
@@ -986,7 +989,8 @@ namespace script_chan2.Database
                         PointsForSecondBan = pointsForSecondBan,
                         AllPicksFreemod = allPicksFreemod,
                         Status = status,
-                        WarmupMode = warmupMode
+                        WarmupMode = warmupMode,
+                        MatchTime = matchTime
                     };
                     Matches.Add(match);
                 }
@@ -1002,8 +1006,8 @@ namespace script_chan2.Database
             using (var conn = GetConnection())
             using (var transaction = conn.BeginTransaction())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode)" +
-                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @viewerMode, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status, @warmupMode)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, status, warmupMode, matchTime)" +
+                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @viewerMode, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @status, @warmupMode, @matchTime)", conn))
                 {
                     command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
                     if (match.Mappool == null)
@@ -1058,6 +1062,10 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@allPicksFreemod", match.AllPicksFreemod);
                     command.Parameters.AddWithValue("@status", match.Status.ToString());
                     command.Parameters.AddWithValue("@warmupMode", match.WarmupMode);
+                    if (match.MatchTime != null)
+                        command.Parameters.AddWithValue("@matchTime", match.MatchTime);
+                    else
+                        command.Parameters.AddWithValue("@matchTime", DBNull.Value);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -1159,7 +1167,7 @@ namespace script_chan2.Database
                 SET tournament = @tournament, mappool = @mappool, name = @name, roomId = @roomId, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
                 teamRed = @teamRed, teamRedPoints = @teamRedPoints, teamSize = @teamSize, roomSize = @roomSize, rollWinner = @rollWinner, firstPicker = @firstPicker, BO = @BO,
                 viewerMode = @viewerMode, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, pointsForSecondBan = @pointsForSecondBan,
-                allPicksFreemod = @allPicksFreemod, status = @status, warmupMode = @warmupMode
+                allPicksFreemod = @allPicksFreemod, status = @status, warmupMode = @warmupMode, matchTime = @matchTime
                 WHERE id = @id", conn))
                 {
                     command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
@@ -1217,6 +1225,10 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@allPicksFreemod", match.AllPicksFreemod);
                     command.Parameters.AddWithValue("@status", match.Status.ToString());
                     command.Parameters.AddWithValue("@warmupMode", match.WarmupMode);
+                    if (match.MatchTime != null)
+                        command.Parameters.AddWithValue("@matchTime", match.MatchTime);
+                    else
+                        command.Parameters.AddWithValue("@matchTime", DBNull.Value);
                     command.Parameters.AddWithValue("@id", match.Id);
                     command.ExecuteNonQuery();
                 }

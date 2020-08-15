@@ -26,6 +26,16 @@ namespace script_chan2.GUI
             get { return match.Name; }
         }
 
+        public string MatchTime
+        {
+            get
+            {
+                if (match.MatchTime != null)
+                    return ((DateTime)match.MatchTime).ToString("MM-dd HH:mm");
+                return "";
+            }
+        }
+
         private bool hover = false;
         public SolidColorBrush Background
         {
@@ -71,6 +81,7 @@ namespace script_chan2.GUI
                 match.TeamRed = model.TeamRed;
                 match.TeamSize = model.TeamSize;
                 match.RoomSize = model.RoomSize;
+                match.MatchTime = model.MatchTime;
                 match.Players.Clear();
                 foreach (var player in model.Players)
                     match.Players.Add(player, 0);

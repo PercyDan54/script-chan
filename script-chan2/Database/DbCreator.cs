@@ -62,7 +62,7 @@ namespace script_chan2.Database
                 ('defaultTimerCommand', '120'),
                 ('defaultTimerAfterGame', '120'),
                 ('defaultTimerAfterPick', '120'),
-                ('dbVersion', '7')", conn))
+                ('dbVersion', '8')", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -242,6 +242,7 @@ namespace script_chan2.Database
                 allPicksFreemod BOOL,
                 status TEXT,
                 warmupMode BOOL,
+                matchTime TEXT,
                 FOREIGN KEY(tournament) REFERENCES Tournaments(id) ON DELETE CASCADE,
                 FOREIGN KEY(mappool) REFERENCES Mappools(id) ON DELETE SET NULL,
                 FOREIGN KEY(teamBlue) REFERENCES Teams(id) ON DELETE RESTRICT,

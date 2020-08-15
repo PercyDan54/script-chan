@@ -70,6 +70,8 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+        <DatePicker SelectedDate="{Binding MatchTime}" Grid.Row="3" Grid.Column="2" Margin="5 10 5 0" />
+        <md:TimePicker SelectedTime="{Binding MatchTime}" Is24Hours="True" Grid.Row="3" Grid.Column="3" Margin="5 10 0 0" />
         <Grid Grid.Row="4" Grid.ColumnSpan="4" Visibility="{Binding TeamsEditorIsVisible}" Margin="0 10 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

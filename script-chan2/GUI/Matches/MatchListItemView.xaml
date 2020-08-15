@@ -15,6 +15,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="90" />
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -22,11 +23,12 @@
                 <Button x:Name="Open" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Open" Grid.Column="0">
                     <md:PackIcon Kind="OpenInNew" />
                 </Button>
-                <TextBlock Text="{Binding Name}" Foreground="{Binding Foreground}" VerticalAlignment="Center" Grid.Column="1" />
-                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit" Grid.Column="2">
+                <TextBlock Text="{Binding MatchTime}" Foreground="{Binding Foreground}" VerticalAlignment="Center" Grid.Column="1" />
+                <TextBlock Text="{Binding Name}" Foreground="{Binding Foreground}" VerticalAlignment="Center" Grid.Column="2" />
+                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit" Grid.Column="3">
                     <md:PackIcon Kind="Edit" />
                 </Button>
-                <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete" Grid.Column="3">
+                <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete" Grid.Column="4">
                     <md:PackIcon Kind="Delete" />
                 </Button>
             </Grid>
