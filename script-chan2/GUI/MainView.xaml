@@ -68,7 +68,7 @@
                     </DockPanel>
                 </md:DrawerHost.LeftDrawerContent>
                 <DockPanel>
-                    <md:ColorZone Padding="16" md:ShadowAssist.ShadowDepth="Depth2" Mode="PrimaryMid" DockPanel.Dock="Top" Background="{StaticResource ButtonForeground}">
+                    <md:ColorZone Padding="16" md:ShadowAssist.ShadowDepth="Depth2" Mode="PrimaryMid" DockPanel.Dock="Top" Background="{StaticResource Foreground}">
                         <DockPanel>
                             <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="{Binding DrawerExpanded}" />
                             <TextBlock x:Name="MainTitle" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" Margin="20 0 0 0" />

@@ -5,11 +5,7 @@
     <Style BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="Button">
         <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}" />
         <Setter Property="Background" Value="{StaticResource ButtonBackground}" />
-        <Setter Property="Foreground" Value="{StaticResource ButtonForeground}" />
+        <Setter Property="Foreground" Value="{StaticResource Foreground}" />
     </Style>
 
-    <Style x:Key="MaterialDesignIconButton" BasedOn="{StaticResource MaterialDesignIconButton}" TargetType="Button">
-        <Setter Property="Foreground" Value="{StaticResource ButtonForeground}" />
-    </Style>
-    
 </ResourceDictionary>

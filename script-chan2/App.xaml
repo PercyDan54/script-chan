@@ -11,7 +11,7 @@
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="ButtonBackground" Color="#FF202020" />
                     <SolidColorBrush x:Key="ButtonBorder" Color="#FFAEAEAE" />
-                    <SolidColorBrush x:Key="ButtonForeground" Color="#FFCD6D7E" />
+                    <SolidColorBrush x:Key="Foreground" Color="#FFCD6D7E" />
                 </ResourceDictionary>
 
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Pink" SecondaryColor="Orange" />
@@ -22,6 +22,8 @@
                     <local:AppBootstrapper x:Key="bootstrapper" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FFCD6D7E" />
 
         </ResourceDictionary>
     </Application.Resources>
