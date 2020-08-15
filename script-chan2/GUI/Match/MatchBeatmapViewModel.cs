@@ -80,7 +80,7 @@ namespace script_chan2.GUI
                         }
                         if (!CanBanOrPick)
                         {
-                            colorToAdd = colorToAdd.Darken(2);
+                            colorToAdd = colorToAdd.Darken(1);
                         }
                         brush.GradientStops.Add(new GradientStop(colorToAdd, 1f / (beatmap.Mods.Count - 1) * i));
                     }
@@ -90,7 +90,7 @@ namespace script_chan2.GUI
                     Color colorToAdd = (Color)ColorConverter.ConvertFromString("#1A1A1A");
                     if (!CanBanOrPick)
                     {
-                        colorToAdd = colorToAdd.Darken(2);
+                        colorToAdd = colorToAdd.Darken(1);
                     }
                     brush.GradientStops.Add(new GradientStop(colorToAdd, 0));
                 }
