@@ -227,7 +227,7 @@ namespace script_chan2.GUI
                 if (block is HeadingBlock)
                 {
                     var headingBlock = (HeadingBlock)block;
-                    if (headingBlock.Inline.FirstChild.ToString().StartsWith("Match schedule"))
+                    if (headingBlock.Inline.FirstChild.ToString().ToLower().StartsWith("match schedule"))
                     {
                         localLog.Information("match schedule header found");
                         matchesHeadingIndex = i;
