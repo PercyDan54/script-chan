@@ -577,7 +577,7 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (match.TeamMode == Enums.TeamModes.TeamVS)
+                if (match.TeamMode == TeamModes.TeamVS)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }
@@ -587,7 +587,17 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (match.TeamMode == Enums.TeamModes.HeadToHead)
+                if (match.TeamMode == TeamModes.HeadToHead)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility BRVisible
+        {
+            get
+            {
+                if (match.TeamMode == TeamModes.BattleRoyale)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }
