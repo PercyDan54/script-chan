@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using AngleSharp;
+using Caliburn.Micro;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
 using Serilog;
@@ -8,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace script_chan2.OsuApi
 {
@@ -34,89 +38,171 @@ namespace script_chan2.OsuApi
         public static async Task<Beatmap> GetBeatmap(int beatmapId)
         {
             localLog.Information("get beatmap {id}", beatmapId);
-            var response = await SendRequest("get_beatmaps", "b=" + beatmapId);
-            var data = JsonConvert.DeserializeObject<List<ApiBeatmap>>(response);
-            if (data.Count == 0)
+            try
             {
-                Log.Information("OsuApi: beatmap {id} not found", beatmapId);
-                return null;
+                var response = await SendRequest("get_beatmaps", "b=" + beatmapId);
+                var data = JsonConvert.DeserializeObject<List<ApiBeatmap>>(response);
+                if (data.Count == 0)
+                {
+                    localLog.Information("beatmap {id} not found", beatmapId);
+                    return null;
+                }
+                var beatmap = data[0];
+                return new Beatmap()
+                {
+                    Id = Convert.ToInt32(beatmap.beatmap_id),
+                    SetId = Convert.ToInt32(beatmap.beatmapset_id),
+                    Artist = beatmap.artist,
+                    Title = beatmap.title,
+                    Version = beatmap.version,
+                    Creator = beatmap.creator,
+                    BPM = Convert.ToDecimal(beatmap.bpm),
+                    AR = Convert.ToDecimal(beatmap.diff_approach),
+                    CS = Convert.ToDecimal(beatmap.diff_size)
+                };
             }
-            var beatmap = data[0];
-            return new Beatmap()
+            catch (ApiException)
             {
-                Id = Convert.ToInt32(beatmap.beatmap_id),
-                SetId = Convert.ToInt32(beatmap.beatmapset_id),
-                Artist = beatmap.artist,
-                Title = beatmap.title,
-                Version = beatmap.version,
-                Creator = beatmap.creator,
-                BPM = Convert.ToDecimal(beatmap.bpm),
-                AR = Convert.ToDecimal(beatmap.diff_approach),
-                CS = Convert.ToDecimal(beatmap.diff_size)
-            };
+                try
+                {
+                    localLog.Information("using website to get beatmap {id}", beatmapId);
+                    using (var webClient = new WebClient())
+                    {
+                        var config = Configuration.Default;
+                        var context = BrowsingContext.New(config);
+                        var source = await webClient.DownloadStringTaskAsync("https://osu.ppy.sh/beatmaps/" + beatmapId);
+                        var document = await context.OpenAsync(req => req.Content(source));
+                        var element = document.QuerySelector("#json-beatmapset").InnerHtml;
+                        dynamic json = JObject.Parse(element);
+                        foreach (var beatmap in json.beatmaps)
+                        {
+                            if (beatmap.id != beatmapId)
+                                continue;
+                            return new Beatmap()
+                            {
+                                Id = beatmap.id,
+                                SetId = Convert.ToInt32(json.id),
+                                Artist = json.artist,
+                                Title = json.title,
+                                Version = beatmap.version,
+                                Creator = json.creator,
+                                BPM = Convert.ToDecimal(json.bpm),
+                                AR = Convert.ToInt32(beatmap.ar),
+                                CS = Convert.ToInt32(beatmap.cs)
+                            };
+                        }
+                        return null;
+                    }
+                }
+                catch
+                {
+                    localLog.Information("website is not reachable");
+                    MessageBox.Show("API and website are down.");
+                    return null;
+                }
+            }
         }
 
         public static async Task<Player> GetPlayer(string playerId)
         {
             localLog.Information("get player {id}", playerId);
-            var response = await SendRequest("get_user", "u=" + playerId);
-            var data = JsonConvert.DeserializeObject<List<ApiPlayer>>(response);
-            if (data.Count == 0)
+            try
             {
-                Log.Information("OsuApi: player {id} not found", playerId);
-                return null;
+                var response = await SendRequest("get_user", "u=" + playerId);
+                var data = JsonConvert.DeserializeObject<List<ApiPlayer>>(response);
+                if (data.Count == 0)
+                {
+                    localLog.Information("player {id} not found", playerId);
+                    return null;
+                }
+                var player = data[0];
+                return new Player()
+                {
+                    Name = player.username,
+                    Country = player.country,
+                    Id = Convert.ToInt32(player.user_id)
+                };
             }
-            var player = data[0];
-            return new Player()
+            catch (ApiException)
             {
-                Name = player.username,
-                Country = player.country,
-                Id = Convert.ToInt32(player.user_id)
-            };
+                try
+                {
+                    localLog.Information("using website to get player {id}", playerId);
+                    using (var webClient = new WebClient())
+                    {
+                        var config = Configuration.Default;
+                        var context = BrowsingContext.New(config);
+                        var source = await webClient.DownloadStringTaskAsync("https://osu.ppy.sh/users/" + playerId);
+                        var document = await context.OpenAsync(req => req.Content(source));
+                        var element = document.QuerySelector("#json-user").InnerHtml;
+                        dynamic json = JObject.Parse(element);
+                        return new Player()
+                        {
+                            Name = json.username,
+                            Country = json.country_code,
+                            Id = json.id
+                        };
+                    }
+                }
+                catch
+                {
+                    localLog.Information("website is not reachable");
+                    MessageBox.Show("API and website are down.");
+                    return null;
+                }
+            }
         }
 
         public static async Task UpdateGames(Match match)
         {
             localLog.Information("refresh match {id}", match.RoomId);
-            var response = await SendRequest("get_match", "mp=" + match.RoomId);
-            var data = JsonConvert.DeserializeObject<ApiMatch>(response);
-            foreach (var gameData in data.games)
+            try
             {
-                if (match.Games.Any(x => x.Id == Convert.ToInt32(gameData.game_id)))
-                    continue;
-
-                if (gameData.end_time == null)
-                    continue;
-
-                if (gameData.scores.Count == 0)
-                    continue;
-
-                var beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
-                var game = new Game()
+                var response = await SendRequest("get_match", "mp=" + match.RoomId);
+                var data = JsonConvert.DeserializeObject<ApiMatch>(response);
+                foreach (var gameData in data.games)
                 {
-                    Match = match,
-                    Id = Convert.ToInt32(gameData.game_id),
-                    Beatmap = beatmap,
-                    Mods = ModsFromBitEnum(gameData.mods)
-                };
+                    if (match.Games.Any(x => x.Id == Convert.ToInt32(gameData.game_id)))
+                        continue;
 
-                foreach (var scoreData in gameData.scores)
-                {
-                    var player = await Database.Database.GetPlayer(scoreData.user_id);
-                    var score = new Score()
+                    if (gameData.end_time == null)
+                        continue;
+
+                    if (gameData.scores.Count == 0)
+                        continue;
+
+                    var beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
+                    var game = new Game()
                     {
-                        Game = game,
-                        Player = player,
-                        Points = Convert.ToInt32(scoreData.score),
-                        Team = TeamFromString(scoreData.team),
-                        Passed = scoreData.pass == "1",
-                        Mods = ModsFromBitEnum(scoreData.enabled_mods)
+                        Match = match,
+                        Id = Convert.ToInt32(gameData.game_id),
+                        Beatmap = beatmap,
+                        Mods = ModsFromBitEnum(gameData.mods)
                     };
 
-                    game.Scores.Add(score);
-                }
+                    foreach (var scoreData in gameData.scores)
+                    {
+                        var player = await Database.Database.GetPlayer(scoreData.user_id);
+                        var score = new Score()
+                        {
+                            Game = game,
+                            Player = player,
+                            Points = Convert.ToInt32(scoreData.score),
+                            Team = TeamFromString(scoreData.team),
+                            Passed = scoreData.pass == "1",
+                            Mods = ModsFromBitEnum(scoreData.enabled_mods)
+                        };
 
-                match.Games.Add(game);
+                        game.Scores.Add(score);
+                    }
+
+                    match.Games.Add(game);
+                }
+            }
+            catch (ApiException)
+            {
+                localLog.Information("api is not reachable");
+                MessageBox.Show("API is down.", "Match update error");
             }
         }
         #endregion
@@ -127,7 +213,19 @@ namespace script_chan2.OsuApi
             using (var webClient = new WebClient())
             {
                 localLog.Information("send request 'https://osu.ppy.sh/api/" + method + "?" + parameters + "'");
-                return await webClient.DownloadStringTaskAsync("https://osu.ppy.sh/api/" + method + "?k=" + Settings.ApiKey + "&" + parameters);
+                for (var i = 0; i < 6; i++)
+                {
+                    try
+                    {
+                        return await webClient.DownloadStringTaskAsync("https://osu.ppy.sh/api/" + method + "?k=" + Settings.ApiKey + "&" + parameters);
+                    }
+                    catch (WebException exception)
+                    {
+                        localLog.Error(exception, "api call failed");
+                        await Task.Delay(5000);
+                    }
+                }
+                throw new ApiException("api call failed after 6 retries");
             }
         }
 
@@ -177,6 +275,15 @@ namespace script_chan2.OsuApi
                 case "1": return LobbyTeams.Blue;
             }
             return LobbyTeams.None;
+        }
+
+        public class ApiException : Exception
+        {
+            public ApiException() { }
+
+            public ApiException(string message) : base(message) { }
+
+            public ApiException(string message, Exception innerException) : base(message, innerException) { }
         }
         #endregion
     }
