@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="script_chan2.GUI.ChatView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             cal:Message.Attach="[Gesture Ctrl+T] = [Action OpenNewChatDialog]"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="UsersWrapper" Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding UserViews}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl cal:View.Model="{Binding}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button x:Name="OpenNewChatDialog" Content="+" Grid.Row="1" ToolTip="Open new tab (Ctrl+T)" />
+        </Grid>
+        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="Black" Width="3" />
+        <Grid x:Name="ChatWrapper" Grid.Column="2" Margin="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <FlowDocumentScrollViewer x:Name="ChatWindow" Document="{Binding Chat}" Grid.ColumnSpan="2" Margin="0 0 0 5" />
+            <TextBox x:Name="ChatMessage" Grid.Row="1" md:HintAssist.Hint="Message" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action ChatMessageEnter]" />
+            <Button x:Name="SendMessage" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Send" Grid.Row="1" Grid.Column="1" Height="35" Width="35" Margin="5 0 0 0">
+                <md:PackIcon Kind="Send" />
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

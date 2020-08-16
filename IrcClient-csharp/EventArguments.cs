@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IrcSharp
+namespace TechLifeForum
 {
     public class UpdateUsersEventArgs : EventArgs
     {

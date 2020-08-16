@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="script_chan2.GUI.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ComboBox x:Name="Languages" Grid.Column="0" Grid.ColumnSpan="2" md:HintAssist.Hint="Language" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="5" />
+        <TextBox x:Name="ApiKey" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" md:HintAssist.Hint="API Key" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+        <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button x:Name="OpenApiKeyPage" Content="Get API key" Width="110" Margin="5" />
+            <Button x:Name="CheckApiKey" Content="Test" Width="60" Margin="5" IsEnabled="{Binding ApiTestEnabled}" />
+            <md:PackIcon Kind="Check" VerticalAlignment="Center" Foreground="Green" Height="30" Width="30" Visibility="{Binding ApiWorks}" />
+            <md:PackIcon Kind="Clear" VerticalAlignment="Center" Foreground="Red" Height="30" Width="30" Visibility="{Binding ApiError}" />
+            <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Column="1" Visibility="{Binding ApiProgress}" />
+        </StackPanel>
+        <TextBox x:Name="IrcUsername" Grid.Row="2" Grid.Column="0" md:HintAssist.Hint="IRC Username" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <TextBox x:Name="IrcPassword" Grid.Row="2" Grid.Column="1" md:HintAssist.Hint="IRC Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button x:Name="OpenIrcPage" Content="Get IRC password" Width="150" Margin="5" />
+            <Button x:Name="CheckIrc" Content="Test" Width="60" Margin="5" />
+            <md:PackIcon Kind="Check" VerticalAlignment="Center" Foreground="Green" Height="30" Width="30" Visibility="{Binding IrcIsConnected}" />
+            <md:PackIcon Kind="Clear" VerticalAlignment="Center" Foreground="Red" Height="30" Width="30" Visibility="{Binding IrcIsDisconnected}" />
+        </StackPanel>
+        <TextBox x:Name="IrcTimeout" Grid.Row="3" Grid.Column="0" md:HintAssist.Hint="IRC Timeout" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <CheckBox x:Name="EnablePrivateIrc" Content="Use private bancho" Grid.Row="3" Grid.Column="1" Visibility="{Binding PrivateIrcVisible}" />
+        <TextBox x:Name="DefaultTimerCommand" Grid.Row="4" Grid.Column="0" md:HintAssist.Hint="Timer Command Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <TextBox x:Name="DefaultTimerAfterGame" Grid.Row="4" Grid.Column="1" md:HintAssist.Hint="Timer After Game Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <TextBox x:Name="DefaultTimerAfterPick" Grid.Row="4" Grid.Column="2" md:HintAssist.Hint="Timer After Pick Duration" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <CheckBox x:Name="EnableNotifications" Content="Enable notifications" Grid.Row="5" Grid.Column="0" Margin="5" />
+        <TextBox x:Name="NotificationSoundFile" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" md:HintAssist.Hint="Notification sound file" ToolTip="Leave empty for default" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        <Button x:Name="SelectNotificationSoundFile" Content="..." Grid.Row="5" Grid.Column="3" Margin="5" Width="50" HorizontalAlignment="Left" />
+        <StackPanel Grid.Row="7" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Dirty, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Button x:Name="Discard" Content="Discard" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignFlatButton}" />
+            <Button x:Name="Save" Content="Save" DockPanel.Dock="Right" Width="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignRaisedButton}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

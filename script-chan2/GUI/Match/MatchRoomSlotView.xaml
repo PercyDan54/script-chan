@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="script_chan2.GUI.MatchRoomSlotView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="400">
+    <Grid Margin="2" Background="{Binding Background}" AllowDrop="True" cal:Message.Attach="[Event Drop] = [Action ChangeSlot($eventArgs)]; [Event MouseMove] = [Action Drag($eventArgs)]">
+        <Grid.ContextMenu>
+            <ContextMenu x:Name="Menu" ItemsSource="{Binding MenuItems}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="cal:Message.Attach" Value="[Event Click] = [Action MenuItemClick($source)]" />
+                        <Setter Property="cal:Action.TargetWithoutContext" Value="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Grid}}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Margin="5" Fill="{Binding TeamColor}" cal:Message.Attach="[Event MouseUp] = [Action ChangeTeam]" />
+        <TextBlock x:Name="SlotNumber" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding NameColor}" />
+        <Image Grid.Column="2" Source="{Binding Flag}" />
+        <TextBlock x:Name="PlayerName" Grid.Column="3" VerticalAlignment="Center" Margin="5" Foreground="{Binding NameColor}" />
+        <ItemsControl ItemsSource="{Binding ModViews}" Grid.Column="4">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl cal:View.Model="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

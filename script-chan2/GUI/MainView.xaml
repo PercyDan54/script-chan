@@ -1,0 +1,82 @@
+﻿<Window x:Class="script_chan2.GUI.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cal="http://www.caliburnproject.org"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="15"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{md:MaterialDesignFont}"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Title="Script-chan" Height="700" Width="1000">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Height="30" Background="Black" cal:Message.Attach="[Event MouseDown] = [Action Drag($eventArgs)]">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Script-chan" VerticalAlignment="Center" Margin="5 0 0 0" />
+            <Button x:Name="MinimizeWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Minimize" Height="30" Width="30" Grid.Column="2" VerticalContentAlignment="Bottom">
+                <md:PackIcon Kind="WindowMinimize" />
+            </Button>
+            <Button x:Name="MaximizeWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Maximize" Height="30" Width="30" Visibility="{Binding WindowMaximizeVisible}" Grid.Column="3">
+                <md:PackIcon Kind="WindowMaximize" />
+            </Button>
+            <Button x:Name="RestoreWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Restore" Height="30" Width="30" Visibility="{Binding WindowRestoreVisible}" Grid.Column="3">
+                <md:PackIcon Kind="WindowRestore" />
+            </Button>
+            <Button x:Name="CloseWindow" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Close" Height="30" Width="30" Grid.Column="4">
+                <md:PackIcon Kind="Close" />
+            </Button>
+        </Grid>
+        <md:DialogHost Grid.Row="1" Identifier="MainDialogHost" DialogTheme="Dark">
+            <md:DrawerHost IsLeftDrawerOpen="{Binding DrawerExpanded}">
+                <md:DrawerHost.LeftDrawerContent>
+                    <DockPanel MinWidth="212">
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" DockPanel.Dock="Top" HorizontalAlignment="Right" Margin="16" IsChecked="{Binding DrawerExpanded}" />
+                        <ListBox x:Name="MenuListBox" Margin="0 16 0 16" SelectedIndex="0">
+                            <ListBox.Resources>
+                                <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" />
+                            </ListBox.Resources>
+                            <ListBoxItem Content="Matches" cal:Message.Attach="[Event MouseUp] = [Action ShowMatches]" />
+                            <ListBoxItem Content="Tournaments" cal:Message.Attach="[Event MouseUp] = [Action ShowTournaments]" />
+                            <ListBoxItem Content="Teams" cal:Message.Attach="[Event MouseUp] = [Action ShowTeams]" />
+                            <ListBoxItem Content="Mappools" cal:Message.Attach="[Event MouseUp] = [Action ShowMappools]" />
+                            <ListBoxItem Content="Webhooks" cal:Message.Attach="[Event MouseUp] = [Action ShowWebhooks]" />
+                            <ListBoxItem Content="Settings" cal:Message.Attach="[Event MouseUp] = [Action ShowSettings]" />
+                            <ListBoxItem Content="Colors" cal:Message.Attach="[Event MouseUp] = [Action ShowColors]" />
+                            <ListBoxItem Content="Commands" cal:Message.Attach="[Event MouseUp] = [Action ShowCommands]" />
+                            <ListBoxItem Content="Chat" cal:Message.Attach="[Event MouseUp] = [Action ShowChat]" />
+                            <ListBoxItem Content="Export" cal:Message.Attach="[Event MouseUp] = [Action ShowExport]" />
+                        </ListBox>
+                    </DockPanel>
+                </md:DrawerHost.LeftDrawerContent>
+                <DockPanel>
+                    <md:ColorZone Padding="16" md:ShadowAssist.ShadowDepth="Depth2" Mode="PrimaryMid" DockPanel.Dock="Top" Background="{StaticResource Foreground}">
+                        <DockPanel>
+                            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="{Binding DrawerExpanded}" />
+                            <TextBlock x:Name="MainTitle" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" Margin="20 0 0 0" />
+                        </DockPanel>
+                    </md:ColorZone>
+                    <ContentControl x:Name="ActiveItem" />
+                </DockPanel>
+            </md:DrawerHost>
+        </md:DialogHost>
+    </Grid>
+</Window>

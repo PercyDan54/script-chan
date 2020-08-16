@@ -1,0 +1,30 @@
+﻿<Application x:Class="script_chan2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:script_chan2"
+             ShutdownMode="OnMainWindowClose">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="ButtonBackground" Color="#FF202020" />
+                    <SolidColorBrush x:Key="ButtonBorder" Color="#FFAEAEAE" />
+                    <SolidColorBrush x:Key="Foreground" Color="#FFCD6D7E" />
+                </ResourceDictionary>
+
+                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Pink" SecondaryColor="Orange" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary Source="Themes/MaterialDesignThemes.Overrides.xaml" />
+                <ResourceDictionary>
+                    <local:AppBootstrapper x:Key="bootstrapper" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FFCD6D7E" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
-using System.Net;
+using System.Net.Security;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace IrcSharp
+namespace TechLifeForum
 {
     /// <summary>
     /// IRC Client class written at http://tech.reboot.pro
@@ -31,11 +31,17 @@ namespace IrcSharp
         //default consoleOutput mode
         private bool _consoleOutput = false;
 
+        //default ssl mode
+        private bool _enablessl = false;
+
         // private TcpClient used to talk to the server
         private TcpClient irc;
 
         // private network stream used to read/write from/to
         private NetworkStream stream;
+
+        // private ssl stream used to read/write from/to
+        private SslStream ssl;
 
         // global variable used to read input from the client
         private string inputLine;
@@ -53,22 +59,23 @@ namespace IrcSharp
 
         #region Constructors
         /// <summary>
-        /// IrcClient used to connect to an IRC Server (default port: 6667)
+        /// IrcClient used to connect to an IRC Server (default port: 6667) (default ssl: false)
         /// </summary>
         /// <param name="Server">IRC Server</param>
-        public IrcClient(string Server, bool shouldOutput) : this(Server, 6667, shouldOutput) { }
+        public IrcClient(string Server) : this(Server, 6667, false) { }
 
         /// <summary>
         /// IrcClient used to connect to an IRC Server
         /// </summary>
         /// <param name="Server">IRC Server</param>
         /// <param name="Port">IRC Port (6667 if you are unsure)</param>
-        public IrcClient(string Server, int Port, bool shouldOutput)
+        /// <param name="EnableSSL">Decides wether you wish to use a SSL connection or not.</param>
+        public IrcClient(string Server, int Port, bool EnableSSL)
         {
             op = AsyncOperationManager.CreateOperation(null);
             _server = Server;
             _port = Port;
-            _consoleOutput = shouldOutput;
+            _enablessl = EnableSSL;
         }
         #endregion
 
@@ -120,6 +127,13 @@ namespace IrcSharp
             set { _consoleOutput = value; }
         }
         /// <summary>
+        /// Use SSL to communicate
+        /// </summary>
+        public bool EnableSSL
+        {
+            get { return _enablessl; }
+        }
+        /// <summary>
         /// Returns true if the client is connected.
         /// </summary>
         public bool Connected
@@ -136,6 +150,7 @@ namespace IrcSharp
 
         #region Events
 
+        public event EventHandler<StringEventArgs> Pinged = delegate { };
         public event EventHandler<UpdateUsersEventArgs> UpdateUsers = delegate { };
         public event EventHandler<UserJoinedEventArgs> UserJoined = delegate { };
         public event EventHandler<UserLeftEventArgs> UserLeft = delegate { };
@@ -220,8 +235,18 @@ namespace IrcSharp
             {
                 irc = new TcpClient(_server, _port);
                 stream = irc.GetStream();
-                reader = new StreamReader(stream);
-                writer = new StreamWriter(stream);
+                if (_enablessl)
+                {
+                    ssl = new SslStream(stream, false);
+                    ssl.AuthenticateAsClient(_server);
+                    reader = new StreamReader(ssl);
+                    writer = new StreamWriter(ssl);
+                }
+                else
+                {
+                    reader = new StreamReader(stream);
+                    writer = new StreamWriter(stream);
+                }
 
                 if (!string.IsNullOrEmpty(_ServerPass))
                     Send("PASS " + _ServerPass);
@@ -245,7 +270,7 @@ namespace IrcSharp
             {
                 if (irc.Connected)
                 {
-                    Send("QUIT Client Disconnected");
+                    Send("QUIT Client Disconnected: http://tech.reboot.pro");
                 }
                 irc = null;
             }
@@ -299,9 +324,19 @@ namespace IrcSharp
 
         public void Dispose()
         {
-            stream.Dispose();
-            writer.Dispose();
-            reader.Dispose();
+            if (_enablessl)
+            {
+                stream.Dispose();
+                ssl.Dispose();
+                writer.Dispose();
+                reader.Dispose();
+            }
+            else
+            {
+                stream.Dispose();
+                writer.Dispose();
+                reader.Dispose();
+            }
         }
         #endregion
 
@@ -317,7 +352,7 @@ namespace IrcSharp
                 try
                 {
                     ParseData(inputLine);
-                    if(_consoleOutput) Console.Write(inputLine);
+                    if (_consoleOutput) Console.Write(inputLine);
                 }
                 catch (Exception ex)
                 {
@@ -341,7 +376,9 @@ namespace IrcSharp
             {
                 if (data.Substring(0, 4) == "PING")
                 {
-                    Send("PONG " + ircData[1]);
+                    // Some servers respond like :potato.freenode.net
+                    // And the pong is not valid with the :
+                    Send("PONG " + ircData[1].Replace(":", string.Empty));
                     return;
                 }
 
