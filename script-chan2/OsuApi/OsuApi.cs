@@ -97,7 +97,7 @@ namespace script_chan2.OsuApi
                 catch
                 {
                     localLog.Information("website is not reachable");
-                    MessageBox.Show("API and website are down.");
+                    MessageBox.Show("API and website are down.", "API error");
                     return null;
                 }
             }
@@ -147,7 +147,7 @@ namespace script_chan2.OsuApi
                 catch
                 {
                     localLog.Information("website is not reachable");
-                    MessageBox.Show("API and website are down.");
+                    MessageBox.Show("API and website are down.", "API error");
                     return null;
                 }
             }
@@ -201,8 +201,60 @@ namespace script_chan2.OsuApi
             }
             catch (ApiException)
             {
-                localLog.Information("api is not reachable");
-                MessageBox.Show("API is down.", "Match update error");
+                try
+                {
+                    using (var webClient = new WebClient())
+                    {
+                        var result = await webClient.DownloadStringTaskAsync("https://osu.ppy.sh/community/matches/" + match.RoomId + "/history");
+                        WebsiteMatch json = JsonConvert.DeserializeObject<WebsiteMatch>(result);
+                        foreach (var eventObject in json.events)
+                        {
+                            if (eventObject.detail.type == "other")
+                            {
+                                if (match.Games.Any(x => x.Id == eventObject.game.id))
+                                    continue;
+
+                                if (eventObject.game.end_time == null)
+                                    continue;
+
+                                if (eventObject.game.scores.Count == 0)
+                                    continue;
+
+                                var beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(eventObject.game.beatmap.id));
+                                var game = new Game()
+                                {
+                                    Match = match,
+                                    Id = Convert.ToInt32(eventObject.game.id),
+                                    Beatmap = beatmap,
+                                    Mods = ModsFromList(eventObject.game.mods)
+                                };
+
+                                foreach (var scoreData in eventObject.game.scores)
+                                {
+                                    var player = await Database.Database.GetPlayer(scoreData.user_id.ToString());
+                                    var score = new Score()
+                                    {
+                                        Game = game,
+                                        Player = player,
+                                        Points = scoreData.score,
+                                        Team = TeamFromString(scoreData.match.team),
+                                        Passed = scoreData.match.pass == 1,
+                                        Mods = ModsFromList(scoreData.mods)
+                                    };
+
+                                    game.Scores.Add(score);
+                                }
+
+                                match.Games.Add(game);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    localLog.Information("website is not reachable");
+                    MessageBox.Show("API and website are down.", "API error");
+                }
             }
         }
         #endregion
@@ -271,8 +323,12 @@ namespace script_chan2.OsuApi
         {
             switch (team)
             {
-                case "2": return LobbyTeams.Red;
-                case "1": return LobbyTeams.Blue;
+                case "2":
+                case "red":
+                    return LobbyTeams.Red;
+                case "1":
+                case "blue":
+                    return LobbyTeams.Blue;
             }
             return LobbyTeams.None;
         }
