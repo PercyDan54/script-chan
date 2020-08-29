@@ -41,6 +41,7 @@ namespace script_chan2.OsuApi
             try
             {
                 var response = await SendRequest("get_beatmaps", "b=" + beatmapId);
+                localLog.Information("GetBeatmap data: " + response);
                 var data = JsonConvert.DeserializeObject<List<ApiBeatmap>>(response);
                 if (data.Count == 0)
                 {
@@ -109,6 +110,7 @@ namespace script_chan2.OsuApi
             try
             {
                 var response = await SendRequest("get_user", "u=" + playerId);
+                localLog.Information("GetPlayer data: " + response);
                 var data = JsonConvert.DeserializeObject<List<ApiPlayer>>(response);
                 if (data.Count == 0)
                 {
@@ -159,6 +161,7 @@ namespace script_chan2.OsuApi
             try
             {
                 var response = await SendRequest("get_match", "mp=" + match.RoomId);
+                localLog.Information("GetMatch data: " + response);
                 var data = JsonConvert.DeserializeObject<ApiMatch>(response);
                 foreach (var gameData in data.games)
                 {
