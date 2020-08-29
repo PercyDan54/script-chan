@@ -224,6 +224,7 @@ namespace script_chan2.GUI
                         PointsForSecondBan = matchData.PointsForSecondBan,
                         AllPicksFreemod = matchData.AllPicksFreemod,
                         WarmupMode = matchData.WarmupMode,
+                        MatchTime = matchData.MatchTime,
                         Players = new List<object>()
                     };
 
@@ -451,6 +452,7 @@ namespace script_chan2.GUI
                     match.PointsForSecondBan = Convert.ToInt32(matchItem.PointsForSecondBan.Value);
                     match.AllPicksFreemod = matchItem.AllPicksFreemod.Value;
                     match.WarmupMode = matchItem.WarmupMode.Value;
+                    match.MatchTime = Convert.ToDateTime(matchItem.MatchTime);
 
                     foreach (var playerItem in matchItem.Players)
                     {
