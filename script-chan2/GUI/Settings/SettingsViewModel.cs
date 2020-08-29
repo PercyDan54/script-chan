@@ -6,9 +6,21 @@ using System.Windows;
 
 namespace script_chan2.GUI
 {
-    public class SettingsViewModel : Screen
+    public class SettingsViewModel : Screen, IHandle<object>
     {
         private ILogger localLog = Log.ForContext<SettingsViewModel>();
+
+        #region Events
+        public void Handle(object message)
+        {
+            if (message is IrcConnectedData)
+            {
+                NotifyOfPropertyChange(() => IrcIsConnecting);
+                NotifyOfPropertyChange(() => IrcIsConnected);
+                NotifyOfPropertyChange(() => IrcIsDisconnected);
+            }
+        }
+        #endregion
 
         #region Properties
         private bool dirty;
@@ -178,18 +190,21 @@ namespace script_chan2.GUI
             System.Diagnostics.Process.Start("https://osu.ppy.sh/p/irc");
         }
 
-        public void CheckIrc()
+        public Visibility IrcIsConnecting
         {
-            localLog.Information("check irc");
-            NotifyOfPropertyChange(() => IrcIsConnected);
-            NotifyOfPropertyChange(() => IrcIsDisconnected);
+            get
+            {
+                if (OsuIrc.OsuIrc.ConnectionStatus == Enums.IrcStatus.Connecting)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
         }
 
         public Visibility IrcIsConnected
         {
             get
             {
-                if (OsuIrc.OsuIrc.IsConnected)
+                if (OsuIrc.OsuIrc.ConnectionStatus == Enums.IrcStatus.Connected)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }
@@ -199,7 +214,7 @@ namespace script_chan2.GUI
         {
             get
             {
-                if (!OsuIrc.OsuIrc.IsConnected)
+                if (OsuIrc.OsuIrc.ConnectionStatus == Enums.IrcStatus.Disconnected)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }
@@ -326,6 +341,13 @@ namespace script_chan2.GUI
         {
             Discard();
             CheckApiKey();
+            Events.Aggregator.Subscribe(this);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Aggregator.Unsubscribe(this);
+            base.OnDeactivate(close);
         }
         #endregion
 

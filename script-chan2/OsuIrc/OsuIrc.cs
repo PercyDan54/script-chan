@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using script_chan2.Enums;
 using script_chan2.GUI;
 using Serilog;
 using System;
@@ -36,7 +37,7 @@ namespace script_chan2.OsuIrc
         public static void Login()
         {
             localLog.Information("login");
-            IsConnected = false;
+            ConnectionStatus = IrcStatus.Connecting;
             if (Settings.IrcUsername == null || Settings.IrcPassword == null)
                 return;
             try
@@ -162,13 +163,13 @@ namespace script_chan2.OsuIrc
         {
             localLog.Error(e.Exception, "Irc exception caught");
             client.Disconnect();
-            IsConnected = false;
+            ConnectionStatus = IrcStatus.Disconnected;
         }
 
         private static void Client_OnConnect(object sender, EventArgs e)
         {
             localLog.Information("connected");
-            IsConnected = true;
+            ConnectionStatus = IrcStatus.Connected;
         }
 
         private static void Client_ChannelMessage(object sender, ChannelMessageEventArgs e)
@@ -256,9 +257,27 @@ namespace script_chan2.OsuIrc
             userChat.AddMessage(ircMessage);
 
             Events.Aggregator.PublishOnUIThread(data);
+
+            if (e.Result.Contains("Bad authentication token"))
+            {
+                ConnectionStatus = IrcStatus.Disconnected;
+            }
         }
 
-        public static bool IsConnected { get; private set; } = false;
+        private static IrcStatus connectionStatus;
+        public static IrcStatus ConnectionStatus
+        {
+            get { return connectionStatus; }
+            set
+            {
+                if (value != connectionStatus)
+                {
+                    connectionStatus = value;
+                    var data = new IrcConnectedData();
+                    Events.Aggregator.PublishOnUIThread(data);
+                }
+            }
+        }
 
         public static void SendMessage(string channel, string message)
         {
