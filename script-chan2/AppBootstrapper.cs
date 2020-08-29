@@ -5,6 +5,7 @@ using script_chan2.GUI;
 using Serilog;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -28,6 +29,9 @@ namespace script_chan2
                 localLog.Information("Logger initialized");
 
                 Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
+
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+                CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
 
                 localLog.Information("Initialize DB");
                 if (!DbCreator.DbExists)
