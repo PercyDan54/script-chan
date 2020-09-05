@@ -8,7 +8,7 @@ namespace script_chan2.DataTypes
         public static string ConvertGameModsToString(List<GameMods> mods)
         {
             if (mods.Count == 0)
-                return "None";
+                return "NoMod";
             var modString = "";
             for (var i = 0; i < mods.Count; i++)
             {
