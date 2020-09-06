@@ -51,6 +51,7 @@ namespace script_chan2.GUI
                     tournament = value;
                     NotifyOfPropertyChange(() => Tournament);
                     NotifyOfPropertyChange(() => ImportEnabled);
+                    NotifyOfPropertyChange(() => NoTeamsWarningVisible);
                 }
             }
         }
@@ -183,6 +184,16 @@ namespace script_chan2.GUI
                 if (IsImporting)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility NoTeamsWarningVisible
+        {
+            get
+            {
+                if (Tournament.Teams.Count > 0)
+                    return Visibility.Collapsed;
+                return Visibility.Visible;
             }
         }
 
