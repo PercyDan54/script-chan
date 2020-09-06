@@ -54,10 +54,10 @@
                             <ListBox.Resources>
                                 <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" />
                             </ListBox.Resources>
-                            <ListBoxItem Content="Matches" cal:Message.Attach="[Event MouseUp] = [Action ShowMatches]" />
                             <ListBoxItem Content="Tournaments" cal:Message.Attach="[Event MouseUp] = [Action ShowTournaments]" />
                             <ListBoxItem Content="Teams" cal:Message.Attach="[Event MouseUp] = [Action ShowTeams]" />
                             <ListBoxItem Content="Mappools" cal:Message.Attach="[Event MouseUp] = [Action ShowMappools]" />
+                            <ListBoxItem Content="Matches" cal:Message.Attach="[Event MouseUp] = [Action ShowMatches]" />
                             <ListBoxItem Content="Webhooks" cal:Message.Attach="[Event MouseUp] = [Action ShowWebhooks]" />
                             <ListBoxItem Content="Settings" cal:Message.Attach="[Event MouseUp] = [Action ShowSettings]" />
                             <ListBoxItem Content="Colors" cal:Message.Attach="[Event MouseUp] = [Action ShowColors]" />
