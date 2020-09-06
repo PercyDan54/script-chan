@@ -258,14 +258,14 @@ namespace script_chan2.GUI
                             Mappool = mappool,
                             Beatmap = beatmap
                         };
-                        switch (importBeatmap.Mod)
+                        switch (importBeatmap.Mod.ToLower())
                         {
-                            case "NoMod": mappoolMap.Tag = "NM" + nomodIndex; nomodIndex++; break;
-                            case "Hidden": mappoolMap.AddMod(GameMods.Hidden); mappoolMap.Tag = "HD" + hiddenIndex; hiddenIndex++; break;
-                            case "HardRock": mappoolMap.AddMod(GameMods.HardRock); mappoolMap.Tag = "HR" + hardrockIndex; hardrockIndex++; break;
-                            case "DoubleTime": mappoolMap.AddMod(GameMods.DoubleTime); mappoolMap.Tag = "DT" + doubletimeIndex; doubletimeIndex++; break;
-                            case "FreeMod": mappoolMap.AddMod(GameMods.Freemod); mappoolMap.Tag = "FM" + freemodIndex; freemodIndex++; break;
-                            case "Tiebreaker": mappoolMap.AddMod(GameMods.TieBreaker); mappoolMap.Tag = "TB"; break;
+                            case "nomod": mappoolMap.Tag = "NM" + nomodIndex; nomodIndex++; break;
+                            case "hidden": mappoolMap.AddMod(GameMods.Hidden); mappoolMap.Tag = "HD" + hiddenIndex; hiddenIndex++; break;
+                            case "hardrock": mappoolMap.AddMod(GameMods.HardRock); mappoolMap.Tag = "HR" + hardrockIndex; hardrockIndex++; break;
+                            case "doubletime": mappoolMap.AddMod(GameMods.DoubleTime); mappoolMap.Tag = "DT" + doubletimeIndex; doubletimeIndex++; break;
+                            case "freemod": mappoolMap.AddMod(GameMods.Freemod); mappoolMap.Tag = "FM" + freemodIndex; freemodIndex++; break;
+                            case "tiebreaker": mappoolMap.AddMod(GameMods.TieBreaker); mappoolMap.Tag = "TB"; break;
                         }
                         localLog.Information("add beatmap '{beatmap}' to mappool '{mappool}'", importBeatmap.Id, mappool.Name);
                         mappool.AddBeatmap(mappoolMap);
