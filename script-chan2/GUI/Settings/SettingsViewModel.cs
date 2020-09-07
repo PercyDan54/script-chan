@@ -18,6 +18,9 @@ namespace script_chan2.GUI
                 NotifyOfPropertyChange(() => IrcIsConnecting);
                 NotifyOfPropertyChange(() => IrcIsConnected);
                 NotifyOfPropertyChange(() => IrcIsDisconnected);
+                NotifyOfPropertyChange(() => PrivateIrcIsConnecting);
+                NotifyOfPropertyChange(() => PrivateIrcIsConnected);
+                NotifyOfPropertyChange(() => PrivateIrcIsDisconnected);
             }
         }
         #endregion
@@ -215,6 +218,42 @@ namespace script_chan2.GUI
             get
             {
                 if (OsuIrc.OsuIrc.ConnectionStatus == Enums.IrcStatus.Disconnected)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility PrivateIrcIsConnecting
+        {
+            get
+            {
+                if (!Settings.EnablePrivateIrc || string.IsNullOrEmpty(Settings.IrcIpPrivate))
+                    return Visibility.Collapsed;
+                if (OsuIrc.OsuIrc.PrivateConnectionStatus == Enums.IrcStatus.Connecting)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility PrivateIrcIsConnected
+        {
+            get
+            {
+                if (!Settings.EnablePrivateIrc || string.IsNullOrEmpty(Settings.IrcIpPrivate))
+                    return Visibility.Collapsed;
+                if (OsuIrc.OsuIrc.PrivateConnectionStatus == Enums.IrcStatus.Connected)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility PrivateIrcIsDisconnected
+        {
+            get
+            {
+                if (!Settings.EnablePrivateIrc || string.IsNullOrEmpty(Settings.IrcIpPrivate))
+                    return Visibility.Collapsed;
+                if (OsuIrc.OsuIrc.PrivateConnectionStatus == Enums.IrcStatus.Disconnected)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }

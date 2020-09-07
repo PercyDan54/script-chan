@@ -57,6 +57,8 @@ namespace script_chan2.OsuIrc
 
                 if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate))
                 {
+                    PrivateConnectionStatus = IrcStatus.Connecting;
+
                     if (privateClient != null && privateClient.Connected)
                         privateClient.Disconnect();
 
@@ -64,8 +66,8 @@ namespace script_chan2.OsuIrc
                     privateClient.ServerMessage += Client_ServerMessage;
                     privateClient.PrivateMessage += Client_PrivateMessage;
                     privateClient.ChannelMessage += Client_ChannelMessage;
-                    privateClient.OnConnect += Client_OnConnect;
-                    privateClient.ExceptionThrown += Client_ExceptionThrown;
+                    privateClient.OnConnect += Client_OnConnectPrivate;
+                    privateClient.ExceptionThrown += Client_ExceptionThrownPrivate;
                     privateClient.Nick = Settings.IrcUsername;
                     privateClient.ServerPass = Settings.IrcPassword;
                     privateClient.Connect();
@@ -116,9 +118,15 @@ namespace script_chan2.OsuIrc
                 return;
 
             if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate) && !ircMessage.Message.StartsWith("!mp switch"))
+            {
+                log.Information("[Private Bancho] {channel} | {user}: {message}", ircMessage.Channel, ircMessage.User, ircMessage.Message);
                 privateClient.SendMessage(ircMessage.Channel, ircMessage.Message);
+            }
             else
+            {
+                log.Information("[Bancho] {channel} | {user}: {message}", ircMessage.Channel, ircMessage.User, ircMessage.Message);
                 client.SendMessage(ircMessage.Channel, ircMessage.Message);
+            }
 
             if (ircMessage.Channel.StartsWith("#"))
             {
@@ -161,9 +169,16 @@ namespace script_chan2.OsuIrc
 
         private static void Client_ExceptionThrown(object sender, ExceptionEventArgs e)
         {
-            localLog.Error(e.Exception, "Irc exception caught");
+            localLog.Error(e.Exception, "irc exception caught");
             client.Disconnect();
             ConnectionStatus = IrcStatus.Disconnected;
+        }
+
+        private static void Client_ExceptionThrownPrivate(object sender, ExceptionEventArgs e)
+        {
+            localLog.Error(e.Exception, "private irc exception caught");
+            client.Disconnect();
+            PrivateConnectionStatus = IrcStatus.Disconnected;
         }
 
         private static void Client_OnConnect(object sender, EventArgs e)
@@ -172,9 +187,15 @@ namespace script_chan2.OsuIrc
             ConnectionStatus = IrcStatus.Connected;
         }
 
+        private static void Client_OnConnectPrivate(object sender, EventArgs e)
+        {
+            localLog.Information("private connected");
+            PrivateConnectionStatus = IrcStatus.Connected;
+        }
+
         private static void Client_ChannelMessage(object sender, ChannelMessageEventArgs e)
         {
-            log.Information("#{channel} | {user}: {message}", e.Channel, e.From, e.Message);
+            log.Information("[{bancho}] {channel} | {user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Channel, e.From, e.Message);
 
             var data = new ChannelMessageData()
             {
@@ -198,7 +219,7 @@ namespace script_chan2.OsuIrc
 
         private static void Client_PrivateMessage(object sender, PrivateMessageEventArgs e)
         {
-            log.Information("#{user}: {message}", e.From, e.Message);
+            log.Information("[{bancho}] #{user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.From, e.Message);
 
             if (e.From == "BanchoBot")
             {
@@ -243,7 +264,7 @@ namespace script_chan2.OsuIrc
 
         private static void Client_ServerMessage(object sender, StringEventArgs e)
         {
-            log.Information("$server$: {message}", e.Result);
+            log.Information("[{bancho}] $server$: {message}", sender == client ? "Bancho" : "Private Bancho", e.Result);
 
             var data = new PrivateMessageData()
             {
@@ -261,6 +282,7 @@ namespace script_chan2.OsuIrc
             if (e.Result.Contains("Bad authentication token"))
             {
                 ConnectionStatus = IrcStatus.Disconnected;
+                PrivateConnectionStatus = IrcStatus.Disconnected;
             }
         }
 
@@ -273,6 +295,21 @@ namespace script_chan2.OsuIrc
                 if (value != connectionStatus)
                 {
                     connectionStatus = value;
+                    var data = new IrcConnectedData();
+                    Events.Aggregator.PublishOnUIThread(data);
+                }
+            }
+        }
+
+        private static IrcStatus privateConnectionStatus;
+        public static IrcStatus PrivateConnectionStatus
+        {
+            get { return privateConnectionStatus; }
+            set
+            {
+                if (value != privateConnectionStatus)
+                {
+                    privateConnectionStatus = value;
                     var data = new IrcConnectedData();
                     Events.Aggregator.PublishOnUIThread(data);
                 }

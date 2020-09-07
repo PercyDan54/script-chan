@@ -39,9 +39,12 @@
         <TextBox x:Name="IrcPassword" Grid.Row="2" Grid.Column="1" md:HintAssist.Hint="IRC Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
             <Button x:Name="OpenIrcPage" Content="Get IRC password" Width="150" Margin="5" />
-            <md:PackIcon Kind="Check" VerticalAlignment="Center" Foreground="Green" Height="30" Width="30" Visibility="{Binding IrcIsConnected}" />
-            <md:PackIcon Kind="Clear" VerticalAlignment="Center" Foreground="Red" Height="30" Width="30" Visibility="{Binding IrcIsDisconnected}" />
-            <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Column="1" Visibility="{Binding IrcIsConnecting}" />
+            <md:PackIcon Kind="Check" VerticalAlignment="Center" Foreground="Green" Height="30" Width="30" Visibility="{Binding IrcIsConnected}" ToolTip="Bancho Connected" Background="{DynamicResource MaterialDesignPaper}" />
+            <md:PackIcon Kind="Clear" VerticalAlignment="Center" Foreground="Red" Height="30" Width="30" Visibility="{Binding IrcIsDisconnected}" ToolTip="Bancho Disconnected" Background="{DynamicResource MaterialDesignPaper}" />
+            <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Column="1" Visibility="{Binding IrcIsConnecting}" ToolTip="Bancho Connecting" Background="{DynamicResource MaterialDesignPaper}" />
+            <md:PackIcon Kind="Check" VerticalAlignment="Center" Foreground="Green" Height="30" Width="30" Visibility="{Binding PrivateIrcIsConnected}" ToolTip="Private Bancho Connected" Background="{DynamicResource MaterialDesignPaper}" />
+            <md:PackIcon Kind="Clear" VerticalAlignment="Center" Foreground="Red" Height="30" Width="30" Visibility="{Binding PrivateIrcIsDisconnected}" ToolTip="Private Bancho Disconnected" Background="{DynamicResource MaterialDesignPaper}" />
+            <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Column="1" Visibility="{Binding PrivateIrcIsConnecting}" ToolTip="Private Bancho Connecting" Background="{DynamicResource MaterialDesignPaper}" />
         </StackPanel>
         <TextBox x:Name="IrcTimeout" Grid.Row="3" Grid.Column="0" md:HintAssist.Hint="IRC Timeout" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <CheckBox x:Name="EnablePrivateIrc" Content="Use private bancho" Grid.Row="3" Grid.Column="1" Visibility="{Binding PrivateIrcVisible}" />
