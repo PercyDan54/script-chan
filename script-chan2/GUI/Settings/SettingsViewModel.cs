@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using script_chan2.DataTypes;
 using Serilog;
+using System.Diagnostics;
 using System.Windows;
 
 namespace script_chan2.GUI
@@ -434,6 +435,11 @@ namespace script_chan2.GUI
 
             localLog.Information("set notification sound file");
             NotificationSoundFile = openFileDialog.FileName;
+        }
+
+        public void OpenConfigFileDirectory()
+        {
+            Process.Start(Settings.CONFIG_PATH);
         }
         #endregion
     }
