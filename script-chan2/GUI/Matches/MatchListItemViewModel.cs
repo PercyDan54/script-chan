@@ -118,7 +118,7 @@ namespace script_chan2.GUI
                 localLog.Information("open match '{name}'", match.Name);
                 var windowManager = new WindowManager();
                 windowManager.ShowWindow(new MatchViewModel(match));
-                MatchList.OpenedMatches.Add(match);
+                MatchList.AddMatch(match);
             }
         }
 

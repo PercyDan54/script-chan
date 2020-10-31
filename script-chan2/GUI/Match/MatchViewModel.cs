@@ -260,7 +260,7 @@ namespace script_chan2.GUI
         protected override void OnDeactivate(bool close)
         {
             localLog.Information("close window of match '{name}'", match.Name);
-            MatchList.OpenedMatches.Remove(match);
+            MatchList.RemoveMatch(match);
             Events.Aggregator.Unsubscribe(this);
 
             var view = (MatchView)GetView();

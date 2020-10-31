@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using script_chan2.Database;
 using script_chan2.DataTypes;
+using script_chan2.Discord;
 using script_chan2.GUI;
 using Serilog;
 using System;
@@ -48,6 +49,8 @@ namespace script_chan2
                 localLog.Information("Initialize app");
                 Initialize();
 
+                DiscordApi.SetRichPresence("Setting up matches.");
+
                 localLog.Information("app started");
             }
             catch (Exception ex)
@@ -57,6 +60,7 @@ namespace script_chan2
                     Log.Error(ex, "Bootstrapper exception");
                     MessageBox.Show("Bootstrapper exception caught. See logs for more details.");
                 }
+                DiscordApi.StopRichPresence();
             }
         }
 
@@ -64,6 +68,7 @@ namespace script_chan2
         {
             Log.Error(e.Exception, "Unhandled exception");
             MessageBox.Show("Unhandled exception caught. See logs for more details.");
+            DiscordApi.StopRichPresence();
         }
 
         protected override void Configure()
@@ -106,6 +111,7 @@ namespace script_chan2
         {
             OsuIrc.OsuIrc.Shutdown();
             Settings.SaveConfig();
+            DiscordApi.StopRichPresence();
             localLog.Information("app shutdown");
         }
     }

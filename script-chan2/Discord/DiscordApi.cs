@@ -1,15 +1,25 @@
 ﻿using Discord;
 using Discord.Webhook;
+using DiscordRPC;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
 using System.Linq;
+using System.Web.UI.Design.WebControls;
 
 namespace script_chan2.Discord
 {
     public static class DiscordApi
     {
         private static ILogger localLog = Log.ForContext(typeof(DiscordApi));
+
+        private static DiscordRpcClient rpcClient;
+
+        static DiscordApi()
+        {
+            rpcClient = new DiscordRpcClient("772143303550435369");
+            rpcClient.Initialize();
+        }
 
         public static void SendMatchCreated(Match match)
         {
@@ -332,6 +342,25 @@ namespace script_chan2.Discord
                     }
                 }
             }
+        }
+
+        public static void SetRichPresence(string details, string state = "")
+        {
+            rpcClient.SetPresence(new RichPresence()
+            {
+                Details = details,
+                State = state,
+                Assets = new Assets()
+                {
+                    LargeImageKey = "logo",
+                    LargeImageText = "Script-chan"
+                }
+            });
+        }
+
+        public static void StopRichPresence()
+        {
+            rpcClient.Dispose();
         }
     }
 }
