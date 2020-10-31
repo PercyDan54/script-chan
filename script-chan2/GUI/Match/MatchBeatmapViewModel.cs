@@ -465,6 +465,8 @@ namespace script_chan2.GUI
 
         private void SendPickMessage()
         {
+            if (match.ViewerMode)
+                return;
             localLog.Information("match '{match}' send pick message for '{beatmap}'", match.Name, beatmap.Beatmap.Title);
             var mods = Utils.ConvertGameModsToString(beatmap.Mods);
             if (match.AllPicksFreemod && !mods.Contains("Freemod"))
