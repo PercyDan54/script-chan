@@ -9,7 +9,7 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
-             d:DesignHeight="370" d:DesignWidth="350">
+             d:DesignHeight="510" d:DesignWidth="350">
     <StackPanel Margin="16" Width="300">
         <TextBox md:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
             <TextBox.Text>
@@ -62,6 +62,8 @@
                 </md:PackIcon.ToolTip>
             </md:PackIcon>
         </StackPanel>
+        <TextBox x:Name="Username" md:HintAssist.Hint="Username" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
+        <TextBox x:Name="Avatar" md:HintAssist.Hint="Avatar" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
         <TextBox x:Name="FooterText" md:HintAssist.Hint="Footer text" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
         <TextBox x:Name="FooterIcon" md:HintAssist.Hint="Footer icon" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
         <TextBox x:Name="WinImage" md:HintAssist.Hint="Win image/gif" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />

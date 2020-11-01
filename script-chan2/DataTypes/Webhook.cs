@@ -33,6 +33,10 @@ namespace script_chan2.DataTypes
         public string FooterIcon { get; set; }
 
         public string WinImage { get; set; }
+
+        public string Username { get; set; }
+
+        public string Avatar { get; set; }
         #endregion
 
         #region Actions

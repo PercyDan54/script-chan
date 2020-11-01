@@ -298,7 +298,7 @@ namespace script_chan2.Database
         {
             localLog.Information("init webhooks");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage FROM Webhooks", conn))
+            using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar FROM Webhooks", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -313,6 +313,8 @@ namespace script_chan2.Database
                     var footerText = reader["footerText"].ToString();
                     var footerIcon = reader["footerIcon"].ToString();
                     var winImage = reader["winImage"].ToString();
+                    var username = reader["username"].ToString();
+                    var avatar = reader["avatar"].ToString();
                     var webhook = new Webhook(id)
                     {
                         Name = name,
@@ -323,7 +325,9 @@ namespace script_chan2.Database
                         GameRecap = gameRecap,
                         FooterText = footerText,
                         FooterIcon = footerIcon,
-                        WinImage = winImage
+                        WinImage = winImage,
+                        Username = username,
+                        Avatar = avatar
                     };
                     Webhooks.Add(webhook);
                 }
@@ -338,8 +342,8 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage)" +
-                    "VALUES (@name, @url, @matchCreated, @banRecap, @pickRecap, @gameRecap, @footerText, @footerIcon, @winImage)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar)" +
+                    "VALUES (@name, @url, @matchCreated, @banRecap, @pickRecap, @gameRecap, @footerText, @footerIcon, @winImage, @username, @avatar)", conn))
                 {
                     command.Parameters.AddWithValue("@name", webhook.Name);
                     command.Parameters.AddWithValue("@url", webhook.URL);
@@ -350,6 +354,8 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@footerText", webhook.FooterText);
                     command.Parameters.AddWithValue("@footerIcon", webhook.FooterIcon);
                     command.Parameters.AddWithValue("@winImage", webhook.WinImage);
+                    command.Parameters.AddWithValue("@username", webhook.Username);
+                    command.Parameters.AddWithValue("@avatar", webhook.Avatar);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -380,7 +386,7 @@ namespace script_chan2.Database
             localLog.Information("update webhook '{name}'", webhook.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE Webhooks
-                SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap, footerText = @footerText, footerIcon = @footerIcon, winImage = @winImage
+                SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap, footerText = @footerText, footerIcon = @footerIcon, winImage = @winImage, username = @username, avatar = @avatar
                 WHERE id = @id", conn))
             {
                 command.Parameters.AddWithValue("@name", webhook.Name);
@@ -393,6 +399,8 @@ namespace script_chan2.Database
                 command.Parameters.AddWithValue("@footerText", webhook.FooterText);
                 command.Parameters.AddWithValue("@footerIcon", webhook.FooterIcon);
                 command.Parameters.AddWithValue("@winImage", webhook.WinImage);
+                command.Parameters.AddWithValue("@username", webhook.Username);
+                command.Parameters.AddWithValue("@avatar", webhook.Avatar);
                 command.ExecuteNonQuery();
                 conn.Close();
             }

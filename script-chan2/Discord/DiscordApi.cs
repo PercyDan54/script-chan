@@ -5,7 +5,6 @@ using script_chan2.DataTypes;
 using Serilog;
 using System;
 using System.Linq;
-using System.Web.UI.Design.WebControls;
 
 namespace script_chan2.Discord
 {
@@ -53,7 +52,7 @@ namespace script_chan2.Discord
 
                     using (var client = new DiscordWebhookClient(webhook.URL))
                     {
-                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
+                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
                     }
                 }
             }
@@ -135,7 +134,7 @@ namespace script_chan2.Discord
 
                     using (var client = new DiscordWebhookClient(webhook.URL))
                     {
-                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
+                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
                     }
                 }
             }
@@ -215,7 +214,7 @@ namespace script_chan2.Discord
 
                     using (var client = new DiscordWebhookClient(webhook.URL))
                     {
-                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
+                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
                     }
                 }
             }
@@ -338,7 +337,7 @@ namespace script_chan2.Discord
 
                     using (var client = new DiscordWebhookClient(webhook.URL))
                     {
-                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: "Script-chan", avatarUrl: "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png").GetAwaiter().GetResult();
+                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
                     }
                 }
             }

@@ -22,6 +22,8 @@ namespace script_chan2.GUI
                 FooterText = webhook.FooterText;
                 FooterIcon = webhook.FooterIcon;
                 WinImage = webhook.WinImage;
+                Username = webhook.Username;
+                Avatar = webhook.Avatar;
             }
             else
             {
@@ -34,6 +36,8 @@ namespace script_chan2.GUI
                 FooterText = "Woah! So cool!";
                 FooterIcon = "https://cdn.frankerfacez.com/emoticon/243789/4";
                 WinImage = "https://78.media.tumblr.com/b94193615145d12bfb64aa77b677269e/tumblr_njzqukOpBP1ti1gm1o1_500.gif";
+                Username = "Script-chan";
+                Avatar = "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png";
             }
         }
         #endregion
@@ -165,6 +169,34 @@ namespace script_chan2.GUI
                 {
                     winImage = value;
                     NotifyOfPropertyChange(() => WinImage);
+                }
+            }
+        }
+
+        private string username;
+        public string Username
+        {
+            get { return username; }
+            set
+            {
+                if (value != username)
+                {
+                    username = value;
+                    NotifyOfPropertyChange(() => Username);
+                }
+            }
+        }
+
+        private string avatar;
+        public string Avatar
+        {
+            get { return avatar; }
+            set
+            {
+                if (value != avatar)
+                {
+                    avatar = value;
+                    NotifyOfPropertyChange(() => Avatar);
                 }
             }
         }

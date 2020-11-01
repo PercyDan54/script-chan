@@ -70,6 +70,8 @@ namespace script_chan2.GUI
                 webhook.FooterText = model.FooterText;
                 webhook.FooterIcon = model.FooterIcon;
                 webhook.WinImage = model.WinImage;
+                webhook.Username = model.Username;
+                webhook.Avatar = model.Avatar;
                 webhook.Save();
                 NotifyOfPropertyChange(() => Name);
             }

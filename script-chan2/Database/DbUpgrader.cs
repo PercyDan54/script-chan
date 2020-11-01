@@ -73,6 +73,11 @@ namespace script_chan2.Database
                 UpgradeV8();
                 dbVersion = 9;
             }
+            if (dbVersion == 9)
+            {
+                UpgradeV9();
+                dbVersion = 10;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -241,6 +246,27 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 9 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV9()
+        {
+            localLog.Information("upgrade database to v9");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE Webhooks ADD COLUMN username TEXT", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"ALTER TABLE Webhooks ADD COLUMN avatar TEXT", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 10 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }
