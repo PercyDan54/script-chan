@@ -9,5 +9,7 @@
         public Team Team { get; set; }
 
         public Player Player { get; set; }
+
+        public int ListIndex { get; set; }
     }
 }

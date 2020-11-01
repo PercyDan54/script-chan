@@ -120,7 +120,7 @@ namespace script_chan2.GUI
                 {
                     foreach (var beatmap in SelectedMappool.Beatmaps.OrderBy(x => x.ListIndex))
                     {
-                        list.Add(new MatchBeatmapViewModel(match, beatmap));
+                        list.Add(new MatchBeatmapViewModel(match, beatmap, true));
                     }
                 }
                 return list;
@@ -1098,6 +1098,18 @@ namespace script_chan2.GUI
                     localLog.Information("match '{match}' set password", match.Name);
                 SendRoomMessage("!mp password " + model.Password);
             }
+        }
+
+        public async void OpenPickOverview()
+        {
+            localLog.Information("match '{match}' open pick overview dialog", match.Name);
+            var model = new MatchPickOverviewDialogViewModel(match, WindowHeight);
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            await DialogHost.Show(view, DialogIdentifier);
+            model.OnDeactivate();
+            NotifyOfPropertyChange(() => BeatmapsViews);
         }
 
         private void AddMessageToChat(IrcMessage message, bool init)

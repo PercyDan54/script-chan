@@ -14,10 +14,11 @@ namespace script_chan2.GUI
         private ILogger localLog = Log.ForContext<MatchBeatmapViewModel>();
 
         #region Constructor
-        public MatchBeatmapViewModel(Match match, MappoolMap beatmap)
+        public MatchBeatmapViewModel(Match match, MappoolMap beatmap, bool sendIrcCommands)
         {
             this.match = match;
             this.beatmap = beatmap;
+            this.sendIrcCommands = sendIrcCommands;
             Events.Aggregator.Subscribe(this);
         }
         #endregion
@@ -36,6 +37,8 @@ namespace script_chan2.GUI
         private Match match;
 
         private MappoolMap beatmap;
+
+        private bool sendIrcCommands;
 
         public string ModTag
         {
@@ -315,7 +318,8 @@ namespace script_chan2.GUI
             {
                 Match = match,
                 Map = beatmap,
-                Team = match.TeamRed
+                Team = match.TeamRed,
+                ListIndex = match.Bans.Count + 1
             });
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
@@ -323,6 +327,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("MapBanned");
         }
 
         public void BanBlue()
@@ -332,7 +337,8 @@ namespace script_chan2.GUI
             {
                 Match = match,
                 Map = beatmap,
-                Team = match.TeamBlue
+                Team = match.TeamBlue,
+                ListIndex = match.Bans.Count + 1
             });
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
@@ -340,6 +346,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("MapBanned");
         }
 
         public void BanPlayer(Player player)
@@ -349,7 +356,8 @@ namespace script_chan2.GUI
             {
                 Match = match,
                 Map = beatmap,
-                Player = player
+                Player = player,
+                ListIndex = match.Bans.Count + 1
             });
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
@@ -357,18 +365,24 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("MapBanned");
         }
 
         public void RemoveBan()
         {
             localLog.Information("match '{match}' unban beatmap '{beatmap}'", match.Name, beatmap.Beatmap.Title);
             match.Bans.RemoveAll(x => x.Map == beatmap);
+            for (var i = 0; i < match.Bans.Count; i++)
+            {
+                match.Bans[i].ListIndex = i + 1;
+            }
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnban);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("MapUnbanned");
         }
 
         public void PickRed()
@@ -378,7 +392,8 @@ namespace script_chan2.GUI
             {
                 Match = match,
                 Map = beatmap,
-                Team = match.TeamRed
+                Team = match.TeamRed,
+                ListIndex = match.Picks.Count + 1
             });
             match.WarmupMode = false;
             match.Save();
@@ -387,8 +402,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapPicked");
-            if (match.RoomId > 0)
-                SendPickMessage();
+            SendPickMessage();
         }
 
         public void PickBlue()
@@ -398,7 +412,8 @@ namespace script_chan2.GUI
             {
                 Match = match,
                 Map = beatmap,
-                Team = match.TeamBlue
+                Team = match.TeamBlue,
+                ListIndex = match.Picks.Count + 1
             });
             match.WarmupMode = false;
             match.Save();
@@ -407,8 +422,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapPicked");
-            if (match.RoomId > 0)
-                SendPickMessage();
+            SendPickMessage();
         }
 
         public void PickPlayer(Player player)
@@ -418,7 +432,8 @@ namespace script_chan2.GUI
             {
                 Match = match,
                 Map = beatmap,
-                Player = player
+                Player = player,
+                ListIndex = match.Picks.Count + 1
             });
             match.WarmupMode = false;
             match.Save();
@@ -428,8 +443,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapPicked");
-            if (match.RoomId > 0)
-                SendPickMessage();
+            SendPickMessage();
         }
 
         public void Pick()
@@ -438,7 +452,8 @@ namespace script_chan2.GUI
             match.Picks.Add(new MatchPick()
             {
                 Match = match,
-                Map = beatmap
+                Map = beatmap,
+                ListIndex = match.Picks.Count + 1
             });
             match.WarmupMode = false;
             match.Save();
@@ -448,24 +463,32 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapPicked");
-            if (match.RoomId > 0)
-                SendPickMessage();
+            SendPickMessage();
         }
 
         public void RemovePick()
         {
             localLog.Information("match '{match}' unpick beatmap '{beatmap}'", match.Name, beatmap.Beatmap.Title);
             match.Picks.RemoveAll(x => x.Map == beatmap);
+            for (var i = 0; i < match.Picks.Count; i++)
+            {
+                match.Picks[i].ListIndex = i + 1;
+            }
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
             NotifyOfPropertyChange(() => CanUnpick);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("MapUnpicked");
         }
 
         private void SendPickMessage()
         {
+            if (match.RoomId <= 0)
+                return;
             if (match.ViewerMode)
+                return;
+            if (!sendIrcCommands)
                 return;
             localLog.Information("match '{match}' send pick message for '{beatmap}'", match.Name, beatmap.Beatmap.Title);
             var mods = Utils.ConvertGameModsToString(beatmap.Mods);

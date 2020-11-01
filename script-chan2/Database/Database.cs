@@ -1,4 +1,5 @@
-﻿using script_chan2.DataTypes;
+﻿using Caliburn.Micro;
+using script_chan2.DataTypes;
 using script_chan2.Enums;
 using Serilog;
 using System;
@@ -1100,7 +1101,7 @@ namespace script_chan2.Database
                 }
                 foreach (var pick in match.Picks)
                 {
-                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker, ban) VALUES (@match, @beatmap, @picker, False)", conn))
+                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker, ban, listIndex) VALUES (@match, @beatmap, @picker, False, @listIndex)", conn))
                     {
                         command.Parameters.AddWithValue("@match", match.Id);
                         command.Parameters.AddWithValue("@beatmap", pick.Map.Id);
@@ -1108,12 +1109,13 @@ namespace script_chan2.Database
                             command.Parameters.AddWithValue("@picker", pick.Team.Id);
                         else if (match.TeamMode == TeamModes.HeadToHead)
                             command.Parameters.AddWithValue("@picker", pick.Player.Id);
+                        command.Parameters.AddWithValue("@listIndex", pick.ListIndex);
                         command.ExecuteNonQuery();
                     }
                 }
                 foreach (var pick in match.Bans)
                 {
-                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker, ban) VALUES (@match, @beatmap, @picker, True)", conn))
+                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker, ban, listIndex) VALUES (@match, @beatmap, @picker, True, @listIndex)", conn))
                     {
                         command.Parameters.AddWithValue("@match", match.Id);
                         command.Parameters.AddWithValue("@beatmap", pick.Map.Id);
@@ -1121,6 +1123,7 @@ namespace script_chan2.Database
                             command.Parameters.AddWithValue("@picker", pick.Team.Id);
                         else if (match.TeamMode == TeamModes.HeadToHead)
                             command.Parameters.AddWithValue("@picker", pick.Player.Id);
+                        command.Parameters.AddWithValue("@listIndex", pick.ListIndex);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -1275,7 +1278,7 @@ namespace script_chan2.Database
                 }
                 foreach (var pick in match.Picks)
                 {
-                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker, ban) VALUES (@match, @beatmap, @picker, False)", conn))
+                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker, ban, listIndex) VALUES (@match, @beatmap, @picker, False, @listIndex)", conn))
                     {
                         command.Parameters.AddWithValue("@match", match.Id);
                         command.Parameters.AddWithValue("@beatmap", pick.Map.Id);
@@ -1285,12 +1288,13 @@ namespace script_chan2.Database
                             command.Parameters.AddWithValue("@picker", pick.Player.Id);
                         else if (match.TeamMode == TeamModes.BattleRoyale)
                             command.Parameters.AddWithValue("@picker", DBNull.Value);
+                        command.Parameters.AddWithValue("@listIndex", pick.ListIndex);
                         command.ExecuteNonQuery();
                     }
                 }
                 foreach (var pick in match.Bans)
                 {
-                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker, ban) VALUES (@match, @beatmap, @picker, True)", conn))
+                    using (var command = new SQLiteCommand("INSERT INTO MatchPicks (match, beatmap, picker, ban, listIndex) VALUES (@match, @beatmap, @picker, True, @listIndex)", conn))
                     {
                         command.Parameters.AddWithValue("@match", match.Id);
                         command.Parameters.AddWithValue("@beatmap", pick.Map.Id);
@@ -1298,6 +1302,7 @@ namespace script_chan2.Database
                             command.Parameters.AddWithValue("@picker", pick.Team.Id);
                         else if (match.TeamMode == TeamModes.HeadToHead)
                             command.Parameters.AddWithValue("@picker", pick.Player.Id);
+                        command.Parameters.AddWithValue("@listIndex", pick.ListIndex);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -1410,13 +1415,15 @@ namespace script_chan2.Database
         {
             localLog.Information("init match picks");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT match, beatmap, picker, ban FROM MatchPicks", conn))
+            using (var command = new SQLiteCommand("SELECT match, beatmap, picker, ban, listIndex FROM MatchPicks ORDER BY listIndex ASC", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
                     var match = Matches.First(x => x.Id == Convert.ToInt32(reader["match"]));
-                    var beatmap = match.Mappool.Beatmaps.First(x => x.Id == Convert.ToInt32(reader["beatmap"]));
+                    var beatmap = match.Mappool.Beatmaps.FirstOrDefault(x => x.Id == Convert.ToInt32(reader["beatmap"]));
+                    if (beatmap == null)
+                        continue;
                     Team team = null;
                     Player player = null;
                     if (match.TeamMode == TeamModes.TeamVS)
@@ -1424,17 +1431,31 @@ namespace script_chan2.Database
                     else if (match.TeamMode == TeamModes.HeadToHead)
                         player = await GetPlayer(reader["picker"].ToString());
                     var ban = Convert.ToBoolean(reader["ban"]);
+                    int listIndex;
+                    if (reader["listIndex"] != DBNull.Value)
+                        listIndex = Convert.ToInt32(reader["listIndex"]);
+                    else
+                        listIndex = 0;
                     var pick = new MatchPick()
                     {
                         Match = match,
                         Map = beatmap,
                         Team = team,
-                        Player = player
+                        Player = player,
+                        ListIndex = listIndex
                     };
                     if (ban)
+                    {
+                        if (pick.ListIndex == 0)
+                            pick.ListIndex = match.Bans.Count + 1;
                         match.Bans.Add(pick);
+                    }
                     else
+                    {
+                        if (pick.ListIndex == 0)
+                            pick.ListIndex = match.Picks.Count + 1;
                         match.Picks.Add(pick);
+                    }
                 }
                 conn.Close();
             }

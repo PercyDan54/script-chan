@@ -183,6 +183,7 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
@@ -194,8 +195,9 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <CheckBox x:Name="WarmupMode" Content="Warmup mode" Grid.Column="1" Margin="10 0 0 0" />
-                    <Button x:Name="PickNextMap" Content="Pick next map" Grid.Column="2" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}" />
-                    <ScrollViewer Grid.Row="1" Grid.ColumnSpan="3">
+                    <Button x:Name="OpenPickOverview" Content="Picks/Bans" Grid.Column="2" Margin="10 0 0 0" />
+                    <Button x:Name="PickNextMap" Content="Pick next map" Grid.Column="3" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}" />
+                    <ScrollViewer Grid.Row="1" Grid.ColumnSpan="4">
                         <ItemsControl ItemsSource="{Binding BeatmapsViews}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

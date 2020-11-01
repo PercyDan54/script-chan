@@ -68,6 +68,11 @@ namespace script_chan2.Database
                 UpgradeV7();
                 dbVersion = 8;
             }
+            if (dbVersion == 8)
+            {
+                UpgradeV8();
+                dbVersion = 9;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -219,6 +224,23 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 8 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV8()
+        {
+            localLog.Information("upgrade database to v9");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE MatchPicks ADD COLUMN listIndex INTEGER", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 9 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }
