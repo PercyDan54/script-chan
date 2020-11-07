@@ -92,6 +92,7 @@ namespace script_chan2.GUI
             ViewModelBinder.Bind(model, view, null);
 
             await DialogHost.Show(view, "MainDialogHost");
+            model.OnDeactivate();
         }
 
         public async void Delete()

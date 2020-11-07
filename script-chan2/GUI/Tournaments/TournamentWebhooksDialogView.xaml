@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{Binding Path=Name, StringFormat=Webhooks of {0}}" FontSize="20" />
         <ScrollViewer Grid.Row="1">
@@ -29,6 +30,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <Button Grid.Row="2" HorizontalAlignment="Right" Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
+        <TextBlock Grid.Row="2" Text="You have multiple Webhooks sending the same message to the same channel!" Foreground="Red" FontSize="14" Visibility="{Binding DuplicateVisibility}" />
+        <Button Grid.Row="3" HorizontalAlignment="Right" Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
     </Grid>
 </UserControl>

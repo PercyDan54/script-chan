@@ -1,15 +1,33 @@
 ﻿using Caliburn.Micro;
 using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
+using System.Linq;
+using System.Windows;
 
 namespace script_chan2.GUI
 {
-    public class TournamentWebhooksDialogViewModel : Screen
+    public class TournamentWebhooksDialogViewModel : Screen, IHandle<string>
     {
         #region Constructor
         public TournamentWebhooksDialogViewModel(Tournament tournament)
         {
             this.tournament = tournament;
+            Events.Aggregator.Subscribe(this);
+        }
+
+        public void OnDeactivate()
+        {
+            Events.Aggregator.Unsubscribe(this);
+        }
+        #endregion
+
+        #region Events
+        public void Handle(string message)
+        {
+            if (message == "WebhookActiveToggle")
+            {
+                NotifyOfPropertyChange(() => DuplicateVisibility);
+            }
         }
         #endregion
 
@@ -29,6 +47,22 @@ namespace script_chan2.GUI
                 foreach (var webhook in Database.Database.Webhooks)
                     list.Add(new TournamentWebhookListItemViewModel(tournament, webhook));
                 return list;
+            }
+        }
+
+        public Visibility DuplicateVisibility
+        {
+            get
+            {
+                if (tournament.Webhooks.Where(x => x.MatchCreated).GroupBy(x => x.Channel).Any(x => x.Count() > 1))
+                    return Visibility.Visible;
+                if (tournament.Webhooks.Where(x => x.BanRecap).GroupBy(x => x.Channel).Any(x => x.Count() > 1))
+                    return Visibility.Visible;
+                if (tournament.Webhooks.Where(x => x.PickRecap).GroupBy(x => x.Channel).Any(x => x.Count() > 1))
+                    return Visibility.Visible;
+                if (tournament.Webhooks.Where(x => x.GameRecap).GroupBy(x => x.Channel).Any(x => x.Count() > 1))
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
             }
         }
         #endregion

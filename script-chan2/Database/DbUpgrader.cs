@@ -78,6 +78,11 @@ namespace script_chan2.Database
                 UpgradeV9();
                 dbVersion = 10;
             }
+            if (dbVersion == 10)
+            {
+                UpgradeV10();
+                dbVersion = 11;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -255,7 +260,7 @@ namespace script_chan2.Database
 
         private static void UpgradeV9()
         {
-            localLog.Information("upgrade database to v9");
+            localLog.Information("upgrade database to v10");
             using (var conn = GetConnection())
             {
                 using (var command = new SQLiteCommand(@"ALTER TABLE Webhooks ADD COLUMN username TEXT", conn))
@@ -267,6 +272,27 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 10 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV10()
+        {
+            localLog.Information("upgrade database to v11");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE Webhooks ADD COLUMN guild TEXT", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"ALTER TABLE Webhooks ADD COLUMN channel TEXT", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 11 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

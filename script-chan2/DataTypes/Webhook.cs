@@ -37,6 +37,10 @@ namespace script_chan2.DataTypes
         public string Username { get; set; }
 
         public string Avatar { get; set; }
+
+        public string Guild { get; set; }
+
+        public string Channel { get; set; }
         #endregion
 
         #region Actions

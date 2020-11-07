@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
+using script_chan2.Discord;
 using Serilog;
 using System;
 using System.Windows.Media;
@@ -72,6 +73,7 @@ namespace script_chan2.GUI
                 webhook.WinImage = model.WinImage;
                 webhook.Username = model.Username;
                 webhook.Avatar = model.Avatar;
+                await DiscordApi.SetWebhookChannel(webhook);
                 webhook.Save();
                 NotifyOfPropertyChange(() => Name);
             }

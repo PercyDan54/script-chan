@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using script_chan2.DataTypes;
+using script_chan2.Discord;
 using script_chan2.Enums;
 using Serilog;
 using System;
@@ -30,7 +31,7 @@ namespace script_chan2.Database
             InitTournamentHeadToHeadPoints();
             InitTeams();
             InitTeamPlayers().Wait();
-            InitWebhooks();
+            InitWebhooks().Wait();
             InitMappools();
             InitMappoolMaps().Wait();
             InitTournamentWebhooks();
@@ -294,11 +295,11 @@ namespace script_chan2.Database
         #endregion
 
         #region Webhooks
-        public static void InitWebhooks()
+        public static async Task InitWebhooks()
         {
             localLog.Information("init webhooks");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar FROM Webhooks", conn))
+            using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar, guild, channel FROM Webhooks", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -315,6 +316,8 @@ namespace script_chan2.Database
                     var winImage = reader["winImage"].ToString();
                     var username = reader["username"].ToString();
                     var avatar = reader["avatar"].ToString();
+                    var guild = reader["guild"].ToString();
+                    var channel = reader["channel"].ToString();
                     var webhook = new Webhook(id)
                     {
                         Name = name,
@@ -327,12 +330,22 @@ namespace script_chan2.Database
                         FooterIcon = footerIcon,
                         WinImage = winImage,
                         Username = username,
-                        Avatar = avatar
+                        Avatar = avatar,
+                        Guild = guild,
+                        Channel = channel
                     };
                     Webhooks.Add(webhook);
                 }
                 reader.Close();
                 conn.Close();
+            }
+            foreach (var webhook in Webhooks)
+            {
+                if (string.IsNullOrEmpty(webhook.Guild))
+                {
+                    await DiscordApi.SetWebhookChannel(webhook);
+                    webhook.Save();
+                }
             }
         }
 
@@ -342,8 +355,8 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar)" +
-                    "VALUES (@name, @url, @matchCreated, @banRecap, @pickRecap, @gameRecap, @footerText, @footerIcon, @winImage, @username, @avatar)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar, guild, channel)" +
+                    "VALUES (@name, @url, @matchCreated, @banRecap, @pickRecap, @gameRecap, @footerText, @footerIcon, @winImage, @username, @avatar, @guild, @channel)", conn))
                 {
                     command.Parameters.AddWithValue("@name", webhook.Name);
                     command.Parameters.AddWithValue("@url", webhook.URL);
@@ -356,6 +369,8 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@winImage", webhook.WinImage);
                     command.Parameters.AddWithValue("@username", webhook.Username);
                     command.Parameters.AddWithValue("@avatar", webhook.Avatar);
+                    command.Parameters.AddWithValue("@guild", webhook.Guild);
+                    command.Parameters.AddWithValue("@channel", webhook.Channel);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -386,12 +401,11 @@ namespace script_chan2.Database
             localLog.Information("update webhook '{name}'", webhook.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE Webhooks
-                SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap, footerText = @footerText, footerIcon = @footerIcon, winImage = @winImage, username = @username, avatar = @avatar
+                SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap, footerText = @footerText, footerIcon = @footerIcon, winImage = @winImage, username = @username, avatar = @avatar, guild = @guild, channel = @channel
                 WHERE id = @id", conn))
             {
                 command.Parameters.AddWithValue("@name", webhook.Name);
                 command.Parameters.AddWithValue("@url", webhook.URL);
-                command.Parameters.AddWithValue("@id", webhook.Id);
                 command.Parameters.AddWithValue("@matchCreated", webhook.MatchCreated);
                 command.Parameters.AddWithValue("@banRecap", webhook.BanRecap);
                 command.Parameters.AddWithValue("@pickRecap", webhook.PickRecap);
@@ -401,6 +415,9 @@ namespace script_chan2.Database
                 command.Parameters.AddWithValue("@winImage", webhook.WinImage);
                 command.Parameters.AddWithValue("@username", webhook.Username);
                 command.Parameters.AddWithValue("@avatar", webhook.Avatar);
+                command.Parameters.AddWithValue("@guild", webhook.Guild);
+                command.Parameters.AddWithValue("@channel", webhook.Channel);
+                command.Parameters.AddWithValue("@id", webhook.Id);
                 command.ExecuteNonQuery();
                 conn.Close();
             }

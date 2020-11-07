@@ -42,6 +42,7 @@ namespace script_chan2.GUI
                     tournament.RemoveWebhook(webhook);
                 }
                 NotifyOfPropertyChange(() => Active);
+                Events.Aggregator.PublishOnUIThread("WebhookActiveToggle");
             }
         }
         #endregion

@@ -321,6 +321,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataTypes\IrcConnectedData.cs" />
+    <Compile Include="Discord\ApiDataTypes.cs" />
     <Compile Include="Enums\IrcStatus.cs" />
     <Compile Include="GUI\Match\MatchPickOverviewDialogViewModel.cs" />
     <Compile Include="Themes\DefaultColors.cs" />

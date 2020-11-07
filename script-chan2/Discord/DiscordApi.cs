@@ -1,10 +1,13 @@
 ﻿using Discord;
 using Discord.Webhook;
 using DiscordRPC;
+using Newtonsoft.Json;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace script_chan2.Discord
 {
@@ -360,6 +363,25 @@ namespace script_chan2.Discord
         public static void StopRichPresence()
         {
             rpcClient.Dispose();
+        }
+
+        public static async Task SetWebhookChannel(Webhook webhook)
+        {
+            localLog.Information("get channel info for webhook {name}", webhook.Name);
+            using (var webClient = new WebClient())
+            {
+                try
+                {
+                    var response = await webClient.DownloadStringTaskAsync(webhook.URL);
+                    var data = JsonConvert.DeserializeObject<ApiWebhook>(response);
+                    webhook.Guild = data.guild_id;
+                    webhook.Channel = data.channel_id;
+                }
+                catch (Exception ex)
+                {
+                    localLog.Error(ex, "error retrieving webhook info");
+                }
+            }
         }
     }
 }

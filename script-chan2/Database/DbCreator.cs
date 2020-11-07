@@ -62,7 +62,7 @@ namespace script_chan2.Database
                 ('defaultTimerCommand', '120'),
                 ('defaultTimerAfterGame', '120'),
                 ('defaultTimerAfterPick', '120'),
-                ('dbVersion', '10')", conn))
+                ('dbVersion', '11')", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -107,7 +107,9 @@ namespace script_chan2.Database
                 footerIcon TEXT,
                 winImage TEXT,
                 username TEXT,
-                avatar TEXT)", conn))
+                avatar TEXT,
+                guild TEXT,
+                channel TEXT)", conn))
             {
                 command.ExecuteNonQuery();
             }
