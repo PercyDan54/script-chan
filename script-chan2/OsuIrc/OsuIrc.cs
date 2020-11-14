@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Meebey.SmartIrc4net;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
 using script_chan2.GUI;
@@ -7,8 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Timers;
-using TechLifeForum;
 
 namespace script_chan2.OsuIrc
 {
@@ -29,7 +30,7 @@ namespace script_chan2.OsuIrc
         private static Regex regexSwitchedLine = new Regex("^Switched ([a-zA-Z0-9_\\- ]+) to the tournament server$");
         private static Regex regexCreateCommand = new Regex(@"^Created the tournament match https:\/\/osu\.ppy\.sh\/mp\/(\d+) (.*)$");
 
-        private static Timer sendMessageTimer;
+        private static System.Timers.Timer sendMessageTimer;
         private static Queue<IrcMessage> messageQueue;
 
         private static List<IrcMessage> messagesToSave = new List<IrcMessage>();
@@ -42,42 +43,44 @@ namespace script_chan2.OsuIrc
                 return;
             try
             {
-                if (client != null && client.Connected)
+                if (client != null && client.IsConnected)
                     client.Disconnect();
 
-                client = new IrcClient("irc.ppy.sh");
-                client.ServerMessage += Client_ServerMessage;
-                client.PrivateMessage += Client_PrivateMessage;
-                client.ChannelMessage += Client_ChannelMessage;
-                client.OnConnect += Client_OnConnect;
-                client.ExceptionThrown += Client_ExceptionThrown;
-                client.Nick = Settings.IrcUsername;
-                client.ServerPass = Settings.IrcPassword;
-                client.Connect();
+                client = new IrcClient() { ActiveChannelSyncing = true };
+                client.OnError += Client_OnError;
+                client.OnErrorMessage += Client_OnErrorMessage;
+                client.OnQueryMessage += Client_OnQueryMessage;
+                client.OnChannelMessage += Client_OnChannelMessage;
+                client.OnRegistered += Client_OnRegistered;
+                client.OnDisconnected += Client_OnDisconnected;
+                client.Connect(new string[] { "irc.ppy.sh" }, 6667);
+                client.Login(Settings.IrcUsername, Settings.IrcUsername, 0, Settings.IrcUsername, Settings.IrcPassword);
+                new Thread(new ThreadStart(client.Listen)).Start();
 
                 if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate))
                 {
                     PrivateConnectionStatus = IrcStatus.Connecting;
 
-                    if (privateClient != null && privateClient.Connected)
+                    if (privateClient != null && privateClient.IsConnected)
                         privateClient.Disconnect();
 
-                    privateClient = new IrcClient(Settings.IrcIpPrivate);
-                    privateClient.ServerMessage += Client_ServerMessage;
-                    privateClient.PrivateMessage += Client_PrivateMessage;
-                    privateClient.ChannelMessage += Client_ChannelMessage;
-                    privateClient.OnConnect += Client_OnConnectPrivate;
-                    privateClient.ExceptionThrown += Client_ExceptionThrownPrivate;
-                    privateClient.Nick = Settings.IrcUsername;
-                    privateClient.ServerPass = Settings.IrcPassword;
-                    privateClient.Connect();
+                    privateClient = new IrcClient();
+                    privateClient.OnError += PrivateClient_OnError;
+                    privateClient.OnErrorMessage += Client_OnErrorMessage;
+                    privateClient.OnQueryMessage += Client_OnQueryMessage;
+                    privateClient.OnChannelMessage += Client_OnChannelMessage;
+                    privateClient.OnRegistered += PrivateClient_OnRegistered;
+                    privateClient.OnDisconnected += PrivateClient_OnDisconnected;
+                    privateClient.Connect(new string[] { Settings.IrcIpPrivate }, 6667);
+                    privateClient.Login(Settings.IrcUsername, Settings.IrcUsername, 0, Settings.IrcUsername, Settings.IrcPassword);
+                    new Thread(new ThreadStart(client.Listen)).Start();
                 }
 
                 messageQueue = new Queue<IrcMessage>();
 
                 if (sendMessageTimer != null)
                     sendMessageTimer.Stop();
-                sendMessageTimer = new Timer();
+                sendMessageTimer = new System.Timers.Timer();
                 sendMessageTimer.Elapsed += SendNextMessage;
                 sendMessageTimer.Interval = Settings.IrcTimeout;
                 sendMessageTimer.AutoReset = true;
@@ -89,9 +92,101 @@ namespace script_chan2.OsuIrc
             }
         }
 
+        private static void Client_OnDisconnected(object sender, EventArgs e)
+        {
+            ConnectionStatus = IrcStatus.Disconnected;
+        }
+
+        private static void PrivateClient_OnDisconnected(object sender, EventArgs e)
+        {
+            PrivateConnectionStatus = IrcStatus.Disconnected;
+        }
+
+        private static void Client_OnErrorMessage(object sender, IrcEventArgs e)
+        {
+            if (e.Data.Message.Contains("Bad authentication token"))
+            {
+                ConnectionStatus = IrcStatus.Disconnected;
+                PrivateConnectionStatus = IrcStatus.Disconnected;
+            }
+        }
+
+        private static void Client_OnChannelMessage(object sender, IrcEventArgs e)
+        {
+            log.Information("[{bancho}] {channel} | {user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Data.Channel, e.Data.Nick, e.Data.Message);
+
+            var data = new ChannelMessageData()
+            {
+                Channel = e.Data.Channel,
+                User = e.Data.Nick,
+                Message = e.Data.Message
+            };
+            Events.Aggregator.PublishOnUIThread(data);
+
+            var ircMessage = new IrcMessage() { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
+            var match = Database.Database.Matches.FirstOrDefault(x => "#mp_" + x.RoomId == data.Channel);
+            if (match != null)
+                ircMessage.Match = match;
+            messagesToSave.Add(ircMessage);
+            if (messagesToSave.Count >= 5)
+            {
+                Database.Database.AddIrcMessages(messagesToSave.ToList());
+                messagesToSave.Clear();
+            }
+        }
+
+        private static void Client_OnQueryMessage(object sender, IrcEventArgs e)
+        {
+            log.Information("[{bancho}] #{user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Data.Nick, e.Data.Message);
+
+            if (e.Data.Nick == "BanchoBot")
+            {
+                var createData = regexCreateCommand.Match(e.Data.Message);
+                if (createData.Success)
+                {
+                    var data = new RoomCreatedData()
+                    {
+                        Id = Convert.ToInt32(createData.Groups[1].Value),
+                        Name = createData.Groups[2].Value
+                    };
+                    Events.Aggregator.PublishOnUIThread(data);
+                }
+            }
+
+            var data2 = new PrivateMessageData()
+            {
+                Channel = e.Data.Nick,
+                User = e.Data.Nick,
+                Message = e.Data.Message
+            };
+
+            var ircMessage = new IrcMessage() { Channel = data2.Channel, User = data2.User, Timestamp = DateTime.Now, Message = data2.Message };
+            if (!ChatList.UserChats.Any(x => x.User == data2.Channel))
+            {
+                var newUserChat = new UserChat() { User = data2.Channel };
+                newUserChat.LoadMessages();
+                ChatList.UserChats.Add(newUserChat);
+            }
+            var userChat = ChatList.UserChats.First(x => x.User == ircMessage.Channel);
+            userChat.AddMessage(ircMessage);
+
+            messagesToSave.Add(ircMessage);
+            if (messagesToSave.Count >= 5)
+            {
+                Database.Database.AddIrcMessages(messagesToSave.ToList());
+                messagesToSave.Clear();
+            }
+
+            Events.Aggregator.PublishOnUIThread(data2);
+        }
+
         public static void Shutdown()
         {
             Database.Database.AddIrcMessages(messagesToSave.ToList());
+            if (client != null && client.IsConnected)
+                client.Disconnect();
+            if (privateClient != null && privateClient.IsConnected)
+                privateClient.Disconnect();
         }
 
         private static void SendNextMessage(object sender, ElapsedEventArgs e)
@@ -120,12 +215,12 @@ namespace script_chan2.OsuIrc
             if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate) && !ircMessage.Message.StartsWith("!mp switch"))
             {
                 log.Information("[Private Bancho] {channel} | {user}: {message}", ircMessage.Channel, ircMessage.User, ircMessage.Message);
-                privateClient.SendMessage(ircMessage.Channel, ircMessage.Message);
+                privateClient.SendMessage(SendType.Message, ircMessage.Channel, ircMessage.Message);
             }
             else
             {
                 log.Information("[Bancho] {channel} | {user}: {message}", ircMessage.Channel, ircMessage.User, ircMessage.Message);
-                client.SendMessage(ircMessage.Channel, ircMessage.Message);
+                client.SendMessage(SendType.Message, ircMessage.Channel, ircMessage.Message);
             }
 
             if (ircMessage.Channel.StartsWith("#"))
@@ -167,123 +262,30 @@ namespace script_chan2.OsuIrc
             }
         }
 
-        private static void Client_ExceptionThrown(object sender, ExceptionEventArgs e)
+        private static void Client_OnError(object sender, ErrorEventArgs e)
         {
-            localLog.Error(e.Exception, "irc exception caught");
+            localLog.Error(e.ErrorMessage, "irc exception caught");
             client.Disconnect();
             ConnectionStatus = IrcStatus.Disconnected;
         }
 
-        private static void Client_ExceptionThrownPrivate(object sender, ExceptionEventArgs e)
+        private static void PrivateClient_OnError(object sender, ErrorEventArgs e)
         {
-            localLog.Error(e.Exception, "private irc exception caught");
+            localLog.Error(e.ErrorMessage, "private irc exception caught");
             client.Disconnect();
             PrivateConnectionStatus = IrcStatus.Disconnected;
         }
 
-        private static void Client_OnConnect(object sender, EventArgs e)
+        private static void Client_OnRegistered(object sender, EventArgs e)
         {
             localLog.Information("connected");
             ConnectionStatus = IrcStatus.Connected;
         }
 
-        private static void Client_OnConnectPrivate(object sender, EventArgs e)
+        private static void PrivateClient_OnRegistered(object sender, EventArgs e)
         {
             localLog.Information("private connected");
             PrivateConnectionStatus = IrcStatus.Connected;
-        }
-
-        private static void Client_ChannelMessage(object sender, ChannelMessageEventArgs e)
-        {
-            log.Information("[{bancho}] {channel} | {user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Channel, e.From, e.Message);
-
-            var data = new ChannelMessageData()
-            {
-                Channel = e.Channel,
-                User = e.From,
-                Message = e.Message
-            };
-            Events.Aggregator.PublishOnUIThread(data);
-
-            var ircMessage = new IrcMessage() { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
-            var match = Database.Database.Matches.FirstOrDefault(x => "#mp_" + x.RoomId == data.Channel);
-            if (match != null)
-                ircMessage.Match = match;
-            messagesToSave.Add(ircMessage);
-            if (messagesToSave.Count >= 5)
-            {
-                Database.Database.AddIrcMessages(messagesToSave.ToList());
-                messagesToSave.Clear();
-            }
-        }
-
-        private static void Client_PrivateMessage(object sender, PrivateMessageEventArgs e)
-        {
-            log.Information("[{bancho}] #{user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.From, e.Message);
-
-            if (e.From == "BanchoBot")
-            {
-                var createData = regexCreateCommand.Match(e.Message);
-                if (createData.Success)
-                {
-                    var data = new RoomCreatedData()
-                    {
-                        Id = Convert.ToInt32(createData.Groups[1].Value),
-                        Name = createData.Groups[2].Value
-                    };
-                    Events.Aggregator.PublishOnUIThread(data);
-                }
-            }
-
-            var data2 = new PrivateMessageData()
-            {
-                Channel = e.From,
-                User = e.From,
-                Message = e.Message
-            };
-
-            var ircMessage = new IrcMessage() { Channel = data2.Channel, User = data2.User, Timestamp = DateTime.Now, Message = data2.Message };
-            if (!ChatList.UserChats.Any(x => x.User == data2.Channel))
-            {
-                var newUserChat = new UserChat() { User = data2.Channel };
-                newUserChat.LoadMessages();
-                ChatList.UserChats.Add(newUserChat);
-            }
-            var userChat = ChatList.UserChats.First(x => x.User == ircMessage.Channel);
-            userChat.AddMessage(ircMessage);
-
-            messagesToSave.Add(ircMessage);
-            if (messagesToSave.Count >= 5)
-            {
-                Database.Database.AddIrcMessages(messagesToSave.ToList());
-                messagesToSave.Clear();
-            }
-
-            Events.Aggregator.PublishOnUIThread(data2);
-        }
-
-        private static void Client_ServerMessage(object sender, StringEventArgs e)
-        {
-            log.Information("[{bancho}] $server$: {message}", sender == client ? "Bancho" : "Private Bancho", e.Result);
-
-            var data = new PrivateMessageData()
-            {
-                Channel = "Server",
-                User = "Server",
-                Message = e.Result
-            };
-
-            var ircMessage = new IrcMessage() { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
-            var userChat = ChatList.UserChats.First(x => x.User == ircMessage.Channel);
-            userChat.AddMessage(ircMessage);
-
-            Events.Aggregator.PublishOnUIThread(data);
-
-            if (e.Result.Contains("Bad authentication token"))
-            {
-                ConnectionStatus = IrcStatus.Disconnected;
-                PrivateConnectionStatus = IrcStatus.Disconnected;
-            }
         }
 
         private static IrcStatus connectionStatus;
@@ -331,12 +333,12 @@ namespace script_chan2.OsuIrc
             if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate))
             {
                 if (privateClient != null)
-                    privateClient.JoinChannel(channel);
+                    privateClient.RfcJoin(channel);
             }
             else
             {
                 if (client != null)
-                    client.JoinChannel(channel);
+                    client.RfcJoin(channel);
             }
         }
 
@@ -346,12 +348,12 @@ namespace script_chan2.OsuIrc
             if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate))
             {
                 if (privateClient != null)
-                    privateClient.PartChannel(channel);
+                    privateClient.RfcPart(channel);
             }
             else
             {
                 if (client != null)
-                    client.PartChannel(channel);
+                    client.RfcPart(channel);
             }
         }
     }
