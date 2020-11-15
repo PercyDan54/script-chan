@@ -94,16 +94,19 @@ namespace script_chan2.OsuIrc
 
         private static void Client_OnDisconnected(object sender, EventArgs e)
         {
+            localLog.Information("disconnected");
             ConnectionStatus = IrcStatus.Disconnected;
         }
 
         private static void PrivateClient_OnDisconnected(object sender, EventArgs e)
         {
+            localLog.Information("private disconnected");
             PrivateConnectionStatus = IrcStatus.Disconnected;
         }
 
         private static void Client_OnErrorMessage(object sender, IrcEventArgs e)
         {
+            localLog.Information("[{bancho}] Error | {error}", sender == client ? "Bancho" : "Private Bancho", e.Data.Message);
             if (e.Data.Message.Contains("Bad authentication token"))
             {
                 ConnectionStatus = IrcStatus.Disconnected;
