@@ -38,13 +38,24 @@ namespace script_chan2.OsuIrc
         public static void Login()
         {
             localLog.Information("login");
-            ConnectionStatus = IrcStatus.Connecting;
+
+            if (privateClient != null && privateClient.IsConnected)
+            {
+                privateClient.RfcQuit();
+                privateClient.Disconnect();
+            }
+            if (client != null && client.IsConnected)
+            {
+                client.RfcQuit();
+                client.Disconnect();
+            }
+
             if (Settings.IrcUsername == null || Settings.IrcPassword == null)
                 return;
+
             try
             {
-                if (client != null && client.IsConnected)
-                    client.Disconnect();
+                ConnectionStatus = IrcStatus.Connecting;
 
                 client = new IrcClient() { ActiveChannelSyncing = true };
                 client.OnError += Client_OnError;
@@ -61,9 +72,6 @@ namespace script_chan2.OsuIrc
                 {
                     PrivateConnectionStatus = IrcStatus.Connecting;
 
-                    if (privateClient != null && privateClient.IsConnected)
-                        privateClient.Disconnect();
-
                     privateClient = new IrcClient();
                     privateClient.OnError += PrivateClient_OnError;
                     privateClient.OnErrorMessage += Client_OnErrorMessage;
@@ -73,7 +81,7 @@ namespace script_chan2.OsuIrc
                     privateClient.OnDisconnected += PrivateClient_OnDisconnected;
                     privateClient.Connect(new string[] { Settings.IrcIpPrivate }, 6667);
                     privateClient.Login(Settings.IrcUsername, Settings.IrcUsername, 0, Settings.IrcUsername, Settings.IrcPassword);
-                    new Thread(new ThreadStart(client.Listen)).Start();
+                    new Thread(new ThreadStart(privateClient.Listen)).Start();
                 }
 
                 messageQueue = new Queue<IrcMessage>();
