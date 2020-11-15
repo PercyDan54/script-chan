@@ -137,7 +137,7 @@ namespace script_chan2.OsuIrc
 
         private static void Client_OnQueryMessage(object sender, IrcEventArgs e)
         {
-            log.Information("[{bancho}] #{user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Data.Nick, e.Data.Message);
+            log.Information("[{bancho}] {user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Data.Nick, e.Data.Message);
 
             if (e.Data.Nick == "BanchoBot")
             {
