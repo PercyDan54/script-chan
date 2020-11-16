@@ -221,6 +221,7 @@
                     </Grid.RowDefinitions>
                     <WrapPanel x:Name="Control2" Grid.Row="0" Margin="2">
                         <Button x:Name="SwitchPlayers" Content="Switch players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SwitchPlayersBack" Content="Switch players back" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="InvitePlayers" Content="Invite players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="SendWelcomeString" Content="Welcome string" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="SetPassword" Content="Set password" Margin="5" Visibility="{Binding RoomOpenVisible}" />

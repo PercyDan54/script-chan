@@ -48,6 +48,7 @@ namespace script_chan2.GUI
             NotifyOfPropertyChange(() => HasModTiebreaker);
             NotifyOfPropertyChange(() => HasModNF);
             NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("UpdateMappoolMap");
         }
 
         public bool HasModHD

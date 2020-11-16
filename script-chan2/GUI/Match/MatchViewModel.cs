@@ -529,6 +529,10 @@ namespace script_chan2.GUI
             {
                 NotifyOfPropertyChange(() => WarmupMode);
             }
+            else if (message == "UpdateMappoolMap")
+            {
+                NotifyOfPropertyChange(() => BeatmapsViews);
+            }
         }
         #endregion
 
