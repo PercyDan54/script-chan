@@ -214,7 +214,8 @@ namespace script_chan2.OsuIrc
                     {
                         Channel = split[1],
                         Message = string.Join(" ", split.Skip(2)),
-                        User = Settings.IrcUsername
+                        User = Settings.IrcUsername,
+                        ForcePrivate = ircMessage.ForcePrivate
                     };
                 }
             }
@@ -222,7 +223,7 @@ namespace script_chan2.OsuIrc
             if (ircMessage.Channel == "Server")
                 return;
 
-            if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate) && !ircMessage.Message.StartsWith("!mp switch"))
+            if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate) && (!ircMessage.Message.StartsWith("!mp switch") || ircMessage.ForcePrivate))
             {
                 log.ForContext("channel", ircMessage.Channel).Information("[Private Bancho] {user}: {message}", ircMessage.User, ircMessage.Message);
                 privateClient.SendMessage(SendType.Message, ircMessage.Channel, ircMessage.Message);
@@ -328,9 +329,9 @@ namespace script_chan2.OsuIrc
             }
         }
 
-        public static void SendMessage(string channel, string message)
+        public static void SendMessage(string channel, string message, bool forcePrivate = false)
         {
-            var ircMessage = new IrcMessage { Channel = channel, Message = message, User = Settings.IrcUsername, Timestamp = DateTime.Now };
+            var ircMessage = new IrcMessage { Channel = channel, Message = message, User = Settings.IrcUsername, Timestamp = DateTime.Now, ForcePrivate = forcePrivate };
             var match = Database.Database.Matches.FirstOrDefault(x => "#mp_" + x.RoomId == channel);
             if (match != null)
                 ircMessage.Match = match;

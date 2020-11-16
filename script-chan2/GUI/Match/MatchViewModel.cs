@@ -1016,6 +1016,15 @@ namespace script_chan2.GUI
             }
         }
 
+        public void SwitchPlayersBack()
+        {
+            localLog.Information("match '{match}' switch players back", match.Name);
+            foreach (var player in match.GetPlayerList())
+            {
+                OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch " + player, true);
+            }
+        }
+
         public void InvitePlayers()
         {
             localLog.Information("match '{match}' invite players", match.Name);

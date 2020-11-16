@@ -9,5 +9,7 @@ namespace script_chan2.DataTypes
         public string Channel { get; set; }
         public string User { get; set; }
         public string Message { get; set; }
+
+        public bool ForcePrivate { get; set; } = false;
     }
 }
