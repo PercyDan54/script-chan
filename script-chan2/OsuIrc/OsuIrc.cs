@@ -17,8 +17,7 @@ namespace script_chan2.OsuIrc
     {
         private static ILogger localLog = Log.ForContext(typeof(OsuIrc));
         private static ILogger log = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .WriteTo.File("logs\\irc.txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.Map("channel", "other", (channel, wt) => wt.File($"logs\\irc-{channel}.txt"))
             .CreateLogger();
 
         private static IrcClient client;
@@ -124,7 +123,7 @@ namespace script_chan2.OsuIrc
 
         private static void Client_OnChannelMessage(object sender, IrcEventArgs e)
         {
-            log.Information("[{bancho}] {channel} | {user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Data.Channel, e.Data.Nick, e.Data.Message);
+            log.ForContext("channel", e.Data.Channel).Information("[{bancho}] {user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Data.Nick, e.Data.Message);
 
             var data = new ChannelMessageData()
             {
@@ -148,7 +147,7 @@ namespace script_chan2.OsuIrc
 
         private static void Client_OnQueryMessage(object sender, IrcEventArgs e)
         {
-            log.Information("[{bancho}] {user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Data.Nick, e.Data.Message);
+            log.ForContext("channel", e.Data.Nick).Information("[{bancho}] {user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Data.Nick, e.Data.Message);
 
             if (e.Data.Nick == "BanchoBot")
             {
@@ -225,12 +224,12 @@ namespace script_chan2.OsuIrc
 
             if (Settings.EnablePrivateIrc && !string.IsNullOrEmpty(Settings.IrcIpPrivate) && !ircMessage.Message.StartsWith("!mp switch"))
             {
-                log.Information("[Private Bancho] {channel} | {user}: {message}", ircMessage.Channel, ircMessage.User, ircMessage.Message);
+                log.ForContext("channel", ircMessage.Channel).Information("[Private Bancho] {user}: {message}", ircMessage.User, ircMessage.Message);
                 privateClient.SendMessage(SendType.Message, ircMessage.Channel, ircMessage.Message);
             }
             else
             {
-                log.Information("[Bancho] {channel} | {user}: {message}", ircMessage.Channel, ircMessage.User, ircMessage.Message);
+                log.ForContext("channel", ircMessage.Channel).Information("[Bancho] {user}: {message}", ircMessage.User, ircMessage.Message);
                 client.SendMessage(SendType.Message, ircMessage.Channel, ircMessage.Message);
             }
 
