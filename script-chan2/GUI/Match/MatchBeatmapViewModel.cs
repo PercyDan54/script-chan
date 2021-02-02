@@ -449,12 +449,33 @@ namespace script_chan2.GUI
         public void Pick()
         {
             localLog.Information("match '{match}' pick beatmap '{beatmap}'", match.Name, beatmap.Beatmap.Title);
-            match.Picks.Add(new MatchPick()
+            var pick = new MatchPick()
             {
                 Match = match,
                 Map = beatmap,
                 ListIndex = match.Picks.Count + 1
-            });
+            };
+            if (match.TeamMode == Enums.TeamModes.TeamVS)
+            {
+                if (match.Picks.Count > 0)
+                {
+                    if (match.Picks.Last().Team.Id == match.TeamRed.Id)
+                        pick.Team = match.TeamBlue;
+                    else
+                        pick.Team = match.TeamRed;
+                }
+                else
+                {
+                    if (match.FirstPickerTeam != null)
+                    {
+                        if (match.FirstPickerTeam.Id == match.TeamRed.Id)
+                            pick.Team = match.TeamRed;
+                        else
+                            pick.Team = match.TeamBlue;
+                    }
+                }
+            }
+            match.Picks.Add(pick);
             match.WarmupMode = false;
             match.Save();
             NotifyOfPropertyChange(() => CanBanOrPickTeam);
