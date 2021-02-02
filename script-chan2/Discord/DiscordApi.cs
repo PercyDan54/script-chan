@@ -201,7 +201,7 @@ namespace script_chan2.Discord
                         var mod = pick.Map.Tag;
                         if (string.IsNullOrEmpty(mod))
                             mod = Utils.ConvertGameModsToString(pick.Map.Mods);
-                        picks += $"-{pick.Player.Name}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                        picks += $"-{(pick.Player != null ? pick.Player.Name : "???")}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
                     }
                     if (!string.IsNullOrEmpty(picks))
                         embed.Fields.Add(new EmbedFieldBuilder { Name = "Picks", Value = picks });
