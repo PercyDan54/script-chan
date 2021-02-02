@@ -744,6 +744,8 @@ namespace script_chan2.Database
         public static async Task<Player> GetPlayer(string idOrName)
         {
             localLog.Information("get player '{name}'", idOrName);
+            if (string.IsNullOrEmpty(idOrName))
+                return null;
             Player returnValue = Players.FirstOrDefault(x => x.Id.ToString() == idOrName || x.Name == idOrName);
             if (returnValue != null)
                 return returnValue;
@@ -1309,9 +1311,9 @@ namespace script_chan2.Database
                         command.Parameters.AddWithValue("@beatmap", pick.Map.Id);
                         if (match.TeamMode == TeamModes.TeamVS)
                             command.Parameters.AddWithValue("@picker", pick.Team.Id);
-                        else if (match.TeamMode == TeamModes.HeadToHead)
+                        else if (match.TeamMode == TeamModes.HeadToHead && pick.Player != null)
                             command.Parameters.AddWithValue("@picker", pick.Player.Id);
-                        else if (match.TeamMode == TeamModes.BattleRoyale)
+                        else
                             command.Parameters.AddWithValue("@picker", DBNull.Value);
                         command.Parameters.AddWithValue("@listIndex", pick.ListIndex);
                         command.ExecuteNonQuery();
