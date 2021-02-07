@@ -57,6 +57,7 @@ namespace script_chan2.OsuIrc
                 ConnectionStatus = IrcStatus.Connecting;
 
                 client = new IrcClient() { ActiveChannelSyncing = true };
+                client.EnableUTF8Recode = true;
                 client.OnError += Client_OnError;
                 client.OnErrorMessage += Client_OnErrorMessage;
                 client.OnQueryMessage += Client_OnQueryMessage;
@@ -72,6 +73,7 @@ namespace script_chan2.OsuIrc
                     PrivateConnectionStatus = IrcStatus.Connecting;
 
                     privateClient = new IrcClient();
+                    privateClient.EnableUTF8Recode = true;
                     privateClient.OnError += PrivateClient_OnError;
                     privateClient.OnErrorMessage += Client_OnErrorMessage;
                     privateClient.OnQueryMessage += Client_OnQueryMessage;
