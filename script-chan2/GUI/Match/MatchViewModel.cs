@@ -1250,6 +1250,31 @@ namespace script_chan2.GUI
                     }
                 }
             }
+            else if (match.TeamMode == TeamModes.HeadToHead)
+            {
+                SendRoomMessage("Ranking of the room:");
+
+                var i = 1;
+                foreach (var player in match.Players.OrderByDescending(x => x.Value))
+                {
+                    SendRoomMessage($"({i}) {player.Key.Name}: {player.Value} pt(s)");
+                    i++;
+                }
+
+                if (match.Picks.Count > 0) {
+                    for (var j = 0; j < match.Players.Count; j++)
+                    {
+                        if (match.Players.ElementAt(j).Key == match.Picks.Last().Player)
+                        {
+                            if (j < match.Players.Count - 1)
+                                SendRoomMessage($"Next player to pick: {match.Players.ElementAt(j + 1).Key.Name}");
+                            else
+                                SendRoomMessage($"Next player to pick: {match.Players.ElementAt(0).Key.Name}");
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private void PlayNotificationSound()
