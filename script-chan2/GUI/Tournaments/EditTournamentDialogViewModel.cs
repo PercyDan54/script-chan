@@ -369,8 +369,6 @@ namespace script_chan2.GUI
             {
                 if (HeadToHeadPointPlace <= 0)
                     return false;
-                if (headToHeadPointPoints <= 0)
-                    return false;
                 if (HeadToHeadPoints.ContainsKey(HeadToHeadPointPlace))
                     return false;
                 return true;
