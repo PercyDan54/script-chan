@@ -142,18 +142,23 @@ namespace script_chan2.GUI
                             list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.AllPlayersFinished, message.Timestamp));
                         if (message.Message.Contains("rolls"))
                         {
-                            var data = message.Message.Replace(" rolls", "").Replace(" point(s)", "");
-                            var user = data.Split(' ')[0];
-                            var roll = data.Split(' ')[1];
-                            TeamColors? team = null;
-                            if (match.TeamMode == TeamModes.TeamVS)
+                            var regex = new Regex(@"^(.+) rolls (\d+) point\(s\)$");
+                            var regexResult = regex.Match(message.Message);
+                            if (regexResult.Success)
                             {
-                                if (match.TeamRed.Players.Any(x => x.Name == user))
-                                    team = TeamColors.Red;
-                                if (match.TeamBlue.Players.Any(x => x.Name == user))
-                                    team = TeamColors.Blue;
+                                var user = regexResult.Groups[1].Value;
+                                var roll = regexResult.Groups[2].Value;
+
+                                TeamColors? team = null;
+                                if (match.TeamMode == TeamModes.TeamVS)
+                                {
+                                    if (match.TeamRed.Players.Any(x => x.Name == user))
+                                        team = TeamColors.Red;
+                                    if (match.TeamBlue.Players.Any(x => x.Name == user))
+                                        team = TeamColors.Blue;
+                                }
+                                list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.PlayerRoll, message.Timestamp, user, team, roll));
                             }
-                            list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.PlayerRoll, message.Timestamp, user, team, roll));
                         }
                     }
                 }
