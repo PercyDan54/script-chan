@@ -41,26 +41,6 @@ namespace script_chan2.GUI
             }
         }
 
-        public BindableCollection<string> Languages
-        {
-            get { return new BindableCollection<string>(new string[] { "en-US", "de-DE" }); }
-        }
-
-        private string lang;
-        public string SelectedLanguage
-        {
-            get { return lang; }
-            set
-            {
-                if (value != lang)
-                {
-                    lang = value;
-                    NotifyOfPropertyChange(() => SelectedLanguage);
-                    Dirty = true;
-                }
-            }
-        }
-
         private string apiKey;
         public string ApiKey
         {
@@ -395,7 +375,6 @@ namespace script_chan2.GUI
         public void Save()
         {
             localLog.Information("save changes");
-            Settings.Lang = lang;
             Settings.ApiKey = apiKey;
             Settings.IrcUsername = ircUsername;
             Settings.IrcPassword = ircPassword;
@@ -412,7 +391,6 @@ namespace script_chan2.GUI
         public void Discard()
         {
             localLog.Information("discard changes");
-            SelectedLanguage = Settings.Lang;
             ApiKey = Settings.ApiKey;
             IrcUsername = Settings.IrcUsername;
             IrcPassword = Settings.IrcPassword;
