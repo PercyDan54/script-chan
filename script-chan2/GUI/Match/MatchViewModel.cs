@@ -1266,7 +1266,15 @@ namespace script_chan2.GUI
                     i++;
                 }
 
-                if (match.Picks.Count > 0) {
+                var matchFinished = false;
+                var first = match.Players.OrderByDescending(x => x.Value).First();
+                if (first.Value * 2 > match.BO)
+                {
+                    SendRoomMessage("**" + first.Key.Name + "** wins the match");
+                    matchFinished = true;
+                }
+
+                if (!matchFinished && match.Picks.Count > 0) {
                     for (var j = 0; j < match.Players.Count; j++)
                     {
                         if (match.Players.ElementAt(j).Key == match.Picks.Last().Player)
