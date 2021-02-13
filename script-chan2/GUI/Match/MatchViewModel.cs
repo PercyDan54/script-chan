@@ -332,6 +332,7 @@ namespace script_chan2.GUI
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
                     {
+                        PlayNotificationSound();
                         await UpdateScore(true);
                         if (!match.WarmupMode)
                         {
