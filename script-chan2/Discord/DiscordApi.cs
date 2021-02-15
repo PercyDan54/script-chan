@@ -308,16 +308,30 @@ namespace script_chan2.Discord
                         Color = Color.Green
                     };
 
-                    var map = match.Picks.Last();
+                    string mod = "";
+                    Beatmap map;
 
-                    var mod = map.Map.Tag;
-                    if (string.IsNullOrEmpty(mod))
-                        mod = Utils.ConvertGameModsToString(map.Map.Mods);
+                    if (match.Mappool != null && match.Mappool.Beatmaps.Any(x => x.Beatmap.Id == match.Games.Last().Beatmap.Id))
+                    {
+                        var mappoolMap = match.Mappool.Beatmaps.First(x => x.Beatmap.Id == match.Games.Last().Beatmap.Id);
+
+                        mod = mappoolMap.Tag;
+                        if (string.IsNullOrEmpty(mod))
+                            mod = Utils.ConvertGameModsToString(mappoolMap.Mods);
+
+                        map = mappoolMap.Beatmap;
+                    }
+                    else
+                    {
+                        var game = match.Games.Last();
+                        mod = Utils.ConvertGameModsToString(game.Mods);
+                        map = game.Beatmap;
+                    }
 
                     var winner = match.Games.Last().Scores.OrderByDescending(x => x.Points).First();
                     embed.Title = $"{winner.Player.Name.Replace("_", "__").Replace("*", "\\*")} won the __{mod}__ pick with {winner.Points} points";
-                    embed.ThumbnailUrl = "https://b.ppy.sh/thumb/" + map.Map.Beatmap.SetId + "l.jpg";
-                    embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**";
+                    embed.ThumbnailUrl = "https://b.ppy.sh/thumb/" + map.SetId + "l.jpg";
+                    embed.Description = $"**{map.Artist.Replace("_", "__").Replace("*", "\\*")} - {map.Title.Replace("_", "__").Replace("*", "\\*")} [{map.Version.Replace("_", "__").Replace("*", "\\*")}]**";
 
                     string players = "";
                     string points = "";
