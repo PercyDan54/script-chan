@@ -241,6 +241,7 @@
                         <WrapPanel>
                             <Button x:Name="SendBanRecap" Content="Ban recap" Margin="5" />
                             <Button x:Name="SendPickRecap" Content="Pick recap" Margin="5" />
+                            <Button x:Name="SendGameRecap" Content="Game recap" Margin="5" />
                         </WrapPanel>
                     </Border>
                     <Grid x:Name="Options" Grid.Row="2" Margin="2">

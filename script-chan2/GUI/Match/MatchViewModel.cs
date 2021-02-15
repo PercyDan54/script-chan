@@ -1382,6 +1382,15 @@ namespace script_chan2.GUI
             }
         }
 
+        public void SendGameRecap()
+        {
+            localLog.Information("match '{match}' send game recap", match.Name);
+            if (!match.ViewerMode)
+            {
+                DiscordApi.SendGameRecap(match);
+            }
+        }
+
         public void KickBRTeam(MatchBRTeamViewModel model)
         {
             KickBRTeam(model.Team);
