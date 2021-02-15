@@ -98,7 +98,7 @@ namespace script_chan2.Discord
                     if (!string.IsNullOrEmpty(blueTeam))
                         embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = blueTeam });
                 }
-                else
+                else if (match.TeamMode == Enums.TeamModes.HeadToHead)
                 {
                     embed = new EmbedBuilder
                     {
@@ -181,7 +181,7 @@ namespace script_chan2.Discord
                     if (!string.IsNullOrEmpty(blueTeam))
                         embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = blueTeam });
                 }
-                else
+                else if (match.TeamMode == Enums.TeamModes.HeadToHead)
                 {
                     embed = new EmbedBuilder
                     {
@@ -295,7 +295,7 @@ namespace script_chan2.Discord
                     else
                         embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = "Next team to pick: " + (map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) + " :loudspeaker:" });
                 }
-                else
+                else if (match.TeamMode == Enums.TeamModes.HeadToHead)
                 {
                     embed = new EmbedBuilder
                     {
