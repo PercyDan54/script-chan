@@ -213,19 +213,24 @@ namespace script_chan2.DataTypes
                         var teams = new Dictionary<Team, int>();
                         foreach (var team in TeamsBR.Where(x => x.Value > 0))
                             teams.Add(team.Key, 0);
-                        foreach (var score in game.Scores)
-                        {
-                            foreach (var team in teams)
+
+                        if (teams.Count > 0)
+                        { 
+                            foreach (var score in game.Scores)
                             {
-                                if (team.Key.Players.Contains(score.Player))
+                                for (var i = 0; i < teams.Count; i++)
                                 {
-                                    teams[team.Key] += score.Points;
+                                    var team = teams.Keys.ElementAt(i);
+                                    if (team.Players.Contains(score.Player))
+                                    {
+                                        teams[team] += score.Points;
+                                    }
                                 }
                             }
-                        }
 
-                        var lastTeam = teams.OrderByDescending(x => x.Value).Last();
-                        TeamsBR[lastTeam.Key]--;
+                            var lastTeam = teams.OrderByDescending(x => x.Value).Last();
+                            TeamsBR[lastTeam.Key]--;
+                        }
                     }
                 }
                 game.Counted = true;
