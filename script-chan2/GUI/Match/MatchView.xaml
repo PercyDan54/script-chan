@@ -284,6 +284,7 @@
                                 <TextBox x:Name="PointsForSecondBan" md:HintAssist.Hint="Points for second ban" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
                                 <CheckBox x:Name="AllPicksFreemod" Content="All picks as freemod" Margin="0 10 0 0" />
                                 <CheckBox x:Name="ViewerMode" Content="Viewer Mode" ToolTip="Disable webhooks and automated irc messages" Margin="0 10 0 0" />
+                                <CheckBox x:Name="DisableIrcMatchStatus" Content="Disable chat match status" ToolTip="Disable automated irc messages after map (Ranking of the room/Next pick)" Margin="0 10 0 0" />
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
