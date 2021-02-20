@@ -1285,25 +1285,31 @@ namespace script_chan2.GUI
                     i++;
                 }
 
-                var matchFinished = false;
                 var first = match.Players.OrderByDescending(x => x.Value).First();
                 if (first.Value * 2 > match.BO)
                 {
                     SendRoomMessage("**" + first.Key.Name + "** wins the match");
-                    matchFinished = true;
                 }
-
-                if (!matchFinished && match.Picks.Count > 0) {
-                    for (var j = 0; j < match.Players.Count; j++)
+                else
+                {
+                    if (match.Picks.Count > 0)
                     {
-                        if (match.Players.ElementAt(j).Key == match.Picks.Last().Player)
+                        for (var j = 0; j < match.Players.Count; j++)
                         {
-                            if (j < match.Players.Count - 1)
-                                SendRoomMessage($"Next player to pick: {match.Players.ElementAt(j + 1).Key.Name}");
-                            else
-                                SendRoomMessage($"Next player to pick: {match.Players.ElementAt(0).Key.Name}");
-                            break;
+                            if (match.Players.ElementAt(j).Key == match.Picks.Last().Player)
+                            {
+                                if (j < match.Players.Count - 1)
+                                    SendRoomMessage($"Next player to pick: {match.Players.ElementAt(j + 1).Key.Name}");
+                                else
+                                    SendRoomMessage($"Next player to pick: {match.Players.ElementAt(0).Key.Name}");
+                                break;
+                            }
                         }
+                    }
+
+                    if (match.MpTimerAfterGame > 0)
+                    {
+                        SendRoomMessage("!mp timer " + match.MpTimerAfterGame);
                     }
                 }
             }
