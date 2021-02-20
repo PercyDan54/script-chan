@@ -1292,17 +1292,24 @@ namespace script_chan2.GUI
                 }
                 else
                 {
-                    if (match.Picks.Count > 0)
+                    if (match.BO > 0 && match.Players.Count == 2 && match.Players.Values.ElementAt(0) * 2 == match.BO - 1 && match.Players.Values.ElementAt(1) * 2 == match.BO - 1)
                     {
-                        for (var j = 0; j < match.Players.Count; j++)
+                        SendRoomMessage("The result is a tie. We have to play the tiebreaker");
+                    }
+                    else
+                    {
+                        if (match.Picks.Count > 0)
                         {
-                            if (match.Players.ElementAt(j).Key == match.Picks.Last().Player)
+                            for (var j = 0; j < match.Players.Count; j++)
                             {
-                                if (j < match.Players.Count - 1)
-                                    SendRoomMessage($"Next player to pick: {match.Players.ElementAt(j + 1).Key.Name}");
-                                else
-                                    SendRoomMessage($"Next player to pick: {match.Players.ElementAt(0).Key.Name}");
-                                break;
+                                if (match.Players.ElementAt(j).Key == match.Picks.Last().Player)
+                                {
+                                    if (j < match.Players.Count - 1)
+                                        SendRoomMessage($"Next player to pick: {match.Players.ElementAt(j + 1).Key.Name}");
+                                    else
+                                        SendRoomMessage($"Next player to pick: {match.Players.ElementAt(0).Key.Name}");
+                                    break;
+                                }
                             }
                         }
                     }
