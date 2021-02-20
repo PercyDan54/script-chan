@@ -166,7 +166,9 @@ namespace script_chan2.GUI
                         GameRecap = webhookData.GameRecap,
                         FooterText = webhookData.FooterText,
                         FooterIcon = webhookData.FooterIcon,
-                        WinImage = webhookData.WinImage
+                        WinImage = webhookData.WinImage,
+                        Username = webhookData.Username,
+                        Avatar = webhookData.Avatar
                     };
 
                     tournamentObject.Webhooks.Add(webhookObject);
@@ -381,6 +383,8 @@ namespace script_chan2.GUI
                     webhook.FooterText = webhookItem.FooterText.Value;
                     webhook.FooterIcon = webhookItem.FooterIcon.Value;
                     webhook.WinImage = webhookItem.WinImage.Value;
+                    webhook.Username = webhookItem.Username.Value;
+                    webhook.Avatar = webhookItem.Avatar.Value;
                     webhook.Save();
 
                     tournament.AddWebhook(webhook);
