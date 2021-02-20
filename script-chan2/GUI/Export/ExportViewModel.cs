@@ -111,8 +111,23 @@ namespace script_chan2.GUI
                     Teams = new List<object>(),
                     Webhooks = new List<object>(),
                     Mappools = new List<object>(),
-                    Matches = new List<object>()
+                    Matches = new List<object>(),
+                    Head2HeadPoints = new List<object>()
                 };
+
+                if (tournamentData.TeamMode == Enums.TeamModes.HeadToHead)
+                {
+                    foreach (var head2headPoint in tournamentData.HeadToHeadPoints)
+                    {
+                        var head2headPointObject = new
+                        {
+                            Place = head2headPoint.Key,
+                            Points = head2headPoint.Value
+                        };
+
+                        tournamentObject.Head2HeadPoints.Add(head2headPointObject);
+                    }
+                }
 
                 foreach (var teamItem in tournamentItem.ExportCategories.First(x => x.Name == "Teams").ExportItems.Where(x => x.Export))
                 {
@@ -234,7 +249,8 @@ namespace script_chan2.GUI
                         {
                             Id = player.Key.Id,
                             Name = player.Key.Name,
-                            Country = player.Key.Country
+                            Country = player.Key.Country,
+                            Points = player.Value
                         };
 
                         matchObject.Players.Add(playerObject);
@@ -303,6 +319,13 @@ namespace script_chan2.GUI
                 tournament.MpTimerAfterGame = Convert.ToInt32(tournamentItem.MpTimerAfterGame.Value);
                 tournament.MpTimerAfterPick = Convert.ToInt32(tournamentItem.MpTimerAfterPick.Value);
                 tournament.WelcomeString = tournamentItem.WelcomeString.Value;
+
+                tournament.HeadToHeadPoints.Clear();
+                foreach (var head2headPointItem in tournamentItem.Head2HeadPoints)
+                {
+                    tournament.HeadToHeadPoints.Add(Convert.ToInt32(head2headPointItem.Place.Value), Convert.ToInt32(head2headPointItem.Points.Value));
+                }
+
                 tournament.Save();
 
                 foreach (var teamItem in tournamentItem.Teams)
