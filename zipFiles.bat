@@ -1,0 +1,1 @@
+7z a script_chan.zip @listfile.txt

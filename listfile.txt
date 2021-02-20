@@ -1,0 +1,6 @@
+.\script-chan2\bin\Debug\*.dll
+.\script-chan2\bin\Debug\*.config
+.\script-chan2\bin\Debug\script-chan2.exe
+.\script-chan2\bin\Debug\Resources
+.\script-chan2\bin\Debug\x64
+.\script-chan2\bin\Debug\x86
