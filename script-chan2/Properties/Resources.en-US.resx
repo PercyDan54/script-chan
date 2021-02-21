@@ -195,4 +195,16 @@
   <data name="SettingsView_UsePrivateBanchoCheckBox" xml:space="preserve">
     <value>Use private bancho</value>
   </data>
+  <data name="Window_CloseButtonTooltip" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Window_MaximizeButtonTooltip" xml:space="preserve">
+    <value>Maximize</value>
+  </data>
+  <data name="Window_MinimizeButtonTooltip" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="Window_RestoreButtonTooltip" xml:space="preserve">
+    <value>Restore</value>
+  </data>
 </root>

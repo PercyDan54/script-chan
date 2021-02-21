@@ -293,5 +293,41 @@ namespace script_chan2.Properties {
                 return ResourceManager.GetString("SettingsView_UsePrivateBanchoCheckBox", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Window_CloseButtonTooltip {
+            get {
+                return ResourceManager.GetString("Window_CloseButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximize.
+        /// </summary>
+        public static string Window_MaximizeButtonTooltip {
+            get {
+                return ResourceManager.GetString("Window_MaximizeButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimize.
+        /// </summary>
+        public static string Window_MinimizeButtonTooltip {
+            get {
+                return ResourceManager.GetString("Window_MinimizeButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string Window_RestoreButtonTooltip {
+            get {
+                return ResourceManager.GetString("Window_RestoreButtonTooltip", resourceCulture);
+            }
+        }
     }
 }
