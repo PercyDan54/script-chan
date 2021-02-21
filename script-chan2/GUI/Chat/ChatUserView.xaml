@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="150">
@@ -15,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <md:PackIcon Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Kind="Circle" Foreground="Pink" Visibility="{Binding NewMessagesVisible}" />
         <TextBlock x:Name="Username" Foreground="{Binding Foreground}" Grid.Column="1" FontSize="20" VerticalAlignment="Center" />
-        <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Close" Grid.Column="2" Width="30" Height="30" Visibility="{Binding CloseVisible}" cal:Message.Attach="[Event Click] = [Action CloseChat($dataContext)]">
+        <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.ChatUserView_CloseButtonText}" Grid.Column="2" Width="30" Height="30" Visibility="{Binding CloseVisible}" cal:Message.Attach="[Event Click] = [Action CloseChat($dataContext)]">
             <md:PackIcon Kind="Close" />
         </Button>
     </Grid>

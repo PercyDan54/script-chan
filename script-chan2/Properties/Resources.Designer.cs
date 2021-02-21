@@ -61,6 +61,51 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string ChatUserView_CloseButtonText {
+            get {
+                return ResourceManager.GetString("ChatUserView_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string ChatView_MessageTextBoxHint {
+            get {
+                return ResourceManager.GetString("ChatView_MessageTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to +.
+        /// </summary>
+        public static string ChatView_OpenNewButtonText {
+            get {
+                return ResourceManager.GetString("ChatView_OpenNewButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open new tab (Ctrl+T).
+        /// </summary>
+        public static string ChatView_OpenNewButtonTooltip {
+            get {
+                return ResourceManager.GetString("ChatView_OpenNewButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string ChatView_SendButtonTooltip {
+            get {
+                return ResourceManager.GetString("ChatView_SendButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chat.
         /// </summary>
         public static string MainView_ChatMenuItem {
@@ -147,6 +192,33 @@ namespace script_chan2.Properties {
         public static string MainView_WebhooksMenuItem {
             get {
                 return ResourceManager.GetString("MainView_WebhooksMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string NewChatDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("NewChatDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string NewChatDialogView_OpenButtonText {
+            get {
+                return ResourceManager.GetString("NewChatDialogView_OpenButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string NewChatDialogView_UserTextBoxHint {
+            get {
+                return ResourceManager.GetString("NewChatDialogView_UserTextBoxHint", resourceCulture);
             }
         }
         
