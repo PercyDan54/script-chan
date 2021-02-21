@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using script_chan2.DataTypes;
 using Serilog;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 
 namespace script_chan2.GUI
@@ -37,6 +38,26 @@ namespace script_chan2.GUI
                 {
                     dirty = value;
                     NotifyOfPropertyChange(() => Dirty);
+                }
+            }
+        }
+
+        public BindableCollection<string> Languages
+        {
+            get { return new BindableCollection<string>(new string[] { "en-US", "de-DE" }); }
+        }
+
+        private string lang;
+        public string SelectedLanguage
+        {
+            get { return lang; }
+            set
+            {
+                if (value != lang)
+                {
+                    lang = value;
+                    NotifyOfPropertyChange(() => SelectedLanguage);
+                    Dirty = true;
                 }
             }
         }
@@ -375,6 +396,9 @@ namespace script_chan2.GUI
         public void Save()
         {
             localLog.Information("save changes");
+            if (lang != Settings.Lang)
+                MessageBox.Show("Changing the language requires an app restart!");
+            Settings.Lang = lang;
             Settings.ApiKey = apiKey;
             Settings.IrcUsername = ircUsername;
             Settings.IrcPassword = ircPassword;
@@ -391,6 +415,7 @@ namespace script_chan2.GUI
         public void Discard()
         {
             localLog.Information("discard changes");
+            SelectedLanguage = Settings.Lang;
             ApiKey = Settings.ApiKey;
             IrcUsername = Settings.IrcUsername;
             IrcPassword = Settings.IrcPassword;

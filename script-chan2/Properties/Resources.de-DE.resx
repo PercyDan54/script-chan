@@ -118,64 +118,64 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsView_ApiKeyTextBoxHint" xml:space="preserve">
-    <value>API Key</value>
+    <value>API Schlüssel</value>
   </data>
   <data name="SettingsView_BanchoConnectedTooltip" xml:space="preserve">
-    <value>Bancho Connected</value>
+    <value>Bancho verbunden</value>
   </data>
   <data name="SettingsView_BanchoConnectingTooltip" xml:space="preserve">
-    <value>Bancho Connecting</value>
+    <value>Bancho verbinden...</value>
   </data>
   <data name="SettingsView_BanchoDisconnectedTooltip" xml:space="preserve">
-    <value>Bancho Disconnected</value>
+    <value>Bancho getrennt</value>
   </data>
   <data name="SettingsView_DiscardButtonText" xml:space="preserve">
-    <value>Discard</value>
+    <value>Verwerfen</value>
   </data>
   <data name="SettingsView_EnableNotificationsCheckBoxText" xml:space="preserve">
-    <value>Enable notifications</value>
+    <value>Benachrichtigungen aktivieren</value>
   </data>
   <data name="SettingsView_EnableNotificationsCheckBoxTooltip" xml:space="preserve">
-    <value>Play sound when all players are ready or map has finished</value>
+    <value>Spielt einen Ton ab wenn alle Spieler bereit sind oder die Beatmap zuende ist</value>
   </data>
   <data name="SettingsView_GetApiKeyButtonText" xml:space="preserve">
-    <value>Get API key</value>
+    <value>osu! Webseite</value>
   </data>
   <data name="SettingsView_GetIrcPasswordButtonText" xml:space="preserve">
-    <value>Get IRC password</value>
+    <value>osu! Webseite</value>
   </data>
   <data name="SettingsView_IrcPasswordTextBoxHint" xml:space="preserve">
-    <value>IRC Password</value>
+    <value>IRC Passwort</value>
   </data>
   <data name="SettingsView_IrcTimeoutTextBoxHint" xml:space="preserve">
-    <value>IRC Timeout</value>
+    <value>Zeit zwischen IRC Nachrichten</value>
   </data>
   <data name="SettingsView_IrcUsernameTextBoxHint" xml:space="preserve">
-    <value>IRC Username</value>
+    <value>IRC Benutzername</value>
   </data>
   <data name="SettingsView_LanguagesComboBoxHint" xml:space="preserve">
-    <value>Language</value>
+    <value>Sprache</value>
   </data>
   <data name="SettingsView_NotificationSoundFileTextBoxHint" xml:space="preserve">
-    <value>Notification sound file</value>
+    <value>Benachrichtigungstondatei</value>
   </data>
   <data name="SettingsView_NotificationSoundFileTextBoxTooltip" xml:space="preserve">
-    <value>Leave empty for default</value>
+    <value>Leer lassen um standard Ton zu verwenden</value>
   </data>
   <data name="SettingsView_OpenConfigFileButtonText" xml:space="preserve">
-    <value>Open config file</value>
+    <value>Konfigurationsdatei öffnen</value>
   </data>
   <data name="SettingsView_PrivateBanchoConnectedTooltip" xml:space="preserve">
-    <value>Private Bancho Connected</value>
+    <value>Turnier Bancho verbunden</value>
   </data>
   <data name="SettingsView_PrivateBanchoConnectingTooltip" xml:space="preserve">
-    <value>Private Bancho Connecting</value>
+    <value>Turnier Bancho verbinden...</value>
   </data>
   <data name="SettingsView_PrivateBanchoDisconnectedTooltip" xml:space="preserve">
-    <value>Private Bancho Disconnected</value>
+    <value>Turnier Bancho getrennt</value>
   </data>
   <data name="SettingsView_SaveButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="SettingsView_SelectNotificationSoundFileButtonText" xml:space="preserve">
     <value>...</value>
@@ -184,15 +184,15 @@
     <value>Test</value>
   </data>
   <data name="SettingsView_TimerAfterGameDurationTextBoxHint" xml:space="preserve">
-    <value>Timer After Game Duration</value>
+    <value>Timer nach Beatmap</value>
   </data>
   <data name="SettingsView_TimerAfterPickDurationTextBoxHint" xml:space="preserve">
-    <value>Timer After Pick Duration</value>
+    <value>Timer nach Pick</value>
   </data>
   <data name="SettingsView_TimerCommandDurationTextBoxHint" xml:space="preserve">
-    <value>Timer Command Duration</value>
+    <value>Timer Befehl</value>
   </data>
   <data name="SettingsView_UsePrivateBanchoCheckBox" xml:space="preserve">
-    <value>Use private bancho</value>
+    <value>Turnier Bancho benutzen</value>
   </data>
 </root>

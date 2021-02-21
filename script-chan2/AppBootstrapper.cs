@@ -31,9 +31,6 @@ namespace script_chan2
 
                 Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
 
-                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
-                CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
-
                 localLog.Information("Initialize DB");
                 if (!DbCreator.DbExists)
                     DbCreator.CreateDb();
@@ -42,6 +39,9 @@ namespace script_chan2
 
                 localLog.Information("Initialize settings");
                 Settings.Initialize();
+
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(Settings.Lang);
+                CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(Settings.Lang);
 
                 localLog.Information("Login to irc");
                 OsuIrc.OsuIrc.Login();
