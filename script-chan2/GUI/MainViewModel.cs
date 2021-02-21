@@ -52,7 +52,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show match list");
             ActivateItem(new MatchesViewModel());
-            MainTitle = "Matches";
+            MainTitle = Properties.Resources.MainView_MatchesMenuItem;
             DrawerExpanded = false;
         }
 
@@ -60,7 +60,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show tournament list");
             ActivateItem(new TournamentsViewModel());
-            MainTitle = "Tournaments";
+            MainTitle = Properties.Resources.MainView_TournamentsMenuItem;
             DrawerExpanded = false;
         }
 
@@ -68,7 +68,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show team list");
             ActivateItem(new TeamsViewModel());
-            MainTitle = "Teams";
+            MainTitle = Properties.Resources.MainView_TeamsMenuItem;
             DrawerExpanded = false;
         }
 
@@ -76,7 +76,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show mappool list");
             ActivateItem(new MappoolsViewModel());
-            MainTitle = "Mappools";
+            MainTitle = Properties.Resources.MainView_MappoolsMenuItem;
             DrawerExpanded = false;
         }
 
@@ -84,7 +84,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show webhook list");
             ActivateItem(new WebhooksViewModel());
-            MainTitle = "Webhooks";
+            MainTitle = Properties.Resources.MainView_WebhooksMenuItem;
             DrawerExpanded = false;
         }
 
@@ -92,7 +92,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show settings");
             ActivateItem(new SettingsViewModel());
-            MainTitle = "Settings";
+            MainTitle = Properties.Resources.MainView_SettingsMenuItem;
             DrawerExpanded = false;
         }
 
@@ -100,7 +100,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show colors");
             ActivateItem(new ColorsViewModel());
-            MainTitle = "Colors";
+            MainTitle = Properties.Resources.MainView_ColorsMenuItem;
             DrawerExpanded = false;
         }
 
@@ -108,7 +108,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show commands");
             ActivateItem(new CustomCommandsViewModel());
-            MainTitle = "Commands";
+            MainTitle = Properties.Resources.MainView_CommandsMenuItem;
             DrawerExpanded = false;
         }
 
@@ -116,7 +116,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show chat");
             ActivateItem(new ChatViewModel());
-            MainTitle = "Chat";
+            MainTitle = Properties.Resources.MainView_ChatMenuItem;
             DrawerExpanded = false;
         }
 
@@ -124,7 +124,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("show export");
             ActivateItem(new ExportViewModel());
-            MainTitle = "Export";
+            MainTitle = Properties.Resources.MainView_ExportMenuItem;
             DrawerExpanded = false;
         }
         #endregion

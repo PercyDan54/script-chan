@@ -61,6 +61,96 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chat.
+        /// </summary>
+        public static string MainView_ChatMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_ChatMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Colors.
+        /// </summary>
+        public static string MainView_ColorsMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_ColorsMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commands.
+        /// </summary>
+        public static string MainView_CommandsMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_CommandsMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string MainView_ExportMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_ExportMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mappools.
+        /// </summary>
+        public static string MainView_MappoolsMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_MappoolsMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Matches.
+        /// </summary>
+        public static string MainView_MatchesMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_MatchesMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string MainView_SettingsMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_SettingsMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teams.
+        /// </summary>
+        public static string MainView_TeamsMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_TeamsMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tournaments.
+        /// </summary>
+        public static string MainView_TournamentsMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_TournamentsMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Webhooks.
+        /// </summary>
+        public static string MainView_WebhooksMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_WebhooksMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to API Key.
         /// </summary>
         public static string SettingsView_ApiKeyTextBoxHint {

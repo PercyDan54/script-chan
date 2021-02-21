@@ -117,6 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MainView_ChatMenuItem" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="MainView_ColorsMenuItem" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="MainView_CommandsMenuItem" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="MainView_ExportMenuItem" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="MainView_MappoolsMenuItem" xml:space="preserve">
+    <value>Mappools</value>
+  </data>
+  <data name="MainView_MatchesMenuItem" xml:space="preserve">
+    <value>Matches</value>
+  </data>
+  <data name="MainView_SettingsMenuItem" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MainView_TeamsMenuItem" xml:space="preserve">
+    <value>Teams</value>
+  </data>
+  <data name="MainView_TournamentsMenuItem" xml:space="preserve">
+    <value>Tournaments</value>
+  </data>
+  <data name="MainView_WebhooksMenuItem" xml:space="preserve">
+    <value>Webhooks</value>
+  </data>
   <data name="SettingsView_ApiKeyTextBoxHint" xml:space="preserve">
     <value>API Key</value>
   </data>

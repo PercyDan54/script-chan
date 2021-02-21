@@ -55,16 +55,16 @@
                             <ListBox.Resources>
                                 <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" />
                             </ListBox.Resources>
-                            <ListBoxItem Content="Tournaments" cal:Message.Attach="[Event MouseUp] = [Action ShowTournaments]" />
-                            <ListBoxItem Content="Teams" cal:Message.Attach="[Event MouseUp] = [Action ShowTeams]" />
-                            <ListBoxItem Content="Mappools" cal:Message.Attach="[Event MouseUp] = [Action ShowMappools]" />
-                            <ListBoxItem Content="Matches" cal:Message.Attach="[Event MouseUp] = [Action ShowMatches]" />
-                            <ListBoxItem Content="Webhooks" cal:Message.Attach="[Event MouseUp] = [Action ShowWebhooks]" />
-                            <ListBoxItem Content="Settings" cal:Message.Attach="[Event MouseUp] = [Action ShowSettings]" />
-                            <ListBoxItem Content="Colors" cal:Message.Attach="[Event MouseUp] = [Action ShowColors]" />
-                            <ListBoxItem Content="Commands" cal:Message.Attach="[Event MouseUp] = [Action ShowCommands]" />
-                            <ListBoxItem Content="Chat" cal:Message.Attach="[Event MouseUp] = [Action ShowChat]" />
-                            <ListBoxItem Content="Export" cal:Message.Attach="[Event MouseUp] = [Action ShowExport]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_TournamentsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowTournaments]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_TeamsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowTeams]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_MappoolsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowMappools]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_MatchesMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowMatches]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_WebhooksMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowWebhooks]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_SettingsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowSettings]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_ColorsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowColors]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_CommandsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowCommands]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_ChatMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowChat]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_ExportMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowExport]" />
                         </ListBox>
                     </DockPanel>
                 </md:DrawerHost.LeftDrawerContent>
