@@ -7,6 +7,7 @@ using Serilog;
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -23,7 +24,7 @@ namespace script_chan2
             {
                 Log.Logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
-                    .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:u} [{Level}] ({SourceContext:1}) {Message}{NewLine}{Exception}")
+                    .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:u} [{Level}] ({SourceContext:1}) {Message}{NewLine}{Exception}", encoding: Encoding.UTF8)
                     .CreateLogger();
 
                 localLog = Log.ForContext<AppBootstrapper>();
