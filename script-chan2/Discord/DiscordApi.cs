@@ -89,9 +89,9 @@ namespace script_chan2.Discord
                         if (string.IsNullOrEmpty(mod))
                             mod = Utils.ConvertGameModsToString(ban.Map.Mods);
                         if (ban.Team == match.TeamRed)
-                            redTeam += $"-{ban.ListIndex}- __{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                            redTeam += $"-{ban.ListIndex}- __{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
                         if (ban.Team == match.TeamBlue)
-                            blueTeam += $"-{ban.ListIndex}- __{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                            blueTeam += $"-{ban.ListIndex}- __{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
                     }
                     if (!string.IsNullOrEmpty(redTeam))
                         embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = redTeam });
@@ -120,7 +120,7 @@ namespace script_chan2.Discord
                             var mod = ban.Map.Tag;
                             if (string.IsNullOrEmpty(mod))
                                 mod = Utils.ConvertGameModsToString(ban.Map.Mods);
-                            bans += $"__{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                            bans += $"__{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
                         }
                         if (!string.IsNullOrEmpty(bans))
                             embed.Fields.Add(new EmbedFieldBuilder { Name = player.Key.Name, Value = bans });
@@ -172,9 +172,9 @@ namespace script_chan2.Discord
                         if (string.IsNullOrEmpty(mod))
                             mod = Utils.ConvertGameModsToString(pick.Map.Mods);
                         if (pick.Team == match.TeamRed)
-                            redTeam += $"-{pick.ListIndex}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                            redTeam += $"-{pick.ListIndex}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
                         if (pick.Team == match.TeamBlue)
-                            blueTeam += $"-{pick.ListIndex}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                            blueTeam += $"-{pick.ListIndex}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
                     }
                     if (!string.IsNullOrEmpty(redTeam))
                         embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = redTeam });
@@ -201,7 +201,7 @@ namespace script_chan2.Discord
                         var mod = pick.Map.Tag;
                         if (string.IsNullOrEmpty(mod))
                             mod = Utils.ConvertGameModsToString(pick.Map.Mods);
-                        picks += $"-{(pick.Player != null ? pick.Player.Name : "???")}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**" + Environment.NewLine;
+                        picks += $"-{(pick.Player != null ? pick.Player.Name : "???")}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
                     }
                     if (!string.IsNullOrEmpty(picks))
                         embed.Fields.Add(new EmbedFieldBuilder { Name = "Picks", Value = picks });
@@ -286,10 +286,10 @@ namespace script_chan2.Discord
                         embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png";
                         embed.Color = Color.Red;
                     }
-                    embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "__").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "__").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "__").Replace("*", "\\*")}]**";
+                    embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**";
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = match.TeamRedPoints, IsInline = true });
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = match.TeamBluePoints, IsInline = true });
-                    embed.Fields.Add(new EmbedFieldBuilder { Name = "MVP", Value = $":flag_{mvp.Player.Country.ToLower()}: **{mvp.Player.Name.Replace("_", "__")}** with {string.Format("{0:n0}", mvp.Points)} points" });
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = "MVP", Value = $":flag_{mvp.Player.Country.ToLower()}: **{mvp.Player.Name.Replace("_", "\\_")}** with {string.Format("{0:n0}", mvp.Points)} points" });
                     if (lastGame)
                         embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = $"{(match.TeamRedPoints * 2 >= match.BO ? match.TeamRed.Name : match.TeamBlue.Name)} wins the match :clap:" });
                     else
@@ -329,9 +329,9 @@ namespace script_chan2.Discord
                     }
 
                     var winner = match.Games.Last().Scores.OrderByDescending(x => x.Points).First();
-                    embed.Title = $"{winner.Player.Name.Replace("_", "__").Replace("*", "\\*")} won the __{mod}__ pick with {winner.Points} points";
+                    embed.Title = $"{winner.Player.Name.Replace("_", "\\_").Replace("*", "\\*")} won the __{mod}__ pick with {winner.Points} points";
                     embed.ThumbnailUrl = "https://b.ppy.sh/thumb/" + map.SetId + "l.jpg";
-                    embed.Description = $"**{map.Artist.Replace("_", "__").Replace("*", "\\*")} - {map.Title.Replace("_", "__").Replace("*", "\\*")} [{map.Version.Replace("_", "__").Replace("*", "\\*")}]**";
+                    embed.Description = $"**{map.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {map.Title.Replace("_", "\\_").Replace("*", "\\*")} [{map.Version.Replace("_", "\\_").Replace("*", "\\*")}]**";
 
                     string players = "";
                     string points = "";
