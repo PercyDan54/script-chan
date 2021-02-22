@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400">
     <Grid>
@@ -15,10 +16,10 @@
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="Username" VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Left" />
         <TextBlock x:Name="Points" VerticalAlignment="Center" FontSize="20" Grid.Column="1" HorizontalAlignment="Center" />
-        <Button x:Name="DecreasePoints" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Decrease" Grid.Column="2">
+        <Button x:Name="DecreasePoints" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchPlayerView_DecreaseButtonTooltip}" Grid.Column="2">
             <md:PackIcon Kind="Minus" />
         </Button>
-        <Button x:Name="IncreasePoints" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Increase" Grid.Column="3">
+        <Button x:Name="IncreasePoints" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchPlayerView_IncreaseButtonTooltip}" Grid.Column="3">
             <md:PackIcon Kind="Add" />
         </Button>
     </Grid>

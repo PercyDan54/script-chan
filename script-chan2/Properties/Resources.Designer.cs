@@ -710,6 +710,837 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abort.
+        /// </summary>
+        public static string MatchAbortMapDialogView_AbortButtonText {
+            get {
+                return ResourceManager.GetString("MatchAbortMapDialogView_AbortButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string MatchAbortMapDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("MatchAbortMapDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abort map?.
+        /// </summary>
+        public static string MatchAbortMapDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("MatchAbortMapDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All players finished.
+        /// </summary>
+        public static string MatchBanchoEventViewModel_AllPlayersFinishedText {
+            get {
+                return ResourceManager.GetString("MatchBanchoEventViewModel_AllPlayersFinishedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All players ready.
+        /// </summary>
+        public static string MatchBanchoEventViewModel_AllPlayersReadyText {
+            get {
+                return ResourceManager.GetString("MatchBanchoEventViewModel_AllPlayersReadyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} rolled {1}.
+        /// </summary>
+        public static string MatchBanchoEventViewModel_RollText {
+            get {
+                return ResourceManager.GetString("MatchBanchoEventViewModel_RollText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HH:mm.
+        /// </summary>
+        public static string MatchBanchoEventViewModel_TimeFormat {
+            get {
+                return ResourceManager.GetString("MatchBanchoEventViewModel_TimeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banned by {0}.
+        /// </summary>
+        public static string MatchBeatmapViewModel_ContextItemBannedByText {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_ContextItemBannedByText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ban.
+        /// </summary>
+        public static string MatchBeatmapViewModel_ContextItemBanText {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_ContextItemBanText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picked by {0}.
+        /// </summary>
+        public static string MatchBeatmapViewModel_ContextItemPickedByText {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_ContextItemPickedByText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick.
+        /// </summary>
+        public static string MatchBeatmapViewModel_ContextItemPickText {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_ContextItemPickText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unban.
+        /// </summary>
+        public static string MatchBeatmapViewModel_ContextItemUnbanText {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_ContextItemUnbanText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpick.
+        /// </summary>
+        public static string MatchBeatmapViewModel_ContextItemUnpickText {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_ContextItemUnpickText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} - {1} [{2}] ({3}) BPM{4} AR{5} CS{6}.
+        /// </summary>
+        public static string MatchBeatmapViewModel_LabelText {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mapper: {0}
+        ///BPM: {1}
+        ///AR: {2}
+        ///CS: {3}.
+        /// </summary>
+        public static string MatchBeatmapViewModel_LabelTooltip {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_LabelTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decrease.
+        /// </summary>
+        public static string MatchBRTeamView_DecreaseButtonTooltip {
+            get {
+                return ResourceManager.GetString("MatchBRTeamView_DecreaseButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increase.
+        /// </summary>
+        public static string MatchBRTeamView_IncreaseButtonTooltip {
+            get {
+                return ResourceManager.GetString("MatchBRTeamView_IncreaseButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kick.
+        /// </summary>
+        public static string MatchBRTeamView_KickButtonTooltip {
+            get {
+                return ResourceManager.GetString("MatchBRTeamView_KickButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string MatchCloseRoomDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("MatchCloseRoomDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string MatchCloseRoomDialogView_CloseButtonText {
+            get {
+                return ResourceManager.GetString("MatchCloseRoomDialogView_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close the room?.
+        /// </summary>
+        public static string MatchCloseRoomDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("MatchCloseRoomDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string MatchJoinRoomDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("MatchJoinRoomDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join.
+        /// </summary>
+        public static string MatchJoinRoomDialogView_JoinButtonText {
+            get {
+                return ResourceManager.GetString("MatchJoinRoomDialogView_JoinButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join room.
+        /// </summary>
+        public static string MatchJoinRoomDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("MatchJoinRoomDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room ID.
+        /// </summary>
+        public static string MatchJoinRoomDialogView_RoomIdTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchJoinRoomDialogView_RoomIdTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string MatchPasswordDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("MatchPasswordDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set password.
+        /// </summary>
+        public static string MatchPasswordDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("MatchPasswordDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string MatchPasswordDialogView_PasswordTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchPasswordDialogView_PasswordTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set.
+        /// </summary>
+        public static string MatchPasswordDialogView_SetButtonText {
+            get {
+                return ResourceManager.GetString("MatchPasswordDialogView_SetButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bans.
+        /// </summary>
+        public static string MatchPickOverviewDialogView_BansLabelText {
+            get {
+                return ResourceManager.GetString("MatchPickOverviewDialogView_BansLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string MatchPickOverviewDialogView_CloseButtonText {
+            get {
+                return ResourceManager.GetString("MatchPickOverviewDialogView_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mappool.
+        /// </summary>
+        public static string MatchPickOverviewDialogView_MappoolLabelText {
+            get {
+                return ResourceManager.GetString("MatchPickOverviewDialogView_MappoolLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picks.
+        /// </summary>
+        public static string MatchPickOverviewDialogView_PicksLabelText {
+            get {
+                return ResourceManager.GetString("MatchPickOverviewDialogView_PicksLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decrease.
+        /// </summary>
+        public static string MatchPlayerView_DecreaseButtonTooltip {
+            get {
+                return ResourceManager.GetString("MatchPlayerView_DecreaseButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increase.
+        /// </summary>
+        public static string MatchPlayerView_IncreaseButtonTooltip {
+            get {
+                return ResourceManager.GetString("MatchPlayerView_IncreaseButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string MatchRoomOptionsDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("MatchRoomOptionsDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game mode.
+        /// </summary>
+        public static string MatchRoomOptionsDialogView_GameModeComboBoxHint {
+            get {
+                return ResourceManager.GetString("MatchRoomOptionsDialogView_GameModeComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set room options.
+        /// </summary>
+        public static string MatchRoomOptionsDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("MatchRoomOptionsDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room size.
+        /// </summary>
+        public static string MatchRoomOptionsDialogView_RoomSizeTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchRoomOptionsDialogView_RoomSizeTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Score mode.
+        /// </summary>
+        public static string MatchRoomOptionsDialogView_ScoreModeComboBoxHint {
+            get {
+                return ResourceManager.GetString("MatchRoomOptionsDialogView_ScoreModeComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set.
+        /// </summary>
+        public static string MatchRoomOptionsDialogView_SetButtonText {
+            get {
+                return ResourceManager.GetString("MatchRoomOptionsDialogView_SetButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team size.
+        /// </summary>
+        public static string MatchRoomOptionsDialogView_TeamSizeTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchRoomOptionsDialogView_TeamSizeTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kick.
+        /// </summary>
+        public static string MatchRoomSlotViewModel_ContextItemKickText {
+            get {
+                return ResourceManager.GetString("MatchRoomSlotViewModel_ContextItemKickText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set host.
+        /// </summary>
+        public static string MatchRoomSlotViewModel_ContextItemSetHostText {
+            get {
+                return ResourceManager.GetString("MatchRoomSlotViewModel_ContextItemSetHostText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decrease.
+        /// </summary>
+        public static string MatchTeamView_DecreaseButtonTooltip {
+            get {
+                return ResourceManager.GetString("MatchTeamView_DecreaseButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increase.
+        /// </summary>
+        public static string MatchTeamView_IncreaseButtonTooltip {
+            get {
+                return ResourceManager.GetString("MatchTeamView_IncreaseButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abort map.
+        /// </summary>
+        public static string MatchView_AbortMapButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_AbortMapButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All picks as freemod.
+        /// </summary>
+        public static string MatchView_AllPicksFreemodCheckBoxText {
+            get {
+                return ResourceManager.GetString("MatchView_AllPicksFreemodCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ban recap.
+        /// </summary>
+        public static string MatchView_BanRecapButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_BanRecapButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BO.
+        /// </summary>
+        public static string MatchView_BOTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_BOTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close the room.
+        /// </summary>
+        public static string MatchView_CloseRoomButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_CloseRoomButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create room.
+        /// </summary>
+        public static string MatchView_CreateRoomButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_CreateRoomButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable chat match status.
+        /// </summary>
+        public static string MatchView_DisableChatMatchStatusCheckBoxText {
+            get {
+                return ResourceManager.GetString("MatchView_DisableChatMatchStatusCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable automated irc messages after map (Ranking of the room/Next pick).
+        /// </summary>
+        public static string MatchView_DisableChatMatchStatusCheckBoxTooltip {
+            get {
+                return ResourceManager.GetString("MatchView_DisableChatMatchStatusCheckBoxTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Pick.
+        /// </summary>
+        public static string MatchView_FirstPickComboBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_FirstPickComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game mode.
+        /// </summary>
+        public static string MatchView_GameModeComboBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_GameModeComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game recap.
+        /// </summary>
+        public static string MatchView_GameRecapButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_GameRecapButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invite players.
+        /// </summary>
+        public static string MatchView_InvitePlayersButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_InvitePlayersButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join existing room.
+        /// </summary>
+        public static string MatchView_JoinRoomButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_JoinRoomButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kick last team.
+        /// </summary>
+        public static string MatchView_KickLastTeamButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_KickLastTeamButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mappool.
+        /// </summary>
+        public static string MatchView_MappoolComboBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_MappoolComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string MatchView_MessageTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_MessageTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick next map.
+        /// </summary>
+        public static string MatchView_PickNextMapButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_PickNextMapButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick recap.
+        /// </summary>
+        public static string MatchView_PickRecapButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_PickRecapButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picks/Bans.
+        /// </summary>
+        public static string MatchView_PicksBansButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_PicksBansButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Roll Winner.
+        /// </summary>
+        public static string MatchView_RollWinnerComboBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_RollWinnerComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room size.
+        /// </summary>
+        public static string MatchView_RoomSizeTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_RoomSizeTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points for second ban.
+        /// </summary>
+        public static string MatchView_SecondBanTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_SecondBanTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string MatchView_SendButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_SendButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set password.
+        /// </summary>
+        public static string MatchView_SetPasswordButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_SetPasswordButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set room options.
+        /// </summary>
+        public static string MatchView_SetRoomOptionsButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_SetRoomOptionsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string MatchView_SettingsButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_SettingsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start game (5s).
+        /// </summary>
+        public static string MatchView_StartGameButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_StartGameButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch players back.
+        /// </summary>
+        public static string MatchView_SwitchPlayersBackButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_SwitchPlayersBackButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch players.
+        /// </summary>
+        public static string MatchView_SwitchPlayersButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_SwitchPlayersButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team size.
+        /// </summary>
+        public static string MatchView_TeamSizeTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_TeamSizeTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer after game.
+        /// </summary>
+        public static string MatchView_TimerAfterGameTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_TimerAfterGameTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer after pick.
+        /// </summary>
+        public static string MatchView_TimerAfterPickTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_TimerAfterPickTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer.
+        /// </summary>
+        public static string MatchView_TimerButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_TimerButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer Command.
+        /// </summary>
+        public static string MatchView_TimerCommandTextBoxHint {
+            get {
+                return ResourceManager.GetString("MatchView_TimerCommandTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viewer Mode.
+        /// </summary>
+        public static string MatchView_ViewerModeCheckBoxText {
+            get {
+                return ResourceManager.GetString("MatchView_ViewerModeCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable webhooks and automated irc messages.
+        /// </summary>
+        public static string MatchView_ViewerModeCheckBoxTooltip {
+            get {
+                return ResourceManager.GetString("MatchView_ViewerModeCheckBoxTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warmup mode.
+        /// </summary>
+        public static string MatchView_WarmupModeCheckBoxText {
+            get {
+                return ResourceManager.GetString("MatchView_WarmupModeCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome string.
+        /// </summary>
+        public static string MatchView_WelcomeStringButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_WelcomeStringButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next player to pick: {0}.
+        /// </summary>
+        public static string MatchViewModel_NextPlayerPickMessage {
+            get {
+                return ResourceManager.GetString("MatchViewModel_NextPlayerPickMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next team to pick: {0}.
+        /// </summary>
+        public static string MatchViewModel_NextTeamPickMessage {
+            get {
+                return ResourceManager.GetString("MatchViewModel_NextTeamPickMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ({0}) {1}: {2} pt(s).
+        /// </summary>
+        public static string MatchViewModel_PlayerPointsMessage {
+            get {
+                return ResourceManager.GetString("MatchViewModel_PlayerPointsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ranking of the room:.
+        /// </summary>
+        public static string MatchViewModel_RoomRankingMessage {
+            get {
+                return ResourceManager.GetString("MatchViewModel_RoomRankingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} can ban another map.
+        /// </summary>
+        public static string MatchViewModel_SecondBanMessage {
+            get {
+                return ResourceManager.GetString("MatchViewModel_SecondBanMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is RED, slots 1 to {1} --- {2} is BLUE, slots {3} to {4}.
+        /// </summary>
+        public static string MatchViewModel_TeamRoomSetupMessage {
+            get {
+                return ResourceManager.GetString("MatchViewModel_TeamRoomSetupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The result is a tie. We have to play the tiebreaker..
+        /// </summary>
+        public static string MatchViewModel_TiebreakerMessage {
+            get {
+                return ResourceManager.GetString("MatchViewModel_TiebreakerMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to **{0} wins the match**.
+        /// </summary>
+        public static string MatchViewModel_WinMessage {
+            get {
+                return ResourceManager.GetString("MatchViewModel_WinMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string NewChatDialogView_CancelButtonText {

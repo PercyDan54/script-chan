@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400">
     <Grid>
@@ -15,15 +16,15 @@
             <ColumnDefinition Width="50" />
             <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
-        <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Kick" Visibility="{Binding KickVisible}" cal:Message.Attach="[Event Click] = [Action KickBRTeam($dataContext)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
+        <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchBRTeamView_KickButtonTooltip}" Visibility="{Binding KickVisible}" cal:Message.Attach="[Event Click] = [Action KickBRTeam($dataContext)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
             <md:PackIcon Kind="Delete" />
         </Button>
         <TextBlock x:Name="Teamname" VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Left" Grid.Column="1" />
         <TextBlock x:Name="Lives" VerticalAlignment="Center" FontSize="20" Grid.Column="2" HorizontalAlignment="Center" />
-        <Button x:Name="DecreaseLives" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Decrease" Grid.Column="3">
+        <Button x:Name="DecreaseLives" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchBRTeamView_DecreaseButtonTooltip}" Grid.Column="3">
             <md:PackIcon Kind="Minus" />
         </Button>
-        <Button x:Name="IncreaseLives" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Increase" Grid.Column="4">
+        <Button x:Name="IncreaseLives" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchBRTeamView_IncreaseButtonTooltip}" Grid.Column="4">
             <md:PackIcon Kind="Add" />
         </Button>
     </Grid>

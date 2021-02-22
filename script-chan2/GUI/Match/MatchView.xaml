@@ -121,12 +121,12 @@
                         </ScrollViewer>
                     </Grid>
                     <WrapPanel x:Name="Control1" Grid.Row="1" Margin="2">
-                        <Button x:Name="StartGame" Content="Start game (5s)" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SendSettings" Content="Settings" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="StartTimer" Content="Timer" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="AbortMatch" Content="Abort map" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="StartGame" Content="{x:Static p:Resources.MatchView_StartGameButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SendSettings" Content="{x:Static p:Resources.MatchView_SettingsButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="StartTimer" Content="{x:Static p:Resources.MatchView_TimerButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="AbortMatch" Content="{x:Static p:Resources.MatchView_AbortMapButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <ContentControl Visibility="{Binding RoomOpenVisible}">
-                            <Button x:Name="KickLastBRTeam" Content="Kick last team" Margin="5" Visibility="{Binding BRVisible}" />
+                            <Button x:Name="KickLastBRTeam" Content="{x:Static p:Resources.MatchView_KickLastTeamButtonText}" Margin="5" Visibility="{Binding BRVisible}" />
                         </ContentControl>
                     </WrapPanel>
                     <Grid x:Name="SlotsGrid" Grid.Row="2" Margin="2">
@@ -170,8 +170,8 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <FlowDocumentScrollViewer x:Name="ChatWindow" Document="{Binding MultiplayerChat}" Grid.ColumnSpan="2" Margin="0 0 0 5" />
-                        <TextBox x:Name="ChatMessage" Grid.Row="1" md:HintAssist.Hint="Message" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action SendMessage]" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SendMessage" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Send" Grid.Row="1" Grid.Column="1" Height="35" Width="35" Margin="5 0 0 0" Visibility="{Binding RoomOpenVisible}">
+                        <TextBox x:Name="ChatMessage" Grid.Row="1" md:HintAssist.Hint="{x:Static p:Resources.MatchView_MessageTextBoxHint}" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action SendMessage]" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SendMessage" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchView_SendButtonText}" Grid.Row="1" Grid.Column="1" Height="35" Width="35" Margin="5 0 0 0" Visibility="{Binding RoomOpenVisible}">
                             <md:PackIcon Kind="Send" />
                         </Button>
                     </Grid>
@@ -188,16 +188,16 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <ComboBox md:HintAssist.Hint="Mappool" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding SelectedMappool}" VerticalAlignment="Center" Width="150">
+                    <ComboBox md:HintAssist.Hint="{x:Static p:Resources.MatchView_MappoolComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding SelectedMappool}" VerticalAlignment="Center" Width="150">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <CheckBox x:Name="WarmupMode" Content="Warmup mode" Grid.Column="1" Margin="10 0 0 0" />
-                    <Button x:Name="OpenPickOverview" Content="Picks/Bans" Grid.Column="2" Margin="10 0 0 0" />
-                    <Button x:Name="PickNextMap" Content="Pick next map" Grid.Column="3" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}" />
+                    <CheckBox x:Name="WarmupMode" Content="{x:Static p:Resources.MatchView_WarmupModeCheckBoxText}" Grid.Column="1" Margin="10 0 0 0" />
+                    <Button x:Name="OpenPickOverview" Content="{x:Static p:Resources.MatchView_PicksBansButtonText}" Grid.Column="2" Margin="10 0 0 0" />
+                    <Button x:Name="PickNextMap" Content="{x:Static p:Resources.MatchView_PickNextMapButtonText}" Grid.Column="3" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}" />
                     <ScrollViewer Grid.Row="1" Grid.ColumnSpan="4">
                         <ItemsControl ItemsSource="{Binding BeatmapsViews}">
                             <ItemsControl.ItemsPanel>
@@ -221,12 +221,12 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <WrapPanel x:Name="Control2" Grid.Row="0" Margin="2">
-                        <Button x:Name="SwitchPlayers" Content="Switch players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SwitchPlayersBack" Content="Switch players back" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="InvitePlayers" Content="Invite players" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SendWelcomeString" Content="Welcome string" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SetPassword" Content="Set password" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="EditRoomOptions" Content="Set room options" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SwitchPlayers" Content="{x:Static p:Resources.MatchView_SwitchPlayersButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SwitchPlayersBack" Content="{x:Static p:Resources.MatchView_SwitchPlayersBackButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="InvitePlayers" Content="{x:Static p:Resources.MatchView_InvitePlayersButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SendWelcomeString" Content="{x:Static p:Resources.MatchView_WelcomeStringButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SetPassword" Content="{x:Static p:Resources.MatchView_SetPasswordButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="EditRoomOptions" Content="{x:Static p:Resources.MatchView_SetRoomOptionsButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <ItemsControl x:Name="CustomCommandViews" Visibility="{Binding RoomOpenVisible}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -234,59 +234,59 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                        <Button x:Name="CloseRoom" Content="Close the room" Margin="5" Foreground="Red" Visibility="{Binding RoomOpenVisible}"/>
-                        <Button x:Name="CreateRoom" Content="Create room" Margin="5" Visibility="{Binding RoomClosedVisible}" />
-                        <Button x:Name="JoinRoom" Content="Join existing room" Margin="5" Visibility="{Binding RoomClosedVisible}" />
+                        <Button x:Name="CloseRoom" Content="{x:Static p:Resources.MatchView_CloseRoomButtonText}" Margin="5" Foreground="Red" Visibility="{Binding RoomOpenVisible}"/>
+                        <Button x:Name="CreateRoom" Content="{x:Static p:Resources.MatchView_CreateRoomButtonText}" Margin="5" Visibility="{Binding RoomClosedVisible}" />
+                        <Button x:Name="JoinRoom" Content="{x:Static p:Resources.MatchView_JoinRoomButtonText}" Margin="5" Visibility="{Binding RoomClosedVisible}" />
                     </WrapPanel>
                     <Border x:Name="Control3" Grid.Row="1" Margin="2" BorderBrush="Black" BorderThickness="0 3 0 3">
                         <WrapPanel>
-                            <Button x:Name="SendBanRecap" Content="Ban recap" Margin="5" />
-                            <Button x:Name="SendPickRecap" Content="Pick recap" Margin="5" />
-                            <Button x:Name="SendGameRecap" Content="Game recap" Margin="5" />
+                            <Button x:Name="SendBanRecap" Content="{x:Static p:Resources.MatchView_BanRecapButtonText}" Margin="5" />
+                            <Button x:Name="SendPickRecap" Content="{x:Static p:Resources.MatchView_PickRecapButtonText}" Margin="5" />
+                            <Button x:Name="SendGameRecap" Content="{x:Static p:Resources.MatchView_GameRecapButtonText}" Margin="5" />
                         </WrapPanel>
                     </Border>
                     <Grid x:Name="Options" Grid.Row="2" Margin="2">
                         <ScrollViewer>
                             <StackPanel Width="200" Margin="10">
-                                <ComboBox md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Visibility="{Binding TeamVsVisible}" ItemsSource="{Binding Teams}" SelectedItem="{Binding RollWinnerTeam}">
+                                <ComboBox md:HintAssist.Hint="{x:Static p:Resources.MatchView_RollWinnerComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Visibility="{Binding TeamVsVisible}" ItemsSource="{Binding Teams}" SelectedItem="{Binding RollWinnerTeam}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Name}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <ComboBox md:HintAssist.Hint="Roll Winner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" Visibility="{Binding HeadToHeadVisible}" ItemsSource="{Binding Players}" SelectedItem="{Binding RollWinnerPlayer}">
+                                <ComboBox md:HintAssist.Hint="{x:Static p:Resources.MatchView_RollWinnerComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" Visibility="{Binding HeadToHeadVisible}" ItemsSource="{Binding Players}" SelectedItem="{Binding RollWinnerPlayer}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Name}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <ComboBox md:HintAssist.Hint="First Pick" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Visibility="{Binding TeamVsVisible}" ItemsSource="{Binding Teams}" SelectedItem="{Binding FirstPickerTeam}">
+                                <ComboBox md:HintAssist.Hint="{x:Static p:Resources.MatchView_FirstPickComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Visibility="{Binding TeamVsVisible}" ItemsSource="{Binding Teams}" SelectedItem="{Binding FirstPickerTeam}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Name}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <ComboBox md:HintAssist.Hint="First Pick" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" Visibility="{Binding HeadToHeadVisible}" ItemsSource="{Binding Players}" SelectedItem="{Binding FirstPickerPlayer}">
+                                <ComboBox md:HintAssist.Hint="{x:Static p:Resources.MatchView_FirstPickComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" Visibility="{Binding HeadToHeadVisible}" ItemsSource="{Binding Players}" SelectedItem="{Binding FirstPickerPlayer}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Name}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <ComboBox md:HintAssist.Hint="Game mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" IsEnabled="False" />
-                                <TextBox x:Name="BO" md:HintAssist.Hint="BO" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                                <TextBox x:Name="RoomSize" md:HintAssist.Hint="Room size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" IsEnabled="False" />
-                                <TextBox x:Name="TeamSize" md:HintAssist.Hint="Team size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" IsEnabled="False" />
-                                <TextBox x:Name="TimerCommand" md:HintAssist.Hint="Timer Command" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                                <TextBox x:Name="TimerAfterGame" md:HintAssist.Hint="Timer after game" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                                <TextBox x:Name="TimerAfterPick" md:HintAssist.Hint="Timer after pick" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                                <TextBox x:Name="PointsForSecondBan" md:HintAssist.Hint="Points for second ban" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
-                                <CheckBox x:Name="AllPicksFreemod" Content="All picks as freemod" Margin="0 10 0 0" />
-                                <CheckBox x:Name="ViewerMode" Content="Viewer Mode" ToolTip="Disable webhooks and automated irc messages" Margin="0 10 0 0" />
-                                <CheckBox x:Name="DisableIrcMatchStatus" Content="Disable chat match status" ToolTip="Disable automated irc messages after map (Ranking of the room/Next pick)" Margin="0 10 0 0" />
+                                <ComboBox md:HintAssist.Hint="{x:Static p:Resources.MatchView_GameModeComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0 10 0 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" IsEnabled="False" />
+                                <TextBox x:Name="BO" md:HintAssist.Hint="{x:Static p:Resources.MatchView_BOTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                                <TextBox x:Name="RoomSize" md:HintAssist.Hint="{x:Static p:Resources.MatchView_RoomSizeTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" IsEnabled="False" />
+                                <TextBox x:Name="TeamSize" md:HintAssist.Hint="{x:Static p:Resources.MatchView_TeamSizeTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" IsEnabled="False" />
+                                <TextBox x:Name="TimerCommand" md:HintAssist.Hint="{x:Static p:Resources.MatchView_TimerCommandTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                                <TextBox x:Name="TimerAfterGame" md:HintAssist.Hint="{x:Static p:Resources.MatchView_TimerAfterGameTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                                <TextBox x:Name="TimerAfterPick" md:HintAssist.Hint="{x:Static p:Resources.MatchView_TimerAfterPickTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                                <TextBox x:Name="PointsForSecondBan" md:HintAssist.Hint="{x:Static p:Resources.MatchView_SecondBanTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
+                                <CheckBox x:Name="AllPicksFreemod" Content="{x:Static p:Resources.MatchView_AllPicksFreemodCheckBoxText}" Margin="0 10 0 0" />
+                                <CheckBox x:Name="ViewerMode" Content="{x:Static p:Resources.MatchView_ViewerModeCheckBoxText}" ToolTip="{x:Static p:Resources.MatchView_ViewerModeCheckBoxTooltip}" Margin="0 10 0 0" />
+                                <CheckBox x:Name="DisableIrcMatchStatus" Content="{x:Static p:Resources.MatchView_DisableChatMatchStatusCheckBoxText}" ToolTip="{x:Static p:Resources.MatchView_DisableChatMatchStatusCheckBoxTooltip}" Margin="0 10 0 0" />
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
