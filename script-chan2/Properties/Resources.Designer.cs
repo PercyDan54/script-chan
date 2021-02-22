@@ -189,6 +189,33 @@ namespace script_chan2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
+        public static string DeleteAllMappoolsDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("DeleteAllMappoolsDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeleteAllMappoolsDialogView_DeleteButtonText {
+            get {
+                return ResourceManager.GetString("DeleteAllMappoolsDialogView_DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete all mappools?.
+        /// </summary>
+        public static string DeleteAllMappoolsDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("DeleteAllMappoolsDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
         public static string DeleteCustomCommandDialogView_CancelButtonText {
             get {
                 return ResourceManager.GetString("DeleteCustomCommandDialogView_CancelButtonText", resourceCulture);
@@ -210,6 +237,33 @@ namespace script_chan2.Properties {
         public static string DeleteCustomCommandDialogViewModel_LabelText {
             get {
                 return ResourceManager.GetString("DeleteCustomCommandDialogViewModel_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string DeleteMappoolDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("DeleteMappoolDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeleteMappoolDialogView_DeleteButtonText {
+            get {
+                return ResourceManager.GetString("DeleteMappoolDialogView_DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete {0}?.
+        /// </summary>
+        public static string DeleteMappoolDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("DeleteMappoolDialogView_LabelText", resourceCulture);
             }
         }
         
@@ -273,6 +327,42 @@ namespace script_chan2.Properties {
         public static string EditCustomCommandDialogView_TournamentComboBoxHint {
             get {
                 return ResourceManager.GetString("EditCustomCommandDialogView_TournamentComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string EditMappoolDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("EditMappoolDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string EditMappoolDialogView_NameTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditMappoolDialogView_NameTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string EditMappoolDialogView_SaveButtonText {
+            get {
+                return ResourceManager.GetString("EditMappoolDialogView_SaveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tournament.
+        /// </summary>
+        public static string EditMappoolDialogView_TournamentComboBoxHint {
+            get {
+                return ResourceManager.GetString("EditMappoolDialogView_TournamentComboBoxHint", resourceCulture);
             }
         }
         
@@ -408,6 +498,214 @@ namespace script_chan2.Properties {
         public static string MainView_WebhooksMenuItem {
             get {
                 return ResourceManager.GetString("MainView_WebhooksMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_DeleteButtonTooltip {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_DeleteButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Down.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_DownButtonTooltip {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_DownButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DT.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_DTCheckBoxText {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_DTCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freemod.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_FreemodCheckBoxText {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_FreemodCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HD.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_HDCheckBoxText {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_HDCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HR.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_HRCheckBoxText {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_HRCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NF.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_NFCheckBoxText {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_NFCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiebreaker.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_TiebreakerCheckBoxText {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_TiebreakerCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_UpButtonTooltip {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_UpButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string MappoolBeatmapsDialogView_AddButtonTooltip {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapsDialogView_AddButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beatmap ID.
+        /// </summary>
+        public static string MappoolBeatmapsDialogView_BeatmapIdTextBoxHint {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapsDialogView_BeatmapIdTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can add multiple beatmaps delimited by &apos;;&apos;
+        ///Copy single beatmap links to clipboard to add them to the list.
+        /// </summary>
+        public static string MappoolBeatmapsDialogView_BeatmapIdTextBoxTooltip {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapsDialogView_BeatmapIdTextBoxTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string MappoolListItemView_DeleteButtonTooltip {
+            get {
+                return ResourceManager.GetString("MappoolListItemView_DeleteButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string MappoolListItemView_EditButtonTooltip {
+            get {
+                return ResourceManager.GetString("MappoolListItemView_EditButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Maps.
+        /// </summary>
+        public static string MappoolListItemView_EditMapsButtonTooltip {
+            get {
+                return ResourceManager.GetString("MappoolListItemView_EditMapsButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete all.
+        /// </summary>
+        public static string MappoolsView_DeleteAllButtonText {
+            get {
+                return ResourceManager.GetString("MappoolsView_DeleteAllButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import from wiki.
+        /// </summary>
+        public static string MappoolsView_ImportFromWikiButtonText {
+            get {
+                return ResourceManager.GetString("MappoolsView_ImportFromWikiButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string MappoolsView_NewButtonText {
+            get {
+                return ResourceManager.GetString("MappoolsView_NewButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tournament.
+        /// </summary>
+        public static string MappoolsView_TournamentComboBoxHint {
+            get {
+                return ResourceManager.GetString("MappoolsView_TournamentComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string MappoolWikiImportDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("MappoolWikiImportDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string MappoolWikiImportDialogView_ImportButtonText {
+            get {
+                return ResourceManager.GetString("MappoolWikiImportDialogView_ImportButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wiki URL.
+        /// </summary>
+        public static string MappoolWikiImportDialogView_WikiUrlTextBoxHint {
+            get {
+                return ResourceManager.GetString("MappoolWikiImportDialogView_WikiUrlTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Getting wiki page.
+        /// </summary>
+        public static string MappoolWikiImportDialogViewModel_StatusGettingWikiPage {
+            get {
+                return ResourceManager.GetString("MappoolWikiImportDialogViewModel_StatusGettingWikiPage", resourceCulture);
             }
         }
         

@@ -159,6 +159,15 @@
   <data name="DefaultColorValuesDialogView_ResetButtonText" xml:space="preserve">
     <value>Zurücksetzen</value>
   </data>
+  <data name="DeleteAllMappoolsDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="DeleteAllMappoolsDialogView_DeleteButtonText" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="DeleteAllMappoolsDialogView_LabelText" xml:space="preserve">
+    <value>Alle Mappools löschen?</value>
+  </data>
   <data name="DeleteCustomCommandDialogViewModel_LabelText" xml:space="preserve">
     <value>{0} löschen?</value>
   </data>
@@ -167,6 +176,15 @@
   </data>
   <data name="DeleteCustomCommandDialogView_DeleteButtonText" xml:space="preserve">
     <value>Löschen</value>
+  </data>
+  <data name="DeleteMappoolDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="DeleteMappoolDialogView_DeleteButtonText" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="DeleteMappoolDialogView_LabelText" xml:space="preserve">
+    <value>{0} löschen?</value>
   </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>Abbrechen</value>
@@ -187,6 +205,18 @@
     <value>Speichern</value>
   </data>
   <data name="EditCustomCommandDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Turnier</value>
+  </data>
+  <data name="EditMappoolDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="EditMappoolDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EditMappoolDialogView_SaveButtonText" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="EditMappoolDialogView_TournamentComboBoxHint" xml:space="preserve">
     <value>Turnier</value>
   </data>
   <data name="ExportSuccessDialogView_OkButtonText" xml:space="preserve">
@@ -233,6 +263,77 @@
   </data>
   <data name="MainView_WebhooksMenuItem" xml:space="preserve">
     <value>Webhooks</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_DownButtonTooltip" xml:space="preserve">
+    <value>Nach unten</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_DTCheckBoxText" xml:space="preserve">
+    <value>DT</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_FreemodCheckBoxText" xml:space="preserve">
+    <value>Freemod</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_HDCheckBoxText" xml:space="preserve">
+    <value>HD</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_HRCheckBoxText" xml:space="preserve">
+    <value>HR</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_NFCheckBoxText" xml:space="preserve">
+    <value>NF</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_TiebreakerCheckBoxText" xml:space="preserve">
+    <value>Tiebreaker</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_UpButtonTooltip" xml:space="preserve">
+    <value>Nach oben</value>
+  </data>
+  <data name="MappoolBeatmapsDialogView_AddButtonTooltip" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="MappoolBeatmapsDialogView_BeatmapIdTextBoxHint" xml:space="preserve">
+    <value>Beatmap ID</value>
+  </data>
+  <data name="MappoolBeatmapsDialogView_BeatmapIdTextBoxTooltip" xml:space="preserve">
+    <value>Mehrere IDs können mit ';' getrennt auf einmal eingegeben werden
+Beatmap Links in der Zwischenablage werden automatisch der Liste hinzugefügt</value>
+    <comment>Can add multiple beatmaps delimited by ';'&amp;#10;Copy single beatmap links to clipboard to add them here</comment>
+  </data>
+  <data name="MappoolListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="MappoolListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="MappoolListItemView_EditMapsButtonTooltip" xml:space="preserve">
+    <value>Beatmaps bearbeiten</value>
+  </data>
+  <data name="MappoolsView_DeleteAllButtonText" xml:space="preserve">
+    <value>Alle löschen</value>
+  </data>
+  <data name="MappoolsView_ImportFromWikiButtonText" xml:space="preserve">
+    <value>Wiki Import</value>
+  </data>
+  <data name="MappoolsView_NewButtonText" xml:space="preserve">
+    <value>Neu</value>
+  </data>
+  <data name="MappoolsView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Turnier</value>
+  </data>
+  <data name="MappoolWikiImportDialogViewModel_StatusGettingWikiPage" xml:space="preserve">
+    <value>Wiki wird geladen...</value>
+  </data>
+  <data name="MappoolWikiImportDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="MappoolWikiImportDialogView_ImportButtonText" xml:space="preserve">
+    <value>Importieren</value>
+  </data>
+  <data name="MappoolWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
+    <value>Wiki URL</value>
   </data>
   <data name="NewChatDialogView_CancelButtonText" xml:space="preserve">
     <value>Abbrechen</value>

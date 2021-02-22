@@ -5,6 +5,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
              d:DesignHeight="550" d:DesignWidth="650">
@@ -18,8 +19,8 @@
             <ColumnDefinition />
             <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
-        <TextBox md:HintAssist.Hint="Beatmap ID" ToolTip="Can add multiple beatmaps delimited by ';'&#10;Copy single beatmap links to clipboard to add them here" Text="{Binding BeatmapId, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action AddBeatmap]" />
-        <Button x:Name="AddBeatmap" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Add" Grid.Column="1" Visibility="{Binding AddButtonVisible}">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.MappoolBeatmapsDialogView_BeatmapIdTextBoxHint}" ToolTip="{x:Static p:Resources.MappoolBeatmapsDialogView_BeatmapIdTextBoxTooltip}" Text="{Binding BeatmapId, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action AddBeatmap]" />
+        <Button x:Name="AddBeatmap" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MappoolBeatmapsDialogView_AddButtonTooltip}" Grid.Column="1" Visibility="{Binding AddButtonVisible}">
             <md:PackIcon Kind="Add" />
         </Button>
         <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Column="1" Visibility="{Binding AddProgressVisible}" />
