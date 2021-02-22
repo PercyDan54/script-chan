@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="10">
@@ -11,8 +12,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button x:Name="OpenNewCustomCommandDialog" Content="New" HorizontalAlignment="Left" />
-        <ComboBox HorizontalAlignment="Right" md:HintAssist.Hint="Tournament" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200">
+        <Button x:Name="OpenNewCustomCommandDialog" Content="{x:Static p:Resources.CustomCommandsView_NewButtonText}" HorizontalAlignment="Left" />
+        <ComboBox HorizontalAlignment="Right" md:HintAssist.Hint="{x:Static p:Resources.CustomCommandsView_TournamentComboBoxHint}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />

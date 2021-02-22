@@ -138,6 +138,18 @@
   <data name="ColorsView_DefaultButtonText" xml:space="preserve">
     <value>Default</value>
   </data>
+  <data name="CustomCommandListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CustomCommandListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="CustomCommandsView_NewButtonText" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="CustomCommandsView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Tournament</value>
+  </data>
   <data name="DefaultColorValuesDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -147,11 +159,35 @@
   <data name="DefaultColorValuesDialogView_ResetButtonText" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="DeleteCustomCommandDialogViewModel_LabelText" xml:space="preserve">
+    <value>Do you really want to delete {0}?</value>
+  </data>
+  <data name="DeleteCustomCommandDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DeleteCustomCommandDialogView_DeleteButtonText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="EditColorDialogView_SaveButtonText" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="EditCustomCommandDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EditCustomCommandDialogView_CommandTextBoxHint" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="EditCustomCommandDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EditCustomCommandDialogView_SaveButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="EditCustomCommandDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Tournament</value>
   </data>
   <data name="MainView_ChatMenuItem" xml:space="preserve">
     <value>Chat</value>

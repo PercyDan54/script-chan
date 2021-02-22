@@ -124,6 +124,42 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string CustomCommandListItemView_DeleteButtonTooltip {
+            get {
+                return ResourceManager.GetString("CustomCommandListItemView_DeleteButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string CustomCommandListItemView_EditButtonTooltip {
+            get {
+                return ResourceManager.GetString("CustomCommandListItemView_EditButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string CustomCommandsView_NewButtonText {
+            get {
+                return ResourceManager.GetString("CustomCommandsView_NewButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tournament.
+        /// </summary>
+        public static string CustomCommandsView_TournamentComboBoxHint {
+            get {
+                return ResourceManager.GetString("CustomCommandsView_TournamentComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string DefaultColorValuesDialogView_CancelButtonText {
@@ -153,6 +189,33 @@ namespace script_chan2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
+        public static string DeleteCustomCommandDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("DeleteCustomCommandDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeleteCustomCommandDialogView_DeleteButtonText {
+            get {
+                return ResourceManager.GetString("DeleteCustomCommandDialogView_DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete {0}?.
+        /// </summary>
+        public static string DeleteCustomCommandDialogViewModel_LabelText {
+            get {
+                return ResourceManager.GetString("DeleteCustomCommandDialogViewModel_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
         public static string EditColorDialogView_CancelButtonText {
             get {
                 return ResourceManager.GetString("EditColorDialogView_CancelButtonText", resourceCulture);
@@ -165,6 +228,51 @@ namespace script_chan2.Properties {
         public static string EditColorDialogView_SaveButtonText {
             get {
                 return ResourceManager.GetString("EditColorDialogView_SaveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string EditCustomCommandDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("EditCustomCommandDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command.
+        /// </summary>
+        public static string EditCustomCommandDialogView_CommandTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditCustomCommandDialogView_CommandTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string EditCustomCommandDialogView_NameTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditCustomCommandDialogView_NameTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string EditCustomCommandDialogView_SaveButtonText {
+            get {
+                return ResourceManager.GetString("EditCustomCommandDialogView_SaveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tournament.
+        /// </summary>
+        public static string EditCustomCommandDialogView_TournamentComboBoxHint {
+            get {
+                return ResourceManager.GetString("EditCustomCommandDialogView_TournamentComboBoxHint", resourceCulture);
             }
         }
         

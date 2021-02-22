@@ -20,6 +20,14 @@ namespace script_chan2.GUI
         {
             get { return customCommand.Name; }
         }
+
+        public string Label
+        {
+            get
+            {
+                return string.Format(Properties.Resources.DeleteCustomCommandDialogViewModel_LabelText, Name);
+            }
+        }
         #endregion
 
         #region Actions
