@@ -277,6 +277,51 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string ExportSuccessDialogView_OkButtonText {
+            get {
+                return ResourceManager.GetString("ExportSuccessDialogView_OkButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string ExportView_ExportButtonText {
+            get {
+                return ResourceManager.GetString("ExportView_ExportButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export successfull.
+        /// </summary>
+        public static string ExportView_ExportSuccessfullDialogText {
+            get {
+                return ResourceManager.GetString("ExportView_ExportSuccessfullDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string ExportView_ImportButtonText {
+            get {
+                return ResourceManager.GetString("ExportView_ImportButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import successfull.
+        /// </summary>
+        public static string ExportView_ImportSuccessfullDialogText {
+            get {
+                return ResourceManager.GetString("ExportView_ImportSuccessfullDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chat.
         /// </summary>
         public static string MainView_ChatMenuItem {

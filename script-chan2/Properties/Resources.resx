@@ -189,6 +189,21 @@
   <data name="EditCustomCommandDialogView_TournamentComboBoxHint" xml:space="preserve">
     <value>Tournament</value>
   </data>
+  <data name="ExportSuccessDialogView_OkButtonText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ExportView_ExportButtonText" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportView_ExportSuccessfullDialogText" xml:space="preserve">
+    <value>Export successfull</value>
+  </data>
+  <data name="ExportView_ImportButtonText" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="ExportView_ImportSuccessfullDialogText" xml:space="preserve">
+    <value>Import successfull</value>
+  </data>
   <data name="MainView_ChatMenuItem" xml:space="preserve">
     <value>Chat</value>
   </data>

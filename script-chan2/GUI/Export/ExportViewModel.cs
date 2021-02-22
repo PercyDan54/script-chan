@@ -268,7 +268,7 @@ namespace script_chan2.GUI
             File.WriteAllText(filePath, jObject.ToString());
             localLog.Information("export finished");
 
-            var model = new ExportSuccessDialogViewModel("Export successfull");
+            var model = new ExportSuccessDialogViewModel(Properties.Resources.ExportView_ExportSuccessfullDialogText);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
             await DialogHost.Show(view, "MainDialogHost");
@@ -502,7 +502,7 @@ namespace script_chan2.GUI
             }
 
             localLog.Information("import finished");
-            var model = new ExportSuccessDialogViewModel("Import successfull");
+            var model = new ExportSuccessDialogViewModel(Properties.Resources.ExportView_ImportSuccessfullDialogText);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
             await DialogHost.Show(view, "MainDialogHost");
