@@ -7,9 +7,10 @@ namespace script_chan2.GUI
     public class EditColorDialogViewModel : Screen
     {
         #region Constructor
-        public EditColorDialogViewModel(Color color)
+        public EditColorDialogViewModel(Color color, string name)
         {
             this.color = color;
+            this.name = name;
         }
         #endregion
 
@@ -27,6 +28,12 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => PreviewColor);
                 }
             }
+        }
+
+        private string name;
+        public string Name
+        {
+            get { return name; }
         }
 
         public SolidColorBrush PreviewColor

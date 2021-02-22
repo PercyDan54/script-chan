@@ -106,6 +106,69 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string ColorListItemView_EditButtonTooltip {
+            get {
+                return ResourceManager.GetString("ColorListItemView_EditButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string ColorsView_DefaultButtonText {
+            get {
+                return ResourceManager.GetString("ColorsView_DefaultButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string DefaultColorValuesDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("DefaultColorValuesDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to reset all colors?.
+        /// </summary>
+        public static string DefaultColorValuesDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("DefaultColorValuesDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string DefaultColorValuesDialogView_ResetButtonText {
+            get {
+                return ResourceManager.GetString("DefaultColorValuesDialogView_ResetButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string EditColorDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("EditColorDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string EditColorDialogView_SaveButtonText {
+            get {
+                return ResourceManager.GetString("EditColorDialogView_SaveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chat.
         /// </summary>
         public static string MainView_ChatMenuItem {

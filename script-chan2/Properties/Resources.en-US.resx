@@ -132,6 +132,27 @@
   <data name="ChatView_SendButtonTooltip" xml:space="preserve">
     <value>Send</value>
   </data>
+  <data name="ColorListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ColorsView_DefaultButtonText" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="DefaultColorValuesDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DefaultColorValuesDialogView_LabelText" xml:space="preserve">
+    <value>Do you really want to reset all colors?</value>
+  </data>
+  <data name="DefaultColorValuesDialogView_ResetButtonText" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EditColorDialogView_SaveButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="MainView_ChatMenuItem" xml:space="preserve">
     <value>Chat</value>
   </data>

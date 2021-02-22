@@ -36,7 +36,7 @@ namespace script_chan2.GUI
         public async void Edit()
         {
             localLog.Information("open editor for color '{name}'", userColor.Key);
-            var model = new EditColorDialogViewModel(userColor.Color);
+            var model = new EditColorDialogViewModel(userColor.Color, userColor.Key);
             var view = ViewLocator.LocateForModel(model, null, null);
             ViewModelBinder.Bind(model, view, null);
 
