@@ -334,6 +334,312 @@ Copy single beatmap links to clipboard to add them to the list</value>
   <data name="MappoolWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
     <value>Wiki URL</value>
   </data>
+  <data name="MatchAbortMapDialogView_AbortButtonText" xml:space="preserve">
+    <value>Abort</value>
+  </data>
+  <data name="MatchAbortMapDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="MatchAbortMapDialogView_LabelText" xml:space="preserve">
+    <value>Abort map?</value>
+  </data>
+  <data name="MatchBanchoEventViewModel_AllPlayersFinishedText" xml:space="preserve">
+    <value>All players finished</value>
+  </data>
+  <data name="MatchBanchoEventViewModel_AllPlayersReadyText" xml:space="preserve">
+    <value>All players ready</value>
+  </data>
+  <data name="MatchBanchoEventViewModel_RollText" xml:space="preserve">
+    <value>{0} rolled {1}</value>
+    <comment>{0}: Player name
+{1}: Roll</comment>
+  </data>
+  <data name="MatchBanchoEventViewModel_TimeFormat" xml:space="preserve">
+    <value>HH:mm</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemBannedByText" xml:space="preserve">
+    <value>Banned by {0}</value>
+    <comment>{0}: Player or team name</comment>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemBanText" xml:space="preserve">
+    <value>Ban</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemPickedByText" xml:space="preserve">
+    <value>Picked by {0}</value>
+    <comment>{0}: Player or team name</comment>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemPickText" xml:space="preserve">
+    <value>Pick</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemUnbanText" xml:space="preserve">
+    <value>Unban</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemUnpickText" xml:space="preserve">
+    <value>Unpick</value>
+  </data>
+  <data name="MatchBeatmapViewModel_LabelText" xml:space="preserve">
+    <value>{0} - {1} [{2}] ({3}) BPM{4} AR{5} CS{6}</value>
+    <comment>{0}: Artist
+{1}: Title
+{2}: Version
+{3}: Creator
+{4}: BPM
+{5}: AR
+{6}: CS</comment>
+  </data>
+  <data name="MatchBeatmapViewModel_LabelTooltip" xml:space="preserve">
+    <value>Mapper: {0}
+BPM: {1}
+AR: {2}
+CS: {3}</value>
+    <comment>{0}: Mapper
+{1}: BPM
+{2}: AR
+{3}: CS</comment>
+  </data>
+  <data name="MatchBRTeamView_DecreaseButtonTooltip" xml:space="preserve">
+    <value>Decrease</value>
+  </data>
+  <data name="MatchBRTeamView_IncreaseButtonTooltip" xml:space="preserve">
+    <value>Increase</value>
+  </data>
+  <data name="MatchBRTeamView_KickButtonTooltip" xml:space="preserve">
+    <value>Kick</value>
+  </data>
+  <data name="MatchCloseRoomDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="MatchCloseRoomDialogView_CloseButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="MatchCloseRoomDialogView_LabelText" xml:space="preserve">
+    <value>Close the room?</value>
+  </data>
+  <data name="MatchJoinRoomDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="MatchJoinRoomDialogView_JoinButtonText" xml:space="preserve">
+    <value>Join</value>
+  </data>
+  <data name="MatchJoinRoomDialogView_LabelText" xml:space="preserve">
+    <value>Join room</value>
+  </data>
+  <data name="MatchJoinRoomDialogView_RoomIdTextBoxHint" xml:space="preserve">
+    <value>Room ID</value>
+  </data>
+  <data name="MatchPasswordDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="MatchPasswordDialogView_LabelText" xml:space="preserve">
+    <value>Set password</value>
+  </data>
+  <data name="MatchPasswordDialogView_PasswordTextBoxHint" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="MatchPasswordDialogView_SetButtonText" xml:space="preserve">
+    <value>Set</value>
+  </data>
+  <data name="MatchPickOverviewDialogView_BansLabelText" xml:space="preserve">
+    <value>Bans</value>
+  </data>
+  <data name="MatchPickOverviewDialogView_CloseButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="MatchPickOverviewDialogView_MappoolLabelText" xml:space="preserve">
+    <value>Mappool</value>
+  </data>
+  <data name="MatchPickOverviewDialogView_PicksLabelText" xml:space="preserve">
+    <value>Picks</value>
+  </data>
+  <data name="MatchPlayerView_DecreaseButtonTooltip" xml:space="preserve">
+    <value>Decrease</value>
+  </data>
+  <data name="MatchPlayerView_IncreaseButtonTooltip" xml:space="preserve">
+    <value>Increase</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_GameModeComboBoxHint" xml:space="preserve">
+    <value>Game mode</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_LabelText" xml:space="preserve">
+    <value>Set room options</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_RoomSizeTextBoxHint" xml:space="preserve">
+    <value>Room size</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_ScoreModeComboBoxHint" xml:space="preserve">
+    <value>Score mode</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_SetButtonText" xml:space="preserve">
+    <value>Set</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_TeamSizeTextBoxHint" xml:space="preserve">
+    <value>Team size</value>
+  </data>
+  <data name="MatchRoomSlotViewModel_ContextItemKickText" xml:space="preserve">
+    <value>Kick</value>
+  </data>
+  <data name="MatchRoomSlotViewModel_ContextItemSetHostText" xml:space="preserve">
+    <value>Set host</value>
+  </data>
+  <data name="MatchTeamView_DecreaseButtonTooltip" xml:space="preserve">
+    <value>Decrease</value>
+  </data>
+  <data name="MatchTeamView_IncreaseButtonTooltip" xml:space="preserve">
+    <value>Increase</value>
+  </data>
+  <data name="MatchViewModel_NextPlayerPickMessage" xml:space="preserve">
+    <value>Next player to pick: {0}</value>
+    <comment>{0}: Player name</comment>
+  </data>
+  <data name="MatchViewModel_NextTeamPickMessage" xml:space="preserve">
+    <value>Next team to pick: {0}</value>
+    <comment>{0}: Team name</comment>
+  </data>
+  <data name="MatchViewModel_PlayerPointsMessage" xml:space="preserve">
+    <value>({0}) {1}: {2} pt(s)</value>
+    <comment>{0}: Player ranking
+{1}: Player name
+{2}: Points</comment>
+  </data>
+  <data name="MatchViewModel_RoomRankingMessage" xml:space="preserve">
+    <value>Ranking of the room:</value>
+  </data>
+  <data name="MatchViewModel_SecondBanMessage" xml:space="preserve">
+    <value>{0} can ban another map</value>
+    <comment>{0}: Team name</comment>
+  </data>
+  <data name="MatchViewModel_TeamRoomSetupMessage" xml:space="preserve">
+    <value>{0} is RED, slots 1 to {1} --- {2} is BLUE, slots {3} to {4}</value>
+    <comment>{0}: Team red name
+{1}: Red team last slot number
+{2}: Team blue name
+{3}: Blue team first slot number
+{4}: Blue team last slot number</comment>
+  </data>
+  <data name="MatchViewModel_TiebreakerMessage" xml:space="preserve">
+    <value>The result is a tie. We have to play the tiebreaker.</value>
+  </data>
+  <data name="MatchViewModel_WinMessage" xml:space="preserve">
+    <value>**{0} wins the match**</value>
+    <comment>{0}: Team or player name</comment>
+  </data>
+  <data name="MatchView_AbortMapButtonText" xml:space="preserve">
+    <value>Abort map</value>
+  </data>
+  <data name="MatchView_AllPicksFreemodCheckBoxText" xml:space="preserve">
+    <value>All picks as freemod</value>
+  </data>
+  <data name="MatchView_BanRecapButtonText" xml:space="preserve">
+    <value>Ban recap</value>
+  </data>
+  <data name="MatchView_BOTextBoxHint" xml:space="preserve">
+    <value>BO</value>
+  </data>
+  <data name="MatchView_CloseRoomButtonText" xml:space="preserve">
+    <value>Close the room</value>
+  </data>
+  <data name="MatchView_CreateRoomButtonText" xml:space="preserve">
+    <value>Create room</value>
+  </data>
+  <data name="MatchView_DisableChatMatchStatusCheckBoxText" xml:space="preserve">
+    <value>Disable chat match status</value>
+  </data>
+  <data name="MatchView_DisableChatMatchStatusCheckBoxTooltip" xml:space="preserve">
+    <value>Disable automated irc messages after map (Ranking of the room/Next pick)</value>
+  </data>
+  <data name="MatchView_FirstPickComboBoxHint" xml:space="preserve">
+    <value>First Pick</value>
+  </data>
+  <data name="MatchView_GameModeComboBoxHint" xml:space="preserve">
+    <value>Game mode</value>
+  </data>
+  <data name="MatchView_GameRecapButtonText" xml:space="preserve">
+    <value>Game recap</value>
+  </data>
+  <data name="MatchView_InvitePlayersButtonText" xml:space="preserve">
+    <value>Invite players</value>
+  </data>
+  <data name="MatchView_JoinRoomButtonText" xml:space="preserve">
+    <value>Join existing room</value>
+  </data>
+  <data name="MatchView_KickLastTeamButtonText" xml:space="preserve">
+    <value>Kick last team</value>
+  </data>
+  <data name="MatchView_MappoolComboBoxHint" xml:space="preserve">
+    <value>Mappool</value>
+  </data>
+  <data name="MatchView_MessageTextBoxHint" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="MatchView_PickNextMapButtonText" xml:space="preserve">
+    <value>Pick next map</value>
+  </data>
+  <data name="MatchView_PickRecapButtonText" xml:space="preserve">
+    <value>Pick recap</value>
+  </data>
+  <data name="MatchView_PicksBansButtonText" xml:space="preserve">
+    <value>Picks/Bans</value>
+  </data>
+  <data name="MatchView_RollWinnerComboBoxHint" xml:space="preserve">
+    <value>Roll Winner</value>
+  </data>
+  <data name="MatchView_RoomSizeTextBoxHint" xml:space="preserve">
+    <value>Room size</value>
+  </data>
+  <data name="MatchView_SecondBanTextBoxHint" xml:space="preserve">
+    <value>Points for second ban</value>
+  </data>
+  <data name="MatchView_SendButtonText" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="MatchView_SetPasswordButtonText" xml:space="preserve">
+    <value>Set password</value>
+  </data>
+  <data name="MatchView_SetRoomOptionsButtonText" xml:space="preserve">
+    <value>Set room options</value>
+  </data>
+  <data name="MatchView_SettingsButtonText" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MatchView_StartGameButtonText" xml:space="preserve">
+    <value>Start game (5s)</value>
+  </data>
+  <data name="MatchView_SwitchPlayersBackButtonText" xml:space="preserve">
+    <value>Switch players back</value>
+  </data>
+  <data name="MatchView_SwitchPlayersButtonText" xml:space="preserve">
+    <value>Switch players</value>
+  </data>
+  <data name="MatchView_TeamSizeTextBoxHint" xml:space="preserve">
+    <value>Team size</value>
+  </data>
+  <data name="MatchView_TimerAfterGameTextBoxHint" xml:space="preserve">
+    <value>Timer after game</value>
+  </data>
+  <data name="MatchView_TimerAfterPickTextBoxHint" xml:space="preserve">
+    <value>Timer after pick</value>
+  </data>
+  <data name="MatchView_TimerButtonText" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="MatchView_TimerCommandTextBoxHint" xml:space="preserve">
+    <value>Timer Command</value>
+  </data>
+  <data name="MatchView_ViewerModeCheckBoxText" xml:space="preserve">
+    <value>Viewer Mode</value>
+  </data>
+  <data name="MatchView_ViewerModeCheckBoxTooltip" xml:space="preserve">
+    <value>Disable webhooks and automated irc messages</value>
+  </data>
+  <data name="MatchView_WarmupModeCheckBoxText" xml:space="preserve">
+    <value>Warmup mode</value>
+  </data>
+  <data name="MatchView_WelcomeStringButtonText" xml:space="preserve">
+    <value>Welcome string</value>
+  </data>
   <data name="NewChatDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
