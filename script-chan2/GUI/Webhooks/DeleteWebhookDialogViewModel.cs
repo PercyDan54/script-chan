@@ -20,6 +20,11 @@ namespace script_chan2.GUI
         {
             get { return webhook.Name; }
         }
+
+        public string Label
+        {
+            get { return string.Format(Properties.Resources.DeleteWebhookDialogView_LabelText, Name); }
+        }
         #endregion
 
         #region Actions

@@ -224,6 +224,16 @@
     <value>{0} löschen?</value>
     <comment>{0}: Tournament name</comment>
   </data>
+  <data name="DeleteWebhookDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="DeleteWebhookDialogView_DeleteButtonText" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="DeleteWebhookDialogView_LabelText" xml:space="preserve">
+    <value>{0} löschen?</value>
+    <comment>{0}: Webhook name</comment>
+  </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
@@ -379,6 +389,45 @@
   </data>
   <data name="EditTournamentDialogView_WinConditionComboBoxHint" xml:space="preserve">
     <value>Gewinnbedingung</value>
+  </data>
+  <data name="EditWebhookDialogView_AvatarTextBoxHint" xml:space="preserve">
+    <value>Profilbild</value>
+  </data>
+  <data name="EditWebhookDialogView_BanRecapCheckBoxText" xml:space="preserve">
+    <value>Ban Zusammenfassung</value>
+  </data>
+  <data name="EditWebhookDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="EditWebhookDialogView_FooterIconTextBoxHint" xml:space="preserve">
+    <value>Footer Bild</value>
+  </data>
+  <data name="EditWebhookDialogView_FooterTextTextBoxHint" xml:space="preserve">
+    <value>Footer Text</value>
+  </data>
+  <data name="EditWebhookDialogView_GameRecapCheckBoxText" xml:space="preserve">
+    <value>Spiel Zusammenfassung</value>
+  </data>
+  <data name="EditWebhookDialogView_MatchCreatedCheckBoxText" xml:space="preserve">
+    <value>Raumerstellung</value>
+  </data>
+  <data name="EditWebhookDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EditWebhookDialogView_PickRecapCheckBoxText" xml:space="preserve">
+    <value>Pick Zusammenfassung</value>
+  </data>
+  <data name="EditWebhookDialogView_SaveButtonText" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="EditWebhookDialogView_URLTextBoxHint" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="EditWebhookDialogView_UsernameTextBoxHint" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="EditWebhookDialogView_WinImageTextBoxHint" xml:space="preserve">
+    <value>Sieg Bild/gif</value>
   </data>
   <data name="ExportSuccessDialogView_OkButtonText" xml:space="preserve">
     <value>OK</value>
@@ -1018,6 +1067,15 @@ CS: {3}</value>
   </data>
   <data name="TournamentWebhooksDialogView_WebhookChannelWarning" xml:space="preserve">
     <value>Mehrere aktive Webhooks senden in den gleichen Discord Channel!</value>
+  </data>
+  <data name="WebhookListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="WebhookListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="WebhooksView_NewButtonText" xml:space="preserve">
+    <value>Neu</value>
   </data>
   <data name="Window_CloseButtonTooltip" xml:space="preserve">
     <value>Schließen</value>

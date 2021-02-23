@@ -378,6 +378,33 @@ namespace script_chan2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
+        public static string DeleteWebhookDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("DeleteWebhookDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeleteWebhookDialogView_DeleteButtonText {
+            get {
+                return ResourceManager.GetString("DeleteWebhookDialogView_DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete {0}?.
+        /// </summary>
+        public static string DeleteWebhookDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("DeleteWebhookDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
         public static string EditColorDialogView_CancelButtonText {
             get {
                 return ResourceManager.GetString("EditColorDialogView_CancelButtonText", resourceCulture);
@@ -840,6 +867,123 @@ namespace script_chan2.Properties {
         public static string EditTournamentDialogView_WinConditionComboBoxHint {
             get {
                 return ResourceManager.GetString("EditTournamentDialogView_WinConditionComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avatar.
+        /// </summary>
+        public static string EditWebhookDialogView_AvatarTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_AvatarTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ban recap.
+        /// </summary>
+        public static string EditWebhookDialogView_BanRecapCheckBoxText {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_BanRecapCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string EditWebhookDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Footer icon.
+        /// </summary>
+        public static string EditWebhookDialogView_FooterIconTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_FooterIconTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Footer text.
+        /// </summary>
+        public static string EditWebhookDialogView_FooterTextTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_FooterTextTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game recap.
+        /// </summary>
+        public static string EditWebhookDialogView_GameRecapCheckBoxText {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_GameRecapCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match created.
+        /// </summary>
+        public static string EditWebhookDialogView_MatchCreatedCheckBoxText {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_MatchCreatedCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string EditWebhookDialogView_NameTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_NameTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick recap.
+        /// </summary>
+        public static string EditWebhookDialogView_PickRecapCheckBoxText {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_PickRecapCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string EditWebhookDialogView_SaveButtonText {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_SaveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL.
+        /// </summary>
+        public static string EditWebhookDialogView_URLTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_URLTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string EditWebhookDialogView_UsernameTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_UsernameTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win image/gif.
+        /// </summary>
+        public static string EditWebhookDialogView_WinImageTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_WinImageTextBoxHint", resourceCulture);
             }
         }
         
@@ -2662,6 +2806,33 @@ namespace script_chan2.Properties {
         public static string TournamentWebhooksDialogView_WebhookChannelWarning {
             get {
                 return ResourceManager.GetString("TournamentWebhooksDialogView_WebhookChannelWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string WebhookListItemView_DeleteButtonTooltip {
+            get {
+                return ResourceManager.GetString("WebhookListItemView_DeleteButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string WebhookListItemView_EditButtonTooltip {
+            get {
+                return ResourceManager.GetString("WebhookListItemView_EditButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string WebhooksView_NewButtonText {
+            get {
+                return ResourceManager.GetString("WebhooksView_NewButtonText", resourceCulture);
             }
         }
         
