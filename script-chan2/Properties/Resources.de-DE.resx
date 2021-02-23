@@ -1068,6 +1068,12 @@ CS: {3}</value>
   <data name="TournamentWebhooksDialogView_WebhookChannelWarning" xml:space="preserve">
     <value>Mehrere aktive Webhooks senden in den gleichen Discord Channel!</value>
   </data>
+  <data name="ValidationRule_FieldRequired" xml:space="preserve">
+    <value>Eingabe benötigt</value>
+  </data>
+  <data name="ValidationRule_WebhookNameDuplicate" xml:space="preserve">
+    <value>Name ist bereits in Benutzung</value>
+  </data>
   <data name="WebhookListItemView_DeleteButtonTooltip" xml:space="preserve">
     <value>Löschen</value>
   </data>

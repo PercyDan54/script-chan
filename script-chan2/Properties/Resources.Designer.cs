@@ -2810,6 +2810,24 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field is required.
+        /// </summary>
+        public static string ValidationRule_FieldRequired {
+            get {
+                return ResourceManager.GetString("ValidationRule_FieldRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name is already in use.
+        /// </summary>
+        public static string ValidationRule_WebhookNameDuplicate {
+            get {
+                return ResourceManager.GetString("ValidationRule_WebhookNameDuplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string WebhookListItemView_DeleteButtonTooltip {

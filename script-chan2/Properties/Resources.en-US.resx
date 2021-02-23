@@ -1067,6 +1067,12 @@ CS: {3}</value>
   <data name="TournamentWebhooksDialogView_WebhookChannelWarning" xml:space="preserve">
     <value>You have multiple Webhooks sending the same message to the same channel!</value>
   </data>
+  <data name="ValidationRule_FieldRequired" xml:space="preserve">
+    <value>Field is required</value>
+  </data>
+  <data name="ValidationRule_WebhookNameDuplicate" xml:space="preserve">
+    <value>Name is already in use</value>
+  </data>
   <data name="WebhookListItemView_DeleteButtonTooltip" xml:space="preserve">
     <value>Delete</value>
   </data>
