@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="10">
@@ -12,20 +13,20 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button x:Name="OpenNewMatchDialog" Content="New" HorizontalAlignment="Left" />
-            <Button x:Name="OpenWikiImportDialog" Content="Import from wiki" Margin="10 0 0 0" />
-            <Button x:Name="OpenDeleteAllMatchesDialog" Content="Delete all" Margin="10 0 0 0" />
+            <Button x:Name="OpenNewMatchDialog" Content="{x:Static p:Resources.MatchesView_NewButtonText}" HorizontalAlignment="Left" />
+            <Button x:Name="OpenWikiImportDialog" Content="{x:Static p:Resources.MatchesView_WikiImportButtonText}" Margin="10 0 0 0" />
+            <Button x:Name="OpenDeleteAllMatchesDialog" Content="{x:Static p:Resources.MatchesView_DeleteAllButtonText}" Margin="10 0 0 0" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBox x:Name="Search" Width="200" md:HintAssist.Hint="Search" />
-            <ComboBox md:HintAssist.Hint="Tournament" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200" Margin="10 0 0 0">
+            <TextBox x:Name="Search" Width="200" md:HintAssist.Hint="{x:Static p:Resources.MatchesView_SearchTextBoxHint}" />
+            <ComboBox md:HintAssist.Hint="{x:Static p:Resources.MatchesView_TournamentComboBoxHint}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding FilterTournament}" Width="200" Margin="10 0 0 0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <ComboBox md:HintAssist.Hint="Status" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Statuses}" SelectedItem="{Binding FilterStatus}" Width="200" Margin="10 0 0 0" />
+            <ComboBox md:HintAssist.Hint="{x:Static p:Resources.MatchesView_StatusComboBoxHint}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Statuses}" SelectedItem="{Binding FilterStatus}" Width="200" Margin="10 0 0 0" />
         </StackPanel>
         <ScrollViewer Grid.Row="1">
             <ItemsControl x:Name="MatchViews">

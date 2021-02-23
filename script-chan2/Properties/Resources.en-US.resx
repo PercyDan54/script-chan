@@ -168,6 +168,15 @@
   <data name="DeleteAllMappoolsDialogView_LabelText" xml:space="preserve">
     <value>Do you really want to delete all mappools?</value>
   </data>
+  <data name="DeleteAllMatchesDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DeleteAllMatchesDialogView_DeleteButtonText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteAllMatchesDialogView_LabelText" xml:space="preserve">
+    <value>Do you really want to delete all matches?</value>
+  </data>
   <data name="DeleteCustomCommandDialogViewModel_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
   </data>
@@ -185,6 +194,16 @@
   </data>
   <data name="DeleteMappoolDialogView_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
+  </data>
+  <data name="DeleteMatchDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DeleteMatchDialogView_DeleteButtonText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteMatchDialogView_LabelText" xml:space="preserve">
+    <value>Do you really want to delete {0}?</value>
+    <comment>{0}: Match name</comment>
   </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -218,6 +237,54 @@
   </data>
   <data name="EditMappoolDialogView_TournamentComboBoxHint" xml:space="preserve">
     <value>Tournament</value>
+  </data>
+  <data name="EditMatchDialogView_AddButtonTooltip" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="EditMatchDialogView_BOTextBoxHint" xml:space="preserve">
+    <value>BO</value>
+  </data>
+  <data name="EditMatchDialogView_CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EditMatchDialogView_GameModeComboBoxHint" xml:space="preserve">
+    <value>Game Mode</value>
+  </data>
+  <data name="EditMatchDialogView_MappoolComboBoxHint" xml:space="preserve">
+    <value>Mappool</value>
+  </data>
+  <data name="EditMatchDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EditMatchDialogView_PlayerNameOrIDTextBoxHint" xml:space="preserve">
+    <value>Player name or ID</value>
+  </data>
+  <data name="EditMatchDialogView_RoomSizeTextBoxHint" xml:space="preserve">
+    <value>Room Size</value>
+  </data>
+  <data name="EditMatchDialogView_SaveButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="EditMatchDialogView_TeamBlueComboBoxHint" xml:space="preserve">
+    <value>Team Blue</value>
+  </data>
+  <data name="EditMatchDialogView_TeamComboBoxHint" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="EditMatchDialogView_TeamModeComboBoxHint" xml:space="preserve">
+    <value>Team Mode</value>
+  </data>
+  <data name="EditMatchDialogView_TeamRedComboBoxHint" xml:space="preserve">
+    <value>Team Red</value>
+  </data>
+  <data name="EditMatchDialogView_TeamSizeTextBoxHint" xml:space="preserve">
+    <value>Team Size</value>
+  </data>
+  <data name="EditMatchDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Tournament</value>
+  </data>
+  <data name="EditMatchDialogView_WinConditionComboBoxHint" xml:space="preserve">
+    <value>Win Condition</value>
   </data>
   <data name="ExportSuccessDialogView_OkButtonText" xml:space="preserve">
     <value>OK</value>
@@ -397,6 +464,9 @@ CS: {3}</value>
 {2}: AR
 {3}: CS</comment>
   </data>
+  <data name="MatchBRTeamListItemView_RemoveTeamButtonTooltip" xml:space="preserve">
+    <value>Remove Team</value>
+  </data>
   <data name="MatchBRTeamView_DecreaseButtonTooltip" xml:space="preserve">
     <value>Decrease</value>
   </data>
@@ -415,6 +485,48 @@ CS: {3}</value>
   <data name="MatchCloseRoomDialogView_LabelText" xml:space="preserve">
     <value>Close the room?</value>
   </data>
+  <data name="MatchesView_DeleteAllButtonText" xml:space="preserve">
+    <value>Delete all</value>
+  </data>
+  <data name="MatchesView_NewButtonText" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="MatchesView_SearchTextBoxHint" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="MatchesView_StatusComboBoxHint" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="MatchesView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Tournament</value>
+  </data>
+  <data name="MatchesView_WikiImportButtonText" xml:space="preserve">
+    <value>Import from wiki</value>
+  </data>
+  <data name="MatchesWikiImportDialogViewModel_StatusGettingWikiPage" xml:space="preserve">
+    <value>Getting wiki page</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_BOTextBoxHint" xml:space="preserve">
+    <value>BO</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_CloseButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_ImportButtonText" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_MappoolComboBoxHint" xml:space="preserve">
+    <value>Mappool</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_NoTeamsWarning" xml:space="preserve">
+    <value>This tournament has no teams set up!</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Tournament</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
+    <value>Wiki URL</value>
+  </data>
   <data name="MatchJoinRoomDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -426,6 +538,18 @@ CS: {3}</value>
   </data>
   <data name="MatchJoinRoomDialogView_RoomIdTextBoxHint" xml:space="preserve">
     <value>Room ID</value>
+  </data>
+  <data name="MatchListItemViewModel_DateTimeFormat" xml:space="preserve">
+    <value>MM-dd HH:mm</value>
+  </data>
+  <data name="MatchListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MatchListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MatchListItemView_OpenButtonTooltip" xml:space="preserve">
+    <value>Open</value>
   </data>
   <data name="MatchPasswordDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -450,6 +574,9 @@ CS: {3}</value>
   </data>
   <data name="MatchPickOverviewDialogView_PicksLabelText" xml:space="preserve">
     <value>Picks</value>
+  </data>
+  <data name="MatchPlayerListItemView_RemovePlayerButtonTooltip" xml:space="preserve">
+    <value>Remove Player</value>
   </data>
   <data name="MatchPlayerView_DecreaseButtonTooltip" xml:space="preserve">
     <value>Decrease</value>

@@ -31,7 +31,7 @@ namespace script_chan2.GUI
             get
             {
                 if (match.MatchTime != null)
-                    return ((DateTime)match.MatchTime).ToString("MM-dd HH:mm");
+                    return ((DateTime)match.MatchTime).ToString(Properties.Resources.MatchListItemViewModel_DateTimeFormat);
                 return "";
             }
         }

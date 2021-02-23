@@ -7,6 +7,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:script_chan2.GUI"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
              d:DesignHeight="500" d:DesignWidth="450">
@@ -25,7 +26,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox md:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="4">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_NameTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="4">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -34,25 +35,25 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <ComboBox md:HintAssist.Hint="Tournament" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding Tournament}" Margin="0 10 5 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="{Binding TournamentEnabled}">
+        <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_TournamentComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding Tournament}" Margin="0 10 5 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="{Binding TournamentEnabled}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox md:HintAssist.Hint="Mappool" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding Mappool}" Margin="5 10 0 0" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
+        <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_MappoolComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding Mappool}" Margin="5 10 0 0" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox md:HintAssist.Hint="Game Mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="0" Margin="0 10 5 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" />
-        <ComboBox md:HintAssist.Hint="Win Condition" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="1" Margin="5 10 5 0" ItemsSource="{Binding WinConditionsList}" SelectedItem="{Binding WinCondition}" />
-        <ComboBox md:HintAssist.Hint="Team Mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="2" Margin="5 10 5 0" ItemsSource="{Binding TeamModesList}" SelectedItem="{Binding TeamMode}" />
-        <TextBox Text="{Binding BO}" md:HintAssist.Hint="BO" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="2" Grid.Column="3" Margin="5 10 0 0" />
-        <TextBox md:HintAssist.Hint="Team Size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="3" Margin="0 10 5 0">
+        <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_GameModeComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="0" Margin="0 10 5 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" />
+        <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_WinConditionComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="1" Margin="5 10 5 0" ItemsSource="{Binding WinConditionsList}" SelectedItem="{Binding WinCondition}" />
+        <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_TeamModeComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="2" Margin="5 10 5 0" ItemsSource="{Binding TeamModesList}" SelectedItem="{Binding TeamMode}" />
+        <TextBox Text="{Binding BO}" md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_BOTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="2" Grid.Column="3" Margin="5 10 0 0" />
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_TeamSizeTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="3" Margin="0 10 5 0">
             <TextBox.Text>
                 <Binding Path="TeamSize" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -61,7 +62,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox md:HintAssist.Hint="Room Size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="3" Grid.Column="1" Margin="5 10 5 0">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_RoomSizeTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="3" Grid.Column="1" Margin="5 10 5 0">
             <TextBox.Text>
                 <Binding Path="RoomSize" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -81,14 +82,14 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ComboBox md:HintAssist.Hint="Team Red" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding TeamRed}" Margin="0 0 5 0">
+            <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_TeamRedComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding TeamRed}" Margin="0 0 5 0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <ComboBox md:HintAssist.Hint="Team Blue" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding TeamBlue}" Grid.Column="1" Margin="5 0 0 0">
+            <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_TeamBlueComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding Teams}" SelectedItem="{Binding TeamBlue}" Grid.Column="1" Margin="5 0 0 0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
@@ -105,8 +106,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBox md:HintAssist.Hint="Player name or ID" Text="{Binding PlayerNameOrId, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action AddPlayer]" />
-            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Add" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action AddPlayer]">
+            <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_PlayerNameOrIDTextBoxHint}" Text="{Binding PlayerNameOrId, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" cal:Message.Attach="[Key Enter] = [Action AddPlayer]" />
+            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.EditMatchDialogView_AddButtonTooltip}" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action AddPlayer]">
                 <md:PackIcon Kind="Add" />
             </Button>
             <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
@@ -133,14 +134,14 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ComboBox md:HintAssist.Hint="Team" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding SelectableBRTeams}" SelectedItem="{Binding SelectedBRTeam}" Margin="0 0 5 0">
+            <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditMatchDialogView_TeamComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ItemsSource="{Binding SelectableBRTeams}" SelectedItem="{Binding SelectedBRTeam}" Margin="0 0 5 0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Add" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action AddBRTeam]">
+            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.EditMatchDialogView_AddButtonTooltip}" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action AddBRTeam]">
                 <md:PackIcon Kind="Add" />
             </Button>
             <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
@@ -159,12 +160,12 @@
             </ScrollViewer>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="5" Grid.ColumnSpan="4">
-            <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
+            <Button Content="{x:Static p:Resources.EditMatchDialogView_CancelButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
                 <Button.CommandParameter>
                     <system:Boolean>False</system:Boolean>
                 </Button.CommandParameter>
             </Button>
-            <Button Content="Save" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding SaveEnabled}">
+            <Button Content="{x:Static p:Resources.EditMatchDialogView_SaveButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding SaveEnabled}">
                 <Button.CommandParameter>
                     <system:Boolean>True</system:Boolean>
                 </Button.CommandParameter>

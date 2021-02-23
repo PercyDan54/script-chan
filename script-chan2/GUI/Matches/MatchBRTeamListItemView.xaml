@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="800">
     <Border BorderBrush="LightGray" BorderThickness="0 0 0 2" Height="40" Background="{Binding Background}" cal:Message.Attach="[Event MouseEnter] = [Action MouseEnter]; [Event MouseLeave] = [Action MouseLeave]">
@@ -14,7 +15,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="TeamName" Margin="10 0 0 0" VerticalAlignment="Center" Grid.Column="0" />
-            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Remove Team" VerticalAlignment="Center" cal:Message.Attach="[Event Click] = [Action RemoveBRTeam($dataContext)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Grid.Column="1">
+            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchBRTeamListItemView_RemoveTeamButtonTooltip}" VerticalAlignment="Center" cal:Message.Attach="[Event Click] = [Action RemoveBRTeam($dataContext)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Grid.Column="1">
                 <md:PackIcon Kind="Delete" />
             </Button>
         </Grid>
