@@ -580,6 +580,9 @@
     <value>Can add multiple beatmaps delimited by ';'
 Copy single beatmap links to clipboard to add them to the list</value>
   </data>
+  <data name="MappoolBeatmapsDialogView_CloseButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="MappoolListItemView_DeleteButtonTooltip" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -921,6 +924,9 @@ CS: {3}</value>
   </data>
   <data name="MatchView_PicksBansButtonText" xml:space="preserve">
     <value>Picks/Bans</value>
+  </data>
+  <data name="MatchView_RefreshButtonTooltip" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="MatchView_RollWinnerComboBoxHint" xml:space="preserve">
     <value>Roll Winner</value>

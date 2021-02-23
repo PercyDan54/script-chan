@@ -74,7 +74,7 @@
                             <ColumnDefinition Width="40" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="UpdateScore" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Refresh" Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center" Visibility="{Binding RoomOpenVisible}">
+                        <Button x:Name="UpdateScore" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchView_RefreshButtonTooltip}" Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center" Visibility="{Binding RoomOpenVisible}">
                             <md:PackIcon Kind="Refresh" />
                         </Button>
                         <ScrollViewer Visibility="{Binding TeamVsVisible}" Grid.Column="1">

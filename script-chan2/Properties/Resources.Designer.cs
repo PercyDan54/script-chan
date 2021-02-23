@@ -1403,6 +1403,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string MappoolBeatmapsDialogView_CloseButtonText {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapsDialogView_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string MappoolListItemView_DeleteButtonTooltip {
@@ -2266,6 +2275,15 @@ namespace script_chan2.Properties {
         public static string MatchView_PicksBansButtonText {
             get {
                 return ResourceManager.GetString("MatchView_PicksBansButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string MatchView_RefreshButtonTooltip {
+            get {
+                return ResourceManager.GetString("MatchView_RefreshButtonTooltip", resourceCulture);
             }
         }
         

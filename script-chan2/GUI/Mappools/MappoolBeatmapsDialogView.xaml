@@ -38,6 +38,6 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" HorizontalAlignment="Right" IsEnabled="{Binding CloseButtonEnabled}" />
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="{x:Static p:Resources.MappoolBeatmapsDialogView_CloseButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" HorizontalAlignment="Right" IsEnabled="{Binding CloseButtonEnabled}" />
     </Grid>
 </UserControl>

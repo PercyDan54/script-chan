@@ -584,6 +584,9 @@
 Beatmap Links in der Zwischenablage werden automatisch der Liste hinzugefügt</value>
     <comment>Can add multiple beatmaps delimited by ';'&amp;#10;Copy single beatmap links to clipboard to add them here</comment>
   </data>
+  <data name="MappoolBeatmapsDialogView_CloseButtonText" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
   <data name="MappoolListItemView_DeleteButtonTooltip" xml:space="preserve">
     <value>Löschen</value>
   </data>
@@ -925,6 +928,9 @@ CS: {3}</value>
   </data>
   <data name="MatchView_PicksBansButtonText" xml:space="preserve">
     <value>Picks/Bans</value>
+  </data>
+  <data name="MatchView_RefreshButtonTooltip" xml:space="preserve">
+    <value>Neu laden</value>
   </data>
   <data name="MatchView_RollWinnerComboBoxHint" xml:space="preserve">
     <value>Würfel Gewinner</value>
