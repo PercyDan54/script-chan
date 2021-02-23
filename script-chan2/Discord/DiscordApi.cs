@@ -36,8 +36,8 @@ namespace script_chan2.Discord
                         Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     },
                     Color = Color.Blue,
-                    Title = "The match has been created!",
-                    Description = $"You can join the match on IRC by typing ```/join #mp_{match.RoomId}```"
+                    Title = Properties.Resources.DiscordApi_MatchCreatedTitle,
+                    Description = string.Format(Properties.Resources.DiscordApi_MatchCreatedDescription, match.RoomId)
                 };
 
                 if (match.TeamMode == Enums.TeamModes.TeamVS)
@@ -78,9 +78,12 @@ namespace script_chan2.Discord
                             Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                         },
                         Color = Color.Gold,
-                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
-                        Title = "Ban Recap " + (match.RollWinnerTeam != null ? "(Roll Winner: " + match.RollWinnerTeam.Name + ")" : ""),
+                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     };
+                    if (match.RollWinnerTeam != null)
+                        embed.Title = string.Format(Properties.Resources.DiscordApi_BanRecapWithRollWinnerTitle, match.RollWinnerTeam.Name);
+                    else
+                        embed.Title = Properties.Resources.DiscordApi_BanRecapTitle;
                     var redTeam = "";
                     var blueTeam = "";
                     foreach (var ban in match.Bans)
@@ -109,9 +112,12 @@ namespace script_chan2.Discord
                             Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                         },
                         Color = Color.Gold,
-                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
-                        Title = "Ban Recap " + (match.RollWinnerPlayer != null ? "(Roll Winner: " + match.RollWinnerPlayer.Name + ")" : ""),
+                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     };
+                    if (match.RollWinnerPlayer != null)
+                        embed.Title = string.Format(Properties.Resources.DiscordApi_BanRecapWithRollWinnerTitle, match.RollWinnerPlayer.Name);
+                    else
+                        embed.Title = Properties.Resources.DiscordApi_BanRecapTitle;
                     foreach (var player in match.Players)
                     {
                         var bans = "";
@@ -160,9 +166,12 @@ namespace script_chan2.Discord
                             Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                         },
                         Color = Color.Gold,
-                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
-                        Title = "Pick Recap " + (match.RollWinnerPlayer != null ? "(Roll Winner: " + match.RollWinnerPlayer.Name + ")" : ""),
+                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     };
+                    if (match.RollWinnerTeam != null)
+                        embed.Title = string.Format(Properties.Resources.DiscordApi_PickRecapWithRollWinnerTitle, match.RollWinnerTeam.Name);
+                    else
+                        embed.Title = Properties.Resources.DiscordApi_PickRecapTitle;
                     var redTeam = "";
                     var blueTeam = "";
                     for (var i = 0; i < match.Picks.Count; i++)
@@ -192,9 +201,12 @@ namespace script_chan2.Discord
                             Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                         },
                         Color = Color.Gold,
-                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId,
-                        Title = "Pick Recap " + (match.RollWinnerTeam != null ? "(Roll Winner: " + match.RollWinnerTeam.Name + ")" : ""),
+                        Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     };
+                    if (match.RollWinnerTeam != null)
+                        embed.Title = string.Format(Properties.Resources.DiscordApi_PickRecapWithRollWinnerTitle, match.RollWinnerPlayer.Name);
+                    else
+                        embed.Title = Properties.Resources.DiscordApi_PickRecapTitle;
                     var picks = "";
                     foreach (var pick in match.Picks)
                     {
@@ -204,7 +216,7 @@ namespace script_chan2.Discord
                         picks += $"-{(pick.Player != null ? pick.Player.Name : "???")}- __{mod}__ **{pick.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {pick.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{pick.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
                     }
                     if (!string.IsNullOrEmpty(picks))
-                        embed.Fields.Add(new EmbedFieldBuilder { Name = "Picks", Value = picks });
+                        embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_PickRecapPicksFieldName, Value = picks });
                 }
 
                 if (embed != null)
@@ -269,7 +281,10 @@ namespace script_chan2.Discord
 
                     var mvp = match.Games.Last().Scores.OrderByDescending(x => x.Points).First();
 
-                    embed.Title = $"{map.Team.Name} {(pickingTeamWon ? "won" : "lost")} their __{mod}__ pick by {string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore))}";
+                    if (pickingTeamWon)
+                        embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapTeamWinTitle, map.Team.Name, mod, string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore)));
+                    else
+                        embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapLostTitle, map.Team.Name, mod, string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore)));
                     if (lastGame)
                     {
                         embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/130304896581763072/411660079771811870/crown.png";
@@ -289,11 +304,11 @@ namespace script_chan2.Discord
                     embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**";
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = match.TeamRedPoints, IsInline = true });
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = match.TeamBluePoints, IsInline = true });
-                    embed.Fields.Add(new EmbedFieldBuilder { Name = "MVP", Value = $":flag_{mvp.Player.Country.ToLower()}: **{mvp.Player.Name.Replace("_", "\\_")}** with {string.Format("{0:n0}", mvp.Points)} points" });
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapMVPFieldName, Value = string.Format(Properties.Resources.DiscordApi_GameRecapMVPFieldValue, mvp.Player.Country.ToLower(), mvp.Player.Name.Replace("_", "\\_"), string.Format("{0:n0}", mvp.Points)) });
                     if (lastGame)
-                        embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = $"{(match.TeamRedPoints * 2 >= match.BO ? match.TeamRed.Name : match.TeamBlue.Name)} wins the match :clap:" });
+                        embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapStatusFieldTitle, Value = string.Format(Properties.Resources.DiscordApi_GameRecapStatusFieldTeamMatchWin, match.TeamRedPoints * 2 >= match.BO ? match.TeamRed.Name : match.TeamBlue.Name) });
                     else
-                        embed.Fields.Add(new EmbedFieldBuilder { Name = "Status", Value = "Next team to pick: " + (map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) + " :loudspeaker:" });
+                        embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapStatusFieldTitle, Value = string.Format(Properties.Resources.DiscordApi_GameRecapStatusFieldTeamNextPick, map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) });
                 }
                 else if (match.TeamMode == Enums.TeamModes.HeadToHead)
                 {
@@ -329,7 +344,7 @@ namespace script_chan2.Discord
                     }
 
                     var winner = match.Games.Last().Scores.OrderByDescending(x => x.Points).First();
-                    embed.Title = $"{winner.Player.Name.Replace("_", "\\_").Replace("*", "\\*")} won the __{mod}__ pick with {winner.Points} points";
+                    embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapPlayerWinTitle, winner.Player.Name.Replace("_", "\\_").Replace("*", "\\*"), mod, winner.Points);
                     embed.ThumbnailUrl = "https://b.ppy.sh/thumb/" + map.SetId + "l.jpg";
                     embed.Description = $"**{map.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {map.Title.Replace("_", "\\_").Replace("*", "\\*")} [{map.Version.Replace("_", "\\_").Replace("*", "\\*")}]**";
 
@@ -340,8 +355,8 @@ namespace script_chan2.Discord
                         players += score.Player.Name + Environment.NewLine;
                         points += score.Points + Environment.NewLine;
                     }
-                    embed.Fields.Add(new EmbedFieldBuilder { Name = "Player", Value = players, IsInline = true });
-                    embed.Fields.Add(new EmbedFieldBuilder { Name = "Points", Value = points, IsInline = true });
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapPlayerFieldName, Value = players, IsInline = true });
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapPointsFieldName, Value = points, IsInline = true });
                 }
 
                 if (embed != null)

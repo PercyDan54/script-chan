@@ -98,7 +98,7 @@ namespace script_chan2.OsuApi
                 catch
                 {
                     localLog.Information("website is not reachable");
-                    MessageBox.Show("API and website are down.", "API error");
+                    MessageBox.Show(Properties.Resources.OsuApi_TimeoutErrorText, Properties.Resources.OsuApi_TimeoutErrorHeader);
                     return null;
                 }
             }
@@ -149,7 +149,7 @@ namespace script_chan2.OsuApi
                 catch
                 {
                     localLog.Information("website is not reachable");
-                    MessageBox.Show("API and website are down.", "API error");
+                    MessageBox.Show(Properties.Resources.OsuApi_TimeoutErrorText, Properties.Resources.OsuApi_TimeoutErrorHeader);
                     return null;
                 }
             }
@@ -256,7 +256,7 @@ namespace script_chan2.OsuApi
                 catch (Exception ex)
                 {
                     localLog.Information("website is not reachable");
-                    MessageBox.Show("API and website are down.", "API error");
+                    MessageBox.Show(Properties.Resources.OsuApi_TimeoutErrorText, Properties.Resources.OsuApi_TimeoutErrorHeader);
                 }
             }
         }

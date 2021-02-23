@@ -133,7 +133,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("start import from wiki '{url}'", WikiUrl);
             IsImporting = true;
-            ImportStatus = "Getting wiki page";
+            ImportStatus = Properties.Resources.MappoolWikiImportDialogViewModel_StatusGettingWikiPage;
 
             var importMappools = new List<ImportMappool>();
 

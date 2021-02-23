@@ -20,6 +20,11 @@ namespace script_chan2.GUI
         {
             get { return team.Name; }
         }
+
+        public string Label
+        {
+            get { return string.Format(Properties.Resources.DeleteTeamDialogView_LabelText, Name); }
+        }
         #endregion
 
         #region Actions

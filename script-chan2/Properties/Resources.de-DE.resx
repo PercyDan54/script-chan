@@ -118,238 +118,238 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppBootstrapper_BootstrapperException" xml:space="preserve">
-    <value>Bootstrapper exception caught. See logs for more details.</value>
+    <value>Bootstrapper Fehler. Siehe Logs für mehr Details.</value>
   </data>
   <data name="AppBootstrapper_UnhandledException" xml:space="preserve">
-    <value>Unhandled exception caught. See logs for more details.</value>
+    <value>Fehler. Siehe Logs für mehr Details.</value>
   </data>
   <data name="ChatUserView_CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="ChatView_MessageTextBoxHint" xml:space="preserve">
-    <value>Message</value>
+    <value>Nachricht</value>
   </data>
   <data name="ChatView_OpenNewButtonText" xml:space="preserve">
     <value>+</value>
   </data>
   <data name="ChatView_OpenNewButtonTooltip" xml:space="preserve">
-    <value>Open new tab (Ctrl+T)</value>
+    <value>Neuen Tab öffnen (Strg+T)</value>
   </data>
   <data name="ChatView_SendButtonTooltip" xml:space="preserve">
-    <value>Send</value>
+    <value>Senden</value>
   </data>
   <data name="ColorListItemView_EditButtonTooltip" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="ColorsView_DefaultButtonText" xml:space="preserve">
-    <value>Default</value>
+    <value>Zurücksetzen</value>
   </data>
   <data name="CustomCommandListItemView_DeleteButtonTooltip" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="CustomCommandListItemView_EditButtonTooltip" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="CustomCommandsView_NewButtonText" xml:space="preserve">
-    <value>New</value>
+    <value>Neu</value>
   </data>
   <data name="CustomCommandsView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="DefaultColorValuesDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="DefaultColorValuesDialogView_LabelText" xml:space="preserve">
-    <value>Do you really want to reset all colors?</value>
+    <value>Alle Farben zurücksetzen?</value>
   </data>
   <data name="DefaultColorValuesDialogView_ResetButtonText" xml:space="preserve">
-    <value>Reset</value>
+    <value>Zurücksetzen</value>
   </data>
   <data name="DeleteAllMappoolsDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="DeleteAllMappoolsDialogView_DeleteButtonText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="DeleteAllMappoolsDialogView_LabelText" xml:space="preserve">
-    <value>Do you really want to delete all mappools?</value>
+    <value>Alle Mappools löschen?</value>
   </data>
   <data name="DeleteAllMatchesDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="DeleteAllMatchesDialogView_DeleteButtonText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="DeleteAllMatchesDialogView_LabelText" xml:space="preserve">
-    <value>Do you really want to delete all matches?</value>
+    <value>Alle Spiele löschen?</value>
   </data>
   <data name="DeleteCustomCommandDialogViewModel_LabelText" xml:space="preserve">
-    <value>Do you really want to delete {0}?</value>
-    <comment>{0}: Custom command name</comment>
+    <value>{0} löschen?</value>
   </data>
   <data name="DeleteCustomCommandDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="DeleteCustomCommandDialogView_DeleteButtonText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="DeleteMappoolDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="DeleteMappoolDialogView_DeleteButtonText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="DeleteMappoolDialogView_LabelText" xml:space="preserve">
-    <value>Do you really want to delete {0}?</value>
-    <comment>{0}: Mappool name</comment>
+    <value>{0} löschen?</value>
   </data>
   <data name="DeleteMatchDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="DeleteMatchDialogView_DeleteButtonText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="DeleteMatchDialogView_LabelText" xml:space="preserve">
-    <value>Do you really want to delete {0}?</value>
+    <value>{0} löschen?</value>
     <comment>{0}: Match name</comment>
   </data>
   <data name="DeleteTeamDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="DeleteTeamDialogView_DeleteButtonText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="DeleteTeamDialogView_LabelText" xml:space="preserve">
-    <value>Do you really want to delete {0}?</value>
-    <comment>{0}: Team name</comment>
+    <value>{0} löschen?</value>
   </data>
   <data name="DeleteTournamentDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="DeleteTournamentDialogView_DeleteButtonText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="DeleteTournamentDialogView_LabelText" xml:space="preserve">
-    <value>Do you really want to delete {0}?</value>
+    <value>{0} löschen?</value>
     <comment>{0}: Tournament name</comment>
   </data>
   <data name="DeleteWebhookDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="DeleteWebhookDialogView_DeleteButtonText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="DeleteWebhookDialogView_LabelText" xml:space="preserve">
-    <value>Do you really want to delete {0}?</value>
+    <value>{0} löschen?</value>
     <comment>{0}: Webhook name</comment>
   </data>
   <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
-    <value>Ban Recap</value>
+    <value>Ban Zusammenfassung</value>
   </data>
   <data name="DiscordApi_BanRecapWithRollWinnerTitle" xml:space="preserve">
-    <value>Ban Recap (Roll Winner: {0})</value>
+    <value>Ban Zusammenfassung (Würfel Gewinner: {0})</value>
   </data>
   <data name="DiscordApi_GameRecapLostTitle" xml:space="preserve">
-    <value>{0} lost their __{1}__ pick by {2}</value>
+    <value>{0} haben ihren __{1}__ Pick mit {2} verloren</value>
+    <comment>{0}: Team name
+{1}: Mod
+{2}: Point difference</comment>
   </data>
   <data name="DiscordApi_GameRecapMVPFieldName" xml:space="preserve">
     <value>MVP</value>
   </data>
   <data name="DiscordApi_GameRecapMVPFieldValue" xml:space="preserve">
-    <value>:flag_{0}: **{1}** with {2} points</value>
+    <value>:flag_{0}: **{1}** mit {2} Punkten</value>
     <comment>{0}: Player country code
 {1}: Player name
 {3}: Points</comment>
   </data>
   <data name="DiscordApi_GameRecapPlayerFieldName" xml:space="preserve">
-    <value>Player</value>
+    <value>Spieler</value>
   </data>
   <data name="DiscordApi_GameRecapPlayerWinTitle" xml:space="preserve">
-    <value>{0} won the __{1}__ pick with {2} points</value>
+    <value>{0} hat den __{1}__ Pick mit {2} Punkten gewonnen</value>
     <comment>{0}: Player name
 {1}: Mod
 {2}: Points</comment>
   </data>
   <data name="DiscordApi_GameRecapPointsFieldName" xml:space="preserve">
-    <value>Points</value>
+    <value>Punkte</value>
   </data>
   <data name="DiscordApi_GameRecapStatusFieldTeamMatchWin" xml:space="preserve">
-    <value>{0} wins the match :clap:</value>
+    <value>{0} hat das Spiel gewonnen :clap:</value>
     <comment>{0}: Team name</comment>
   </data>
   <data name="DiscordApi_GameRecapStatusFieldTeamNextPick" xml:space="preserve">
-    <value>Next team to pick: {0} :loudspeaker:</value>
+    <value>Nächster Pick: {0} :loudspeaker:</value>
     <comment>{0}: Next pick</comment>
   </data>
   <data name="DiscordApi_GameRecapStatusFieldTitle" xml:space="preserve">
     <value>Status</value>
   </data>
   <data name="DiscordApi_GameRecapTeamWinTitle" xml:space="preserve">
-    <value>{0} won their __{1}__ pick by {2}</value>
+    <value>{0} haben ihren __{1}__ Pick mit {2} gewonnen</value>
     <comment>{0}: Team name
 {1}: Mod
 {2}: Point difference</comment>
   </data>
   <data name="DiscordApi_MatchCreatedDescription" xml:space="preserve">
-    <value>You can join the match on IRC by typing ```/join #mp_{0}```</value>
+    <value>Der Raum kann mit ```/join #mp_{0}``` betreten werden</value>
     <comment>{0}: Room id</comment>
   </data>
   <data name="DiscordApi_MatchCreatedTitle" xml:space="preserve">
-    <value>The match has been created!</value>
+    <value>Raum wurde erstellt!</value>
   </data>
   <data name="DiscordApi_PickRecapPicksFieldName" xml:space="preserve">
     <value>Picks</value>
   </data>
   <data name="DiscordApi_PickRecapTitle" xml:space="preserve">
-    <value>Pick Recap</value>
+    <value>Pick Zusammenfassung</value>
   </data>
   <data name="DiscordApi_PickRecapWithRollWinnerTitle" xml:space="preserve">
-    <value>Pick Recap (Roll Winner: {0})</value>
+    <value>Pick Zusammenfassung (Würfel Gewinner: {0})</value>
   </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="EditColorDialogView_SaveButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="EditCustomCommandDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="EditCustomCommandDialogView_CommandTextBoxHint" xml:space="preserve">
-    <value>Command</value>
+    <value>Befehl</value>
   </data>
   <data name="EditCustomCommandDialogView_NameTextBoxHint" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="EditCustomCommandDialogView_SaveButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="EditCustomCommandDialogView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="EditMappoolDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="EditMappoolDialogView_NameTextBoxHint" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="EditMappoolDialogView_SaveButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="EditMappoolDialogView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="EditMatchDialogView_AddButtonTooltip" xml:space="preserve">
-    <value>Add</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="EditMatchDialogView_BOTextBoxHint" xml:space="preserve">
     <value>BO</value>
   </data>
   <data name="EditMatchDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="EditMatchDialogView_GameModeComboBoxHint" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Spielmodus</value>
   </data>
   <data name="EditMatchDialogView_MappoolComboBoxHint" xml:space="preserve">
     <value>Mappool</value>
@@ -358,172 +358,172 @@
     <value>Name</value>
   </data>
   <data name="EditMatchDialogView_PlayerNameOrIDTextBoxHint" xml:space="preserve">
-    <value>Player name or ID</value>
+    <value>Spieler Name oder ID</value>
   </data>
   <data name="EditMatchDialogView_RoomSizeTextBoxHint" xml:space="preserve">
-    <value>Room Size</value>
+    <value>Raumgröße</value>
   </data>
   <data name="EditMatchDialogView_SaveButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="EditMatchDialogView_TeamBlueComboBoxHint" xml:space="preserve">
-    <value>Team Blue</value>
+    <value>Blaues Team</value>
   </data>
   <data name="EditMatchDialogView_TeamComboBoxHint" xml:space="preserve">
     <value>Team</value>
   </data>
   <data name="EditMatchDialogView_TeamModeComboBoxHint" xml:space="preserve">
-    <value>Team Mode</value>
+    <value>Teammodus</value>
   </data>
   <data name="EditMatchDialogView_TeamRedComboBoxHint" xml:space="preserve">
-    <value>Team Red</value>
+    <value>Rotes Team</value>
   </data>
   <data name="EditMatchDialogView_TeamSizeTextBoxHint" xml:space="preserve">
-    <value>Team Size</value>
+    <value>Teamgröße</value>
   </data>
   <data name="EditMatchDialogView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="EditMatchDialogView_WinConditionComboBoxHint" xml:space="preserve">
-    <value>Win Condition</value>
+    <value>Gewinnbedingung</value>
   </data>
   <data name="EditTeamDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="EditTeamDialogView_NameTextBoxHint" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="EditTeamDialogView_SaveButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="EditTeamDialogView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="EditTournamentDialogView_AcronymTextBoxHint" xml:space="preserve">
-    <value>Acronym</value>
+    <value>Akronym</value>
   </data>
   <data name="EditTournamentDialogView_AddButtonTooltip" xml:space="preserve">
-    <value>Add</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="EditTournamentDialogView_AllPicksFreemodCheckBoxText" xml:space="preserve">
-    <value>All picks as freemod</value>
+    <value>Alle Picks Freemod</value>
   </data>
   <data name="EditTournamentDialogView_BRInitialLivesTextBoxHint" xml:space="preserve">
-    <value>BR Initial Lives</value>
+    <value>BR initiale Leben</value>
   </data>
   <data name="EditTournamentDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="EditTournamentDialogView_CommandTimerTextBoxHint" xml:space="preserve">
-    <value>Command Timer</value>
+    <value>Timer Befehl</value>
   </data>
   <data name="EditTournamentDialogView_GameModeComboBoxHint" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Spielmodus</value>
   </data>
   <data name="EditTournamentDialogView_NameTextBoxHint" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="EditTournamentDialogView_PlacingTextBoxHint" xml:space="preserve">
-    <value>Placing</value>
+    <value>Platzierung</value>
   </data>
   <data name="EditTournamentDialogView_PointsForSecondBanTextBoxHint" xml:space="preserve">
-    <value>Points for second ban</value>
+    <value>Punkte für zweiten Ban</value>
   </data>
   <data name="EditTournamentDialogView_PointsForSecondBanTextBoxTooltip" xml:space="preserve">
-    <value>0 to disable</value>
+    <value>0 zum deaktivieren</value>
   </data>
   <data name="EditTournamentDialogView_PointsGivenTextBoxHint" xml:space="preserve">
-    <value>Points given</value>
+    <value>Punkte</value>
   </data>
   <data name="EditTournamentDialogView_PointsPerGameTextBlockText" xml:space="preserve">
-    <value>Points given for each game</value>
+    <value>Punkteaufteilung</value>
   </data>
   <data name="EditTournamentDialogView_RoomSizeTextBoxHint" xml:space="preserve">
-    <value>Room Size</value>
+    <value>Raumgröße</value>
   </data>
   <data name="EditTournamentDialogView_SaveButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="EditTournamentDialogView_TeamModeComboBoxHint" xml:space="preserve">
-    <value>Team Mode</value>
+    <value>Teammodus</value>
   </data>
   <data name="EditTournamentDialogView_TeamSizeTextBoxHint" xml:space="preserve">
-    <value>Team Size</value>
+    <value>Teamgröße</value>
   </data>
   <data name="EditTournamentDialogView_TimerAfterGameTextBoxHint" xml:space="preserve">
-    <value>Timer After Game</value>
+    <value>Timer nach Spiel</value>
   </data>
   <data name="EditTournamentDialogView_TimerAfterPickTextBoxHint" xml:space="preserve">
-    <value>Timer After Pick</value>
+    <value>Timer nach Pick</value>
   </data>
   <data name="EditTournamentDialogView_WelcomeStringTextBoxHint" xml:space="preserve">
-    <value>Welcome String</value>
+    <value>Willkommensnachricht</value>
   </data>
   <data name="EditTournamentDialogView_WinConditionComboBoxHint" xml:space="preserve">
-    <value>Win Condition</value>
+    <value>Gewinnbedingung</value>
   </data>
   <data name="EditWebhookDialogView_AvatarTextBoxHint" xml:space="preserve">
-    <value>Avatar</value>
+    <value>Profilbild</value>
   </data>
   <data name="EditWebhookDialogView_BanRecapCheckBoxText" xml:space="preserve">
-    <value>Ban recap</value>
+    <value>Ban Zusammenfassung</value>
   </data>
   <data name="EditWebhookDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="EditWebhookDialogView_FooterIconTextBoxHint" xml:space="preserve">
-    <value>Footer icon</value>
+    <value>Footer Bild</value>
   </data>
   <data name="EditWebhookDialogView_FooterTextTextBoxHint" xml:space="preserve">
-    <value>Footer text</value>
+    <value>Footer Text</value>
   </data>
   <data name="EditWebhookDialogView_GameRecapCheckBoxText" xml:space="preserve">
-    <value>Game recap</value>
+    <value>Spiel Zusammenfassung</value>
   </data>
   <data name="EditWebhookDialogView_MatchCreatedCheckBoxText" xml:space="preserve">
-    <value>Match created</value>
+    <value>Raumerstellung</value>
   </data>
   <data name="EditWebhookDialogView_NameTextBoxHint" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="EditWebhookDialogView_PickRecapCheckBoxText" xml:space="preserve">
-    <value>Pick recap</value>
+    <value>Pick Zusammenfassung</value>
   </data>
   <data name="EditWebhookDialogView_SaveButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="EditWebhookDialogView_URLTextBoxHint" xml:space="preserve">
     <value>URL</value>
   </data>
   <data name="EditWebhookDialogView_UsernameTextBoxHint" xml:space="preserve">
-    <value>Username</value>
+    <value>Benutzername</value>
   </data>
   <data name="EditWebhookDialogView_WinImageTextBoxHint" xml:space="preserve">
-    <value>Win image/gif</value>
+    <value>Sieg Bild/gif</value>
   </data>
   <data name="ExportSuccessDialogView_OkButtonText" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ExportView_ExportButtonText" xml:space="preserve">
-    <value>Export</value>
+    <value>Exportieren</value>
   </data>
   <data name="ExportView_ExportSuccessfullDialogText" xml:space="preserve">
-    <value>Export successfull</value>
+    <value>Export erfolgreich</value>
   </data>
   <data name="ExportView_ImportButtonText" xml:space="preserve">
-    <value>Import</value>
+    <value>Importieren</value>
   </data>
   <data name="ExportView_ImportSuccessfullDialogText" xml:space="preserve">
-    <value>Import successfull</value>
+    <value>Import erfolgreich</value>
   </data>
   <data name="MainView_ChatMenuItem" xml:space="preserve">
     <value>Chat</value>
   </data>
   <data name="MainView_ColorsMenuItem" xml:space="preserve">
-    <value>Colors</value>
+    <value>Farben</value>
   </data>
   <data name="MainView_CommandsMenuItem" xml:space="preserve">
-    <value>Commands</value>
+    <value>Befehle</value>
   </data>
   <data name="MainView_ExportMenuItem" xml:space="preserve">
     <value>Export</value>
@@ -532,25 +532,25 @@
     <value>Mappools</value>
   </data>
   <data name="MainView_MatchesMenuItem" xml:space="preserve">
-    <value>Matches</value>
+    <value>Spiele</value>
   </data>
   <data name="MainView_SettingsMenuItem" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="MainView_TeamsMenuItem" xml:space="preserve">
     <value>Teams</value>
   </data>
   <data name="MainView_TournamentsMenuItem" xml:space="preserve">
-    <value>Tournaments</value>
+    <value>Turniere</value>
   </data>
   <data name="MainView_WebhooksMenuItem" xml:space="preserve">
     <value>Webhooks</value>
   </data>
   <data name="MappoolBeatmapListItemView_DeleteButtonTooltip" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="MappoolBeatmapListItemView_DownButtonTooltip" xml:space="preserve">
-    <value>Down</value>
+    <value>Nach unten</value>
   </data>
   <data name="MappoolBeatmapListItemView_DTCheckBoxText" xml:space="preserve">
     <value>DT</value>
@@ -571,71 +571,72 @@
     <value>Tiebreaker</value>
   </data>
   <data name="MappoolBeatmapListItemView_UpButtonTooltip" xml:space="preserve">
-    <value>Up</value>
+    <value>Nach oben</value>
   </data>
   <data name="MappoolBeatmapsDialogView_AddButtonTooltip" xml:space="preserve">
-    <value>Add</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="MappoolBeatmapsDialogView_BeatmapIdTextBoxHint" xml:space="preserve">
     <value>Beatmap ID</value>
   </data>
   <data name="MappoolBeatmapsDialogView_BeatmapIdTextBoxTooltip" xml:space="preserve">
-    <value>Can add multiple beatmaps delimited by ';'
-Copy single beatmap links to clipboard to add them to the list</value>
+    <value>Mehrere IDs können mit ';' getrennt auf einmal eingegeben werden
+Beatmap Links in der Zwischenablage werden automatisch der Liste hinzugefügt</value>
+    <comment>Can add multiple beatmaps delimited by ';'&amp;#10;Copy single beatmap links to clipboard to add them here</comment>
   </data>
   <data name="MappoolBeatmapsDialogView_CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="MappoolListItemView_DeleteButtonTooltip" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="MappoolListItemView_EditButtonTooltip" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="MappoolListItemView_EditMapsButtonTooltip" xml:space="preserve">
-    <value>Edit Maps</value>
+    <value>Beatmaps bearbeiten</value>
   </data>
   <data name="MappoolsView_DeleteAllButtonText" xml:space="preserve">
-    <value>Delete all</value>
+    <value>Alle löschen</value>
   </data>
   <data name="MappoolsView_ImportFromWikiButtonText" xml:space="preserve">
-    <value>Import from wiki</value>
+    <value>Wiki Import</value>
   </data>
   <data name="MappoolsView_NewButtonText" xml:space="preserve">
-    <value>New</value>
+    <value>Neu</value>
   </data>
   <data name="MappoolsView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="MappoolWikiImportDialogViewModel_StatusGettingWikiPage" xml:space="preserve">
-    <value>Getting wiki page</value>
+    <value>Wiki wird geladen...</value>
   </data>
   <data name="MappoolWikiImportDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="MappoolWikiImportDialogView_ImportButtonText" xml:space="preserve">
-    <value>Import</value>
+    <value>Importieren</value>
   </data>
   <data name="MappoolWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
     <value>Wiki URL</value>
   </data>
   <data name="MatchAbortMapDialogView_AbortButtonText" xml:space="preserve">
-    <value>Abort</value>
+    <value>Ja</value>
   </data>
   <data name="MatchAbortMapDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Nein</value>
   </data>
   <data name="MatchAbortMapDialogView_LabelText" xml:space="preserve">
-    <value>Abort map?</value>
+    <value>Spiel abbrechen?</value>
   </data>
   <data name="MatchBanchoEventViewModel_AllPlayersFinishedText" xml:space="preserve">
-    <value>All players finished</value>
+    <value>Alle Spieler fertig</value>
   </data>
   <data name="MatchBanchoEventViewModel_AllPlayersReadyText" xml:space="preserve">
-    <value>All players ready</value>
+    <value>Alle Spieler bereit</value>
   </data>
   <data name="MatchBanchoEventViewModel_RollText" xml:space="preserve">
-    <value>{0} rolled {1}</value>
+    <value>{0} rollt {1}</value>
     <comment>{0}: Player name
 {1}: Roll</comment>
   </data>
@@ -643,24 +644,24 @@ Copy single beatmap links to clipboard to add them to the list</value>
     <value>HH:mm</value>
   </data>
   <data name="MatchBeatmapViewModel_ContextItemBannedByText" xml:space="preserve">
-    <value>Banned by {0}</value>
+    <value>Gebannt von {0}</value>
     <comment>{0}: Player or team name</comment>
   </data>
   <data name="MatchBeatmapViewModel_ContextItemBanText" xml:space="preserve">
     <value>Ban</value>
   </data>
   <data name="MatchBeatmapViewModel_ContextItemPickedByText" xml:space="preserve">
-    <value>Picked by {0}</value>
+    <value>Pick von {0}</value>
     <comment>{0}: Player or team name</comment>
   </data>
   <data name="MatchBeatmapViewModel_ContextItemPickText" xml:space="preserve">
     <value>Pick</value>
   </data>
   <data name="MatchBeatmapViewModel_ContextItemUnbanText" xml:space="preserve">
-    <value>Unban</value>
+    <value>Ban rückgängig machen</value>
   </data>
   <data name="MatchBeatmapViewModel_ContextItemUnpickText" xml:space="preserve">
-    <value>Unpick</value>
+    <value>Pick rückgängig machen</value>
   </data>
   <data name="MatchBeatmapViewModel_LabelText" xml:space="preserve">
     <value>{0} - {1} [{2}] ({3}) BPM{4} AR{5} CS{6}</value>
@@ -683,52 +684,52 @@ CS: {3}</value>
 {3}: CS</comment>
   </data>
   <data name="MatchBRTeamListItemView_RemoveTeamButtonTooltip" xml:space="preserve">
-    <value>Remove Team</value>
+    <value>Team entfernen</value>
   </data>
   <data name="MatchBRTeamView_DecreaseButtonTooltip" xml:space="preserve">
-    <value>Decrease</value>
+    <value>Reduzieren</value>
   </data>
   <data name="MatchBRTeamView_IncreaseButtonTooltip" xml:space="preserve">
-    <value>Increase</value>
+    <value>Erhöhen</value>
   </data>
   <data name="MatchBRTeamView_KickButtonTooltip" xml:space="preserve">
     <value>Kick</value>
   </data>
   <data name="MatchCloseRoomDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="MatchCloseRoomDialogView_CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="MatchCloseRoomDialogView_LabelText" xml:space="preserve">
-    <value>Close the room?</value>
+    <value>Raum schließen?</value>
   </data>
   <data name="MatchesView_DeleteAllButtonText" xml:space="preserve">
-    <value>Delete all</value>
+    <value>Alle löschen</value>
   </data>
   <data name="MatchesView_NewButtonText" xml:space="preserve">
-    <value>New</value>
+    <value>Neu</value>
   </data>
   <data name="MatchesView_SearchTextBoxHint" xml:space="preserve">
-    <value>Search</value>
+    <value>Suche</value>
   </data>
   <data name="MatchesView_StatusComboBoxHint" xml:space="preserve">
     <value>Status</value>
   </data>
   <data name="MatchesView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="MatchesView_WikiImportButtonText" xml:space="preserve">
-    <value>Import from wiki</value>
+    <value>Wiki Import</value>
   </data>
   <data name="MatchesWikiImportDialogViewModel_StatusGettingWikiPage" xml:space="preserve">
-    <value>Getting wiki page</value>
+    <value>Wiki wird geladen...</value>
   </data>
   <data name="MatchesWikiImportDialogView_BOTextBoxHint" xml:space="preserve">
     <value>BO</value>
   </data>
   <data name="MatchesWikiImportDialogView_CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="MatchesWikiImportDialogView_ImportButtonText" xml:space="preserve">
     <value>Import</value>
@@ -737,55 +738,55 @@ CS: {3}</value>
     <value>Mappool</value>
   </data>
   <data name="MatchesWikiImportDialogView_NoTeamsWarning" xml:space="preserve">
-    <value>This tournament has no teams set up!</value>
+    <value>Dieses Turnier hat keine Teams!</value>
   </data>
   <data name="MatchesWikiImportDialogView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="MatchesWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
     <value>Wiki URL</value>
   </data>
   <data name="MatchJoinRoomDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="MatchJoinRoomDialogView_JoinButtonText" xml:space="preserve">
-    <value>Join</value>
+    <value>Betreten</value>
   </data>
   <data name="MatchJoinRoomDialogView_LabelText" xml:space="preserve">
-    <value>Join room</value>
+    <value>Raum betreten</value>
   </data>
   <data name="MatchJoinRoomDialogView_RoomIdTextBoxHint" xml:space="preserve">
-    <value>Room ID</value>
+    <value>Raum ID</value>
   </data>
   <data name="MatchListItemViewModel_DateTimeFormat" xml:space="preserve">
     <value>MM-dd HH:mm</value>
   </data>
   <data name="MatchListItemView_DeleteButtonTooltip" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="MatchListItemView_EditButtonTooltip" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="MatchListItemView_OpenButtonTooltip" xml:space="preserve">
-    <value>Open</value>
+    <value>Öffnen</value>
   </data>
   <data name="MatchPasswordDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="MatchPasswordDialogView_LabelText" xml:space="preserve">
-    <value>Set password</value>
+    <value>Passwort setzen</value>
   </data>
   <data name="MatchPasswordDialogView_PasswordTextBoxHint" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="MatchPasswordDialogView_SetButtonText" xml:space="preserve">
-    <value>Set</value>
+    <value>Speichern</value>
   </data>
   <data name="MatchPickOverviewDialogView_BansLabelText" xml:space="preserve">
     <value>Bans</value>
   </data>
   <data name="MatchPickOverviewDialogView_CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="MatchPickOverviewDialogView_MappoolLabelText" xml:space="preserve">
     <value>Mappool</value>
@@ -794,53 +795,53 @@ CS: {3}</value>
     <value>Picks</value>
   </data>
   <data name="MatchPlayerListItemView_RemovePlayerButtonTooltip" xml:space="preserve">
-    <value>Remove Player</value>
+    <value>Spieler entfernen</value>
   </data>
   <data name="MatchPlayerView_DecreaseButtonTooltip" xml:space="preserve">
-    <value>Decrease</value>
+    <value>Reduzieren</value>
   </data>
   <data name="MatchPlayerView_IncreaseButtonTooltip" xml:space="preserve">
-    <value>Increase</value>
+    <value>Erhöhen</value>
   </data>
   <data name="MatchRoomOptionsDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="MatchRoomOptionsDialogView_GameModeComboBoxHint" xml:space="preserve">
-    <value>Game mode</value>
+    <value>Spielmodus</value>
   </data>
   <data name="MatchRoomOptionsDialogView_LabelText" xml:space="preserve">
-    <value>Set room options</value>
+    <value>Raum Einstellungen</value>
   </data>
   <data name="MatchRoomOptionsDialogView_RoomSizeTextBoxHint" xml:space="preserve">
-    <value>Room size</value>
+    <value>Raumgröße</value>
   </data>
   <data name="MatchRoomOptionsDialogView_ScoreModeComboBoxHint" xml:space="preserve">
-    <value>Score mode</value>
+    <value>Score-Modus</value>
   </data>
   <data name="MatchRoomOptionsDialogView_SetButtonText" xml:space="preserve">
-    <value>Set</value>
+    <value>Speichern</value>
   </data>
   <data name="MatchRoomOptionsDialogView_TeamSizeTextBoxHint" xml:space="preserve">
-    <value>Team size</value>
+    <value>Teamgröße</value>
   </data>
   <data name="MatchRoomSlotViewModel_ContextItemKickText" xml:space="preserve">
     <value>Kick</value>
   </data>
   <data name="MatchRoomSlotViewModel_ContextItemSetHostText" xml:space="preserve">
-    <value>Set host</value>
+    <value>Host setzen</value>
   </data>
   <data name="MatchTeamView_DecreaseButtonTooltip" xml:space="preserve">
-    <value>Decrease</value>
+    <value>Reduzieren</value>
   </data>
   <data name="MatchTeamView_IncreaseButtonTooltip" xml:space="preserve">
-    <value>Increase</value>
+    <value>Erhöhen</value>
   </data>
   <data name="MatchViewModel_NextPlayerPickMessage" xml:space="preserve">
-    <value>Next player to pick: {0}</value>
+    <value>Nächster Pick: {0}</value>
     <comment>{0}: Player name</comment>
   </data>
   <data name="MatchViewModel_NextTeamPickMessage" xml:space="preserve">
-    <value>Next team to pick: {0}</value>
+    <value>Nächster Pick: {0}</value>
     <comment>{0}: Team name</comment>
   </data>
   <data name="MatchViewModel_PlayerPointsMessage" xml:space="preserve">
@@ -850,14 +851,14 @@ CS: {3}</value>
 {2}: Points</comment>
   </data>
   <data name="MatchViewModel_RoomRankingMessage" xml:space="preserve">
-    <value>Ranking of the room:</value>
+    <value>Aktuelle Tabelle:</value>
   </data>
   <data name="MatchViewModel_SecondBanMessage" xml:space="preserve">
-    <value>{0} can ban another map</value>
+    <value>{0} kann noch eine Beatmap bannen</value>
     <comment>{0}: Team name</comment>
   </data>
   <data name="MatchViewModel_TeamRoomSetupMessage" xml:space="preserve">
-    <value>{0} is RED, slots 1 to {1} --- {2} is BLUE, slots {3} to {4}</value>
+    <value>{0} ist ROT, Slots 1 bis {1} --- {2} ist BLAU, Slots {3} bis {4}</value>
     <comment>{0}: Team red name
 {1}: Red team last slot number
 {2}: Team blue name
@@ -865,203 +866,203 @@ CS: {3}</value>
 {4}: Blue team last slot number</comment>
   </data>
   <data name="MatchViewModel_TiebreakerMessage" xml:space="preserve">
-    <value>The result is a tie. We have to play the tiebreaker.</value>
+    <value>Das Spiel ist unentschieden. Der Tiebreaker muss gespielt werden.</value>
   </data>
   <data name="MatchViewModel_WinMessage" xml:space="preserve">
-    <value>**{0} wins the match**</value>
+    <value>**{0} gewinnt das Spiel**</value>
     <comment>{0}: Team or player name</comment>
   </data>
   <data name="MatchView_AbortMapButtonText" xml:space="preserve">
-    <value>Abort map</value>
+    <value>Spiel abbrechen</value>
   </data>
   <data name="MatchView_AllPicksFreemodCheckBoxText" xml:space="preserve">
-    <value>All picks as freemod</value>
+    <value>Alles Freemod</value>
   </data>
   <data name="MatchView_BanRecapButtonText" xml:space="preserve">
-    <value>Ban recap</value>
+    <value>Ban Zusammenfassung</value>
   </data>
   <data name="MatchView_BOTextBoxHint" xml:space="preserve">
     <value>BO</value>
   </data>
   <data name="MatchView_CloseRoomButtonText" xml:space="preserve">
-    <value>Close the room</value>
+    <value>Raum schließen</value>
   </data>
   <data name="MatchView_CreateRoomButtonText" xml:space="preserve">
-    <value>Create room</value>
+    <value>Raum öffnen</value>
   </data>
   <data name="MatchView_DisableChatMatchStatusCheckBoxText" xml:space="preserve">
-    <value>Disable chat match status</value>
+    <value>Spiel Zusammenfassung deaktivieren</value>
   </data>
   <data name="MatchView_DisableChatMatchStatusCheckBoxTooltip" xml:space="preserve">
-    <value>Disable automated irc messages after map (Ranking of the room/Next pick)</value>
+    <value>Deaktiviert die automatische IRC Nachricht nach einem Spiel</value>
   </data>
   <data name="MatchView_FirstPickComboBoxHint" xml:space="preserve">
-    <value>First Pick</value>
+    <value>Erster Pick</value>
   </data>
   <data name="MatchView_GameModeComboBoxHint" xml:space="preserve">
-    <value>Game mode</value>
+    <value>Spielmodus</value>
   </data>
   <data name="MatchView_GameRecapButtonText" xml:space="preserve">
-    <value>Game recap</value>
+    <value>Spiel Zusammenfassung</value>
   </data>
   <data name="MatchView_InvitePlayersButtonText" xml:space="preserve">
-    <value>Invite players</value>
+    <value>Spieler einladen</value>
   </data>
   <data name="MatchView_JoinRoomButtonText" xml:space="preserve">
-    <value>Join existing room</value>
+    <value>Existierenden Raum betreten</value>
   </data>
   <data name="MatchView_KickLastTeamButtonText" xml:space="preserve">
-    <value>Kick last team</value>
+    <value>Letztes Team kicken</value>
   </data>
   <data name="MatchView_MappoolComboBoxHint" xml:space="preserve">
     <value>Mappool</value>
   </data>
   <data name="MatchView_MessageTextBoxHint" xml:space="preserve">
-    <value>Message</value>
+    <value>Nachricht</value>
   </data>
   <data name="MatchView_PickNextMapButtonText" xml:space="preserve">
-    <value>Pick next map</value>
+    <value>Nächste Beatmap</value>
   </data>
   <data name="MatchView_PickRecapButtonText" xml:space="preserve">
-    <value>Pick recap</value>
+    <value>Pick Zusammenfassung</value>
   </data>
   <data name="MatchView_PicksBansButtonText" xml:space="preserve">
     <value>Picks/Bans</value>
   </data>
   <data name="MatchView_RefreshButtonTooltip" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Neu laden</value>
   </data>
   <data name="MatchView_RollWinnerComboBoxHint" xml:space="preserve">
-    <value>Roll Winner</value>
+    <value>Würfel Gewinner</value>
   </data>
   <data name="MatchView_RoomSizeTextBoxHint" xml:space="preserve">
-    <value>Room size</value>
+    <value>Raumgröße</value>
   </data>
   <data name="MatchView_SecondBanTextBoxHint" xml:space="preserve">
-    <value>Points for second ban</value>
+    <value>Punkte für zweiten Ban</value>
   </data>
   <data name="MatchView_SendButtonText" xml:space="preserve">
-    <value>Send</value>
+    <value>Senden</value>
   </data>
   <data name="MatchView_SetPasswordButtonText" xml:space="preserve">
-    <value>Set password</value>
+    <value>Passwort setzen</value>
   </data>
   <data name="MatchView_SetRoomOptionsButtonText" xml:space="preserve">
-    <value>Set room options</value>
+    <value>Raum Einstellungen</value>
   </data>
   <data name="MatchView_SettingsButtonText" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="MatchView_StartGameButtonText" xml:space="preserve">
-    <value>Start game (5s)</value>
+    <value>Spiel starten (5s)</value>
   </data>
   <data name="MatchView_SwitchPlayersBackButtonText" xml:space="preserve">
-    <value>Switch players back</value>
+    <value>Spieler auf normalen Server zurück wechseln</value>
   </data>
   <data name="MatchView_SwitchPlayersButtonText" xml:space="preserve">
-    <value>Switch players</value>
+    <value>Spieler auf Turnier Server wechseln</value>
   </data>
   <data name="MatchView_TeamSizeTextBoxHint" xml:space="preserve">
-    <value>Team size</value>
+    <value>Teamgröße</value>
   </data>
   <data name="MatchView_TimerAfterGameTextBoxHint" xml:space="preserve">
-    <value>Timer after game</value>
+    <value>Timer nach Spiel</value>
   </data>
   <data name="MatchView_TimerAfterPickTextBoxHint" xml:space="preserve">
-    <value>Timer after pick</value>
+    <value>Timer nach Pick</value>
   </data>
   <data name="MatchView_TimerButtonText" xml:space="preserve">
     <value>Timer</value>
   </data>
   <data name="MatchView_TimerCommandTextBoxHint" xml:space="preserve">
-    <value>Timer Command</value>
+    <value>Timer Befehl</value>
   </data>
   <data name="MatchView_ViewerModeCheckBoxText" xml:space="preserve">
-    <value>Viewer Mode</value>
+    <value>Zuschauermodus</value>
   </data>
   <data name="MatchView_ViewerModeCheckBoxTooltip" xml:space="preserve">
-    <value>Disable webhooks and automated irc messages</value>
+    <value>Deaktiviert Discord Webhooks und automatische IRC Nachrichten</value>
   </data>
   <data name="MatchView_WarmupModeCheckBoxText" xml:space="preserve">
-    <value>Warmup mode</value>
+    <value>Aufwärmmodus</value>
   </data>
   <data name="MatchView_WelcomeStringButtonText" xml:space="preserve">
-    <value>Welcome string</value>
+    <value>Willkommensnachricht</value>
   </data>
   <data name="NewChatDialogView_CancelButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="NewChatDialogView_OpenButtonText" xml:space="preserve">
-    <value>Open</value>
+    <value>Öffnen</value>
   </data>
   <data name="NewChatDialogView_UserTextBoxHint" xml:space="preserve">
-    <value>User</value>
+    <value>Benutzer</value>
   </data>
   <data name="OsuApi_TimeoutErrorHeader" xml:space="preserve">
-    <value>API error</value>
+    <value>API Fehler</value>
   </data>
   <data name="OsuApi_TimeoutErrorText" xml:space="preserve">
-    <value>API and website are down.</value>
+    <value>API ist nicht erreichbar.</value>
   </data>
   <data name="SettingsView_ApiKeyTextBoxHint" xml:space="preserve">
-    <value>API Key</value>
+    <value>API Schlüssel</value>
   </data>
   <data name="SettingsView_BanchoConnectedTooltip" xml:space="preserve">
-    <value>Bancho Connected</value>
+    <value>Bancho verbunden</value>
   </data>
   <data name="SettingsView_BanchoConnectingTooltip" xml:space="preserve">
-    <value>Bancho Connecting</value>
+    <value>Bancho verbinden...</value>
   </data>
   <data name="SettingsView_BanchoDisconnectedTooltip" xml:space="preserve">
-    <value>Bancho Disconnected</value>
+    <value>Bancho getrennt</value>
   </data>
   <data name="SettingsView_DiscardButtonText" xml:space="preserve">
-    <value>Discard</value>
+    <value>Verwerfen</value>
   </data>
   <data name="SettingsView_EnableNotificationsCheckBoxText" xml:space="preserve">
-    <value>Enable notifications</value>
+    <value>Benachrichtigungen aktivieren</value>
   </data>
   <data name="SettingsView_EnableNotificationsCheckBoxTooltip" xml:space="preserve">
-    <value>Play sound when all players are ready or map has finished</value>
+    <value>Spielt einen Ton ab wenn alle Spieler bereit sind oder die Beatmap zuende ist</value>
   </data>
   <data name="SettingsView_GetApiKeyButtonText" xml:space="preserve">
-    <value>Get API key</value>
+    <value>osu! Webseite</value>
   </data>
   <data name="SettingsView_GetIrcPasswordButtonText" xml:space="preserve">
-    <value>Get IRC password</value>
+    <value>osu! Webseite</value>
   </data>
   <data name="SettingsView_IrcPasswordTextBoxHint" xml:space="preserve">
-    <value>IRC Password</value>
+    <value>IRC Passwort</value>
   </data>
   <data name="SettingsView_IrcTimeoutTextBoxHint" xml:space="preserve">
-    <value>IRC Timeout</value>
+    <value>Zeit zwischen IRC Nachrichten</value>
   </data>
   <data name="SettingsView_IrcUsernameTextBoxHint" xml:space="preserve">
-    <value>IRC Username</value>
+    <value>IRC Benutzername</value>
   </data>
   <data name="SettingsView_LanguagesComboBoxHint" xml:space="preserve">
-    <value>Language</value>
+    <value>Sprache</value>
   </data>
   <data name="SettingsView_NotificationSoundFileTextBoxHint" xml:space="preserve">
-    <value>Notification sound file</value>
+    <value>Benachrichtigungstondatei</value>
   </data>
   <data name="SettingsView_NotificationSoundFileTextBoxTooltip" xml:space="preserve">
-    <value>Leave empty for default</value>
+    <value>Leer lassen um standard Ton zu verwenden</value>
   </data>
   <data name="SettingsView_OpenConfigFileButtonText" xml:space="preserve">
-    <value>Open config file</value>
+    <value>Konfigurationsdatei öffnen</value>
   </data>
   <data name="SettingsView_PrivateBanchoConnectedTooltip" xml:space="preserve">
-    <value>Private Bancho Connected</value>
+    <value>Turnier Bancho verbunden</value>
   </data>
   <data name="SettingsView_PrivateBanchoConnectingTooltip" xml:space="preserve">
-    <value>Private Bancho Connecting</value>
+    <value>Turnier Bancho verbinden...</value>
   </data>
   <data name="SettingsView_PrivateBanchoDisconnectedTooltip" xml:space="preserve">
-    <value>Private Bancho Disconnected</value>
+    <value>Turnier Bancho getrennt</value>
   </data>
   <data name="SettingsView_SaveButtonText" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="SettingsView_SelectNotificationSoundFileButtonText" xml:space="preserve">
     <value>...</value>
@@ -1070,112 +1071,112 @@ CS: {3}</value>
     <value>Test</value>
   </data>
   <data name="SettingsView_TimerAfterGameDurationTextBoxHint" xml:space="preserve">
-    <value>Timer After Game Duration</value>
+    <value>Timer nach Beatmap</value>
   </data>
   <data name="SettingsView_TimerAfterPickDurationTextBoxHint" xml:space="preserve">
-    <value>Timer After Pick Duration</value>
+    <value>Timer nach Pick</value>
   </data>
   <data name="SettingsView_TimerCommandDurationTextBoxHint" xml:space="preserve">
-    <value>Timer Command Duration</value>
+    <value>Timer Befehl</value>
   </data>
   <data name="SettingsView_UsePrivateBanchoCheckBox" xml:space="preserve">
-    <value>Use private bancho</value>
+    <value>Turnier Bancho benutzen</value>
   </data>
   <data name="TeamListItemView_DeleteButtonTooltip" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="TeamListItemView_EditButtonTooltip" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="TeamListItemView_EditPlayersButtonTooltip" xml:space="preserve">
-    <value>Edit Players</value>
+    <value>Spieler bearbeiten</value>
   </data>
   <data name="TeamPlayerListItemView_RemovePlayerButtonTooltip" xml:space="preserve">
-    <value>Remove Player</value>
+    <value>Spieler entfernen</value>
   </data>
   <data name="TeamPlayersDialogView_AddButtonTooltip" xml:space="preserve">
-    <value>Add</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="TeamPlayersDialogView_CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="TeamPlayersDialogView_PlayerNameOrIdTextBoxHint" xml:space="preserve">
-    <value>Player name or ID</value>
+    <value>Spieler Name oder ID</value>
   </data>
   <data name="TeamsView_NewButtonText" xml:space="preserve">
-    <value>New</value>
+    <value>Neu</value>
   </data>
   <data name="TeamsView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="TeamsView_WikiImportButtonText" xml:space="preserve">
-    <value>Import from wiki</value>
+    <value>Wiki Import</value>
   </data>
   <data name="TeamWikiImportDialogViewModel_StatusGettingWikiPage" xml:space="preserve">
-    <value>Getting wiki page</value>
+    <value>Wiki wird geladen...</value>
   </data>
   <data name="TeamWikiImportDialogView_CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="TeamWikiImportDialogView_ImportButtonText" xml:space="preserve">
     <value>Import</value>
   </data>
   <data name="TeamWikiImportDialogView_TournamentComboBoxHint" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
   </data>
   <data name="TeamWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
     <value>Wiki URL</value>
   </data>
   <data name="TournamentListItemView_DeleteButtonTooltip" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="TournamentListItemView_EditButtonTooltip" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="TournamentListItemView_WebhooksButtonTooltip" xml:space="preserve">
     <value>Webhooks</value>
   </data>
   <data name="TournamentPointListItemView_DeleteButtonTooltip" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="TournamentsView_NewButtonText" xml:space="preserve">
-    <value>New</value>
+    <value>Neu</value>
   </data>
   <data name="TournamentWebhooksDialogView_CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="TournamentWebhooksDialogView_LabelText" xml:space="preserve">
-    <value>Webhooks of {0}</value>
+    <value>Webhooks von {0}</value>
     <comment>{0}: Tournament name</comment>
   </data>
   <data name="TournamentWebhooksDialogView_WebhookChannelWarning" xml:space="preserve">
-    <value>You have multiple Webhooks sending the same message to the same channel!</value>
+    <value>Mehrere aktive Webhooks senden in den gleichen Discord Channel!</value>
   </data>
   <data name="ValidationRule_FieldRequired" xml:space="preserve">
-    <value>Field is required</value>
+    <value>Eingabe benötigt</value>
   </data>
   <data name="ValidationRule_WebhookNameDuplicate" xml:space="preserve">
-    <value>Name is already in use</value>
+    <value>Name ist bereits in Benutzung</value>
   </data>
   <data name="WebhookListItemView_DeleteButtonTooltip" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="WebhookListItemView_EditButtonTooltip" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="WebhooksView_NewButtonText" xml:space="preserve">
-    <value>New</value>
+    <value>Neu</value>
   </data>
   <data name="Window_CloseButtonTooltip" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="Window_MaximizeButtonTooltip" xml:space="preserve">
-    <value>Maximize</value>
+    <value>Maximieren</value>
   </data>
   <data name="Window_MinimizeButtonTooltip" xml:space="preserve">
-    <value>Minimize</value>
+    <value>Minimieren</value>
   </data>
   <data name="Window_RestoreButtonTooltip" xml:space="preserve">
-    <value>Restore</value>
+    <value>Wiederherstellen</value>
   </data>
 </root>

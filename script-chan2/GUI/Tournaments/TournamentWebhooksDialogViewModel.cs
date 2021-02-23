@@ -39,6 +39,11 @@ namespace script_chan2.GUI
             get { return tournament.Name; }
         }
 
+        public string Label
+        {
+            get { return string.Format(Properties.Resources.TournamentWebhooksDialogView_LabelText, Name); }
+        }
+
         public BindableCollection<TournamentWebhookListItemViewModel> WebhookViews
         {
             get

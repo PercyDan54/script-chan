@@ -20,6 +20,14 @@ namespace script_chan2.GUI
         {
             get { return mappool.Name; }
         }
+
+        public string Label
+        {
+            get
+            {
+                return string.Format(Properties.Resources.DeleteMappoolDialogView_LabelText, Name);
+            }
+        }
         #endregion
 
         #region Actions

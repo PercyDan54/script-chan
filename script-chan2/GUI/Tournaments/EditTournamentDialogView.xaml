@@ -7,6 +7,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:script_chan2.GUI"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
              d:DesignHeight="600" d:DesignWidth="450">
@@ -27,7 +28,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox md:HintAssist.Hint="Acronym" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="0">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_AcronymTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="0">
             <TextBox.Text>
                 <Binding Path="Acronym" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -36,7 +37,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox md:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.ColumnSpan="3" Margin="10 0 0 0">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_NameTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.ColumnSpan="3" Margin="10 0 0 0">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -46,7 +47,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox md:HintAssist.Hint="Room Size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 5 0">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_RoomSizeTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 5 0">
             <TextBox.Text>
                 <Binding Path="RoomSize" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -55,7 +56,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox md:HintAssist.Hint="Team Size" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="5 10 0 0">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_TeamSizeTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="5 10 0 0">
             <TextBox.Text>
                 <Binding Path="TeamSize" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -64,10 +65,10 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <ComboBox md:HintAssist.Hint="Game Mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="0" Margin="0 10 5 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" />
-        <ComboBox md:HintAssist.Hint="Win Condition" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="1" Margin="5 10 5 0" ItemsSource="{Binding WinConditionsList}" SelectedItem="{Binding WinCondition}" />
-        <ComboBox md:HintAssist.Hint="Team Mode" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="5 10 0 0" ItemsSource="{Binding TeamModesList}" SelectedItem="{Binding TeamMode}" />
-        <TextBox md:HintAssist.Hint="Points for second ban" ToolTip="0 to disable" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 5 0">
+        <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_GameModeComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="0" Margin="0 10 5 0" ItemsSource="{Binding GameModesList}" SelectedItem="{Binding GameMode}" />
+        <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_WinConditionComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="1" Margin="5 10 5 0" ItemsSource="{Binding WinConditionsList}" SelectedItem="{Binding WinCondition}" />
+        <ComboBox md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_TeamModeComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="5 10 0 0" ItemsSource="{Binding TeamModesList}" SelectedItem="{Binding TeamMode}" />
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_PointsForSecondBanTextBoxHint}" ToolTip="{x:Static p:Resources.EditTournamentDialogView_PointsForSecondBanTextBoxTooltip}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 5 0">
             <TextBox.Text>
                 <Binding Path="PointsForSecondBan" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -76,12 +77,12 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <CheckBox Content="All picks as freemod" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5 10 0 0" IsChecked="{Binding AllPicksFreemod}" />
-        <TextBox x:Name="MpTimerCommand" md:HintAssist.Hint="Command Timer" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="0" Margin="0 10 5 0" />
-        <TextBox x:Name="MpTimerAfterGame" md:HintAssist.Hint="Timer After Game" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="1" Margin="5 10 5 0" />
-        <TextBox x:Name="MpTimerAfterPick" md:HintAssist.Hint="Timer After Pick" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="2" Margin="5 10 5 0" />
-        <TextBox x:Name="BRInitialLivesAmount" md:HintAssist.Hint="BR Initial Lives" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="3" Margin="5 10 5 0" Visibility="{Binding BattleRoyaleVisible}" />
-        <TextBox x:Name="WelcomeString" md:HintAssist.Hint="Welcome String" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="5" Grid.ColumnSpan="4" Margin="0 10 0 0" />
+        <CheckBox Content="{x:Static p:Resources.EditTournamentDialogView_AllPicksFreemodCheckBoxText}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5 10 0 0" IsChecked="{Binding AllPicksFreemod}" />
+        <TextBox x:Name="MpTimerCommand" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_CommandTimerTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="0" Margin="0 10 5 0" />
+        <TextBox x:Name="MpTimerAfterGame" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_TimerAfterGameTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="1" Margin="5 10 5 0" />
+        <TextBox x:Name="MpTimerAfterPick" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_TimerAfterPickTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="2" Margin="5 10 5 0" />
+        <TextBox x:Name="BRInitialLivesAmount" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_BRInitialLivesTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="3" Margin="5 10 5 0" Visibility="{Binding BattleRoyaleVisible}" />
+        <TextBox x:Name="WelcomeString" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_WelcomeStringTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="5" Grid.ColumnSpan="4" Margin="0 10 0 0" />
         <Grid Grid.Row="6" Grid.ColumnSpan="4" Visibility="{Binding HeadToHeadVisible}" Margin="0 10 0 0" Height="200">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -93,10 +94,10 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock Text="Points given for each game" FontSize="20" Grid.ColumnSpan="3" />
-            <TextBox x:Name="HeadToHeadPointPlace" md:HintAssist.Hint="Placing" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="0" Grid.Row="1" Margin="0 10 5 0" />
-            <TextBox x:Name="HeadToHeadPointPoints" md:HintAssist.Hint="Points given" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.Row="1" Margin="5 10 0 0" />
-            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Add" Grid.Column="2" Grid.Row="1" cal:Message.Attach="[Event Click] = [Action AddPoints]" IsEnabled="{Binding AddPointsEnabled}" Height="30" Width="30" Margin="0 10 0 0">
+            <TextBlock Text="{x:Static p:Resources.EditTournamentDialogView_PointsPerGameTextBlockText}" FontSize="20" Grid.ColumnSpan="3" />
+            <TextBox x:Name="HeadToHeadPointPlace" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_PlacingTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="0" Grid.Row="1" Margin="0 10 5 0" />
+            <TextBox x:Name="HeadToHeadPointPoints" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_PointsGivenTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.Row="1" Margin="5 10 0 0" />
+            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.EditTournamentDialogView_AddButtonTooltip}" Grid.Column="2" Grid.Row="1" cal:Message.Attach="[Event Click] = [Action AddPoints]" IsEnabled="{Binding AddPointsEnabled}" Height="30" Width="30" Margin="0 10 0 0">
                 <md:PackIcon Kind="Add" />
             </Button>
             <ScrollViewer Grid.Row="2" Grid.ColumnSpan="3">
@@ -115,12 +116,12 @@
             </ScrollViewer>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4">
-            <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
+            <Button Content="{x:Static p:Resources.EditTournamentDialogView_CancelButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
                 <Button.CommandParameter>
                     <system:Boolean>False</system:Boolean>
                 </Button.CommandParameter>
             </Button>
-            <Button Content="Save" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding SaveEnabled}">
+            <Button Content="{x:Static p:Resources.EditTournamentDialogView_SaveButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding SaveEnabled}">
                 <Button.CommandParameter>
                     <system:Boolean>True</system:Boolean>
                 </Button.CommandParameter>

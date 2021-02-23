@@ -185,7 +185,6 @@
   </data>
   <data name="DeleteCustomCommandDialogViewModel_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
-    <comment>{0}: Custom command name</comment>
   </data>
   <data name="DeleteCustomCommandDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -201,7 +200,6 @@
   </data>
   <data name="DeleteMappoolDialogView_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
-    <comment>{0}: Mappool name</comment>
   </data>
   <data name="DeleteMatchDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -221,7 +219,6 @@
   </data>
   <data name="DeleteTeamDialogView_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
-    <comment>{0}: Team name</comment>
   </data>
   <data name="DeleteTournamentDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>

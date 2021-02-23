@@ -5,6 +5,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
@@ -14,14 +15,14 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox x:Name="NewChatChannel" md:HintAssist.Hint="User" Style="{StaticResource MaterialDesignFloatingHintTextBox}" cal:Message.Attach="[Key Enter] = [Action NewChatChannelEnter]" />
+        <TextBox x:Name="NewChatChannel" md:HintAssist.Hint="{x:Static p:Resources.NewChatDialogView_UserTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" cal:Message.Attach="[Key Enter] = [Action NewChatChannelEnter]" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0" Grid.Row="1">
-            <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
+            <Button Content="{x:Static p:Resources.NewChatDialogView_CancelButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
                 <Button.CommandParameter>
                     <system:Boolean>False</system:Boolean>
                 </Button.CommandParameter>
             </Button>
-            <Button Content="Open" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding NewChatOpenEnabled}">
+            <Button Content="{x:Static p:Resources.NewChatDialogView_OpenButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding NewChatOpenEnabled}">
                 <Button.CommandParameter>
                     <system:Boolean>True</system:Boolean>
                 </Button.CommandParameter>

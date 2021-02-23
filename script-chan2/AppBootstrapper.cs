@@ -7,6 +7,7 @@ using Serilog;
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -23,16 +24,13 @@ namespace script_chan2
             {
                 Log.Logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
-                    .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:u} [{Level}] ({SourceContext:1}) {Message}{NewLine}{Exception}")
+                    .WriteTo.File("logs\\all.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:u} [{Level}] ({SourceContext:1}) {Message}{NewLine}{Exception}", encoding: Encoding.UTF8)
                     .CreateLogger();
 
                 localLog = Log.ForContext<AppBootstrapper>();
                 localLog.Information("Logger initialized");
 
                 Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
-
-                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
-                CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
 
                 localLog.Information("Initialize DB");
                 if (!DbCreator.DbExists)
@@ -42,6 +40,9 @@ namespace script_chan2
 
                 localLog.Information("Initialize settings");
                 Settings.Initialize();
+
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(Settings.Lang);
+                CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(Settings.Lang);
 
                 localLog.Information("Login to irc");
                 OsuIrc.OsuIrc.Login();
@@ -58,7 +59,7 @@ namespace script_chan2
                 if (!(bool)DesignerProperties.IsInDesignModeProperty.GetMetadata(typeof(DependencyObject)).DefaultValue)
                 {
                     Log.Error(ex, "Bootstrapper exception");
-                    MessageBox.Show("Bootstrapper exception caught. See logs for more details.");
+                    MessageBox.Show(Properties.Resources.AppBootstrapper_BootstrapperException);
                 }
                 DiscordApi.StopRichPresence();
             }
@@ -67,7 +68,7 @@ namespace script_chan2
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             Log.Error(e.Exception, "Unhandled exception");
-            MessageBox.Show("Unhandled exception caught. See logs for more details.");
+            MessageBox.Show(Properties.Resources.AppBootstrapper_UnhandledException);
             DiscordApi.StopRichPresence();
         }
 

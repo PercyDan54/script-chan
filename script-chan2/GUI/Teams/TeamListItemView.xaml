@@ -5,6 +5,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="800">
     <UserControl.Resources>
@@ -20,13 +21,13 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding Name}" Foreground="{Binding Foreground}" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Left" Margin="10 0 0 0" />
-                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit" Grid.Column="1">
+                <Button x:Name="Edit" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.TeamListItemView_EditButtonTooltip}" Grid.Column="1">
                     <md:PackIcon Kind="Edit" />
                 </Button>
-                <Button x:Name="EditPlayers" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Edit Players" Grid.Column="2">
+                <Button x:Name="EditPlayers" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.TeamListItemView_EditPlayersButtonTooltip}" Grid.Column="2">
                     <md:PackIcon Kind="People" />
                 </Button>
-                <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete" Grid.Column="3">
+                <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.TeamListItemView_DeleteButtonTooltip}" Grid.Column="3">
                     <md:PackIcon Kind="Delete" />
                 </Button>
             </Grid>

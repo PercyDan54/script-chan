@@ -47,17 +47,28 @@ namespace script_chan2.GUI
 
         public string BeatmapName
         {
-            get { return $"{beatmap.Beatmap.Artist} - {beatmap.Beatmap.Title} [{beatmap.Beatmap.Version}] ({beatmap.Beatmap.Creator})  BPM{beatmap.Beatmap.BPM} AR{beatmap.Beatmap.AR} CS{beatmap.Beatmap.CS}"; }
+            get
+            {
+                return string.Format(Properties.Resources.MatchBeatmapViewModel_LabelText,
+                    beatmap.Beatmap.Artist,
+                    beatmap.Beatmap.Title,
+                    beatmap.Beatmap.Version,
+                    beatmap.Beatmap.Creator,
+                    beatmap.Beatmap.BPM,
+                    beatmap.Beatmap.AR,
+                    beatmap.Beatmap.CS);
+            }
         }
 
         public string ToolTip
         {
             get
             {
-                return "Mapper: " + beatmap.Beatmap.Creator + Environment.NewLine
-                    + "BPM: " + beatmap.Beatmap.BPM + Environment.NewLine
-                    + "AR: " + beatmap.Beatmap.AR + Environment.NewLine
-                    + "CS: " + beatmap.Beatmap.CS;
+                return string.Format(Properties.Resources.MatchBeatmapViewModel_LabelTooltip,
+                    beatmap.Beatmap.Creator,
+                    beatmap.Beatmap.BPM,
+                    beatmap.Beatmap.AR,
+                    beatmap.Beatmap.CS);
             }
         }
 
@@ -571,37 +582,37 @@ namespace script_chan2.GUI
                 {
                     if (Player != null)
                     {
-                        return "Banned by " + Player.Name;
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemBannedByText, Player.Name);
                     }
                     else if (Team != null)
                     {
-                        return "Banned by " + Team.Name;
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemBannedByText, Team.Name);
                     }
                     else
                     {
-                        return "Ban";
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemBanText);
                     }
                 }
                 if (Type == MatchBeatmapMenuItemTypes.Pick)
                 {
                     if (Player != null)
                     {
-                        return "Picked by " + Player.Name;
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemPickedByText, Player.Name);
                     }
                     else if (Team != null)
                     {
-                        return "Picked by " + Team.Name;
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemPickedByText, Team.Name);
                     }
                     else
                     {
-                        return "Pick";
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemPickText);
                     }
                 }
                 if (Type == MatchBeatmapMenuItemTypes.Unban)
                 {
-                    return "Unban";
+                    return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemUnbanText);
                 }
-                return "Unpick";
+                return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemUnpickText);
             }
         }
     }

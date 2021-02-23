@@ -7,11 +7,12 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:script_chan2.GUI"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
              d:DesignHeight="510" d:DesignWidth="350">
     <StackPanel Margin="16" Width="300">
-        <TextBox md:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_NameTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -21,7 +22,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox md:HintAssist.Hint="URL" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_URLTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0">
             <TextBox.Text>
                 <Binding Path="Url" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -31,7 +32,7 @@
             </TextBox.Text>
         </TextBox>
         <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-            <CheckBox x:Name="MatchCreated" Content="Match created"/>
+            <CheckBox x:Name="MatchCreated" Content="{x:Static p:Resources.EditWebhookDialogView_MatchCreatedCheckBoxText}"/>
             <md:PackIcon Kind="QuestionMark" Margin="5 0 0 0" Background="{StaticResource MaterialDesignDarkBackground}">
                 <md:PackIcon.ToolTip>
                     <Image Source="../../Resources/discord_matchcreated.png" />
@@ -39,7 +40,7 @@
             </md:PackIcon>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-            <CheckBox x:Name="BanRecap" Content="Ban recap" />
+            <CheckBox x:Name="BanRecap" Content="{x:Static p:Resources.EditWebhookDialogView_BanRecapCheckBoxText}" />
             <md:PackIcon Kind="QuestionMark" Margin="5 0 0 0" Background="{StaticResource MaterialDesignDarkBackground}">
                 <md:PackIcon.ToolTip>
                     <Image Source="../../Resources/discord_banrecap.png" />
@@ -47,7 +48,7 @@
             </md:PackIcon>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-            <CheckBox x:Name="PickRecap" Content="Pick recap" />
+            <CheckBox x:Name="PickRecap" Content="{x:Static p:Resources.EditWebhookDialogView_PickRecapCheckBoxText}" />
             <md:PackIcon Kind="QuestionMark" Margin="5 0 0 0" Background="{StaticResource MaterialDesignDarkBackground}">
                 <md:PackIcon.ToolTip>
                     <Image Source="../../Resources/discord_pickrecap.png" />
@@ -55,25 +56,25 @@
             </md:PackIcon>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-            <CheckBox x:Name="GameRecap" Content="Game recap" />
+            <CheckBox x:Name="GameRecap" Content="{x:Static p:Resources.EditWebhookDialogView_GameRecapCheckBoxText}" />
             <md:PackIcon Kind="QuestionMark" Margin="5 0 0 0" Background="{StaticResource MaterialDesignDarkBackground}">
                 <md:PackIcon.ToolTip>
                     <Image Source="../../Resources/discord_gamerecap.png" />
                 </md:PackIcon.ToolTip>
             </md:PackIcon>
         </StackPanel>
-        <TextBox x:Name="Username" md:HintAssist.Hint="Username" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
-        <TextBox x:Name="Avatar" md:HintAssist.Hint="Avatar" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
-        <TextBox x:Name="FooterText" md:HintAssist.Hint="Footer text" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
-        <TextBox x:Name="FooterIcon" md:HintAssist.Hint="Footer icon" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
-        <TextBox x:Name="WinImage" md:HintAssist.Hint="Win image/gif" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
+        <TextBox x:Name="Username" md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_UsernameTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
+        <TextBox x:Name="Avatar" md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_AvatarTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
+        <TextBox x:Name="FooterText" md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_FooterTextTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
+        <TextBox x:Name="FooterIcon" md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_FooterIconTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
+        <TextBox x:Name="WinImage" md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_WinImageTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-            <Button Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
+            <Button Content="{x:Static p:Resources.EditWebhookDialogView_CancelButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
                 <Button.CommandParameter>
                     <system:Boolean>False</system:Boolean>
                 </Button.CommandParameter>
             </Button>
-            <Button Content="Save" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding SaveEnabled}">
+            <Button Content="{x:Static p:Resources.EditWebhookDialogView_SaveButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding SaveEnabled}">
                 <Button.CommandParameter>
                     <system:Boolean>True</system:Boolean>
                 </Button.CommandParameter>

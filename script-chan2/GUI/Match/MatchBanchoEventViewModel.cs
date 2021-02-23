@@ -33,13 +33,13 @@ namespace script_chan2.GUI
         {
             get
             {
-                var text = $"[{eventTime.ToString("HH:mm")}]";
+                var text = $"[{eventTime.ToString(Properties.Resources.MatchBanchoEventViewModel_TimeFormat)}] ";
                 if (type == MatchBanchoEvents.AllPlayersFinished)
-                    text += " All players finished";
+                    text += Properties.Resources.MatchBanchoEventViewModel_AllPlayersFinishedText;
                 if (type == MatchBanchoEvents.AllPlayersReady)
-                    text += " All players ready";
+                    text += Properties.Resources.MatchBanchoEventViewModel_AllPlayersReadyText;
                 if (type == MatchBanchoEvents.PlayerRoll)
-                    text += $" {user} rolled {data}";
+                    text += string.Format(Properties.Resources.MatchBanchoEventViewModel_RollText, user, data);
                 return text;
             }
         }

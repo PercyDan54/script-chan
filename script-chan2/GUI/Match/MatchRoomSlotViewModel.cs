@@ -184,8 +184,8 @@ namespace script_chan2.GUI
                 var list = new BindableCollection<MenuItem>();
                 if (Player != null)
                 {
-                    list.Add(new MenuItem() { Header = "Set host" });
-                    list.Add(new MenuItem() { Header = "Kick" });
+                    list.Add(new MenuItem() { Header = Properties.Resources.MatchRoomSlotViewModel_ContextItemSetHostText });
+                    list.Add(new MenuItem() { Header = Properties.Resources.MatchRoomSlotViewModel_ContextItemKickText });
                 }
                 return list;
             }
@@ -198,7 +198,7 @@ namespace script_chan2.GUI
             if (match.TeamMode == TeamModes.TeamVS && Player != null)
             {
                 localLog.Information("change team of player '{player}'", Player.Name);
-                var color = "";
+                string color;
                 if (Team == TeamColors.Red)
                     color = "blue";
                 else
@@ -228,11 +228,11 @@ namespace script_chan2.GUI
         public void MenuItemClick(MenuItem context)
         {
             localLog.Information("room slot '{slot}' click context menu item '{item}'", SlotNumber, context.Header);
-            if (context.Header.ToString() == "Set host")
+            if (context.Header.ToString() == Properties.Resources.MatchRoomSlotViewModel_ContextItemSetHostText)
             {
                 OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp host {Player.Name}");
             }
-            if (context.Header.ToString() == "Kick")
+            if (context.Header.ToString() == Properties.Resources.MatchRoomSlotViewModel_ContextItemKickText)
             {
                 OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp kick {Player.Name}");
             }

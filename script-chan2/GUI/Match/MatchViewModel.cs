@@ -1063,7 +1063,7 @@ namespace script_chan2.GUI
             localLog.Information("match '{match}' send welcome string", match.Name);
             if (match.TeamMode == TeamModes.TeamVS)
             {
-                SendRoomMessage($"{TeamRedName} is RED, slots 1 to {match.TeamSize} --- {TeamBlueName} is BLUE, slots {match.TeamSize + 1} to {match.TeamSize * 2}");
+                SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_TeamRoomSetupMessage, TeamRedName, match.TeamSize, TeamBlueName, match.TeamSize + 1, match.TeamSize * 2));
             }
 
             SendRoomMessage(match.Tournament.WelcomeString);
@@ -1229,11 +1229,11 @@ namespace script_chan2.GUI
 
                 if (match.TeamRedPoints * 2 > match.BO)
                 {
-                    SendRoomMessage("**" + match.TeamRed.Name + " wins the match**");
+                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_WinMessage, match.TeamRed.Name));
                 }
                 else if (match.TeamBluePoints * 2 > match.BO)
                 {
-                    SendRoomMessage("**" + match.TeamBlue.Name + " wins the match**");
+                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_WinMessage, match.TeamBlue.Name));
                 }
                 else
                 {
@@ -1241,17 +1241,17 @@ namespace script_chan2.GUI
                     {
                         if (match.Games.Last().TeamRedWon && match.TeamRedPoints == match.PointsForSecondBan)
                         {
-                            SendRoomMessage(match.TeamBlue.Name + " can ban another map");
+                            SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_SecondBanMessage, match.TeamBlue.Name));
                         }
                         else if (match.Games.Last().TeamBlueWon && match.TeamBluePoints == match.PointsForSecondBan)
                         {
-                            SendRoomMessage(match.TeamRed.Name + " can ban another map");
+                            SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_SecondBanMessage, match.TeamRed.Name));
                         }
                     }
 
                     if (match.TeamRedPoints * 2 == match.BO - 1 && match.TeamBluePoints * 2 == match.BO - 1)
                     {
-                        SendRoomMessage("The result is a tie. We have to play the tiebreaker");
+                        SendRoomMessage(Properties.Resources.MatchViewModel_TiebreakerMessage);
                     }
                     else
                     {
@@ -1259,11 +1259,11 @@ namespace script_chan2.GUI
                         {
                             if (match.Picks.Last().Team == match.TeamRed)
                             {
-                                SendRoomMessage("Next team to pick: " + match.TeamBlue.Name);
+                                SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextTeamPickMessage, match.TeamBlue.Name));
                             }
                             else
                             {
-                                SendRoomMessage("Next team to pick: " + match.TeamRed.Name);
+                                SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextTeamPickMessage, match.TeamRed.Name));
                             }
                         }
                     }
@@ -1276,25 +1276,25 @@ namespace script_chan2.GUI
             }
             else if (match.TeamMode == TeamModes.HeadToHead)
             {
-                SendRoomMessage("Ranking of the room:");
+                SendRoomMessage(Properties.Resources.MatchViewModel_RoomRankingMessage);
 
                 var i = 1;
                 foreach (var player in match.Players.OrderByDescending(x => x.Value))
                 {
-                    SendRoomMessage($"({i}) {player.Key.Name}: {player.Value} pt(s)");
+                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_PlayerPointsMessage, i, player.Key.Name, player.Value));
                     i++;
                 }
 
                 var first = match.Players.OrderByDescending(x => x.Value).First();
                 if (first.Value * 2 > match.BO)
                 {
-                    SendRoomMessage("**" + first.Key.Name + "** wins the match");
+                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_WinMessage, first.Key.Name));
                 }
                 else
                 {
                     if (match.BO > 0 && match.Players.Count == 2 && match.Players.Values.ElementAt(0) * 2 == match.BO - 1 && match.Players.Values.ElementAt(1) * 2 == match.BO - 1)
                     {
-                        SendRoomMessage("The result is a tie. We have to play the tiebreaker");
+                        SendRoomMessage(Properties.Resources.MatchViewModel_TiebreakerMessage);
                     }
                     else
                     {
@@ -1305,9 +1305,9 @@ namespace script_chan2.GUI
                                 if (match.Players.ElementAt(j).Key == match.Picks.Last().Player)
                                 {
                                     if (j < match.Players.Count - 1)
-                                        SendRoomMessage($"Next player to pick: {match.Players.ElementAt(j + 1).Key.Name}");
+                                        SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextPlayerPickMessage, match.Players.ElementAt(j + 1).Key.Name));
                                     else
-                                        SendRoomMessage($"Next player to pick: {match.Players.ElementAt(0).Key.Name}");
+                                        SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextPlayerPickMessage, match.Players.ElementAt(0).Key.Name));
                                     break;
                                 }
                             }
