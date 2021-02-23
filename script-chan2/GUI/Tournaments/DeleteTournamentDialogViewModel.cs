@@ -20,6 +20,11 @@ namespace script_chan2.GUI
         {
             get { return tournament.Name; }
         }
+
+        public string Label
+        {
+            get { return string.Format(Properties.Resources.DeleteTournamentDialogView_LabelText, Name); }
+        }
         #endregion
 
         #region Actions

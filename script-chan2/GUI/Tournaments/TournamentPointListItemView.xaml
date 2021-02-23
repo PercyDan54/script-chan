@@ -5,6 +5,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="800">
     <Border BorderBrush="LightGray" BorderThickness="0 0 0 2" Height="40" Background="{Binding Background}" cal:Message.Attach="[Event MouseEnter] = [Action MouseEnter]; [Event MouseLeave] = [Action MouseLeave]">
@@ -14,7 +15,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="ContentText" Margin="10 0 0 0" VerticalAlignment="Center" Grid.Column="0" />
-            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Remove Player" VerticalAlignment="Center" cal:Message.Attach="[Event Click] = [Action RemovePoints($dataContext)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Grid.Column="1">
+            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.TournamentPointListItemView_DeleteButtonTooltip}" VerticalAlignment="Center" cal:Message.Attach="[Event Click] = [Action RemovePoints($dataContext)]" cal:Action.TargetWithoutContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Grid.Column="1">
                 <md:PackIcon Kind="Delete" />
             </Button>
         </Grid>

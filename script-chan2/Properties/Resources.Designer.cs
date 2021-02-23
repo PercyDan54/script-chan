@@ -351,6 +351,33 @@ namespace script_chan2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
+        public static string DeleteTournamentDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("DeleteTournamentDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeleteTournamentDialogView_DeleteButtonText {
+            get {
+                return ResourceManager.GetString("DeleteTournamentDialogView_DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete {0}?.
+        /// </summary>
+        public static string DeleteTournamentDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("DeleteTournamentDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
         public static string EditColorDialogView_CancelButtonText {
             get {
                 return ResourceManager.GetString("EditColorDialogView_CancelButtonText", resourceCulture);
@@ -624,6 +651,195 @@ namespace script_chan2.Properties {
         public static string EditTeamDialogView_TournamentComboBoxHint {
             get {
                 return ResourceManager.GetString("EditTeamDialogView_TournamentComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acronym.
+        /// </summary>
+        public static string EditTournamentDialogView_AcronymTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_AcronymTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string EditTournamentDialogView_AddButtonTooltip {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_AddButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All picks as freemod.
+        /// </summary>
+        public static string EditTournamentDialogView_AllPicksFreemodCheckBoxText {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_AllPicksFreemodCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BR Initial Lives.
+        /// </summary>
+        public static string EditTournamentDialogView_BRInitialLivesTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_BRInitialLivesTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string EditTournamentDialogView_CancelButtonText {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Timer.
+        /// </summary>
+        public static string EditTournamentDialogView_CommandTimerTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_CommandTimerTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Mode.
+        /// </summary>
+        public static string EditTournamentDialogView_GameModeComboBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_GameModeComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string EditTournamentDialogView_NameTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_NameTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placing.
+        /// </summary>
+        public static string EditTournamentDialogView_PlacingTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_PlacingTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points for second ban.
+        /// </summary>
+        public static string EditTournamentDialogView_PointsForSecondBanTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_PointsForSecondBanTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0 to disable.
+        /// </summary>
+        public static string EditTournamentDialogView_PointsForSecondBanTextBoxTooltip {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_PointsForSecondBanTextBoxTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points given.
+        /// </summary>
+        public static string EditTournamentDialogView_PointsGivenTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_PointsGivenTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points given for each game.
+        /// </summary>
+        public static string EditTournamentDialogView_PointsPerGameTextBlockText {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_PointsPerGameTextBlockText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room Size.
+        /// </summary>
+        public static string EditTournamentDialogView_RoomSizeTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_RoomSizeTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string EditTournamentDialogView_SaveButtonText {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_SaveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team Mode.
+        /// </summary>
+        public static string EditTournamentDialogView_TeamModeComboBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_TeamModeComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team Size.
+        /// </summary>
+        public static string EditTournamentDialogView_TeamSizeTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_TeamSizeTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer After Game.
+        /// </summary>
+        public static string EditTournamentDialogView_TimerAfterGameTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_TimerAfterGameTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer After Pick.
+        /// </summary>
+        public static string EditTournamentDialogView_TimerAfterPickTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_TimerAfterPickTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome String.
+        /// </summary>
+        public static string EditTournamentDialogView_WelcomeStringTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_WelcomeStringTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win Condition.
+        /// </summary>
+        public static string EditTournamentDialogView_WinConditionComboBoxHint {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_WinConditionComboBoxHint", resourceCulture);
             }
         }
         
@@ -2374,6 +2590,78 @@ namespace script_chan2.Properties {
         public static string TeamWikiImportDialogViewModel_StatusGettingWikiPage {
             get {
                 return ResourceManager.GetString("TeamWikiImportDialogViewModel_StatusGettingWikiPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string TournamentListItemView_DeleteButtonTooltip {
+            get {
+                return ResourceManager.GetString("TournamentListItemView_DeleteButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string TournamentListItemView_EditButtonTooltip {
+            get {
+                return ResourceManager.GetString("TournamentListItemView_EditButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Webhooks.
+        /// </summary>
+        public static string TournamentListItemView_WebhooksButtonTooltip {
+            get {
+                return ResourceManager.GetString("TournamentListItemView_WebhooksButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string TournamentPointListItemView_DeleteButtonTooltip {
+            get {
+                return ResourceManager.GetString("TournamentPointListItemView_DeleteButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string TournamentsView_NewButtonText {
+            get {
+                return ResourceManager.GetString("TournamentsView_NewButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string TournamentWebhooksDialogView_CloseButtonText {
+            get {
+                return ResourceManager.GetString("TournamentWebhooksDialogView_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Webhooks of {0}.
+        /// </summary>
+        public static string TournamentWebhooksDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("TournamentWebhooksDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have multiple Webhooks sending the same message to the same channel!.
+        /// </summary>
+        public static string TournamentWebhooksDialogView_WebhookChannelWarning {
+            get {
+                return ResourceManager.GetString("TournamentWebhooksDialogView_WebhookChannelWarning", resourceCulture);
             }
         }
         

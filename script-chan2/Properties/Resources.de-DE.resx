@@ -214,6 +214,16 @@
   <data name="DeleteTeamDialogView_LabelText" xml:space="preserve">
     <value>{0} löschen?</value>
   </data>
+  <data name="DeleteTournamentDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="DeleteTournamentDialogView_DeleteButtonText" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="DeleteTournamentDialogView_LabelText" xml:space="preserve">
+    <value>{0} löschen?</value>
+    <comment>{0}: Tournament name</comment>
+  </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
@@ -306,6 +316,69 @@
   </data>
   <data name="EditTeamDialogView_TournamentComboBoxHint" xml:space="preserve">
     <value>Turnier</value>
+  </data>
+  <data name="EditTournamentDialogView_AcronymTextBoxHint" xml:space="preserve">
+    <value>Akronym</value>
+  </data>
+  <data name="EditTournamentDialogView_AddButtonTooltip" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="EditTournamentDialogView_AllPicksFreemodCheckBoxText" xml:space="preserve">
+    <value>Alle Picks Freemod</value>
+  </data>
+  <data name="EditTournamentDialogView_BRInitialLivesTextBoxHint" xml:space="preserve">
+    <value>BR initiale Leben</value>
+  </data>
+  <data name="EditTournamentDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="EditTournamentDialogView_CommandTimerTextBoxHint" xml:space="preserve">
+    <value>Timer Befehl</value>
+  </data>
+  <data name="EditTournamentDialogView_GameModeComboBoxHint" xml:space="preserve">
+    <value>Spielmodus</value>
+  </data>
+  <data name="EditTournamentDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EditTournamentDialogView_PlacingTextBoxHint" xml:space="preserve">
+    <value>Platzierung</value>
+  </data>
+  <data name="EditTournamentDialogView_PointsForSecondBanTextBoxHint" xml:space="preserve">
+    <value>Punkte für zweiten Ban</value>
+  </data>
+  <data name="EditTournamentDialogView_PointsForSecondBanTextBoxTooltip" xml:space="preserve">
+    <value>0 zum deaktivieren</value>
+  </data>
+  <data name="EditTournamentDialogView_PointsGivenTextBoxHint" xml:space="preserve">
+    <value>Punkte</value>
+  </data>
+  <data name="EditTournamentDialogView_PointsPerGameTextBlockText" xml:space="preserve">
+    <value>Punkteaufteilung</value>
+  </data>
+  <data name="EditTournamentDialogView_RoomSizeTextBoxHint" xml:space="preserve">
+    <value>Raumgröße</value>
+  </data>
+  <data name="EditTournamentDialogView_SaveButtonText" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="EditTournamentDialogView_TeamModeComboBoxHint" xml:space="preserve">
+    <value>Teammodus</value>
+  </data>
+  <data name="EditTournamentDialogView_TeamSizeTextBoxHint" xml:space="preserve">
+    <value>Teamgröße</value>
+  </data>
+  <data name="EditTournamentDialogView_TimerAfterGameTextBoxHint" xml:space="preserve">
+    <value>Timer nach Spiel</value>
+  </data>
+  <data name="EditTournamentDialogView_TimerAfterPickTextBoxHint" xml:space="preserve">
+    <value>Timer nach Pick</value>
+  </data>
+  <data name="EditTournamentDialogView_WelcomeStringTextBoxHint" xml:space="preserve">
+    <value>Willkommensnachricht</value>
+  </data>
+  <data name="EditTournamentDialogView_WinConditionComboBoxHint" xml:space="preserve">
+    <value>Gewinnbedingung</value>
   </data>
   <data name="ExportSuccessDialogView_OkButtonText" xml:space="preserve">
     <value>OK</value>
@@ -920,6 +993,31 @@ CS: {3}</value>
   </data>
   <data name="TeamWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
     <value>Wiki URL</value>
+  </data>
+  <data name="TournamentListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="TournamentListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="TournamentListItemView_WebhooksButtonTooltip" xml:space="preserve">
+    <value>Webhooks</value>
+  </data>
+  <data name="TournamentPointListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="TournamentsView_NewButtonText" xml:space="preserve">
+    <value>Neu</value>
+  </data>
+  <data name="TournamentWebhooksDialogView_CloseButtonText" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="TournamentWebhooksDialogView_LabelText" xml:space="preserve">
+    <value>Webhooks von {0}</value>
+    <comment>{0}: Tournament name</comment>
+  </data>
+  <data name="TournamentWebhooksDialogView_WebhookChannelWarning" xml:space="preserve">
+    <value>Mehrere aktive Webhooks senden in den gleichen Discord Channel!</value>
   </data>
   <data name="Window_CloseButtonTooltip" xml:space="preserve">
     <value>Schließen</value>
