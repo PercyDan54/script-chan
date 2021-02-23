@@ -205,6 +205,15 @@
     <value>{0} löschen?</value>
     <comment>{0}: Match name</comment>
   </data>
+  <data name="DeleteTeamDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="DeleteTeamDialogView_DeleteButtonText" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="DeleteTeamDialogView_LabelText" xml:space="preserve">
+    <value>{0} löschen?</value>
+  </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
@@ -285,6 +294,18 @@
   </data>
   <data name="EditMatchDialogView_WinConditionComboBoxHint" xml:space="preserve">
     <value>Gewinnbedingung</value>
+  </data>
+  <data name="EditTeamDialogView_CancelButtonText" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="EditTeamDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EditTeamDialogView_SaveButtonText" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="EditTeamDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Turnier</value>
   </data>
   <data name="ExportSuccessDialogView_OkButtonText" xml:space="preserve">
     <value>OK</value>
@@ -854,6 +875,51 @@ CS: {3}</value>
   </data>
   <data name="SettingsView_UsePrivateBanchoCheckBox" xml:space="preserve">
     <value>Turnier Bancho benutzen</value>
+  </data>
+  <data name="TeamListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="TeamListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="TeamListItemView_EditPlayersButtonTooltip" xml:space="preserve">
+    <value>Spieler bearbeiten</value>
+  </data>
+  <data name="TeamPlayerListItemView_RemovePlayerButtonTooltip" xml:space="preserve">
+    <value>Spieler entfernen</value>
+  </data>
+  <data name="TeamPlayersDialogView_AddButtonTooltip" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="TeamPlayersDialogView_CloseButtonText" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="TeamPlayersDialogView_PlayerNameOrIdTextBoxHint" xml:space="preserve">
+    <value>Spieler Name oder ID</value>
+  </data>
+  <data name="TeamsView_NewButtonText" xml:space="preserve">
+    <value>Neu</value>
+  </data>
+  <data name="TeamsView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Turnier</value>
+  </data>
+  <data name="TeamsView_WikiImportButtonText" xml:space="preserve">
+    <value>Wiki Import</value>
+  </data>
+  <data name="TeamWikiImportDialogViewModel_StatusGettingWikiPage" xml:space="preserve">
+    <value>Wiki wird geladen...</value>
+  </data>
+  <data name="TeamWikiImportDialogView_CloseButtonText" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="TeamWikiImportDialogView_ImportButtonText" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="TeamWikiImportDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>Turnier</value>
+  </data>
+  <data name="TeamWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
+    <value>Wiki URL</value>
   </data>
   <data name="Window_CloseButtonTooltip" xml:space="preserve">
     <value>Schließen</value>

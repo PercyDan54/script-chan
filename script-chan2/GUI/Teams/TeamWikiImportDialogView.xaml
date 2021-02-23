@@ -5,6 +5,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
              d:DesignHeight="170" d:DesignWidth="450">
@@ -15,21 +16,21 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ComboBox md:HintAssist.Hint="Tournament" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding Tournament}" Margin="0 0 0 10">
+        <ComboBox md:HintAssist.Hint="{x:Static p:Resources.TeamWikiImportDialogView_TournamentComboBoxHint}" ItemsSource="{Binding Tournaments}" SelectedItem="{Binding Tournament}" Margin="0 0 0 10">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBox x:Name="WikiUrl" Grid.Row="1" md:HintAssist.Hint="Wiki URL" Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsEnabled="{Binding WikiUrlEnabled}" />
+        <TextBox x:Name="WikiUrl" Grid.Row="1" md:HintAssist.Hint="{x:Static p:Resources.TeamWikiImportDialogView_WikiUrlTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsEnabled="{Binding WikiUrlEnabled}" />
         <StackPanel Grid.Row="2" Visibility="{Binding ProgressVisible}" VerticalAlignment="Center">
             <ProgressBar Minimum="0" Maximum="{Binding TeamCount}" Value="{Binding ImportProgress}" Grid.Row="1" />
             <TextBlock Text="{Binding ImportStatus}" HorizontalAlignment="Center" Margin="0 10 0 0" />
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-            <Button Content="Close" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding CloseEnabled}" />
-            <Button x:Name="StartImport" Content="Import" Style="{StaticResource MaterialDesignFlatButton}" IsEnabled="{Binding ImportEnabled}" />
+            <Button Content="{x:Static p:Resources.TeamWikiImportDialogView_CloseButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding CloseEnabled}" />
+            <Button x:Name="StartImport" Content="{x:Static p:Resources.TeamWikiImportDialogView_ImportButtonText}" Style="{StaticResource MaterialDesignFlatButton}" IsEnabled="{Binding ImportEnabled}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -168,7 +168,7 @@ namespace script_chan2.GUI
         {
             localLog.Information("start import");
             IsImporting = true;
-            ImportStatus = "Getting wiki page";
+            ImportStatus = Properties.Resources.TeamWikiImportDialogViewModel_StatusGettingWikiPage;
 
             var importTeams = new List<ImportTeam>();
 
