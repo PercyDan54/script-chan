@@ -59,7 +59,7 @@ namespace script_chan2
                 if (!(bool)DesignerProperties.IsInDesignModeProperty.GetMetadata(typeof(DependencyObject)).DefaultValue)
                 {
                     Log.Error(ex, "Bootstrapper exception");
-                    MessageBox.Show("Bootstrapper exception caught. See logs for more details.");
+                    MessageBox.Show(Properties.Resources.AppBootstrapper_BootstrapperException);
                 }
                 DiscordApi.StopRichPresence();
             }
@@ -68,7 +68,7 @@ namespace script_chan2
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             Log.Error(e.Exception, "Unhandled exception");
-            MessageBox.Show("Unhandled exception caught. See logs for more details.");
+            MessageBox.Show(Properties.Resources.AppBootstrapper_UnhandledException);
             DiscordApi.StopRichPresence();
         }
 

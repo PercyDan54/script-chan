@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppBootstrapper_BootstrapperException" xml:space="preserve">
+    <value>Bootstrapper Fehler. Siehe Logs für mehr Details.</value>
+  </data>
+  <data name="AppBootstrapper_UnhandledException" xml:space="preserve">
+    <value>Fehler. Siehe Logs für mehr Details.</value>
+  </data>
   <data name="ChatUserView_CloseButtonText" xml:space="preserve">
     <value>Schließen</value>
   </data>
@@ -233,6 +239,72 @@
   <data name="DeleteWebhookDialogView_LabelText" xml:space="preserve">
     <value>{0} löschen?</value>
     <comment>{0}: Webhook name</comment>
+  </data>
+  <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
+    <value>Ban Zusammenfassung</value>
+  </data>
+  <data name="DiscordApi_BanRecapWithRollWinnerTitle" xml:space="preserve">
+    <value>Ban Zusammenfassung (Würfel Gewinner: {0})</value>
+  </data>
+  <data name="DiscordApi_GameRecapLostTitle" xml:space="preserve">
+    <value>{0} haben ihren __{1}__ Pick mit {2} verloren</value>
+    <comment>{0}: Team name
+{1}: Mod
+{2}: Point difference</comment>
+  </data>
+  <data name="DiscordApi_GameRecapMVPFieldName" xml:space="preserve">
+    <value>MVP</value>
+  </data>
+  <data name="DiscordApi_GameRecapMVPFieldValue" xml:space="preserve">
+    <value>:flag_{0}: **{1}** mit {2} Punkten</value>
+    <comment>{0}: Player country code
+{1}: Player name
+{3}: Points</comment>
+  </data>
+  <data name="DiscordApi_GameRecapPlayerFieldName" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="DiscordApi_GameRecapPlayerWinTitle" xml:space="preserve">
+    <value>{0} hat den __{1}__ Pick mit {2} Punkten gewonnen</value>
+    <comment>{0}: Player name
+{1}: Mod
+{2}: Points</comment>
+  </data>
+  <data name="DiscordApi_GameRecapPointsFieldName" xml:space="preserve">
+    <value>Punkte</value>
+  </data>
+  <data name="DiscordApi_GameRecapStatusFieldTeamMatchWin" xml:space="preserve">
+    <value>{0} hat das Spiel gewonnen :clap:</value>
+    <comment>{0}: Team name</comment>
+  </data>
+  <data name="DiscordApi_GameRecapStatusFieldTeamNextPick" xml:space="preserve">
+    <value>Nächster Pick: {0} :loudspeaker:</value>
+    <comment>{0}: Next pick</comment>
+  </data>
+  <data name="DiscordApi_GameRecapStatusFieldTitle" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="DiscordApi_GameRecapTeamWinTitle" xml:space="preserve">
+    <value>{0} haben ihren __{1}__ Pick mit {2} gewonnen</value>
+    <comment>{0}: Team name
+{1}: Mod
+{2}: Point difference</comment>
+  </data>
+  <data name="DiscordApi_MatchCreatedDescription" xml:space="preserve">
+    <value>Der Raum kann mit ```/join #mp_{0}``` betreten werden</value>
+    <comment>{0}: Room id</comment>
+  </data>
+  <data name="DiscordApi_MatchCreatedTitle" xml:space="preserve">
+    <value>Raum wurde erstellt!</value>
+  </data>
+  <data name="DiscordApi_PickRecapPicksFieldName" xml:space="preserve">
+    <value>Picks</value>
+  </data>
+  <data name="DiscordApi_PickRecapTitle" xml:space="preserve">
+    <value>Pick Zusammenfassung</value>
+  </data>
+  <data name="DiscordApi_PickRecapWithRollWinnerTitle" xml:space="preserve">
+    <value>Pick Zusammenfassung (Würfel Gewinner: {0})</value>
   </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>Abbrechen</value>
@@ -919,6 +991,12 @@ CS: {3}</value>
   </data>
   <data name="NewChatDialogView_UserTextBoxHint" xml:space="preserve">
     <value>Benutzer</value>
+  </data>
+  <data name="OsuApi_TimeoutErrorHeader" xml:space="preserve">
+    <value>API Fehler</value>
+  </data>
+  <data name="OsuApi_TimeoutErrorText" xml:space="preserve">
+    <value>API ist nicht erreichbar.</value>
   </data>
   <data name="SettingsView_ApiKeyTextBoxHint" xml:space="preserve">
     <value>API Schlüssel</value>

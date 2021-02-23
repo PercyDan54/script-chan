@@ -61,6 +61,24 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bootstrapper exception caught. See logs for more details..
+        /// </summary>
+        public static string AppBootstrapper_BootstrapperException {
+            get {
+                return ResourceManager.GetString("AppBootstrapper_BootstrapperException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unhandled exception caught. See logs for more details..
+        /// </summary>
+        public static string AppBootstrapper_UnhandledException {
+            get {
+                return ResourceManager.GetString("AppBootstrapper_UnhandledException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string ChatUserView_CloseButtonText {
@@ -399,6 +417,159 @@ namespace script_chan2.Properties {
         public static string DeleteWebhookDialogView_LabelText {
             get {
                 return ResourceManager.GetString("DeleteWebhookDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ban Recap.
+        /// </summary>
+        public static string DiscordApi_BanRecapTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_BanRecapTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ban Recap (Roll Winner: {0}).
+        /// </summary>
+        public static string DiscordApi_BanRecapWithRollWinnerTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_BanRecapWithRollWinnerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} lost their __{1}__ pick by {2}.
+        /// </summary>
+        public static string DiscordApi_GameRecapLostTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapLostTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MVP.
+        /// </summary>
+        public static string DiscordApi_GameRecapMVPFieldName {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapMVPFieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to :flag_{0}: **{1}** with {2} points.
+        /// </summary>
+        public static string DiscordApi_GameRecapMVPFieldValue {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapMVPFieldValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player.
+        /// </summary>
+        public static string DiscordApi_GameRecapPlayerFieldName {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapPlayerFieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} won the __{1}__ pick with {2} points.
+        /// </summary>
+        public static string DiscordApi_GameRecapPlayerWinTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapPlayerWinTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points.
+        /// </summary>
+        public static string DiscordApi_GameRecapPointsFieldName {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapPointsFieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} wins the match :clap:.
+        /// </summary>
+        public static string DiscordApi_GameRecapStatusFieldTeamMatchWin {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapStatusFieldTeamMatchWin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next team to pick: {0} :loudspeaker:.
+        /// </summary>
+        public static string DiscordApi_GameRecapStatusFieldTeamNextPick {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapStatusFieldTeamNextPick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string DiscordApi_GameRecapStatusFieldTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapStatusFieldTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} won their __{1}__ pick by {2}.
+        /// </summary>
+        public static string DiscordApi_GameRecapTeamWinTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapTeamWinTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can join the match on IRC by typing ```/join #mp_{0}```.
+        /// </summary>
+        public static string DiscordApi_MatchCreatedDescription {
+            get {
+                return ResourceManager.GetString("DiscordApi_MatchCreatedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The match has been created!.
+        /// </summary>
+        public static string DiscordApi_MatchCreatedTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_MatchCreatedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picks.
+        /// </summary>
+        public static string DiscordApi_PickRecapPicksFieldName {
+            get {
+                return ResourceManager.GetString("DiscordApi_PickRecapPicksFieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick Recap.
+        /// </summary>
+        public static string DiscordApi_PickRecapTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_PickRecapTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick Recap (Roll Winner: {0}).
+        /// </summary>
+        public static string DiscordApi_PickRecapWithRollWinnerTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_PickRecapWithRollWinnerTitle", resourceCulture);
             }
         }
         
@@ -2365,6 +2536,24 @@ namespace script_chan2.Properties {
         public static string NewChatDialogView_UserTextBoxHint {
             get {
                 return ResourceManager.GetString("NewChatDialogView_UserTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to API error.
+        /// </summary>
+        public static string OsuApi_TimeoutErrorHeader {
+            get {
+                return ResourceManager.GetString("OsuApi_TimeoutErrorHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to API and website are down..
+        /// </summary>
+        public static string OsuApi_TimeoutErrorText {
+            get {
+                return ResourceManager.GetString("OsuApi_TimeoutErrorText", resourceCulture);
             }
         }
         
