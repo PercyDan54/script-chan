@@ -201,7 +201,8 @@ namespace script_chan2.GUI
                             },
                             Tag = mappoolMap.Tag,
                             ListIndex = mappoolMap.ListIndex,
-                            Mods = new List<string>()
+                            Mods = new List<string>(),
+                            PickCommand = mappoolMap.PickCommand
                         };
 
                         foreach (var mod in mappoolMap.Mods)
@@ -431,7 +432,8 @@ namespace script_chan2.GUI
                             Mappool = mappool,
                             Beatmap = beatmap,
                             Tag = mappoolMapItem.Tag.Value,
-                            ListIndex = Convert.ToInt32(mappoolMapItem.ListIndex.Value)
+                            ListIndex = Convert.ToInt32(mappoolMapItem.ListIndex.Value),
+                            PickCommand = mappoolMapItem.PickCommand.Value
                         };
 
                         foreach (var modItem in mappoolMapItem.Mods)

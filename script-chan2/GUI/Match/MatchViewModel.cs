@@ -296,12 +296,12 @@ namespace script_chan2.GUI
                     NotifyOfPropertyChange(() => RoomOpenVisible);
                     OsuIrc.OsuIrc.JoinChannel("#mp_" + data.Id);
                     SendRoomSet();
-                    if (match.Mappool != null && match.Mappool.Beatmaps.Count > 0)
+                    if (match.Mappool != null && match.Mappool.Beatmaps.Count(x => x.PickCommand) > 0)
                     {
                         if (match.Mappool.Beatmaps.Any(x => x.Mods.Contains(GameMods.TieBreaker)))
                             SendRoomMessage($"!mp map {match.Mappool.Beatmaps.First(x => x.Mods.Contains(GameMods.TieBreaker)).Beatmap.Id} {(int)match.GameMode}");
                         else
-                            SendRoomMessage($"!mp map {match.Mappool.Beatmaps[0].Beatmap.Id} {(int)match.GameMode}");
+                            SendRoomMessage($"!mp map {match.Mappool.Beatmaps.First(x => x.PickCommand).Beatmap.Id} {(int)match.GameMode}");
                     }
                     SendRoomMessage("!mp unlock");
                     SendRoomMessage("!mp settings");

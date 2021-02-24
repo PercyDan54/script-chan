@@ -564,6 +564,13 @@
   <data name="MappoolBeatmapListItemView_NFCheckBoxText" xml:space="preserve">
     <value>NF</value>
   </data>
+  <data name="MappoolBeatmapListItemView_PickCommandCheckBoxText" xml:space="preserve">
+    <value>Pick command</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_PickCommandCheckBoxTooltip" xml:space="preserve">
+    <value>Send !mp map command in chat if map is picked.
+Disable this if you want to use older versions of the map for example.</value>
+  </data>
   <data name="MappoolBeatmapListItemView_TiebreakerCheckBoxText" xml:space="preserve">
     <value>Tiebreaker</value>
   </data>

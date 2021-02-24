@@ -637,7 +637,7 @@ namespace script_chan2.Database
         {
             localLog.Information("init mappool maps");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, mappool, beatmap, listIndex, mods, tag FROM MappoolMaps ORDER BY listIndex ASC", conn))
+            using (var command = new SQLiteCommand("SELECT id, mappool, beatmap, listIndex, mods, tag, pickCommand FROM MappoolMaps ORDER BY listIndex ASC", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -647,12 +647,14 @@ namespace script_chan2.Database
                     var beatmap = await GetBeatmap(Convert.ToInt32(reader["beatmap"]));
                     var listIndex = Convert.ToInt32(reader["listIndex"]);
                     var tag = reader["tag"].ToString();
+                    var pickCommand = Convert.ToBoolean(reader["pickCommand"]);
                     var mappoolMap = new MappoolMap(id)
                     {
                         Mappool = mappool,
                         Beatmap = beatmap,
                         ListIndex = listIndex,
-                        Tag = tag
+                        Tag = tag,
+                        PickCommand = pickCommand
                     };
                     foreach (string mod in reader["mods"].ToString().Split(','))
                     {
@@ -674,13 +676,14 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("INSERT INTO MappoolMaps (mappool, beatmap, listIndex, mods, tag) VALUES (@mappool, @beatmap, @listIndex, @mods, @tag)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO MappoolMaps (mappool, beatmap, listIndex, mods, tag, pickCommand) VALUES (@mappool, @beatmap, @listIndex, @mods, @tag, @pickCommand)", conn))
                 {
                     command.Parameters.AddWithValue("@mappool", map.Mappool.Id);
                     command.Parameters.AddWithValue("@beatmap", map.Beatmap.Id);
                     command.Parameters.AddWithValue("@listIndex", map.ListIndex);
                     command.Parameters.AddWithValue("@mods", string.Join(",", map.Mods));
                     command.Parameters.AddWithValue("@tag", map.Tag);
+                    command.Parameters.AddWithValue("@pickCommand", map.PickCommand);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -709,7 +712,7 @@ namespace script_chan2.Database
             localLog.Information("update map '{map}' in mappool '{mappool}'", map.Beatmap.Id, map.Mappool.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE MappoolMaps
-                SET beatmap = @beatmap, listIndex = @listIndex, mods = @mods, tag = @tag
+                SET beatmap = @beatmap, listIndex = @listIndex, mods = @mods, tag = @tag, pickCommand = @pickCommand
                 WHERE id = @id", conn))
             {
                 command.Parameters.AddWithValue("@beatmap", map.Beatmap.Id);
@@ -717,6 +720,7 @@ namespace script_chan2.Database
                 command.Parameters.AddWithValue("@mods", string.Join(",", map.Mods));
                 command.Parameters.AddWithValue("@id", map.Id);
                 command.Parameters.AddWithValue("@tag", map.Tag);
+                command.Parameters.AddWithValue("@pickCommand", map.PickCommand);
                 command.ExecuteNonQuery();
                 conn.Close();
             }

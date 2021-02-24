@@ -83,6 +83,11 @@ namespace script_chan2.Database
                 UpgradeV10();
                 dbVersion = 11;
             }
+            if (dbVersion == 11)
+            {
+                UpgradeV11();
+                dbVersion = 12;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -293,6 +298,27 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 11 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV11()
+        {
+            localLog.Information("upgrade database to v12");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE MappoolMaps ADD COLUMN pickCommand BOOL", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE MappoolMaps SET pickCommand = true", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 12 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }
