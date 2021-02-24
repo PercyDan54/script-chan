@@ -1259,11 +1259,17 @@ namespace script_chan2.GUI
                         {
                             if (match.Picks.Last().Team == match.TeamRed)
                             {
-                                SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextTeamPickMessage, match.TeamBlue.Name));
+                                if (match.Tournament.TeamSize == 1)
+                                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextPlayerPickMessage, match.TeamBlue.Players[0].Name));
+                                else
+                                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextTeamPickMessage, match.TeamBlue.Name));
                             }
                             else
                             {
-                                SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextTeamPickMessage, match.TeamRed.Name));
+                                if (match.Tournament.TeamSize == 1)
+                                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextPlayerPickMessage, match.TeamRed.Players[0].Name));
+                                else
+                                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextTeamPickMessage, match.TeamRed.Name));
                             }
                         }
                     }
