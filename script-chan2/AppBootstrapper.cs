@@ -50,7 +50,7 @@ namespace script_chan2
                 localLog.Information("Initialize app");
                 Initialize();
 
-                DiscordApi.SetRichPresence("Setting up matches.");
+                DiscordApi.SetRichPresence(Properties.Resources.DiscordRPC_DefaultStatus);
 
                 localLog.Information("app started");
             }

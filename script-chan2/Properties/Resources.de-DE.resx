@@ -306,6 +306,12 @@
   <data name="DiscordApi_PickRecapWithRollWinnerTitle" xml:space="preserve">
     <value>Pick Zusammenfassung (Würfel Gewinner: {0})</value>
   </data>
+  <data name="DiscordRPC_DefaultStatus" xml:space="preserve">
+    <value>In den Einstellungen.</value>
+  </data>
+  <data name="DiscordRPC_ReffingStatus" xml:space="preserve">
+    <value>Schiedsrichtert Spiele.</value>
+  </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>Abbrechen</value>
   </data>

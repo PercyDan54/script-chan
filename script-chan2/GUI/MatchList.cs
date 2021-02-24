@@ -31,11 +31,11 @@ namespace script_chan2.GUI
                     matches += match.Name + Environment.NewLine;
                 }
                 matches.Trim(Environment.NewLine.ToCharArray());
-                DiscordApi.SetRichPresence("Reffing matches.", matches);
+                DiscordApi.SetRichPresence(Properties.Resources.DiscordRPC_ReffingStatus, matches);
             }
             else
             {
-                DiscordApi.SetRichPresence("Setting up matches.");
+                DiscordApi.SetRichPresence(Properties.Resources.DiscordRPC_DefaultStatus);
             }
         }
     }

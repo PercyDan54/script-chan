@@ -303,6 +303,12 @@
   <data name="DiscordApi_PickRecapWithRollWinnerTitle" xml:space="preserve">
     <value>Pick Recap (Roll Winner: {0})</value>
   </data>
+  <data name="DiscordRPC_DefaultStatus" xml:space="preserve">
+    <value>Setting up matches.</value>
+  </data>
+  <data name="DiscordRPC_ReffingStatus" xml:space="preserve">
+    <value>Reffing matches.</value>
+  </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>

@@ -309,6 +309,12 @@
   <data name="DiscordApi_PickRecapWithRollWinnerTitle" xml:space="preserve">
     <value>選圖回顧 (骰子贏家: {0})</value>
   </data>
+  <data name="DiscordRPC_DefaultStatus" xml:space="preserve">
+    <value>設定對賽中...</value>
+  </data>
+  <data name="DiscordRPC_ReffingStatus" xml:space="preserve">
+    <value>正在管理對賽...</value>
+  </data>
   <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
     <value>取消</value>
   </data>

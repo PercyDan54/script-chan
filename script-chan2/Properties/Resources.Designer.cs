@@ -574,6 +574,24 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Setting up matches..
+        /// </summary>
+        public static string DiscordRPC_DefaultStatus {
+            get {
+                return ResourceManager.GetString("DiscordRPC_DefaultStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reffing matches..
+        /// </summary>
+        public static string DiscordRPC_ReffingStatus {
+            get {
+                return ResourceManager.GetString("DiscordRPC_ReffingStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string EditColorDialogView_CancelButtonText {
