@@ -1,0 +1,1192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppBootstrapper_BootstrapperException" xml:space="preserve">
+    <value>啟動載入器的例外狀況 請參閱日誌以獲取更多詳細訊息。</value>
+  </data>
+  <data name="AppBootstrapper_UnhandledException" xml:space="preserve">
+    <value>未處理的例外狀況 請參閱日誌以獲取更多詳細訊息。</value>
+  </data>
+  <data name="ChatUserView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="ChatView_MessageTextBoxHint" xml:space="preserve">
+    <value>訊息</value>
+  </data>
+  <data name="ChatView_OpenNewButtonText" xml:space="preserve">
+    <value>+</value>
+  </data>
+  <data name="ChatView_OpenNewButtonTooltip" xml:space="preserve">
+    <value>開啟新分頁 (Ctrl+T)</value>
+  </data>
+  <data name="ChatView_SendButtonTooltip" xml:space="preserve">
+    <value>傳送</value>
+  </data>
+  <data name="ColorListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="ColorsView_DefaultButtonText" xml:space="preserve">
+    <value>預設</value>
+  </data>
+  <data name="CustomCommandListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="CustomCommandListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="CustomCommandsView_NewButtonText" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="CustomCommandsView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="DefaultColorValuesDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DefaultColorValuesDialogView_LabelText" xml:space="preserve">
+    <value>你確定你真的想要重設所有顏色嗎?</value>
+  </data>
+  <data name="DefaultColorValuesDialogView_ResetButtonText" xml:space="preserve">
+    <value>重設</value>
+  </data>
+  <data name="DeleteAllMappoolsDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DeleteAllMappoolsDialogView_DeleteButtonText" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="DeleteAllMappoolsDialogView_LabelText" xml:space="preserve">
+    <value>你確定你真的想要刪除所有圖池嗎?</value>
+  </data>
+  <data name="DeleteAllMatchesDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DeleteAllMatchesDialogView_DeleteButtonText" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="DeleteAllMatchesDialogView_LabelText" xml:space="preserve">
+    <value>你確定你真的想要刪除所有對賽嗎?</value>
+  </data>
+  <data name="DeleteCustomCommandDialogViewModel_LabelText" xml:space="preserve">
+    <value>你確定你真的想要刪除 {0} 嗎?</value>
+    <comment>{0}: Custom command name</comment>
+  </data>
+  <data name="DeleteCustomCommandDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DeleteCustomCommandDialogView_DeleteButtonText" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="DeleteMappoolDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DeleteMappoolDialogView_DeleteButtonText" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="DeleteMappoolDialogView_LabelText" xml:space="preserve">
+    <value>你確定你真的想要刪除 {0} 嗎?</value>
+    <comment>{0}: Mappool name</comment>
+  </data>
+  <data name="DeleteMatchDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DeleteMatchDialogView_DeleteButtonText" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="DeleteMatchDialogView_LabelText" xml:space="preserve">
+    <value>你確定你真的想要刪除 {0} 嗎?</value>
+    <comment>{0}: Match name</comment>
+  </data>
+  <data name="DeleteTeamDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DeleteTeamDialogView_DeleteButtonText" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="DeleteTeamDialogView_LabelText" xml:space="preserve">
+    <value>你確定你真的想要刪除 {0} 嗎?</value>
+    <comment>{0}: Team name</comment>
+  </data>
+  <data name="DeleteTournamentDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DeleteTournamentDialogView_DeleteButtonText" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="DeleteTournamentDialogView_LabelText" xml:space="preserve">
+    <value>你確定你真的想要刪除 {0} 嗎?</value>
+    <comment>{0}: Tournament name</comment>
+  </data>
+  <data name="DeleteWebhookDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DeleteWebhookDialogView_DeleteButtonText" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="DeleteWebhookDialogView_LabelText" xml:space="preserve">
+    <value>你確定你真的想要刪除 {0} 嗎?</value>
+    <comment>{0}: Webhook name</comment>
+  </data>
+  <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
+    <value>Ban圖回顧</value>
+  </data>
+  <data name="DiscordApi_BanRecapWithRollWinnerTitle" xml:space="preserve">
+    <value>Ban圖回顧 (骰子贏家: {0})</value>
+  </data>
+  <data name="DiscordApi_GameRecapLostTitle" xml:space="preserve">
+    <value>{0} 以 {2} 分的差距輸掉了他們的 __{1}__ 圖選</value>
+    <comment>{0}: Team name
+{1}: Mod
+{2}: Point difference</comment>
+  </data>
+  <data name="DiscordApi_GameRecapMVPFieldName" xml:space="preserve">
+    <value>MVP</value>
+  </data>
+  <data name="DiscordApi_GameRecapMVPFieldValue" xml:space="preserve">
+    <value>:flag_{0}: **{1}** - {2} 分</value>
+    <comment>{0}: Player country code
+{1}: Player name
+{3}: Points</comment>
+  </data>
+  <data name="DiscordApi_GameRecapPlayerFieldName" xml:space="preserve">
+    <value>玩家</value>
+  </data>
+  <data name="DiscordApi_GameRecapPlayerWinTitle" xml:space="preserve">
+    <value>{0} 以 {2} 分的差距贏得了他的 __{1}__ 圖選</value>
+    <comment>{0}: Player name
+{1}: Mod
+{2}: Points</comment>
+  </data>
+  <data name="DiscordApi_GameRecapPointsFieldName" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="DiscordApi_GameRecapStatusFieldTeamMatchWin" xml:space="preserve">
+    <value>{0} 獲得了這場比賽的勝利 :clap:</value>
+    <comment>{0}: Team name</comment>
+  </data>
+  <data name="DiscordApi_GameRecapStatusFieldTeamNextPick" xml:space="preserve">
+    <value>下一個 PICK 隊伍: {0} :loudspeaker:</value>
+    <comment>{0}: Next pick</comment>
+  </data>
+  <data name="DiscordApi_GameRecapStatusFieldTitle" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="DiscordApi_GameRecapTeamWinTitle" xml:space="preserve">
+    <value>{0} 以 {2} 分的差距贏得了他們的 __{1}__ 圖選</value>
+    <comment>{0}: Team name
+{1}: Mod
+{2}: Point difference</comment>
+  </data>
+  <data name="DiscordApi_MatchCreatedDescription" xml:space="preserve">
+    <value>你可以輸入以下指令在IRC中加入這場對賽 ```/join #mp_{0}```</value>
+    <comment>{0}: Room id</comment>
+  </data>
+  <data name="DiscordApi_MatchCreatedTitle" xml:space="preserve">
+    <value>對賽已被創建！</value>
+  </data>
+  <data name="DiscordApi_PickRecapPicksFieldName" xml:space="preserve">
+    <value>Picks</value>
+  </data>
+  <data name="DiscordApi_PickRecapTitle" xml:space="preserve">
+    <value>選圖回顧</value>
+  </data>
+  <data name="DiscordApi_PickRecapWithRollWinnerTitle" xml:space="preserve">
+    <value>選圖回顧 (骰子贏家: {0})</value>
+  </data>
+  <data name="EditColorDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="EditColorDialogView_SaveButtonText" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="EditCustomCommandDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="EditCustomCommandDialogView_CommandTextBoxHint" xml:space="preserve">
+    <value>指令</value>
+  </data>
+  <data name="EditCustomCommandDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="EditCustomCommandDialogView_SaveButtonText" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="EditCustomCommandDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="EditMappoolDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="EditMappoolDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="EditMappoolDialogView_SaveButtonText" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="EditMappoolDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="EditMatchDialogView_AddButtonTooltip" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="EditMatchDialogView_BOTextBoxHint" xml:space="preserve">
+    <value>BO</value>
+  </data>
+  <data name="EditMatchDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="EditMatchDialogView_GameModeComboBoxHint" xml:space="preserve">
+    <value>遊戲模式</value>
+  </data>
+  <data name="EditMatchDialogView_MappoolComboBoxHint" xml:space="preserve">
+    <value>圖池</value>
+  </data>
+  <data name="EditMatchDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="EditMatchDialogView_PlayerNameOrIDTextBoxHint" xml:space="preserve">
+    <value>玩家名稱 或 帳號ID</value>
+  </data>
+  <data name="EditMatchDialogView_RoomSizeTextBoxHint" xml:space="preserve">
+    <value>房間大小</value>
+  </data>
+  <data name="EditMatchDialogView_SaveButtonText" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="EditMatchDialogView_TeamBlueComboBoxHint" xml:space="preserve">
+    <value>藍對</value>
+  </data>
+  <data name="EditMatchDialogView_TeamComboBoxHint" xml:space="preserve">
+    <value>隊伍</value>
+  </data>
+  <data name="EditMatchDialogView_TeamModeComboBoxHint" xml:space="preserve">
+    <value>分組方式</value>
+  </data>
+  <data name="EditMatchDialogView_TeamRedComboBoxHint" xml:space="preserve">
+    <value>紅隊</value>
+  </data>
+  <data name="EditMatchDialogView_TeamSizeTextBoxHint" xml:space="preserve">
+    <value>隊伍大小</value>
+  </data>
+  <data name="EditMatchDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="EditMatchDialogView_WinConditionComboBoxHint" xml:space="preserve">
+    <value>勝利條件</value>
+  </data>
+  <data name="EditTeamDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="EditTeamDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="EditTeamDialogView_SaveButtonText" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="EditTeamDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="EditTournamentDialogView_AcronymTextBoxHint" xml:space="preserve">
+    <value>比賽縮寫</value>
+  </data>
+  <data name="EditTournamentDialogView_AddButtonTooltip" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="EditTournamentDialogView_AllPicksFreemodCheckBoxText" xml:space="preserve">
+    <value>選圖皆為 Freemod</value>
+  </data>
+  <data name="EditTournamentDialogView_BRInitialLivesTextBoxHint" xml:space="preserve">
+    <value>BR Initial Lives</value>
+  </data>
+  <data name="EditTournamentDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="EditTournamentDialogView_CommandTimerTextBoxHint" xml:space="preserve">
+    <value>計時器指令時長</value>
+  </data>
+  <data name="EditTournamentDialogView_GameModeComboBoxHint" xml:space="preserve">
+    <value>遊戲模式</value>
+  </data>
+  <data name="EditTournamentDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="EditTournamentDialogView_PlacingTextBoxHint" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="EditTournamentDialogView_PointsForSecondBanTextBoxHint" xml:space="preserve">
+    <value>第二個 BAN 需要的分數</value>
+  </data>
+  <data name="EditTournamentDialogView_PointsForSecondBanTextBoxTooltip" xml:space="preserve">
+    <value>輸入 0 來停用</value>
+  </data>
+  <data name="EditTournamentDialogView_PointsGivenTextBoxHint" xml:space="preserve">
+    <value>給分</value>
+  </data>
+  <data name="EditTournamentDialogView_PointsPerGameTextBlockText" xml:space="preserve">
+    <value>每場遊戲給分</value>
+  </data>
+  <data name="EditTournamentDialogView_RoomSizeTextBoxHint" xml:space="preserve">
+    <value>房間大小</value>
+  </data>
+  <data name="EditTournamentDialogView_SaveButtonText" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="EditTournamentDialogView_TeamModeComboBoxHint" xml:space="preserve">
+    <value>分組方式</value>
+  </data>
+  <data name="EditTournamentDialogView_TeamSizeTextBoxHint" xml:space="preserve">
+    <value>隊伍大小</value>
+  </data>
+  <data name="EditTournamentDialogView_TimerAfterGameTextBoxHint" xml:space="preserve">
+    <value>遊戲後計時器時長</value>
+  </data>
+  <data name="EditTournamentDialogView_TimerAfterPickTextBoxHint" xml:space="preserve">
+    <value>選後計時器時長</value>
+  </data>
+  <data name="EditTournamentDialogView_WelcomeStringTextBoxHint" xml:space="preserve">
+    <value>歡迎字串</value>
+  </data>
+  <data name="EditTournamentDialogView_WinConditionComboBoxHint" xml:space="preserve">
+    <value>獲勝條件</value>
+  </data>
+  <data name="EditWebhookDialogView_AvatarTextBoxHint" xml:space="preserve">
+    <value>頭貼</value>
+  </data>
+  <data name="EditWebhookDialogView_BanRecapCheckBoxText" xml:space="preserve">
+    <value>Ban圖回顧</value>
+  </data>
+  <data name="EditWebhookDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="EditWebhookDialogView_FooterIconTextBoxHint" xml:space="preserve">
+    <value>註腳圖標</value>
+  </data>
+  <data name="EditWebhookDialogView_FooterTextTextBoxHint" xml:space="preserve">
+    <value>註腳文字</value>
+  </data>
+  <data name="EditWebhookDialogView_GameRecapCheckBoxText" xml:space="preserve">
+    <value>遊戲回顧</value>
+  </data>
+  <data name="EditWebhookDialogView_MatchCreatedCheckBoxText" xml:space="preserve">
+    <value>對賽創建</value>
+  </data>
+  <data name="EditWebhookDialogView_NameTextBoxHint" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="EditWebhookDialogView_PickRecapCheckBoxText" xml:space="preserve">
+    <value>選圖回顧</value>
+  </data>
+  <data name="EditWebhookDialogView_SaveButtonText" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="EditWebhookDialogView_URLTextBoxHint" xml:space="preserve">
+    <value>連結</value>
+  </data>
+  <data name="EditWebhookDialogView_UsernameTextBoxHint" xml:space="preserve">
+    <value>使用者名稱</value>
+  </data>
+  <data name="EditWebhookDialogView_WinImageTextBoxHint" xml:space="preserve">
+    <value>贏家圖片 / GIF</value>
+  </data>
+  <data name="ExportSuccessDialogView_OkButtonText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ExportView_ExportButtonText" xml:space="preserve">
+    <value>匯出</value>
+  </data>
+  <data name="ExportView_ExportSuccessfullDialogText" xml:space="preserve">
+    <value>匯出成功</value>
+  </data>
+  <data name="ExportView_ImportButtonText" xml:space="preserve">
+    <value>匯入</value>
+  </data>
+  <data name="ExportView_ImportSuccessfullDialogText" xml:space="preserve">
+    <value>匯入成功</value>
+  </data>
+  <data name="MainView_ChatMenuItem" xml:space="preserve">
+    <value>聊天</value>
+  </data>
+  <data name="MainView_ColorsMenuItem" xml:space="preserve">
+    <value>顏色</value>
+  </data>
+  <data name="MainView_CommandsMenuItem" xml:space="preserve">
+    <value>指令</value>
+  </data>
+  <data name="MainView_ExportMenuItem" xml:space="preserve">
+    <value>匯出</value>
+  </data>
+  <data name="MainView_MappoolsMenuItem" xml:space="preserve">
+    <value>圖池</value>
+  </data>
+  <data name="MainView_MatchesMenuItem" xml:space="preserve">
+    <value>對賽</value>
+  </data>
+  <data name="MainView_SettingsMenuItem" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="MainView_TeamsMenuItem" xml:space="preserve">
+    <value>隊伍</value>
+  </data>
+  <data name="MainView_TournamentsMenuItem" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="MainView_WebhooksMenuItem" xml:space="preserve">
+    <value>Webhooks</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_DownButtonTooltip" xml:space="preserve">
+    <value>向下移動</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_DTCheckBoxText" xml:space="preserve">
+    <value>DT</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_FreemodCheckBoxText" xml:space="preserve">
+    <value>Freemod</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_HDCheckBoxText" xml:space="preserve">
+    <value>HD</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_HRCheckBoxText" xml:space="preserve">
+    <value>HR</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_NFCheckBoxText" xml:space="preserve">
+    <value>NF</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_PickCommandCheckBoxText" xml:space="preserve">
+    <value>選圖指令</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_PickCommandCheckBoxTooltip" xml:space="preserve">
+    <value>當圖譜被選時傳送 !mp map 指令
+如果你需要使用較舊版本的圖譜時，請取消勾選這個選項。</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_TiebreakerCheckBoxText" xml:space="preserve">
+    <value>Tiebreaker</value>
+  </data>
+  <data name="MappoolBeatmapListItemView_UpButtonTooltip" xml:space="preserve">
+    <value>向上移動</value>
+  </data>
+  <data name="MappoolBeatmapsDialogView_AddButtonTooltip" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="MappoolBeatmapsDialogView_BeatmapIdTextBoxHint" xml:space="preserve">
+    <value>圖譜ID</value>
+  </data>
+  <data name="MappoolBeatmapsDialogView_BeatmapIdTextBoxTooltip" xml:space="preserve">
+    <value>可以添加多個以 分號(;) 分隔的圖譜
+將單個圖譜連結複製到剪貼板以將其添加到列表中</value>
+    <comment>Can add multiple beatmaps delimited by ';'&amp;#10;Copy single beatmap links to clipboard to add them here</comment>
+  </data>
+  <data name="MappoolBeatmapsDialogView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="MappoolListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="MappoolListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="MappoolListItemView_EditMapsButtonTooltip" xml:space="preserve">
+    <value>編輯圖譜</value>
+  </data>
+  <data name="MappoolsView_DeleteAllButtonText" xml:space="preserve">
+    <value>刪除所有</value>
+  </data>
+  <data name="MappoolsView_ImportFromWikiButtonText" xml:space="preserve">
+    <value>從wiki匯入</value>
+  </data>
+  <data name="MappoolsView_NewButtonText" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="MappoolsView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="MappoolWikiImportDialogViewModel_StatusGettingWikiPage" xml:space="preserve">
+    <value>獲取wiki頁面中</value>
+  </data>
+  <data name="MappoolWikiImportDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="MappoolWikiImportDialogView_ImportButtonText" xml:space="preserve">
+    <value>匯入</value>
+  </data>
+  <data name="MappoolWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
+    <value>Wiki 連結</value>
+  </data>
+  <data name="MatchAbortMapDialogView_AbortButtonText" xml:space="preserve">
+    <value>中斷圖譜</value>
+  </data>
+  <data name="MatchAbortMapDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="MatchAbortMapDialogView_LabelText" xml:space="preserve">
+    <value>中斷圖譜?</value>
+  </data>
+  <data name="MatchBanchoEventViewModel_AllPlayersFinishedText" xml:space="preserve">
+    <value>所有玩家已完成</value>
+  </data>
+  <data name="MatchBanchoEventViewModel_AllPlayersReadyText" xml:space="preserve">
+    <value>所有玩家已準備就緒</value>
+  </data>
+  <data name="MatchBanchoEventViewModel_RollText" xml:space="preserve">
+    <value>{0} 骰出了 {1}</value>
+    <comment>{0}: Player name
+{1}: Roll</comment>
+  </data>
+  <data name="MatchBanchoEventViewModel_TimeFormat" xml:space="preserve">
+    <value>HH:mm</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemBannedByText" xml:space="preserve">
+    <value>BAN {0}</value>
+    <comment>{0}: Player or team name</comment>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemBanText" xml:space="preserve">
+    <value>Ban</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemPickedByText" xml:space="preserve">
+    <value>PICK {0}</value>
+    <comment>{0}: Player or team name</comment>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemPickText" xml:space="preserve">
+    <value>Pick</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemUnbanText" xml:space="preserve">
+    <value>取消 BAN</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemUnpickText" xml:space="preserve">
+    <value>取消 PICK</value>
+  </data>
+  <data name="MatchBeatmapViewModel_LabelText" xml:space="preserve">
+    <value>{0} - {1} [{2}] ({3}) BPM{4} AR{5} CS{6}</value>
+    <comment>{0}: Artist
+{1}: Title
+{2}: Version
+{3}: Creator
+{4}: BPM
+{5}: AR
+{6}: CS</comment>
+  </data>
+  <data name="MatchBeatmapViewModel_LabelTooltip" xml:space="preserve">
+    <value>作圖者: {0}
+BPM: {1}
+AR: {2}
+CS: {3}</value>
+    <comment>{0}: Mapper
+{1}: BPM
+{2}: AR
+{3}: CS</comment>
+  </data>
+  <data name="MatchBRTeamListItemView_RemoveTeamButtonTooltip" xml:space="preserve">
+    <value>刪除隊伍</value>
+  </data>
+  <data name="MatchBRTeamView_DecreaseButtonTooltip" xml:space="preserve">
+    <value>減少</value>
+  </data>
+  <data name="MatchBRTeamView_IncreaseButtonTooltip" xml:space="preserve">
+    <value>增加</value>
+  </data>
+  <data name="MatchBRTeamView_KickButtonTooltip" xml:space="preserve">
+    <value>踢出</value>
+  </data>
+  <data name="MatchCloseRoomDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="MatchCloseRoomDialogView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="MatchCloseRoomDialogView_LabelText" xml:space="preserve">
+    <value>確定要關閉房間?</value>
+  </data>
+  <data name="MatchesView_DeleteAllButtonText" xml:space="preserve">
+    <value>刪除所有</value>
+  </data>
+  <data name="MatchesView_NewButtonText" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="MatchesView_SearchTextBoxHint" xml:space="preserve">
+    <value>搜尋</value>
+  </data>
+  <data name="MatchesView_StatusComboBoxHint" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="MatchesView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="MatchesView_WikiImportButtonText" xml:space="preserve">
+    <value>從wiki匯入</value>
+  </data>
+  <data name="MatchesWikiImportDialogViewModel_StatusGettingWikiPage" xml:space="preserve">
+    <value>獲取wiki頁面中</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_BOTextBoxHint" xml:space="preserve">
+    <value>BO</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_ImportButtonText" xml:space="preserve">
+    <value>匯入</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_MappoolComboBoxHint" xml:space="preserve">
+    <value>圖池</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_NoTeamsWarning" xml:space="preserve">
+    <value>這個比賽還沒有設定任何隊伍</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="MatchesWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
+    <value>Wiki 連結</value>
+  </data>
+  <data name="MatchJoinRoomDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="MatchJoinRoomDialogView_JoinButtonText" xml:space="preserve">
+    <value>加入</value>
+  </data>
+  <data name="MatchJoinRoomDialogView_LabelText" xml:space="preserve">
+    <value>加入房間</value>
+  </data>
+  <data name="MatchJoinRoomDialogView_RoomIdTextBoxHint" xml:space="preserve">
+    <value>房間 ID</value>
+  </data>
+  <data name="MatchListItemViewModel_DateTimeFormat" xml:space="preserve">
+    <value>MM/dd HH:mm</value>
+  </data>
+  <data name="MatchListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="MatchListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="MatchListItemView_OpenButtonTooltip" xml:space="preserve">
+    <value>開啟房間管理視窗</value>
+  </data>
+  <data name="MatchPasswordDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="MatchPasswordDialogView_LabelText" xml:space="preserve">
+    <value>設定密碼</value>
+  </data>
+  <data name="MatchPasswordDialogView_PasswordTextBoxHint" xml:space="preserve">
+    <value>密碼</value>
+  </data>
+  <data name="MatchPasswordDialogView_SetButtonText" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="MatchPickOverviewDialogView_BansLabelText" xml:space="preserve">
+    <value>Bans</value>
+  </data>
+  <data name="MatchPickOverviewDialogView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="MatchPickOverviewDialogView_MappoolLabelText" xml:space="preserve">
+    <value>圖池</value>
+  </data>
+  <data name="MatchPickOverviewDialogView_PicksLabelText" xml:space="preserve">
+    <value>Picks</value>
+  </data>
+  <data name="MatchPlayerListItemView_RemovePlayerButtonTooltip" xml:space="preserve">
+    <value>刪除玩家</value>
+  </data>
+  <data name="MatchPlayerView_DecreaseButtonTooltip" xml:space="preserve">
+    <value>減少</value>
+  </data>
+  <data name="MatchPlayerView_IncreaseButtonTooltip" xml:space="preserve">
+    <value>增加</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_GameModeComboBoxHint" xml:space="preserve">
+    <value>遊戲模式</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_LabelText" xml:space="preserve">
+    <value>設定房間選項</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_RoomSizeTextBoxHint" xml:space="preserve">
+    <value>房間大小</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_ScoreModeComboBoxHint" xml:space="preserve">
+    <value>計分模式</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_SetButtonText" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="MatchRoomOptionsDialogView_TeamSizeTextBoxHint" xml:space="preserve">
+    <value>隊伍大小</value>
+  </data>
+  <data name="MatchRoomSlotViewModel_ContextItemKickText" xml:space="preserve">
+    <value>踢出</value>
+  </data>
+  <data name="MatchRoomSlotViewModel_ContextItemSetHostText" xml:space="preserve">
+    <value>設為房主</value>
+  </data>
+  <data name="MatchTeamView_DecreaseButtonTooltip" xml:space="preserve">
+    <value>減少</value>
+  </data>
+  <data name="MatchTeamView_IncreaseButtonTooltip" xml:space="preserve">
+    <value>增加</value>
+  </data>
+  <data name="MatchViewModel_NextPlayerPickMessage" xml:space="preserve">
+    <value>下一個 PICK 玩家: {0}</value>
+    <comment>{0}: Player name</comment>
+  </data>
+  <data name="MatchViewModel_NextTeamPickMessage" xml:space="preserve">
+    <value>下一個 PICK 隊伍: {0}</value>
+    <comment>{0}: Team name</comment>
+  </data>
+  <data name="MatchViewModel_PlayerPointsMessage" xml:space="preserve">
+    <value>({0}) {1}: {2} 分</value>
+    <comment>{0}: Player ranking
+{1}: Player name
+{2}: Points</comment>
+  </data>
+  <data name="MatchViewModel_RoomRankingMessage" xml:space="preserve">
+    <value>房間排行榜</value>
+  </data>
+  <data name="MatchViewModel_SecondBanMessage" xml:space="preserve">
+    <value>{0} 可以再 BAN 一張圖</value>
+    <comment>{0}: Team name</comment>
+  </data>
+  <data name="MatchViewModel_TeamRoomSetupMessage" xml:space="preserve">
+    <value>紅隊 {0}, slots 1 ~ {1} --- 籃隊 {2}, slots {3} ~ {4}</value>
+    <comment>{0}: Team red name
+{1}: Red team last slot number
+{2}: Team blue name
+{3}: Blue team first slot number
+{4}: Blue team last slot number</comment>
+  </data>
+  <data name="MatchViewModel_TiebreakerMessage" xml:space="preserve">
+    <value>結果是平局。 我們必須打決勝局。</value>
+  </data>
+  <data name="MatchViewModel_WinMessage" xml:space="preserve">
+    <value>**{0} 贏得了這場比賽**</value>
+    <comment>{0}: Team or player name</comment>
+  </data>
+  <data name="MatchView_AbortMapButtonText" xml:space="preserve">
+    <value>中斷遊戲</value>
+  </data>
+  <data name="MatchView_AllPicksFreemodCheckBoxText" xml:space="preserve">
+    <value>選圖皆為 Freemod</value>
+  </data>
+  <data name="MatchView_BanRecapButtonText" xml:space="preserve">
+    <value>BAN 回顧</value>
+  </data>
+  <data name="MatchView_BOTextBoxHint" xml:space="preserve">
+    <value>BO</value>
+  </data>
+  <data name="MatchView_CloseRoomButtonText" xml:space="preserve">
+    <value>關閉房間</value>
+  </data>
+  <data name="MatchView_CreateRoomButtonText" xml:space="preserve">
+    <value>創建房間</value>
+  </data>
+  <data name="MatchView_DisableChatMatchStatusCheckBoxText" xml:space="preserve">
+    <value>停用比賽狀態訊息</value>
+  </data>
+  <data name="MatchView_DisableChatMatchStatusCheckBoxTooltip" xml:space="preserve">
+    <value>停用遊戲後自動訊息 (房間排行 / 下一個旋圖)</value>
+  </data>
+  <data name="MatchView_FirstPickComboBoxHint" xml:space="preserve">
+    <value>第一個選圖</value>
+  </data>
+  <data name="MatchView_GameModeComboBoxHint" xml:space="preserve">
+    <value>遊戲模式</value>
+  </data>
+  <data name="MatchView_GameRecapButtonText" xml:space="preserve">
+    <value>比賽回顧</value>
+  </data>
+  <data name="MatchView_InvitePlayersButtonText" xml:space="preserve">
+    <value>邀請玩家</value>
+  </data>
+  <data name="MatchView_JoinRoomButtonText" xml:space="preserve">
+    <value>加入現存房間</value>
+  </data>
+  <data name="MatchView_KickLastTeamButtonText" xml:space="preserve">
+    <value>踢除最後一隊</value>
+  </data>
+  <data name="MatchView_MappoolComboBoxHint" xml:space="preserve">
+    <value>圖池</value>
+  </data>
+  <data name="MatchView_MessageTextBoxHint" xml:space="preserve">
+    <value>訊息</value>
+  </data>
+  <data name="MatchView_PickNextMapButtonText" xml:space="preserve">
+    <value>PICK 下一張圖</value>
+  </data>
+  <data name="MatchView_PickRecapButtonText" xml:space="preserve">
+    <value>PICK 回顧</value>
+  </data>
+  <data name="MatchView_PicksBansButtonText" xml:space="preserve">
+    <value>Picks/Bans</value>
+  </data>
+  <data name="MatchView_RefreshButtonTooltip" xml:space="preserve">
+    <value>重新整理</value>
+  </data>
+  <data name="MatchView_RollWinnerComboBoxHint" xml:space="preserve">
+    <value>骰子贏家</value>
+  </data>
+  <data name="MatchView_RoomSizeTextBoxHint" xml:space="preserve">
+    <value>房間大小</value>
+  </data>
+  <data name="MatchView_SecondBanTextBoxHint" xml:space="preserve">
+    <value>第二個 BAN 需要的分數</value>
+  </data>
+  <data name="MatchView_SendButtonText" xml:space="preserve">
+    <value>傳送</value>
+  </data>
+  <data name="MatchView_SetPasswordButtonText" xml:space="preserve">
+    <value>設定密碼</value>
+  </data>
+  <data name="MatchView_SetRoomOptionsButtonText" xml:space="preserve">
+    <value>設定房間選項</value>
+  </data>
+  <data name="MatchView_SettingsButtonText" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="MatchView_StartGameButtonText" xml:space="preserve">
+    <value>開始遊戲 (5秒)</value>
+  </data>
+  <data name="MatchView_SwitchPlayersBackButtonText" xml:space="preserve">
+    <value>對調玩家</value>
+  </data>
+  <data name="MatchView_SwitchPlayersButtonText" xml:space="preserve">
+    <value>對調玩家</value>
+  </data>
+  <data name="MatchView_TeamSizeTextBoxHint" xml:space="preserve">
+    <value>隊伍大小</value>
+  </data>
+  <data name="MatchView_TimerAfterGameTextBoxHint" xml:space="preserve">
+    <value>遊戲後計時器</value>
+  </data>
+  <data name="MatchView_TimerAfterPickTextBoxHint" xml:space="preserve">
+    <value>選圖後計時器</value>
+  </data>
+  <data name="MatchView_TimerButtonText" xml:space="preserve">
+    <value>計時器</value>
+  </data>
+  <data name="MatchView_TimerCommandTextBoxHint" xml:space="preserve">
+    <value>計時器指令</value>
+  </data>
+  <data name="MatchView_ViewerModeCheckBoxText" xml:space="preserve">
+    <value>旁觀模式</value>
+  </data>
+  <data name="MatchView_ViewerModeCheckBoxTooltip" xml:space="preserve">
+    <value>停用 Webhook 和自動 IRC 訊息</value>
+  </data>
+  <data name="MatchView_WarmupModeCheckBoxText" xml:space="preserve">
+    <value>暖身模式</value>
+  </data>
+  <data name="MatchView_WelcomeStringButtonText" xml:space="preserve">
+    <value>歡迎字串</value>
+  </data>
+  <data name="NewChatDialogView_CancelButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="NewChatDialogView_OpenButtonText" xml:space="preserve">
+    <value>開啟</value>
+  </data>
+  <data name="NewChatDialogView_UserTextBoxHint" xml:space="preserve">
+    <value>使用者名稱或頻道名稱</value>
+  </data>
+  <data name="OsuApi_TimeoutErrorHeader" xml:space="preserve">
+    <value>API 錯誤</value>
+  </data>
+  <data name="OsuApi_TimeoutErrorText" xml:space="preserve">
+    <value>API 和網頁已離線</value>
+  </data>
+  <data name="SettingsView_ApiKeyTextBoxHint" xml:space="preserve">
+    <value>API 金鑰</value>
+  </data>
+  <data name="SettingsView_BanchoConnectedTooltip" xml:space="preserve">
+    <value>Bancho 已連線</value>
+  </data>
+  <data name="SettingsView_BanchoConnectingTooltip" xml:space="preserve">
+    <value>連線至 Bancho 中...</value>
+  </data>
+  <data name="SettingsView_BanchoDisconnectedTooltip" xml:space="preserve">
+    <value>未連線至 Bancho</value>
+  </data>
+  <data name="SettingsView_DiscardButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="SettingsView_EnableNotificationsCheckBoxText" xml:space="preserve">
+    <value>啟用通知</value>
+  </data>
+  <data name="SettingsView_EnableNotificationsCheckBoxTooltip" xml:space="preserve">
+    <value>當遊戲結束或所有玩家已準備就緒時播放音效</value>
+  </data>
+  <data name="SettingsView_GetApiKeyButtonText" xml:space="preserve">
+    <value>取得 API 金鑰</value>
+  </data>
+  <data name="SettingsView_GetIrcPasswordButtonText" xml:space="preserve">
+    <value>取得 IRC 密碼</value>
+  </data>
+  <data name="SettingsView_IrcPasswordTextBoxHint" xml:space="preserve">
+    <value>IRC 密碼</value>
+  </data>
+  <data name="SettingsView_IrcTimeoutTextBoxHint" xml:space="preserve">
+    <value>IRC 愈時</value>
+  </data>
+  <data name="SettingsView_IrcUsernameTextBoxHint" xml:space="preserve">
+    <value>IRC 使用者名稱</value>
+  </data>
+  <data name="SettingsView_LanguagesComboBoxHint" xml:space="preserve">
+    <value>語言 (Language)</value>
+  </data>
+  <data name="SettingsView_NotificationSoundFileTextBoxHint" xml:space="preserve">
+    <value>通知音效檔案</value>
+  </data>
+  <data name="SettingsView_NotificationSoundFileTextBoxTooltip" xml:space="preserve">
+    <value>留空使用愈設音效</value>
+  </data>
+  <data name="SettingsView_OpenConfigFileButtonText" xml:space="preserve">
+    <value>打開設定檔案</value>
+  </data>
+  <data name="SettingsView_PrivateBanchoConnectedTooltip" xml:space="preserve">
+    <value>Private Bancho Connected</value>
+  </data>
+  <data name="SettingsView_PrivateBanchoConnectingTooltip" xml:space="preserve">
+    <value>Private Bancho Connecting</value>
+  </data>
+  <data name="SettingsView_PrivateBanchoDisconnectedTooltip" xml:space="preserve">
+    <value>Private Bancho Disconnected</value>
+  </data>
+  <data name="SettingsView_SaveButtonText" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="SettingsView_SelectNotificationSoundFileButtonText" xml:space="preserve">
+    <value>瀏覽</value>
+  </data>
+  <data name="SettingsView_TestApiKeyButtonText" xml:space="preserve">
+    <value>測試音效</value>
+  </data>
+  <data name="SettingsView_TimerAfterGameDurationTextBoxHint" xml:space="preserve">
+    <value>遊戲後計時器時長</value>
+  </data>
+  <data name="SettingsView_TimerAfterPickDurationTextBoxHint" xml:space="preserve">
+    <value>選後後計時器時長</value>
+  </data>
+  <data name="SettingsView_TimerCommandDurationTextBoxHint" xml:space="preserve">
+    <value>計時器指令時長</value>
+  </data>
+  <data name="SettingsView_UsePrivateBanchoCheckBox" xml:space="preserve">
+    <value>使用私人伺服器</value>
+  </data>
+  <data name="TeamListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="TeamListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="TeamListItemView_EditPlayersButtonTooltip" xml:space="preserve">
+    <value>編輯玩家</value>
+  </data>
+  <data name="TeamPlayerListItemView_RemovePlayerButtonTooltip" xml:space="preserve">
+    <value>刪除玩家</value>
+  </data>
+  <data name="TeamPlayersDialogView_AddButtonTooltip" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="TeamPlayersDialogView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="TeamPlayersDialogView_PlayerNameOrIdTextBoxHint" xml:space="preserve">
+    <value>玩家名稱 或 帳號ID</value>
+  </data>
+  <data name="TeamsView_NewButtonText" xml:space="preserve">
+    <value>新增隊伍</value>
+  </data>
+  <data name="TeamsView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="TeamsView_WikiImportButtonText" xml:space="preserve">
+    <value>從wiki匯入</value>
+  </data>
+  <data name="TeamWikiImportDialogViewModel_StatusGettingWikiPage" xml:space="preserve">
+    <value>獲取wiki頁面中</value>
+  </data>
+  <data name="TeamWikiImportDialogView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="TeamWikiImportDialogView_ImportButtonText" xml:space="preserve">
+    <value>匯入</value>
+  </data>
+  <data name="TeamWikiImportDialogView_TournamentComboBoxHint" xml:space="preserve">
+    <value>比賽</value>
+  </data>
+  <data name="TeamWikiImportDialogView_WikiUrlTextBoxHint" xml:space="preserve">
+    <value>Wiki 連結</value>
+  </data>
+  <data name="TournamentListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="TournamentListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="TournamentListItemView_WebhooksButtonTooltip" xml:space="preserve">
+    <value>Webhooks</value>
+  </data>
+  <data name="TournamentPointListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="TournamentsView_NewButtonText" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="TournamentWebhooksDialogView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="TournamentWebhooksDialogView_LabelText" xml:space="preserve">
+    <value>{0} 的 Webhook</value>
+    <comment>{0}: Tournament name</comment>
+  </data>
+  <data name="TournamentWebhooksDialogView_WebhookChannelWarning" xml:space="preserve">
+    <value>您有多個 Webhook 將相同的訊息發送到同一個頻道！</value>
+  </data>
+  <data name="ValidationRule_FieldRequired" xml:space="preserve">
+    <value>必填欄位</value>
+  </data>
+  <data name="ValidationRule_WebhookNameDuplicate" xml:space="preserve">
+    <value>名稱已被使用</value>
+  </data>
+  <data name="WebhookListItemView_DeleteButtonTooltip" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="WebhookListItemView_EditButtonTooltip" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="WebhooksView_NewButtonText" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="Window_CloseButtonTooltip" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="Window_MaximizeButtonTooltip" xml:space="preserve">
+    <value>最大化</value>
+  </data>
+  <data name="Window_MinimizeButtonTooltip" xml:space="preserve">
+    <value>最小化</value>
+  </data>
+  <data name="Window_RestoreButtonTooltip" xml:space="preserve">
+    <value>向下還原</value>
+  </data>
+</root>

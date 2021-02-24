@@ -7,3 +7,4 @@
 .\script-chan2\bin\Debug\x86
 .\script-chan2\bin\Debug\en-US
 .\script-chan2\bin\Debug\de-DE
+.\script-chan2\bin\Debug\zh-TW
