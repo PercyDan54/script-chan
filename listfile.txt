@@ -5,3 +5,5 @@
 .\script-chan2\bin\Debug\Resources
 .\script-chan2\bin\Debug\x64
 .\script-chan2\bin\Debug\x86
+.\script-chan2\bin\Debug\en-US
+.\script-chan2\bin\Debug\de-DE
