@@ -135,6 +135,20 @@ namespace script_chan2.GUI
             }
         }
 
+        public bool PickCommand
+        {
+            get { return beatmap.PickCommand; }
+            set
+            {
+                if (value != beatmap.PickCommand)
+                {
+                    beatmap.PickCommand = value;
+                    beatmap.Save();
+                    NotifyOfPropertyChange(() => PickCommand);
+                }
+            }
+        }
+
         public Brush Background
         {
             get

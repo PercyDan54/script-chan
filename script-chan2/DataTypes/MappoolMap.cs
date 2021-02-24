@@ -24,6 +24,8 @@ namespace script_chan2.DataTypes
 
         public int ListIndex { get; set; }
 
+        public bool PickCommand { get; set; }
+
         public List<GameMods> Mods;
 
         public void AddMod(GameMods mod)

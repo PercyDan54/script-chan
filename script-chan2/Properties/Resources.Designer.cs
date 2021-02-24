@@ -1357,6 +1357,25 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick command.
+        /// </summary>
+        public static string MappoolBeatmapListItemView_PickCommandCheckBoxText {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_PickCommandCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send !mp map command in chat if map is picked.
+        ///Disable this if you want to use older versions of the map for example..
+        /// </summary>
+        public static string MappoolBeatmapListItemView_PickCommandCheckBoxTooltip {
+            get {
+                return ResourceManager.GetString("MappoolBeatmapListItemView_PickCommandCheckBoxTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tiebreaker.
         /// </summary>
         public static string MappoolBeatmapListItemView_TiebreakerCheckBoxText {

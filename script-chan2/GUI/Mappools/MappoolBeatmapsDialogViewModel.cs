@@ -162,7 +162,8 @@ namespace script_chan2.GUI
                 var mappoolMap = new MappoolMap()
                 {
                     Mappool = mappool,
-                    Beatmap = beatmap
+                    Beatmap = beatmap,
+                    PickCommand = true
                 };
                 mappool.AddBeatmap(mappoolMap);
                 mappoolMap.Save();
