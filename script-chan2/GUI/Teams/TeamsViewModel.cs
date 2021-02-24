@@ -94,6 +94,12 @@ namespace script_chan2.GUI
                     Tournament = model.Tournament
                 };
                 team.Save();
+                if (model.Tournament.TeamSize == 1)
+                {
+                    var player = await Database.Database.GetPlayer(team.Name);
+                    if (player != null)
+                        team.AddPlayer(player);
+                }
                 Settings.DefaultTournament = model.Tournament;
                 NotifyOfPropertyChange(() => TeamViews);
             }
