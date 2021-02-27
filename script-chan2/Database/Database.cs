@@ -1563,7 +1563,13 @@ namespace script_chan2.Database
         {
             localLog.Information("add irc messages");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("INSERT INTO IrcMessages (match, timestamp, channel, user, message) VALUES (@match, @timestamp, @channel, @user, @message)", conn))
+            using (var command = new SQLiteCommand(@"INSERT INTO IrcMessages (match, timestamp, channel, user, message)
+                SELECT match, timestamp, channel, user, message
+                FROM (SELECT @match as match, @timestamp as timestamp, @channel as channel, @user as user, @message as message)
+                WHERE EXISTS
+                (
+                    SELECT id FROM Matches WHERE id = @match
+                ) OR @match IS NULL", conn))
             using (var transaction = conn.BeginTransaction())
             {
                 foreach (var message in messages)
