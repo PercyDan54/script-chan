@@ -256,7 +256,8 @@ namespace script_chan2.GUI
                         var mappoolMap = new MappoolMap()
                         {
                             Mappool = mappool,
-                            Beatmap = beatmap
+                            Beatmap = beatmap,
+                            PickCommand = true
                         };
                         switch (importBeatmap.Mod.ToLower())
                         {
