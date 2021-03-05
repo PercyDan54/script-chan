@@ -284,7 +284,15 @@ namespace script_chan2.GUI
                         {
                             if (importMatch != null && !string.IsNullOrEmpty(date))
                             {
-                                importMatch.MatchTime = DateTime.Parse(date + " " + ((EmphasisInline)subBlock).FirstChild.ToString().Split(' ').First());
+                                try
+                                {
+                                    importMatch.MatchTime = DateTime.Parse(date + " " + ((EmphasisInline)subBlock).FirstChild.ToString().Split(' ').First());
+                                }
+                                catch (Exception e)
+                                {
+                                    localLog.Error(e, "DateTime parse failed");
+                                    importMatch.MatchTime = DateTime.Now;
+                                }
                                 importMatches.Add(importMatch);
                                 importMatch = null;
                             }
