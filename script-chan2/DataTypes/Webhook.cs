@@ -38,6 +38,8 @@ namespace script_chan2.DataTypes
 
         public string Avatar { get; set; }
 
+        public string AuthorIcon { get; set; }
+
         public string Guild { get; set; }
 
         public string Channel { get; set; }

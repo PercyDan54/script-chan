@@ -468,6 +468,12 @@
   <data name="EditTournamentDialogView_WinConditionComboBoxHint" xml:space="preserve">
     <value>Win Condition</value>
   </data>
+  <data name="EditWebhookDialogView_AuthorIconTextBoxHint" xml:space="preserve">
+    <value>Author icon</value>
+  </data>
+  <data name="EditWebhookDialogView_AuthorIconTextBoxTooltip" xml:space="preserve">
+    <value>Leave empty for default</value>
+  </data>
   <data name="EditWebhookDialogView_AvatarTextBoxHint" xml:space="preserve">
     <value>Avatar</value>
   </data>

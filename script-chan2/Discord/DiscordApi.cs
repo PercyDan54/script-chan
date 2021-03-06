@@ -39,6 +39,8 @@ namespace script_chan2.Discord
                     Title = Properties.Resources.DiscordApi_MatchCreatedTitle,
                     Description = string.Format(Properties.Resources.DiscordApi_MatchCreatedDescription, match.RoomId)
                 };
+                if (!string.IsNullOrEmpty(webhook.AuthorIcon))
+                    embed.Author.IconUrl = webhook.AuthorIcon;
 
                 if (match.TeamMode == Enums.TeamModes.TeamVS)
                     embed.Author.Name = $"{match.TeamRed.Name} VS {match.TeamBlue.Name}";
@@ -80,6 +82,9 @@ namespace script_chan2.Discord
                         Color = Color.Gold,
                         Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     };
+                    if (!string.IsNullOrEmpty(webhook.AuthorIcon))
+                        embed.Author.IconUrl = webhook.AuthorIcon;
+
                     if (match.RollWinnerTeam != null)
                         embed.Title = string.Format(Properties.Resources.DiscordApi_BanRecapWithRollWinnerTitle, match.RollWinnerTeam.Name);
                     else
@@ -114,6 +119,9 @@ namespace script_chan2.Discord
                         Color = Color.Gold,
                         Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     };
+                    if (!string.IsNullOrEmpty(webhook.AuthorIcon))
+                        embed.Author.IconUrl = webhook.AuthorIcon;
+
                     if (match.RollWinnerPlayer != null)
                         embed.Title = string.Format(Properties.Resources.DiscordApi_BanRecapWithRollWinnerTitle, match.RollWinnerPlayer.Name);
                     else
@@ -168,6 +176,9 @@ namespace script_chan2.Discord
                         Color = Color.Gold,
                         Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     };
+                    if (!string.IsNullOrEmpty(webhook.AuthorIcon))
+                        embed.Author.IconUrl = webhook.AuthorIcon;
+
                     if (match.RollWinnerTeam != null)
                         embed.Title = string.Format(Properties.Resources.DiscordApi_PickRecapWithRollWinnerTitle, match.RollWinnerTeam.Name);
                     else
@@ -203,6 +214,9 @@ namespace script_chan2.Discord
                         Color = Color.Gold,
                         Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                     };
+                    if (!string.IsNullOrEmpty(webhook.AuthorIcon))
+                        embed.Author.IconUrl = webhook.AuthorIcon;
+
                     if (match.RollWinnerTeam != null)
                         embed.Title = string.Format(Properties.Resources.DiscordApi_PickRecapWithRollWinnerTitle, match.RollWinnerPlayer.Name);
                     else
@@ -252,6 +266,8 @@ namespace script_chan2.Discord
                             Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
                         }
                     };
+                    if (!string.IsNullOrEmpty(webhook.AuthorIcon))
+                        embed.Author.IconUrl = webhook.AuthorIcon;
 
                     var map = match.Picks.Last();
 

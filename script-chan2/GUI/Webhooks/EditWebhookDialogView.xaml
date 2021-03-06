@@ -10,7 +10,7 @@
              xmlns:p="clr-namespace:script_chan2.Properties"
              mc:Ignorable="d" 
              cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
-             d:DesignHeight="510" d:DesignWidth="350">
+             d:DesignHeight="550" d:DesignWidth="350">
     <StackPanel Margin="16" Width="300">
         <TextBox md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_NameTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
             <TextBox.Text>
@@ -68,6 +68,7 @@
         <TextBox x:Name="FooterText" md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_FooterTextTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
         <TextBox x:Name="FooterIcon" md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_FooterIconTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
         <TextBox x:Name="WinImage" md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_WinImageTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
+        <TextBox x:Name="AuthorIcon" md:HintAssist.Hint="{x:Static p:Resources.EditWebhookDialogView_AuthorIconTextBoxHint}" ToolTip="{x:Static p:Resources.EditWebhookDialogView_AuthorIconTextBoxTooltip}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5 0 0" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
             <Button Content="{x:Static p:Resources.EditWebhookDialogView_CancelButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}">
                 <Button.CommandParameter>

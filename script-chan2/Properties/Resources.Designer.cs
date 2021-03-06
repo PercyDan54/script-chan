@@ -1060,6 +1060,24 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author icon.
+        /// </summary>
+        public static string EditWebhookDialogView_AuthorIconTextBoxHint {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_AuthorIconTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave empty for default.
+        /// </summary>
+        public static string EditWebhookDialogView_AuthorIconTextBoxTooltip {
+            get {
+                return ResourceManager.GetString("EditWebhookDialogView_AuthorIconTextBoxTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avatar.
         /// </summary>
         public static string EditWebhookDialogView_AvatarTextBoxHint {

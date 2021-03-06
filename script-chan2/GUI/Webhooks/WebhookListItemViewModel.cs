@@ -73,6 +73,7 @@ namespace script_chan2.GUI
                 webhook.WinImage = model.WinImage;
                 webhook.Username = model.Username;
                 webhook.Avatar = model.Avatar;
+                webhook.AuthorIcon = model.AuthorIcon;
                 await DiscordApi.SetWebhookChannel(webhook);
                 webhook.Save();
                 NotifyOfPropertyChange(() => Name);

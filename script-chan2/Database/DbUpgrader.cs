@@ -88,6 +88,11 @@ namespace script_chan2.Database
                 UpgradeV11();
                 dbVersion = 12;
             }
+            if (dbVersion == 12)
+            {
+                UpgradeV12();
+                dbVersion = 13;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -319,6 +324,23 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 12 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV12()
+        {
+            localLog.Information("upgrade database to v13");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE Webhooks ADD COLUMN authorIcon TEXT", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 13 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

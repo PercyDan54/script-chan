@@ -24,6 +24,7 @@ namespace script_chan2.GUI
                 WinImage = webhook.WinImage;
                 Username = webhook.Username;
                 Avatar = webhook.Avatar;
+                AuthorIcon = webhook.AuthorIcon;
             }
             else
             {
@@ -38,6 +39,7 @@ namespace script_chan2.GUI
                 WinImage = "https://78.media.tumblr.com/b94193615145d12bfb64aa77b677269e/tumblr_njzqukOpBP1ti1gm1o1_500.gif";
                 Username = "Script-chan";
                 Avatar = "https://cdn.discordapp.com/attachments/130304896581763072/400723356283961354/d366ce5fdd90f4e4471da04db380c378.png";
+                AuthorIcon = "";
             }
         }
         #endregion
@@ -197,6 +199,20 @@ namespace script_chan2.GUI
                 {
                     avatar = value;
                     NotifyOfPropertyChange(() => Avatar);
+                }
+            }
+        }
+
+        private string authorIcon;
+        public string AuthorIcon
+        {
+            get { return authorIcon; }
+            set
+            {
+                if (value != authorIcon)
+                {
+                    authorIcon = value;
+                    NotifyOfPropertyChange(() => AuthorIcon);
                 }
             }
         }

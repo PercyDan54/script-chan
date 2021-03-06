@@ -299,7 +299,7 @@ namespace script_chan2.Database
         {
             localLog.Information("init webhooks");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar, guild, channel FROM Webhooks", conn))
+            using (var command = new SQLiteCommand("SELECT id, name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar, guild, channel, authorIcon FROM Webhooks", conn))
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -318,6 +318,7 @@ namespace script_chan2.Database
                     var avatar = reader["avatar"].ToString();
                     var guild = reader["guild"].ToString();
                     var channel = reader["channel"].ToString();
+                    var authorIcon = reader["authorIcon"].ToString();
                     var webhook = new Webhook(id)
                     {
                         Name = name,
@@ -332,7 +333,8 @@ namespace script_chan2.Database
                         Username = username,
                         Avatar = avatar,
                         Guild = guild,
-                        Channel = channel
+                        Channel = channel,
+                        AuthorIcon = authorIcon
                     };
                     Webhooks.Add(webhook);
                 }
@@ -355,8 +357,8 @@ namespace script_chan2.Database
             int resultValue;
             using (var conn = GetConnection())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar, guild, channel)" +
-                    "VALUES (@name, @url, @matchCreated, @banRecap, @pickRecap, @gameRecap, @footerText, @footerIcon, @winImage, @username, @avatar, @guild, @channel)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Webhooks (name, url, matchCreated, banRecap, pickRecap, gameRecap, footerText, footerIcon, winImage, username, avatar, guild, channel, authorIcon)" +
+                    "VALUES (@name, @url, @matchCreated, @banRecap, @pickRecap, @gameRecap, @footerText, @footerIcon, @winImage, @username, @avatar, @guild, @channel, @authorIcon)", conn))
                 {
                     command.Parameters.AddWithValue("@name", webhook.Name);
                     command.Parameters.AddWithValue("@url", webhook.URL);
@@ -371,6 +373,7 @@ namespace script_chan2.Database
                     command.Parameters.AddWithValue("@avatar", webhook.Avatar);
                     command.Parameters.AddWithValue("@guild", webhook.Guild);
                     command.Parameters.AddWithValue("@channel", webhook.Channel);
+                    command.Parameters.AddWithValue("@authorIcon", webhook.AuthorIcon);
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
@@ -401,7 +404,7 @@ namespace script_chan2.Database
             localLog.Information("update webhook '{name}'", webhook.Name);
             using (var conn = GetConnection())
             using (var command = new SQLiteCommand(@"UPDATE Webhooks
-                SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap, footerText = @footerText, footerIcon = @footerIcon, winImage = @winImage, username = @username, avatar = @avatar, guild = @guild, channel = @channel
+                SET name = @name, url = @url, matchCreated = @matchCreated, banRecap = @banRecap, pickRecap = @pickRecap, gameRecap = @gameRecap, footerText = @footerText, footerIcon = @footerIcon, winImage = @winImage, username = @username, avatar = @avatar, guild = @guild, channel = @channel, authorIcon = @authorIcon
                 WHERE id = @id", conn))
             {
                 command.Parameters.AddWithValue("@name", webhook.Name);
@@ -418,6 +421,7 @@ namespace script_chan2.Database
                 command.Parameters.AddWithValue("@guild", webhook.Guild);
                 command.Parameters.AddWithValue("@channel", webhook.Channel);
                 command.Parameters.AddWithValue("@id", webhook.Id);
+                command.Parameters.AddWithValue("@authorIcon", webhook.AuthorIcon);
                 command.ExecuteNonQuery();
                 conn.Close();
             }

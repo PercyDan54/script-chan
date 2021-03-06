@@ -65,7 +65,8 @@ namespace script_chan2.GUI
                     FooterIcon = model.FooterIcon,
                     WinImage = model.WinImage,
                     Username = model.Username,
-                    Avatar = model.Avatar
+                    Avatar = model.Avatar,
+                    AuthorIcon = model.AuthorIcon
                 };
                 await DiscordApi.SetWebhookChannel(webhook);
                 webhook.Save();
