@@ -130,6 +130,10 @@
                         </ContentControl>
                     </WrapPanel>
                     <Grid x:Name="SlotsGrid" Grid.Row="2" Margin="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <ItemsControl ItemsSource="{Binding RoomSlotsViews}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -142,6 +146,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                        <TextBlock Text="{x:Static p:Resources.MatchView_WrongTeamWarningText}" Foreground="Red" Grid.Row="1" Visibility="{Binding WrongTeamWarningVisible}" Margin="0 5" FontSize="26" FontWeight="UltraBold" />
                     </Grid>
                     <Grid x:Name="Overview2" Grid.Row="3" Margin="2">
                         <ScrollViewer x:Name="BanchoEventsScrollViewer">

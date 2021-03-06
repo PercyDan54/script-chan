@@ -2514,6 +2514,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PLAYERS ARE IN THE WRONG TEAM!.
+        /// </summary>
+        public static string MatchView_WrongTeamWarningText {
+            get {
+                return ResourceManager.GetString("MatchView_WrongTeamWarningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next player to pick: {0}.
         /// </summary>
         public static string MatchViewModel_NextPlayerPickMessage {

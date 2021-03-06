@@ -404,6 +404,7 @@ namespace script_chan2.GUI
                                 slot.Mods = mods;
                             }
 
+                            NotifyOfPropertyChange(() => WrongTeamWarningVisible);
                         }
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("joined in slot"))
@@ -430,6 +431,8 @@ namespace script_chan2.GUI
                                     slot.Mods = new List<GameMods>();
                                     slot.State = RoomSlotStates.NotReady;
                                 }
+
+                                NotifyOfPropertyChange(() => WrongTeamWarningVisible);
                             }
                         }
                         else if (match.TeamMode == TeamModes.HeadToHead || match.TeamMode == TeamModes.BattleRoyale)
@@ -468,6 +471,8 @@ namespace script_chan2.GUI
                             {
                                 slot.Team = team;
                             }
+
+                            NotifyOfPropertyChange(() => WrongTeamWarningVisible);
                         }
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("moved to slot"))
@@ -490,6 +495,8 @@ namespace script_chan2.GUI
                                 oldSlot.Team = null;
                                 oldSlot.Mods = new List<GameMods>();
                             }
+
+                            NotifyOfPropertyChange(() => WrongTeamWarningVisible);
                         }
                     }
                     if (data.User == "BanchoBot" && data.Message.Contains("left the game."))
@@ -506,6 +513,8 @@ namespace script_chan2.GUI
                                 slot.Team = null;
                                 slot.Mods = new List<GameMods>();
                             }
+
+                            NotifyOfPropertyChange(() => WrongTeamWarningVisible);
                         }
                     }
                 }
@@ -629,6 +638,23 @@ namespace script_chan2.GUI
             {
                 if (match.RoomId > 0)
                     return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility WrongTeamWarningVisible
+        {
+            get
+            {
+                if (match.TeamMode != TeamModes.TeamVS)
+                    return Visibility.Collapsed;
+                foreach (var slot in RoomSlotsViews)
+                {
+                    if (slot.Player != null && match.TeamRed.Players.Contains(slot.Player) && slot.Team == TeamColors.Blue)
+                        return Visibility.Visible;
+                    if (slot.Player != null && match.TeamBlue.Players.Contains(slot.Player) && slot.Team == TeamColors.Red)
+                        return Visibility.Visible;
+                }
                 return Visibility.Collapsed;
             }
         }

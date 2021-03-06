@@ -1004,6 +1004,9 @@ CS: {3}</value>
   <data name="MatchView_WelcomeStringButtonText" xml:space="preserve">
     <value>Welcome string</value>
   </data>
+  <data name="MatchView_WrongTeamWarningText" xml:space="preserve">
+    <value>PLAYERS ARE IN THE WRONG TEAM!</value>
+  </data>
   <data name="NewChatDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
