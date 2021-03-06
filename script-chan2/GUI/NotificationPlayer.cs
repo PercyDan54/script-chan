@@ -21,6 +21,7 @@ namespace script_chan2.GUI
                 mediaPlayer.Open(new Uri(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "Resources/notification.mp3")));
             else
                 mediaPlayer.Open(new Uri(Settings.NotificationSoundFile));
+            mediaPlayer.Volume = Settings.NotificationVolume;
         }
 
         public static void PlayNotification()

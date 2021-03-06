@@ -25,6 +25,7 @@ namespace script_chan2.DataTypes
             public List<ConfigColor> colors { get; set; }
             public string notificationSoundFile { get; set; }
             public bool enableNotifications { get; set; }
+            public double notificationVolume { get; set; }
             public List<ConfigSize> matchSizes { get; set; }
         }
 
@@ -52,6 +53,7 @@ namespace script_chan2.DataTypes
                 colors = new List<ConfigColor>(),
                 notificationSoundFile = NotificationSoundFile,
                 enableNotifications = EnableNotifications,
+                notificationVolume = NotificationVolume,
                 matchSizes = new List<ConfigSize>
                 {
                     new ConfigSize { key = "height", size = WindowHeight },
@@ -96,6 +98,7 @@ namespace script_chan2.DataTypes
                     },
                     notificationSoundFile = "",
                     enableNotifications = true,
+                    notificationVolume = 0.5,
                     matchSizes = new List<ConfigSize>
                     {
                         new ConfigSize { key = "height", size = 700 },
@@ -124,6 +127,9 @@ namespace script_chan2.DataTypes
                 config.notificationSoundFile = "";
             notificationSoundFile = config.notificationSoundFile;
             enableNotifications = config.enableNotifications;
+            if (config.notificationVolume == 0)
+                config.notificationVolume = 0.5;
+            notificationVolume = config.notificationVolume;
             ircTimeout = Convert.ToInt32(settings["ircTimeout"]);
             enablePrivateIrc = Convert.ToBoolean(settings["enablePrivateIrc"]);
             defaultBO = Convert.ToInt32(settings["defaultBO"]);
@@ -393,6 +399,21 @@ namespace script_chan2.DataTypes
                 {
                     enableNotifications = value;
                     SaveConfig();
+                }
+            }
+        }
+
+        private static double notificationVolume;
+        public static double NotificationVolume
+        {
+            get { return notificationVolume; }
+            set
+            {
+                if (value != notificationVolume)
+                {
+                    notificationVolume = value;
+                    SaveConfig();
+                    NotificationPlayer.Refresh();
                 }
             }
         }

@@ -53,8 +53,14 @@
         <TextBox x:Name="DefaultTimerAfterGame" Grid.Row="4" Grid.Column="1" md:HintAssist.Hint="{x:Static p:Resources.SettingsView_TimerAfterGameDurationTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <TextBox x:Name="DefaultTimerAfterPick" Grid.Row="4" Grid.Column="2" md:HintAssist.Hint="{x:Static p:Resources.SettingsView_TimerAfterPickDurationTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
         <CheckBox x:Name="EnableNotifications" Content="{x:Static p:Resources.SettingsView_EnableNotificationsCheckBoxText}" Grid.Row="5" Grid.Column="0" Margin="5" ToolTip="{x:Static p:Resources.SettingsView_EnableNotificationsCheckBoxTooltip}" />
-        <TextBox x:Name="NotificationSoundFile" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" md:HintAssist.Hint="{x:Static p:Resources.SettingsView_NotificationSoundFileTextBoxHint}" ToolTip="{x:Static p:Resources.SettingsView_NotificationSoundFileTextBoxTooltip}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
-        <Button x:Name="SelectNotificationSoundFile" Content="{x:Static p:Resources.SettingsView_SelectNotificationSoundFileButtonText}" Grid.Row="5" Grid.Column="3" Margin="5" MinWidth="50" HorizontalAlignment="Left" />
+        <DockPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">
+            <Button x:Name="SelectNotificationSoundFile" Content="{x:Static p:Resources.SettingsView_SelectNotificationSoundFileButtonText}" Margin="5" MinWidth="50" DockPanel.Dock="Right" />
+            <TextBox x:Name="NotificationSoundFile" Grid.ColumnSpan="2" md:HintAssist.Hint="{x:Static p:Resources.SettingsView_NotificationSoundFileTextBoxHint}" ToolTip="{x:Static p:Resources.SettingsView_NotificationSoundFileTextBoxTooltip}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5" />
+        </DockPanel>
+        <DockPanel Grid.Row="5" Grid.Column="3">
+            <md:PackIcon Kind="VolumeHigh" Foreground="{StaticResource Foreground}" Height="30" Width="30" VerticalAlignment="Center" Margin="5 0" />
+            <Slider x:Name="NotificationVolume" Minimum="1" Maximum="100" TickFrequency="1" VerticalAlignment="Center" />
+        </DockPanel>
         <StackPanel Grid.Row="7" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Dirty, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <Button x:Name="Discard" Content="{x:Static p:Resources.SettingsView_DiscardButtonText}" MinWidth="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignFlatButton}" />
             <Button x:Name="Save" Content="{x:Static p:Resources.SettingsView_SaveButtonText}" MinWidth="120" Height="50" Margin="5 0" FontSize="20" Style="{StaticResource MaterialDesignRaisedButton}" />

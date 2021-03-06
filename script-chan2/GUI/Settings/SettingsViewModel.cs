@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using script_chan2.DataTypes;
 using Serilog;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
@@ -80,7 +81,7 @@ namespace script_chan2.GUI
         public void OpenApiKeyPage()
         {
             localLog.Information("open api key page");
-            System.Diagnostics.Process.Start("https://osu.ppy.sh/p/api");
+            Process.Start("https://osu.ppy.sh/p/api");
         }
 
         public Visibility ApiWorks
@@ -375,6 +376,21 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        private double notificationVolume;
+        public double NotificationVolume
+        {
+            get { return notificationVolume; }
+            set
+            {
+                if (value != notificationVolume)
+                {
+                    notificationVolume = value;
+                    NotifyOfPropertyChange(() => NotificationVolume);
+                    Dirty = true;
+                }
+            }
+        }
         #endregion
 
         #region Constructor
@@ -409,6 +425,7 @@ namespace script_chan2.GUI
             Settings.DefaultTimerAfterPick = defaultTimerAfterPick;
             Settings.NotificationSoundFile = notificationSoundFile;
             Settings.EnableNotifications = enableNotifications;
+            Settings.NotificationVolume = Math.Round(notificationVolume / 100, 2);
             Dirty = false;
         }
 
@@ -426,6 +443,7 @@ namespace script_chan2.GUI
             DefaultTimerAfterPick = Settings.DefaultTimerAfterPick;
             NotificationSoundFile = Settings.NotificationSoundFile;
             EnableNotifications = Settings.EnableNotifications;
+            NotificationVolume = Settings.NotificationVolume * 100;
             Dirty = false;
         }
 
