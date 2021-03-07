@@ -19,8 +19,8 @@
             </ContextMenu>
         </Border.ContextMenu>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <TextBlock x:Name="ModTag" Width="40" TextDecorations="{Binding TextDecoration}" Foreground="{Binding FontColor}" />
-            <TextBlock x:Name="BeatmapName" TextDecorations="{Binding TextDecoration}" Foreground="{Binding FontColor}" />
+            <TextBlock x:Name="ModTag" TextDecorations="{Binding TextDecoration}" Foreground="{Binding FontColor}" FontStyle="Italic" />
+            <TextBlock x:Name="BeatmapName" TextDecorations="{Binding TextDecoration}" Foreground="{Binding FontColor}" Margin="15 0" />
         </StackPanel>
     </Border>
 </UserControl>

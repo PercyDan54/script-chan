@@ -18,8 +18,10 @@
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="ModTag" Grid.Column="1" VerticalAlignment="Center" Margin="5" />
-            <TextBlock x:Name="BeatmapName" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" />
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="2">
+                <TextBox x:Name="ModTag" VerticalAlignment="Center" Margin="5" MinWidth="40" />
+                <TextBlock x:Name="BeatmapName" VerticalAlignment="Center" />
+            </StackPanel>
             <Button x:Name="Delete" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MappoolBeatmapListItemView_DeleteButtonTooltip}" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1">
                 <md:PackIcon Kind="Delete" />
             </Button>
