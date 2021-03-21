@@ -585,11 +585,11 @@ namespace script_chan2.GUI
                 {
                     if (Player != null)
                     {
-                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemBannedByText, Player.Name);
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemBannedByText, Player.Name.Replace("_", "__"));
                     }
                     else if (Team != null)
                     {
-                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemBannedByText, Team.Name);
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemBannedByText, Team.Name.Replace("_", "__"));
                     }
                     else
                     {
@@ -600,11 +600,11 @@ namespace script_chan2.GUI
                 {
                     if (Player != null)
                     {
-                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemPickedByText, Player.Name);
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemPickedByText, Player.Name.Replace("_", "__"));
                     }
                     else if (Team != null)
                     {
-                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemPickedByText, Team.Name);
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemPickedByText, Team.Name.Replace("_", "__"));
                     }
                     else
                     {
