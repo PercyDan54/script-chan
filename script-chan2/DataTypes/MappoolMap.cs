@@ -34,13 +34,6 @@ namespace script_chan2.DataTypes
             if (Mods.Contains(mod))
                 return;
 
-            if (mod == GameMods.TieBreaker)
-                Mods.Clear();
-            else if (mod == GameMods.DoubleTime)
-                Mods.RemoveAll(x => x == GameMods.TieBreaker);
-            else
-                Mods.RemoveAll(x => x == GameMods.DoubleTime || x == GameMods.TieBreaker);
-
             Mods.Add(mod);
         }
 
