@@ -329,6 +329,7 @@ namespace script_chan2.GUI
                         MpTimerAfterPick = Tournament.MpTimerAfterPick,
                         PointsForSecondBan = Tournament.PointsForSecondBan,
                         AllPicksFreemod = Tournament.AllPicksFreemod,
+                        AllPicksNofail = Tournament.AllPicksNofail,
                         WarmupMode = true,
                         MatchTime = importMatch.MatchTime
                     };

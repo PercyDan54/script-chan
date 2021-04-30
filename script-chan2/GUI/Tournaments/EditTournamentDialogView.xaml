@@ -77,7 +77,10 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <CheckBox Content="{x:Static p:Resources.EditTournamentDialogView_AllPicksFreemodCheckBoxText}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5 10 0 0" IsChecked="{Binding AllPicksFreemod}" />
+        <StackPanel Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
+            <CheckBox Content="{x:Static p:Resources.EditTournamentDialogView_AllPicksFreemodCheckBoxText}" IsChecked="{Binding AllPicksFreemod}" Margin="0 10 0 0" />
+            <CheckBox Content="{x:Static p:Resources.EditTournamentDialogView_AllPicksNofailCheckBoxText}" IsChecked="{Binding AllPicksNofail}" Margin="0 10 0 0" />
+        </StackPanel>
         <TextBox x:Name="MpTimerCommand" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_CommandTimerTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="0" Margin="0 10 5 0" />
         <TextBox x:Name="MpTimerAfterGame" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_TimerAfterGameTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="1" Margin="5 10 5 0" />
         <TextBox x:Name="MpTimerAfterPick" md:HintAssist.Hint="{x:Static p:Resources.EditTournamentDialogView_TimerAfterPickTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="4" Grid.Column="2" Margin="5 10 5 0" />

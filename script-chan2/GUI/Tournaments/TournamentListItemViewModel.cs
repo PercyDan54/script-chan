@@ -71,6 +71,7 @@ namespace script_chan2.GUI
                 tournament.RoomSize = model.RoomSize;
                 tournament.PointsForSecondBan = model.PointsForSecondBan;
                 tournament.AllPicksFreemod = model.AllPicksFreemod;
+                tournament.AllPicksNofail = model.AllPicksNofail;
                 tournament.MpTimerCommand = model.MpTimerCommand;
                 tournament.MpTimerAfterGame = model.MpTimerAfterGame;
                 tournament.MpTimerAfterPick = model.MpTimerAfterPick;

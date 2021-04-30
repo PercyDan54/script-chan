@@ -838,6 +838,20 @@ namespace script_chan2.GUI
             }
         }
 
+        public bool AllPicksNofail
+        {
+            get { return match.AllPicksNofail; }
+            set
+            {
+                if (value != match.AllPicksNofail)
+                {
+                    match.AllPicksNofail = value;
+                    match.Save();
+                    NotifyOfPropertyChange(() => AllPicksNofail);
+                }
+            }
+        }
+
         public bool ViewerMode
         {
             get { return match.ViewerMode; }

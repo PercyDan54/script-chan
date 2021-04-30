@@ -146,6 +146,7 @@ namespace script_chan2.GUI
                     MpTimerAfterPick = model.Tournament.MpTimerAfterPick,
                     PointsForSecondBan = model.Tournament.PointsForSecondBan,
                     AllPicksFreemod = model.Tournament.AllPicksFreemod,
+                    AllPicksNofail = model.Tournament.AllPicksNofail,
                     WarmupMode = true,
                     MatchTime = model.MatchTime
                 };

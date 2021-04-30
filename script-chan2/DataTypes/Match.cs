@@ -77,6 +77,8 @@ namespace script_chan2.DataTypes
 
         public bool AllPicksFreemod { get; set; }
 
+        public bool AllPicksNofail { get; set; }
+
         public MatchStatus Status { get; set; }
 
         public bool WarmupMode { get; set; }

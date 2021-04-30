@@ -417,6 +417,9 @@
   <data name="EditTournamentDialogView_AllPicksFreemodCheckBoxText" xml:space="preserve">
     <value>選圖皆為 Freemod</value>
   </data>
+  <data name="EditTournamentDialogView_AllPicksNofailCheckBoxText" xml:space="preserve">
+    <value>All picks as Nofail</value>
+  </data>
   <data name="EditTournamentDialogView_BRInitialLivesTextBoxHint" xml:space="preserve">
     <value>BR Initial Lives</value>
   </data>
@@ -893,6 +896,9 @@ CS: {3}</value>
   </data>
   <data name="MatchView_AllPicksFreemodCheckBoxText" xml:space="preserve">
     <value>選圖皆為 Freemod</value>
+  </data>
+  <data name="MatchView_AllPicksNofailCheckBoxText" xml:space="preserve">
+    <value>All picks as Nofail</value>
   </data>
   <data name="MatchView_BanRecapButtonText" xml:space="preserve">
     <value>BAN 回顧</value>

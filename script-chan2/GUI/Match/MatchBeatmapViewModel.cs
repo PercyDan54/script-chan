@@ -526,6 +526,8 @@ namespace script_chan2.GUI
             var mods = Utils.ConvertGameModsToString(beatmap.Mods);
             if (match.AllPicksFreemod && !mods.Contains("Freemod"))
                 mods += " Freemod";
+            if (match.AllPicksNofail && !mods.Contains("NF"))
+                mods += " NF";
             if (beatmap.PickCommand)
             {
                 OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp mods " + mods);

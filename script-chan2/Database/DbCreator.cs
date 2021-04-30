@@ -62,7 +62,7 @@ namespace script_chan2.Database
                 ('defaultTimerCommand', '120'),
                 ('defaultTimerAfterGame', '120'),
                 ('defaultTimerAfterPick', '120'),
-                ('dbVersion', '13')", conn))
+                ('dbVersion', '14')", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -82,6 +82,7 @@ namespace script_chan2.Database
                 roomSize INTEGER,
                 pointsForSecondBan INTEGER,
                 allPicksFreemod BOOL,
+                allPicksNofail BOOL,
                 mpTimerCommand INTEGER,
                 mpTimerAfterGame INTEGER,
                 mpTimerAfterPick INTEGER,
@@ -246,6 +247,7 @@ namespace script_chan2.Database
                 mpTimerAfterPick INTEGER,
                 pointsForSecondBan INTEGER,
                 allPicksFreemod BOOL,
+                allPicksNofail BOOL,
                 status TEXT,
                 warmupMode BOOL,
                 matchTime TEXT,

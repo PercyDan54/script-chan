@@ -290,6 +290,7 @@
                                 <TextBox x:Name="TimerAfterPick" md:HintAssist.Hint="{x:Static p:Resources.MatchView_TimerAfterPickTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
                                 <TextBox x:Name="PointsForSecondBan" md:HintAssist.Hint="{x:Static p:Resources.MatchView_SecondBanTextBoxHint}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 10 0 0" />
                                 <CheckBox x:Name="AllPicksFreemod" Content="{x:Static p:Resources.MatchView_AllPicksFreemodCheckBoxText}" Margin="0 10 0 0" />
+                                <CheckBox x:Name="AllPicksNofail" Content="{x:Static p:Resources.MatchView_AllPicksNofailCheckBoxText}" Margin="0 10 0 0" />
                                 <CheckBox x:Name="ViewerMode" Content="{x:Static p:Resources.MatchView_ViewerModeCheckBoxText}" ToolTip="{x:Static p:Resources.MatchView_ViewerModeCheckBoxTooltip}" Margin="0 10 0 0" />
                                 <CheckBox x:Name="DisableIrcMatchStatus" Content="{x:Static p:Resources.MatchView_DisableChatMatchStatusCheckBoxText}" ToolTip="{x:Static p:Resources.MatchView_DisableChatMatchStatusCheckBoxTooltip}" Margin="0 10 0 0" />
                             </StackPanel>

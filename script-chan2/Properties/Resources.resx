@@ -412,7 +412,10 @@
     <value>Add</value>
   </data>
   <data name="EditTournamentDialogView_AllPicksFreemodCheckBoxText" xml:space="preserve">
-    <value>All picks as freemod</value>
+    <value>All picks as Freemod</value>
+  </data>
+  <data name="EditTournamentDialogView_AllPicksNofailCheckBoxText" xml:space="preserve">
+    <value>All picks as Nofail</value>
   </data>
   <data name="EditTournamentDialogView_BRInitialLivesTextBoxHint" xml:space="preserve">
     <value>BR Initial Lives</value>
@@ -894,7 +897,10 @@ CS: {3}</value>
     <value>Abort map</value>
   </data>
   <data name="MatchView_AllPicksFreemodCheckBoxText" xml:space="preserve">
-    <value>All picks as freemod</value>
+    <value>All picks as Freemod</value>
+  </data>
+  <data name="MatchView_AllPicksNofailCheckBoxText" xml:space="preserve">
+    <value>All picks as Nofail</value>
   </data>
   <data name="MatchView_BanRecapButtonText" xml:space="preserve">
     <value>Ban recap</value>

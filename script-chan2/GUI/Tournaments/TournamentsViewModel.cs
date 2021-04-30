@@ -63,6 +63,7 @@ namespace script_chan2.GUI
                     RoomSize = model.RoomSize,
                     PointsForSecondBan = model.PointsForSecondBan,
                     AllPicksFreemod = model.AllPicksFreemod,
+                    AllPicksNofail = model.AllPicksNofail,
                     MpTimerCommand = model.MpTimerCommand,
                     MpTimerAfterGame = model.MpTimerAfterGame,
                     MpTimerAfterPick = model.MpTimerAfterPick,

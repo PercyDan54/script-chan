@@ -28,6 +28,7 @@ namespace script_chan2.GUI
                 TeamMode = tournament.TeamMode;
                 PointsForSecondBan = tournament.PointsForSecondBan;
                 AllPicksFreemod = tournament.AllPicksFreemod;
+                AllPicksNofail = tournament.AllPicksNofail;
                 MpTimerCommand = tournament.MpTimerCommand;
                 MpTimerAfterGame = tournament.MpTimerAfterGame;
                 MpTimerAfterPick = tournament.MpTimerAfterPick;
@@ -51,6 +52,7 @@ namespace script_chan2.GUI
                 TeamMode = TeamModes.TeamVS;
                 PointsForSecondBan = 0;
                 AllPicksFreemod = false;
+                AllPicksNofail = false;
                 MpTimerCommand = Settings.DefaultTimerCommand;
                 MpTimerAfterGame = Settings.DefaultTimerAfterGame;
                 MpTimerAfterPick = Settings.DefaultTimerAfterPick;
@@ -227,6 +229,20 @@ namespace script_chan2.GUI
                 {
                     allPicksFreemod = value;
                     NotifyOfPropertyChange(() => AllPicksFreemod);
+                }
+            }
+        }
+
+        private bool allPicksNofail;
+        public bool AllPicksNofail
+        {
+            get { return allPicksNofail; }
+            set
+            {
+                if (value != allPicksNofail)
+                {
+                    allPicksNofail = value;
+                    NotifyOfPropertyChange(() => AllPicksNofail);
                 }
             }
         }

@@ -93,6 +93,11 @@ namespace script_chan2.Database
                 UpgradeV12();
                 dbVersion = 13;
             }
+            if (dbVersion == 13)
+            {
+                UpgradeV13();
+                dbVersion = 14;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -341,6 +346,35 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 13 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV13()
+        {
+            localLog.Information("upgrade database to v14");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE Tournaments ADD COLUMN allPicksNofail BOOL", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE Tournaments SET allPicksNofail = false", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"ALTER TABLE Matches ADD COLUMN allPicksNofail BOOL", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE Matches SET allPicksNofail = false", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 14 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

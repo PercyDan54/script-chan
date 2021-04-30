@@ -889,11 +889,20 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All picks as freemod.
+        ///   Looks up a localized string similar to All picks as Freemod.
         /// </summary>
         public static string EditTournamentDialogView_AllPicksFreemodCheckBoxText {
             get {
                 return ResourceManager.GetString("EditTournamentDialogView_AllPicksFreemodCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All picks as Nofail.
+        /// </summary>
+        public static string EditTournamentDialogView_AllPicksNofailCheckBoxText {
+            get {
+                return ResourceManager.GetString("EditTournamentDialogView_AllPicksNofailCheckBoxText", resourceCulture);
             }
         }
         
@@ -2172,11 +2181,20 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All picks as freemod.
+        ///   Looks up a localized string similar to All picks as Freemod.
         /// </summary>
         public static string MatchView_AllPicksFreemodCheckBoxText {
             get {
                 return ResourceManager.GetString("MatchView_AllPicksFreemodCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All picks as Nofail.
+        /// </summary>
+        public static string MatchView_AllPicksNofailCheckBoxText {
+            get {
+                return ResourceManager.GetString("MatchView_AllPicksNofailCheckBoxText", resourceCulture);
             }
         }
         

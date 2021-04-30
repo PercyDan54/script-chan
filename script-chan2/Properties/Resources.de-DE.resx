@@ -414,6 +414,9 @@
   <data name="EditTournamentDialogView_AllPicksFreemodCheckBoxText" xml:space="preserve">
     <value>Alle Picks Freemod</value>
   </data>
+  <data name="EditTournamentDialogView_AllPicksNofailCheckBoxText" xml:space="preserve">
+    <value>Alles Nofail</value>
+  </data>
   <data name="EditTournamentDialogView_BRInitialLivesTextBoxHint" xml:space="preserve">
     <value>BR initiale Leben</value>
   </data>
@@ -896,6 +899,9 @@ CS: {3}</value>
   </data>
   <data name="MatchView_AllPicksFreemodCheckBoxText" xml:space="preserve">
     <value>Alles Freemod</value>
+  </data>
+  <data name="MatchView_AllPicksNofailCheckBoxText" xml:space="preserve">
+    <value>Alles Nofail</value>
   </data>
   <data name="MatchView_BanRecapButtonText" xml:space="preserve">
     <value>Ban Zusammenfassung</value>

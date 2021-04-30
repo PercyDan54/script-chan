@@ -104,6 +104,7 @@ namespace script_chan2.GUI
                     RoomSize = tournamentData.RoomSize,
                     PointsForSecondBan = tournamentData.PointsForSecondBan,
                     AllPicksFreemod = tournamentData.AllPicksFreemod,
+                    AllPicksNofail = tournamentData.AllPicksNofail,
                     MpTimerCommand = tournamentData.MpTimerCommand,
                     MpTimerAfterGame = tournamentData.MpTimerAfterGame,
                     MpTimerAfterPick = tournamentData.MpTimerAfterPick,
@@ -241,6 +242,7 @@ namespace script_chan2.GUI
                         MpTimerAfterPick = matchData.MpTimerAfterPick,
                         PointsForSecondBan = matchData.PointsForSecondBan,
                         AllPicksFreemod = matchData.AllPicksFreemod,
+                        AllPicksNofail = matchData.AllPicksNofail,
                         WarmupMode = matchData.WarmupMode,
                         MatchTime = matchData.MatchTime,
                         Players = new List<object>()
@@ -318,6 +320,7 @@ namespace script_chan2.GUI
                 tournament.RoomSize = Convert.ToInt32(tournamentItem.RoomSize.Value);
                 tournament.PointsForSecondBan = Convert.ToInt32(tournamentItem.PointsForSecondBan.Value);
                 tournament.AllPicksFreemod = tournamentItem.AllPicksFreemod.Value;
+                tournament.AllPicksNofail = tournamentItem.AllPicksNofail.Value;
                 tournament.MpTimerCommand = Convert.ToInt32(tournamentItem.MpTimerCommand.Value);
                 tournament.MpTimerAfterGame = Convert.ToInt32(tournamentItem.MpTimerAfterGame.Value);
                 tournament.MpTimerAfterPick = Convert.ToInt32(tournamentItem.MpTimerAfterPick.Value);
@@ -480,6 +483,7 @@ namespace script_chan2.GUI
                     match.MpTimerAfterPick = Convert.ToInt32(matchItem.MpTimerAfterPick.Value);
                     match.PointsForSecondBan = Convert.ToInt32(matchItem.PointsForSecondBan.Value);
                     match.AllPicksFreemod = matchItem.AllPicksFreemod.Value;
+                    match.AllPicksNofail = matchItem.AllPicksNofail.Value;
                     match.WarmupMode = matchItem.WarmupMode.Value;
                     match.MatchTime = Convert.ToDateTime(matchItem.MatchTime);
 

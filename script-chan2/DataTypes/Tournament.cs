@@ -35,6 +35,8 @@ namespace script_chan2.DataTypes
 
         public bool AllPicksFreemod { get; set; }
 
+        public bool AllPicksNofail { get; set; }
+
         public int MpTimerCommand { get; set; }
 
         public int MpTimerAfterGame { get; set; }
