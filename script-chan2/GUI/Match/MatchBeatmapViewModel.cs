@@ -37,6 +37,10 @@ namespace script_chan2.GUI
         private Match match;
 
         private MappoolMap beatmap;
+        public MappoolMap Beatmap
+        {
+            get { return beatmap; }
+        }
 
         private bool sendIrcCommands;
 
@@ -483,6 +487,10 @@ namespace script_chan2.GUI
                             pick.Team = match.TeamRed;
                         else
                             pick.Team = match.TeamBlue;
+                    }
+                    else
+                    {
+                        pick.Team = match.TeamRed;
                     }
                 }
             }

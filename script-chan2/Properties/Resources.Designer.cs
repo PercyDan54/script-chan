@@ -2334,6 +2334,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick random map.
+        /// </summary>
+        public static string MatchView_PickRandomMapButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_PickRandomMapButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pick recap.
         /// </summary>
         public static string MatchView_PickRecapButtonText {

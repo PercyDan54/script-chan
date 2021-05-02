@@ -192,6 +192,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <ComboBox md:HintAssist.Hint="{x:Static p:Resources.MatchView_MappoolComboBoxHint}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" md:TextFieldAssist.HasClearButton="True" ItemsSource="{Binding Mappools}" SelectedItem="{Binding SelectedMappool}" VerticalAlignment="Center" Width="150">
                         <ComboBox.ItemTemplate>
@@ -203,7 +204,8 @@
                     <CheckBox x:Name="WarmupMode" Content="{x:Static p:Resources.MatchView_WarmupModeCheckBoxText}" Grid.Column="1" Margin="10 0 0 0" />
                     <Button x:Name="OpenPickOverview" Content="{x:Static p:Resources.MatchView_PicksBansButtonText}" Grid.Column="2" Margin="10 0 0 0" />
                     <Button x:Name="PickNextMap" Content="{x:Static p:Resources.MatchView_PickNextMapButtonText}" Grid.Column="3" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}" />
-                    <ScrollViewer Grid.Row="1" Grid.ColumnSpan="4">
+                    <Button x:Name="PickRandomMap" Content="{x:Static p:Resources.MatchView_PickRandomMapButtonText}" Grid.Column="4" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}" />
+                    <ScrollViewer Grid.Row="1" Grid.ColumnSpan="5">
                         <ItemsControl ItemsSource="{Binding BeatmapsViews}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

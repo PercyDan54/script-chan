@@ -948,6 +948,9 @@ CS: {3}</value>
   <data name="MatchView_PickNextMapButtonText" xml:space="preserve">
     <value>Nächste Beatmap</value>
   </data>
+  <data name="MatchView_PickRandomMapButtonText" xml:space="preserve">
+    <value>Zufällige Beatmap</value>
+  </data>
   <data name="MatchView_PickRecapButtonText" xml:space="preserve">
     <value>Pick Zusammenfassung</value>
   </data>

@@ -947,6 +947,9 @@ CS: {3}</value>
   <data name="MatchView_PickNextMapButtonText" xml:space="preserve">
     <value>Pick next map</value>
   </data>
+  <data name="MatchView_PickRandomMapButtonText" xml:space="preserve">
+    <value>Pick random map</value>
+  </data>
   <data name="MatchView_PickRecapButtonText" xml:space="preserve">
     <value>Pick recap</value>
   </data>

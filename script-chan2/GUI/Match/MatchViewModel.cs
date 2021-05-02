@@ -1503,6 +1503,18 @@ namespace script_chan2.GUI
                 }
             }
         }
+
+        public void PickRandomMap()
+        {
+            var pickableMaps = BeatmapsViews.Where(x => x.CanBanOrPick && !x.Beatmap.Mods.Contains(GameMods.TieBreaker));
+            if (pickableMaps.Count() < 1)
+                return;
+            var random = new Random();
+            int randomMapIndex = random.Next(0, pickableMaps.Count() - 1);
+            var randomMap = pickableMaps.ElementAt(randomMapIndex);
+            randomMap.Pick();
+            NotifyOfPropertyChange(() => BeatmapsViews);
+        }
         #endregion
     }
 }
