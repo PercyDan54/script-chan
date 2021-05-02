@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="script_chan2.GUI.MatchTeamDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:p="clr-namespace:script_chan2.Properties"
+             cal:Message.Attach="[Key Escape] = [Action DialogEscape]"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="325">
+    <Grid Margin="16" Width="300">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="TeamName" Grid.Row="0" FontSize="20" FontWeight="Bold" Margin="5" Foreground="{StaticResource Foreground}" />
+        <ItemsControl ItemsSource="{Binding PlayersViews}" Grid.Row="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl cal:View.Model="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Grid.Row="2" HorizontalAlignment="Right" Content="{x:Static p:Resources.MatchTeamDialogView_CloseButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
+    </Grid>
+</UserControl>

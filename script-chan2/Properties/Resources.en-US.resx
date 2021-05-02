@@ -848,6 +848,12 @@ CS: {3}</value>
   <data name="MatchRoomSlotViewModel_ContextItemSetHostText" xml:space="preserve">
     <value>Set host</value>
   </data>
+  <data name="MatchTeamDialogPlayerView_SwitchPlayerButtonText" xml:space="preserve">
+    <value>Switch player</value>
+  </data>
+  <data name="MatchTeamDialogView_CloseButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="MatchTeamView_DecreaseButtonTooltip" xml:space="preserve">
     <value>Decrease</value>
   </data>

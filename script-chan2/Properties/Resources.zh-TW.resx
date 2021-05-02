@@ -849,6 +849,12 @@ CS: {3}</value>
   <data name="MatchRoomSlotViewModel_ContextItemSetHostText" xml:space="preserve">
     <value>設為房主</value>
   </data>
+  <data name="MatchTeamDialogPlayerView_SwitchPlayerButtonText" xml:space="preserve">
+    <value>對調玩家</value>
+  </data>
+  <data name="MatchTeamDialogView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
   <data name="MatchTeamView_DecreaseButtonTooltip" xml:space="preserve">
     <value>減少</value>
   </data>

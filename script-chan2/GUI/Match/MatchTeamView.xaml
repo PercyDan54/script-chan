@@ -5,6 +5,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:p="clr-namespace:script_chan2.Properties"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400">
     <Grid>
@@ -14,7 +15,7 @@
             <ColumnDefinition Width="50" />
             <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="Teamname" VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Left" Foreground="{Binding FontColor}" />
+        <TextBlock x:Name="Teamname" VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Left" Foreground="{Binding FontColor}" Cursor="Hand" cal:Message.Attach="[Event MouseUp] = [Action OpenTeamWindow($dataContext)]" />
         <TextBlock x:Name="Points" VerticalAlignment="Center" FontSize="20" Grid.Column="1" HorizontalAlignment="Center" />
         <Button x:Name="DecreasePoints" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchTeamView_DecreaseButtonTooltip}" Grid.Column="2">
             <md:PackIcon Kind="Minus" />

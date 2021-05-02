@@ -23,6 +23,16 @@ namespace script_chan2.GUI
 
         private TeamColors teamColor;
 
+        public Team Team
+        {
+            get
+            {
+                if (teamColor == TeamColors.Blue)
+                    return match.TeamBlue;
+                return match.TeamRed;
+            }
+        }
+
         public string Teamname
         {
             get

@@ -2154,6 +2154,24 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Switch player.
+        /// </summary>
+        public static string MatchTeamDialogPlayerView_SwitchPlayerButtonText {
+            get {
+                return ResourceManager.GetString("MatchTeamDialogPlayerView_SwitchPlayerButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string MatchTeamDialogView_CloseButtonText {
+            get {
+                return ResourceManager.GetString("MatchTeamDialogView_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Decrease.
         /// </summary>
         public static string MatchTeamView_DecreaseButtonTooltip {

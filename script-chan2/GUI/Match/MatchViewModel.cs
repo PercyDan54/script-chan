@@ -1515,6 +1515,17 @@ namespace script_chan2.GUI
             randomMap.Pick();
             NotifyOfPropertyChange(() => BeatmapsViews);
         }
+
+        public async void OpenTeamWindow(MatchTeamViewModel teamViewModel)
+        {
+            var team = teamViewModel.Team;
+            localLog.Information("match '{match}' open team dialog of {team}", match.Name, team.Name);
+            var model = new MatchTeamDialogViewModel(match, team);
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            await DialogHost.Show(view, DialogIdentifier);
+        }
         #endregion
     }
 }
