@@ -191,34 +191,57 @@ namespace script_chan2.GUI
                 }
                 if (block is ListBlock)
                 {
-                    // Mod categories
+                    //// Mod categories
+                    //var listBlock = (ListBlock)block;
+                    //foreach (ListItemBlock modBlock in listBlock)
+                    //{
+                    //    var modTitle = ((ParagraphBlock)modBlock[0]).Inline.FirstChild.ToString();
+                    //    localLog.Information("mod header '{mod}' found", modTitle);
+
+                    //    foreach (ListItemBlock beatmapBlock in (ListBlock)modBlock[1])
+                    //    {
+                    //        var inline = ((ParagraphBlock)beatmapBlock[0]).Inline.FirstChild;
+                    //        var beatmapId = 0;
+
+                    //        if (inline is EmphasisInline)
+                    //        {
+                    //            var emphasisInline = ((EmphasisInline)inline);
+                    //            inline = emphasisInline.FirstChild;
+                    //        }
+                    //        if (inline is LinkInline)
+                    //        {
+                    //            var beatmapUrl = ((LinkInline)inline).Url;
+                    //            beatmapId = Convert.ToInt32(beatmapUrl.Split('/').Last());
+                    //        }
+
+                    //        if (beatmapId > 0)
+                    //        {
+                    //            localLog.Information("beatmap '{beatmap}' found", beatmapId);
+                    //            importMappool.Beatmaps.Add(new ImportBeatmap { Id = beatmapId, Mod = modTitle });
+                    //        }
+                    //    }
+                    //}
                     var listBlock = (ListBlock)block;
-                    foreach (ListItemBlock modBlock in listBlock)
+                    foreach (ListItemBlock beatmapBlock in listBlock)
                     {
-                        var modTitle = ((ParagraphBlock)modBlock[0]).Inline.FirstChild.ToString();
-                        localLog.Information("mod header '{mod}' found", modTitle);
+                        var inline = ((ParagraphBlock)beatmapBlock[0]).Inline.FirstChild;
+                        var beatmapId = 0;
 
-                        foreach (ListItemBlock beatmapBlock in (ListBlock)modBlock[1])
+                        if (inline is EmphasisInline)
                         {
-                            var inline = ((ParagraphBlock)beatmapBlock[0]).Inline.FirstChild;
-                            var beatmapId = 0;
+                            var emphasisInline = ((EmphasisInline)inline);
+                            inline = emphasisInline.FirstChild;
+                        }
+                        if (inline is LinkInline)
+                        {
+                            var beatmapUrl = ((LinkInline)inline).Url;
+                            beatmapId = Convert.ToInt32(beatmapUrl.Split('/').Last());
+                        }
 
-                            if (inline is EmphasisInline)
-                            {
-                                var emphasisInline = ((EmphasisInline)inline);
-                                inline = emphasisInline.FirstChild;
-                            }
-                            if (inline is LinkInline)
-                            {
-                                var beatmapUrl = ((LinkInline)inline).Url;
-                                beatmapId = Convert.ToInt32(beatmapUrl.Split('/').Last());
-                            }
-
-                            if (beatmapId > 0)
-                            {
-                                localLog.Information("beatmap '{beatmap}' found", beatmapId);
-                                importMappool.Beatmaps.Add(new ImportBeatmap { Id = beatmapId, Mod = modTitle });
-                            }
+                        if (beatmapId > 0)
+                        {
+                            localLog.Information("beatmap '{beatmap}' found", beatmapId);
+                            importMappool.Beatmaps.Add(new ImportBeatmap { Id = beatmapId, Mod = "freemod" });
                         }
                     }
                 }
