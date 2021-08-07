@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Media;
 
 namespace script_chan2.DataTypes
@@ -15,6 +16,8 @@ namespace script_chan2.DataTypes
         private static ILogger localLog = Log.ForContext(typeof(Settings));
 
         public static string CONFIG_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "script_chan");
+
+        private static FileSystemWatcher configFileWatcher;
 
         private class Config
         {
@@ -44,6 +47,7 @@ namespace script_chan2.DataTypes
         public static void SaveConfig()
         {
             localLog.Information("save config");
+            configFileWatcher.EnableRaisingEvents = false;
             var config = new Config
             {
                 apiKey = ApiKey,
@@ -68,6 +72,7 @@ namespace script_chan2.DataTypes
                 config.colors.Add(new ConfigColor { key = colorData.Key, color = colorData.Color.ToString() });
             }
             File.WriteAllText(CONFIG_PATH + "\\config.json", JsonConvert.SerializeObject(config, Formatting.Indented));
+            configFileWatcher.EnableRaisingEvents = true;
         }
 
         internal static void Initialize()
@@ -202,7 +207,38 @@ namespace script_chan2.DataTypes
                 WindowWidth = 1000;
             }
 
+            configFileWatcher = new FileSystemWatcher(CONFIG_PATH);
+            configFileWatcher.Filter = "config.json";
+            configFileWatcher.Changed += ConfigFileWatcher_Changed;
+            configFileWatcher.EnableRaisingEvents = true;
+
             localLog.Information("initialized");
+        }
+
+        private static void ConfigFileWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (e.ChangeType != WatcherChangeTypes.Changed)
+                return;
+
+            localLog.Information("config.json got changed outside of script-chan");
+
+            var retry = true;
+            while (retry)
+            {
+                try
+                {
+                    var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(CONFIG_PATH + "\\config.json"));
+                    ircIpPrivate = config.ircIpPrivate;
+                    retry = false;
+                }
+                catch
+                {
+                    //horrible IO stuff happened
+                    Thread.Sleep(1000);
+                }
+            }
+            OsuIrc.OsuIrc.Login();
+            Events.Aggregator.PublishOnUIThread("ConfigFileChanged");
         }
 
         private static string lang;

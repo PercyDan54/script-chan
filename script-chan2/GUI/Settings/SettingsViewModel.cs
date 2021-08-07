@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace script_chan2.GUI
 {
-    public class SettingsViewModel : Screen, IHandle<object>
+    public class SettingsViewModel : Screen, IHandle<object>, IHandle<string>
     {
         private ILogger localLog = Log.ForContext<SettingsViewModel>();
 
@@ -24,6 +24,14 @@ namespace script_chan2.GUI
                 NotifyOfPropertyChange(() => PrivateIrcIsConnecting);
                 NotifyOfPropertyChange(() => PrivateIrcIsConnected);
                 NotifyOfPropertyChange(() => PrivateIrcIsDisconnected);
+            }
+        }
+
+        public void Handle(string message)
+        {
+            if (message == "ConfigFileChanged")
+            {
+                NotifyOfPropertyChange(() => PrivateIrcVisible);
             }
         }
         #endregion
