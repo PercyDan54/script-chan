@@ -220,7 +220,7 @@ namespace script_chan2.GUI
                                 if (beatmapId > 0)
                                 {
                                     localLog.Information("beatmap '{beatmap}' found", beatmapId);
-                                    importMappool.Beatmaps.Add(new ImportBeatmap { Id = beatmapId, Mod = modTitle.ToLower().Contains("tiebreaker") ? "tiebreaker" : "freemod" });
+                                    importMappool.Beatmaps.Add(new ImportBeatmap { Id = beatmapId, Mod = modTitle });
                                 }
                             }
                         }
@@ -296,7 +296,9 @@ namespace script_chan2.GUI
                             case "hardrock": mappoolMap.AddMod(GameMods.HardRock); mappoolMap.Tag = "HR" + hardrockIndex; hardrockIndex++; break;
                             case "doubletime": mappoolMap.AddMod(GameMods.DoubleTime); mappoolMap.Tag = "DT" + doubletimeIndex; doubletimeIndex++; break;
                             case "freemod": mappoolMap.AddMod(GameMods.Freemod); mappoolMap.Tag = "FM" + freemodIndex; freemodIndex++; break;
+                            case "tiebreaker:":
                             case "tiebreaker": mappoolMap.AddMod(GameMods.TieBreaker); mappoolMap.Tag = "TB"; break;
+                            default: mappoolMap.AddMod(GameMods.Freemod); mappoolMap.Tag = "FM" + freemodIndex; freemodIndex++; break;
                         }
                         localLog.Information("add beatmap '{beatmap}' to mappool '{mappool}'", importBeatmap.Id, mappool.Name);
                         mappool.AddBeatmap(mappoolMap);
