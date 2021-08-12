@@ -280,13 +280,13 @@ namespace script_chan2.GUI
                             else
                                 importMatch.TeamBlue = ((LinkInline)subBlock).Title;
                         }
-                        if (subBlock is EmphasisInline)
+                        if (subBlock is LiteralInline)
                         {
-                            if (importMatch != null && !string.IsNullOrEmpty(date))
+                            if (importMatch != null && !string.IsNullOrEmpty(date) && importMatch.TeamBlue != null && importMatch.TeamRed != null)
                             {
                                 try
                                 {
-                                    importMatch.MatchTime = DateTime.Parse(date + " " + ((EmphasisInline)subBlock).FirstChild.ToString().Split(' ').First());
+                                    importMatch.MatchTime = DateTime.Parse(date + " " + ((LiteralInline)subBlock).ToString().Split('|')[2].Split(' ')[4]);
                                 }
                                 catch (Exception e)
                                 {
