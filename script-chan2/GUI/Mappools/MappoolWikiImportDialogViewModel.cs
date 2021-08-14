@@ -1,16 +1,12 @@
-﻿using Caliburn.Micro;
-using Markdig;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
+﻿using AngleSharp;
+using Caliburn.Micro;
 using MaterialDesignThemes.Wpf;
-using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
 using script_chan2.Enums;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -137,118 +133,68 @@ namespace script_chan2.GUI
 
             var importMappools = new List<ImportMappool>();
 
-            var webClient = new WebClient();
-            webClient.Headers.Set(HttpRequestHeader.Accept, "application/json");
-            dynamic response = JObject.Parse(await webClient.DownloadStringTaskAsync(WikiUrl));
-            MarkdownDocument markdown = Markdown.Parse(response.markdown.Value);
-
             localLog.Information("search for mappools header");
-            int mappoolHeadingIndex = -1;
-            for (var i = 0; i < markdown.Count; i++)
-            {
-                var block = markdown[i];
-                if (block is HeadingBlock)
-                {
-                    var headingBlock = (HeadingBlock)block;
-                    if (headingBlock.Inline.FirstChild.ToString() == "Mappools")
-                    {
-                        localLog.Information("mappools header found");
-                        mappoolHeadingIndex = i;
-                        break;
-                    }
-                }
-            }
-            if (mappoolHeadingIndex == -1)
-                return;
+            var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
+            var document = await context.OpenAsync(WikiUrl);
+            var currentElement = document.QuerySelectorAll("h2").First(x => x.TextContent.StartsWith("Mappools"));
 
             ImportMappool importMappool = null;
-            for (var i = mappoolHeadingIndex + 1; i < markdown.Count; i++)
+            string mappoolName = "";
+            while (true)
             {
-                var block = markdown[i];
-                if (block is HeadingBlock)
-                {
-                    var headingBlock = (HeadingBlock)block;
-                    // End of mappools reached
-                    if (headingBlock.Level == 2)
-                        break;
+                currentElement = currentElement.NextElementSibling;
 
-                    // Mappool name
-                    if (headingBlock.Level == 3)
+                // End of mappools reached
+                if (currentElement.TagName != "H3" && currentElement.TagName != "UL")
+                    break;
+
+                // Name header
+                if (currentElement.TagName == "H3")
+                {
+                    mappoolName = currentElement.TextContent;
+                    localLog.Information("mappool header '{name}' found", mappoolName);
+                    if (Settings.DefaultTournament.Mappools.Any(x => x.Name == mappoolName))
                     {
-                        string mappoolName = headingBlock.Inline.FirstChild.ToString();
-                        localLog.Information("mappool header '{name}' found", mappoolName);
-                        if (Settings.DefaultTournament.Mappools.Any(x => x.Name == mappoolName))
-                        {
-                            var j = 1;
-                            while (Settings.DefaultTournament.Mappools.Any(x => x.Name == mappoolName + " (" + j + ")"))
-                                j++;
-                            mappoolName = mappoolName + " (" + j + ")";
-                            localLog.Information("rename mappool '{oldName}' to '{newName}' because of name collision", headingBlock.Inline.FirstChild.ToString(), mappoolName);
-                        }
-                        importMappool = new ImportMappool() { Name = mappoolName };
-                        importMappools.Add(importMappool);
+                        var j = 1;
+                        while (Settings.DefaultTournament.Mappools.Any(x => x.Name == mappoolName + " (" + j + ")"))
+                            j++;
+                        mappoolName = mappoolName + " (" + j + ")";
+                        localLog.Information("rename mappool '{oldName}' to '{newName}' because of name collision", currentElement.TextContent, mappoolName);
                     }
+
+                    importMappool = new ImportMappool() { Name = mappoolName };
+                    importMappools.Add(importMappool);
                 }
-                if (block is ListBlock)
+
+                // Map list
+                if (currentElement.TagName == "UL")
                 {
-                    var listBlock = (ListBlock)block;
-                    //2 level deep list
-                    if (((ListItemBlock)listBlock[0]).Count > 1 && ((ListItemBlock)listBlock[0])[1] is ListBlock)
+                    // List with mod headers
+                    if (currentElement.QuerySelector("ul") != null)
                     {
-                        // Mod categories
-                        foreach (ListItemBlock modBlock in listBlock)
+                        foreach (var modList in currentElement.QuerySelectorAll(":scope > li > div"))
                         {
-                            var modTitle = ((ParagraphBlock)modBlock[0]).Inline.FirstChild.ToString();
-                            localLog.Information("mod header '{mod}' found", modTitle);
+                            var modName = modList.TextContent.Split('\n').First();
+                            localLog.Information("mod header '{mod}' found", modName);
 
-                            foreach (ListItemBlock beatmapBlock in (ListBlock)modBlock[1])
+                            foreach (var map in modList.QuerySelectorAll("a"))
                             {
-                                var inline = ((ParagraphBlock)beatmapBlock[0]).Inline.FirstChild;
-                                var beatmapId = 0;
-
-                                if (inline is EmphasisInline)
-                                {
-                                    var emphasisInline = ((EmphasisInline)inline);
-                                    inline = emphasisInline.FirstChild;
-                                }
-                                if (inline is LinkInline)
-                                {
-                                    var beatmapUrl = ((LinkInline)inline).Url;
-                                    beatmapId = Convert.ToInt32(beatmapUrl.Split('/').Last());
-                                }
-
-                                if (beatmapId > 0)
-                                {
-                                    localLog.Information("beatmap '{beatmap}' found", beatmapId);
-                                    importMappool.Beatmaps.Add(new ImportBeatmap { Id = beatmapId, Mod = modTitle });
-                                }
+                                var beatmapUrl = map.Attributes["href"].Value;
+                                var beatmapId = Convert.ToInt32(beatmapUrl.Split('/').Last());
+                                localLog.Information("beatmap '{beatmap}' found", beatmapId);
+                                importMappool.Beatmaps.Add(new ImportBeatmap { Id = beatmapId, Mod = modName });
                             }
                         }
                     }
-                    //only 1 level
+                    // No mod headers
                     else
                     {
-                        foreach (ListItemBlock beatmapBlock in listBlock)
+                        foreach (var map in currentElement.QuerySelectorAll("a"))
                         {
-                            var inline = ((ParagraphBlock)beatmapBlock[0]).Inline.FirstChild;
-                            var beatmapId = 0;
-
-                            if (inline is EmphasisInline)
-                            {
-                                var emphasisInline = ((EmphasisInline)inline);
-                                inline = emphasisInline.FirstChild;
-                            }
-                            if (inline is LinkInline)
-                            {
-                                var beatmapUrl = ((LinkInline)inline).Url;
-                                beatmapId = Convert.ToInt32(beatmapUrl.Split('/').Last());
-                            }
-
-                            if (beatmapId > 0)
-                            {
-                                localLog.Information("beatmap '{beatmap}' found", beatmapId);
-                                importMappool.Beatmaps.Add(new ImportBeatmap { Id = beatmapId, Mod = "freemod" });
-                            }
+                            var beatmapUrl = map.Attributes["href"].Value;
+                            var beatmapId = Convert.ToInt32(beatmapUrl.Split('/').Last());
+                            localLog.Information("beatmap '{beatmap}' found", beatmapId);
+                            importMappool.Beatmaps.Add(new ImportBeatmap { Id = beatmapId, Mod = "freemod" });
                         }
                     }
                 }
