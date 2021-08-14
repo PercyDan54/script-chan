@@ -102,6 +102,9 @@
     <Reference Include="DiscordRPC, Version=1.0.150.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DiscordRichPresence.1.0.150\lib\net35\DiscordRPC.dll</HintPath>
     </Reference>
+    <Reference Include="ISO3166, Version=1.0.3.0, Culture=neutral, PublicKeyToken=8d672889792f7833, processorArchitecture=MSIL">
+      <HintPath>..\packages\ISO3166.1.0.3\lib\net20\ISO3166.dll</HintPath>
+    </Reference>
     <Reference Include="Markdig, Version=0.20.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Markdig.0.20.0\lib\netstandard2.0\Markdig.dll</HintPath>
     </Reference>

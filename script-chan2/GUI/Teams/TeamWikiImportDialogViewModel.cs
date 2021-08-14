@@ -1,15 +1,11 @@
-﻿using Caliburn.Micro;
-using Markdig;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
+﻿using AngleSharp;
+using Caliburn.Micro;
 using MaterialDesignThemes.Wpf;
-using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -172,88 +168,41 @@ namespace script_chan2.GUI
 
             var importTeams = new List<ImportTeam>();
 
-            var webClient = new WebClient();
-            webClient.Headers.Set(HttpRequestHeader.Accept, "application/json");
-            dynamic response = JObject.Parse(await webClient.DownloadStringTaskAsync(WikiUrl));
-            MarkdownDocument markdown = Markdown.Parse(response.markdown.Value);
-
-            localLog.Information("search for participants header");
-            int participantsHeadingIndex = -1;
-            for (var i = 0; i < markdown.Count; i++)
-            {
-                var block = markdown[i];
-                if (block is HeadingBlock)
-                {
-                    var headingBlock = (HeadingBlock)block;
-                    if (headingBlock.Inline.FirstChild.ToString() == "Participants")
-                    {
-                        localLog.Information("participants header found");
-                        participantsHeadingIndex = i;
-                        break;
-                    }
-                }
-            }
-            if (participantsHeadingIndex == -1)
-                return;
-
+            var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
+            var document = await context.OpenAsync(WikiUrl);
+            var participantsHeader = document.QuerySelectorAll("h2").First(x => x.TextContent.StartsWith("Participants"));
+            var teamsTable = participantsHeader.NextElementSibling;
+            var teams = teamsTable.QuerySelectorAll("tbody tr");
             ImportTeam importTeam = null;
-            var wrapperBlock = (ParagraphBlock)markdown[participantsHeadingIndex + 1];
-            var wrapperInline = wrapperBlock.Inline;
-            foreach (var block in wrapperBlock.Inline)
+            foreach (var team in teams)
             {
-                if (block is LinkInline)
+                var isoName = team.Children[1].TextContent;
+                switch (isoName)
                 {
-                    var linkBlock = (LinkInline)block;
-                    if (linkBlock.Label != null && linkBlock.Label.StartsWith("flag_"))
-                    {
-                        importTeam = new ImportTeam { Name = linkBlock.Title, Country = linkBlock.Label.Replace("flag_", "") };
-                        importTeams.Add(importTeam);
-                    }
-                    else
-                    {
-                        var profileUrl = linkBlock.Url;
-                        var userId = Convert.ToInt32(profileUrl.Split('/').Last());
-                        var username = "";
-                        foreach (LiteralInline usernamePart in linkBlock)
-                        {
-                            username += usernamePart.ToString();
-                        }
-                        if (importTeam != null)
-                        {
-                            var importPlayer = new ImportPlayer()
-                            {
-                                Id = userId,
-                                Name = username,
-                                Country = importTeam.Country
-                            };
-                            importTeam.Players.Add(importPlayer);
-                        }
-                    }
+                    case "South Korea": isoName = "Korea, Republic of"; break;
+                    case "Taiwan": isoName = "Taiwan, Province of China"; break;
+                    case "United Kingdom": isoName = "United Kingdom of Great Britain and Northern Ireland"; break;
+                    case "United States": isoName = "United States of America"; break;
+                    case "Venezuela": isoName = "Venezuela, Bolivarian Republic of"; break;
+                    case "Vietnam": isoName = "Viet Nam"; break;
                 }
-                if (block is EmphasisInline)
+                importTeam = new ImportTeam
                 {
-                    var emphasisInline = (EmphasisInline)block;
-                    if (emphasisInline.FirstChild is LinkInline)
+                    Name = team.Children[1].TextContent,
+                    Country = ISO3166.Country.List.First(x => x.Name == isoName).TwoLetterCode
+                };
+                importTeams.Add(importTeam);
+
+                var players = team.Children[2].QuerySelectorAll("a");
+                foreach (var player in players)
+                {
+                    var importPlayer = new ImportPlayer()
                     {
-                        var linkBlock = (LinkInline)emphasisInline.FirstChild;
-                        var profileUrl = linkBlock.Url;
-                        var userId = Convert.ToInt32(profileUrl.Split('/').Last());
-                        var username = "";
-                        foreach (LiteralInline usernamePart in linkBlock)
-                        {
-                            username += usernamePart.ToString();
-                        }
-                        if (importTeam != null)
-                        {
-                            var importPlayer = new ImportPlayer()
-                            {
-                                Id = userId,
-                                Name = username,
-                                Country = importTeam.Country
-                            };
-                            importTeam.Players.Add(importPlayer);
-                        }
-                    }
+                        Id = Convert.ToInt32(player.Attributes["href"].Value.Split('/').Last()),
+                        Name = player.TextContent,
+                        Country = importTeam.Country
+                    };
+                    importTeam.Players.Add(importPlayer);
                 }
             }
 
