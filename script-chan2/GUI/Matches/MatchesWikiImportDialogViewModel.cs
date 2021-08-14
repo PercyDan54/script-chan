@@ -1,16 +1,11 @@
 ﻿using AngleSharp;
 using Caliburn.Micro;
-using Markdig;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
 using MaterialDesignThemes.Wpf;
-using Newtonsoft.Json.Linq;
 using script_chan2.DataTypes;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 
