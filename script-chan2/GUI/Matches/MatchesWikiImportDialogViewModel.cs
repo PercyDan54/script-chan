@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using AngleSharp;
+using Caliburn.Micro;
 using Markdig;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
@@ -226,77 +227,39 @@ namespace script_chan2.GUI
 
             var importMatches = new List<ImportMatch>();
 
-            var webClient = new WebClient();
-            webClient.Headers.Set(HttpRequestHeader.Accept, "application/json");
-            dynamic response = JObject.Parse(await webClient.DownloadStringTaskAsync(WikiUrl));
-            MarkdownDocument markdown = Markdown.Parse(response.markdown.Value);
-
-            localLog.Information("search for match schedule header");
-            int matchesHeadingIndex = -1;
-            for (var i = 0; i < markdown.Count; i++)
-            {
-                var block = markdown[i];
-                if (block is HeadingBlock)
-                {
-                    var headingBlock = (HeadingBlock)block;
-                    if (headingBlock.Inline.FirstChild.ToString().ToLower().StartsWith("match schedule"))
-                    {
-                        localLog.Information("match schedule header found");
-                        matchesHeadingIndex = i;
-                        break;
-                    }
-                }
-            }
-            if (matchesHeadingIndex == -1)
-                return;
+            var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
+            var document = await context.OpenAsync(WikiUrl);
+            var currentElement = document.QuerySelectorAll("h2").First(x => x.TextContent.StartsWith("Match schedule"));
 
             ImportMatch importMatch = null;
             string date = "";
-            for (var i = matchesHeadingIndex + 1; i < markdown.Count; i++)
+            while (true)
             {
-                var block = markdown[i];
-                if (block is HeadingBlock)
-                {
-                    var headingBlock = (HeadingBlock)block;
-                    // End of matches reached
-                    if (headingBlock.Level == 2)
-                        break;
+                currentElement = currentElement.NextElementSibling;
 
-                    // Date header
-                    if (headingBlock.Level == 3)
-                    {
-                        date = headingBlock.Inline.FirstChild.ToString();
-                    }
-                }
-                if (block is ParagraphBlock)
+                // End of matches reached
+                if (currentElement.TagName != "H3" && currentElement.TagName != "DIV")
+                    break;
+
+                // Date header
+                if (currentElement.TagName == "H3")
                 {
-                    var paragraphBlock = (ParagraphBlock)block;
-                    foreach (var subBlock in paragraphBlock.Inline)
+                    date = currentElement.TextContent; 
+                }
+
+                // Match table
+                if (currentElement.TagName == "DIV")
+                {
+                    var matches = currentElement.QuerySelectorAll("tbody tr");
+                    foreach (var match in matches)
                     {
-                        if (subBlock is LinkInline)
+                        importMatch = new ImportMatch
                         {
-                            if (importMatch == null)
-                                importMatch = new ImportMatch() { TeamRed = ((LinkInline)subBlock).Title };
-                            else
-                                importMatch.TeamBlue = ((LinkInline)subBlock).Title;
-                        }
-                        if (subBlock is LiteralInline)
-                        {
-                            if (importMatch != null && !string.IsNullOrEmpty(date) && importMatch.TeamBlue != null && importMatch.TeamRed != null)
-                            {
-                                try
-                                {
-                                    importMatch.MatchTime = DateTime.Parse(date + " " + ((LiteralInline)subBlock).ToString().Split('|')[2].Split(' ')[4]);
-                                }
-                                catch (Exception e)
-                                {
-                                    localLog.Error(e, "DateTime parse failed");
-                                    importMatch.MatchTime = DateTime.Now;
-                                }
-                                importMatches.Add(importMatch);
-                                importMatch = null;
-                            }
-                        }
+                            TeamRed = match.Children[0].TextContent,
+                            TeamBlue = match.Children[3].TextContent,
+                            MatchTime = DateTime.Parse(date + " " + match.Children[4].TextContent.Split(' ')[3])
+                        };
+                        importMatches.Add(importMatch);
                     }
                 }
             }
