@@ -218,11 +218,7 @@ namespace script_chan2.GUI
                 mappool.Tournament = Settings.DefaultTournament;
                 mappool.Save();
 
-                var nomodIndex = 1;
-                var hiddenIndex = 1;
-                var hardrockIndex = 1;
-                var doubletimeIndex = 1;
-                var freemodIndex = 1;
+                var modIndexes = new Dictionary<string, int>();
 
                 foreach (var importBeatmap in importMappool.Beatmaps)
                 {
@@ -235,16 +231,27 @@ namespace script_chan2.GUI
                             Beatmap = beatmap,
                             PickCommand = true
                         };
+                        var mappoolTag = importBeatmap.Mod;
                         switch (importBeatmap.Mod.ToLower())
                         {
-                            case "nomod": mappoolMap.Tag = "NM" + nomodIndex; nomodIndex++; break;
-                            case "hidden": mappoolMap.AddMod(GameMods.Hidden); mappoolMap.Tag = "HD" + hiddenIndex; hiddenIndex++; break;
-                            case "hardrock": mappoolMap.AddMod(GameMods.HardRock); mappoolMap.Tag = "HR" + hardrockIndex; hardrockIndex++; break;
-                            case "doubletime": mappoolMap.AddMod(GameMods.DoubleTime); mappoolMap.Tag = "DT" + doubletimeIndex; doubletimeIndex++; break;
-                            case "freemod": mappoolMap.AddMod(GameMods.Freemod); mappoolMap.Tag = "FM" + freemodIndex; freemodIndex++; break;
+                            case "nomod": mappoolTag = "NM"; break;
+                            case "hidden": mappoolMap.AddMod(GameMods.Hidden); mappoolTag = "HD"; break;
+                            case "hardrock": mappoolMap.AddMod(GameMods.HardRock); mappoolTag = "HR"; break;
+                            case "doubletime": mappoolMap.AddMod(GameMods.DoubleTime); mappoolTag = "DT"; break;
+                            case "freemod": mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "FM"; break;
                             case "tiebreaker:":
-                            case "tiebreaker": mappoolMap.AddMod(GameMods.TieBreaker); mappoolMap.Tag = "TB"; break;
-                            default: mappoolMap.AddMod(GameMods.Freemod); mappoolMap.Tag = "FM" + freemodIndex; freemodIndex++; break;
+                            case "tiebreaker": mappoolMap.AddMod(GameMods.TieBreaker); mappoolTag = "TB"; break;
+                            default: mappoolMap.AddMod(GameMods.Freemod); break;
+                        }
+                        if (modIndexes.ContainsKey(mappoolTag))
+                        {
+                            modIndexes[mappoolTag]++;
+                            mappoolMap.Tag = mappoolTag + modIndexes[mappoolTag].ToString();
+                        }
+                        else
+                        {
+                            modIndexes.Add(mappoolTag, 1);
+                            mappoolMap.Tag = mappoolTag + "1";
                         }
                         localLog.Information("add beatmap '{beatmap}' to mappool '{mappool}'", importBeatmap.Id, mappool.Name);
                         mappool.AddBeatmap(mappoolMap);
