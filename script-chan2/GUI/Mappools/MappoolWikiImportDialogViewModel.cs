@@ -241,6 +241,8 @@ namespace script_chan2.GUI
                             case "freemod": mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "FM"; break;
                             case "tiebreaker:":
                             case "tiebreaker": mappoolMap.AddMod(GameMods.TieBreaker); mappoolTag = "TB"; break;
+                            case "rice": mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "RC"; break;
+                            case "hybrid": mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "HB"; break;
                             default: mappoolMap.AddMod(GameMods.Freemod); break;
                         }
                         if (modIndexes.ContainsKey(mappoolTag))
