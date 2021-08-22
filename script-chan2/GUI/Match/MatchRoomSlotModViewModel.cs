@@ -29,6 +29,7 @@ namespace script_chan2.GUI
                     case GameMods.HardRock: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_hard-rock.png"));
                     case GameMods.Hidden: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_hidden.png"));
                     case GameMods.NoFail: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_no-fail.png"));
+                    case GameMods.Mirror: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_mirror.png"));
                 }
                 return null;
             }

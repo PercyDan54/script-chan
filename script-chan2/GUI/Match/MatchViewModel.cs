@@ -401,6 +401,8 @@ namespace script_chan2.GUI
                                     mods.Add(GameMods.Easy);
                                 if (detailsString.Contains("Flashlight"))
                                     mods.Add(GameMods.Flashlight);
+                                if (detailsString.Contains("Mirror"))
+                                    mods.Add(GameMods.Mirror);
                                 slot.Mods = mods;
                             }
 

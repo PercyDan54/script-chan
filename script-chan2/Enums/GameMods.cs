@@ -9,6 +9,7 @@
         Freemod,
         TieBreaker,
         NoFail,
-        Easy
+        Easy,
+        Mirror
     }
 }
