@@ -145,7 +145,7 @@ namespace script_chan2.GUI
                 currentElement = currentElement.NextElementSibling;
 
                 // End of mappools reached
-                if (currentElement.TagName != "H3" && currentElement.TagName != "UL")
+                if (currentElement.TagName == "H2")
                     break;
 
                 // Name header
