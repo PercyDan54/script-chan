@@ -179,6 +179,7 @@ namespace script_chan2.GUI
                 var isoName = team.Children[1].TextContent;
                 switch (isoName)
                 {
+                    case "Czech Republic": isoName = "Czechia"; break;
                     case "South Korea": isoName = "Korea, Republic of"; break;
                     case "Taiwan": isoName = "Taiwan, Province of China"; break;
                     case "United Kingdom": isoName = "United Kingdom of Great Britain and Northern Ireland"; break;
