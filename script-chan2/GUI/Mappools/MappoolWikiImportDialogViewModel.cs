@@ -170,7 +170,7 @@ namespace script_chan2.GUI
                 if (currentElement.TagName == "UL")
                 {
                     // List with mod headers
-                    if (currentElement.QuerySelector("ol") != null)
+                    if (currentElement.QuerySelector("ol") != null || currentElement.QuerySelector("ul") != null)
                     {
                         foreach (var modList in currentElement.QuerySelectorAll(":scope > li > div"))
                         {
