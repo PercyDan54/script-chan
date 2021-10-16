@@ -243,6 +243,7 @@
                         </ItemsControl>
                         <Button x:Name="CloseRoom" Content="{x:Static p:Resources.MatchView_CloseRoomButtonText}" Margin="5" Foreground="Red" Visibility="{Binding RoomOpenVisible}"/>
                         <Button x:Name="CreateRoom" Content="{x:Static p:Resources.MatchView_CreateRoomButtonText}" Margin="5" Visibility="{Binding RoomClosedVisible}" />
+                        <Button x:Name="CreatePrivateRoom" Content="{x:Static p:Resources.MatchView_CreatePrivateRoomButtonText}" Margin="5" Visibility="{Binding RoomClosedVisible}" />
                         <Button x:Name="JoinRoom" Content="{x:Static p:Resources.MatchView_JoinRoomButtonText}" Margin="5" Visibility="{Binding RoomClosedVisible}" />
                     </WrapPanel>
                     <Border x:Name="Control3" Grid.Row="1" Margin="2" BorderBrush="Black" BorderThickness="0 3 0 3">

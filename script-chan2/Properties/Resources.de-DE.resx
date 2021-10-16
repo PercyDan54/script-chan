@@ -918,6 +918,9 @@ CS: {3}</value>
   <data name="MatchView_CloseRoomButtonText" xml:space="preserve">
     <value>Raum schließen</value>
   </data>
+  <data name="MatchView_CreatePrivateRoomButtonText" xml:space="preserve">
+    <value>Privaten Raum öffnen</value>
+  </data>
   <data name="MatchView_CreateRoomButtonText" xml:space="preserve">
     <value>Raum öffnen</value>
   </data>

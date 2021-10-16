@@ -1029,6 +1029,12 @@ namespace script_chan2.GUI
             OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
         }
 
+        public void CreatePrivateRoom()
+        {
+            localLog.Information("match '{match}' create private room", match.Name);
+            OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp makeprivate " + match.Name);
+        }
+
         public async void JoinRoom()
         {
             localLog.Information("match '{match}' open join room dialog", match.Name);

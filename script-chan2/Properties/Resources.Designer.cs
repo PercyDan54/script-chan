@@ -2244,6 +2244,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create private room.
+        /// </summary>
+        public static string MatchView_CreatePrivateRoomButtonText {
+            get {
+                return ResourceManager.GetString("MatchView_CreatePrivateRoomButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create room.
         /// </summary>
         public static string MatchView_CreateRoomButtonText {
