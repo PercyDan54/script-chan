@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace script_chan2.Discord
 {
@@ -55,9 +56,17 @@ namespace script_chan2.Discord
                         IconUrl = webhook.FooterIcon
                     };
 
-                    using (var client = new DiscordWebhookClient(webhook.URL))
+                    try
                     {
-                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
+                        using (var client = new DiscordWebhookClient(webhook.URL))
+                        {
+                            client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error sending match created to webhook " + webhook.Name);
+                        localLog.Error(ex, "error sending match created to webhook " + webhook.Name);
                     }
                 }
             }
@@ -149,9 +158,17 @@ namespace script_chan2.Discord
                         IconUrl = webhook.FooterIcon
                     };
 
-                    using (var client = new DiscordWebhookClient(webhook.URL))
+                    try
                     {
-                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
+                        using (var client = new DiscordWebhookClient(webhook.URL))
+                        {
+                            client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error sending ban recap to webhook " + webhook.Name);
+                        localLog.Error(ex, "error sending ban recap to webhook " + webhook.Name);
                     }
                 }
             }
@@ -241,9 +258,17 @@ namespace script_chan2.Discord
                         IconUrl = webhook.FooterIcon
                     };
 
-                    using (var client = new DiscordWebhookClient(webhook.URL))
+                    try
                     {
-                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
+                        using (var client = new DiscordWebhookClient(webhook.URL))
+                        {
+                            client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error sending pick recap to webhook " + webhook.Name);
+                        localLog.Error(ex, "error sending pick recap to webhook " + webhook.Name);
                     }
                 }
             }
@@ -383,9 +408,17 @@ namespace script_chan2.Discord
                         IconUrl = webhook.FooterIcon
                     };
 
-                    using (var client = new DiscordWebhookClient(webhook.URL))
+                    try
                     {
-                        client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
+                        using (var client = new DiscordWebhookClient(webhook.URL))
+                        {
+                            client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error sending game recap to webhook " + webhook.Name);
+                        localLog.Error(ex, "error sending game recap to webhook " + webhook.Name);
                     }
                 }
             }
