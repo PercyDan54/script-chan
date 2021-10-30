@@ -229,7 +229,7 @@
                     </Grid.RowDefinitions>
                     <WrapPanel x:Name="Control2" Grid.Row="0" Margin="2">
                         <Button x:Name="SwitchPlayers" Content="{x:Static p:Resources.MatchView_SwitchPlayersButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SwitchPlayersBack" Content="{x:Static p:Resources.MatchView_SwitchPlayersBackButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SwitchPlayersBack" Content="{x:Static p:Resources.MatchView_SwitchPlayersBackButtonText}" Margin="5" />
                         <Button x:Name="InvitePlayers" Content="{x:Static p:Resources.MatchView_InvitePlayersButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="SendWelcomeString" Content="{x:Static p:Resources.MatchView_WelcomeStringButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
                         <Button x:Name="SetPassword" Content="{x:Static p:Resources.MatchView_SetPasswordButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
