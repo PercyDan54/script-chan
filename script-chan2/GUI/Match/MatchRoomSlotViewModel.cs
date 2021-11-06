@@ -203,7 +203,7 @@ namespace script_chan2.GUI
                     color = "blue";
                 else
                     color = "red";
-                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp team {Player.Name} {color}");
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp team #{Player.Id} {color}");
             }
         }
 
@@ -221,7 +221,7 @@ namespace script_chan2.GUI
             {
                 MatchRoomSlotViewModel oldSlot = e.Data.GetData(typeof(MatchRoomSlotViewModel)) as MatchRoomSlotViewModel;
                 localLog.Information("drag player '{player}' to slot '{slot}'", oldSlot.Player.Name, SlotNumber);
-                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp move {oldSlot.Player.Name} {SlotNumber}");
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp move #{oldSlot.Player.Id} {SlotNumber}");
             }
         }
 
@@ -230,11 +230,11 @@ namespace script_chan2.GUI
             localLog.Information("room slot '{slot}' click context menu item '{item}'", SlotNumber, context.Header);
             if (context.Header.ToString() == Properties.Resources.MatchRoomSlotViewModel_ContextItemSetHostText)
             {
-                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp host {Player.Name}");
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp host #{Player.Id}");
             }
             if (context.Header.ToString() == Properties.Resources.MatchRoomSlotViewModel_ContextItemKickText)
             {
-                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp kick {Player.Name}");
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp kick #{Player.Id}");
             }
         }
         #endregion

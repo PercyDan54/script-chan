@@ -112,29 +112,29 @@ namespace script_chan2.DataTypes
             Database.Database.DeleteMatch(this);
         }
 
-        public List<string> GetPlayerList()
+        public List<Player> GetPlayerList()
         {
             localLog.Information("'{name}' get player list", Name);
-            var players = new List<string>();
+            var players = new List<Player>();
 
             if (TeamMode == TeamModes.TeamVS)
             {
                 foreach (var player in TeamBlue.Players)
-                    players.Add(player.Name);
+                    players.Add(player);
                 foreach (var player in TeamRed.Players)
-                    players.Add(player.Name);
+                    players.Add(player);
             }
             if (TeamMode == TeamModes.HeadToHead)
             {
                 foreach (var player in Players)
-                    players.Add(player.Key.Name);
+                    players.Add(player.Key);
             }
             if (TeamMode == TeamModes.BattleRoyale)
             {
                 foreach (var team in TeamsBR)
                 {
                     foreach (var player in team.Key.Players)
-                        players.Add(player.Name);
+                        players.Add(player);
                 }
             }
 

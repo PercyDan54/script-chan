@@ -36,7 +36,7 @@ namespace script_chan2.GUI
         public void SwitchPlayer()
         {
             localLog.Information("Team dialog switch player {player}", player.Name);
-            OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch " + player.Name);
+            OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch #" + player.Id);
         }
     }
 }

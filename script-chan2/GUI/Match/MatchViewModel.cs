@@ -1084,7 +1084,7 @@ namespace script_chan2.GUI
             localLog.Information("match '{match}' switch players", match.Name);
             foreach (var player in match.GetPlayerList())
             {
-                OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch " + player);
+                OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch #" + player.Id);
             }
         }
 
@@ -1093,7 +1093,7 @@ namespace script_chan2.GUI
             localLog.Information("match '{match}' switch players back", match.Name);
             foreach (var player in match.GetPlayerList())
             {
-                OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch " + player, true);
+                OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp switch #" + player.Id, true);
             }
         }
 
@@ -1102,7 +1102,7 @@ namespace script_chan2.GUI
             localLog.Information("match '{match}' invite players", match.Name);
             foreach (var player in match.GetPlayerList())
             {
-                SendRoomMessage("!mp invite " + player);
+                SendRoomMessage("!mp invite #" + player.Id);
             }
         }
 
@@ -1487,14 +1487,14 @@ namespace script_chan2.GUI
                     slot.Player = null;
                     slot.Team = null;
                     slot.Mods = new List<GameMods>();
-                    OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp kick {player.Name}");
+                    OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp kick #{player.Id}");
                 }
             }
             foreach (var slot in RoomSlotsViews.Where(x => x.Player != null).OrderByDescending(x => x.SlotNumber))
             {
                 if (slots.Count <= 0)
                     break;
-                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp move {slot.Player.Name} {slots[0]}");
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp move #{slot.Player.Id} {slots[0]}");
                 slots.RemoveAt(0);
             }
         }
