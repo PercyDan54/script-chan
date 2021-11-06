@@ -12,6 +12,6 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBox x:Name="PlayerName" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Margin="5 0 0 0" Background="Transparent" BorderThickness="0" IsReadOnly="True" TextWrapping="Wrap" />
-        <Button x:Name="SwitchPlayer" Grid.Column="1" Visibility="{Binding RoomOpenVisible}" Content="{x:Static p:Resources.MatchTeamDialogPlayerView_SwitchPlayerButtonText}" />
+        <Button x:Name="SwitchPlayer" Grid.Column="1" Content="{x:Static p:Resources.MatchTeamDialogPlayerView_SwitchPlayerButtonText}" />
     </Grid>
 </UserControl>
