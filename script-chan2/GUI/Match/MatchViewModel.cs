@@ -1221,7 +1221,32 @@ namespace script_chan2.GUI
                 brush.Color = Settings.UserColors.First(x => x.Key == "BanchoBot").Color;
             else
                 brush.Color = Settings.UserColors.First(x => x.Key == "Default").Color;
-            var paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush };
+
+            var slotMovementCombined = false;
+            Paragraph paragraph = null;
+            if (message.User == "BanchoBot" && message.Message.Contains(" moved to slot ") && MultiplayerChat.Blocks.Count > 0)
+            {
+                var lastMessageParagraph = (Paragraph)MultiplayerChat.Blocks.LastBlock;
+                var lastMessageInline = (Run)lastMessageParagraph.Inlines.FirstInline;
+                if (lastMessageInline.Text.Contains(" moved to slot "))
+                {
+                    var tooltip = "";
+                    if (lastMessageParagraph.ToolTip != null)
+                    {
+                        tooltip = lastMessageParagraph.ToolTip.ToString() + Environment.NewLine + $"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}";
+                    }
+                    else
+                    {
+                        tooltip = lastMessageInline.Text + Environment.NewLine + $"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}";
+                    }
+                    paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message} (...)")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush, ToolTip = tooltip };
+                    MultiplayerChat.Blocks.Remove(MultiplayerChat.Blocks.LastBlock);
+                    slotMovementCombined = true;
+                }
+            }
+            if (!slotMovementCombined)
+                paragraph = new Paragraph(new Run($"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}")) { Margin = new Thickness(202, 0, 0, 0), TextIndent = -202, Foreground = brush };
+
             MultiplayerChat.Blocks.Add(paragraph);
             NotifyOfPropertyChange(() => MultiplayerChat);
             NotifyOfPropertyChange(() => BanchoEventsViews);
