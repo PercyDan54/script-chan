@@ -167,7 +167,7 @@ namespace script_chan2.GUI
                 }
 
                 // Map list
-                if (currentElement.TagName == "UL")
+                if (currentElement.TagName == "UL" || currentElement.TagName == "OL")
                 {
                     // List with mod headers
                     if (currentElement.QuerySelector("ol") != null || currentElement.QuerySelector("ul") != null)
