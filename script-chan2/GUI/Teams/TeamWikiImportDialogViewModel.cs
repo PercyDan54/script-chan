@@ -180,6 +180,7 @@ namespace script_chan2.GUI
                 switch (isoName)
                 {
                     case "Czech Republic": isoName = "Czechia"; break;
+                    case "Macau": isoName = "Macao"; break;
                     case "South Korea": isoName = "Korea, Republic of"; break;
                     case "Taiwan": isoName = "Taiwan, Province of China"; break;
                     case "United Kingdom": isoName = "United Kingdom of Great Britain and Northern Ireland"; break;
