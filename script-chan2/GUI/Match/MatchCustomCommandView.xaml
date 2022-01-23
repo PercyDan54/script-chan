@@ -5,5 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Button x:Name="Execute" Content="{Binding Name}" Margin="5" />
+    <Button x:Name="Execute" Margin="5" Height="Auto">
+        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" />
+    </Button>
 </UserControl>

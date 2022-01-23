@@ -21,6 +21,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Height="30" Background="Black" cal:Message.Attach="[Event MouseDown] = [Action Drag($eventArgs)]">
@@ -51,7 +52,10 @@
                 <md:PackIcon Kind="Close" />
             </Button>
         </Grid>
-        <md:DialogHost Grid.Row="1" Identifier="{Binding DialogIdentifier}" DialogTheme="Dark">
+        <Grid Grid.Row="1" Background="Pink" Visibility="{Binding PrivateRibbonVisible}">
+            <TextBlock Text="{x:Static p:Resources.MatchView_PrivateLobbyRibbon}" Margin="5" Foreground="Black" />
+        </Grid>
+        <md:DialogHost Grid.Row="2" Identifier="{Binding DialogIdentifier}" DialogTheme="Dark">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="Column1" />
@@ -121,12 +125,22 @@
                         </ScrollViewer>
                     </Grid>
                     <WrapPanel x:Name="Control1" Grid.Row="1" Margin="2">
-                        <Button x:Name="StartGame" Content="{x:Static p:Resources.MatchView_StartGameButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SendSettings" Content="{x:Static p:Resources.MatchView_SettingsButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="StartTimer" Content="{x:Static p:Resources.MatchView_TimerButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="AbortMatch" Content="{x:Static p:Resources.MatchView_AbortMapButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="StartGame" Margin="5" Height="Auto" Visibility="{Binding RoomOpenVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_StartGameButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="SendSettings" Margin="5" Height="Auto" Visibility="{Binding RoomOpenVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_SettingsButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="StartTimer" Margin="5" Height="Auto" Visibility="{Binding RoomOpenVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_TimerButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="AbortMatch" Margin="5" Height="Auto" Visibility="{Binding RoomOpenVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_AbortMapButtonText}" TextWrapping="Wrap" />
+                        </Button>
                         <ContentControl Visibility="{Binding RoomOpenVisible}">
-                            <Button x:Name="KickLastBRTeam" Content="{x:Static p:Resources.MatchView_KickLastTeamButtonText}" Margin="5" Visibility="{Binding BRVisible}" />
+                            <Button x:Name="KickLastBRTeam" Margin="5" Height="Auto" Visibility="{Binding BRVisible}">
+                                <TextBlock Text="{x:Static p:Resources.MatchView_KickLastTeamButtonText}" TextWrapping="Wrap" />
+                            </Button>
                         </ContentControl>
                     </WrapPanel>
                     <Grid x:Name="SlotsGrid" Grid.Row="2" Margin="2">
@@ -202,9 +216,15 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <CheckBox x:Name="WarmupMode" Content="{x:Static p:Resources.MatchView_WarmupModeCheckBoxText}" Grid.Column="1" Margin="10 0 0 0" />
-                    <Button x:Name="OpenPickOverview" Content="{x:Static p:Resources.MatchView_PicksBansButtonText}" Grid.Column="2" Margin="10 0 0 0" />
-                    <Button x:Name="PickNextMap" Content="{x:Static p:Resources.MatchView_PickNextMapButtonText}" Grid.Column="3" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}" />
-                    <Button x:Name="PickRandomMap" Content="{x:Static p:Resources.MatchView_PickRandomMapButtonText}" Grid.Column="4" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}" />
+                    <Button x:Name="OpenPickOverview" Height="Auto" Grid.Column="2" Margin="10 0 0 0">
+                        <TextBlock Text="{x:Static p:Resources.MatchView_PicksBansButtonText}" TextWrapping="Wrap" />
+                    </Button>
+                    <Button x:Name="PickNextMap" Height="Auto" Grid.Column="3" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}">
+                        <TextBlock Text="{x:Static p:Resources.MatchView_PickNextMapButtonText}" TextWrapping="Wrap" />
+                    </Button>
+                    <Button x:Name="PickRandomMap" Height="Auto" Grid.Column="4" Margin="10 0 0 0" Visibility="{Binding RoomOpenVisible}">
+                        <TextBlock Text="{x:Static p:Resources.MatchView_PickRandomMapButtonText}" TextWrapping="Wrap" />
+                    </Button>
                     <ScrollViewer Grid.Row="1" Grid.ColumnSpan="5">
                         <ItemsControl ItemsSource="{Binding BeatmapsViews}">
                             <ItemsControl.ItemsPanel>
@@ -228,12 +248,24 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <WrapPanel x:Name="Control2" Grid.Row="0" Margin="2">
-                        <Button x:Name="SwitchPlayers" Content="{x:Static p:Resources.MatchView_SwitchPlayersButtonText}" Margin="5" />
-                        <Button x:Name="SwitchPlayersBack" Content="{x:Static p:Resources.MatchView_SwitchPlayersBackButtonText}" Margin="5" />
-                        <Button x:Name="InvitePlayers" Content="{x:Static p:Resources.MatchView_InvitePlayersButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SendWelcomeString" Content="{x:Static p:Resources.MatchView_WelcomeStringButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="SetPassword" Content="{x:Static p:Resources.MatchView_SetPasswordButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
-                        <Button x:Name="EditRoomOptions" Content="{x:Static p:Resources.MatchView_SetRoomOptionsButtonText}" Margin="5" Visibility="{Binding RoomOpenVisible}" />
+                        <Button x:Name="SwitchPlayers" Margin="5" Height="Auto">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_SwitchPlayersButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="SwitchPlayersBack" Margin="5" Height="Auto">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_SwitchPlayersBackButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="InvitePlayers" Margin="5" Height="Auto" Visibility="{Binding RoomOpenVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_InvitePlayersButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="SendWelcomeString" Margin="5" Height="Auto" Visibility="{Binding RoomOpenVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_WelcomeStringButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="SetPassword" Margin="5" Height="Auto" Visibility="{Binding RoomOpenVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_SetPasswordButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="EditRoomOptions" Margin="5" Height="Auto" Visibility="{Binding RoomOpenVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_SetRoomOptionsButtonText}" TextWrapping="Wrap" />
+                        </Button>
                         <ItemsControl x:Name="CustomCommandViews" Visibility="{Binding RoomOpenVisible}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -241,16 +273,30 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                        <Button x:Name="CloseRoom" Content="{x:Static p:Resources.MatchView_CloseRoomButtonText}" Margin="5" Foreground="Red" Visibility="{Binding RoomOpenVisible}"/>
-                        <Button x:Name="CreateRoom" Content="{x:Static p:Resources.MatchView_CreateRoomButtonText}" Margin="5" Visibility="{Binding RoomClosedVisible}" />
-                        <Button x:Name="CreatePrivateRoom" Content="{x:Static p:Resources.MatchView_CreatePrivateRoomButtonText}" Margin="5" Visibility="{Binding RoomClosedVisible}" />
-                        <Button x:Name="JoinRoom" Content="{x:Static p:Resources.MatchView_JoinRoomButtonText}" Margin="5" Visibility="{Binding RoomClosedVisible}" />
+                        <Button x:Name="CloseRoom" Margin="5" Height="Auto" Foreground="Red" Visibility="{Binding RoomOpenVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_CloseRoomButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="CreateRoom" Margin="5" Height="Auto" Visibility="{Binding RoomClosedVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_CreateRoomButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="CreatePrivateRoom" Margin="5" Height="Auto" Visibility="{Binding RoomClosedVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_CreatePrivateRoomButtonText}" TextWrapping="Wrap" />
+                        </Button>
+                        <Button x:Name="JoinRoom" Margin="5" Height="Auto" Visibility="{Binding RoomClosedVisible}">
+                            <TextBlock Text="{x:Static p:Resources.MatchView_JoinRoomButtonText}" TextWrapping="Wrap" />
+                        </Button>
                     </WrapPanel>
                     <Border x:Name="Control3" Grid.Row="1" Margin="2" BorderBrush="Black" BorderThickness="0 3 0 3">
                         <WrapPanel>
-                            <Button x:Name="SendBanRecap" Content="{x:Static p:Resources.MatchView_BanRecapButtonText}" Margin="5" />
-                            <Button x:Name="SendPickRecap" Content="{x:Static p:Resources.MatchView_PickRecapButtonText}" Margin="5" />
-                            <Button x:Name="SendGameRecap" Content="{x:Static p:Resources.MatchView_GameRecapButtonText}" Margin="5" />
+                            <Button x:Name="SendBanRecap" Margin="5" Height="Auto">
+                                <TextBlock Text="{x:Static p:Resources.MatchView_BanRecapButtonText}" TextWrapping="Wrap" />
+                            </Button>
+                            <Button x:Name="SendPickRecap" Margin="5" Height="Auto">
+                                <TextBlock Text="{x:Static p:Resources.MatchView_PickRecapButtonText}" TextWrapping="Wrap" />
+                            </Button>
+                            <Button x:Name="SendGameRecap" Margin="5" Height="Auto">
+                                <TextBlock Text="{x:Static p:Resources.MatchView_GameRecapButtonText}" TextWrapping="Wrap" />
+                            </Button>
                         </WrapPanel>
                     </Border>
                     <Grid x:Name="Options" Grid.Row="2" Margin="2">
