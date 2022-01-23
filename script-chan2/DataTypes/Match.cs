@@ -85,6 +85,8 @@ namespace script_chan2.DataTypes
 
         public DateTime? MatchTime { get; set; }
 
+        public bool PrivateRoom { get; set; }
+
         public Dictionary<Player, int> Players { get; set; }
 
         public Dictionary<Team, int> TeamsBR { get; set; }

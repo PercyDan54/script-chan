@@ -98,6 +98,11 @@ namespace script_chan2.Database
                 UpgradeV13();
                 dbVersion = 14;
             }
+            if (dbVersion == 14)
+            {
+                UpgradeV14();
+                dbVersion = 15;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -375,6 +380,27 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 14 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV14()
+        {
+            localLog.Information("upgrade database to v15");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE Matches ADD COLUMN privateRoom BOOL", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE Matches SET privateRoom = false", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 15 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

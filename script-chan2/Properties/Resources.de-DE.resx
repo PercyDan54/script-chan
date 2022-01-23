@@ -966,6 +966,9 @@ CS: {3}</value>
   <data name="MatchView_PicksBansButtonText" xml:space="preserve">
     <value>Picks/Bans</value>
   </data>
+  <data name="MatchView_PrivateLobbyRibbon" xml:space="preserve">
+    <value>Diese Lobby ist privat und ist nicht im osu!tourney Client sichtbar.</value>
+  </data>
   <data name="MatchView_RefreshButtonTooltip" xml:space="preserve">
     <value>Neu laden</value>
   </data>

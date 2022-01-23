@@ -965,6 +965,9 @@ CS: {3}</value>
   <data name="MatchView_PicksBansButtonText" xml:space="preserve">
     <value>Picks/Bans</value>
   </data>
+  <data name="MatchView_PrivateLobbyRibbon" xml:space="preserve">
+    <value>This is a private lobby. It will not be visible in the tourney client.</value>
+  </data>
   <data name="MatchView_RefreshButtonTooltip" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -1119,7 +1122,7 @@ CS: {3}</value>
     <value>Timer Command Duration</value>
   </data>
   <data name="SettingsView_UsePrivateBanchoCheckBox" xml:space="preserve">
-    <value>Use private bancho</value>
+    <value>Use tournament bancho</value>
   </data>
   <data name="TeamListItemView_DeleteButtonTooltip" xml:space="preserve">
     <value>Delete</value>

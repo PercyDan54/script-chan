@@ -661,6 +661,16 @@ namespace script_chan2.GUI
             }
         }
 
+        public Visibility PrivateRibbonVisible
+        {
+            get
+            {
+                if (match.PrivateRoom)
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+        }
+
         public Mappool SelectedMappool
         {
             get { return match.Mappool; }
@@ -1027,12 +1037,18 @@ namespace script_chan2.GUI
         {
             localLog.Information("match '{match}' create room", match.Name);
             OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
+            match.PrivateRoom = false;
+            match.Save();
+            NotifyOfPropertyChange(() => PrivateRibbonVisible);
         }
 
         public void CreatePrivateRoom()
         {
             localLog.Information("match '{match}' create private room", match.Name);
             OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp makeprivate " + match.Name);
+            match.PrivateRoom = true;
+            match.Save();
+            NotifyOfPropertyChange(() => PrivateRibbonVisible);
         }
 
         public async void JoinRoom()
@@ -1072,10 +1088,12 @@ namespace script_chan2.GUI
                 SendRoomMessage("!mp close");
                 match.RoomId = 0;
                 match.Status = MatchStatus.Finished;
+                match.PrivateRoom = false;
                 match.Save();
                 NotifyOfPropertyChange(() => RoomLinkName);
                 NotifyOfPropertyChange(() => RoomClosedVisible);
                 NotifyOfPropertyChange(() => RoomOpenVisible);
+                NotifyOfPropertyChange(() => PrivateRibbonVisible);
             }
         }
 

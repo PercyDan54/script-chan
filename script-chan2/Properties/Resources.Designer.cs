@@ -19,7 +19,7 @@ namespace script_chan2.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -2388,6 +2388,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is a private lobby. It will not be visible in the tourney client..
+        /// </summary>
+        public static string MatchView_PrivateLobbyRibbon {
+            get {
+                return ResourceManager.GetString("MatchView_PrivateLobbyRibbon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refresh.
         /// </summary>
         public static string MatchView_RefreshButtonTooltip {
@@ -2919,7 +2928,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use private bancho.
+        ///   Looks up a localized string similar to Use tournament bancho.
         /// </summary>
         public static string SettingsView_UsePrivateBanchoCheckBox {
             get {

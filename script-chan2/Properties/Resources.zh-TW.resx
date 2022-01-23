@@ -963,6 +963,9 @@ CS: {3}</value>
   <data name="MatchView_PicksBansButtonText" xml:space="preserve">
     <value>Picks/Bans</value>
   </data>
+  <data name="MatchView_PrivateLobbyRibbon" xml:space="preserve">
+    <value>This is a private lobby. It will not be visible in the tourney client.</value>
+  </data>
   <data name="MatchView_RefreshButtonTooltip" xml:space="preserve">
     <value>重新整理</value>
   </data>
