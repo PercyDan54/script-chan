@@ -1242,11 +1242,11 @@ namespace script_chan2.GUI
 
             var slotMovementCombined = false;
             Paragraph paragraph = null;
-            if (message.User == "BanchoBot" && message.Message.Contains(" moved to slot ") && MultiplayerChat.Blocks.Count > 0)
+            if (message.User == "BanchoBot" && (message.Message.Contains(" moved to slot ") || message.Message.Contains(" changed to ")) && MultiplayerChat.Blocks.Count > 0)
             {
                 var lastMessageParagraph = (Paragraph)MultiplayerChat.Blocks.LastBlock;
                 var lastMessageInline = (Run)lastMessageParagraph.Inlines.FirstInline;
-                if (lastMessageInline.Text.Contains(" moved to slot "))
+                if (lastMessageInline.Text.Contains(" moved to slot ") || lastMessageInline.Text.Contains(" changed to "))
                 {
                     var tooltip = "";
                     if (lastMessageParagraph.ToolTip != null)
