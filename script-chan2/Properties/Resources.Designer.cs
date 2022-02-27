@@ -3108,6 +3108,33 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string TournamentsBracketJsonImportDialogView_CloseButtonText {
+            get {
+                return ResourceManager.GetString("TournamentsBracketJsonImportDialogView_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string TournamentsBracketJsonImportDialogView_ImportButtonText {
+            get {
+                return ResourceManager.GetString("TournamentsBracketJsonImportDialogView_ImportButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import from bracket.json.
+        /// </summary>
+        public static string TournamentsView_BracketJsonImportButtonText {
+            get {
+                return ResourceManager.GetString("TournamentsView_BracketJsonImportButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
         public static string TournamentsView_NewButtonText {

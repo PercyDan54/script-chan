@@ -1176,6 +1176,15 @@ CS: {3}</value>
   <data name="TournamentPointListItemView_DeleteButtonTooltip" xml:space="preserve">
     <value>刪除</value>
   </data>
+  <data name="TournamentsBracketJsonImportDialogView_CloseButtonText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="TournamentsBracketJsonImportDialogView_ImportButtonText" xml:space="preserve">
+    <value>匯入</value>
+  </data>
+  <data name="TournamentsView_BracketJsonImportButtonText" xml:space="preserve">
+    <value>Import from bracket.json</value>
+  </data>
   <data name="TournamentsView_NewButtonText" xml:space="preserve">
     <value>新增</value>
   </data>

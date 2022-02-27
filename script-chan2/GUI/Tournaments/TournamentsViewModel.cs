@@ -36,6 +36,8 @@ namespace script_chan2.GUI
         {
             if (message == "DeleteTournament")
                 NotifyOfPropertyChange(() => TournamentsViews);
+            else if (message == "AddTournament")
+                NotifyOfPropertyChange(() => TournamentsViews);
         }
         #endregion
 
@@ -76,6 +78,16 @@ namespace script_chan2.GUI
                 Settings.DefaultTournament = tournament;
                 NotifyOfPropertyChange(() => TournamentsViews);
             }
+        }
+
+        public async void OpenBracketJsonImportDialog()
+        {
+            localLog.Information("open bracket.json import dialog");
+            var model = new TournamentsBracketJsonImportDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            await DialogHost.Show(view, "MainDialogHost");
         }
         #endregion
     }

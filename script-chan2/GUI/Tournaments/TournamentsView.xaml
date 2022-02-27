@@ -14,7 +14,10 @@
             <RowDefinition Height="40" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button x:Name="OpenNewTournamentDialog" Content="{x:Static p:Resources.TournamentsView_NewButtonText}" HorizontalAlignment="Left" />
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button x:Name="OpenNewTournamentDialog" Content="{x:Static p:Resources.TournamentsView_NewButtonText}" HorizontalAlignment="Left" />
+            <Button x:Name="OpenBracketJsonImportDialog" Content="{x:Static p:Resources.TournamentsView_BracketJsonImportButtonText}" Margin="10 0 0 0" />
+        </StackPanel>
         <ScrollViewer Grid.Row="1">
             <ItemsControl x:Name="TournamentsViews">
                 <ItemsControl.ItemsPanel>

@@ -332,6 +332,7 @@
     <Compile Include="GUI\Match\MatchPickOverviewDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchTeamDialogPlayerViewModel.cs" />
     <Compile Include="GUI\Match\MatchTeamDialogViewModel.cs" />
+    <Compile Include="GUI\Tournaments\TournamentsBracketJsonImportDialogViewModel.cs" />
     <Compile Include="Properties\Resources.de-DE.Designer.cs">
       <DependentUpon>Resources.de-DE.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -672,6 +673,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\Tournaments\TournamentPointListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Tournaments\TournamentsBracketJsonImportDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
