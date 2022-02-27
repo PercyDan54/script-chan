@@ -1182,6 +1182,9 @@ CS: {3}</value>
   <data name="TournamentPointListItemView_DeleteButtonTooltip" xml:space="preserve">
     <value>Löschen</value>
   </data>
+  <data name="TournamentsBracketJsonImportDialogView_BracketJsonFileTextBoxHint" xml:space="preserve">
+    <value>json Datei</value>
+  </data>
   <data name="TournamentsBracketJsonImportDialogView_CloseButtonText" xml:space="preserve">
     <value>Schließen</value>
   </data>

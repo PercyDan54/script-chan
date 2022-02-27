@@ -3108,6 +3108,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to json file.
+        /// </summary>
+        public static string TournamentsBracketJsonImportDialogView_BracketJsonFileTextBoxHint {
+            get {
+                return ResourceManager.GetString("TournamentsBracketJsonImportDialogView_BracketJsonFileTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string TournamentsBracketJsonImportDialogView_CloseButtonText {

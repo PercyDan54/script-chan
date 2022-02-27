@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Column="0" Grid.Row="0" x:Name="JsonFilePath" Margin="5" />
+        <TextBox Grid.Column="0" Grid.Row="0" x:Name="JsonFilePath" Margin="5" md:HintAssist.Hint="{x:Static p:Resources.TournamentsBracketJsonImportDialogView_BracketJsonFileTextBoxHint}" />
         <Button Grid.Column="1" Grid.Row="0" x:Name="SelectFile" Content="..." Margin="5" />
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
             <Button Content="{x:Static p:Resources.TournamentsBracketJsonImportDialogView_CloseButtonText}" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
