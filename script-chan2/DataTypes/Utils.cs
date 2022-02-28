@@ -38,6 +38,7 @@ namespace script_chan2.DataTypes
                     case "HD": mods.Add(GameMods.Hidden); break;
                     case "HR": mods.Add(GameMods.HardRock); break;
                     case "DT": mods.Add(GameMods.DoubleTime); break;
+                    case "FM": mods.Add(GameMods.Freemod); break;
                     case "TB": mods.Add(GameMods.TieBreaker); break;
                 }
             }
