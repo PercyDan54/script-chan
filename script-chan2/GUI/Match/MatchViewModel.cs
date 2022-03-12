@@ -333,13 +333,16 @@ namespace script_chan2.GUI
                     if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
                     {
                         PlayNotificationSound();
-                        await UpdateScore(true);
-                        if (!match.WarmupMode)
+                        if (!match.PrivateRoom)
                         {
-                            if (!match.ViewerMode)
+                            await UpdateScore(true);
+                            if (!match.WarmupMode)
                             {
-                                SendRoomStatus();
-                                DiscordApi.SendGameRecap(match);
+                                if (!match.ViewerMode)
+                                {
+                                    SendRoomStatus();
+                                    DiscordApi.SendGameRecap(match);
+                                }
                             }
                         }
                         foreach (var slot in RoomSlotsViews)
