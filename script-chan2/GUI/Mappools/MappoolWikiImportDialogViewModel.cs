@@ -234,16 +234,36 @@ namespace script_chan2.GUI
                         var mappoolTag = importBeatmap.Mod;
                         switch (importBeatmap.Mod.ToLower())
                         {
-                            case "nomod": mappoolTag = "NM"; break;
-                            case "hidden": mappoolMap.AddMod(GameMods.Hidden); mappoolTag = "HD"; break;
-                            case "hardrock": mappoolMap.AddMod(GameMods.HardRock); mappoolTag = "HR"; break;
-                            case "doubletime": mappoolMap.AddMod(GameMods.DoubleTime); mappoolTag = "DT"; break;
-                            case "freemod": mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "FM"; break;
+                            case "nomod":
+                                mappoolTag = "NM";
+                                break;
+                            case "hidden":
+                                mappoolMap.AddMod(GameMods.Hidden); mappoolTag = "HD";
+                                break;
+                            case "hardrock":
+                            case "hard rock":
+                                mappoolMap.AddMod(GameMods.HardRock); mappoolTag = "HR";
+                                break;
+                            case "doubletime":
+                            case "double time":
+                                mappoolMap.AddMod(GameMods.DoubleTime); mappoolTag = "DT";
+                                break;
+                            case "freemod":
+                                mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "FM";
+                                break;
                             case "tiebreaker:":
-                            case "tiebreaker": mappoolMap.AddMod(GameMods.TieBreaker); mappoolTag = "TB"; break;
-                            case "rice": mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "RC"; break;
-                            case "hybrid": mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "HB"; break;
-                            default: mappoolMap.AddMod(GameMods.Freemod); break;
+                            case "tiebreaker":
+                                mappoolMap.AddMod(GameMods.TieBreaker); mappoolTag = "TB";
+                                break;
+                            case "rice":
+                                mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "RC";
+                                break;
+                            case "hybrid":
+                                mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "HB";
+                                break;
+                            default:
+                                mappoolMap.AddMod(GameMods.Freemod);
+                                break;
                         }
                         if (modIndexes.ContainsKey(mappoolTag))
                         {
