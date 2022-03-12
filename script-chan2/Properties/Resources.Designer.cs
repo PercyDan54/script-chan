@@ -1929,6 +1929,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Private room.
+        /// </summary>
+        public static string MatchJoinRoomDialogView_PrivateRoom {
+            get {
+                return ResourceManager.GetString("MatchJoinRoomDialogView_PrivateRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Room ID.
         /// </summary>
         public static string MatchJoinRoomDialogView_RoomIdTextBoxHint {

@@ -774,6 +774,9 @@ CS: {3}</value>
   <data name="MatchJoinRoomDialogView_LabelText" xml:space="preserve">
     <value>加入房間</value>
   </data>
+  <data name="MatchJoinRoomDialogView_PrivateRoom" xml:space="preserve">
+    <value>Private room</value>
+  </data>
   <data name="MatchJoinRoomDialogView_RoomIdTextBoxHint" xml:space="preserve">
     <value>房間 ID</value>
   </data>

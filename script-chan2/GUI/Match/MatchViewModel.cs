@@ -1067,11 +1067,13 @@ namespace script_chan2.GUI
             {
                 localLog.Information("match '{match}' join room '{room}'", match.Name, model.RoomId);
                 match.RoomId = model.RoomId;
+                match.PrivateRoom = model.PrivateRoom;
                 match.Status = MatchStatus.InProgress;
                 match.Save();
                 NotifyOfPropertyChange(() => RoomLinkName);
                 NotifyOfPropertyChange(() => RoomClosedVisible);
                 NotifyOfPropertyChange(() => RoomOpenVisible);
+                NotifyOfPropertyChange(() => PrivateRibbonVisible);
                 OsuIrc.OsuIrc.JoinChannel("#mp_" + model.RoomId);
             }
         }

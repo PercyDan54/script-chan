@@ -21,6 +21,20 @@ namespace script_chan2.GUI
             }
         }
 
+        private bool privateRoom;
+        public bool PrivateRoom
+        {
+            get { return privateRoom; }
+            set
+            {
+                if (value != privateRoom)
+                {
+                    privateRoom = value;
+                    NotifyOfPropertyChange(() => PrivateRoom);
+                }
+            }
+        }
+
         public bool JoinEnabled
         {
             get { return RoomId > 0; }
