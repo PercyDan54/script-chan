@@ -346,6 +346,21 @@
                         </ScrollViewer>
                     </Grid>
                 </Grid>
+                <Border CornerRadius="25" Grid.Column="0" Grid.ColumnSpan="5" Width="400" Height="50" Visibility="{Binding PuffHintVisible}" VerticalAlignment="Bottom" Margin="0 0 0 30" Background="LightGray" BorderBrush="Black" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" CornerRadius="25">
+                            <Border.Background>
+                                <ImageBrush Stretch="Fill" ImageSource="/Resources/puffbuck_avatar.png" />
+                            </Border.Background>
+                        </Border>
+                        <TextBlock x:Name="PuffHintText" Grid.Column="1" VerticalAlignment="Center" Foreground="Black" Margin="20 0 0 0" FontSize="20" />
+                        <Button x:Name="HidePuffHint" Grid.Column="1" Content="X" Width="40" Background="Transparent" HorizontalAlignment="Right" BorderBrush="Transparent" />
+                    </Grid>
+                </Border>
             </Grid>
         </md:DialogHost>
     </Grid>

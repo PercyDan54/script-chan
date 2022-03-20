@@ -2712,6 +2712,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select a roll winner.
+        /// </summary>
+        public static string PuffHint_SelectRollWinner {
+            get {
+                return ResourceManager.GetString("PuffHint_SelectRollWinner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to API Key.
         /// </summary>
         public static string SettingsView_ApiKeyTextBoxHint {

@@ -1044,6 +1044,9 @@ CS: {3}</value>
   <data name="OsuApi_TimeoutErrorText" xml:space="preserve">
     <value>API 和網頁已離線</value>
   </data>
+  <data name="PuffHint_SelectRollWinner" xml:space="preserve">
+    <value>Please select a roll winner</value>
+  </data>
   <data name="SettingsView_ApiKeyTextBoxHint" xml:space="preserve">
     <value>API 金鑰</value>
   </data>

@@ -1050,6 +1050,9 @@ CS: {3}</value>
   <data name="OsuApi_TimeoutErrorText" xml:space="preserve">
     <value>API ist nicht erreichbar.</value>
   </data>
+  <data name="PuffHint_SelectRollWinner" xml:space="preserve">
+    <value>Bitte wähle einen Würfel Gewinner aus</value>
+  </data>
   <data name="SettingsView_ApiKeyTextBoxHint" xml:space="preserve">
     <value>API Schlüssel</value>
   </data>

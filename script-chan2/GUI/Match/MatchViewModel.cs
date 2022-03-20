@@ -548,6 +548,13 @@ namespace script_chan2.GUI
             else if (message == "MapPicked")
             {
                 NotifyOfPropertyChange(() => WarmupMode);
+                NotifyOfPropertyChange(() => PuffHintText);
+                NotifyOfPropertyChange(() => PuffHintVisible);
+            }
+            else if (message == "MapBanned")
+            {
+                NotifyOfPropertyChange(() => PuffHintText);
+                NotifyOfPropertyChange(() => PuffHintVisible);
             }
             else if (message == "UpdateMappoolMap")
             {
@@ -699,6 +706,8 @@ namespace script_chan2.GUI
                     match.RollWinnerTeam = value;
                     match.Save();
                     NotifyOfPropertyChange(() => RollWinnerTeam);
+                    NotifyOfPropertyChange(() => PuffHintText);
+                    NotifyOfPropertyChange(() => PuffHintVisible);
                 }
             }
         }
@@ -713,6 +722,8 @@ namespace script_chan2.GUI
                     match.RollWinnerPlayer = value;
                     match.Save();
                     NotifyOfPropertyChange(() => RollWinnerPlayer);
+                    NotifyOfPropertyChange(() => PuffHintText);
+                    NotifyOfPropertyChange(() => PuffHintVisible);
                 }
             }
         }
@@ -962,6 +973,31 @@ namespace script_chan2.GUI
                     match.Save();
                     NotifyOfPropertyChange(() => WarmupMode);
                 }
+            }
+        }
+
+        private bool suppressHint = false;
+        public Visibility PuffHintVisible
+        {
+            get
+            {
+                if (suppressHint)
+                    return Visibility.Hidden;
+                if ((match.Picks.Count > 0 || match.Bans.Count > 0) && RollWinnerTeam == null && RollWinnerPlayer == null)
+                    return Visibility.Visible;
+                return Visibility.Hidden;
+            }
+        }
+
+        public string PuffHintText
+        {
+            get
+            {
+                if (suppressHint)
+                    return "";
+                if ((match.Picks.Count > 0 || match.Bans.Count > 0) && RollWinnerTeam == null && RollWinnerPlayer == null)
+                    return Properties.Resources.PuffHint_SelectRollWinner;
+                return "";
             }
         }
         #endregion
@@ -1581,6 +1617,13 @@ namespace script_chan2.GUI
             ViewModelBinder.Bind(model, view, null);
 
             await DialogHost.Show(view, DialogIdentifier);
+        }
+
+        public void HidePuffHint()
+        {
+            suppressHint = true;
+            NotifyOfPropertyChange(() => PuffHintText);
+            NotifyOfPropertyChange(() => PuffHintVisible);
         }
         #endregion
     }
