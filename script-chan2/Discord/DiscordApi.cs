@@ -320,7 +320,8 @@ namespace script_chan2.Discord
                     if (string.IsNullOrEmpty(mod))
                         mod = Utils.ConvertGameModsToString(map.Map.Mods);
 
-                    var mvp = match.Games.Last().Scores.OrderByDescending(x => x.Points).First();
+                    var orderedScores = match.Games.Last().Scores.OrderByDescending(x => x.Points);
+                    var mvpScores = orderedScores.Where(x => x.Points == orderedScores.First().Points);
 
                     if (pickingTeamWon)
                         embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapTeamWinTitle, map.Team.Name, mod, string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore)));
@@ -345,7 +346,12 @@ namespace script_chan2.Discord
                     embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**";
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = match.TeamRedPoints, IsInline = true });
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = match.TeamBluePoints, IsInline = true });
-                    embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapMVPFieldName, Value = string.Format(Properties.Resources.DiscordApi_GameRecapMVPFieldValue, mvp.Player.Country.ToLower(), mvp.Player.Name.Replace("_", "\\_"), string.Format("{0:n0}", mvp.Points)) });
+                    var mvps = "";
+                    foreach (var score in mvpScores)
+                    {
+                        mvps += string.Format(Properties.Resources.DiscordApi_GameRecapMVPFieldValue, score.Player.Country.ToLower(), score.Player.Name.Replace("_", "\\_"), string.Format("{0:n0}", score.Points)) + Environment.NewLine;
+                    }
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapMVPFieldName, Value = mvps });
                     if (lastGame)
                         embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapStatusFieldTitle, Value = string.Format(Properties.Resources.DiscordApi_GameRecapStatusFieldTeamMatchWin, match.TeamRedPoints * 2 >= match.BO ? match.TeamRed.Name : match.TeamBlue.Name) });
                     else
