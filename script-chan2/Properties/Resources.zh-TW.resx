@@ -287,6 +287,9 @@
   <data name="DiscordApi_GameRecapStatusFieldTitle" xml:space="preserve">
     <value>狀態</value>
   </data>
+  <data name="DiscordApi_GameRecapTeamDrawTitle" xml:space="preserve">
+    <value>Draw</value>
+  </data>
   <data name="DiscordApi_GameRecapTeamWinTitle" xml:space="preserve">
     <value>{0} 以 {2} 分的差距贏得了他們的 __{1}__ 圖選</value>
     <comment>{0}: Team name
@@ -863,6 +866,9 @@ CS: {3}</value>
   </data>
   <data name="MatchTeamView_IncreaseButtonTooltip" xml:space="preserve">
     <value>增加</value>
+  </data>
+  <data name="MatchViewModel_MapDrawMessage" xml:space="preserve">
+    <value>Result is a draw. The map needs to be replayed.</value>
   </data>
   <data name="MatchViewModel_NextPlayerPickMessage" xml:space="preserve">
     <value>下一個 PICK 玩家: {0}</value>

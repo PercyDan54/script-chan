@@ -520,6 +520,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Draw.
+        /// </summary>
+        public static string DiscordApi_GameRecapTeamDrawTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_GameRecapTeamDrawTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} won their __{1}__ pick by {2}.
         /// </summary>
         public static string DiscordApi_GameRecapTeamWinTitle {
@@ -2591,6 +2600,15 @@ namespace script_chan2.Properties {
         public static string MatchView_WrongTeamWarningText {
             get {
                 return ResourceManager.GetString("MatchView_WrongTeamWarningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result is a draw. The map needs to be replayed..
+        /// </summary>
+        public static string MatchViewModel_MapDrawMessage {
+            get {
+                return ResourceManager.GetString("MatchViewModel_MapDrawMessage", resourceCulture);
             }
         }
         

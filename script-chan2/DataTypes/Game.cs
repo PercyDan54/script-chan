@@ -41,5 +41,13 @@ namespace script_chan2.DataTypes
                 return Scores.Where(x => x.Team == LobbyTeams.Red && x.Passed).Sum(x => x.Points) < Scores.Where(x => x.Team == LobbyTeams.Blue && x.Passed).Sum(x => x.Points);
             }
         }
+
+        public bool Draw
+        {
+            get
+            {
+                return Scores.Where(x => x.Team == LobbyTeams.Red && x.Passed).Sum(x => x.Points) == Scores.Where(x => x.Team == LobbyTeams.Blue && x.Passed).Sum(x => x.Points);
+            }
+        }
     }
 }

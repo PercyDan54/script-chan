@@ -1357,7 +1357,10 @@ namespace script_chan2.GUI
 
             if (match.TeamMode == TeamModes.TeamVS)
             {
-                SendRoomMessage($"{match.TeamRed.Name} : {match.TeamRedPoints} | {match.TeamBluePoints} : {match.TeamBlue.Name}");
+                if (!match.Games.Last().Draw)
+                {
+                    SendRoomMessage($"{match.TeamRed.Name} : {match.TeamRedPoints} | {match.TeamBluePoints} : {match.TeamBlue.Name}");
+                }
 
                 if (match.TeamRedPoints * 2 > match.BO)
                 {
@@ -1387,7 +1390,11 @@ namespace script_chan2.GUI
                     }
                     else
                     {
-                        if (match.Picks.Count > 0)
+                        if (match.Games.Last().Draw)
+                        {
+                            SendRoomMessage(Properties.Resources.MatchViewModel_MapDrawMessage);
+                        }
+                        else if (match.Picks.Count > 0)
                         {
                             if (match.Picks.Last().Team == match.TeamRed)
                             {

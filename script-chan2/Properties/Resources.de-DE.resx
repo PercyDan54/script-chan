@@ -284,6 +284,9 @@
   <data name="DiscordApi_GameRecapStatusFieldTitle" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="DiscordApi_GameRecapTeamDrawTitle" xml:space="preserve">
+    <value>Unentschieden</value>
+  </data>
   <data name="DiscordApi_GameRecapTeamWinTitle" xml:space="preserve">
     <value>{0} haben ihren __{1}__ Pick mit {2} gewonnen</value>
     <comment>{0}: Team name
@@ -866,6 +869,9 @@ CS: {3}</value>
   </data>
   <data name="MatchTeamView_IncreaseButtonTooltip" xml:space="preserve">
     <value>Erhöhen</value>
+  </data>
+  <data name="MatchViewModel_MapDrawMessage" xml:space="preserve">
+    <value>Unentschieden. Die Beatmap muss nochmal gespielt werden.</value>
   </data>
   <data name="MatchViewModel_NextPlayerPickMessage" xml:space="preserve">
     <value>Nächster Pick: {0}</value>

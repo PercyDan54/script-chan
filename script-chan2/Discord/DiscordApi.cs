@@ -323,11 +323,24 @@ namespace script_chan2.Discord
                     var orderedScores = match.Games.Last().Scores.OrderByDescending(x => x.Points);
                     var mvpScores = orderedScores.Where(x => x.Points == orderedScores.First().Points);
 
-                    if (pickingTeamWon)
-                        embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapTeamWinTitle, map.Team.Name, mod, string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore)));
+                    if (teamRedScore == teamBlueScore)
+                    {
+                        embed.Title = Properties.Resources.DiscordApi_GameRecapTeamDrawTitle;
+                    }
                     else
-                        embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapLostTitle, map.Team.Name, mod, string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore)));
-                    if (lastGame)
+                    {
+                        if (pickingTeamWon)
+                            embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapTeamWinTitle, map.Team.Name, mod, string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore)));
+                        else
+                            embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapLostTitle, map.Team.Name, mod, string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore)));
+                    }
+                    
+                    if (teamRedScore == teamBlueScore)
+                    {
+                        embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/696350776750243840/957382088733110282/equals_PNG19.png";
+                        embed.Color = Color.Orange;
+                    }
+                    else if (lastGame)
                     {
                         embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/130304896581763072/411660079771811870/crown.png";
                         embed.Color = Color.Purple;
@@ -352,7 +365,9 @@ namespace script_chan2.Discord
                         mvps += string.Format(Properties.Resources.DiscordApi_GameRecapMVPFieldValue, score.Player.Country.ToLower(), score.Player.Name.Replace("_", "\\_"), string.Format("{0:n0}", score.Points)) + Environment.NewLine;
                     }
                     embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapMVPFieldName, Value = mvps });
-                    if (lastGame)
+                    if (teamRedScore == teamBlueScore)
+                        embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapStatusFieldTitle, Value = Properties.Resources.MatchViewModel_MapDrawMessage });
+                    else if (lastGame)
                         embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapStatusFieldTitle, Value = string.Format(Properties.Resources.DiscordApi_GameRecapStatusFieldTeamMatchWin, match.TeamRedPoints * 2 >= match.BO ? match.TeamRed.Name : match.TeamBlue.Name) });
                     else
                         embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapStatusFieldTitle, Value = string.Format(Properties.Resources.DiscordApi_GameRecapStatusFieldTeamNextPick, map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) });
