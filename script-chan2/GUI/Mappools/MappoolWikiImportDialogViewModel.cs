@@ -261,6 +261,10 @@ namespace script_chan2.GUI
                             case "hybrid":
                                 mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "HB";
                                 break;
+                            case "mixedmod":
+                            case "mixed mod":
+                                mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "MM";
+                                break;
                             default:
                                 mappoolMap.AddMod(GameMods.Freemod);
                                 break;
