@@ -250,9 +250,9 @@ namespace script_chan2.GUI
                     {
                         importMatch = new ImportMatch
                         {
-                            TeamRed = match.Children[0].TextContent,
-                            TeamBlue = match.Children[3].TextContent,
-                            MatchTime = DateTime.Parse(date + " " + match.Children[4].TextContent.Split(' ')[3])
+                            TeamRed = match.Children[0].TextContent.Trim(' '),
+                            TeamBlue = match.Children[1].TextContent.Trim(' '),
+                            MatchTime = DateTime.Parse(date + " " + match.Children[2].TextContent.Split(' ')[3])
                         };
                         importMatches.Add(importMatch);
                     }
