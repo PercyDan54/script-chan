@@ -235,6 +235,7 @@ namespace script_chan2.GUI
                         switch (importBeatmap.Mod.ToLower())
                         {
                             case "nomod":
+                            case "no mod":
                                 mappoolTag = "NM";
                                 break;
                             case "hidden":
