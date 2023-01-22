@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using WK.Libraries.SharpClipboardNS;
 
 namespace script_chan2.GUI
 {
@@ -44,38 +43,15 @@ namespace script_chan2.GUI
             }
         }
 
-        private SharpClipboard clipboard;
-
         public void Activate()
         {
             localLog.Information("player list dialog of team '{team}' open", team.Name);
             AddPlayerNameOrId = "";
-            Clipboard.SetText("");
-            clipboard = new SharpClipboard();
-            clipboard.ClipboardChanged += Clipboard_ClipboardChanged;
         }
 
         public void Deactivate()
         {
             localLog.Information("player list dialog of team '{team}' close", team.Name);
-            clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
-        }
-
-        private async void Clipboard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
-        {
-            if (e.ContentType != SharpClipboard.ContentTypes.Text)
-                return;
-
-            var text = clipboard.ClipboardText;
-
-            if (Regex.IsMatch(text, @"https://osu.ppy.sh/users/\d*"))
-                text = text.Split('/').Last();
-
-            if (int.TryParse(text, out int id))
-            {
-                localLog.Information("team player list dialog clipboard event, found id {id}", id);
-                await AddPlayerInternal(id.ToString());
-            }
         }
 
         private string addPlayerNameOrId;

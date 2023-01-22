@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using WK.Libraries.SharpClipboardNS;
 
 namespace script_chan2.GUI
 {
@@ -32,8 +31,6 @@ namespace script_chan2.GUI
 
         #region Properties
         private Mappool mappool;
-
-        private SharpClipboard clipboard;
 
         public BindableCollection<MappoolBeatmapListItemViewModel> BeatmapViews
         {
@@ -107,32 +104,11 @@ namespace script_chan2.GUI
         {
             localLog.Information("beatmap list dialog of mappool '{mappool}' open", mappool.Name);
             BeatmapId = "";
-            Clipboard.SetText("");
-            clipboard = new SharpClipboard();
-            clipboard.ClipboardChanged += Clipboard_ClipboardChanged;
         }
 
         public void Deactivate()
         {
             localLog.Information("beatmap list dialog of mappool '{mappool}' close", mappool.Name);
-            clipboard.ClipboardChanged -= Clipboard_ClipboardChanged;
-        }
-
-        private async void Clipboard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
-        {
-            if (e.ContentType != SharpClipboard.ContentTypes.Text)
-                return;
-
-            var text = clipboard.ClipboardText;
-
-            if (Regex.IsMatch(text, @"https://osu.ppy.sh/beatmapsets/\d*"))
-                text = text.Split('/').Last();
-
-            if (int.TryParse(text, out int id))
-            {
-                localLog.Information("mappool beatmap list dialog clipboard event, found id {id}", id);
-                await AddBeatmapInternal(id);
-            }
         }
 
         public async Task AddBeatmap()
