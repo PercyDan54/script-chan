@@ -266,6 +266,9 @@ namespace script_chan2.GUI
                             case "mixed mod":
                                 mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "MM";
                                 break;
+                            case "long note":
+                                mappoolMap.AddMod(GameMods.Freemod); mappoolTag = "LN";
+                                break;
                             default:
                                 mappoolMap.AddMod(GameMods.Freemod);
                                 break;
