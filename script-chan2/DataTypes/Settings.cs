@@ -228,7 +228,12 @@ namespace script_chan2.DataTypes
                 try
                 {
                     var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(CONFIG_PATH + "\\config.json"));
-                    ircIpPrivate = config.ircIpPrivate;
+                    if (ircIpPrivate != config.ircIpPrivate)
+                    {
+                        localLog.Information("ircIpPrivate changed");
+                        ircIpPrivate = config.ircIpPrivate;
+                        OsuIrc.OsuIrc.Login();
+                    }
                     retry = false;
                 }
                 catch
@@ -237,7 +242,6 @@ namespace script_chan2.DataTypes
                     Thread.Sleep(1000);
                 }
             }
-            OsuIrc.OsuIrc.Login();
             Events.Aggregator.PublishOnUIThread("ConfigFileChanged");
         }
 
