@@ -1594,7 +1594,7 @@ namespace script_chan2.GUI
         {
             foreach (var map in BeatmapsViews)
             {
-                if (map.CanBanOrPick)
+                if (map.CanPick)
                 {
                     map.Pick();
                     NotifyOfPropertyChange(() => BeatmapsViews);
@@ -1605,7 +1605,7 @@ namespace script_chan2.GUI
 
         public void PickRandomMap()
         {
-            var pickableMaps = BeatmapsViews.Where(x => x.CanBanOrPick && !x.Beatmap.Mods.Contains(GameMods.TieBreaker));
+            var pickableMaps = BeatmapsViews.Where(x => x.CanPick && !x.Beatmap.Mods.Contains(GameMods.TieBreaker));
             if (pickableMaps.Count() < 1)
                 return;
             var random = new Random();

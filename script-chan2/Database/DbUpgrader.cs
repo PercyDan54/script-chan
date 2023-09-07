@@ -103,6 +103,11 @@ namespace script_chan2.Database
                 UpgradeV14();
                 dbVersion = 15;
             }
+            if (dbVersion == 15)
+            {
+                UpgradeV15();
+                dbVersion = 16;
+            }
 
             localLog.Information("database upgrade finished");
         }
@@ -401,6 +406,35 @@ namespace script_chan2.Database
                     command.ExecuteNonQuery();
                 }
                 using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 15 WHERE name = 'dbVersion'", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        private static void UpgradeV15()
+        {
+            localLog.Information("upgrade database to v16");
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand(@"ALTER TABLE MatchPicks ADD COLUMN pick BOOL", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE MatchPicks SET pick = true WHERE ban = false", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"ALTER TABLE MatchPicks ADD COLUMN protect BOOL", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(@"UPDATE MatchPicks SET protect = false", conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("UPDATE UserSettings SET value = 16 WHERE name = 'dbVersion'", conn))
                 {
                     command.ExecuteNonQuery();
                 }

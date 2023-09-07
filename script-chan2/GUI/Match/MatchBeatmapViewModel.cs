@@ -96,7 +96,7 @@ namespace script_chan2.GUI
                             case Enums.GameMods.TieBreaker: colorToAdd = Settings.UserColors.First(x => x.Key == "Tiebreaker").Color; break;
                             case Enums.GameMods.NoFail: colorToAdd = Settings.UserColors.First(x => x.Key == "NoFail").Color; break;
                         }
-                        if (!CanBanOrPick)
+                        if (!CanBan && !CanPick)
                         {
                             colorToAdd = colorToAdd.Darken(1);
                         }
@@ -106,57 +106,13 @@ namespace script_chan2.GUI
                 else
                 {
                     Color colorToAdd = (Color)ColorConverter.ConvertFromString("#1A1A1A");
-                    if (!CanBanOrPick)
+                    if (!CanBan && !CanPick)
                     {
                         colorToAdd = colorToAdd.Darken(1);
                     }
                     brush.GradientStops.Add(new GradientStop(colorToAdd, 0));
                 }
                 return brush;
-            }
-        }
-
-        public Visibility CanUnban
-        {
-            get
-            {
-                if (match.Bans.Any(x => x.Map == beatmap))
-                    return Visibility.Visible;
-                return Visibility.Collapsed;
-            }
-        }
-
-        public Visibility CanBanOrPickTeam
-        {
-            get
-            {
-                if (match.TeamMode != Enums.TeamModes.TeamVS)
-                    return Visibility.Collapsed;
-                if (match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap))
-                    return Visibility.Collapsed;
-                return Visibility.Visible;
-            }
-        }
-
-        public Visibility CanBanOrPickPlayer
-        {
-            get
-            {
-                if (match.TeamMode != Enums.TeamModes.HeadToHead)
-                    return Visibility.Collapsed;
-                if (match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap))
-                    return Visibility.Collapsed;
-                return Visibility.Visible;
-            }
-        }
-
-        public Visibility CanUnpick
-        {
-            get
-            {
-                if (match.Picks.Any(x => x.Map == beatmap))
-                    return Visibility.Visible;
-                return Visibility.Collapsed;
             }
         }
 
@@ -186,8 +142,12 @@ namespace script_chan2.GUI
                         return Brushes.Red;
                     return Brushes.DeepSkyBlue;
                 }
-                if (match.TeamMode == Enums.TeamModes.HeadToHead && match.Picks.Any(x => x.Map == beatmap))
+                if (match.TeamMode == Enums.TeamModes.TeamVS && match.Protects.Any(x => x.Map == beatmap))
+                {
                     return Brushes.Green;
+                }
+                if (match.TeamMode == Enums.TeamModes.HeadToHead && match.Picks.Any(x => x.Map == beatmap))
+                    return Brushes.DeepSkyBlue;
                 return Brushes.White;
             }
         }
@@ -226,19 +186,34 @@ namespace script_chan2.GUI
             }
         }
 
-        public bool CanBanOrPick
+        public bool CanBan
+        {
+            get { return !(match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap) || match.Protects.Any(x => x.Map == beatmap)); }
+        }
+
+        public bool CanPick
         {
             get { return !(match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap)); }
         }
 
-        private bool canUnban
+        public bool CanProtect
+        {
+            get { return !(match.Bans.Any(x => x.Map == beatmap) || match.Picks.Any(x => x.Map == beatmap) || match.Protects.Any(x => x.Map == beatmap)); }
+        }
+
+        private bool CanUnban
         {
             get { return match.Bans.Any(x => x.Map == beatmap); }
         }
 
-        private bool canUnpick
+        private bool CanUnpick
         {
             get { return match.Picks.Any(x => x.Map == beatmap); }
+        }
+
+        private bool CanUnprotect
+        {
+            get { return match.Protects.Any(x => x.Map == beatmap); }
         }
 
         public BindableCollection<MatchBeatmapMenuItem> MenuItems
@@ -246,19 +221,15 @@ namespace script_chan2.GUI
             get
             {
                 var list = new BindableCollection<MatchBeatmapMenuItem>();
-                if (CanBanOrPick)
+                if (CanPick)
                 {
                     if (match.TeamMode == Enums.TeamModes.TeamVS)
                     {
-                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Team = match.TeamRed });
-                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Team = match.TeamBlue });
                         list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick, Team = match.TeamRed });
                         list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick, Team = match.TeamBlue });
                     }
                     if (match.TeamMode == Enums.TeamModes.HeadToHead)
                     {
-                        foreach (var player in match.Players)
-                            list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Player = player.Key });
                         foreach (var player in match.Players)
                             list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick, Player = player.Key });
                     }
@@ -267,16 +238,38 @@ namespace script_chan2.GUI
                         list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Pick });
                     }
                 }
-                else
+                if (CanBan)
                 {
-                    if (canUnban)
+                    if (match.TeamMode == Enums.TeamModes.TeamVS)
                     {
-                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Unban });
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Team = match.TeamRed });
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Team = match.TeamBlue });
                     }
-                    else if (canUnpick)
+                    if (match.TeamMode == Enums.TeamModes.HeadToHead)
                     {
-                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Unpick });
+                        foreach (var player in match.Players)
+                            list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Ban, Player = player.Key });
                     }
+                }
+                if (CanProtect)
+                {
+                    if (match.TeamMode == Enums.TeamModes.TeamVS)
+                    {
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Protect, Team = match.TeamRed });
+                        list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Protect, Team = match.TeamBlue });
+                    }
+                }
+                if (CanUnban)
+                {
+                    list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Unban });
+                }
+                if (CanUnpick)
+                {
+                    list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Unpick });
+                }
+                if (CanUnprotect)
+                {
+                    list.Add(new MatchBeatmapMenuItem { Type = MatchBeatmapMenuItemTypes.Unprotect });
                 }
                 return list;
             }
@@ -291,6 +284,8 @@ namespace script_chan2.GUI
                 RemoveBan();
             else if (context.Type == MatchBeatmapMenuItemTypes.Unpick)
                 RemovePick();
+            else if (context.Type == MatchBeatmapMenuItemTypes.Unprotect)
+                RemoveProtect();
             else if (context.Type == MatchBeatmapMenuItemTypes.Ban)
             {
                 if (context.Player != null)
@@ -323,6 +318,16 @@ namespace script_chan2.GUI
                     Pick();
                 }
             }
+            else if (context.Type == MatchBeatmapMenuItemTypes.Protect)
+            {
+                if (context.Team != null)
+                {
+                    if (context.Team == match.TeamRed)
+                        ProtectRed();
+                    else
+                        ProtectBlue();
+                }
+            }
             NotifyOfPropertyChange(() => MenuItems);
         }
 
@@ -337,8 +342,10 @@ namespace script_chan2.GUI
                 ListIndex = match.Bans.Count + 1
             });
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
             NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => CanProtect);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
@@ -356,8 +363,10 @@ namespace script_chan2.GUI
                 ListIndex = match.Bans.Count + 1
             });
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
             NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => CanProtect);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
@@ -375,8 +384,10 @@ namespace script_chan2.GUI
                 ListIndex = match.Bans.Count + 1
             });
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
             NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => CanProtect);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
@@ -392,12 +403,75 @@ namespace script_chan2.GUI
                 match.Bans[i].ListIndex = i + 1;
             }
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
             NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => CanProtect);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapUnbanned");
+        }
+
+        public void ProtectRed()
+        {
+            localLog.Information("match '{match}' protect beatmap '{beatmap}' by red", match.Name, beatmap.Beatmap.Title);
+            match.Protects.Add(new MatchPick()
+            {
+                Match = match,
+                Map = beatmap,
+                Team = match.TeamRed,
+                ListIndex = match.Protects.Count + 1
+            });
+            match.Save();
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
+            NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => CanProtect);
+            NotifyOfPropertyChange(() => TextDecoration);
+            NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("MapProtected");
+        }
+
+        public void ProtectBlue()
+        {
+            localLog.Information("match '{match}' protect beatmap '{beatmap}' by blue", match.Name, beatmap.Beatmap.Title);
+            match.Protects.Add(new MatchPick()
+            {
+                Match = match,
+                Map = beatmap,
+                Team = match.TeamBlue,
+                ListIndex = match.Protects.Count + 1
+            });
+            match.Save();
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
+            NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => CanProtect);
+            NotifyOfPropertyChange(() => TextDecoration);
+            NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("MapProtected");
+        }
+
+        public void RemoveProtect()
+        {
+            localLog.Information("match '{match}' unprotect beatmap '{beatmap}'", match.Name, beatmap.Beatmap.Title);
+            match.Protects.RemoveAll(x => x.Map == beatmap);
+            for (var i = 0; i < match.Protects.Count; i++)
+            {
+                match.Protects[i].ListIndex = i + 1;
+            }
+            match.Save();
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
+            NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => CanProtect);
+            NotifyOfPropertyChange(() => TextDecoration);
+            NotifyOfPropertyChange(() => FontColor);
+            NotifyOfPropertyChange(() => Background);
+            Events.Aggregator.PublishOnUIThread("MapUnprotected");
         }
 
         public void PickRed()
@@ -412,8 +486,10 @@ namespace script_chan2.GUI
             });
             match.WarmupMode = false;
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
             NotifyOfPropertyChange(() => CanUnpick);
+            NotifyOfPropertyChange(() => CanProtect);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapPicked");
@@ -432,8 +508,10 @@ namespace script_chan2.GUI
             });
             match.WarmupMode = false;
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
             NotifyOfPropertyChange(() => CanUnpick);
+            NotifyOfPropertyChange(() => CanProtect);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapPicked");
@@ -452,8 +530,10 @@ namespace script_chan2.GUI
             });
             match.WarmupMode = false;
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
             NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => CanProtect);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
@@ -497,8 +577,10 @@ namespace script_chan2.GUI
             match.Picks.Add(pick);
             match.WarmupMode = false;
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
             NotifyOfPropertyChange(() => CanUnban);
+            NotifyOfPropertyChange(() => CanProtect);
             NotifyOfPropertyChange(() => TextDecoration);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
@@ -515,8 +597,10 @@ namespace script_chan2.GUI
                 match.Picks[i].ListIndex = i + 1;
             }
             match.Save();
-            NotifyOfPropertyChange(() => CanBanOrPickTeam);
+            NotifyOfPropertyChange(() => CanBan);
+            NotifyOfPropertyChange(() => CanPick);
             NotifyOfPropertyChange(() => CanUnpick);
+            NotifyOfPropertyChange(() => CanProtect);
             NotifyOfPropertyChange(() => FontColor);
             NotifyOfPropertyChange(() => Background);
             Events.Aggregator.PublishOnUIThread("MapUnpicked");
@@ -547,7 +631,7 @@ namespace script_chan2.GUI
 
         public void RootDoubleClick()
         {
-            if (CanBanOrPick && match.TeamMode == Enums.TeamModes.TeamVS)
+            if (CanPick && match.TeamMode == Enums.TeamModes.TeamVS)
             {
                 if (match.Picks.Count > 0)
                 {
@@ -575,8 +659,10 @@ namespace script_chan2.GUI
     {
         Pick,
         Ban,
+        Protect,
         Unpick,
-        Unban
+        Unban,
+        Unprotect,
     }
 
     public class MatchBeatmapMenuItem
@@ -621,9 +707,24 @@ namespace script_chan2.GUI
                         return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemPickText);
                     }
                 }
+                if (Type == MatchBeatmapMenuItemTypes.Protect)
+                {
+                    if (Player != null)
+                    {
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemProtectedByText, Player.Name.Replace("_", "__"));
+                    }
+                    else if (Team != null)
+                    {
+                        return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemProtectedByText, Team.Name.Replace("_", "__"));
+                    }
+                }
                 if (Type == MatchBeatmapMenuItemTypes.Unban)
                 {
                     return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemUnbanText);
+                }
+                if (Type == MatchBeatmapMenuItemTypes.Unprotect)
+                {
+                    return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemUnprotectText);
                 }
                 return string.Format(Properties.Resources.MatchBeatmapViewModel_ContextItemUnpickText);
             }

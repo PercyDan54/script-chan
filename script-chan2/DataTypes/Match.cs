@@ -17,6 +17,7 @@ namespace script_chan2.DataTypes
             TeamsBR = new Dictionary<Team, int>();
             Picks = new List<MatchPick>();
             Bans = new List<MatchPick>();
+            Protects = new List<MatchPick>();
             ChatMessages = new List<IrcMessage>();
             Games = new List<Game>();
             Id = id;
@@ -94,6 +95,8 @@ namespace script_chan2.DataTypes
         public List<MatchPick> Picks { get; set; }
 
         public List<MatchPick> Bans { get; set; }
+
+        public List<MatchPick> Protects { get; set; }
 
         public List<IrcMessage> ChatMessages { get; set; }
 

@@ -421,7 +421,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ban Recap.
+        ///   Looks up a localized string similar to Ban/Protect Recap.
         /// </summary>
         public static string DiscordApi_BanRecapTitle {
             get {
@@ -430,7 +430,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ban Recap (Roll Winner: {0}).
+        ///   Looks up a localized string similar to Ban/Protect Recap (Roll Winner: {0}).
         /// </summary>
         public static string DiscordApi_BanRecapWithRollWinnerTitle {
             get {
@@ -1683,6 +1683,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Protected by {0}.
+        /// </summary>
+        public static string MatchBeatmapViewModel_ContextItemProtectedByText {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_ContextItemProtectedByText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unban.
         /// </summary>
         public static string MatchBeatmapViewModel_ContextItemUnbanText {
@@ -1697,6 +1706,15 @@ namespace script_chan2.Properties {
         public static string MatchBeatmapViewModel_ContextItemUnpickText {
             get {
                 return ResourceManager.GetString("MatchBeatmapViewModel_ContextItemUnpickText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unprotect.
+        /// </summary>
+        public static string MatchBeatmapViewModel_ContextItemUnprotectText {
+            get {
+                return ResourceManager.GetString("MatchBeatmapViewModel_ContextItemUnprotectText", resourceCulture);
             }
         }
         

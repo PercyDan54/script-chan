@@ -103,6 +103,7 @@ namespace script_chan2.DataTypes
                     match.Mappool = null;
                     match.Picks.Clear();
                     match.Bans.Clear();
+                    match.Protects.Clear();
                     match.Save();
                 }
             }

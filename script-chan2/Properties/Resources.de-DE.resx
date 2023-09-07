@@ -241,10 +241,10 @@
     <comment>{0}: Webhook name</comment>
   </data>
   <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
-    <value>Ban Zusammenfassung</value>
+    <value>Ban/Protect Zusammenfassung</value>
   </data>
   <data name="DiscordApi_BanRecapWithRollWinnerTitle" xml:space="preserve">
-    <value>Ban Zusammenfassung (Würfel Gewinner: {0})</value>
+    <value>Ban/Protect Zusammenfassung (Würfel Gewinner: {0})</value>
   </data>
   <data name="DiscordApi_GameRecapLostTitle" xml:space="preserve">
     <value>{0} haben ihren __{1}__ Pick mit {2} verloren</value>
@@ -682,11 +682,18 @@ Beatmap Links in der Zwischenablage werden automatisch der Liste hinzugefügt</v
   <data name="MatchBeatmapViewModel_ContextItemPickText" xml:space="preserve">
     <value>Pick</value>
   </data>
+  <data name="MatchBeatmapViewModel_ContextItemProtectedByText" xml:space="preserve">
+    <value>Protected by {0}</value>
+    <comment>{0}: Player or team name</comment>
+  </data>
   <data name="MatchBeatmapViewModel_ContextItemUnbanText" xml:space="preserve">
     <value>Ban rückgängig machen</value>
   </data>
   <data name="MatchBeatmapViewModel_ContextItemUnpickText" xml:space="preserve">
     <value>Pick rückgängig machen</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemUnprotectText" xml:space="preserve">
+    <value>Unprotect</value>
   </data>
   <data name="MatchBeatmapViewModel_LabelText" xml:space="preserve">
     <value>{0} - {1} [{2}] ({3}) BPM{4} AR{5} CS{6}</value>

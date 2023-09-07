@@ -679,11 +679,18 @@
   <data name="MatchBeatmapViewModel_ContextItemPickText" xml:space="preserve">
     <value>Pick</value>
   </data>
+  <data name="MatchBeatmapViewModel_ContextItemProtectedByText" xml:space="preserve">
+    <value>Protected by {0}</value>
+    <comment>{0}: Player or team name</comment>
+  </data>
   <data name="MatchBeatmapViewModel_ContextItemUnbanText" xml:space="preserve">
     <value>取消 BAN</value>
   </data>
   <data name="MatchBeatmapViewModel_ContextItemUnpickText" xml:space="preserve">
     <value>取消 PICK</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemUnprotectText" xml:space="preserve">
+    <value>Unprotect</value>
   </data>
   <data name="MatchBeatmapViewModel_LabelText" xml:space="preserve">
     <value>{0} - {1} [{2}] ({3}) BPM{4} AR{5} CS{6}</value>

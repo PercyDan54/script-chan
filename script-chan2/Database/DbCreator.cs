@@ -62,7 +62,7 @@ namespace script_chan2.Database
                 ('defaultTimerCommand', '120'),
                 ('defaultTimerAfterGame', '120'),
                 ('defaultTimerAfterPick', '120'),
-                ('dbVersion', '15')", conn))
+                ('dbVersion', '16')", conn))
             {
                 command.ExecuteNonQuery();
             }
@@ -298,7 +298,9 @@ namespace script_chan2.Database
                 (match INTEGER NOT NULL,
                 beatmap INTEGER NOT NULL,
                 picker INTEGER,
+                pick BOOL,
                 ban BOOL,
+                protect BOOL,
                 listIndex INTEGER,
                 PRIMARY KEY(match, beatmap),
                 FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,

@@ -241,10 +241,10 @@
     <comment>{0}: Webhook name</comment>
   </data>
   <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
-    <value>Ban Recap</value>
+    <value>Ban/Protect Recap</value>
   </data>
   <data name="DiscordApi_BanRecapWithRollWinnerTitle" xml:space="preserve">
-    <value>Ban Recap (Roll Winner: {0})</value>
+    <value>Ban/Protect Recap (Roll Winner: {0})</value>
   </data>
   <data name="DiscordApi_GameRecapLostTitle" xml:space="preserve">
     <value>{0} lost their __{1}__ pick by {2}</value>
@@ -678,11 +678,18 @@ Copy single beatmap links to clipboard to add them to the list</value>
   <data name="MatchBeatmapViewModel_ContextItemPickText" xml:space="preserve">
     <value>Pick</value>
   </data>
+  <data name="MatchBeatmapViewModel_ContextItemProtectedByText" xml:space="preserve">
+    <value>Protected by {0}</value>
+    <comment>{0}: Player or team name</comment>
+  </data>
   <data name="MatchBeatmapViewModel_ContextItemUnbanText" xml:space="preserve">
     <value>Unban</value>
   </data>
   <data name="MatchBeatmapViewModel_ContextItemUnpickText" xml:space="preserve">
     <value>Unpick</value>
+  </data>
+  <data name="MatchBeatmapViewModel_ContextItemUnprotectText" xml:space="preserve">
+    <value>Unprotect</value>
   </data>
   <data name="MatchBeatmapViewModel_LabelText" xml:space="preserve">
     <value>{0} - {1} [{2}] ({3}) BPM{4} AR{5} CS{6}</value>

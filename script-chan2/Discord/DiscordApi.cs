@@ -100,15 +100,25 @@ namespace script_chan2.Discord
                         embed.Title = Properties.Resources.DiscordApi_BanRecapTitle;
                     var redTeam = "";
                     var blueTeam = "";
+                    foreach (var protect in match.Protects)
+                    {
+                        var mod = protect.Map.Tag;
+                        if (string.IsNullOrEmpty(mod))
+                            mod = Utils.ConvertGameModsToString(protect.Map.Mods);
+                        if (protect.Team == match.TeamRed)
+                            redTeam += $"🛡 -{protect.ListIndex}- __{mod}__ **{protect.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {protect.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{protect.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
+                        if (protect.Team == match.TeamBlue)
+                            blueTeam += $"🛡 -{protect.ListIndex}- __{mod}__ **{protect.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {protect.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{protect.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
+                    }
                     foreach (var ban in match.Bans)
                     {
                         var mod = ban.Map.Tag;
                         if (string.IsNullOrEmpty(mod))
                             mod = Utils.ConvertGameModsToString(ban.Map.Mods);
                         if (ban.Team == match.TeamRed)
-                            redTeam += $"-{ban.ListIndex}- __{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
+                            redTeam += $"🚫 -{ban.ListIndex}- __{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
                         if (ban.Team == match.TeamBlue)
-                            blueTeam += $"-{ban.ListIndex}- __{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
+                            blueTeam += $"🚫 -{ban.ListIndex}- __{mod}__ **{ban.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {ban.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{ban.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**" + Environment.NewLine;
                     }
                     if (!string.IsNullOrEmpty(redTeam))
                         embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = redTeam });
