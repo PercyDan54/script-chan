@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using Serilog;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -17,6 +18,15 @@ namespace script_chan2.GUI
             else
                 ShowMatches();
             localLog.Information("main view loaded");
+            var randomNumber = new Random().Next(0, 10000);
+            if (randomNumber <= 727)
+            {
+                WindowTitle = "S[k]ript-chan";
+            }
+            else
+            {
+                WindowTitle = "Script-chan";
+            }
         }
         #endregion
 
@@ -42,6 +52,20 @@ namespace script_chan2.GUI
                 {
                     mainTitle = value;
                     NotifyOfPropertyChange(() => MainTitle);
+                }
+            }
+        }
+
+        private string windowTitle;
+        public string WindowTitle
+        {
+            get { return windowTitle; }
+            set
+            {
+                if (value != windowTitle)
+                {
+                    windowTitle = value;
+                    NotifyOfPropertyChange(() => WindowTitle);
                 }
             }
         }
