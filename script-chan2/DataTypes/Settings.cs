@@ -99,7 +99,8 @@ namespace script_chan2.DataTypes
                         new ConfigColor { key = "FL", color = DefaultColors.GetDefaultColor("FL") },
                         new ConfigColor { key = "Freemod", color = DefaultColors.GetDefaultColor("Freemod") },
                         new ConfigColor { key = "Tiebreaker", color = DefaultColors.GetDefaultColor("Tiebreaker") },
-                        new ConfigColor { key = "NoFail", color = DefaultColors.GetDefaultColor("NoFail") }
+                        new ConfigColor { key = "NoFail", color = DefaultColors.GetDefaultColor("NoFail") },
+                        new ConfigColor { key = "Protect", color = DefaultColors.GetDefaultColor("Protect") },
                     },
                     notificationSoundFile = "",
                     enableNotifications = true,
@@ -150,6 +151,8 @@ namespace script_chan2.DataTypes
             {
                 if (!config.colors.Any(x => x.key == "Default"))
                     config.colors.Add(new ConfigColor { key = "Default", color = Colors.Black.ToString() });
+                if (!config.colors.Any(x => x.key == "Protect"))
+                    config.colors.Add(new ConfigColor { key = "Protect", color = DefaultColors.GetDefaultColor("Protect") });
             }
             else
             {
@@ -164,7 +167,8 @@ namespace script_chan2.DataTypes
                     new ConfigColor { key = "FL", color = DefaultColors.GetDefaultColor("FL") },
                     new ConfigColor { key = "Freemod", color = DefaultColors.GetDefaultColor("Freemod") },
                     new ConfigColor { key = "Tiebreaker", color = DefaultColors.GetDefaultColor("Tiebreaker") },
-                    new ConfigColor { key = "NoFail", color = DefaultColors.GetDefaultColor("NoFail") }
+                    new ConfigColor { key = "NoFail", color = DefaultColors.GetDefaultColor("NoFail") },
+                    new ConfigColor { key = "Protect", color = DefaultColors.GetDefaultColor("Protect") },
                 };
             }
 

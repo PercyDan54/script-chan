@@ -23,6 +23,7 @@ namespace script_chan2
                 case "Freemod": return "#493872";
                 case "Tiebreaker": return "#467337";
                 case "NoFail": return "#F97AE4";
+                case "Protect": return Colors.Green.ToString();
             }
             return Colors.Black.ToString();
         }

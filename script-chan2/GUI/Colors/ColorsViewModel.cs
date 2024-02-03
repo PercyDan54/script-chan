@@ -48,6 +48,7 @@ namespace script_chan2.GUI
                 Settings.UserColors.First(x => x.Key == "Freemod").Color = (Color)ColorConverter.ConvertFromString(DefaultColors.GetDefaultColor("Freemod"));
                 Settings.UserColors.First(x => x.Key == "Tiebreaker").Color = (Color)ColorConverter.ConvertFromString(DefaultColors.GetDefaultColor("Tiebreaker"));
                 Settings.UserColors.First(x => x.Key == "NoFail").Color = (Color)ColorConverter.ConvertFromString(DefaultColors.GetDefaultColor("NoFail"));
+                Settings.UserColors.First(x => x.Key == "Protect").Color = (Color)ColorConverter.ConvertFromString(DefaultColors.GetDefaultColor("Protect"));
                 Settings.SaveConfig();
                 Events.Aggregator.PublishOnUIThread("UpdateColors");
                 NotifyOfPropertyChange(() => ColorsViews);

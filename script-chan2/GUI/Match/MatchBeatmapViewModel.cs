@@ -144,7 +144,7 @@ namespace script_chan2.GUI
                 }
                 if (match.TeamMode == Enums.TeamModes.TeamVS && match.Protects.Any(x => x.Map == beatmap))
                 {
-                    return Brushes.Green;
+                    return new SolidColorBrush(Settings.UserColors.First(x => x.Key == "Protect").Color);
                 }
                 if (match.TeamMode == Enums.TeamModes.HeadToHead && match.Picks.Any(x => x.Map == beatmap))
                     return Brushes.DeepSkyBlue;
