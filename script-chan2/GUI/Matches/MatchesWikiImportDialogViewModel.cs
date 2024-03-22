@@ -224,7 +224,7 @@ namespace script_chan2.GUI
 
             var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
             var document = await context.OpenAsync(WikiUrl);
-            var currentElement = document.QuerySelectorAll("h2").First(x => x.TextContent.StartsWith("Match schedule"));
+            var currentElement = document.QuerySelectorAll("h2").First(x => x.TextContent.StartsWith("Match schedule", StringComparison.CurrentCultureIgnoreCase));
 
             ImportMatch importMatch = null;
             string date = "";
