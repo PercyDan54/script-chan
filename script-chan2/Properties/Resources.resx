@@ -243,11 +243,17 @@
     <value>Do you really want to delete {0}?</value>
     <comment>{0}: Webhook name</comment>
   </data>
-  <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
+  <data name="DiscordApi_BanProtectRecapTitle" xml:space="preserve">
     <value>Ban/Protect Recap</value>
   </data>
-  <data name="DiscordApi_BanRecapWithRollWinnerTitle" xml:space="preserve">
+  <data name="DiscordApi_BanProtectRecapWithRollWinnerTitle" xml:space="preserve">
     <value>Ban/Protect Recap (Roll Winner: {0})</value>
+  </data>
+  <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
+    <value>Ban Recap</value>
+  </data>
+  <data name="DiscordApi_BanRecapWithRollWinnerTitle" xml:space="preserve">
+    <value>Ban Recap (Roll Winner: {0})</value>
   </data>
   <data name="DiscordApi_GameRecapLostTitle" xml:space="preserve">
     <value>{0} lost their __{1}__ pick by {2}</value>

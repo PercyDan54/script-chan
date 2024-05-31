@@ -95,9 +95,9 @@ namespace script_chan2.Discord
                         embed.Author.IconUrl = webhook.AuthorIcon;
 
                     if (match.RollWinnerTeam != null)
-                        embed.Title = string.Format(Properties.Resources.DiscordApi_BanRecapWithRollWinnerTitle, match.RollWinnerTeam.Name);
+                        embed.Title = string.Format(match.Protects.Count > 0 ? Properties.Resources.DiscordApi_BanProtectRecapWithRollWinnerTitle : Properties.Resources.DiscordApi_BanRecapWithRollWinnerTitle, match.RollWinnerTeam.Name);
                     else
-                        embed.Title = Properties.Resources.DiscordApi_BanRecapTitle;
+                        embed.Title = match.Protects.Count > 0 ? Properties.Resources.DiscordApi_BanProtectRecapTitle : Properties.Resources.DiscordApi_BanRecapTitle;
                     var redTeam = "";
                     var blueTeam = "";
                     foreach (var protect in match.Protects)

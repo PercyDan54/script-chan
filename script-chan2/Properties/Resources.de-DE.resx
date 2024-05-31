@@ -240,11 +240,17 @@
     <value>{0} löschen?</value>
     <comment>{0}: Webhook name</comment>
   </data>
-  <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
+  <data name="DiscordApi_BanProtectRecapTitle" xml:space="preserve">
     <value>Ban/Protect Zusammenfassung</value>
   </data>
-  <data name="DiscordApi_BanRecapWithRollWinnerTitle" xml:space="preserve">
+  <data name="DiscordApi_BanProtectRecapWithRollWinnerTitle" xml:space="preserve">
     <value>Ban/Protect Zusammenfassung (Würfel Gewinner: {0})</value>
+  </data>
+  <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
+    <value>Ban Zusammenfassung</value>
+  </data>
+  <data name="DiscordApi_BanRecapWithRollWinnerTitle" xml:space="preserve">
+    <value>Ban Zusammenfassung (Würfel Gewinner: {0})</value>
   </data>
   <data name="DiscordApi_GameRecapLostTitle" xml:space="preserve">
     <value>{0} haben ihren __{1}__ Pick mit {2} verloren</value>

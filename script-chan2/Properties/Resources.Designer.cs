@@ -423,6 +423,24 @@ namespace script_chan2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ban/Protect Recap.
         /// </summary>
+        public static string DiscordApi_BanProtectRecapTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_BanProtectRecapTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ban/Protect Recap (Roll Winner: {0}).
+        /// </summary>
+        public static string DiscordApi_BanProtectRecapWithRollWinnerTitle {
+            get {
+                return ResourceManager.GetString("DiscordApi_BanProtectRecapWithRollWinnerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ban Recap.
+        /// </summary>
         public static string DiscordApi_BanRecapTitle {
             get {
                 return ResourceManager.GetString("DiscordApi_BanRecapTitle", resourceCulture);
@@ -430,7 +448,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ban/Protect Recap (Roll Winner: {0}).
+        ///   Looks up a localized string similar to Ban Recap (Roll Winner: {0}).
         /// </summary>
         public static string DiscordApi_BanRecapWithRollWinnerTitle {
             get {

@@ -243,6 +243,12 @@
     <value>你確定你真的想要刪除 {0} 嗎?</value>
     <comment>{0}: Webhook name</comment>
   </data>
+  <data name="DiscordApi_BanProtectRecapTitle" xml:space="preserve">
+    <value>Ban/Protect圖回顧</value>
+  </data>
+  <data name="DiscordApi_BanProtectRecapWithRollWinnerTitle" xml:space="preserve">
+    <value>Ban/Protect圖回顧 (骰子贏家: {0})</value>
+  </data>
   <data name="DiscordApi_BanRecapTitle" xml:space="preserve">
     <value>Ban圖回顧</value>
   </data>
