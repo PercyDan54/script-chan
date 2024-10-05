@@ -95,14 +95,14 @@ namespace script_chan2.GUI
 
                 foreach (var playerItem in teamItem.Players)
                 {
-                    if (string.IsNullOrEmpty(playerItem.username) || playerItem.country == null)
+                    if (string.IsNullOrEmpty(playerItem.username))
                         continue;
 
-                    var player = new Player()
+                    var player = new Player
                     {
                         Id = playerItem.id,
                         Name = playerItem.username,
-                        Country = playerItem.country.name
+                        Country = playerItem.country_code
                     };
 
                     localLog.Information("adding player '{player}' to team '{team}'", player.Name, team.Name);
@@ -134,29 +134,16 @@ namespace script_chan2.GUI
                     decimal bpm = 0;
                     decimal ar = 0;
                     decimal cs = 0;
-                    if (beatmapItem.BeatmapInfo.beatmapset_id != null)
-                        beatmapSetId = Convert.ToInt32(beatmapItem.BeatmapInfo.beatmapset_id);
-                    else if (beatmapItem.BeatmapInfo.beatmapset.OnlineBeatmapSetId != null)
-                        beatmapSetId = Convert.ToInt32(beatmapItem.BeatmapInfo.beatmapset.OnlineBeatmapSetId);
-                    if (beatmapItem.BeatmapInfo.ar != null)
+
+                    if (beatmapItem.BeatmapInfo.Difficulty != null)
                     {
-                        artist = beatmapItem.BeatmapInfo.beatmapset.Artist;
-                        title = beatmapItem.BeatmapInfo.beatmapset.Title;
-                        version = beatmapItem.BeatmapInfo.version;
-                        creator = beatmapItem.BeatmapInfo.beatmapset.creator;
-                        bpm = Convert.ToDecimal(beatmapItem.BeatmapInfo.beatmapset.bpm);
-                        ar = Convert.ToDecimal(beatmapItem.BeatmapInfo.ar);
-                        cs = Convert.ToDecimal(beatmapItem.BeatmapInfo.cs);
-                    }
-                    else if (beatmapItem.BeatmapInfo.BaseDifficulty != null)
-                    {
-                        artist = beatmapItem.BeatmapInfo.beatmapset.Metadata.Artist;
-                        title = beatmapItem.BeatmapInfo.beatmapset.Metadata.Title;
-                        version = beatmapItem.BeatmapInfo.version;
-                        creator = beatmapItem.BeatmapInfo.beatmapset.Metadata.creator;
-                        bpm = Convert.ToDecimal(beatmapItem.BeatmapInfo.beatmapset.OnlineInfo.BPM);
-                        ar = Convert.ToDecimal(beatmapItem.BeatmapInfo.BaseDifficulty.ApproachRate);
-                        cs = Convert.ToDecimal(beatmapItem.BeatmapInfo.BaseDifficulty.CircleSize);
+                        artist = beatmapItem.BeatmapInfo.Metadata.Artist;
+                        title = beatmapItem.BeatmapInfo.Metadata.Title;
+                        version = beatmapItem.BeatmapInfo.DifficultyName;
+                        creator = beatmapItem.BeatmapInfo.Metadata.Author.username;
+                        bpm = Convert.ToDecimal(beatmapItem.BeatmapInfo.BPM);
+                        ar = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.ApproachRate);
+                        cs = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.CircleSize);
                     }
                     Beatmap beatmap = new Beatmap()
                     {
@@ -168,7 +155,7 @@ namespace script_chan2.GUI
                         Creator = creator,
                         BPM = bpm,
                         AR = ar,
-                        CS = cs
+                        CS = cs,
                     };
                     Database.Database.AddBeatmap(beatmap);
 
@@ -272,18 +259,16 @@ namespace script_chan2.GUI
 
         private class ImportBeatmapInfo
         {
-            public int? id { get; set; }
+            public decimal? BPM { get; set; }
+            public int? OnlineID { get; set; }
             public int? beatmapset_id { get; set; }
-            public ImportBeatmapset beatmapset { get; set; }
-            public ImportBaseDifficulty BaseDifficulty { get; set; }
-            public string version { get; set; }
-            public decimal? cs { get; set; }
-            public decimal? ar { get; set; }
+            public ImportMetadata Metadata { get; set; }
+            public ImportBaseDifficulty Difficulty { get; set; }
+            public string DifficultyName { get; set; }
         }
 
         private class ImportBeatmapset
         {
-            public decimal? bpm { get; set; }
             public string Title { get; set; }
             public string Artist { get; set; }
             public string creator { get; set; }
@@ -297,6 +282,7 @@ namespace script_chan2.GUI
             public string Title { get; set; }
             public string Artist { get; set; }
             public string creator { get; set; }
+            public ImportPlayer Author { get; set; }
         }
 
         private class ImportOnlineInfo
@@ -308,6 +294,8 @@ namespace script_chan2.GUI
         {
             public decimal? CircleSize { get; set; }
             public decimal? ApproachRate { get; set; }
+            public decimal? DrainRate { get; set; }
+            public decimal? OverallDifficulty { get; set; }
         }
 
         private class ImportTeam
@@ -321,12 +309,7 @@ namespace script_chan2.GUI
         {
             public int id { get; set; }
             public string username { get; set; }
-            public ImportCountry country { get; set; }
-        }
-
-        private class ImportCountry
-        {
-            public string name { get; set; }
+            public string country_code { get; set; }
         }
 
         private class ImportMatch
