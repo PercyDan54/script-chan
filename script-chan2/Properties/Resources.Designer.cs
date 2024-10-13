@@ -2226,6 +2226,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coins.
+        /// </summary>
+        public static string MatchTeamView_CoinsTooltip {
+            get {
+                return ResourceManager.GetString("MatchTeamView_CoinsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Decrease.
         /// </summary>
         public static string MatchTeamView_DecreaseButtonTooltip {

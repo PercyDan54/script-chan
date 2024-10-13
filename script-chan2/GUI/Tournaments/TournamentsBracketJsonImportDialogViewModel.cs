@@ -65,7 +65,7 @@ namespace script_chan2.GUI
 
             var tournament = new Tournament();
             tournament.Name = Path.GetFileName(Path.GetDirectoryName(JsonFilePath)) ?? "imported tournament";
-            tournament.Acronym = tournament.Name.Substring(0, 2).ToUpperInvariant();
+            tournament.Acronym = tournament.Name.Substring(0, 3).ToUpperInvariant();
             switch (importObject.Ruleset.ShortName)
             {
                 case "mania": tournament.GameMode = Enums.GameModes.Mania; break;
@@ -126,6 +126,7 @@ namespace script_chan2.GUI
                 mappool.Save();
 
                 int beatmapIndex = 0;
+
                 foreach (var beatmapItem in roundItem.Beatmaps)
                 {
                     int beatmapSetId = -1;
@@ -187,7 +188,7 @@ namespace script_chan2.GUI
                     match.Tournament = tournament;
                     match.TeamRed = tournament.Teams.First(x => x.Name == importObject.Teams.First(y => y.Acronym == matchItem.Team1Acronym).FullName);
                     match.TeamBlue = tournament.Teams.First(x => x.Name == importObject.Teams.First(y => y.Acronym == matchItem.Team2Acronym).FullName);
-                    match.Name = $"({match.TeamRed.Name}) vs ({match.TeamBlue.Name})";
+                    match.Name = $"{tournament.Acronym}: ({match.TeamRed.Name}) vs ({match.TeamBlue.Name})";
                     match.MatchTime = matchItem.Date;
                     match.GameMode = tournament.GameMode;
                     match.TeamMode = tournament.TeamMode;
