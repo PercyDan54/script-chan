@@ -1078,7 +1078,7 @@ namespace script_chan2.GUI
         public void CreateRoom()
         {
             localLog.Information("match '{match}' create room", match.Name);
-            OsuIrc.OsuIrc.SendMessage("BanchoBot", "!mp make " + match.Name);
+            OsuIrc.OsuIrc.SendMessage("BanchoBot", $"!mp make {match.Tournament.Acronym}: {match.Name}");
             match.PrivateRoom = false;
             match.Save();
             NotifyOfPropertyChange(() => PrivateRibbonVisible);
