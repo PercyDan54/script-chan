@@ -87,6 +87,8 @@ namespace script_chan2.GUI
             localLog.Information("saving tournament");
             tournament.Save();
 
+            bool? hasApi = null;
+
             foreach (var teamItem in importObject.Teams)
             {
                 var team = new Team();
@@ -124,45 +126,44 @@ namespace script_chan2.GUI
                 mappool.Tournament = tournament;
                 localLog.Information("saving mappool '{name}'", mappool.Name);
                 mappool.Save();
-
                 int beatmapIndex = 0;
 
                 foreach (var beatmapItem in roundItem.Beatmaps)
                 {
-                    int beatmapSetId = -1;
-                    string artist = string.Empty;
-                    string title = string.Empty;
-                    string version = string.Empty;
-                    string creator = string.Empty;
-                    decimal bpm = 120;
-                    decimal ar = 5;
-                    decimal cs = 5;
+                    Beatmap beatmap = new Beatmap();
 
                     if (beatmapItem.BeatmapInfo?.Difficulty != null)
                     {
-                        artist = beatmapItem.BeatmapInfo.Metadata.Artist;
-                        title = beatmapItem.BeatmapInfo.Metadata.Title;
-                        version = beatmapItem.BeatmapInfo.DifficultyName;
-                        creator = beatmapItem.BeatmapInfo.Metadata.Author.username;
-                        bpm = Convert.ToDecimal(beatmapItem.BeatmapInfo.BPM);
-                        ar = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.ApproachRate);
-                        cs = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.CircleSize);
+                        beatmap.Artist = beatmapItem.BeatmapInfo.Metadata.Artist;
+                        beatmap.Title = beatmapItem.BeatmapInfo.Metadata.Title;
+                        beatmap.Version = beatmapItem.BeatmapInfo.DifficultyName;
+                        beatmap.Creator = beatmapItem.BeatmapInfo.Metadata.Author.username;
+                        beatmap.BPM = Convert.ToDecimal(beatmapItem.BeatmapInfo.BPM);
+                        beatmap.AR = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.ApproachRate);
+                        beatmap.CS = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.CircleSize);
                     }
-                    Beatmap beatmap = new Beatmap
+                    else
                     {
-                        Id = beatmapItem.id,
-                        SetId = beatmapSetId,
-                        Artist = artist,
-                        Title = string.IsNullOrEmpty(title) ? beatmapItem.id.ToString() : title,
-                        Version = version,
-                        Creator = creator,
-                        BPM = bpm,
-                        AR = ar,
-                        CS = cs,
-                    };
+                        if (!hasApi.HasValue) 
+                            hasApi = await OsuApi.OsuApi.CheckApiKey(Settings.ApiKey);
+
+                        if (hasApi.GetValueOrDefault())
+                        {
+                            var apiBeatmap = await OsuApi.OsuApi.GetBeatmap(beatmapItem.id);
+
+                            if (apiBeatmap != null)
+                                beatmap = apiBeatmap;
+                        }
+                        else
+                        {
+                            beatmap.Id = beatmapItem.id;
+                            beatmap.Title = beatmapItem.id.ToString();
+                        }
+                    }
+
                     Database.Database.AddBeatmap(beatmap);
 
-                    beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(beatmapItem.id));
+                    beatmap = await Database.Database.GetBeatmap(beatmapItem.id);
 
                     MappoolMap mappoolMap = new MappoolMap
                     {

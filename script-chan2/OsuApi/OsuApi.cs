@@ -62,7 +62,7 @@ namespace script_chan2.OsuApi
                     CS = Convert.ToDecimal(beatmap.diff_size)
                 };
             }
-            catch (ApiException)
+            catch (Exception)
             {
                 try
                 {
@@ -277,7 +277,7 @@ namespace script_chan2.OsuApi
                     catch (WebException exception)
                     {
                         localLog.Error(exception, "api call failed");
-                        await Task.Delay(5000);
+                        await Task.Delay(3000);
                     }
                 }
                 throw new ApiException("api call failed after 6 retries");
