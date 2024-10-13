@@ -88,7 +88,7 @@ namespace script_chan2.GUI
             if (result)
             {
                 localLog.Information("save new custom command '{name}'", model.Name);
-                var customCommand = new CustomCommand()
+                var customCommand = new CustomCommand
                 {
                     Name = model.Name,
                     Tournament = model.Tournament,

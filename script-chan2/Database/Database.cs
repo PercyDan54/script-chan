@@ -613,7 +613,7 @@ namespace script_chan2.Database
                         var bpm = Convert.ToDecimal(reader["bpm"]);
                         var ar = Convert.ToDecimal(reader["ar"]);
                         var cs = Convert.ToDecimal(reader["cs"]);
-                        returnValue = new Beatmap()
+                        returnValue = new Beatmap
                         {
                             Id = id,
                             SetId = setId,
@@ -774,7 +774,7 @@ namespace script_chan2.Database
                         var id = Convert.ToInt32(reader["id"]);
                         var name = reader["name"].ToString();
                         var country = reader["country"].ToString();
-                        returnValue = new Player()
+                        returnValue = new Player
                         {
                             Name = name,
                             Country = country,
@@ -1523,7 +1523,7 @@ namespace script_chan2.Database
                         listIndex = Convert.ToInt32(reader["listIndex"]);
                     else
                         listIndex = 0;
-                    var matchPick = new MatchPick()
+                    var matchPick = new MatchPick
                     {
                         Match = match,
                         Map = beatmap,
@@ -1568,7 +1568,7 @@ namespace script_chan2.Database
                     var beatmap = await GetBeatmap(Convert.ToInt32(reader["beatmap"]));
                     var counted = Convert.ToBoolean(reader["counted"]);
                     var warmup = Convert.ToBoolean(reader["warmup"]);
-                    var game = new Game()
+                    var game = new Game
                     {
                         Id = id,
                         Match = match,
@@ -1593,7 +1593,7 @@ namespace script_chan2.Database
                                 var player = await GetPlayer(reader2["player"].ToString());
                                 var points = Convert.ToInt32(reader2["score"]);
                                 var passed = Convert.ToBoolean(reader2["passed"]);
-                                var score = new Score()
+                                var score = new Score
                                 {
                                     Game = game,
                                     Player = player,
@@ -1663,7 +1663,7 @@ namespace script_chan2.Database
                 {
                     while (reader.Read())
                     {
-                        var message = new IrcMessage()
+                        var message = new IrcMessage
                         {
                             Timestamp = DateTime.Parse(reader["timestamp"].ToString()),
                             Channel = reader["channel"].ToString(),
@@ -1692,7 +1692,7 @@ namespace script_chan2.Database
                 {
                     while (reader.Read())
                     {
-                        var message = new IrcMessage()
+                        var message = new IrcMessage
                         {
                             Timestamp = DateTime.Parse(reader["timestamp"].ToString()),
                             Channel = channel,

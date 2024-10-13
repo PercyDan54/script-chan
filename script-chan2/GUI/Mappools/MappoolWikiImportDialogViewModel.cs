@@ -139,7 +139,7 @@ namespace script_chan2.GUI
             var currentElement = document.QuerySelectorAll("h2").First(x => x.TextContent.StartsWith("Mappools"));
 
             ImportMappool importMappool = null;
-            string mappoolName = "";
+            string mappoolName = string.Empty;
             while (true)
             {
                 currentElement = currentElement.NextElementSibling;
@@ -162,7 +162,7 @@ namespace script_chan2.GUI
                         localLog.Information("rename mappool '{oldName}' to '{newName}' because of name collision", currentElement.TextContent, mappoolName);
                     }
 
-                    importMappool = new ImportMappool() { Name = mappoolName };
+                    importMappool = new ImportMappool { Name = mappoolName };
                     importMappools.Add(importMappool);
                 }
 
@@ -225,7 +225,7 @@ namespace script_chan2.GUI
                     var beatmap = await Database.Database.GetBeatmap(importBeatmap.Id);
                     if (beatmap != null)
                     {
-                        var mappoolMap = new MappoolMap()
+                        var mappoolMap = new MappoolMap
                         {
                             Mappool = mappool,
                             Beatmap = beatmap,

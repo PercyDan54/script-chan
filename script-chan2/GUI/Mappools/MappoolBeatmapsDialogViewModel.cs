@@ -2,8 +2,6 @@
 using MaterialDesignThemes.Wpf;
 using script_chan2.DataTypes;
 using Serilog;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -103,7 +101,7 @@ namespace script_chan2.GUI
         public void Activate()
         {
             localLog.Information("beatmap list dialog of mappool '{mappool}' open", mappool.Name);
-            BeatmapId = "";
+            BeatmapId = string.Empty;
         }
 
         public void Deactivate()
@@ -126,7 +124,7 @@ namespace script_chan2.GUI
                     await AddBeatmapInternal(actualId);
                 }
             }
-            BeatmapId = "";
+            BeatmapId = string.Empty;
             IsAddingBeatmap = false;
         }
 
@@ -135,7 +133,7 @@ namespace script_chan2.GUI
             var beatmap = await Database.Database.GetBeatmap(id);
             if (beatmap != null)
             {
-                var mappoolMap = new MappoolMap()
+                var mappoolMap = new MappoolMap
                 {
                     Mappool = mappool,
                     Beatmap = beatmap,

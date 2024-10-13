@@ -46,7 +46,7 @@ namespace script_chan2.GUI
                 var data = (PrivateMessageData)message;
                 localLog.Information("irc message received '{message}' from user '{user}'", data.Message, data.User);
 
-                var ircMessage = new IrcMessage() { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
+                var ircMessage = new IrcMessage { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
 
                 NotifyOfPropertyChange(() => UserViews);
 
@@ -186,7 +186,7 @@ namespace script_chan2.GUI
                 localLog.Information("open new chat for user '{user}'", model.NewChatChannel);
                 if (!ChatList.UserChats.Any(x => x.User == model.NewChatChannel))
                 {
-                    var newUserChat = new UserChat() { User = model.NewChatChannel };
+                    var newUserChat = new UserChat { User = model.NewChatChannel };
                     newUserChat.LoadMessages();
                     ChatList.UserChats.Add(newUserChat);
                 }
@@ -204,7 +204,7 @@ namespace script_chan2.GUI
                 return;
             localLog.Information("user '{user}' send irc message '{message}'", ChatList.GetActiveChat().User, ChatMessage);
             var message = ChatMessage;
-            ChatMessage = "";
+            ChatMessage = string.Empty;
             OsuIrc.OsuIrc.SendMessage(ChatList.GetActiveChat().User, message);
         }
         #endregion

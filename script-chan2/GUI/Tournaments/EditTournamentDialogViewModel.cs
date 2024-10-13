@@ -43,8 +43,8 @@ namespace script_chan2.GUI
             }
             else
             {
-                Name = "";
-                Acronym = "";
+                Name = string.Empty;
+                Acronym = string.Empty;
                 RoomSize = 8;
                 TeamSize = 4;
                 GameMode = GameModes.Standard;
@@ -56,7 +56,7 @@ namespace script_chan2.GUI
                 MpTimerCommand = Settings.DefaultTimerCommand;
                 MpTimerAfterGame = Settings.DefaultTimerAfterGame;
                 MpTimerAfterPick = Settings.DefaultTimerAfterPick;
-                WelcomeString = "";
+                WelcomeString = string.Empty;
                 BRInitialLivesAmount = 2;
                 HeadToHeadPoints = new Dictionary<int, int>();
                 HeadToHeadPointPlace = 1;

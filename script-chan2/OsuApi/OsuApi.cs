@@ -49,7 +49,7 @@ namespace script_chan2.OsuApi
                     return null;
                 }
                 var beatmap = data[0];
-                return new Beatmap()
+                return new Beatmap
                 {
                     Id = Convert.ToInt32(beatmap.beatmap_id),
                     SetId = Convert.ToInt32(beatmap.beatmapset_id),
@@ -79,7 +79,7 @@ namespace script_chan2.OsuApi
                         {
                             if (beatmap.id != beatmapId)
                                 continue;
-                            return new Beatmap()
+                            return new Beatmap
                             {
                                 Id = beatmap.id,
                                 SetId = Convert.ToInt32(json.id),
@@ -118,7 +118,7 @@ namespace script_chan2.OsuApi
                     return null;
                 }
                 var player = data[0];
-                return new Player()
+                return new Player
                 {
                     Name = player.username,
                     Country = player.country,
@@ -138,7 +138,7 @@ namespace script_chan2.OsuApi
                         var document = await context.OpenAsync(req => req.Content(source));
                         var element = document.QuerySelector("#json-user").InnerHtml;
                         dynamic json = JObject.Parse(element);
-                        return new Player()
+                        return new Player
                         {
                             Name = json.username,
                             Country = json.country_code,
@@ -175,7 +175,7 @@ namespace script_chan2.OsuApi
                         continue;
 
                     var beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(gameData.beatmap_id));
-                    var game = new Game()
+                    var game = new Game
                     {
                         Match = match,
                         Id = Convert.ToInt32(gameData.game_id),
@@ -186,7 +186,7 @@ namespace script_chan2.OsuApi
                     foreach (var scoreData in gameData.scores)
                     {
                         var player = await Database.Database.GetPlayer(scoreData.user_id);
-                        var score = new Score()
+                        var score = new Score
                         {
                             Game = game,
                             Player = player,
@@ -224,7 +224,7 @@ namespace script_chan2.OsuApi
                                     continue;
 
                                 var beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(eventObject.game.beatmap.id));
-                                var game = new Game()
+                                var game = new Game
                                 {
                                     Match = match,
                                     Id = Convert.ToInt32(eventObject.game.id),
@@ -235,7 +235,7 @@ namespace script_chan2.OsuApi
                                 foreach (var scoreData in eventObject.game.scores)
                                 {
                                     var player = await Database.Database.GetPlayer(scoreData.user_id.ToString());
-                                    var score = new Score()
+                                    var score = new Score
                                     {
                                         Game = game,
                                         Player = player,

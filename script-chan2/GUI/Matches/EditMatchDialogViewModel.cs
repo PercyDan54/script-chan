@@ -44,11 +44,11 @@ namespace script_chan2.GUI
                 foreach (var player in match.Players)
                     Players.Add(player.Key);
                 NotifyOfPropertyChange(() => PlayerViews);
-                PlayerNameOrId = "";
+                PlayerNameOrId = string.Empty;
             }
             else
             {
-                Name = "";
+                Name = string.Empty;
                 TeamBlue = null;
                 TeamRed = null;
                 TeamSize = 4;
@@ -432,7 +432,7 @@ namespace script_chan2.GUI
                 return;
             localLog.Information("add player {name}", player.Name);
             Players.Add(player);
-            PlayerNameOrId = "";
+            PlayerNameOrId = string.Empty;
             NotifyOfPropertyChange(() => PlayerViews);
         }
 

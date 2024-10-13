@@ -319,7 +319,7 @@ namespace script_chan2.GUI
                 localLog.Information("match '{match}' irc message '{message}' received from user '{user}'", match.Name, data.Message, data.User);
                 if (data.Channel == "#mp_" + match.RoomId)
                 {
-                    var ircMessage = new IrcMessage() { Channel = "#mp_" + match.RoomId, User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
+                    var ircMessage = new IrcMessage { Channel = "#mp_" + match.RoomId, User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
                     AddMessageToChat(ircMessage, false);
 
                     if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
@@ -913,7 +913,7 @@ namespace script_chan2.GUI
             {
                 if (match.TeamMode == TeamModes.TeamVS)
                     return match.TeamBlue.Name;
-                return "";
+                return string.Empty;
             }
         }
 
@@ -923,7 +923,7 @@ namespace script_chan2.GUI
             {
                 if (match.TeamMode == TeamModes.TeamVS)
                     return match.TeamRed.Name;
-                return "";
+                return string.Empty;
             }
         }
 
@@ -995,10 +995,10 @@ namespace script_chan2.GUI
             get
             {
                 if (suppressHint)
-                    return "";
+                    return string.Empty;
                 if ((match.Picks.Count > 0 || match.Bans.Count > 0) && RollWinnerTeam == null && RollWinnerPlayer == null)
                     return Properties.Resources.PuffHint_SelectRollWinner;
-                return "";
+                return string.Empty;
             }
         }
 
@@ -1185,7 +1185,7 @@ namespace script_chan2.GUI
                 return;
             localLog.Information("match '{match}' send irc message '{message}'", match.Name, ChatMessage);
             var message = ChatMessage;
-            ChatMessage = "";
+            ChatMessage = string.Empty;
             SendRoomMessage(message);
         }
 
@@ -1292,7 +1292,7 @@ namespace script_chan2.GUI
                 var lastMessageInline = (Run)lastMessageParagraph.Inlines.FirstInline;
                 if (lastMessageInline.Text.Contains(" moved to slot ") || lastMessageInline.Text.Contains(" changed to "))
                 {
-                    var tooltip = "";
+                    var tooltip = string.Empty;
                     if (lastMessageParagraph.ToolTip != null)
                     {
                         tooltip = lastMessageParagraph.ToolTip.ToString() + Environment.NewLine + $"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}";

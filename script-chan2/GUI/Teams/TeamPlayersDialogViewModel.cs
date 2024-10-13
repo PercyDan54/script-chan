@@ -46,7 +46,7 @@ namespace script_chan2.GUI
         public void Activate()
         {
             localLog.Information("player list dialog of team '{team}' open", team.Name);
-            AddPlayerNameOrId = "";
+            AddPlayerNameOrId = string.Empty;
         }
 
         public void Deactivate()
@@ -123,7 +123,7 @@ namespace script_chan2.GUI
             {
                 await AddPlayerInternal(playerId);
             }
-            AddPlayerNameOrId = "";
+            AddPlayerNameOrId = string.Empty;
             IsAddingPlayer = false;
         }
 

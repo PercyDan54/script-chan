@@ -19,7 +19,7 @@ namespace script_chan2.GUI
             }
             else
             {
-                Name = "";
+                Name = string.Empty;
                 Tournament = Settings.DefaultTournament;
             }
         }

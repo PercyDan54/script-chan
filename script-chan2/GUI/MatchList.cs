@@ -25,7 +25,7 @@ namespace script_chan2.GUI
         {
             if (OpenedMatches.Count > 0)
             {
-                string matches = "";
+                string matches = string.Empty;
                 foreach (var match in OpenedMatches)
                 {
                     matches += match.Name + Environment.NewLine;

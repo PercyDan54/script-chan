@@ -54,7 +54,7 @@ namespace script_chan2.GUI
             if (result)
             {
                 localLog.Information("save new tournament '{tournament}'", model.Name);
-                var tournament = new Tournament()
+                var tournament = new Tournament
                 {
                     Name = model.Name,
                     GameMode = model.GameMode,

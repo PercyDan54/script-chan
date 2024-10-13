@@ -9,7 +9,7 @@ namespace script_chan2.DataTypes
         {
             if (mods.Count == 0)
                 return "NoMod";
-            var modString = "";
+            var modString = string.Empty;
             for (var i = 0; i < mods.Count; i++)
             {
                 if (i > 0)

@@ -99,7 +99,7 @@ namespace script_chan2.GUI
             }
         }
 
-        private string search = "";
+        private string search = string.Empty;
         public string Search
         {
             get { return search; }

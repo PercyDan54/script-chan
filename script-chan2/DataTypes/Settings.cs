@@ -84,10 +84,10 @@ namespace script_chan2.DataTypes
                 localLog.Information("create config file");
                 var configNew = new Config
                 {
-                    apiKey = "",
-                    ircUsername = "",
-                    ircPassword = "",
-                    ircIpPrivate = "",
+                    apiKey = string.Empty,
+                    ircUsername = string.Empty,
+                    ircPassword = string.Empty,
+                    ircIpPrivate = string.Empty,
                     colors = new List<ConfigColor>
                     {
                         new ConfigColor { key = "BanchoBot", color = DefaultColors.GetDefaultColor("BanchoBot") },
@@ -102,7 +102,7 @@ namespace script_chan2.DataTypes
                         new ConfigColor { key = "NoFail", color = DefaultColors.GetDefaultColor("NoFail") },
                         new ConfigColor { key = "Protect", color = DefaultColors.GetDefaultColor("Protect") },
                     },
-                    notificationSoundFile = "",
+                    notificationSoundFile = string.Empty,
                     enableNotifications = true,
                     notificationVolume = 0.5,
                     matchSizes = new List<ConfigSize>
@@ -130,7 +130,7 @@ namespace script_chan2.DataTypes
             ircPassword = config.ircPassword;
             ircIpPrivate = config.ircIpPrivate;
             if (config.notificationSoundFile == null)
-                config.notificationSoundFile = "";
+                config.notificationSoundFile = string.Empty;
             notificationSoundFile = config.notificationSoundFile;
             enableNotifications = config.enableNotifications;
             if (config.notificationVolume == 0)
@@ -366,7 +366,7 @@ namespace script_chan2.DataTypes
                 {
                     defaultTournament = value;
                     if (value == null)
-                        Database.Database.UpdateSettings("defaultTournament", "");
+                        Database.Database.UpdateSettings("defaultTournament", string.Empty);
                     else
                         Database.Database.UpdateSettings("defaultTournament", value.Id.ToString());
                     Events.Aggregator.PublishOnUIThread("UpdateDefaultTournament");
