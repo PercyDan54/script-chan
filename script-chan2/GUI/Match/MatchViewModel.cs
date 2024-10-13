@@ -6,6 +6,7 @@ using script_chan2.Enums;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -1000,6 +1001,8 @@ namespace script_chan2.GUI
                 return "";
             }
         }
+
+        private bool tieBreaker = false;
         #endregion
 
         #region Window Events
@@ -1359,16 +1362,19 @@ namespace script_chan2.GUI
             {
                 if (!match.Games.Last().Draw)
                 {
-                    SendRoomMessage($"{match.TeamRed.Name} : {match.TeamRedPoints} | {match.TeamBluePoints} : {match.TeamBlue.Name}");
+                    SendRoomMessage($"{match.TeamRed.Name} : {match.TeamRedCoins.ToString("N1", CultureInfo.InvariantCulture)} | {match.TeamBlueCoins.ToString("N1", CultureInfo.InvariantCulture)} : {match.TeamBlue.Name}");
                 }
 
-                if (match.TeamRedPoints * 2 > match.BO)
+                if (match.TeamBluePoints + match.TeamRedPoints == match.BO + (tieBreaker ? 1 : 0))
                 {
-                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_WinMessage, match.TeamRed.Name));
-                }
-                else if (match.TeamBluePoints * 2 > match.BO)
-                {
-                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_WinMessage, match.TeamBlue.Name));
+                    if (match.TeamRedCoins > match.TeamBlueCoins)
+                    {
+                        SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_WinMessage, match.TeamRed.Name));
+                    }
+                    else
+                    {
+                        SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_WinMessage, match.TeamBlue.Name));
+                    }
                 }
                 else
                 {
@@ -1384,8 +1390,9 @@ namespace script_chan2.GUI
                         }
                     }
 
-                    if (match.TeamRedPoints * 2 == match.BO - 1 && match.TeamBluePoints * 2 == match.BO - 1)
+                    if (Math.Abs(match.TeamBlueCoins - match.TeamRedCoins) < 150)
                     {
+                        tieBreaker = true;
                         SendRoomMessage(Properties.Resources.MatchViewModel_TiebreakerMessage);
                     }
                     else
@@ -1396,20 +1403,18 @@ namespace script_chan2.GUI
                         }
                         else if (match.Picks.Count > 0)
                         {
-                            if (match.Picks.Last().Team == match.TeamRed)
+                            var nextPick = match.Picks.Last().Team == match.TeamRed ? match.TeamBlue : match.TeamRed;
+
+                            if (match.TeamBluePoints + match.TeamRedPoints == match.BO / 2)
                             {
-                                if (match.Tournament.TeamSize == 1)
-                                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextPlayerPickMessage, match.TeamBlue.Players[0].Name));
-                                else
-                                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextTeamPickMessage, match.TeamBlue.Name));
+                                nextPick = match.TeamRedCoins > match.TeamBlueCoins ? match.TeamBlue : match.TeamRed;
                             }
+
+                            if (match.Tournament.TeamSize == 1)
+                                SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextPlayerPickMessage, nextPick.Players[0].Name));
                             else
-                            {
-                                if (match.Tournament.TeamSize == 1)
-                                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextPlayerPickMessage, match.TeamRed.Players[0].Name));
-                                else
-                                    SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextTeamPickMessage, match.TeamRed.Name));
-                            }
+                                SendRoomMessage(string.Format(Properties.Resources.MatchViewModel_NextTeamPickMessage, nextPick.Name));
+                            
                         }
                     }
 

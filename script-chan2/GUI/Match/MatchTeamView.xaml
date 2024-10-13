@@ -6,6 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:p="clr-namespace:script_chan2.Properties"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:gui="clr-namespace:script_chan2.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400">
     <Grid>
@@ -14,13 +15,23 @@
             <ColumnDefinition Width="50" />
             <ColumnDefinition Width="50" />
             <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="Teamname" VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Left" Foreground="{Binding FontColor}" Cursor="Hand" cal:Message.Attach="[Event MouseUp] = [Action OpenTeamWindow($dataContext)]" />
         <TextBlock x:Name="Points" VerticalAlignment="Center" FontSize="20" Grid.Column="1" HorizontalAlignment="Center" />
-        <Button x:Name="DecreasePoints" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchTeamView_DecreaseButtonTooltip}" Grid.Column="2">
+        <TextBox md:HintAssist.Hint="{x:Static p:Resources.MatchTeamView_CoinsTooltip}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="2" Margin="0 10 5 0">
+            <TextBox.Text>
+                <Binding Path="Coins" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <gui:NotEmptyValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button x:Name="DecreasePoints" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchTeamView_DecreaseButtonTooltip}" Grid.Column="3">
             <md:PackIcon Kind="Minus" />
         </Button>
-        <Button x:Name="IncreasePoints" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchTeamView_IncreaseButtonTooltip}" Grid.Column="3">
+        <Button x:Name="IncreasePoints" Style="{StaticResource MaterialDesignIconButton}" ToolTip="{x:Static p:Resources.MatchTeamView_IncreaseButtonTooltip}" Grid.Column="4">
             <md:PackIcon Kind="Add" />
         </Button>
     </Grid>

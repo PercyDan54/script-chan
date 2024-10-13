@@ -888,7 +888,7 @@ CS: {3}</value>
     <comment>{0}: Player name</comment>
   </data>
   <data name="MatchViewModel_NextTeamPickMessage" xml:space="preserve">
-    <value>下一個 PICK 隊伍: {0}</value>
+    <value>下一个 PICK 隊伍: {0}</value>
     <comment>{0}: Team name</comment>
   </data>
   <data name="MatchViewModel_PlayerPointsMessage" xml:space="preserve">
@@ -913,10 +913,10 @@ CS: {3}</value>
 {4}: Blue team last slot number</comment>
   </data>
   <data name="MatchViewModel_TiebreakerMessage" xml:space="preserve">
-    <value>結果是平局。 我們必須打決勝局。</value>
+    <value>即将进入TB。</value>
   </data>
   <data name="MatchViewModel_WinMessage" xml:space="preserve">
-    <value>**{0} 贏得了這場比賽**</value>
+    <value>**{0} 贏得了这场比赛**</value>
     <comment>{0}: Team or player name</comment>
   </data>
   <data name="MatchView_AbortMapButtonText" xml:space="preserve">

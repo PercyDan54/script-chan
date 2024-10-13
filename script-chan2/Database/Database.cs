@@ -920,7 +920,7 @@ namespace script_chan2.Database
         {
             localLog.Information("init matches");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
+            using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamBlueCoins, teamRed, teamRedPoints, teamRedCoins, teamSize, roomSize,
                 rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, allPicksNofail, status, warmupMode, matchTime, privateRoom FROM Matches", conn))
             using (var reader = command.ExecuteReader())
             {
@@ -982,6 +982,8 @@ namespace script_chan2.Database
                     }
                     var teamRedPoints = Convert.ToInt32(reader["teamRedPoints"]);
                     var teamBluePoints = Convert.ToInt32(reader["teamBluePoints"]);
+                    var teamRedCoins = Convert.ToDouble(reader["teamRedCoins"]);
+                    var teamBlueCoins = Convert.ToDouble(reader["teamBlueCoins"]);
                     var teamSize = Convert.ToInt32(reader["teamSize"]);
                     var roomSize = Convert.ToInt32(reader["roomSize"]);
                     var bo = Convert.ToInt32(reader["BO"]);
@@ -1015,8 +1017,10 @@ namespace script_chan2.Database
                         WinCondition = winCondition,
                         TeamBlue = teamBlue,
                         TeamBluePoints = teamBluePoints,
+                        TeamBlueCoins = teamBlueCoins,
                         TeamRed = teamRed,
                         TeamRedPoints = teamRedPoints,
+                        TeamRedCoins = teamRedCoins,
                         TeamSize = teamSize,
                         RoomSize = roomSize,
                         RollWinnerTeam = rollWinnerTeam,
@@ -1050,8 +1054,8 @@ namespace script_chan2.Database
             using (var conn = GetConnection())
             using (var transaction = conn.BeginTransaction())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, allPicksNofail, status, warmupMode, matchTime, privateRoom)" +
-                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @viewerMode, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @allPicksNofail, @status, @warmupMode, @matchTime, @privateRoom)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamBlueCoins, teamRed, teamRedPoints, teamRedCoins, teamSize, roomSize, rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, allPicksNofail, status, warmupMode, matchTime, privateRoom)" +
+                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamBlueCoins, @teamRed, @teamRedPoints, @teamRedCoins, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @viewerMode, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @allPicksNofail, @status, @warmupMode, @matchTime, @privateRoom)", conn))
                 {
                     command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
                     if (match.Mappool == null)
@@ -1095,6 +1099,8 @@ namespace script_chan2.Database
                     }
                     command.Parameters.AddWithValue("@teamBluePoints", match.TeamBluePoints);
                     command.Parameters.AddWithValue("@teamRedPoints", match.TeamRedPoints);
+                    command.Parameters.AddWithValue("@teamBlueCoins", match.TeamBlueCoins);
+                    command.Parameters.AddWithValue("@teamRedCoins", match.TeamRedCoins);
                     command.Parameters.AddWithValue("@teamSize", match.TeamSize);
                     command.Parameters.AddWithValue("@roomSize", match.RoomSize);
                     command.Parameters.AddWithValue("@BO", match.BO);
@@ -1227,8 +1233,8 @@ namespace script_chan2.Database
             using (var transaction = conn.BeginTransaction())
             {
                 using (var command = new SQLiteCommand(@"UPDATE Matches
-                SET tournament = @tournament, mappool = @mappool, name = @name, roomId = @roomId, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
-                teamRed = @teamRed, teamRedPoints = @teamRedPoints, teamSize = @teamSize, roomSize = @roomSize, rollWinner = @rollWinner, firstPicker = @firstPicker, BO = @BO,
+                SET tournament = @tournament, mappool = @mappool, name = @name, roomId = @roomId, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints, teamBlueCoins = @teamBlueCoins,
+                teamRed = @teamRed, teamRedPoints = @teamRedPoints, teamRedCoins = @teamRedCoins, teamSize = @teamSize, roomSize = @roomSize, rollWinner = @rollWinner, firstPicker = @firstPicker, BO = @BO,
                 viewerMode = @viewerMode, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, pointsForSecondBan = @pointsForSecondBan,
                 allPicksFreemod = @allPicksFreemod, allPicksNofail = @allPicksNofail, status = @status, warmupMode = @warmupMode, matchTime = @matchTime, privateRoom = @privateRoom
                 WHERE id = @id", conn))
@@ -1277,6 +1283,8 @@ namespace script_chan2.Database
                     }
                     command.Parameters.AddWithValue("@teamBluePoints", match.TeamBluePoints);
                     command.Parameters.AddWithValue("@teamRedPoints", match.TeamRedPoints);
+                    command.Parameters.AddWithValue("@teamBlueCoins", match.TeamBlueCoins);
+                    command.Parameters.AddWithValue("@teamRedCoins", match.TeamRedCoins);
                     command.Parameters.AddWithValue("@teamSize", match.TeamSize);
                     command.Parameters.AddWithValue("@roomSize", match.RoomSize);
                     command.Parameters.AddWithValue("@BO", match.BO);

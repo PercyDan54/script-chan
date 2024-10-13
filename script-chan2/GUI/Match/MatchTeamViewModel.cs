@@ -53,6 +53,25 @@ namespace script_chan2.GUI
             }
         }
 
+        public double Coins
+        {
+            get
+            {
+                if (teamColor == TeamColors.Blue)
+                    return match.TeamBlueCoins;
+                return match.TeamRedCoins;
+            }
+            set
+            {
+                if (teamColor == TeamColors.Blue)
+                    match.TeamBlueCoins = value;
+                else
+                    match.TeamRedCoins= value;
+
+                match.Save();
+            }
+        }
+
         public Brush FontColor
         {
             get

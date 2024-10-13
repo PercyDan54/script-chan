@@ -882,6 +882,9 @@ CS: {3}</value>
   <data name="MatchTeamView_IncreaseButtonTooltip" xml:space="preserve">
     <value>Increase</value>
   </data>
+  <data name="MatchTeamView_CoinsTooltip" xml:space="preserve">
+    <value>Coins</value>
+  </data>
   <data name="MatchViewModel_MapDrawMessage" xml:space="preserve">
     <value>Result is a draw. The map needs to be replayed.</value>
   </data>

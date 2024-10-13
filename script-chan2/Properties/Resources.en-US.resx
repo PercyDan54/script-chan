@@ -185,6 +185,7 @@
   </data>
   <data name="DeleteCustomCommandDialogViewModel_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
+    <comment>{0}: Custom command name</comment>
   </data>
   <data name="DeleteCustomCommandDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -200,6 +201,7 @@
   </data>
   <data name="DeleteMappoolDialogView_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
+    <comment>{0}: Mappool name</comment>
   </data>
   <data name="DeleteMatchDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -219,6 +221,7 @@
   </data>
   <data name="DeleteTeamDialogView_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
+    <comment>{0}: Team name</comment>
   </data>
   <data name="DeleteTournamentDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -418,7 +421,7 @@
     <value>Add</value>
   </data>
   <data name="EditTournamentDialogView_AllPicksFreemodCheckBoxText" xml:space="preserve">
-    <value>All picks as freemod</value>
+    <value>All picks as Freemod</value>
   </data>
   <data name="EditTournamentDialogView_AllPicksNofailCheckBoxText" xml:space="preserve">
     <value>All picks as Nofail</value>
@@ -879,6 +882,9 @@ CS: {3}</value>
   <data name="MatchTeamView_IncreaseButtonTooltip" xml:space="preserve">
     <value>Increase</value>
   </data>
+  <data name="MatchTeamView_CoinsTooltip" xml:space="preserve">
+    <value>Coins</value>
+  </data>
   <data name="MatchViewModel_MapDrawMessage" xml:space="preserve">
     <value>Result is a draw. The map needs to be replayed.</value>
   </data>
@@ -922,7 +928,7 @@ CS: {3}</value>
     <value>Abort map</value>
   </data>
   <data name="MatchView_AllPicksFreemodCheckBoxText" xml:space="preserve">
-    <value>All picks as freemod</value>
+    <value>All picks as Freemod</value>
   </data>
   <data name="MatchView_AllPicksNofailCheckBoxText" xml:space="preserve">
     <value>All picks as Nofail</value>

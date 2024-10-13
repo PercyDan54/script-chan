@@ -24,6 +24,8 @@ namespace script_chan2.DataTypes
             RoomId = 0;
             TeamBluePoints = 0;
             TeamRedPoints = 0;
+            TeamBlueCoins = 0;
+            TeamRedCoins = 0;
             ViewerMode = false;
             Status = MatchStatus.New;
         }
@@ -48,9 +50,13 @@ namespace script_chan2.DataTypes
 
         public int TeamBluePoints { get; set; }
 
+        public double TeamBlueCoins { get; set; }
+
         public Team TeamRed { get; set; }
 
         public int TeamRedPoints { get; set; }
+
+        public double TeamRedCoins { get; set; }
 
         public int TeamSize { get; set; }
 
@@ -190,9 +196,18 @@ namespace script_chan2.DataTypes
                             }
                         }
                         if (teamRedScore > teamBlueScore)
+                        {
                             TeamRedPoints++;
+                            TeamRedCoins += 100;
+                            TeamBlueCoins += teamBlueScore / (double)teamRedScore * 100;
+                        }
+
                         if (teamBlueScore > teamRedScore)
+                        {
                             TeamBluePoints++;
+                            TeamBlueCoins += 100;
+                            TeamRedCoins +=  teamRedScore / (double)teamBlueScore * 100;
+                        }
                     }
                     if (TeamMode == TeamModes.HeadToHead)
                     {
