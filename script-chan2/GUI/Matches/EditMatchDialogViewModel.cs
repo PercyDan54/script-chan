@@ -471,7 +471,7 @@ namespace script_chan2.GUI
             if (string.IsNullOrEmpty(Name) && TeamMode == TeamModes.TeamVS && Tournament != null && TeamBlue != null && TeamRed != null)
             {
                 localLog.Information("generate match name");
-                Name = $"{Tournament.Acronym}: ({TeamRed.Name}) VS ({TeamBlue.Name})";
+                Name = $"{Tournament.Acronym}: ({TeamRed.Name}) vs ({TeamBlue.Name})";
             }
         }
 

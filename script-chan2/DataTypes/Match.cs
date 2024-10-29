@@ -90,6 +90,8 @@ namespace script_chan2.DataTypes
 
         public bool WarmupMode { get; set; }
 
+        public bool Tiebreaker { get; set; }
+
         public DateTime? MatchTime { get; set; }
 
         public bool PrivateRoom { get; set; }
@@ -164,7 +166,7 @@ namespace script_chan2.DataTypes
             ChatMessages.Clear();
         }
 
-        public async Task UpdateScores(bool newGameExpected = false)
+        public async Task UpdateScores(bool newGameExpected = false, int skipRound = 0)
         {
             localLog.Information("'{name}' update scores", Name);
             var oldGameCount = Games.Count;
@@ -177,7 +179,7 @@ namespace script_chan2.DataTypes
                 else
                     keepUpdating = false;
             }
-            foreach (var game in Games.Where(x => !x.Counted))
+            foreach (var game in Games.Skip(skipRound).Where(x => !x.Counted))
             {
                 if (!WarmupMode)
                 {
@@ -198,15 +200,19 @@ namespace script_chan2.DataTypes
                         if (teamRedScore > teamBlueScore)
                         {
                             TeamRedPoints++;
-                            TeamRedCoins += 100;
+                            TeamRedCoins += Tiebreaker ? 150 : 110;
                             TeamBlueCoins += teamBlueScore / (double)teamRedScore * 100;
                         }
-
-                        if (teamBlueScore > teamRedScore)
+                        else if (teamBlueScore > teamRedScore)
                         {
                             TeamBluePoints++;
-                            TeamBlueCoins += 100;
-                            TeamRedCoins +=  teamRedScore / (double)teamBlueScore * 100;
+                            TeamBlueCoins += Tiebreaker ? 150 : 110;
+                            TeamRedCoins += teamRedScore / (double)teamBlueScore * 100;
+                        }
+
+                        if (TeamBluePoints + TeamRedPoints == BO && Math.Abs(TeamBlueCoins - TeamRedCoins) < 22.5)
+                        {
+                            Tiebreaker = true;
                         }
                     }
                     if (TeamMode == TeamModes.HeadToHead)

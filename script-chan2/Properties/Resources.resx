@@ -936,6 +936,12 @@ CS: {3}</value>
   <data name="MatchView_BanRecapButtonText" xml:space="preserve">
     <value>Ban recap</value>
   </data>
+  <data name="MatchView_SyncScoreButtonText" xml:space="preserve">
+    <value>Sync score</value>
+  </data>
+  <data name="MatchView_SyncScoreSkipRoundsTooltip" xml:space="preserve">
+    <value>Skip rounds</value>
+  </data>
   <data name="MatchView_BOTextBoxHint" xml:space="preserve">
     <value>BO</value>
   </data>

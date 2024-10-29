@@ -131,6 +131,7 @@ namespace script_chan2.GUI
                 foreach (var beatmapItem in roundItem.Beatmaps)
                 {
                     Beatmap beatmap = new Beatmap();
+                    beatmap.Id = Convert.ToInt32(beatmapItem.id);
 
                     if (beatmapItem.BeatmapInfo?.Difficulty != null)
                     {
@@ -156,7 +157,6 @@ namespace script_chan2.GUI
                         }
                         else
                         {
-                            beatmap.Id = beatmapItem.id;
                             beatmap.Title = beatmapItem.id.ToString();
                         }
                     }
@@ -191,6 +191,8 @@ namespace script_chan2.GUI
                     match.TeamBlue = tournament.Teams.First(x => x.Name == importObject.Teams.First(y => y.Acronym == matchItem.Team2Acronym).FullName);
                     match.Name = $"{tournament.Acronym}: ({match.TeamRed.Name}) vs ({match.TeamBlue.Name})";
                     match.MatchTime = matchItem.Date;
+                    match.TeamRedCoins = matchItem.Team1Coin ?? 0;
+                    match.TeamBlueCoins = matchItem.Team2Coin ?? 0;
                     match.GameMode = tournament.GameMode;
                     match.TeamMode = tournament.TeamMode;
                     match.WinCondition = tournament.WinCondition;
@@ -319,6 +321,8 @@ namespace script_chan2.GUI
             public int ID { get; set; }
             public string Team1Acronym { get; set; }
             public string Team2Acronym { get; set; }
+            public double? Team1Coin { get; set; }
+            public double? Team2Coin { get; set; }
             public DateTime Date { get; set; }
             public int PointsToWin { get; set; }
         }

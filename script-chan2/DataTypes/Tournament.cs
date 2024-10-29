@@ -52,6 +52,13 @@ namespace script_chan2.DataTypes
         public void Save()
         {
             localLog.Information("'{name}' save", Name);
+
+            foreach (var match in Database.Database.Matches.Where(m => m.Tournament == this))
+            {
+                match.Name = $"{Acronym}: ({match.TeamRed.Name}) vs ({match.TeamBlue.Name})";
+                match.Save();
+            }
+
             if (Id == 0)
                 Id = Database.Database.AddTournament(this);
             else

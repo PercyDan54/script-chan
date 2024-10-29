@@ -888,7 +888,7 @@ CS: {3}</value>
     <comment>{0}: Player name</comment>
   </data>
   <data name="MatchViewModel_NextTeamPickMessage" xml:space="preserve">
-    <value>下一个 PICK 隊伍: {0}</value>
+    <value>下一个 Pick 队伍: {0}</value>
     <comment>{0}: Team name</comment>
   </data>
   <data name="MatchViewModel_PlayerPointsMessage" xml:space="preserve">
@@ -913,7 +913,7 @@ CS: {3}</value>
 {4}: Blue team last slot number</comment>
   </data>
   <data name="MatchViewModel_TiebreakerMessage" xml:space="preserve">
-    <value>即将进入TB。</value>
+    <value>即将进入TB</value>
   </data>
   <data name="MatchViewModel_WinMessage" xml:space="preserve">
     <value>**{0} 贏得了这场比赛**</value>
@@ -931,11 +931,17 @@ CS: {3}</value>
   <data name="MatchView_BanRecapButtonText" xml:space="preserve">
     <value>BAN 回顧</value>
   </data>
+  <data name="MatchView_SyncScoreButtonText" xml:space="preserve">
+    <value>重算比分</value>
+  </data>
+  <data name="MatchView_SyncScoreSkipRoundsTooltip" xml:space="preserve">
+    <value>跳过回合数（热手）</value>
+  </data>
   <data name="MatchView_BOTextBoxHint" xml:space="preserve">
     <value>BO</value>
   </data>
   <data name="MatchView_CloseRoomButtonText" xml:space="preserve">
-    <value>關閉房間</value>
+    <value>关闭房间</value>
   </data>
   <data name="MatchView_CreatePrivateRoomButtonText" xml:space="preserve">
     <value>Create private room</value>
