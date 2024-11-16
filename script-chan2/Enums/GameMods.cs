@@ -10,6 +10,7 @@
         TieBreaker,
         NoFail,
         SuddenDeath,
+        SpunOut,
         Easy,
         Mirror
     }

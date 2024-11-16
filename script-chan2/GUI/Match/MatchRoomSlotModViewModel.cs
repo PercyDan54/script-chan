@@ -1,7 +1,7 @@
-﻿using Caliburn.Micro;
-using script_chan2.Enums;
-using System;
+﻿using System;
 using System.Windows.Media.Imaging;
+using Caliburn.Micro;
+using script_chan2.Enums;
 
 namespace script_chan2.GUI
 {
@@ -23,13 +23,15 @@ namespace script_chan2.GUI
             {
                 switch (mod)
                 {
-                    case GameMods.DoubleTime: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_double-time.png"));
-                    case GameMods.Easy: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_easy.png"));
-                    case GameMods.Flashlight: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_flashlight.png"));
-                    case GameMods.HardRock: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_hard-rock.png"));
-                    case GameMods.Hidden: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_hidden.png"));
-                    case GameMods.NoFail: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_no-fail.png"));
-                    case GameMods.Mirror: return new BitmapImage(new Uri($"https://osu.ppy.sh/images/badges/mods/mod_mirror.png"));
+                    case GameMods.DoubleTime: return new BitmapImage(new Uri("https://osu.ppy.sh/images/badges/mods/mod_double-time.png"));
+                    case GameMods.Easy: return new BitmapImage(new Uri("https://osu.ppy.sh/images/badges/mods/mod_easy.png"));
+                    case GameMods.Flashlight: return new BitmapImage(new Uri("https://osu.ppy.sh/images/badges/mods/mod_flashlight.png"));
+                    case GameMods.HardRock: return new BitmapImage(new Uri("https://osu.ppy.sh/images/badges/mods/mod_hard-rock.png"));
+                    case GameMods.Hidden: return new BitmapImage(new Uri("https://osu.ppy.sh/images/badges/mods/mod_hidden.png"));
+                    case GameMods.NoFail: return new BitmapImage(new Uri("https://osu.ppy.sh/images/badges/mods/mod_no-fail.png"));
+                    case GameMods.SuddenDeath: return new BitmapImage(new Uri("https://osu.ppy.sh/images/badges/mods/mod_sudden-death.png"));
+                    case GameMods.SpunOut: return new BitmapImage(new Uri("https://osu.ppy.sh/images/badges/mods/mod_spun-out.png"));
+                    case GameMods.Mirror: return new BitmapImage(new Uri("https://osu.ppy.sh/images/badges/mods/mod_mirror.png"));
                 }
                 return null;
             }

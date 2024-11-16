@@ -1293,7 +1293,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 圖池.
+        ///   Looks up a localized string similar to 图池.
         /// </summary>
         public static string MainView_MappoolsMenuItem {
             get {
@@ -1302,7 +1302,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 對賽.
+        ///   Looks up a localized string similar to 对局.
         /// </summary>
         public static string MainView_MatchesMenuItem {
             get {
@@ -2225,7 +2225,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 中斷遊戲.
+        ///   Looks up a localized string similar to 终止比赛.
         /// </summary>
         public static string MatchView_AbortMapButtonText {
             get {
@@ -2288,7 +2288,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 創建房間.
+        ///   Looks up a localized string similar to 创建房间.
         /// </summary>
         public static string MatchView_CreateRoomButtonText {
             get {
@@ -2315,7 +2315,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 第一個選圖.
+        ///   Looks up a localized string similar to 第一个选图.
         /// </summary>
         public static string MatchView_FirstPickComboBoxHint {
             get {
@@ -2342,7 +2342,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 邀請玩家.
+        ///   Looks up a localized string similar to 邀请玩家.
         /// </summary>
         public static string MatchView_InvitePlayersButtonText {
             get {
@@ -2351,7 +2351,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 加入現存房間.
+        ///   Looks up a localized string similar to 加入现有房间.
         /// </summary>
         public static string MatchView_JoinRoomButtonText {
             get {
@@ -2549,7 +2549,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 隊伍大小.
+        ///   Looks up a localized string similar to 队伍大小.
         /// </summary>
         public static string MatchView_TeamSizeTextBoxHint {
             get {
@@ -2630,7 +2630,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Result is a draw. The map needs to be replayed..
+        ///   Looks up a localized string similar to 分数为平局.
         /// </summary>
         public static string MatchViewModel_MapDrawMessage {
             get {
@@ -2648,7 +2648,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 下一个 Pick 队伍: {0}.
+        ///   Looks up a localized string similar to 下一个选图队伍: {0}.
         /// </summary>
         public static string MatchViewModel_NextTeamPickMessage {
             get {
@@ -2765,7 +2765,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to API 金鑰.
+        ///   Looks up a localized string similar to API 密钥.
         /// </summary>
         public static string SettingsView_ApiKeyTextBoxHint {
             get {
@@ -2828,7 +2828,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 取得 API 金鑰.
+        ///   Looks up a localized string similar to 获取 API 密钥.
         /// </summary>
         public static string SettingsView_GetApiKeyButtonText {
             get {
@@ -2837,7 +2837,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 取得 IRC 密碼.
+        ///   Looks up a localized string similar to 获取 IRC 密码.
         /// </summary>
         public static string SettingsView_GetIrcPasswordButtonText {
             get {
@@ -2846,7 +2846,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IRC 密碼.
+        ///   Looks up a localized string similar to IRC 密码.
         /// </summary>
         public static string SettingsView_IrcPasswordTextBoxHint {
             get {
@@ -2855,7 +2855,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IRC 愈時.
+        ///   Looks up a localized string similar to IRC 超时.
         /// </summary>
         public static string SettingsView_IrcTimeoutTextBoxHint {
             get {
@@ -2864,7 +2864,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IRC 使用者名稱.
+        ///   Looks up a localized string similar to IRC 用户名.
         /// </summary>
         public static string SettingsView_IrcUsernameTextBoxHint {
             get {
@@ -2882,7 +2882,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 通知音效檔案.
+        ///   Looks up a localized string similar to 通知音效文件.
         /// </summary>
         public static string SettingsView_NotificationSoundFileTextBoxHint {
             get {
@@ -2936,7 +2936,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 儲存.
+        ///   Looks up a localized string similar to 保存.
         /// </summary>
         public static string SettingsView_SaveButtonText {
             get {
@@ -2945,7 +2945,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 瀏覽.
+        ///   Looks up a localized string similar to 浏览.
         /// </summary>
         public static string SettingsView_SelectNotificationSoundFileButtonText {
             get {
@@ -2954,7 +2954,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 測試音效.
+        ///   Looks up a localized string similar to 测试 API 密钥.
         /// </summary>
         public static string SettingsView_TestApiKeyButtonText {
             get {
@@ -3071,7 +3071,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 比賽.
+        ///   Looks up a localized string similar to 比赛.
         /// </summary>
         public static string TeamsView_TournamentComboBoxHint {
             get {
