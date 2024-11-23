@@ -50,13 +50,13 @@ namespace script_chan2.DataTypes
 
         public int TeamBluePoints { get; set; }
 
-        public double TeamBlueCoins { get; set; }
+        public decimal TeamBlueCoins { get; set; }
 
         public Team TeamRed { get; set; }
 
         public int TeamRedPoints { get; set; }
 
-        public double TeamRedCoins { get; set; }
+        public decimal TeamRedCoins { get; set; }
 
         public int TeamSize { get; set; }
 
@@ -201,16 +201,16 @@ namespace script_chan2.DataTypes
                         {
                             TeamRedPoints++;
                             TeamRedCoins += Tiebreaker ? 150 : 110;
-                            TeamBlueCoins += teamBlueScore / (double)teamRedScore * 100;
+                            TeamBlueCoins += teamBlueScore / (decimal)teamRedScore * 100;
                         }
                         else if (teamBlueScore > teamRedScore)
                         {
                             TeamBluePoints++;
                             TeamBlueCoins += Tiebreaker ? 150 : 110;
-                            TeamRedCoins += teamRedScore / (double)teamBlueScore * 100;
+                            TeamRedCoins += teamRedScore / (decimal)teamBlueScore * 100;
                         }
 
-                        if (TeamBluePoints + TeamRedPoints == BO && Math.Abs(TeamBlueCoins - TeamRedCoins) < 22.5)
+                        if (TeamBluePoints + TeamRedPoints == BO && Math.Abs(TeamBlueCoins - TeamRedCoins) < 22.5m)
                         {
                             Tiebreaker = true;
                         }

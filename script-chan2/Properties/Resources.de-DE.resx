@@ -1016,7 +1016,7 @@ CS: {3}</value>
     <value>Settings</value>
   </data>
   <data name="MatchView_StartGameButtonText" xml:space="preserve">
-    <value>Spiel starten (5s)</value>
+    <value>Spiel starten (7s)</value>
   </data>
   <data name="MatchView_SwitchPlayersBackButtonText" xml:space="preserve">
     <value>Spieler auf normalen Server zurück wechseln</value>

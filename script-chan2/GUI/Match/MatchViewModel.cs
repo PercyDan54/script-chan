@@ -1222,7 +1222,7 @@ namespace script_chan2.GUI
         public void StartGame()
         {
             localLog.Information("match '{match}' start game", match.Name);
-            SendRoomMessage("!mp start 5");
+            SendRoomMessage("!mp start 7");
         }
 
         public async void AbortMatch()
@@ -1379,6 +1379,7 @@ namespace script_chan2.GUI
             {
                 if (!match.Games.Last().Draw)
                 {
+                    localLog.Information("match '{match}' coins '{teamRedCoins}' '{teamRedCoins}'", match.Name, match.TeamRedCoins.ToString("G"), match.TeamBlueCoins.ToString("G"));
                     SendRoomMessage($"{match.TeamRed.Name} : {match.TeamRedCoins.ToString("N2", CultureInfo.InvariantCulture)} | {match.TeamBlueCoins.ToString("N2", CultureInfo.InvariantCulture)} : {match.TeamBlue.Name}");
                 }
 

@@ -1018,7 +1018,7 @@ CS: {3}</value>
     <value>Settings</value>
   </data>
   <data name="MatchView_StartGameButtonText" xml:space="preserve">
-    <value>Start game (5s)</value>
+    <value>Start game (7s)</value>
   </data>
   <data name="MatchView_SwitchPlayersBackButtonText" xml:space="preserve">
     <value>Switch players back</value>

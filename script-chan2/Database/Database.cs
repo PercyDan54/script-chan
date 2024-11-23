@@ -982,8 +982,8 @@ namespace script_chan2.Database
                     }
                     var teamRedPoints = Convert.ToInt32(reader["teamRedPoints"]);
                     var teamBluePoints = Convert.ToInt32(reader["teamBluePoints"]);
-                    var teamRedCoins = Convert.ToDouble(reader["teamRedCoins"]);
-                    var teamBlueCoins = Convert.ToDouble(reader["teamBlueCoins"]);
+                    var teamRedCoins = Convert.ToDecimal(reader["teamRedCoins"]);
+                    var teamBlueCoins = Convert.ToDecimal(reader["teamBlueCoins"]);
                     var teamSize = Convert.ToInt32(reader["teamSize"]);
                     var roomSize = Convert.ToInt32(reader["roomSize"]);
                     var bo = Convert.ToInt32(reader["BO"]);

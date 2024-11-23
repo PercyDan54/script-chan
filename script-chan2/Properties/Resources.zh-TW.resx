@@ -1019,7 +1019,7 @@ CS: {3}</value>
     <value>設定</value>
   </data>
   <data name="MatchView_StartGameButtonText" xml:space="preserve">
-    <value>開始遊戲 (5秒)</value>
+    <value>开始游戏 (7秒)</value>
   </data>
   <data name="MatchView_SwitchPlayersBackButtonText" xml:space="preserve">
     <value>對調玩家</value>

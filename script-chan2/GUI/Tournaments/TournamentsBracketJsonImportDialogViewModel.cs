@@ -321,8 +321,8 @@ namespace script_chan2.GUI
             public int ID { get; set; }
             public string Team1Acronym { get; set; }
             public string Team2Acronym { get; set; }
-            public double? Team1Coin { get; set; }
-            public double? Team2Coin { get; set; }
+            public decimal? Team1Coin { get; set; }
+            public decimal? Team2Coin { get; set; }
             public DateTime Date { get; set; }
             public int PointsToWin { get; set; }
         }

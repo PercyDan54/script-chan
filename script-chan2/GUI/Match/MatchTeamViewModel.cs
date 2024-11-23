@@ -53,7 +53,7 @@ namespace script_chan2.GUI
             }
         }
 
-        public double Coins
+        public decimal Coins
         {
             get
             {
