@@ -67,7 +67,7 @@ namespace script_chan2.GUI
             {
                 if (Player != null)
                     return Player.Name;
-                return "";
+                return string.Empty;
             }
         }
 
@@ -184,8 +184,8 @@ namespace script_chan2.GUI
                 var list = new BindableCollection<MenuItem>();
                 if (Player != null)
                 {
-                    list.Add(new MenuItem() { Header = Properties.Resources.MatchRoomSlotViewModel_ContextItemSetHostText });
-                    list.Add(new MenuItem() { Header = Properties.Resources.MatchRoomSlotViewModel_ContextItemKickText });
+                    list.Add(new MenuItem { Header = Properties.Resources.MatchRoomSlotViewModel_ContextItemSetHostText });
+                    list.Add(new MenuItem { Header = Properties.Resources.MatchRoomSlotViewModel_ContextItemKickText });
                 }
                 return list;
             }

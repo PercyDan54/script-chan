@@ -88,7 +88,7 @@ namespace script_chan2.GUI
             if (result)
             {
                 localLog.Information("save new team '{team}'", model.Name);
-                var team = new Team()
+                var team = new Team
                 {
                     Name = model.Name,
                     Tournament = model.Tournament

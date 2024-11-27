@@ -140,25 +140,21 @@ namespace script_chan2.GUI
                             list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.AllPlayersReady, message.Timestamp));
                         if (message.Message.Contains("The match has finished"))
                             list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.AllPlayersFinished, message.Timestamp));
-                        if (message.Message.Contains("rolls"))
+                        var regexResult = rollRegex.Match(message.Message);
+                        if (regexResult.Success)
                         {
-                            var regex = new Regex(@"^(.+) rolls (\d+) point\(s\)$");
-                            var regexResult = regex.Match(message.Message);
-                            if (regexResult.Success)
-                            {
-                                var user = regexResult.Groups[1].Value;
-                                var roll = regexResult.Groups[2].Value;
+                            var user = regexResult.Groups[1].Value;
+                            var roll = regexResult.Groups[2].Value;
 
-                                TeamColors? team = null;
-                                if (match.TeamMode == TeamModes.TeamVS)
-                                {
-                                    if (match.TeamRed.Players.Any(x => x.Name == user))
-                                        team = TeamColors.Red;
-                                    if (match.TeamBlue.Players.Any(x => x.Name == user))
-                                        team = TeamColors.Blue;
-                                }
-                                list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.PlayerRoll, message.Timestamp, user, team, roll));
+                            TeamColors? team = null;
+                            if (match.TeamMode == TeamModes.TeamVS)
+                            {
+                                if (match.TeamRed.Players.Any(x => x.Name == user))
+                                    team = TeamColors.Red;
+                                if (match.TeamBlue.Players.Any(x => x.Name == user))
+                                    team = TeamColors.Blue;
                             }
+                            list.Add(new MatchBanchoEventViewModel(MatchBanchoEvents.PlayerRoll, message.Timestamp, user, team, roll));
                         }
                     }
                 }
@@ -219,6 +215,17 @@ namespace script_chan2.GUI
         }
         #endregion
 
+        #region Regex
+
+        private static readonly Regex slotInfoRegex = new Regex(@"^Slot (\d+) ([\w ]+) https://osu.ppy.sh/u/(\d+) (.+) (\[.+\])?$", RegexOptions.Compiled);
+        private static readonly Regex playerJoinRegex = new Regex(@"^(.+) joined in slot (\d+) for team (\w+)\.$", RegexOptions.Compiled);
+        private static readonly Regex rollRegex = new Regex(@"^(.+) rolls (\d+) point\(s\)$", RegexOptions.Compiled);
+        private static readonly Regex changeTeamRegex = new Regex(@"^(.+) changed to (\w+)$", RegexOptions.Compiled);
+        private static readonly Regex moveSlotRegex = new Regex(@"^(.+) moved to slot (\d+)$", RegexOptions.Compiled);
+        private static readonly Regex leftGameRegex = new Regex(@"^(.+) left the game\.$", RegexOptions.Compiled);
+
+        #endregion
+
         #region Events
         protected override void OnActivate()
         {
@@ -247,8 +254,7 @@ namespace script_chan2.GUI
         {
             var actualView = (MatchView)view;
             var scrollViewer = FindScroll(actualView.ChatWindow);
-            if (scrollViewer != null)
-                scrollViewer.ScrollToEnd();
+            scrollViewer?.ScrollToEnd();
 
             WindowHeight = Settings.WindowHeight;
             WindowWidth = Settings.WindowWidth;
@@ -312,57 +318,59 @@ namespace script_chan2.GUI
                     }
                 }
             }
-            else if (message is ChannelMessageData)
+            else if (message is ChannelMessageData data)
             {
-                var data = (ChannelMessageData)message;
                 localLog.Information("match '{match}' irc message '{message}' received from user '{user}'", match.Name, data.Message, data.User);
                 if (data.Channel == "#mp_" + match.RoomId)
                 {
-                    var ircMessage = new IrcMessage() { Channel = "#mp_" + match.RoomId, User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
+                    var ircMessage = new IrcMessage { Channel = "#mp_" + match.RoomId, User = data.User, Timestamp = DateTime.Now, Match = match, Message = data.Message };
                     AddMessageToChat(ircMessage, false);
 
-                    if (data.User == "BanchoBot" && data.Message.Contains("All players are ready"))
+                    if (data.User == "BanchoBot")
                     {
-                        PlayNotificationSound();
-                        foreach (var slot in RoomSlotsViews)
+                        if (data.Message.Contains("All players are ready"))
                         {
-                            slot.State = RoomSlotStates.Ready;
-                        }
-                        NotifyOfPropertyChange(() => RoomSlotsViews);
-                    }
-                    if (data.User == "BanchoBot" && data.Message.Contains("The match has finished"))
-                    {
-                        PlayNotificationSound();
-                        if (!match.PrivateRoom)
-                        {
-                            await UpdateScore(true);
-                            if (!match.WarmupMode)
+                            PlayNotificationSound();
+                            foreach (var slot in RoomSlotsViews)
                             {
-                                if (!match.ViewerMode)
+                                slot.State = RoomSlotStates.Ready;
+                            }
+
+                            NotifyOfPropertyChange(() => RoomSlotsViews);
+                        }
+                        else if (data.Message.Contains("The match has finished"))
+                        {
+                            PlayNotificationSound();
+                            if (!match.PrivateRoom)
+                            {
+                                await UpdateScore(true);
+                                if (!match.WarmupMode)
                                 {
-                                    SendRoomStatus();
-                                    DiscordApi.SendGameRecap(match);
+                                    if (!match.ViewerMode)
+                                    {
+                                        SendRoomStatus();
+                                        DiscordApi.SendGameRecap(match);
+                                    }
                                 }
                             }
+
+                            foreach (var slot in RoomSlotsViews)
+                            {
+                                slot.State = RoomSlotStates.NotReady;
+                            }
                         }
-                        foreach (var slot in RoomSlotsViews)
+                        else if (data.Message.StartsWith("Room name:"))
                         {
-                            slot.State = RoomSlotStates.NotReady;
+                            foreach (var slot in RoomSlotsViews)
+                            {
+                                slot.Player = null;
+                                slot.Team = null;
+                                slot.Mods = new List<GameMods>();
+                            }
                         }
-                    }
-                    if (data.User == "BanchoBot" && data.Message.StartsWith("Room name:"))
-                    {
-                        foreach (var slot in RoomSlotsViews)
-                        {
-                            slot.Player = null;
-                            slot.Team = null;
-                            slot.Mods = new List<GameMods>();
-                        }
-                    }
-                    if (data.User == "BanchoBot" && data.Message.StartsWith("Slot "))
-                    {
-                        var regex = new Regex(@"^Slot (\d+) ([\w ]+) https://osu.ppy.sh/u/(\d+) (.+) (\[.+\])?$");
-                        var regexResult = regex.Match(data.Message);
+
+                        var regexResult = slotInfoRegex.Match(data.Message);
+
                         if (regexResult.Success)
                         {
                             var slotNumber = Convert.ToInt32(regexResult.Groups[1].Value.Trim());
@@ -400,6 +408,10 @@ namespace script_chan2.GUI
                                     mods.Add(GameMods.HardRock);
                                 if (detailsString.Contains("NoFail"))
                                     mods.Add(GameMods.NoFail);
+                                if (detailsString.Contains("SuddenDeath"))
+                                    mods.Add(GameMods.SuddenDeath);
+                                if (detailsString.Contains("SpunOut"))
+                                    mods.Add(GameMods.SpunOut);
                                 if (detailsString.Contains("Easy"))
                                     mods.Add(GameMods.Easy);
                                 if (detailsString.Contains("Flashlight"))
@@ -411,66 +423,54 @@ namespace script_chan2.GUI
 
                             NotifyOfPropertyChange(() => WrongTeamWarningVisible);
                         }
-                    }
-                    if (data.User == "BanchoBot" && data.Message.Contains("joined in slot"))
-                    {
-                        if (match.TeamMode == TeamModes.TeamVS)
-                        {
-                            var regex = new Regex(@"^(.+) joined in slot (\d+) for team (\w+)\.$");
-                            var regexResult = regex.Match(data.Message);
-                            if (regexResult.Success)
-                            {
-                                var player = await Database.Database.GetPlayer(regexResult.Groups[1].Value);
-                                var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
-                                TeamColors? team = null;
-                                switch (regexResult.Groups[3].Value)
-                                {
-                                    case "blue": team = TeamColors.Blue; break;
-                                    case "red": team = TeamColors.Red; break;
-                                }
-                                var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
-                                if (slot != null)
-                                {
-                                    slot.Player = player;
-                                    slot.Team = team;
-                                    slot.Mods = new List<GameMods>();
-                                    slot.State = RoomSlotStates.NotReady;
-                                }
 
-                                NotifyOfPropertyChange(() => WrongTeamWarningVisible);
-                            }
-                        }
-                        else if (match.TeamMode == TeamModes.HeadToHead || match.TeamMode == TeamModes.BattleRoyale)
+                        regexResult = playerJoinRegex.Match(data.Message);
+
+                        if (regexResult.Success)
                         {
-                            var regex = new Regex(@"^(.+) joined in slot (\d+).$");
-                            var regexResult = regex.Match(data.Message);
-                            if (regexResult.Success)
+                            var player = await Database.Database.GetPlayer(regexResult.Groups[1].Value);
+                            var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
+                            TeamColors? team = null;
+                            switch (regexResult.Groups[3].Value)
                             {
-                                var player = await Database.Database.GetPlayer(regexResult.Groups[1].Value);
-                                var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
-                                var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
-                                if (slot != null)
-                                {
-                                    slot.Player = player;
-                                    slot.Mods = new List<GameMods>();
-                                    slot.State = RoomSlotStates.NotReady;
-                                }
+                                case "blue":
+                                    team = TeamColors.Blue;
+                                    break;
+                                case "red":
+                                    team = TeamColors.Red;
+                                    break;
                             }
+
+                            var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
+                            if (slot != null)
+                            {
+                                slot.Player = player;
+                                if (match.TeamMode == TeamModes.TeamVS)
+                                    slot.Team = team;
+                                slot.Mods = new List<GameMods>();
+                                slot.State = RoomSlotStates.NotReady;
+                            }
+
+                            if (match.TeamMode == TeamModes.TeamVS)
+                                NotifyOfPropertyChange(() => WrongTeamWarningVisible);
                         }
-                    }
-                    if (data.User == "BanchoBot" && data.Message.Contains("changed to"))
-                    {
-                        var regex = new Regex(@"^(.+) changed to (\w+)$");
-                        var regexResult = regex.Match(data.Message);
+
+                        regexResult = changeTeamRegex.Match(data.Message);
+
                         if (regexResult.Success)
                         {
                             var player = regexResult.Groups[1].Value;
                             TeamColors? team = null;
                             switch (regexResult.Groups[2].Value)
                             {
-                                case "Blue": team = TeamColors.Blue; break;
-                                case "Red": team = TeamColors.Red; break;
+                                case "Blue":
+                                    team = TeamColors.Blue;
+                                    break;
+                                case "Red":
+                                    team = TeamColors.Red;
+                                    break;
                             }
+
                             var slot = RoomSlotsViews.FirstOrDefault(x => x.PlayerName == player);
                             if (slot != null)
                             {
@@ -479,23 +479,26 @@ namespace script_chan2.GUI
 
                             NotifyOfPropertyChange(() => WrongTeamWarningVisible);
                         }
-                    }
-                    if (data.User == "BanchoBot" && data.Message.Contains("moved to slot"))
-                    {
-                        var regex = new Regex(@"^(.+) moved to slot (\d+)$");
-                        var regexResult = regex.Match(data.Message);
+
+                        regexResult = moveSlotRegex.Match(data.Message);
+
                         if (regexResult.Success)
                         {
                             var player = regexResult.Groups[1].Value;
                             var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
                             var oldSlot = RoomSlotsViews.FirstOrDefault(x => x.PlayerName == player);
                             var newSlot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
-                            if (oldSlot != null && newSlot != null)
+
+                            if (oldSlot != null)
                             {
-                                newSlot.Player = oldSlot.Player;
-                                newSlot.Team = oldSlot.Team;
-                                newSlot.Mods = oldSlot.Mods;
-                                newSlot.State = oldSlot.State;
+                                if (newSlot != null)
+                                {
+                                    newSlot.Player = oldSlot.Player;
+                                    newSlot.Team = oldSlot.Team;
+                                    newSlot.Mods = oldSlot.Mods;
+                                    newSlot.State = oldSlot.State;
+                                }
+
                                 oldSlot.Player = null;
                                 oldSlot.Team = null;
                                 oldSlot.Mods = new List<GameMods>();
@@ -503,11 +506,9 @@ namespace script_chan2.GUI
 
                             NotifyOfPropertyChange(() => WrongTeamWarningVisible);
                         }
-                    }
-                    if (data.User == "BanchoBot" && data.Message.Contains("left the game."))
-                    {
-                        var regex = new Regex(@"^(.+) left the game\.$");
-                        var regexResult = regex.Match(data.Message);
+
+                        regexResult = leftGameRegex.Match(data.Message);
+
                         if (regexResult.Success)
                         {
                             var player = regexResult.Groups[1].Value;
@@ -912,7 +913,7 @@ namespace script_chan2.GUI
             {
                 if (match.TeamMode == TeamModes.TeamVS)
                     return match.TeamBlue.Name;
-                return "";
+                return string.Empty;
             }
         }
 
@@ -922,7 +923,7 @@ namespace script_chan2.GUI
             {
                 if (match.TeamMode == TeamModes.TeamVS)
                     return match.TeamRed.Name;
-                return "";
+                return string.Empty;
             }
         }
 
@@ -994,12 +995,14 @@ namespace script_chan2.GUI
             get
             {
                 if (suppressHint)
-                    return "";
+                    return string.Empty;
                 if ((match.Picks.Count > 0 || match.Bans.Count > 0) && RollWinnerTeam == null && RollWinnerPlayer == null)
                     return Properties.Resources.PuffHint_SelectRollWinner;
-                return "";
+                return string.Empty;
             }
         }
+
+        private bool tieBreaker = false;
         #endregion
 
         #region Window Events
@@ -1064,7 +1067,7 @@ namespace script_chan2.GUI
         public void OpenMpLink()
         {
             localLog.Information("match '{match}' open mp link", match.Name);
-            System.Diagnostics.Process.Start("https://osu.ppy.sh/community/matches/" + match.RoomId);
+            System.Diagnostics.Process.Start("https://osu.ppy.sh/mp/" + match.RoomId);
         }
 
         private void SendRoomMessage(string message)
@@ -1106,11 +1109,28 @@ namespace script_chan2.GUI
                 match.PrivateRoom = model.PrivateRoom;
                 match.Status = MatchStatus.InProgress;
                 match.Save();
+                await match.UpdateScores();
                 NotifyOfPropertyChange(() => RoomLinkName);
                 NotifyOfPropertyChange(() => RoomClosedVisible);
                 NotifyOfPropertyChange(() => RoomOpenVisible);
                 NotifyOfPropertyChange(() => PrivateRibbonVisible);
                 OsuIrc.OsuIrc.JoinChannel("#mp_" + model.RoomId);
+            }
+        }
+
+        public async void SyncScore()
+        {
+            localLog.Information("match '{match}' open sync score dialog", match.Name);
+            var model = new MatchSyncScoreDialogViewModel();
+            var view = ViewLocator.LocateForModel(model, null, null);
+            ViewModelBinder.Bind(model, view, null);
+
+            bool result = Convert.ToBoolean(await DialogHost.Show(view, DialogIdentifier));
+
+            if (result)
+            {
+                match.Games.Clear();
+                await UpdateScore(false, model.SkipRound);
             }
         }
 
@@ -1159,10 +1179,8 @@ namespace script_chan2.GUI
         public void InvitePlayers()
         {
             localLog.Information("match '{match}' invite players", match.Name);
-            foreach (var player in match.GetPlayerList())
-            {
-                SendRoomMessage("!mp invite #" + player.Id);
-            }
+            SendRoomMessage($"!mp invite #{match.TeamBlue.Players[0].Id}");
+            SendRoomMessage($"!mp invite #{match.TeamRed.Players[0].Id}");
         }
 
         public void SendWelcomeString()
@@ -1182,7 +1200,7 @@ namespace script_chan2.GUI
                 return;
             localLog.Information("match '{match}' send irc message '{message}'", match.Name, ChatMessage);
             var message = ChatMessage;
-            ChatMessage = "";
+            ChatMessage = string.Empty;
             SendRoomMessage(message);
         }
 
@@ -1202,7 +1220,7 @@ namespace script_chan2.GUI
         public void StartGame()
         {
             localLog.Information("match '{match}' start game", match.Name);
-            SendRoomMessage("!mp start 5");
+            SendRoomMessage("!mp start 7");
         }
 
         public async void AbortMatch()
@@ -1289,10 +1307,10 @@ namespace script_chan2.GUI
                 var lastMessageInline = (Run)lastMessageParagraph.Inlines.FirstInline;
                 if (lastMessageInline.Text.Contains(" moved to slot ") || lastMessageInline.Text.Contains(" changed to "))
                 {
-                    var tooltip = "";
+                    var tooltip = string.Empty;
                     if (lastMessageParagraph.ToolTip != null)
                     {
-                        tooltip = lastMessageParagraph.ToolTip.ToString() + Environment.NewLine + $"[{message.Timestamp.ToString("HH:mm")}] {message.User.PadRight(15)} {message.Message}";
+                        tooltip = lastMessageParagraph.ToolTip + Environment.NewLine + $"[{message.Timestamp:HH:mm}] {message.User.PadRight(15)} {message.Message}";
                     }
                     else
                     {
@@ -1474,10 +1492,10 @@ namespace script_chan2.GUI
                 NotificationPlayer.PlayNotification();
         }
 
-        public async Task UpdateScore(bool newGameExpected = false)
+        public async Task UpdateScore(bool newGameExpected = false, int skipRound = 0)
         {
             localLog.Information("match '{match}' update scores", match.Name);
-            await match.UpdateScores(newGameExpected);
+            await match.UpdateScores(newGameExpected, skipRound);
             if (match.TeamMode == TeamModes.TeamVS)
                 NotifyOfPropertyChange(() => TeamsViews);
             if (match.TeamMode == TeamModes.HeadToHead)

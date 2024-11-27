@@ -53,7 +53,7 @@ namespace script_chan2.GUI
             if (result)
             {
                 localLog.Information("save new webhook '{webhook}'", model.Name);
-                var webhook = new Webhook()
+                var webhook = new Webhook
                 {
                     Name = model.Name,
                     URL = model.Url,

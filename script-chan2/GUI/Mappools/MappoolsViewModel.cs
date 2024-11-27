@@ -97,7 +97,7 @@ namespace script_chan2.GUI
             if (result)
             {
                 localLog.Information("save new mappool '{mappool}'", model.Name);
-                var mappool = new Mappool()
+                var mappool = new Mappool
                 {
                     Name = model.Name,
                     Tournament = model.Tournament

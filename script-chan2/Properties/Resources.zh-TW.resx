@@ -550,10 +550,10 @@
     <value>匯出</value>
   </data>
   <data name="MainView_MappoolsMenuItem" xml:space="preserve">
-    <value>圖池</value>
+    <value>图池</value>
   </data>
   <data name="MainView_MatchesMenuItem" xml:space="preserve">
-    <value>對賽</value>
+    <value>对局</value>
   </data>
   <data name="MainView_SettingsMenuItem" xml:space="preserve">
     <value>設定</value>
@@ -881,14 +881,14 @@ CS: {3}</value>
     <value>增加</value>
   </data>
   <data name="MatchViewModel_MapDrawMessage" xml:space="preserve">
-    <value>Result is a draw. The map needs to be replayed.</value>
+    <value>分数为平局</value>
   </data>
   <data name="MatchViewModel_NextPlayerPickMessage" xml:space="preserve">
     <value>下一個 PICK 玩家: {0}</value>
     <comment>{0}: Player name</comment>
   </data>
   <data name="MatchViewModel_NextTeamPickMessage" xml:space="preserve">
-    <value>下一個 PICK 隊伍: {0}</value>
+    <value>下一个选图队伍: {0}</value>
     <comment>{0}: Team name</comment>
   </data>
   <data name="MatchViewModel_PlayerPointsMessage" xml:space="preserve">
@@ -913,14 +913,14 @@ CS: {3}</value>
 {4}: Blue team last slot number</comment>
   </data>
   <data name="MatchViewModel_TiebreakerMessage" xml:space="preserve">
-    <value>結果是平局。 我們必須打決勝局。</value>
+    <value>即将进入TB</value>
   </data>
   <data name="MatchViewModel_WinMessage" xml:space="preserve">
-    <value>**{0} 贏得了這場比賽**</value>
+    <value>**{0} 贏得了这场比赛**</value>
     <comment>{0}: Team or player name</comment>
   </data>
   <data name="MatchView_AbortMapButtonText" xml:space="preserve">
-    <value>中斷遊戲</value>
+    <value>终止比赛</value>
   </data>
   <data name="MatchView_AllPicksFreemodCheckBoxText" xml:space="preserve">
     <value>選圖皆為 Freemod</value>
@@ -931,17 +931,23 @@ CS: {3}</value>
   <data name="MatchView_BanRecapButtonText" xml:space="preserve">
     <value>BAN 回顧</value>
   </data>
+  <data name="MatchView_SyncScoreButtonText" xml:space="preserve">
+    <value>重算比分</value>
+  </data>
+  <data name="MatchView_SyncScoreSkipRoundsTooltip" xml:space="preserve">
+    <value>跳过回合数（热手）</value>
+  </data>
   <data name="MatchView_BOTextBoxHint" xml:space="preserve">
     <value>BO</value>
   </data>
   <data name="MatchView_CloseRoomButtonText" xml:space="preserve">
-    <value>關閉房間</value>
+    <value>关闭房间</value>
   </data>
   <data name="MatchView_CreatePrivateRoomButtonText" xml:space="preserve">
     <value>Create private room</value>
   </data>
   <data name="MatchView_CreateRoomButtonText" xml:space="preserve">
-    <value>創建房間</value>
+    <value>创建房间</value>
   </data>
   <data name="MatchView_DisableChatMatchStatusCheckBoxText" xml:space="preserve">
     <value>停用比賽狀態訊息</value>
@@ -950,7 +956,7 @@ CS: {3}</value>
     <value>停用遊戲後自動訊息 (房間排行 / 下一個旋圖)</value>
   </data>
   <data name="MatchView_FirstPickComboBoxHint" xml:space="preserve">
-    <value>第一個選圖</value>
+    <value>第一个选图</value>
   </data>
   <data name="MatchView_GameModeComboBoxHint" xml:space="preserve">
     <value>遊戲模式</value>
@@ -959,10 +965,10 @@ CS: {3}</value>
     <value>比賽回顧</value>
   </data>
   <data name="MatchView_InvitePlayersButtonText" xml:space="preserve">
-    <value>邀請玩家</value>
+    <value>邀请玩家</value>
   </data>
   <data name="MatchView_JoinRoomButtonText" xml:space="preserve">
-    <value>加入現存房間</value>
+    <value>加入现有房间</value>
   </data>
   <data name="MatchView_KickLastTeamButtonText" xml:space="preserve">
     <value>踢除最後一隊</value>
@@ -1013,7 +1019,7 @@ CS: {3}</value>
     <value>設定</value>
   </data>
   <data name="MatchView_StartGameButtonText" xml:space="preserve">
-    <value>開始遊戲 (5秒)</value>
+    <value>开始游戏 (7秒)</value>
   </data>
   <data name="MatchView_SwitchPlayersBackButtonText" xml:space="preserve">
     <value>對調玩家</value>
@@ -1022,7 +1028,7 @@ CS: {3}</value>
     <value>對調玩家</value>
   </data>
   <data name="MatchView_TeamSizeTextBoxHint" xml:space="preserve">
-    <value>隊伍大小</value>
+    <value>队伍大小</value>
   </data>
   <data name="MatchView_TimerAfterGameTextBoxHint" xml:space="preserve">
     <value>遊戲後計時器</value>
@@ -1067,7 +1073,7 @@ CS: {3}</value>
     <value>Please select a roll winner</value>
   </data>
   <data name="SettingsView_ApiKeyTextBoxHint" xml:space="preserve">
-    <value>API 金鑰</value>
+    <value>API 密钥</value>
   </data>
   <data name="SettingsView_BanchoConnectedTooltip" xml:space="preserve">
     <value>Bancho 已連線</value>
@@ -1088,25 +1094,25 @@ CS: {3}</value>
     <value>當遊戲結束或所有玩家已準備就緒時播放音效</value>
   </data>
   <data name="SettingsView_GetApiKeyButtonText" xml:space="preserve">
-    <value>取得 API 金鑰</value>
+    <value>获取 API 密钥</value>
   </data>
   <data name="SettingsView_GetIrcPasswordButtonText" xml:space="preserve">
-    <value>取得 IRC 密碼</value>
+    <value>获取 IRC 密码</value>
   </data>
   <data name="SettingsView_IrcPasswordTextBoxHint" xml:space="preserve">
-    <value>IRC 密碼</value>
+    <value>IRC 密码</value>
   </data>
   <data name="SettingsView_IrcTimeoutTextBoxHint" xml:space="preserve">
-    <value>IRC 愈時</value>
+    <value>IRC 超时</value>
   </data>
   <data name="SettingsView_IrcUsernameTextBoxHint" xml:space="preserve">
-    <value>IRC 使用者名稱</value>
+    <value>IRC 用户名</value>
   </data>
   <data name="SettingsView_LanguagesComboBoxHint" xml:space="preserve">
     <value>語言 (Language)</value>
   </data>
   <data name="SettingsView_NotificationSoundFileTextBoxHint" xml:space="preserve">
-    <value>通知音效檔案</value>
+    <value>通知音效文件</value>
   </data>
   <data name="SettingsView_NotificationSoundFileTextBoxTooltip" xml:space="preserve">
     <value>留空使用愈設音效</value>
@@ -1124,13 +1130,13 @@ CS: {3}</value>
     <value>Private Bancho Disconnected</value>
   </data>
   <data name="SettingsView_SaveButtonText" xml:space="preserve">
-    <value>儲存</value>
+    <value>保存</value>
   </data>
   <data name="SettingsView_SelectNotificationSoundFileButtonText" xml:space="preserve">
-    <value>瀏覽</value>
+    <value>浏览</value>
   </data>
   <data name="SettingsView_TestApiKeyButtonText" xml:space="preserve">
-    <value>測試音效</value>
+    <value>测试 API 密钥</value>
   </data>
   <data name="SettingsView_TimerAfterGameDurationTextBoxHint" xml:space="preserve">
     <value>遊戲後計時器時長</value>
@@ -1169,7 +1175,7 @@ CS: {3}</value>
     <value>新增隊伍</value>
   </data>
   <data name="TeamsView_TournamentComboBoxHint" xml:space="preserve">
-    <value>比賽</value>
+    <value>比赛</value>
   </data>
   <data name="TeamsView_WikiImportButtonText" xml:space="preserve">
     <value>從wiki匯入</value>

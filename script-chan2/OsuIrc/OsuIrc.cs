@@ -56,7 +56,7 @@ namespace script_chan2.OsuIrc
             {
                 ConnectionStatus = IrcStatus.Connecting;
 
-                client = new IrcClient() { ActiveChannelSyncing = true };
+                client = new IrcClient { ActiveChannelSyncing = true };
                 client.EnableUTF8Recode = true;
                 client.OnError += Client_OnError;
                 client.OnErrorMessage += Client_OnErrorMessage;
@@ -127,7 +127,7 @@ namespace script_chan2.OsuIrc
         {
             log.ForContext("channel", e.Data.Channel).Information("[{bancho}] {user}: {message}", sender == client ? "Bancho" : "Private Bancho", e.Data.Nick, e.Data.Message);
 
-            var data = new ChannelMessageData()
+            var data = new ChannelMessageData
             {
                 Channel = e.Data.Channel,
                 User = e.Data.Nick,
@@ -135,7 +135,7 @@ namespace script_chan2.OsuIrc
             };
             Events.Aggregator.PublishOnUIThread(data);
 
-            var ircMessage = new IrcMessage() { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
+            var ircMessage = new IrcMessage { Channel = data.Channel, User = data.User, Timestamp = DateTime.Now, Message = data.Message };
             var match = Database.Database.Matches.FirstOrDefault(x => "#mp_" + x.RoomId == data.Channel);
             if (match != null)
                 ircMessage.Match = match;
@@ -156,7 +156,7 @@ namespace script_chan2.OsuIrc
                 var createData = regexCreateCommand.Match(e.Data.Message);
                 if (createData.Success)
                 {
-                    var data = new RoomCreatedData()
+                    var data = new RoomCreatedData
                     {
                         Id = Convert.ToInt32(createData.Groups[1].Value),
                         Name = createData.Groups[2].Value
@@ -165,17 +165,17 @@ namespace script_chan2.OsuIrc
                 }
             }
 
-            var data2 = new PrivateMessageData()
+            var data2 = new PrivateMessageData
             {
                 Channel = e.Data.Nick,
                 User = e.Data.Nick,
                 Message = e.Data.Message
             };
 
-            var ircMessage = new IrcMessage() { Channel = data2.Channel, User = data2.User, Timestamp = DateTime.Now, Message = data2.Message };
+            var ircMessage = new IrcMessage { Channel = data2.Channel, User = data2.User, Timestamp = DateTime.Now, Message = data2.Message };
             if (!ChatList.UserChats.Any(x => x.User == data2.Channel))
             {
-                var newUserChat = new UserChat() { User = data2.Channel };
+                var newUserChat = new UserChat { User = data2.Channel };
                 newUserChat.LoadMessages();
                 ChatList.UserChats.Add(newUserChat);
             }
@@ -212,7 +212,7 @@ namespace script_chan2.OsuIrc
                 var split = ircMessage.Message.Split(' ');
                 if (split.Length > 2)
                 {
-                    ircMessage = new IrcMessage()
+                    ircMessage = new IrcMessage
                     {
                         Channel = split[1],
                         Message = string.Join(" ", split.Skip(2)),
@@ -238,7 +238,7 @@ namespace script_chan2.OsuIrc
 
             if (ircMessage.Channel.StartsWith("#"))
             {
-                var data = new ChannelMessageData()
+                var data = new ChannelMessageData
                 {
                     Channel = ircMessage.Channel,
                     User = Settings.IrcUsername,
@@ -248,7 +248,7 @@ namespace script_chan2.OsuIrc
             }
             else
             {
-                var data = new PrivateMessageData()
+                var data = new PrivateMessageData
                 {
                     Channel = ircMessage.Channel,
                     User = Settings.IrcUsername,
@@ -257,7 +257,7 @@ namespace script_chan2.OsuIrc
 
                 if (!ChatList.UserChats.Any(x => x.User == ircMessage.Channel))
                 {
-                    var newUserChat = new UserChat() { User = ircMessage.Channel };
+                    var newUserChat = new UserChat { User = ircMessage.Channel };
                     newUserChat.LoadMessages();
                     ChatList.UserChats.Add(newUserChat);
                 }

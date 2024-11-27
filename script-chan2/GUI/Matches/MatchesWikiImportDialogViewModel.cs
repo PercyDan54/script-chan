@@ -19,7 +19,7 @@ namespace script_chan2.GUI
         public MatchesWikiImportDialogViewModel()
         {
             Tournament = Settings.DefaultTournament;
-            WikiUrl = "";
+            WikiUrl = string.Empty;
             BO = Settings.DefaultBO;
         }
         #endregion
@@ -227,7 +227,7 @@ namespace script_chan2.GUI
             var currentElement = document.QuerySelectorAll("h2").First(x => x.TextContent.StartsWith("Match schedule", StringComparison.CurrentCultureIgnoreCase));
 
             ImportMatch importMatch = null;
-            string date = "";
+            string date = string.Empty;
             while (true)
             {
                 currentElement = currentElement.NextElementSibling;
@@ -269,7 +269,7 @@ namespace script_chan2.GUI
 
                 if (Tournament.Teams.Any(x => x.Name == importMatch.TeamRed) && Tournament.Teams.Any(x => x.Name == importMatch.TeamBlue))
                 {
-                    var match = new Match()
+                    var match = new Match
                     {
                         Name = $"{Tournament.Acronym}: ({importMatch.TeamRed}) VS ({importMatch.TeamBlue})",
                         Tournament = Tournament,

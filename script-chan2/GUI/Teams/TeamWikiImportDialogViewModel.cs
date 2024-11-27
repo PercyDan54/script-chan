@@ -19,7 +19,7 @@ namespace script_chan2.GUI
         public TeamWikiImportDialogViewModel()
         {
             Tournament = Settings.DefaultTournament;
-            WikiUrl = "";
+            WikiUrl = string.Empty;
         }
         #endregion
 
@@ -198,7 +198,7 @@ namespace script_chan2.GUI
                 var players = team.Children[2].QuerySelectorAll("a");
                 foreach (var player in players)
                 {
-                    var importPlayer = new ImportPlayer()
+                    var importPlayer = new ImportPlayer
                     {
                         Id = Convert.ToInt32(player.Attributes["href"].Value.Split('/').Last()),
                         Name = player.TextContent,
@@ -218,7 +218,7 @@ namespace script_chan2.GUI
 
                 if (!Tournament.Teams.Any(x => x.Name == importTeam.Name))
                 {
-                    var team = new Team()
+                    var team = new Team
                     {
                         Name = importTeam.Name,
                         Tournament = Tournament
@@ -227,7 +227,7 @@ namespace script_chan2.GUI
 
                     foreach (var playerObject in importTeam.Players)
                     {
-                        Player player = new Player()
+                        Player player = new Player
                         {
                             Id = playerObject.Id,
                             Name = playerObject.Name,

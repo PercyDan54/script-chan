@@ -273,6 +273,9 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
+                        <Button x:Name="SyncScore" Margin="5" Height="Auto" Visibility="{Binding RoomOpenVisible}" >
+                            <TextBlock Text="{x:Static p:Resources.MatchView_SyncScoreButtonText}" TextWrapping="Wrap" />
+                        </Button>
                         <Button x:Name="CloseRoom" Margin="5" Height="Auto" Foreground="Red" Visibility="{Binding RoomOpenVisible}">
                             <TextBlock Text="{x:Static p:Resources.MatchView_CloseRoomButtonText}" TextWrapping="Wrap" />
                         </Button>

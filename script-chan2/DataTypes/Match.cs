@@ -158,7 +158,7 @@ namespace script_chan2.DataTypes
             ChatMessages.Clear();
         }
 
-        public async Task UpdateScores(bool newGameExpected = false)
+        public async Task UpdateScores(bool newGameExpected = false, int skipRound = 0)
         {
             localLog.Information("'{name}' update scores", Name);
             var oldGameCount = Games.Count;
@@ -171,7 +171,7 @@ namespace script_chan2.DataTypes
                 else
                     keepUpdating = false;
             }
-            foreach (var game in Games.Where(x => !x.Counted))
+            foreach (var game in Games.Skip(skipRound).Where(x => !x.Counted))
             {
                 if (!WarmupMode)
                 {

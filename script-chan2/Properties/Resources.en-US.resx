@@ -185,6 +185,7 @@
   </data>
   <data name="DeleteCustomCommandDialogViewModel_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
+    <comment>{0}: Custom command name</comment>
   </data>
   <data name="DeleteCustomCommandDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -200,6 +201,7 @@
   </data>
   <data name="DeleteMappoolDialogView_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
+    <comment>{0}: Mappool name</comment>
   </data>
   <data name="DeleteMatchDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -219,6 +221,7 @@
   </data>
   <data name="DeleteTeamDialogView_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
+    <comment>{0}: Team name</comment>
   </data>
   <data name="DeleteTournamentDialogView_CancelButtonText" xml:space="preserve">
     <value>Cancel</value>
@@ -418,7 +421,7 @@
     <value>Add</value>
   </data>
   <data name="EditTournamentDialogView_AllPicksFreemodCheckBoxText" xml:space="preserve">
-    <value>All picks as freemod</value>
+    <value>All picks as Freemod</value>
   </data>
   <data name="EditTournamentDialogView_AllPicksNofailCheckBoxText" xml:space="preserve">
     <value>All picks as Nofail</value>
@@ -922,7 +925,7 @@ CS: {3}</value>
     <value>Abort map</value>
   </data>
   <data name="MatchView_AllPicksFreemodCheckBoxText" xml:space="preserve">
-    <value>All picks as freemod</value>
+    <value>All picks as Freemod</value>
   </data>
   <data name="MatchView_AllPicksNofailCheckBoxText" xml:space="preserve">
     <value>All picks as Nofail</value>
@@ -1012,7 +1015,7 @@ CS: {3}</value>
     <value>Settings</value>
   </data>
   <data name="MatchView_StartGameButtonText" xml:space="preserve">
-    <value>Start game (5s)</value>
+    <value>Start game (7s)</value>
   </data>
   <data name="MatchView_SwitchPlayersBackButtonText" xml:space="preserve">
     <value>Switch players back</value>

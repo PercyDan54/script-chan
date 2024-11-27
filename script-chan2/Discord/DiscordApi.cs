@@ -98,8 +98,8 @@ namespace script_chan2.Discord
                         embed.Title = string.Format(match.Protects.Count > 0 ? Properties.Resources.DiscordApi_BanProtectRecapWithRollWinnerTitle : Properties.Resources.DiscordApi_BanRecapWithRollWinnerTitle, match.RollWinnerTeam.Name);
                     else
                         embed.Title = match.Protects.Count > 0 ? Properties.Resources.DiscordApi_BanProtectRecapTitle : Properties.Resources.DiscordApi_BanRecapTitle;
-                    var redTeam = "";
-                    var blueTeam = "";
+                    var redTeam = string.Empty;
+                    var blueTeam = string.Empty;
                     foreach (var protect in match.Protects)
                     {
                         var mod = protect.Map.Tag;
@@ -147,7 +147,7 @@ namespace script_chan2.Discord
                         embed.Title = Properties.Resources.DiscordApi_BanRecapTitle;
                     foreach (var player in match.Players)
                     {
-                        var bans = "";
+                        var bans = string.Empty;
                         foreach (var ban in match.Bans.Where(x => x.Player == player.Key))
                         {
                             var mod = ban.Map.Tag;
@@ -210,8 +210,8 @@ namespace script_chan2.Discord
                         embed.Title = string.Format(Properties.Resources.DiscordApi_PickRecapWithRollWinnerTitle, match.RollWinnerTeam.Name);
                     else
                         embed.Title = Properties.Resources.DiscordApi_PickRecapTitle;
-                    var redTeam = "";
-                    var blueTeam = "";
+                    var redTeam = string.Empty;
+                    var blueTeam = string.Empty;
                     for (var i = 0; i < match.Picks.Count; i++)
                     {
                         var pick = match.Picks[i];
@@ -248,7 +248,7 @@ namespace script_chan2.Discord
                         embed.Title = string.Format(Properties.Resources.DiscordApi_PickRecapWithRollWinnerTitle, match.RollWinnerPlayer.Name);
                     else
                         embed.Title = Properties.Resources.DiscordApi_PickRecapTitle;
-                    var picks = "";
+                    var picks = string.Empty;
                     foreach (var pick in match.Picks)
                     {
                         var mod = pick.Map.Tag;
@@ -369,7 +369,7 @@ namespace script_chan2.Discord
                     embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**";
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = match.TeamRedPoints, IsInline = true });
                     embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = match.TeamBluePoints, IsInline = true });
-                    var mvps = "";
+                    var mvps = string.Empty;
                     foreach (var score in mvpScores)
                     {
                         mvps += string.Format(Properties.Resources.DiscordApi_GameRecapMVPFieldValue, score.Player.Country.ToLower(), score.Player.Name.Replace("_", "\\_"), string.Format("{0:n0}", score.Points)) + Environment.NewLine;
@@ -395,7 +395,7 @@ namespace script_chan2.Discord
                         Color = Color.Green
                     };
 
-                    string mod = "";
+                    string mod = string.Empty;
                     Beatmap map;
 
                     if (match.Mappool != null && match.Mappool.Beatmaps.Any(x => x.Beatmap.Id == match.Games.Last().Beatmap.Id))
@@ -420,8 +420,8 @@ namespace script_chan2.Discord
                     embed.ThumbnailUrl = "https://b.ppy.sh/thumb/" + map.SetId + "l.jpg";
                     embed.Description = $"**{map.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {map.Title.Replace("_", "\\_").Replace("*", "\\*")} [{map.Version.Replace("_", "\\_").Replace("*", "\\*")}]**";
 
-                    string players = "";
-                    string points = "";
+                    string players = string.Empty;
+                    string points = string.Empty;
                     foreach (var score in match.Games.Last().Scores.OrderByDescending(x => x.Points))
                     {
                         players += score.Player.Name + Environment.NewLine;
@@ -457,11 +457,11 @@ namespace script_chan2.Discord
 
         public static void SetRichPresence(string details, string state = "")
         {
-            rpcClient.SetPresence(new RichPresence()
+            rpcClient.SetPresence(new RichPresence
             {
                 Details = details,
                 State = state,
-                Assets = new Assets()
+                Assets = new Assets
                 {
                     LargeImageKey = "logo",
                     LargeImageText = "Script-chan"

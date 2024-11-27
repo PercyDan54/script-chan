@@ -32,7 +32,7 @@ namespace script_chan2.GUI
             {
                 if (match.MatchTime != null)
                     return ((DateTime)match.MatchTime).ToString(Properties.Resources.MatchListItemViewModel_DateTimeFormat);
-                return "";
+                return string.Empty;
             }
         }
 

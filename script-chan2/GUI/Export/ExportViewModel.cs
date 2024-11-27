@@ -223,18 +223,18 @@ namespace script_chan2.GUI
                     var matchObject = new
                     {
                         Name = matchData.Name,
-                        Mappool = matchData.Mappool != null ? matchData.Mappool.Name : "",
+                        Mappool = matchData.Mappool != null ? matchData.Mappool.Name : string.Empty,
                         GameMode = matchData.GameMode.ToString(),
                         TeamMode = matchData.TeamMode.ToString(),
                         WinCondition = matchData.WinCondition.ToString(),
-                        TeamBlue = matchData.TeamBlue != null ? matchData.TeamBlue.Name : "",
-                        TeamRed = matchData.TeamRed != null ? matchData.TeamRed.Name : "",
+                        TeamBlue = matchData.TeamBlue != null ? matchData.TeamBlue.Name : string.Empty,
+                        TeamRed = matchData.TeamRed != null ? matchData.TeamRed.Name : string.Empty,
                         TeamSize = matchData.TeamSize,
                         RoomSize = matchData.RoomSize,
-                        RollWinnerTeam = matchData.RollWinnerTeam != null ? matchData.RollWinnerTeam.Name : "",
-                        RollWinnerPlayer = matchData.RollWinnerPlayer != null ? matchData.RollWinnerPlayer.Name : "",
-                        FirstPickerTeam = matchData.FirstPickerTeam != null ? matchData.FirstPickerTeam.Name : "",
-                        FirstPickerPlayer = matchData.FirstPickerPlayer != null ? matchData.FirstPickerPlayer.Name : "",
+                        RollWinnerTeam = matchData.RollWinnerTeam != null ? matchData.RollWinnerTeam.Name : string.Empty,
+                        RollWinnerPlayer = matchData.RollWinnerPlayer != null ? matchData.RollWinnerPlayer.Name : string.Empty,
+                        FirstPickerTeam = matchData.FirstPickerTeam != null ? matchData.FirstPickerTeam.Name : string.Empty,
+                        FirstPickerPlayer = matchData.FirstPickerPlayer != null ? matchData.FirstPickerPlayer.Name : string.Empty,
                         BO = matchData.BO,
                         ViewerMode = matchData.ViewerMode,
                         MpTimerCommand = matchData.MpTimerCommand,
@@ -339,7 +339,7 @@ namespace script_chan2.GUI
                     Team team = tournament.Teams.FirstOrDefault(x => x.Name == teamItem.Name.Value);
                     if (team == null)
                     {
-                        team = new Team() { Tournament = tournament };
+                        team = new Team { Tournament = tournament };
                         localLog.Information("import new team '{team}' in tournament '{tournament}'", teamItem.Name.Value, tournament.Name);
                     }
                     else
@@ -352,7 +352,7 @@ namespace script_chan2.GUI
 
                     foreach (var playerItem in teamItem.Players)
                     {
-                        Player player = new Player()
+                        Player player = new Player
                         {
                             Id = Convert.ToInt32(playerItem.Id.Value),
                             Name = playerItem.Name.Value,
@@ -407,14 +407,14 @@ namespace script_chan2.GUI
                         localLog.Information("rename mappool '{oldName}' to '{newName}' because of name collision", mappoolItem.Name.Value, mappoolName);
                     }
 
-                    Mappool mappool = new Mappool() { Tournament = tournament };
+                    Mappool mappool = new Mappool { Tournament = tournament };
                     mappool.Name = mappoolName;
                     mappool.Save();
 
                     foreach (var mappoolMapItem in mappoolItem.Maps)
                     {
                         localLog.Information("add beatmap '{beatmap}' to mappool '{newName}' ", mappoolMapItem.Beatmap.Id.Value, mappoolName);
-                        Beatmap beatmap = new Beatmap()
+                        Beatmap beatmap = new Beatmap
                         {
                             Id = Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value),
                             SetId = Convert.ToInt32(mappoolMapItem.Beatmap.SetId.Value),
@@ -430,7 +430,7 @@ namespace script_chan2.GUI
 
                         beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(mappoolMapItem.Beatmap.Id.Value));
 
-                        MappoolMap mappoolMap = new MappoolMap()
+                        MappoolMap mappoolMap = new MappoolMap
                         {
                             Mappool = mappool,
                             Beatmap = beatmap,
@@ -489,7 +489,7 @@ namespace script_chan2.GUI
 
                     foreach (var playerItem in matchItem.Players)
                     {
-                        Player player = new Player()
+                        Player player = new Player
                         {
                             Id = Convert.ToInt32(playerItem.Id.Value),
                             Name = playerItem.Name.Value,

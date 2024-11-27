@@ -99,7 +99,7 @@ namespace script_chan2.GUI
             }
         }
 
-        private string search = "";
+        private string search = string.Empty;
         public string Search
         {
             get { return search; }
@@ -128,7 +128,7 @@ namespace script_chan2.GUI
             if (result)
             {
                 localLog.Information("save new match '{match}'", model.Name);
-                var match = new Match()
+                var match = new Match
                 {
                     Name = model.Name,
                     Tournament = model.Tournament,

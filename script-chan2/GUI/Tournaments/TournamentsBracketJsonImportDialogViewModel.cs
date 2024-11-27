@@ -68,7 +68,9 @@ namespace script_chan2.GUI
             tournament.Acronym = "imp";
             switch (importObject.Ruleset.ShortName)
             {
-                case "osu": tournament.GameMode = Enums.GameModes.Standard; break;
+                case "mania": tournament.GameMode = Enums.GameModes.Mania; break;
+                case "taiko": tournament.GameMode = Enums.GameModes.Taiko; break;
+                case "fruits": tournament.GameMode = Enums.GameModes.Catch; break;
                 default: tournament.GameMode = Enums.GameModes.Standard; break;
             }
             tournament.TeamSize = importObject.PlayersPerTeam;
@@ -77,13 +79,15 @@ namespace script_chan2.GUI
             tournament.WinCondition = Enums.WinConditions.ScoreV2;
             tournament.PointsForSecondBan = 0;
             tournament.AllPicksFreemod = false;
-            tournament.AllPicksNofail = false;
+            tournament.AllPicksNofail = true;
             tournament.MpTimerCommand = Settings.DefaultTimerCommand;
             tournament.MpTimerAfterGame = Settings.DefaultTimerAfterGame;
             tournament.MpTimerAfterPick = Settings.DefaultTimerAfterPick;
-            tournament.WelcomeString = "";
+            tournament.WelcomeString = string.Empty;
             localLog.Information("saving tournament");
             tournament.Save();
+
+            bool? hasApi = null;
 
             foreach (var teamItem in importObject.Teams)
             {
@@ -122,51 +126,51 @@ namespace script_chan2.GUI
                 mappool.Tournament = tournament;
                 localLog.Information("saving mappool '{name}'", mappool.Name);
                 mappool.Save();
-
                 int beatmapIndex = 0;
+
                 foreach (var beatmapItem in roundItem.Beatmaps)
                 {
-                    int beatmapSetId = -1;
-                    string artist = "";
-                    string title = "";
-                    string version = "";
-                    string creator = "";
-                    decimal bpm = 0;
-                    decimal ar = 0;
-                    decimal cs = 0;
+                    Beatmap beatmap = new Beatmap();
+                    beatmap.Id = Convert.ToInt32(beatmapItem.id);
 
-                    if (beatmapItem.BeatmapInfo.Difficulty != null)
+                    if (beatmapItem.BeatmapInfo?.Difficulty != null)
                     {
-                        artist = beatmapItem.BeatmapInfo.Metadata.Artist;
-                        title = beatmapItem.BeatmapInfo.Metadata.Title;
-                        version = beatmapItem.BeatmapInfo.DifficultyName;
-                        creator = beatmapItem.BeatmapInfo.Metadata.Author.username;
-                        bpm = Convert.ToDecimal(beatmapItem.BeatmapInfo.BPM);
-                        ar = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.ApproachRate);
-                        cs = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.CircleSize);
+                        beatmap.Artist = beatmapItem.BeatmapInfo.Metadata.Artist;
+                        beatmap.Title = beatmapItem.BeatmapInfo.Metadata.Title;
+                        beatmap.Version = beatmapItem.BeatmapInfo.DifficultyName;
+                        beatmap.Creator = beatmapItem.BeatmapInfo.Metadata.Author.username;
+                        beatmap.BPM = Convert.ToDecimal(beatmapItem.BeatmapInfo.BPM);
+                        beatmap.AR = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.ApproachRate);
+                        beatmap.CS = Convert.ToDecimal(beatmapItem.BeatmapInfo.Difficulty.CircleSize);
                     }
-                    Beatmap beatmap = new Beatmap()
+                    else
                     {
-                        Id = beatmapItem.id,
-                        SetId = beatmapSetId,
-                        Artist = artist,
-                        Title = title,
-                        Version = version,
-                        Creator = creator,
-                        BPM = bpm,
-                        AR = ar,
-                        CS = cs,
-                    };
+                        if (!hasApi.HasValue)
+                            hasApi = await OsuApi.OsuApi.CheckApiKey(Settings.ApiKey);
+
+                        if (hasApi.GetValueOrDefault())
+                        {
+                            var apiBeatmap = await OsuApi.OsuApi.GetBeatmap(beatmapItem.id);
+
+                            if (apiBeatmap != null)
+                                beatmap = apiBeatmap;
+                        }
+                        else
+                        {
+                            beatmap.Title = beatmapItem.id.ToString();
+                        }
+                    }
+
                     Database.Database.AddBeatmap(beatmap);
 
-                    beatmap = await Database.Database.GetBeatmap(Convert.ToInt32(beatmapItem.id));
+                    beatmap = await Database.Database.GetBeatmap(beatmapItem.id);
 
-                    MappoolMap mappoolMap = new MappoolMap()
+                    MappoolMap mappoolMap = new MappoolMap
                     {
                         Mappool = mappool,
                         Beatmap = beatmap,
-                        Tag = "",
-                        ListIndex = Convert.ToInt32(beatmapIndex),
+                        Tag = string.Empty,
+                        ListIndex = beatmapIndex++,
                         PickCommand = true,
                         Mods = Utils.ConvertStringtoGameMods(beatmapItem.Mods)
                     };
@@ -174,8 +178,6 @@ namespace script_chan2.GUI
                     localLog.Information("adding beatmap '{beatmap}' to mappool '{mappool}'", beatmap.Title, mappool.Name);
                     mappool.Beatmaps.Add(mappoolMap);
                     mappoolMap.Save();
-
-                    beatmapIndex++;
                 }
             }
 
@@ -187,7 +189,7 @@ namespace script_chan2.GUI
                     match.Tournament = tournament;
                     match.TeamRed = tournament.Teams.First(x => x.Name == importObject.Teams.First(y => y.Acronym == matchItem.Team1Acronym).FullName);
                     match.TeamBlue = tournament.Teams.First(x => x.Name == importObject.Teams.First(y => y.Acronym == matchItem.Team2Acronym).FullName);
-                    match.Name = match.TeamRed.Name + " vs " + match.TeamBlue.Name;
+                    match.Name = $"{tournament.Acronym}: ({match.TeamRed.Name}) vs ({match.TeamBlue.Name})";
                     match.MatchTime = matchItem.Date;
                     match.GameMode = tournament.GameMode;
                     match.TeamMode = tournament.TeamMode;

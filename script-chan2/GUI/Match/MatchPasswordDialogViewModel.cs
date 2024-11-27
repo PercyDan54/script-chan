@@ -8,7 +8,7 @@ namespace script_chan2.GUI
         #region Constructor
         public MatchPasswordDialogViewModel()
         {
-            Password = "";
+            Password = string.Empty;
         }
         #endregion
 

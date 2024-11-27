@@ -158,7 +158,7 @@ namespace script_chan2.GUI
             {
                 if (match.TeamMode == Enums.TeamModes.TeamVS)
                     return match.TeamRed.Name;
-                return "";
+                return string.Empty;
             }
         }
 
@@ -168,7 +168,7 @@ namespace script_chan2.GUI
             {
                 if (match.TeamMode == Enums.TeamModes.TeamVS)
                     return match.TeamBlue.Name;
-                return "";
+                return string.Empty;
             }
         }
 
@@ -334,7 +334,7 @@ namespace script_chan2.GUI
         public void BanRed()
         {
             localLog.Information("match '{match}' ban beatmap '{beatmap}' by red", match.Name, beatmap.Beatmap.Title);
-            match.Bans.Add(new MatchPick()
+            match.Bans.Add(new MatchPick
             {
                 Match = match,
                 Map = beatmap,
@@ -355,7 +355,7 @@ namespace script_chan2.GUI
         public void BanBlue()
         {
             localLog.Information("match '{match}' ban beatmap '{beatmap}' by blue", match.Name, beatmap.Beatmap.Title);
-            match.Bans.Add(new MatchPick()
+            match.Bans.Add(new MatchPick
             {
                 Match = match,
                 Map = beatmap,
@@ -376,7 +376,7 @@ namespace script_chan2.GUI
         public void BanPlayer(Player player)
         {
             localLog.Information("match '{match}' ban beatmap '{beatmap}' by player '{player}'", match.Name, beatmap.Beatmap.Title, player.Name);
-            match.Bans.Add(new MatchPick()
+            match.Bans.Add(new MatchPick
             {
                 Match = match,
                 Map = beatmap,
@@ -416,7 +416,7 @@ namespace script_chan2.GUI
         public void ProtectRed()
         {
             localLog.Information("match '{match}' protect beatmap '{beatmap}' by red", match.Name, beatmap.Beatmap.Title);
-            match.Protects.Add(new MatchPick()
+            match.Protects.Add(new MatchPick
             {
                 Match = match,
                 Map = beatmap,
@@ -437,7 +437,7 @@ namespace script_chan2.GUI
         public void ProtectBlue()
         {
             localLog.Information("match '{match}' protect beatmap '{beatmap}' by blue", match.Name, beatmap.Beatmap.Title);
-            match.Protects.Add(new MatchPick()
+            match.Protects.Add(new MatchPick
             {
                 Match = match,
                 Map = beatmap,
@@ -477,7 +477,7 @@ namespace script_chan2.GUI
         public void PickRed()
         {
             localLog.Information("match '{match}' pick beatmap '{beatmap}' by red", match.Name, beatmap.Beatmap.Title);
-            match.Picks.Add(new MatchPick()
+            match.Picks.Add(new MatchPick
             {
                 Match = match,
                 Map = beatmap,
@@ -499,7 +499,7 @@ namespace script_chan2.GUI
         public void PickBlue()
         {
             localLog.Information("match '{match}' pick beatmap '{beatmap}' by blue", match.Name, beatmap.Beatmap.Title);
-            match.Picks.Add(new MatchPick()
+            match.Picks.Add(new MatchPick
             {
                 Match = match,
                 Map = beatmap,
@@ -521,7 +521,7 @@ namespace script_chan2.GUI
         public void PickPlayer(Player player)
         {
             localLog.Information("match '{match}' pick beatmap '{beatmap}' by player '{player}'", match.Name, beatmap.Beatmap.Title, player.Name);
-            match.Picks.Add(new MatchPick()
+            match.Picks.Add(new MatchPick
             {
                 Match = match,
                 Map = beatmap,
@@ -544,7 +544,7 @@ namespace script_chan2.GUI
         public void Pick()
         {
             localLog.Information("match '{match}' pick beatmap '{beatmap}'", match.Name, beatmap.Beatmap.Title);
-            var pick = new MatchPick()
+            var pick = new MatchPick
             {
                 Match = match,
                 Map = beatmap,
