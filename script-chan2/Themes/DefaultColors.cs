@@ -16,6 +16,7 @@ namespace script_chan2
                 case "BanchoBot": return Colors.Pink.ToString();
                 case "Self": return Colors.Green.ToString();
                 case "Default": return Colors.White.ToString();
+                case "EZ": return Colors.Green.ToString();
                 case "HD": return "#AA8000";
                 case "HR": return "#8C1E1E";
                 case "DT": return "#134197";

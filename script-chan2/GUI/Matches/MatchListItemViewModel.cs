@@ -73,6 +73,7 @@ namespace script_chan2.GUI
                 localLog.Information("save match '{match}'", match.Name);
                 match.Name = model.Name;
                 match.Mappool = model.Mappool;
+                match.ModMultiplierPreset = model.ModMultiplierPreset;
                 match.GameMode = model.GameMode;
                 match.TeamMode = model.TeamMode;
                 match.WinCondition = model.WinCondition;

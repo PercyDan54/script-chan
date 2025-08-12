@@ -323,12 +323,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataTypes\IrcConnectedData.cs" />
+    <Compile Include="DataTypes\ModMultiplier.cs" />
+    <Compile Include="DataTypes\ModMultiplierPreset.cs" />
     <Compile Include="Discord\ApiDataTypes.cs" />
     <Compile Include="Enums\IrcStatus.cs" />
     <Compile Include="GUI\Match\MatchPickOverviewDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchSyncScoreDialogViewModel.cs" />
     <Compile Include="GUI\Match\MatchTeamDialogPlayerViewModel.cs" />
     <Compile Include="GUI\Match\MatchTeamDialogViewModel.cs" />
+    <Compile Include="GUI\ModMultiplierPreset\DeleteAllModMultiplierPresetsDialogViewModel.cs" />
+    <Compile Include="GUI\ModMultiplierPreset\DeleteModMultiplierPresetDialogViewModel.cs" />
+    <Compile Include="GUI\ModMultiplierPreset\EditModMultiplierPresetDialogViewModel.cs" />
+    <Compile Include="GUI\ModMultiplierPreset\ModMultiplierPresetItemViewModel.cs" />
+    <Compile Include="GUI\ModMultiplierPreset\ModMultiplierPresetListItemViewModel.cs" />
+    <Compile Include="GUI\ModMultiplierPreset\ModMultiplierPresetViewModel.cs" />
+    <Compile Include="GUI\ModMultiplierPreset\ModMultipliersDialogViewModel.cs" />
     <Compile Include="GUI\Tournaments\TournamentsBracketJsonImportDialogViewModel.cs" />
     <Compile Include="Properties\Resources.de-DE.Designer.cs">
       <DependentUpon>Resources.de-DE.resx</DependentUpon>
@@ -531,6 +540,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\ModMultiplierPreset\DeleteAllModMultiplierPresetsDialogView.xaml" />
+    <Page Include="GUI\ModMultiplierPreset\DeleteModMultiplierPresetDialogView.xaml" />
+    <Page Include="GUI\ModMultiplierPreset\EditModMultiplierPresetDialogView.xaml" />
+    <Page Include="GUI\ModMultiplierPreset\ModMultiplierPresetItemView.xaml" />
+    <Page Include="GUI\ModMultiplierPreset\ModMultiplierPresetListItemView.xaml" />
+    <Page Include="GUI\ModMultiplierPreset\ModMultiplierPresetView.xaml" />
+    <Page Include="GUI\ModMultiplierPreset\ModMultipliersDialogView.xaml" />
     <Page Include="GUI\Settings\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

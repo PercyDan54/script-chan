@@ -30,6 +30,7 @@ namespace script_chan2.Database
             CreateMatchPlayersTable();
             CreateMatchTeamsBRTable();
             CreateMatchPicksTable();
+            CreateModMultiplierPresetsTable();
             CreateGamesTable();
             CreateScoresTable();
             CreateIrcMessagesTable();
@@ -229,6 +230,7 @@ namespace script_chan2.Database
                 roomId INTEGER,
                 tournament INTEGER,
                 mappool TEXT,
+                modMultiplierPreset INTEGER,
                 gameMode TEXT,
                 teamMode TEXT,
                 winCondition TEXT,
@@ -254,6 +256,7 @@ namespace script_chan2.Database
                 privateRoom BOOL,
                 FOREIGN KEY(tournament) REFERENCES Tournaments(id) ON DELETE CASCADE,
                 FOREIGN KEY(mappool) REFERENCES Mappools(id) ON DELETE SET NULL,
+                FOREIGN KEY(modMultiplierPreset) REFERENCES ModMultiplierPresets(id) ON DELETE SET NULL,
                 FOREIGN KEY(teamBlue) REFERENCES Teams(id) ON DELETE RESTRICT,
                 FOREIGN KEY(teamRed) REFERENCES Teams(id) ON DELETE RESTRICT)", conn))
             {
@@ -305,6 +308,18 @@ namespace script_chan2.Database
                 PRIMARY KEY(match, beatmap),
                 FOREIGN KEY(match) REFERENCES Matches(id) ON DELETE CASCADE,
                 FOREIGN KEY(beatmap) REFERENCES MappoolMaps(id) ON DELETE CASCADE)", conn))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private static void CreateModMultiplierPresetsTable()
+        {
+            localLog.Information("create table ModMultiplierPresets");
+            using (var command = new SQLiteCommand(@"CREATE TABLE ModMultiplierPresets
+                (id INTEGER NOT NULL PRIMARY KEY,
+                name TEXT,
+                data TEXT)", conn))
             {
                 command.ExecuteNonQuery();
             }

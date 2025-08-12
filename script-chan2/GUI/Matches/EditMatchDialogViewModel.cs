@@ -25,6 +25,7 @@ namespace script_chan2.GUI
                 Name = match.Name;
                 Tournament = match.Tournament;
                 Mappool = match.Mappool;
+                ModMultiplierPreset = match.ModMultiplierPreset;
                 GameMode = match.GameMode;
                 TeamMode = match.TeamMode;
                 WinCondition = match.WinCondition;
@@ -98,6 +99,19 @@ namespace script_chan2.GUI
                 return list;
             }
         }
+
+        public BindableCollection<ModMultiplierPreset> ModMultiplierPresets
+        {
+            get
+            {
+                var list = new BindableCollection<ModMultiplierPreset>();
+                foreach (var preset in Database.Database.ModMultiplierPresets.OrderBy(x => x.Id))
+                    list.Add(preset);
+                return list;
+            }
+        }
+
+        public ModMultiplierPreset ModMultiplierPreset { get; set; }
 
         private Tournament tournament;
         public Tournament Tournament

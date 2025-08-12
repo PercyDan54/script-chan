@@ -59,6 +59,7 @@
                             <ListBoxItem Content="{x:Static p:Resources.MainView_TeamsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowTeams]" />
                             <ListBoxItem Content="{x:Static p:Resources.MainView_MappoolsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowMappools]" />
                             <ListBoxItem Content="{x:Static p:Resources.MainView_MatchesMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowMatches]" />
+                            <ListBoxItem Content="{x:Static p:Resources.MainView_ModMultiplierPresetMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowModMultiplierPresets]" />
                             <ListBoxItem Content="{x:Static p:Resources.MainView_WebhooksMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowWebhooks]" />
                             <ListBoxItem Content="{x:Static p:Resources.MainView_SettingsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowSettings]" />
                             <ListBoxItem Content="{x:Static p:Resources.MainView_ColorsMenuItem}" cal:Message.Attach="[Event MouseUp] = [Action ShowColors]" />

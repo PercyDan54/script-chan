@@ -258,6 +258,15 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete all mod multiplier presets?.
+        /// </summary>
+        public static string DeleteAllModMultiplierPresetsDialogView_LabelText {
+            get {
+                return ResourceManager.GetString("DeleteAllModMultiplierPresetsDialogView_LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string DeleteCustomCommandDialogView_CancelButtonText {
@@ -1325,6 +1334,15 @@ namespace script_chan2.Properties {
         public static string MainView_MatchesMenuItem {
             get {
                 return ResourceManager.GetString("MainView_MatchesMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Multiplier Presets.
+        /// </summary>
+        public static string MainView_ModMultiplierPresetMenuItem {
+            get {
+                return ResourceManager.GetString("MainView_ModMultiplierPresetMenuItem", resourceCulture);
             }
         }
         
@@ -2522,7 +2540,7 @@ namespace script_chan2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start game (5s).
+        ///   Looks up a localized string similar to Start game (7s).
         /// </summary>
         public static string MatchView_StartGameButtonText {
             get {

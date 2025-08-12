@@ -34,6 +34,8 @@ namespace script_chan2.DataTypes
 
         public Mappool Mappool { get; set; }
 
+        public ModMultiplierPreset ModMultiplierPreset { get; set; }
+
         public string Name { get; set; }
 
         public int RoomId { get; set; }

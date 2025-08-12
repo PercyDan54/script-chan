@@ -79,6 +79,14 @@ namespace script_chan2.GUI
             MainTitle = Properties.Resources.MainView_MatchesMenuItem;
             DrawerExpanded = false;
         }
+        
+        public void ShowModMultiplierPresets()
+        {
+            localLog.Information("show ModMultiplierPresets list");
+            ActivateItem(new ModMultiplierPresetViewModel());
+            MainTitle = Properties.Resources.MainView_ModMultiplierPresetMenuItem;
+            DrawerExpanded = false;
+        }
 
         public void ShowTournaments()
         {

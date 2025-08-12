@@ -93,6 +93,7 @@ namespace script_chan2.DataTypes
                         new ConfigColor { key = "BanchoBot", color = DefaultColors.GetDefaultColor("BanchoBot") },
                         new ConfigColor { key = "Self", color = DefaultColors.GetDefaultColor("Self") },
                         new ConfigColor { key = "Default", color = DefaultColors.GetDefaultColor("Default") },
+                        new ConfigColor { key = "EZ", color = DefaultColors.GetDefaultColor("EZ") },
                         new ConfigColor { key = "HD", color = DefaultColors.GetDefaultColor("HD") },
                         new ConfigColor { key = "HR", color = DefaultColors.GetDefaultColor("HR") },
                         new ConfigColor { key = "DT", color = DefaultColors.GetDefaultColor("DT") },

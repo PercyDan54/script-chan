@@ -183,6 +183,9 @@
   <data name="DeleteAllMatchesDialogView_LabelText" xml:space="preserve">
     <value>Do you really want to delete all matches?</value>
   </data>
+  <data name="DeleteAllModMultiplierPresetsDialogView_LabelText" xml:space="preserve">
+    <value>Do you really want to delete all mod multiplier presets?</value>
+  </data>
   <data name="DeleteCustomCommandDialogViewModel_LabelText" xml:space="preserve">
     <value>Do you really want to delete {0}?</value>
     <comment>{0}: Custom command name</comment>
@@ -557,6 +560,9 @@
   </data>
   <data name="MainView_MatchesMenuItem" xml:space="preserve">
     <value>Matches</value>
+  </data>
+  <data name="MainView_ModMultiplierPresetMenuItem" xml:space="preserve">
+    <value>Mod Multiplier Presets</value>
   </data>
   <data name="MainView_SettingsMenuItem" xml:space="preserve">
     <value>Settings</value>

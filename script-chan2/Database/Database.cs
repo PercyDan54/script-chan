@@ -1,5 +1,4 @@
-﻿using Caliburn.Micro;
-using script_chan2.DataTypes;
+﻿using script_chan2.DataTypes;
 using script_chan2.Discord;
 using script_chan2.Enums;
 using Serilog;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace script_chan2.Database
 {
@@ -18,6 +18,7 @@ namespace script_chan2.Database
         public static List<Tournament> Tournaments = new List<Tournament>();
         public static List<Webhook> Webhooks = new List<Webhook>();
         public static List<Mappool> Mappools = new List<Mappool>();
+        public static List<ModMultiplierPreset> ModMultiplierPresets = new List<ModMultiplierPreset>();
         public static List<Player> Players = new List<Player>();
         public static List<Team> Teams = new List<Team>();
         public static List<Match> Matches = new List<Match>();
@@ -34,6 +35,7 @@ namespace script_chan2.Database
             InitWebhooks().Wait();
             InitMappools();
             InitMappoolMaps().Wait();
+            InitModMultiplierPresets();
             InitTournamentWebhooks();
             InitMatches().Wait();
             InitMatchPlayers().Wait();
@@ -735,6 +737,88 @@ namespace script_chan2.Database
         }
         #endregion
 
+        #region ModMultiplierPresets
+        public static void InitModMultiplierPresets()
+        {
+            localLog.Information("init ModMultiplierPresets");
+            using (var conn = GetConnection())
+            using (var command = new SQLiteCommand("SELECT id, name, data FROM ModMultiplierPresets", conn))
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var id = Convert.ToInt32(reader["id"]);
+                    var name = reader["name"].ToString();
+                    var data = reader["data"].ToString();
+                    var modMultiplierPreset = new ModMultiplierPreset(id)
+                    {
+                        Name = name,
+                        Multipliers = JsonConvert.DeserializeObject<List<ModMultiplier>>(data)
+                    };
+                    ModMultiplierPresets.Add(modMultiplierPreset);
+                }
+                reader.Close();
+                conn.Close();
+            }
+        }
+
+        public static int AddModMultiplierPreset(ModMultiplierPreset modMultiplierPreset)
+        {
+            localLog.Information("add new ModMultiplierPreset '{name}'", modMultiplierPreset.Name);
+            int resultValue;
+            using (var conn = GetConnection())
+            {
+                using (var command = new SQLiteCommand("INSERT INTO ModMultiplierPresets (name, data) VALUES (@name, @data)", conn))
+                { 
+                    command.Parameters.AddWithValue("@name", modMultiplierPreset.Name);
+                    command.Parameters.AddWithValue("@data", JsonConvert.SerializeObject(modMultiplierPreset.Multipliers));
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand("SELECT last_insert_rowid()", conn))
+                {
+                    resultValue = Convert.ToInt32(command.ExecuteScalar());
+                }
+                conn.Close();
+            }
+            ModMultiplierPresets.Add(modMultiplierPreset);
+            return resultValue;
+        }
+
+        public static void DeleteModMultiplierPreset(ModMultiplierPreset modMultiplierPreset)
+        {
+            localLog.Information("delete ModMultiplierPreset '{name}'", modMultiplierPreset.Name);
+            using (var conn = GetConnection())
+            using (var transaction = conn.BeginTransaction())
+            {
+                using (var command = new SQLiteCommand("DELETE FROM ModMultiplierPresets WHERE id = @id", conn))
+                {
+                    command.Parameters.AddWithValue("@id", modMultiplierPreset.Id);
+                    command.ExecuteNonQuery();
+                }
+                transaction.Commit();
+                conn.Close();
+            }
+            ModMultiplierPresets.Remove(modMultiplierPreset);
+        }
+
+        public static void UpdateModMultiplierPreset(ModMultiplierPreset modMultiplierPreset)
+        {
+            localLog.Information("update ModMultiplierPreset '{name}'", modMultiplierPreset.Name);
+            using (var conn = GetConnection())
+            using (var command = new SQLiteCommand(@"UPDATE ModMultiplierPresets
+                SET name = @name,
+                data = @data
+                WHERE id = @id", conn))
+            {
+                command.Parameters.AddWithValue("@name", modMultiplierPreset.Name);
+                command.Parameters.AddWithValue("@id", modMultiplierPreset.Id);
+                command.Parameters.AddWithValue("@data", JsonConvert.SerializeObject(modMultiplierPreset.Multipliers));
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
+        #endregion
         #region Players
         public static void AddPlayer(Player player)
         {
@@ -920,7 +1004,7 @@ namespace script_chan2.Database
         {
             localLog.Information("init matches");
             using (var conn = GetConnection())
-            using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
+            using (var command = new SQLiteCommand(@"SELECT id, tournament, mappool, modMultiplierPreset, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize,
                 rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, allPicksNofail, status, warmupMode, matchTime, privateRoom FROM Matches", conn))
             using (var reader = command.ExecuteReader())
             {
@@ -931,6 +1015,9 @@ namespace script_chan2.Database
                     Mappool mappool = null;
                     if (reader["mappool"] != DBNull.Value)
                         mappool = Mappools.First(x => x.Id == Convert.ToInt32(reader["mappool"]));
+                    ModMultiplierPreset modMultiplierPreset = null;
+                    if (reader["modMultiplierPreset"] != DBNull.Value)
+                        modMultiplierPreset = ModMultiplierPresets.First(x => x.Id == Convert.ToInt32(reader["modMultiplierPreset"]));
                     var name = reader["name"].ToString();
                     var roomId = Convert.ToInt32(reader["roomId"]);
                     var gameMode = GameModes.Standard;
@@ -1008,6 +1095,7 @@ namespace script_chan2.Database
                     {
                         Tournament = tournament,
                         Mappool = mappool,
+                        ModMultiplierPreset = modMultiplierPreset,
                         Name = name,
                         RoomId = roomId,
                         GameMode = gameMode,
@@ -1050,14 +1138,18 @@ namespace script_chan2.Database
             using (var conn = GetConnection())
             using (var transaction = conn.BeginTransaction())
             {
-                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, allPicksNofail, status, warmupMode, matchTime, privateRoom)" +
-                    "VALUES (@tournament, @mappool, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @viewerMode, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @allPicksNofail, @status, @warmupMode, @matchTime, @privateRoom)", conn))
+                using (var command = new SQLiteCommand("INSERT INTO Matches (tournament, mappool, modMultiplierPreset, name, roomId, gameMode, teamMode, winCondition, teamBlue, teamBluePoints, teamRed, teamRedPoints, teamSize, roomSize, rollWinner, firstPicker, BO, viewerMode, mpTimerCommand, mpTimerAfterGame, mpTimerAfterPick, pointsForSecondBan, allPicksFreemod, allPicksNofail, status, warmupMode, matchTime, privateRoom)" +
+                    "VALUES (@tournament, @mappool, @modMultiplierPreset, @name, @roomId, @gameMode, @teamMode, @winCondition, @teamBlue, @teamBluePoints, @teamRed, @teamRedPoints, @teamSize, @roomSize, @rollWinner, @firstPicker, @BO, @viewerMode, @mpTimerCommand, @mpTimerAfterGame, @mpTimerAfterPick, @pointsForSecondBan, @allPicksFreemod, @allPicksNofail, @status, @warmupMode, @matchTime, @privateRoom)", conn))
                 {
                     command.Parameters.AddWithValue("@tournament", match.Tournament.Id);
                     if (match.Mappool == null)
                         command.Parameters.AddWithValue("@mappool", DBNull.Value);
                     else
                         command.Parameters.AddWithValue("@mappool", match.Mappool.Id);
+                    if (match.ModMultiplierPreset == null)
+                        command.Parameters.AddWithValue("@modMultiplierPreset", DBNull.Value);
+                    else
+                        command.Parameters.AddWithValue("@modMultiplierPreset", match.ModMultiplierPreset.Id);
                     command.Parameters.AddWithValue("@name", match.Name);
                     command.Parameters.AddWithValue("@roomId", match.RoomId);
                     command.Parameters.AddWithValue("@gameMode", match.GameMode.ToString());
@@ -1227,7 +1319,7 @@ namespace script_chan2.Database
             using (var transaction = conn.BeginTransaction())
             {
                 using (var command = new SQLiteCommand(@"UPDATE Matches
-                SET tournament = @tournament, mappool = @mappool, name = @name, roomId = @roomId, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
+                SET tournament = @tournament, mappool = @mappool, modMultiplierPreset = @modMultiplierPreset, name = @name, roomId = @roomId, gameMode = @gameMode, teamMode = @teamMode, winCondition = @winCondition, teamBlue = @teamBlue, teamBluePoints = @teamBluePoints,
                 teamRed = @teamRed, teamRedPoints = @teamRedPoints, teamSize = @teamSize, roomSize = @roomSize, rollWinner = @rollWinner, firstPicker = @firstPicker, BO = @BO,
                 viewerMode = @viewerMode, mpTimerCommand = @mpTimerCommand, mpTimerAfterGame = @mpTimerAfterGame, mpTimerAfterPick = @mpTimerAfterPick, pointsForSecondBan = @pointsForSecondBan,
                 allPicksFreemod = @allPicksFreemod, allPicksNofail = @allPicksNofail, status = @status, warmupMode = @warmupMode, matchTime = @matchTime, privateRoom = @privateRoom
@@ -1238,6 +1330,10 @@ namespace script_chan2.Database
                         command.Parameters.AddWithValue("@mappool", DBNull.Value);
                     else
                         command.Parameters.AddWithValue("@mappool", match.Mappool.Id);
+                    if (match.ModMultiplierPreset == null)
+                        command.Parameters.AddWithValue("@modMultiplierPreset", DBNull.Value);
+                    else
+                        command.Parameters.AddWithValue("@modMultiplierPreset", match.ModMultiplierPreset.Id);
                     command.Parameters.AddWithValue("@name", match.Name);
                     command.Parameters.AddWithValue("@roomId", match.RoomId);
                     command.Parameters.AddWithValue("@gameMode", match.GameMode.ToString());
