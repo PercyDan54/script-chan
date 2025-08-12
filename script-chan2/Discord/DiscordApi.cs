@@ -9,6 +9,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+using Discord.Net.Rest;
+using Discord.Rest;
 
 namespace script_chan2.Discord
 {
@@ -17,6 +19,13 @@ namespace script_chan2.Discord
         private static ILogger localLog = Log.ForContext(typeof(DiscordApi));
 
         private static DiscordRpcClient rpcClient;
+
+        private const string redSquareEmoji = ":red_square:";
+        private const string blueSquareEmoji = ":blue_square:";
+        private const string purpleSquareEmoji = ":purple_square:";
+        private const string winnerEmoji = ":first_place:";
+        private static readonly Color redColor = new Color(218, 53, 72);
+        private static readonly Color blueColor = new Color(52, 152, 219);
 
         static DiscordApi()
         {
@@ -287,100 +296,51 @@ namespace script_chan2.Discord
         public static void SendGameRecap(Match match)
         {
             localLog.Information("match '{match}' send game recap", match.Name);
+
+            string getTeamIcon(Team team) => team.Id == match.TeamRed.Id ? redSquareEmoji : blueSquareEmoji;
+
             foreach (var webhook in match.Tournament.Webhooks.Where(x => x.GameRecap))
             {
                 EmbedBuilder embed = null;
                 if (match.TeamMode == Enums.TeamModes.TeamVS)
                 {
+                    bool teamRedWon = match.TeamRedPoints > match.TeamBluePoints;
+                    string teamRedName = $"{(teamRedWon ? winnerEmoji : string.Empty)} {redSquareEmoji} {match.TeamRed.Name}";
+                    string teamBlueName = $"{match.TeamBlue.Name} {blueSquareEmoji} {(!teamRedWon ? winnerEmoji : string.Empty)}";
+
                     embed = new EmbedBuilder
                     {
                         Author = new EmbedAuthorBuilder
                         {
-                            IconUrl = "https://cdn0.iconfinder.com/data/icons/fighting-1/258/brawl003-512.png",
-                            Name = $"{match.TeamRed.Name} VS {match.TeamBlue.Name}",
+                            IconUrl = webhook.AuthorIcon,
+                            Name = match.Name,
                             Url = "https://osu.ppy.sh/community/matches/" + match.RoomId
-                        }
+                        },
+                        Description = $"** {teamRedName} | {match.TeamRedPoints} - {match.TeamBluePoints} | {teamBlueName}**",
+                        Color = teamRedWon ? redColor : blueColor
                     };
-                    if (!string.IsNullOrEmpty(webhook.AuthorIcon))
-                        embed.Author.IconUrl = webhook.AuthorIcon;
 
-                    var map = match.Picks.Last();
+                    string title = match.RollWinnerTeam == null
+                        ? Properties.Resources.DiscordApi_BanRecapTitle
+                        : string.Format(Properties.Resources.DiscordApi_BanRecapWithRollWinnerTitle, getTeamIcon(match.RollWinnerTeam));
+                    string content = match.Bans.Count > 0 ? string.Join(Environment.NewLine, match.Bans.Select(b => $"{(b.Team.Id == b.Match.TeamRed.Id ? redSquareEmoji : blueSquareEmoji)} bans `{b.Map.Tag}`")) : string.Empty;
 
-                    bool pickingTeamWon = false;
-                    var teamRedScore = 0;
-                    var teamBlueScore = 0;
-                    foreach (var score in match.Games.Last().Scores)
-                    {
-                        if (score.Passed)
-                        {
-                            if (match.TeamRed.Players.Any(x => x.Id == score.Player.Id))
-                                teamRedScore += score.Points;
-                            if (match.TeamBlue.Players.Any(x => x.Id == score.Player.Id))
-                                teamBlueScore += score.Points;
-                        }
-                    }
-                    if (teamRedScore > teamBlueScore && map.Team == match.TeamRed)
-                        pickingTeamWon = true;
-                    if (teamBlueScore > teamRedScore && map.Team == match.TeamBlue)
-                        pickingTeamWon = true;
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = title, Value = content });
 
-                    var lastGame = match.TeamRedPoints * 2 >= match.BO || match.TeamBluePoints * 2 >= match.BO;
+                    title = match.FirstPickerTeam == null
+                        ? Properties.Resources.DiscordApi_PickRecapTitle
+                        : string.Format(Properties.Resources.DiscordApi_PickRecapWithRollWinnerTitle, getTeamIcon(match.FirstPickerTeam));
+                    content = match.Bans.Count > 0 ? string.Join(Environment.NewLine, match.Picks.Select(p =>
+                    {
+                        int index = p.ListIndex - 1;
+                        var games = match.Games.Where(m => !m.Warmup).ToArray();
+                        string winner = index < games.Length ? $" > {(games[index].TeamRedWon ? redSquareEmoji : blueSquareEmoji)} wins" : string.Empty;
+                        return p.Map.Mods.Contains(Enums.GameMods.TieBreaker)
+                            ? $"{purpleSquareEmoji} `{p.Map.Tag}`"
+                            : $"{getTeamIcon(p.Team)} picks `{p.Map.Tag}`{winner}";
+                    })) : string.Empty;
 
-                    var mod = map.Map.Tag;
-                    if (string.IsNullOrEmpty(mod))
-                        mod = Utils.ConvertGameModsToString(map.Map.Mods);
-
-                    var orderedScores = match.Games.Last().Scores.OrderByDescending(x => x.Points);
-                    var mvpScores = orderedScores.Where(x => x.Points == orderedScores.First().Points);
-
-                    if (teamRedScore == teamBlueScore)
-                    {
-                        embed.Title = Properties.Resources.DiscordApi_GameRecapTeamDrawTitle;
-                    }
-                    else
-                    {
-                        if (pickingTeamWon)
-                            embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapTeamWinTitle, map.Team.Name, mod, string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore)));
-                        else
-                            embed.Title = string.Format(Properties.Resources.DiscordApi_GameRecapLostTitle, map.Team.Name, mod, string.Format("{0:n0}", Math.Abs(teamRedScore - teamBlueScore)));
-                    }
-                    
-                    if (teamRedScore == teamBlueScore)
-                    {
-                        embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/696350776750243840/957382088733110282/equals_PNG19.png";
-                        embed.Color = Color.Orange;
-                    }
-                    else if (lastGame)
-                    {
-                        embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/130304896581763072/411660079771811870/crown.png";
-                        embed.Color = Color.Purple;
-                        embed.ImageUrl = webhook.WinImage;
-                    }
-                    else if (pickingTeamWon)
-                    {
-                        embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400388818127290369/section-pass.png";
-                        embed.Color = Color.Green;
-                    }
-                    else
-                    {
-                        embed.ThumbnailUrl = "https://cdn.discordapp.com/attachments/130304896581763072/400388814213873666/section-fail.png";
-                        embed.Color = Color.Red;
-                    }
-                    embed.Description = $"**{map.Map.Beatmap.Artist.Replace("_", "\\_").Replace("*", "\\*")} - {map.Map.Beatmap.Title.Replace("_", "\\_").Replace("*", "\\*")} [{map.Map.Beatmap.Version.Replace("_", "\\_").Replace("*", "\\*")}]**";
-                    embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamRed.Name, Value = match.TeamRedPoints, IsInline = true });
-                    embed.Fields.Add(new EmbedFieldBuilder { Name = match.TeamBlue.Name, Value = match.TeamBluePoints, IsInline = true });
-                    var mvps = string.Empty;
-                    foreach (var score in mvpScores)
-                    {
-                        mvps += string.Format(Properties.Resources.DiscordApi_GameRecapMVPFieldValue, score.Player.Country.ToLower(), score.Player.Name.Replace("_", "\\_"), string.Format("{0:n0}", score.Points)) + Environment.NewLine;
-                    }
-                    embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapMVPFieldName, Value = mvps });
-                    if (teamRedScore == teamBlueScore)
-                        embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapStatusFieldTitle, Value = Properties.Resources.MatchViewModel_MapDrawMessage });
-                    else if (lastGame)
-                        embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapStatusFieldTitle, Value = string.Format(Properties.Resources.DiscordApi_GameRecapStatusFieldTeamMatchWin, match.TeamRedPoints * 2 >= match.BO ? match.TeamRed.Name : match.TeamBlue.Name) });
-                    else
-                        embed.Fields.Add(new EmbedFieldBuilder { Name = Properties.Resources.DiscordApi_GameRecapStatusFieldTitle, Value = string.Format(Properties.Resources.DiscordApi_GameRecapStatusFieldTeamNextPick, map.Team == match.TeamRed ? match.TeamBlue.Name : match.TeamRed.Name) });
+                    embed.Fields.Add(new EmbedFieldBuilder { Name = title, Value = content });
                 }
                 else if (match.TeamMode == Enums.TeamModes.HeadToHead)
                 {
@@ -441,7 +401,10 @@ namespace script_chan2.Discord
 
                     try
                     {
-                        using (var client = new DiscordWebhookClient(webhook.URL))
+                        using (var client = new DiscordWebhookClient(webhook.URL, new DiscordRestConfig
+                               {
+                                   RestClientProvider = DefaultRestClientProvider.Create(true)
+                               }))
                         {
                             client.SendMessageAsync(embeds: new[] { embed.Build() }, username: webhook.Username, avatarUrl: webhook.Avatar).GetAwaiter().GetResult();
                         }

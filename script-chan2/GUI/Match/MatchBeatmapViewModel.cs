@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using script_chan2.Enums;
 
 namespace script_chan2.GUI
 {
@@ -616,13 +617,17 @@ namespace script_chan2.GUI
                 return;
             localLog.Information("match '{match}' send pick message for '{beatmap}'", match.Name, beatmap.Beatmap.Title);
             var mods = Utils.ConvertGameModsToString(beatmap.Mods);
+
+            if (match.AllPicksFreemod && (beatmap.Mods.Count == 0 || !beatmap.Mods.Contains(GameMods.DoubleTime)))
+                mods = string.Empty;
+
             if (match.AllPicksFreemod && !mods.Contains("Freemod"))
                 mods += " Freemod";
             if (match.AllPicksNofail && !mods.Contains("NF"))
                 mods += " NF";
             if (beatmap.PickCommand)
             {
-                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp mods " + mods);
+                OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, "!mp mods " + mods.Trim());
                 OsuIrc.OsuIrc.SendMessage("#mp_" + match.RoomId, $"!mp map {beatmap.Beatmap.Id} {(int)match.GameMode}");
             }
             if (match.MpTimerAfterPick > 0)

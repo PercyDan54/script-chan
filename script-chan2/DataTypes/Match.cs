@@ -171,8 +171,21 @@ namespace script_chan2.DataTypes
                 else
                     keepUpdating = false;
             }
-            foreach (var game in Games.Skip(skipRound).Where(x => !x.Counted))
+
+            for (int i = 0; i < Games.Count; i++)
             {
+                var game = Games[i];
+
+                if (game.Counted)
+                    continue;
+
+                if (skipRound > 0 && i < skipRound)
+                {
+                    game.Warmup = true;
+                    game.Counted = true;
+                    continue;
+                }
+
                 if (!WarmupMode)
                 {
                     if (TeamMode == TeamModes.TeamVS)
@@ -191,6 +204,7 @@ namespace script_chan2.DataTypes
                         }
                         if (teamRedScore > teamBlueScore)
                             TeamRedPoints++;
+
                         if (teamBlueScore > teamRedScore)
                             TeamBluePoints++;
                     }
@@ -208,10 +222,10 @@ namespace script_chan2.DataTypes
                             {
                                 list.Add(score.Player);
                             }
-                            for (var i = 0; i < list.Count; i++)
+                            for (var j = 0; j < list.Count; i++)
                             {
-                                if (Tournament.HeadToHeadPoints.ContainsKey(i + 1))
-                                    Players[list[i]] += Tournament.HeadToHeadPoints[i + 1];
+                                if (Tournament.HeadToHeadPoints.ContainsKey(j + 1))
+                                    Players[list[j]] += Tournament.HeadToHeadPoints[j + 1];
                             }
                         }
                     }
@@ -225,9 +239,9 @@ namespace script_chan2.DataTypes
                         { 
                             foreach (var score in game.Scores)
                             {
-                                for (var i = 0; i < teams.Count; i++)
+                                for (var j = 0; j < teams.Count; j++)
                                 {
-                                    var team = teams.Keys.ElementAt(i);
+                                    var team = teams.Keys.ElementAt(j);
                                     if (team.Players.Contains(score.Player))
                                     {
                                         teams[team] += score.Points;

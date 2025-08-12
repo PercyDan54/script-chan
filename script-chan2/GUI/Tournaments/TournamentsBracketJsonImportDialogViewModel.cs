@@ -127,6 +127,7 @@ namespace script_chan2.GUI
                 localLog.Information("saving mappool '{name}'", mappool.Name);
                 mappool.Save();
                 int beatmapIndex = 0;
+                var mapMod = new Dictionary<string, int>();
 
                 foreach (var beatmapItem in roundItem.Beatmaps)
                 {
@@ -163,13 +164,26 @@ namespace script_chan2.GUI
 
                     Database.Database.AddBeatmap(beatmap);
 
+                    string tag;
+
+                    if (!mapMod.TryGetValue(beatmapItem.Mods, out int num))
+                    {
+                        mapMod.Add(beatmapItem.Mods, 1);
+                        tag = $"{beatmapItem.Mods}1";
+                    }
+                    else
+                    {
+                        tag = $"{beatmapItem.Mods}{++num}";
+                        mapMod[beatmapItem.Mods] = num;
+                    }
+
                     beatmap = await Database.Database.GetBeatmap(beatmapItem.id);
 
                     MappoolMap mappoolMap = new MappoolMap
                     {
                         Mappool = mappool,
                         Beatmap = beatmap,
-                        Tag = string.Empty,
+                        Tag = tag,
                         ListIndex = beatmapIndex++,
                         PickCommand = true,
                         Mods = Utils.ConvertStringtoGameMods(beatmapItem.Mods)

@@ -218,7 +218,7 @@ namespace script_chan2.GUI
         #region Regex
 
         private static readonly Regex slotInfoRegex = new Regex(@"^Slot (\d+) ([\w ]+) https://osu.ppy.sh/u/(\d+) (.+) (\[.+\])?$", RegexOptions.Compiled);
-        private static readonly Regex playerJoinRegex = new Regex(@"^(.+) joined in slot (\d+) for team (\w+)\.$", RegexOptions.Compiled);
+        private static readonly Regex playerJoinRegex = new Regex(@"^(.+) joined in slot (\d+)(?: for team (\w+))?\.$", RegexOptions.Compiled);
         private static readonly Regex rollRegex = new Regex(@"^(.+) rolls (\d+) point\(s\)$", RegexOptions.Compiled);
         private static readonly Regex changeTeamRegex = new Regex(@"^(.+) changed to (\w+)$", RegexOptions.Compiled);
         private static readonly Regex moveSlotRegex = new Regex(@"^(.+) moved to slot (\d+)$", RegexOptions.Compiled);
@@ -431,22 +431,29 @@ namespace script_chan2.GUI
                             var player = await Database.Database.GetPlayer(regexResult.Groups[1].Value);
                             var slotNumber = Convert.ToInt32(regexResult.Groups[2].Value);
                             TeamColors? team = null;
-                            switch (regexResult.Groups[3].Value)
-                            {
-                                case "blue":
-                                    team = TeamColors.Blue;
-                                    break;
-                                case "red":
-                                    team = TeamColors.Red;
-                                    break;
-                            }
 
                             var slot = RoomSlotsViews.FirstOrDefault(x => x.SlotNumber == slotNumber);
                             if (slot != null)
                             {
                                 slot.Player = player;
+
                                 if (match.TeamMode == TeamModes.TeamVS)
-                                    slot.Team = team;
+                                {
+                                    if (regexResult.Groups[3].Success)
+                                    {
+                                        switch (regexResult.Groups[3].Value)
+                                        {
+                                            case "blue":
+                                                team = TeamColors.Blue;
+                                                break;
+                                            case "red":
+                                                team = TeamColors.Red;
+                                                break;
+                                        }
+                                        slot.Team = team;
+                                    }
+                                }
+
                                 slot.Mods = new List<GameMods>();
                                 slot.State = RoomSlotStates.NotReady;
                             }
